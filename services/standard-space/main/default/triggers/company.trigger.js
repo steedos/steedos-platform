@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-08 15:16:53
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-08 16:15:10
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2024-04-14 11:32:59
  * @Description: 
  */
 "use strict";
@@ -54,17 +54,15 @@ module.exports = {
     beforeDelete: async function () {
         const { id } = this
         const companyObj = getObject('company');
-        const orgObj = getObject('organizations');
-        const doc = await companyObj.findOne(id)
+        const doc = await companyObj.findOne(id, {
+            fields: ['organization']
+        })
         if (doc.organization) {
-            // throw new Error("company_error_company_name_exists");
-            // 还不支持i18n
-            var org = await orgObj.findOne(doc.organization, {
-                fields: ['_id']
+            // 不再提示有关联组织，而是直接先清空分部的关联组织属性，触发其afterUpdate，
+            // 更新分部关联组织为空值后，相关级联操作规则由afterUpdate决定，这里不做其它组织操作
+            await companyObj.update(id, {
+                organization: null
             });
-            if (org) {
-                throw new Error("company_error_clear_before_deleting");
-            }
         }
     },
 
@@ -116,7 +114,9 @@ module.exports = {
         const { previousDoc, id } = this
         const companyObj = getObject('company');
         const orgObj = getObject('organizations');
-        const doc = await companyObj.findOne(id)
+        const doc = await companyObj.findOne(id, {
+            fields: ['organization']
+        });
         if (previousDoc.organization !== doc.organization) {
             if (doc.organization) {
                 /* 设置了关联组织值，则更新相关属性*/
