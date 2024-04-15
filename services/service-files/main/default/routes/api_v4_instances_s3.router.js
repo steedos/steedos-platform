@@ -1,14 +1,15 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-08 09:38:56
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-08-03 11:33:16
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-04-15 18:18:09
  * @Description: 
  */
 const express = require("express");
 const router = express.Router();
 const core = require('@steedos/core');
 const formidable = require('formidable');
+const _ = require('lodash')
 const {
     getCollection,
     File,
@@ -63,6 +64,17 @@ router.post('/api/v4/instances/s3/', core.requireAuthentication, async function 
                 } = files.file;
 
                 const collection = await getCollection(DB_COLLECTION_NAME);
+
+                const deny_ext = _.split(process.env.STEEDOS_CFS_UPLOAD_DENY_EXT, ',');
+
+                const fileName = formatFileName(originalFilename, upload_from);
+
+                const name_split = fileName.split('.');
+                const extention = name_split.pop();
+
+                if(_.includes(deny_ext, extention)){
+                    throw new Error(`禁止上传「${extention}」附件`)
+                }
 
                 const newFile = new File({ name: formatFileName(originalFilename, upload_from), size, mimetype, fsCollectionName: FS_COLLECTION_NAME });
 
