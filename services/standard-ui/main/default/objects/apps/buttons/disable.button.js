@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2024-03-30 11:37:53
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-03-30 12:17:46
+ * @LastEditTime: 2024-04-15 10:43:38
  * @Description: 
  */
 module.exports = {
@@ -14,7 +14,7 @@ module.exports = {
             text:  `确定要停用${record.name}?${nodesSelect}`,
             html: true,
             showCancelButton: true,
-            confirmButtonText: '启用',
+            confirmButtonText: '停用',
             cancelButtonText: TAPi18n.__('Cancel')
         }, function (option) {
             if (option) {
@@ -45,6 +45,9 @@ module.exports = {
     },
     disableVisible: function (object_name, record_id) {
         const record = Creator.odata.get(object_name, record_id);
+        if(record._id == record.code){
+            return false
+        }
         if(record.visible){
             return true;
         }
