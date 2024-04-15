@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2024-03-22 09:49:22
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-03-29 13:36:20
+ * @LastEditTime: 2024-04-15 16:39:05
  * @Description: 
  */
 const cachers = require('@steedos/cachers');
@@ -17,15 +17,17 @@ export class MetadataCacherBase {
     collectionName;
     observeHandle;
     cacherName;
+    observeQuery;
 
-    constructor(collectionName, supportSpace) {
+    constructor(collectionName, supportSpace, observeQuery = {}) {
         this.collectionName = collectionName;
         this.supportSpace = supportSpace;
         this.cacherName = `metadata.${collectionName}`
         this.cacher = cachers.getCacher(this.cacherName);
+        this.observeQuery = observeQuery;
 
         try {
-            this.observeHandle = Creator.getCollection(collectionName).find({}).observe({
+            this.observeHandle = Creator.getCollection(collectionName).find(observeQuery).observe({
                 added: (doc)=>{
                     this.onAdded(doc)
                 },
@@ -40,7 +42,6 @@ export class MetadataCacherBase {
             console.error(`${collectionName} observeHandle error`, error);
         }
     }
-
     onAdded(doc){
         this.set(doc._id, doc);
     }

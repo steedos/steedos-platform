@@ -1,14 +1,16 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-10 09:38:53
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-06-12 16:47:12
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-04-15 14:47:25
  * @Description: 
  */
 
 const express = require("express");
 const router = express.Router();
 const core = require('@steedos/core');
+const { getSettings } = require('@steedos/utils')
+const _ = require('lodash')
 const formidable = require('formidable');
 const {
     getCollection,
@@ -27,6 +29,7 @@ router.post('/s3/', core.requireAuthentication, async function (req, res) {
 
         const userSession = req.user;
         const userId = userSession.userId;
+        const spaceId = userSession.spaceId;
 
         const form = formidable({});
 
@@ -38,6 +41,8 @@ router.post('/s3/', core.requireAuthentication, async function (req, res) {
 
                 // console.log(fields);
                 // console.log(files);
+                const settings = await getSettings(spaceId);
+                const deny_ext = _.get(settings, 'cfs.upload.deny_ext') || [];
 
                 const {
                     owner,
@@ -68,6 +73,10 @@ router.post('/s3/', core.requireAuthentication, async function (req, res) {
 
                 const name_split = filename.split('.');
                 const extention = name_split.pop();
+
+                if(_.includes(deny_ext, extention)){
+                    throw new Error(`禁止上传「${extention}」附件`)
+                }
 
                 const metadata = {
                     owner,

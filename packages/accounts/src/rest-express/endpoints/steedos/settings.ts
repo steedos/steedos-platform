@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-11-21 09:56:06
+ * @LastEditTime: 2024-04-15 15:13:49
  * @Description: 
  */
 import * as express from 'express';
@@ -12,7 +12,7 @@ import { getSteedosConfig, getSteedosSchema } from '@steedos/objectql'
 import { db } from '../../../db';
 import { canSendEmail, canSendSMS, getSteedosService } from '../../../core';
 const validator = require('validator');
-
+const util = require('@steedos/utils')
 const clone = require('clone');
 
 const config = getSteedosConfig();
@@ -90,6 +90,13 @@ export const getSettings = (accountsServer: AccountsServer) => async (
     delete _tenant._id;
   }
 
+
+  let settings = {};
+
+  if(tenant._id){
+    settings = await util.getSettings(tenant._id, true)
+  }
+
   res.json({
     tenant: _tenant,
     password: config.password ? config.password : ( config.public?.password ? config.public?.password : {} ),
@@ -99,6 +106,7 @@ export const getSettings = (accountsServer: AccountsServer) => async (
     serverInitInfo: serverInitInfo,
     redirect_url_whitelist: process.env.REDIRECT_URL_WHITELIST,
     platform: platform,
-    public: (global as any).Meteor.settings.public || {}
+    public: (global as any).Meteor.settings.public || {},
+    settings: settings
   })
 }

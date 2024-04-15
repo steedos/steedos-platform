@@ -2,12 +2,13 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-08-06 14:44:51
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-08-06 18:03:41
+ * @LastEditTime: 2024-04-14 13:58:40
  * @Description: 
  */
 
 export * from './queryMetadata';
-
+export * from './defaultsDeep';
+export * from './settings'
 
 export async function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));

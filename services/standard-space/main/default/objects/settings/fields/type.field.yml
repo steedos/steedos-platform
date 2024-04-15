@@ -1,0 +1,10 @@
+name: type
+label: 类型
+type: select
+options:
+  - label: User
+    value: user
+  - label: Space
+    value: space
+hidden: true
+defaultValue: space
