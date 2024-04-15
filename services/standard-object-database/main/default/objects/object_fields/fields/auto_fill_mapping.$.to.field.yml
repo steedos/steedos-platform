@@ -58,5 +58,5 @@ label: 'To:Fields in the current form'
 reference_to: object_fields
 reference_to_field: name
 required: true
-sort_no: 520
+sort_no: 530
 type: lookup
