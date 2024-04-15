@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-package-loader",
-  "version": "2.6.10-beta.14",
+  "version": "2.6.10-beta.15",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,10 +10,10 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@steedos/metadata-core": "2.6.10-beta.14",
-    "@steedos/metadata-registrar": "2.6.10-beta.14",
-    "@steedos/router": "2.6.10-beta.14",
-    "@steedos/service-object-mixin": "2.6.10-beta.14",
+    "@steedos/metadata-core": "2.6.10-beta.15",
+    "@steedos/metadata-registrar": "2.6.10-beta.15",
+    "@steedos/router": "2.6.10-beta.15",
+    "@steedos/service-object-mixin": "2.6.10-beta.15",
     "clone": "^2.1.2",
     "csvtojson": "~2.0.10",
     "moleculer": "^0.14.25",
@@ -28,5 +28,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "08a983c5018baaf59851b45ad2e328614365e920"
+  "gitHead": "46b8287f10ff6d1f767bd01b512a847610508f93"
 }
