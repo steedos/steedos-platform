@@ -3580,6 +3580,11 @@
   resolved "https://registry.yarnpkg.com/@sqltools/formatter/-/formatter-1.2.2.tgz#9390a8127c0dcba61ebd7fdcc748655e191bdd68"
   integrity sha512-/5O7Fq6Vnv8L6ucmPjaWbVG1XkP4FO+w5glqfkIsq3Xw4oyNAdJddbnYodNDAfjVUvo/rrSCTom4kAND7T1o5Q==
 
+"@steedos-builder/amis-editor@6.3.0-beta.8":
+  version "6.3.0-beta.8"
+  resolved "https://registry.npmjs.org/@steedos-builder/amis-editor/-/amis-editor-6.3.0-beta.8.tgz#79060ab52d4097d76dc1bdeeae960f5771ec6d0c"
+  integrity sha512-Vc8VkHnpnUbQPt1/lakB4b5JO+o/P6X9baPcwGFxLslfbR4NGc3OTI3XukCK3ysLeUchp7Jb+Dv/47bjSDHEgA==
+
 "@steedos-widgets/amis-lib@^1.0.22":
   version "1.1.7"
   resolved "https://registry.npmjs.org/@steedos-widgets/amis-lib/-/amis-lib-1.1.7.tgz#831542c4b5254d81c0457465a598e8140b4f0ca1"
@@ -12388,7 +12393,7 @@ mime-db@1.52.0, "mime-db@>= 1.43.0 < 2":
   resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.52.0.tgz#bbabcdc02859f4987301c856e3387ce5ec43bf70"
   integrity sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg==
 
-mime-types@^2.1.12, mime-types@^2.1.35, mime-types@~2.1.19, mime-types@~2.1.24, mime-types@~2.1.34:
+mime-types@2.1.35, mime-types@^2.1.12, mime-types@^2.1.35, mime-types@~2.1.19, mime-types@~2.1.24, mime-types@~2.1.34:
   version "2.1.35"
   resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.35.tgz#381a871b62a734450660ae3deee44813f70d959a"
   integrity sha512-ZDY+bPm5zTTF+YpCrAU9nK0UgICYPT0QtT1NZWFv4s++TNkcgVaT0g6+4R2uI4MjQjzysHB1zxuWL50hzaeXiw==

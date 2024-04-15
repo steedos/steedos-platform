@@ -22,5 +22,5 @@ label: 'From:Fields in object that reference to'
 reference_to: object_fields
 reference_to_field: name
 required: true
-sort_no: 530
+sort_no: 520
 type: lookup

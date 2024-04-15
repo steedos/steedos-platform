@@ -1,0 +1,39 @@
+name: settings
+label: 参数配置
+description: 
+fields:
+  description:
+    label: 描述
+    help: 
+    description: 
+  schema:
+    label: 表单
+    help: 
+    description: 
+  is_public:
+    label: 公开
+    help: 在前端可访问
+    description: 
+  key:
+    label: key
+    help: 
+    description: 
+  name:
+    label: 名称
+    help: 
+    description: 
+  owner:
+    label: 所有者
+    help: 
+    description: 
+  value:
+    label: 值
+    help: 
+    description: 
+groups:
+  系统信息: 系统信息
+listviews:
+  all:
+    label: 所有
+  recent:
+    label: 最近查看

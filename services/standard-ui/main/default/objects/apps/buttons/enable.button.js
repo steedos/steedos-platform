@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2024-03-30 11:37:53
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-03-30 12:18:00
+ * @LastEditTime: 2024-04-15 10:43:45
  * @Description: 
  */
 module.exports = {
@@ -49,6 +49,9 @@ module.exports = {
     },
     enableVisible: function (object_name,record_id) {
         const record = Creator.odata.get(object_name,record_id);
+        if(record._id == record.code){
+            return false
+        }
         if(record.visible){
             return false;
         }

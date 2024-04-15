@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-10 09:38:53
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-08-03 11:33:20
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-04-14 14:09:26
  * @Description: 
  */
 
@@ -10,6 +10,8 @@ const express = require("express");
 const router = express.Router();
 const core = require('@steedos/core');
 const formidable = require('formidable');
+const { getSettings } = require('@steedos/utils')
+const _ = require('lodash')
 const {
     getCollection,
     File,
@@ -23,6 +25,7 @@ router.post('/s3/:collection/', core.requireAuthentication, async function (req,
 
         const userSession = req.user;
         const userId = userSession.userId;
+        const spaceId = userSession.spaceId;
 
         const FS_COLLECTION_NAME = req.params.collection;
         const DB_COLLECTION_NAME = `cfs.${FS_COLLECTION_NAME}.filerecord`;
@@ -37,6 +40,8 @@ router.post('/s3/:collection/', core.requireAuthentication, async function (req,
 
                 // console.log(fields);
                 // console.log(files);
+                const settings = await getSettings(spaceId);
+                const deny_ext = _.get(settings, 'cfs.upload.deny_ext') || [];
 
                 const {
                     filepath: tempFilePath,
@@ -46,6 +51,13 @@ router.post('/s3/:collection/', core.requireAuthentication, async function (req,
                     originalFilename,
                     size
                 } = files.file;
+
+                const name_split = originalFilename.split('.');
+                const extention = name_split.pop();
+
+                if(_.includes(deny_ext, extention)){
+                    throw new Error(`禁止上传「${extention}」附件`)
+                }
 
                 const collection = await getCollection(DB_COLLECTION_NAME);
 
