@@ -127,6 +127,8 @@ module.exports = {
         // 启动 登录页面
         this.broker.createService(require("@steedos/webapp-accounts"));
 
+        this.broker.createService(require("@steedos-builder/amis-editor"));
+
         // 产品分析
         this.broker.createService(require("@steedos/service-analytics"));
 
