@@ -1,6 +1,0 @@
-name: test3
-active: true
-description: 测试说明3
-error_condition_formula: 3 == 3
-error_message: "对象验证规则3.\U0001F44C"
-locked: false
