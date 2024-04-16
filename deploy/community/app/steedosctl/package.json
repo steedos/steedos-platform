@@ -1,5 +1,5 @@
 {
-  "name": "steedos_utils",
+  "name": "steedos_utils_community",
   "version": "1.0.0",
   "description": "steedos utils tool",
   "main": "bin/index.js",
