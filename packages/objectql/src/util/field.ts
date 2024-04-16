@@ -1,3 +1,9 @@
+/*
+ * @Author: 殷亮辉 yinlianghui@hotoa.com
+ * @Date: 2023-01-06 22:43:24
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2024-04-16 11:47:59
+ */
 const baseFieldsName = [{ "name": "object", "required": true }, { "name": "label", "required": true },
 { name: '_name', required: true }, { "name": "type", "required": false }, { "name": "defaultValue" },
 { "name": "group" }, { "name": "sort_no" }, { "name": "is_name" }, { "name": "required" },
@@ -90,4 +96,18 @@ export const getFieldsByType = (doc, type: string, dataType?: string) => {
     }
 
     return baseFieldsName.concat(fields);
+}
+
+
+export const getFieldNamesFromDoc = (doc: any, fields?: any): string[] => {
+    const docFieldNames: string[] = _.keys(doc) || [];
+    if(fields){
+        // 如果提供了fields，则进一步筛选，只返回fields中存在的字段我
+        return docFieldNames.filter((docFieldName)=>{
+            return !!fields[docFieldName];
+        });
+    }
+    else{
+        return docFieldNames;
+    }
 }

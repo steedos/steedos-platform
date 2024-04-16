@@ -1,6 +1,6 @@
 {
   "name": "@steedos/metadata-registrar",
-  "version": "2.7.0-beta.29",
+  "version": "2.7.0-beta.30",
   "description": "",
   "main": "lib/index.js",
   "files": [
@@ -13,8 +13,8 @@
   },
   "dependencies": {
     "@salesforce/ts-types": "1.1.2",
-    "@steedos/client": "2.7.0-beta.29",
-    "@steedos/metadata-core": "2.7.0-beta.29",
+    "@steedos/client": "2.7.0-beta.30",
+    "@steedos/metadata-core": "2.7.0-beta.30",
     "archiver": "^5.1.0",
     "chalk": "^4.1.0",
     "clone": "^2.1.2",
@@ -41,5 +41,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "bed06b59dd588350bf7226309164003ac1414a5b"
+  "gitHead": "c886ced355a573a7c11b9daba97b2f6916328d89"
 }
