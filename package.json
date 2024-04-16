@@ -6,8 +6,7 @@
     "services/*",
     "ee/*",
     "server",
-    "steedos-packages/*",
-    "deploy/**"
+    "steedos-packages/*"
   ],
   "scripts": {
     "bootstrap": "lerna clean --yes && lerna bootstrap",

@@ -1,5 +1,5 @@
 {
-    "name": "steedos-community-docker",
+    "name": "steedos-community",
     "private": true,
     "scripts": {
       "start": "steedos start"
