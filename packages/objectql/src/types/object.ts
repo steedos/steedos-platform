@@ -2329,7 +2329,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             if (fieldNames) {
                 // 如果修改了主子表字段，则重算当前子表对象关联的所有主表中的汇总字段
                 let hasMasterDetailField = !!fieldNames.find((item) => {
-                    return this.fields[item].type === "master_detail";
+                    return this.fields[item]?.type === "master_detail";
                 });
                 if (hasMasterDetailField) {
                     fieldNames = null;
