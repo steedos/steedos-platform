@@ -1,6 +1,6 @@
 import { Dictionary, JsonMap } from "@salesforce/ts-types";
 import { SteedosTriggerType, SteedosFieldType, SteedosFieldTypeConfig, SteedosSchema, SteedosListenerConfig, SteedosObjectListViewTypeConfig, SteedosObjectListViewType, SteedosIDType, SteedosObjectPermissionTypeConfig, SteedosActionType, SteedosActionTypeConfig, SteedosUserSession, getSteedosSchema} from ".";
-import { getUserObjectSharesFilters, isTemplateSpace, isCloudAdminSpace, generateActionParams, absoluteUrl, transformListenersToTriggers } from '../util'
+import { getUserObjectSharesFilters, isTemplateSpace, isCloudAdminSpace, generateActionParams, absoluteUrl, transformListenersToTriggers, getFieldNamesFromDoc } from '../util'
 import { extend } from '../index'
 import _ = require("underscore");
 import { SteedosTriggerTypeConfig, SteedosTriggerContextConfig } from "./trigger";
@@ -2285,7 +2285,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         let setDoc: any;
         if (["insert", "update"].indexOf(method) > -1) {
             // 更新记录前计算当前记录公式字段值时，只需要查找和重算与doc中传入的字段相关的公式字段，不需要把所有公式字段都重算，优化性能
-            let fieldNames = method === "update" ? _.keys(doc) : null;
+            let fieldNames = method === "update" ? getFieldNamesFromDoc(doc, this.fields) : null;
             let quotedByConfigs: any;
             if(fieldNames){
                 quotedByConfigs = await getCurrentObjectQuotedByFieldFormulaConfigs(objectName, fieldNames);
@@ -2310,7 +2310,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             // 而删除记录后，本身就不需要再计算当前记录中的公式字段了，所以这里也排除掉
             const withoutCurrent = true;//method === "delete";
             // 更新记录后，只需要查找和重算与doc中传入的字段相关的公式字段，不需要把所有公式字段都重算，优化性能
-            let fieldNames = method === "update" ? _.keys(doc) : null;
+            let fieldNames = method === "update" ? getFieldNamesFromDoc(doc, this.fields) : null;
             await runQuotedByObjectFieldFormulas(objectName, recordId, userSession, { onlyForOwn, withoutCurrent, fieldNames });
         }
     }
@@ -2325,11 +2325,12 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 await runCurrentObjectFieldSummaries(objectName, recordId);
             }
             // 更新记录后，只需要查找和重算与doc中传入的字段相关的汇总字段，不需要把所有汇总字段都重算，优化性能
-            let fieldNames = method === "update" ? _.keys(doc) : null;
+            let fieldNames = method === "update" ? getFieldNamesFromDoc(doc, this.fields) : null;
             if (fieldNames) {
                 // 如果修改了主子表字段，则重算当前子表对象关联的所有主表中的汇总字段
+                const fields = this.fields;
                 let hasMasterDetailField = !!fieldNames.find((item) => {
-                    return this.fields[item].type === "master_detail";
+                    return fields[item]?.type === "master_detail";
                 });
                 if (hasMasterDetailField) {
                     fieldNames = null;

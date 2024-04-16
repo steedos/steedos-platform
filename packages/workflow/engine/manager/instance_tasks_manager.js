@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-28 10:36:06
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-03-05 16:32:39
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2024-04-16 13:14:20
  * @Description: 
  */
 'use strict';
@@ -16,6 +16,8 @@ function _insert(taskDoc) {
     const newTaskDoc = Meteor.wrapAsync(function (taskDoc, cb) {
         getObject('instance_tasks').insert(taskDoc).then(function (resolve, reject) {
             cb(reject, resolve);
+        }).catch(function (err) {
+            cb(err, null);
         });
     })(taskDoc);
     return newTaskDoc
@@ -25,6 +27,8 @@ function _directInsert(taskDoc) {
     const newTaskDoc = Meteor.wrapAsync(function (taskDoc, cb) {
         getObject('instance_tasks').directInsert(taskDoc).then(function (resolve, reject) {
             cb(reject, resolve);
+        }).catch(function (err) {
+            cb(err, null);
         });
     })(taskDoc);
     return newTaskDoc
@@ -34,6 +38,8 @@ function _update(_id, taskDoc) {
     const latestTaskDoc = Meteor.wrapAsync(function (_id, taskDoc, cb) {
         getObject('instance_tasks').update(_id, taskDoc).then(function (resolve, reject) {
             cb(reject, resolve);
+        }).catch(function (err) {
+            cb(err, null);
         });
     })(_id, taskDoc);
     return latestTaskDoc
@@ -43,6 +49,8 @@ function _remove(_id) {
     const result = Meteor.wrapAsync(function (_id, cb) {
         getObject('instance_tasks').delete(_id).then(function (resolve, reject) {
             cb(reject, resolve);
+        }).catch(function (err) {
+            cb(err, null);
         });
     })(_id);
     return result
@@ -52,6 +60,8 @@ function _directRemove(_id) {
     const result = Meteor.wrapAsync(function (_id, cb) {
         getObject('instance_tasks').directDelete(_id).then(function (resolve, reject) {
             cb(reject, resolve);
+        }).catch(function (err) {
+            cb(err, null);
         });
     })(_id);
     return result
@@ -61,6 +71,8 @@ function _find(query) {
     const taskDocs = Meteor.wrapAsync(function (query, cb) {
         getObject('instance_tasks').find(query).then(function (resolve, reject) {
             cb(reject, resolve);
+        }).catch(function (err) {
+            cb(err, null);
         });
     })(query);
     return taskDocs
@@ -70,6 +82,8 @@ function _count(query) {
     const count = Meteor.wrapAsync(function (query, cb) {
         getObject('instance_tasks').count(query).then(function (resolve, reject) {
             cb(reject, resolve);
+        }).catch(function (err) {
+            cb(err, null);
         });
     })(query);
     return count
@@ -84,7 +98,7 @@ function _count(query) {
  */
 function insert_instance_tasks(insId, traceId, approveId) {
     const taskDoc = _makeTaskDoc(insId, traceId, approveId)
-    if(DISABLE_DIRECT){
+    if (DISABLE_DIRECT) {
         return _insert(taskDoc)
     }
     return _directInsert(taskDoc)
@@ -205,10 +219,10 @@ function remove_instance_tasks_by_instance_id(insId) {
 function direct_remove_many_instance_tasks(approveIds) {
     const results = []
     for (const aId of approveIds) {
-        if(DISABLE_DIRECT){
+        if (DISABLE_DIRECT) {
             const r = _remove(aId)
             results.push(r)
-        }else{
+        } else {
             const r = _directRemove(aId)
             results.push(r)
         }
