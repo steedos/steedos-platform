@@ -4,7 +4,8 @@
     "steedos-packages/*",
     "services/*",
     "ee/**",
-    "server"
+    "server",
+    "deploy"
   ],
   "useWorkspaces": true,
   "npmClient": "yarn",
