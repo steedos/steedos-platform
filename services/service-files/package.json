@@ -14,7 +14,8 @@
     "formidable": "2.0.1",
     "mime-types": "2.1.35",
     "mkdirp": "^1.0.4",
-    "moment": "^2.29.1"
+    "moment": "^2.29.1",
+    "@steedos/utils": "2.7.0-beta.28"
   },
   "gitHead": "55756b53104b59b3b678fd58b564dabd8fed1272"
 }
