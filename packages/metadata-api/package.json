@@ -1,6 +1,6 @@
 {
     "name": "@steedos/metadata-api",
-    "version": "2.7.0-beta.30",
+    "version": "2.7.0-beta.31",
     "description": "",
     "main": "lib/index.js",
     "files": [
@@ -22,10 +22,10 @@
         "access": "public"
     },
     "dependencies": {
-        "@steedos/auth": "2.7.0-beta.30",
-        "@steedos/core": "2.7.0-beta.30",
-        "@steedos/metadata-core": "2.7.0-beta.30",
-        "@steedos/objectql": "2.7.0-beta.30",
+        "@steedos/auth": "2.7.0-beta.31",
+        "@steedos/core": "2.7.0-beta.31",
+        "@steedos/metadata-core": "2.7.0-beta.31",
+        "@steedos/objectql": "2.7.0-beta.31",
         "chalk": "^4.1.0",
         "clone": "2.1.2",
         "compressing": "^1.5.1",
@@ -37,9 +37,9 @@
         "underscore": "^1.11.0"
     },
     "devDependencies": {
-        "@steedos/service-meteor-package-loader": "2.7.0-beta.30",
+        "@steedos/service-meteor-package-loader": "2.7.0-beta.31",
         "javascript-obfuscator": "^2.9.1",
         "typescript": "4.6.3"
     },
-    "gitHead": "c886ced355a573a7c11b9daba97b2f6916328d89"
+    "gitHead": "3c128fb9db10e54320e35a6ef2fd4e805b4a20d5"
 }
