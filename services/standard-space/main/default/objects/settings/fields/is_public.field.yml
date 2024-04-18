@@ -9,7 +9,7 @@ index: false
 inlineHelpText: 在前端可访问
 is_name: false
 is_wide: false
-label: 公开
+label: 前端可访问
 multiple: false
 primary: false
 readonly: false

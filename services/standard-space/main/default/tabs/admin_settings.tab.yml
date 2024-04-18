@@ -5,7 +5,7 @@ is_new_window: false
 label: 选项卡
 mobile: true
 permissions:
-  - permission: 'on'
+  - permission: 'off'
     permission_set: admin
   - permission: 'off'
     permission_set: user
