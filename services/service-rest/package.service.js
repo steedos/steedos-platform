@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-04-01 16:41:07
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2024-04-18 10:48:25
  * @Description: 
  */
 "use strict";
@@ -690,17 +690,21 @@ module.exports = {
             async handler(ctx) {
                 const userSession = ctx.meta.user;
                 const { objectName, id } = ctx.params;
-                const objectConfig = await getObject(objectName).getConfig()
-                const enableTrash = objectConfig.enable_trash
-                if (!enableTrash) {
-                    await this.delete(objectName, id, userSession)
-                } else {
-                    const data = {
-                        is_deleted: true,
-                        deleted: new Date(),
-                        deleted_by: userSession ? userSession.userId : null
+                const obj = getObject(objectName)
+                const doc = await obj.findOne(id, { fields: { _id: 1 } }) // 检查记录是否存在
+                if (doc) {
+                    const objectConfig = await obj.getConfig()
+                    const enableTrash = objectConfig.enable_trash
+                    if (!enableTrash) {
+                        await this.delete(objectName, id, userSession)
+                    } else {
+                        const data = {
+                            is_deleted: true,
+                            deleted: new Date(),
+                            deleted_by: userSession ? userSession.userId : null
+                        }
+                        await this.update(objectName, id, data, userSession)
                     }
-                    await this.update(objectName, id, data, userSession)
                 }
                 return {
                     "status": REQUEST_SUCCESS_STATUS,
