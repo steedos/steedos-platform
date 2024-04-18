@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-08 09:38:56
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-04-15 16:54:54
+ * @LastEditTime: 2024-04-18 12:11:04
  * @Description: 
  */
 const express = require("express");
@@ -67,7 +67,7 @@ router.post('/api/v4/instances/s3/', core.requireAuthentication, async function 
                 const collection = await getCollection(DB_COLLECTION_NAME);
 
                 const settings = await getSettings(spaceId);
-                const deny_ext = _.get(settings, 'cfs.upload.deny_ext') || [];
+                const deny_ext = _.get(settings, 'cfs.upload.deny_ext') || _.split(process.env.STEEDOS_CFS_UPLOAD_DENY_EXT, ',') || [];
 
                 const fileName = formatFileName(originalFilename, upload_from);
 

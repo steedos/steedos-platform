@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 13:17:06
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-04-15 14:12:40
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2024-04-18 10:09:00
  * @Description: 
  */
 "use strict";
@@ -64,7 +64,7 @@ module.exports = {
                 // console.log(require('chalk').red('-------------------@*.deleted-------------------'), ctx.params)
                 const params = ctx.params
                 const { isDelete, isAfter, previousDoc, objectName } = params;
-                if (isAfter && isDelete) {
+                if (isAfter && isDelete && previousDoc) {
                     const spaceId = previousDoc.space;
                     const obj = objectql.getObject(objectName);
                     const detailsInfo = await obj.getDetailsInfo(); // 查找当前哪些对象有masterDetail字段引用当前对象

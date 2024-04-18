@@ -1,0 +1,14 @@
+name: keyvalue.user
+allowCreate: false
+allowCreateFiles: false
+allowDelete: false
+allowDeleteFiles: false
+allowEdit: false
+allowEditFiles: false
+allowRead: true
+allowReadFiles: false
+modifyAllRecords: false
+permission_set_id: user
+viewAllFiles: false
+viewAllRecords: false
+field_permissions: []

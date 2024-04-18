@@ -1,4 +1,4 @@
-name: schema
+name: value
 create: true
 enable_enhanced_lookup: true
 enable_thousands: true
@@ -9,7 +9,7 @@ hidden: false
 index: false
 is_name: false
 is_wide: true
-label: 表单
+label: value
 language: json
 multiple: false
 primary: false
@@ -17,7 +17,7 @@ readonly: false
 required: false
 searchable: false
 show_as_qr: false
-sort_no: 60
+sort_no: 40
 sortable: true
 static: false
 type: code

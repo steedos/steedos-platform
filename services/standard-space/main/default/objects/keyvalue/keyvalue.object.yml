@@ -1,0 +1,23 @@
+name: keyvalue
+custom: true
+enable_api: true
+enable_dataloader: true
+enable_enhanced_lookup: true
+enable_events: false
+enable_files: false
+enable_inline_edit: true
+enable_instances: false
+enable_lock_detail: true
+enable_notes: false
+enable_split: false
+enable_tasks: false
+enable_tree: false
+enable_workflow: true
+field_groups:
+  - group_name: 系统信息
+    collapsed: true
+icon: environment_hub
+is_enable: true
+label: 参数配置
+locked: false
+version: 2
