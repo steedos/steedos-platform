@@ -1,6 +1,6 @@
 name: is_system
 hidden: false
 label: System
-readonly: true
+visible_on: "{{false}}"
 sort_no: 370
 type: boolean
