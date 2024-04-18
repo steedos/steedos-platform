@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-10 09:38:53
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-04-14 14:09:26
+ * @LastEditTime: 2024-04-18 12:12:56
  * @Description: 
  */
 
@@ -41,7 +41,7 @@ router.post('/s3/:collection/', core.requireAuthentication, async function (req,
                 // console.log(fields);
                 // console.log(files);
                 const settings = await getSettings(spaceId);
-                const deny_ext = _.get(settings, 'cfs.upload.deny_ext') || [];
+                const deny_ext = _.get(settings, 'cfs.upload.deny_ext') || _.split(process.env.STEEDOS_CFS_UPLOAD_DENY_EXT, ',') || [];
 
                 const {
                     filepath: tempFilePath,
