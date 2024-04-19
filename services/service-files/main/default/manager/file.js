@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-09 09:36:43
- * @LastEditors: liaodaxue
- * @LastEditTime: 2023-06-16 15:56:45
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2024-04-19 14:47:44
  * @Description: 文件类，处理文件保存
  */
 'use strict';
@@ -148,8 +148,8 @@ class File {
             const absolutePath = path.resolve(pathname);
             // 如果文件夹不存在，则创建文件夹
             mkdirp.sync(absolutePath);
-
-            return customPathPrefix + '/' + fsCollectionName + '-' + _id + '-' + final_filename;
+            const fullpath = path.join(customPathPrefix, fsCollectionName + '-' + _id + '-' + final_filename)
+            return fullpath;
         }
         else {
             return fsCollectionName + '/' + fsCollectionName + '-' + _id + '-' + final_filename;
