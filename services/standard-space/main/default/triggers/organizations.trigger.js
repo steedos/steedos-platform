@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-06 15:30:08
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-03-28 16:50:27
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2024-04-19 10:45:22
  * @Description: 
  */
 "use strict";
@@ -273,8 +273,7 @@ module.exports = {
         const afterUpdateDoc = await orgObj.findOne(id)
         var added_space_users, added_users, children, newParent, new_users, obj, oldParent, old_users, removed_space_users, removed_users, rootOrg, sUser, updateFields, updatedDoc;
         updateFields = {};
-        obj = orgObj.findOne(id);
-        if (obj.parent) {
+        if (afterUpdateDoc.parent) {
             updateFields.parents = await broker.call('organizations.calculateParents', { orgId: id })
         }
         if (doc.parent) {
@@ -406,6 +405,8 @@ module.exports = {
                 ],
                 fields: ['_id']
             });
+            // 考虑本组织的人员
+            children.push(afterUpdateDoc)
             for (const child of children) {
                 let childUsers = await suObj.find({
                     filters: [
