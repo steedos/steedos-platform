@@ -4,6 +4,7 @@ label: Workflow Role
 hidden: true
 version: 2
 enable_dataloader: false
+enable_enhanced_lookup: true
 fields:
   name:
     type: text
