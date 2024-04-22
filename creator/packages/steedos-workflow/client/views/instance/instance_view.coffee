@@ -156,6 +156,11 @@ Template.instance_view.onRendered ->
 		if ins
 			form_version = db.form_versions.findOne({_id: ins.form_version})
 			flow_version = db.flow_versions.findOne({_id: ins.flow_version})
+
+			# 当申请单在草稿箱，但是申请单的状态不是草稿时，页面切换到草稿箱列表
+			if "draft" != ins.state && "draft" == Session.get("box")
+				window.history.back()
+
 			Tracker.nonreactive ()->
 				if ins && Session.get("instanceId") == ins._id && form_version && flow_version
 					try
