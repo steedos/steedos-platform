@@ -71,10 +71,10 @@ const getCategoriesInbox = async (userSession, req, currentUrl) => {
     let categoryBadge = 0;
     const flowGroups = lodash.groupBy(v, 'flow_name');
     const flows = [];
-    const categoryValue = `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['category', '=', ${v[0].category?"'" + v[0].category + "'":v[0].category}]&flowId=&categoryId=${v[0].category}`;
+    const categoryValue = `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['category','=',${v[0].category?"'" + v[0].category + "'":v[0].category}]&flowId=&categoryId=${v[0].category}`;
     let categoryIsUnfolded = false;
     lodash.each(flowGroups, (v2, k2)=>{
-      const flowValue = `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['flow', '=', '${v2[0].flow}']&flowId=${v2[0].flow}&categoryId=${v[0].category}`;
+      const flowValue = `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['flow','=','${v2[0].flow}']&flowId=${v2[0].flow}&categoryId=${v[0].category}`;
       let flowIsUnfolded = false;
       if(currentUrl == flowValue){
         flowIsUnfolded = true;
@@ -199,10 +199,10 @@ const getCategoriesMonitor = async (userSession, req, currentUrl) => {
     lodash.each(categoryGroups, (v, k) => {
       const flowGroups = lodash.groupBy(v, 'name');
       const flows = [];
-      const categoryValue = `/app/${appId}/instances/grid/monitor?additionalFilters=['category', '=', ${v[0].category__expand?"'" + v[0].category__expand._id + "'":null}]&flowId=&categoryId=${v[0].category__expand && v[0].category__expand._id}`;
+      const categoryValue = `/app/${appId}/instances/grid/monitor?additionalFilters=['category','=',${v[0].category__expand?"'" + v[0].category__expand._id + "'":null}]&flowId=&categoryId=${v[0].category__expand && v[0].category__expand._id}`;
       let categoryIsUnfolded = false;
       lodash.each(flowGroups, (v2, k2) => {
-        const flowValue = `/app/${appId}/instances/grid/monitor?additionalFilters=['flow', '=', '${v2[0]._id}']&flowId=${v2[0]._id}&categoryId=${v[0].category__expand && v[0].category__expand._id}`;
+        const flowValue = `/app/${appId}/instances/grid/monitor?additionalFilters=['flow','=','${v2[0]._id}']&flowId=${v2[0]._id}&categoryId=${v[0].category__expand && v[0].category__expand._id}`;
         let flowIsUnfolded = false;
         if(currentUrl == flowValue){
           flowIsUnfolded = true;
