@@ -324,12 +324,21 @@ export class FormulaActionHandler{
 
     async addFormulaMetadata(config: any, datasource: string){
         const objectFieldsFormulaConfig = await this.getObjectFieldsFormulaConfig(config, datasource);
+        const objectFormulas = await this.filter({params: {objectApiName: config.name}});
+        const formulaFieldsName = _.map(objectFormulas, 'field_name');
+        const objectFields = _.map(config.fields, 'name');
+        const diff = _.difference(formulaFieldsName, objectFields);
         for await (const fieldFormula of objectFieldsFormulaConfig) {
             for await (const quote of fieldFormula.quotes) {
                 await this.addFormulaReferenceMaps(this.broker, `${fieldFormula._id}`, `${quote.object_name}.${quote.field_name}`);
             }
             await Register.add(this.broker, {key: this.cacherKey(fieldFormula._id), data: fieldFormula}, {});
             // await this.broker.call('metadata.add', {key: this.cacherKey(fieldFormula._id), data: fieldFormula}, {meta: {}})
+        }
+        for (const deletedFieldName of diff) {
+            if(deletedFieldName){
+                await Register.delete(this.broker, this.cacherKey(`${config.name}.${deletedFieldName}`))
+            }
         }
         return true;
     }
