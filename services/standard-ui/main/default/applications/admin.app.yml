@@ -20,6 +20,8 @@ tab_groups:
     default_open: false
   - group_name: advanced_settings
     default_open: false
+  - group_name: system_settings
+    default_open: false
 tab_items:
   # admin_space_user_info:
   #   group: 个人设置
@@ -159,6 +161,9 @@ tab_items:
   admin_logs:
     group: advanced_settings
     index: 52
+  admin_email_setting:
+    group: system_settings
+    index: 60
 objects: []
 sort: 999999
 #url: /app/admin

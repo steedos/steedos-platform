@@ -13,6 +13,7 @@ CustomApplications:
       process_automation: 流程自动化
       approval_workflow: 审批王
       advanced_settings: 高级设置
+      system_settings: 系统设置
 CustomLabels:
   app_object_manager_name: 对象管理
   menu_account: 个人设置

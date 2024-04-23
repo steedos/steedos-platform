@@ -1,0 +1,105 @@
+{
+    "type": "page",
+    "title": "Welcome to Steedos",
+    "body": [
+        {
+            "id": "u:aec4a17dd908",
+            "type": "form",
+            "title": "邮件设置",
+            "mode": "horizontal",
+            "dsType": "api",
+            "feat": "Edit",
+            "body": [
+                {
+                    "name": "from",
+                    "label": "账户",
+                    "type": "input-text",
+                    "id": "u:7a88be6d04a8",
+                    "editorState": "default",
+                    "required": true
+                },
+                {
+                    "name": "username",
+                    "label": "用户名",
+                    "type": "input-text",
+                    "id": "u:f02a39af1b6c",
+                    "editorState": "default",
+                    "required": true
+                },
+                {
+                    "name": "password",
+                    "label": "密码",
+                    "type": "input-text",
+                    "id": "u:ec90ebdadec4",
+                    "editorState": "default",
+                    "required": true
+                },
+                {
+                    "name": "host",
+                    "label": "主机名",
+                    "type": "input-text",
+                    "id": "u:0280797943eb",
+                    "editorState": "default",
+                    "required": true
+                },
+                {
+                    "name": "port",
+                    "label": "主机端口",
+                    "type": "input-text",
+                    "id": "u:58d95524d400",
+                    "editorState": "default",
+                    "required": true,
+                    "value": "465"
+                }
+            ],
+            "api": {
+                "url": "/api/settings/set/email",
+                "method": "post",
+                "requestAdaptor": "",
+                "adaptor": "",
+                "messages": {}
+            },
+            "actions": [
+                {
+                    "type": "button",
+                    "label": "保存",
+                    "onEvent": {
+                        "click": {
+                            "actions": [
+                                {
+                                    "actionType": "submit",
+                                    "componentId": "u:aec4a17dd908"
+                                },
+                                {
+                                    "componentId": "u:aec4a17dd908",
+                                    "groupType": "component",
+                                    "actionType": "reload"
+                                }
+                            ]
+                        }
+                    },
+                    "level": "primary",
+                    "id": "u:346a1dfdea87",
+                    "editorState": "default"
+                }
+            ],
+            "resetAfterSubmit": true,
+            "initApi": {
+                "method": "get",
+                "url": "/api/settings/get/email",
+                "requestAdaptor": "",
+                "adaptor": "",
+                "messages": {}
+            }
+        }
+    ],
+    "regions": [
+        "body"
+    ],
+    "data": {
+        "initialValues": {},
+        "appId": "builder",
+        "title": ""
+    },
+    "id": "u:a5c8cdda457e"
+}

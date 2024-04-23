@@ -1,0 +1,8 @@
+name: email_setting
+is_active: true
+label: 邮件设置
+locked: false
+pageAssignments: []
+render_engine: amis
+type: app
+widgets: []

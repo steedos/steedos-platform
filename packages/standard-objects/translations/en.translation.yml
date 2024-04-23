@@ -16,6 +16,7 @@ CustomApplications:
       process_automation: Process Automation
       approval_workflow: Approval Workflow
       advanced_settings: Advanced Settings
+      system_settings: System Settings
 CustomLabels:
   app_object_manager_name: app_object_manager_name
   menu_account: My Account
