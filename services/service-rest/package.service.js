@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2024-04-18 10:48:25
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-04-25 16:54:55
  * @Description: 
  */
 "use strict";
@@ -218,6 +218,11 @@ module.exports = {
                 }
                 const params = ctx.params
                 const { objectName, filters, top, skip, sort } = params
+
+                if(objectName === 'users'){
+                    throw new Error("not find object users")
+                }
+
                 const userSession = ctx.meta.user;
 
                 let fields = [];
