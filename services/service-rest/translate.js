@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2024-02-26 13:29:53
- * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2024-03-12 17:32:17
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-04-25 17:16:06
  * @Description: 
  */
 const _ = require('lodash')
@@ -394,7 +394,9 @@ async function translateRecordToExpand(record, objectName, expandFields, userSes
                             if (refField && refField != '_id' && refTo != 'users' && refTo != 'spaces' && spaceId) {
                                 queryFilters.push(["space", "=", spaceId])
                             }
-
+                            if(refTo === 'users'){
+                                queryFields = ['_id', 'name']
+                            }
                             let refRecords = await refObj.find({
                                 filters: queryFilters,
                                 fields: queryFields,
