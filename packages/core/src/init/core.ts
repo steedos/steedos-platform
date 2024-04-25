@@ -56,7 +56,7 @@ export const loadClientScripts = async ()=>{
 
             clientCodes = clientCodes + packageClientScripts;
     
-            WebAppInternals.additionalStaticJs["/steedos_dynamic_scripts.js"] = `$.getScript( Meteor.isCordova ? '${objectql.absoluteUrl("/steedos-init.js")}' : '/steedos-init.js', function(){${clientCodes}})`
+            WebAppInternals.additionalStaticJs["/steedos_dynamic_scripts.js"] = `$.getScript( Meteor.isCordova ? '${objectql.absoluteUrl("/steedos-init.js")}' : '/steedos-init.js', function(){${clientCodes}}.bind(window))`
         }
     } catch (error) {
         // console.log(`loadClientScripts error: ${error}`);
