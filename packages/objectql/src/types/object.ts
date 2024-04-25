@@ -1987,7 +1987,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         let meteorWhen = `before${method.charAt(0).toLocaleUpperCase()}${_.rest([...method]).join('')}`
         await this.runBaseTriggers(meteorWhen, context);
         await this.runFunctionTriggers(meteorWhen, context);
-        // await this.runTriggers(meteorWhen, context);
+        await this.runTriggers(meteorWhen, context);
         return await this.runTriggerActions(meteorWhen, context)
     }
 
@@ -1995,7 +1995,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         let meteorWhen = `after${method.charAt(0).toLocaleUpperCase()}${_.rest([...method]).join('')}`
         await this.runBaseTriggers(meteorWhen, context);
         await this.runFunctionTriggers(meteorWhen, context);
-        // await this.runTriggers(meteorWhen, context);
+        await this.runTriggers(meteorWhen, context);
         return await this.runTriggerActions(meteorWhen, context)
     }
 
