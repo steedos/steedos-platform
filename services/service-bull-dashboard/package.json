@@ -1,0 +1,18 @@
+{
+    "name": "@steedos/service-bull-dashboard",
+    "version": "2.7.1-beta.2",
+    "description": "",
+    "main": "package.service.js",
+    "license": "MIT",
+    "private": false,
+    "publishConfig": {
+        "access": "public"
+    },
+    "dependencies": {
+        "@steedos/service-package-loader": "2.7.1-beta.2",
+        "@steedos/router": "2.7.1-beta.2",
+        "@steedos/auth": "2.7.1-beta.2",
+        "@bull-board/express": "^4.6.4",
+        "bullmq": "5.7.4"
+    }
+}
