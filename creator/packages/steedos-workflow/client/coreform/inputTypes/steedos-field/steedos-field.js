@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-10-28 15:25:17
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-11-23 13:27:39
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2024-04-26 10:45:13
  * @Description: 
  */
 if (Meteor.isClient) {
@@ -110,6 +110,14 @@ if (Meteor.isClient) {
         $("[name='"+atts.name+"']").data('value', values);
         $("[name='"+atts.name+"']").data('multiple', atts.multiple);
         const config = JSON.parse(atts.config || "{}");
+
+        let data = disabled ? {[atts.name]: values, _display: {}} : {_display: {}};
+        let value = values;
+        if (atts.fieldType === 'time') { // 因为time类型在amis中给value赋值时，在编辑状态下值显示会多8小时，所以这里特殊处理。
+            data = {[atts.name]: values, _display: {}};
+            value = undefined;
+        }
+
         const schema = {
             render_engine: 'amis',
             name: "steedos-field-"+atts.id,
@@ -123,7 +131,7 @@ if (Meteor.isClient) {
                         "actions": false,
                         "wrapWithPanel": false,
                         id: 'steedosField_' + atts.id,
-                        data: disabled ? {[atts.name]: values, _display: {}} : {_display: {}},
+                        data: data,
                         body: [
                             {
                                 type: 'steedos-field',
@@ -137,7 +145,7 @@ if (Meteor.isClient) {
                                     reference_to_field: atts.reference_to_field,
                                     filters: _.isString(atts.filters) ? JSON.parse(atts.filters) : atts.filters,
                                     amis: {
-                                        value: values,
+                                        value: value,
                                         static: disabled,
                                         disabled: disabled,
                                         disabledOn: undefined

@@ -1,8 +1,8 @@
 # 定义 formBuilder 所有的字段类型
 FORMBUILDERFIELDTYPES = ["autocomplete", "paragraph", "header", "select",
-	"checkbox-group", "radio-group", "checkbox", "text", "file", "image", "lookup"
+	"checkbox-group", "radio-group", "checkbox", "text", "file", "image", "lookup",
 	"date", "number", "textarea",
-	"dateTime", "dateNew", "checkboxBoolean", "email", "url", "password", "user", "group",
+	"dateTime", "dateNew", "time", "checkboxBoolean", "email", "url", "password", "user", "group",
 	"table", "section",
 	"odata", "html"]
 
@@ -17,7 +17,7 @@ DISABLEDATTRS = ['description', 'maxlength', 'placeholder', "access", "value", '
 	'toggle', 'rows', 'subtype', 'multiple', 'name']
 
 # 定义字段类型排序
-CONTROLORDER = ['text', 'textarea', 'number', 'dateNew', 'dateTime', 'date', 'checkboxBoolean',
+CONTROLORDER = ['text', 'textarea', 'number', 'dateNew', 'dateTime', 'date', "time", 'checkboxBoolean',
 	'email', 'url', 'password', 'select', 'user', 'group', "radio-group", "checkbox-group", "file", "image", "lookup", "odata", "html", 'table', 'section']
 
 # 获取各字段类型禁用的字段属性
@@ -177,6 +177,8 @@ getTypeUserAttrs = ()->
 				typeUserAttrs[item] = _.extend {}, CODEUSERATTRS, BASEUSERATTRS
 			when 'dateTime'
 				typeUserAttrs[item] = _.extend {}, CODEUSERATTRS, BASEUSERATTRS
+			when 'time'
+				typeUserAttrs[item] = _.extend {}, CODEUSERATTRS, BASEUSERATTRS
 			when 'checkboxBoolean'
 				typeUserAttrs[item] = _.extend {}, CODEUSERATTRS, BASEUSERATTRS
 			when 'email'
@@ -329,6 +331,13 @@ getFields = ()->
 			icon: "🕛"
 		},
 		{
+			label: "时间",
+			attrs: {
+				type: 'time'
+			}
+			icon: "🕛"
+		},
+		{
 			label: "勾选框"
 			attrs: {
 				type: "checkboxBoolean"
@@ -432,6 +441,12 @@ getFieldTemplates = ()->
 				fieldData.className = 'form-control'
 			return {
 				field: "<input id='#{fieldData.name}' placeholder='yyyy-MM-dd HH:mm' type='text' #{Creator.formBuilder.utils.attrString(fieldData)} readonly>",
+			};
+		time: (fieldData) ->
+			if !fieldData.className
+				fieldData.className = 'form-control'
+			return {
+				field: "<input id='#{fieldData.name}' placeholder='HH:mm' type='text' #{Creator.formBuilder.utils.attrString(fieldData)} readonly>",
 			};
 		checkboxBoolean: (fieldData)->
 			if fieldData.value

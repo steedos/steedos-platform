@@ -94,6 +94,8 @@ fields:
         value: dateTimeD
       - label: Date
         value: date
+      - label: Time
+        value: time
       - label: EmailGM
       - label: Group
         value: group

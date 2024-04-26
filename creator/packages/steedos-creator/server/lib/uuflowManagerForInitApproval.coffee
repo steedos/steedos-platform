@@ -185,6 +185,8 @@ getInstanceFieldValue = (objField, formField, record, object_field, spaceId, rec
 				value = selectFieldValue
 	else if formField && objField && formField.type == 'date' && recordFieldValue
 		value = uuflowManagerForInitApproval.formatDate(recordFieldValue) # Date转String
+	else if formField && objField && formField.type == 'time' && recordFieldValue
+		value = uuflowManagerForInitApproval.formatTime(recordFieldValue) # Time转String
 	else if formField && objField && recordFieldValue && (formField.type == 'image' || formField.type == 'file')
 		value = getFileFieldValue(recordFieldValue, formField.type)
 	else if formField && objField && recordFieldValue && formField.type == 'lookup' && ['lookup', 'master_detail'].includes(objField.type) && _.isString(objField.reference_to)
@@ -722,3 +724,6 @@ uuflowManagerForInitApproval.checkIsInApproval = (recordIds, spaceId) ->
 
 uuflowManagerForInitApproval.formatDate = (date) ->
 	return moment(date).format("YYYY-MM-DD")
+
+uuflowManagerForInitApproval.formatTime = (date) ->
+	return moment(date).utcOffset(0).format("1970-01-01THH:mm:00.000[Z]")
