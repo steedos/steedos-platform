@@ -1,0 +1,12 @@
+name: execute_when
+label: 何时运行更新记录的webhook
+type: select
+inlineHelpText: 您可能希望仅在将触发记录从不满足条件要求更改为满足条件要求时运行。在出现此情况时，选择第二个选项。
+visible_on: ${!!condition && (event === 'update' || event === 'createAndUpdate')}
+sort_no: 50
+is_wide: true
+options:
+  - label: 每次更新记录并满足条件要求
+    value: trueEveryTime
+  - label: 仅在更新记录以满足条件要求时
+    value: trueOnChangeOnly

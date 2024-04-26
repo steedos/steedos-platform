@@ -1,0 +1,5 @@
+name: active
+label: Active
+type: boolean
+defaultValue: true
+sort_no: 80

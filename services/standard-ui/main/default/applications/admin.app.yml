@@ -150,6 +150,9 @@ tab_items:
   # admin_object_webhooks:
   #   group: 高级设置
   #   index: 41
+  admin_object_webhooks:
+    group: development
+    index: 41
   admin_api_keys:
     group: development
     index: 42

@@ -1,0 +1,51 @@
+{
+    "type": "service",
+    "body": [{
+        "type": "steedos-object-form",
+        "label": "Object Webhook",
+        "objectApiName": "object_webhooks",
+        "recordId": "${recordId}",
+        "mode": "edit",
+        "layout": "horizontal",
+    
+        "fieldsExtend": {
+            "condition": {
+                "amis": {
+                    "type": "service",
+                    "schemaApi": {
+                        "method": "get",
+                        "url": "/service/api/amis-metadata-objects/objects/${object_name}/fields/options",
+                        "cache": 30000,
+                        "adaptor": "const visibleOnVariables = SteedosUI.getFormulaVariables(payload.data.options);\n const defaultValueVariables = [visibleOnVariables[1]];\n const variables = [];\n const varItem = {\n     label: '对象字段',\n     children: _.map(payload.data.options, (item)=>{\n         return {\n             label: item.label,\n             value: item.value\n         }\n     })\n };\n variables.push(varItem);\n payload.data={label: '准入条件', type:'input-formula', name: 'condition', variables: variables} \n return payload;",
+                        "trackExpression": "${object_name}",
+                        "sendOn": "${object_name}"
+                    }
+                  }
+            },
+            "execute_when":{
+                "amis": {
+                    "type": "radios",
+                    "inline": false
+                }
+            },
+            "event": {
+                "amis":{
+                    "type": "radios",
+                    "inline": false
+                }
+            }
+        },
+        "form": {
+            "id": "steedos_object_webhooks_form"
+        },
+        "id": "u:e17c57cce896",
+        "tabsMode": "line"
+    }],
+    "data": {
+        "context": {},
+        "visibleOnVariables": "",
+        "defaultValueVariables": ""
+    },
+    "name": "object_webhooks_form",
+    "id": "steedos_object_webhooks_service"
+}

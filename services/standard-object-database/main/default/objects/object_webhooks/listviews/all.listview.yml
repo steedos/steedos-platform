@@ -1,0 +1,9 @@
+name: all
+columns:
+  - name
+  - object_name
+  - event
+  - payload_url
+  - active
+label: All Object Webhooks
+filter_scope: space

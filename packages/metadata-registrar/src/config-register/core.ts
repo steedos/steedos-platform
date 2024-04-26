@@ -360,7 +360,7 @@ export const loadStandardBaseObjects = async (serviceName: string) => {
     coreObject.name = SQL_BASE_OBJECT;
     await addObjectConfig(coreObject, SYSTEM_DATASOURCE, serviceName);
 
-    const coreTriggers = ['core.objectwebhooks.trigger.js','core.autonumber.trigger.js'];
+    const coreTriggers = ['core.autonumber.trigger.js'];
     _.forEach(coreTriggers, function(triggerFileName){
         let coreObjectTrigger:any = loadFile(path.join(standardObjectsDir, triggerFileName))
         coreObjectTrigger.listenTo = SQL_BASE_OBJECT

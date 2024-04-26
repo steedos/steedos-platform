@@ -1,0 +1,5 @@
+name: name
+type: text
+label: Name
+required: true
+sort_no: 10
