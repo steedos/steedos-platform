@@ -136,6 +136,8 @@ fields:
         value: dateTime
       - label: Date
         value: date
+      - label: Time
+        value: time
       - label: Email
         value: email
       - label: Group

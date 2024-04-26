@@ -554,6 +554,7 @@ SteedosTable.getTDValue = function (field, value) {
             case 'file':
             case 'lookup':
             case 'image':
+            case 'time':
                 td_value = InstanceReadOnlyTemplate.getValue(value, field);
                 break
             default:

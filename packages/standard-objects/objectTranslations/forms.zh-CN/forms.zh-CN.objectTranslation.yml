@@ -94,6 +94,8 @@ fields:
         value: dateTime
       - label: 日期
         value: date
+      - label: 时间
+        value: time
       - label: 电子邮件
         value: email
       - label: Group

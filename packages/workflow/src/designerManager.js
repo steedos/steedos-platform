@@ -492,7 +492,7 @@ async function _transformObjectFieldToFormField(objField, codePrefix = '') {
             formField.type = "dateTime";
             break;
         case 'time':
-            formField.type = "input";
+            formField.type = "time";
             break;
         case 'number':
             formField.type = "number";

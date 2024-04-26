@@ -300,7 +300,7 @@ const getRecordFieldValue = function (oField, wField, ofValue, wfValue, spaceId,
         value = wfValue ? wfValue : null
     }
     // 日期、日期时间
-    else if (oFieldType === 'date' || oFieldType === 'datetime') {
+    else if (oFieldType === 'date' || oFieldType === 'datetime' || oFieldType === 'time') {
         if (wfValue && _.isDate(new Date(wfValue))) {
             value = new Date(wfValue);
         }

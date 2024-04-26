@@ -315,6 +315,23 @@ InstanceReadOnlyTemplate.getValue = (value, field, locale, utcOffset) ->
 				value = new Date(value)
 
 			value = InstanceReadOnlyTemplate.formatDate(value, utcOffset);
+		when 'time'
+			if value && value.length == 16
+				t = value.split("T")
+				t0 = t[0].split("-");
+				t1 = t[1].split(":");
+
+				year = t0[0];
+				month = t0[1];
+				date = t0[2];
+				hours = t1[0];
+				seconds = t1[1];
+
+				value = new Date(year, month - 1, date, hours, seconds)
+			else
+				value = new Date(value)
+
+			value = InstanceReadOnlyTemplate.formatTime(value);
 		when 'input'
 			if field.is_textarea
 				value = value
@@ -552,6 +569,10 @@ InstanceReadOnlyTemplate.formatDate = (date, utcOffset)->
 		utcOffset = 8
 
 	return moment(date).utcOffset(utcOffset, passing).format("YYYY-MM-DD HH:mm");
+
+InstanceReadOnlyTemplate.formatTime = (date)->
+	utcOffset = 0
+	return moment(date).utcOffset(utcOffset).format("HH:mm");
 
 InstanceReadOnlyTemplate.getInstanceView = (user, space, instance, options)->
 

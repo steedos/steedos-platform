@@ -306,6 +306,13 @@ var s_autoform = function (schema, field) {
             autoform.filters = field.filters;
             autoform.config = field.config;
             break;
+        case 'time':
+            schema.type = String;
+            autoform.readonly = (permission == 'readonly');
+            autoform.disabled = (permission == 'readonly');
+            autoform.type = 'steedos-field'
+            autoform.fieldType = 'time'
+            break;
         default:
             schema.type = String;
             autoform.readonly = (permission == 'readonly');

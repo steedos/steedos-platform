@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-metadata-layouts",
-  "version": "2.7.1-beta.4",
+  "version": "2.7.1-beta.5",
   "description": "",
   "main": "lib/layouts.service.js",
   "scripts": {
@@ -33,5 +33,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "e7cff53d00640d5eaa84c9993e213510b30ed2ad"
+  "gitHead": "7a72f5a45906ef75f267a6da6fb9913169685323"
 }

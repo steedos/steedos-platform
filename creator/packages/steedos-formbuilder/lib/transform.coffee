@@ -115,6 +115,9 @@ Creator.formBuilder.transformFormFieldsIn = (formFields)->
 			when 'lookup'
 				field.type = 'lookup';
 				fields.push field;
+			when 'time'
+				field.type = 'time';
+				fields.push field;
 			else
 				console.log(f.code, f.name, f.type)
 
