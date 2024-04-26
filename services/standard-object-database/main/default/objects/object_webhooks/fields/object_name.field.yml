@@ -1,0 +1,8 @@
+name: object_name
+type: lookup
+reference_to: objects
+reference_to_field: name
+label: Object
+required: true
+index: true
+sort_no: 20

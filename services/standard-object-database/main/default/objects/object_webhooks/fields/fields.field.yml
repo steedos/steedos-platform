@@ -1,0 +1,27 @@
+name: fields
+type: lookup
+label: Fields
+multiple: true
+is_wide: true
+sort_no: 60
+depend_on:
+  - object_name
+optionsFunction: !!js/function |
+  function(values) {
+    var _object, _options, fields, icon, object_name;
+    object_name = values.object_name;
+    if (!object_name) {
+      return [];
+    }
+    _options = [];
+    _object = Creator.getObject(object_name);
+    fields = _object.fields;
+    icon = _object.icon;
+    _.forEach(fields, function(f, k) {
+      return _options.push({
+        label: f.label || k,
+        value: k
+      });
+    });
+    return _options;
+  }

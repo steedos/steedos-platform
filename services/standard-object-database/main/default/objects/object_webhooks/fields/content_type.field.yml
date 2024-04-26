@@ -1,0 +1,5 @@
+name: content_type
+label: Format of Request
+type: text
+defaultValue: '"application/json"'
+hidden: true

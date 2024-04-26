@@ -13,7 +13,10 @@
     "dependencies": {
         "@steedos-widgets/amis-lib": "^1.0.22",
         "@steedos/metadata-core": "2.7.1-beta.2",
-        "@steedos/standard-objects": "2.7.1-beta.2"
+        "@steedos/standard-objects": "2.7.1-beta.2",
+        "@steedos/service-object-mixin": "2.7.1-beta.2",
+        "moleculer-bullmq": "3.0.0",
+        "amis-formula": "~6.3.0"
     },
     "repository": {},
     "license": "MIT",

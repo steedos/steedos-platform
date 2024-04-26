@@ -1,0 +1,15 @@
+name: event
+type: select
+label: 何时触发
+required: true
+multiple: false
+sort_no: 30
+options:
+  - label: 记录已创建
+    value: create
+  - label: 记录已更新
+    value: update
+  - label: 记录已创建或已更新
+    value: createAndUpdate
+  - label: 记录已删除
+    value: delete
