@@ -1,8 +1,8 @@
 /*
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-01-06 22:43:24
- * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2024-04-16 11:47:59
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2024-04-28 10:38:18
  */
 const baseFieldsName = [{ "name": "object", "required": true }, { "name": "label", "required": true },
 { name: '_name', required: true }, { "name": "type", "required": false }, { "name": "defaultValue" },
@@ -101,13 +101,24 @@ export const getFieldsByType = (doc, type: string, dataType?: string) => {
 
 export const getFieldNamesFromDoc = (doc: any, fields?: any): string[] => {
     const docFieldNames: string[] = _.keys(doc) || [];
+
+    let reFieldNames: string[] = [];
+    for (const fieldName of docFieldNames) {
+        if(_.includes(['$inc','$min','$max','$mul'], fieldName)){
+            const keys = getFieldNamesFromDoc(doc[fieldName], fields);
+            reFieldNames = reFieldNames.concat(keys);
+        }
+    }
+
+    reFieldNames = _.union(reFieldNames, docFieldNames)
+    
     if(fields){
         // 如果提供了fields，则进一步筛选，只返回fields中存在的字段我
-        return docFieldNames.filter((docFieldName)=>{
+        return reFieldNames.filter((docFieldName)=>{
             return !!fields[docFieldName];
         });
     }
     else{
-        return docFieldNames;
+        return reFieldNames;
     }
 }
