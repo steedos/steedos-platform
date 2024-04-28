@@ -110,16 +110,31 @@
                               ]
                             }
                           ],
-                          "onEvent": {
-                            "confirm": {
-                              "actions": [
-                                {
-                                  "actionType": "custom",
-                                  "script": "///整理分组数据\nconst defaultGroupName = \"未分组\";\nconst hiddenGroupName = \"隐藏\";\nlet setting_groups = _.cloneDeep(event.data.groups);\nif (!_.find(setting_groups, { is_default: true })) {\n  setting_groups.unshift({\n    \"id\": defaultGroupName,\n    \"group_name\": defaultGroupName,\n    \"visible_on\": \"\",\n    \"is_default\": true\n  })\n}\nif (!_.find(setting_groups, { is_hidden: true })) {\n  setting_groups.push({\n    id: hiddenGroupName,\n    group_name: hiddenGroupName,\n    visible_on: \"\",\n    is_hidden: true\n  });\n}\nsetting_groups.forEach(function (group) {\n  if (!group.id || group.id != group.group_name) {\n    group.id = group.group_name;\n  }\n  if (/\\$\\{.+\\}/.test(group.visible_on)) {\n    group.visible_on = group.visible_on.replaceAll('${', '\\\\${');\n  }\n})\n\n//整理字段与分组关系的数据\nlet fieldForGroup = {};\nlet oldGroup = _.cloneDeep(event.data.fieldForGroup);\nsetting_groups.forEach(function (group) {\n  if (_.has(oldGroup, group.id)) {\n    fieldForGroup[group.id] = oldGroup[group.id];\n    oldGroup = _.omit(oldGroup, group.id);\n  } else {\n    fieldForGroup[group.id] = [];\n  }\n})\nif (oldGroup && !_.isEmpty(oldGroup)) {\n  _.forEach(oldGroup, function (value, key) {\n    fieldForGroup[defaultGroupName] = _.unionBy(fieldForGroup[defaultGroupName], value);\n  });\n}\n\n//未分组 放在所有分组开头，隐藏 放在所有分组最后\nconst defaultGroup = fieldForGroup[defaultGroupName];\nconst hiddenGroup = fieldForGroup[hiddenGroupName];\ndelete fieldForGroup[defaultGroupName];\ndelete fieldForGroup[hiddenGroupName];\nfieldForGroup = _.merge({ [defaultGroupName]: defaultGroup }, fieldForGroup, { [hiddenGroupName]: hiddenGroup });\n\n//根据fieldForGroup调整groups顺序，设置分组与保存时需要groups按照顺序\nconst keys = _.keys(fieldForGroup);\nsetting_groups = _.sortBy(setting_groups, function (group) { return _.findIndex(keys, function (key) { return key == group.group_name }) });\n\ndoAction({\n  actionType: 'setValue',\n  componentId: 'service_field_design',\n  args: {\n    value: {\n      groups: setting_groups\n    }\n  }\n});\n\ndoAction({\n  actionType: 'setValue',\n  componentId: \"form_field_design\",\n  args: {\n    value: { design_field: fieldForGroup }\n  }\n});"
+                          "actions": [
+                            {
+                              "type": "action",
+                              "label": "取消",
+                              "actionType": "cancel"
+                            },
+                            {
+                              "type": "action",
+                              "label": "确认",
+                              "level": "primary",
+                              "onEvent": {
+                                "click": {
+                                  "actions": [
+                                    {
+                                      "actionType": "custom",
+                                      "script": "///整理分组数据\nconst defaultGroupName = \"未分组\";\nconst hiddenGroupName = \"隐藏\";\nlet setting_groups = _.cloneDeep(event.data.groups);\nif (!_.find(setting_groups, { is_default: true })) {\n  setting_groups.unshift({\n    \"id\": defaultGroupName,\n    \"group_name\": defaultGroupName,\n    \"visible_on\": \"\",\n    \"is_default\": true\n  })\n}\nif (!_.find(setting_groups, { is_hidden: true })) {\n  setting_groups.push({\n    id: hiddenGroupName,\n    group_name: hiddenGroupName,\n    visible_on: \"\",\n    is_hidden: true\n  });\n}\nsetting_groups.forEach(function (group) {\n  if (!group.id || group.id != group.group_name) {\n    group.id = group.group_name;\n  }\n  if (/\\$\\{.+\\}/.test(group.visible_on)) {\n    group.visible_on = group.visible_on.replaceAll('${', '\\\\${');\n  }\n})\n\n//整理字段与分组关系的数据\nlet fieldForGroup = {};\nlet oldGroup = _.cloneDeep(event.data.fieldForGroup);\nsetting_groups.forEach(function (group) {\n  if (_.has(oldGroup, group.id)) {\n    fieldForGroup[group.id] = oldGroup[group.id];\n    oldGroup = _.omit(oldGroup, group.id);\n  } else {\n    fieldForGroup[group.id] = [];\n  }\n})\nif (oldGroup && !_.isEmpty(oldGroup)) {\n  _.forEach(oldGroup, function (value, key) {\n    fieldForGroup[defaultGroupName] = _.unionBy(fieldForGroup[defaultGroupName], value);\n  });\n}\n\n//未分组 放在所有分组开头，隐藏 放在所有分组最后\nconst defaultGroup = fieldForGroup[defaultGroupName];\nconst hiddenGroup = fieldForGroup[hiddenGroupName];\ndelete fieldForGroup[defaultGroupName];\ndelete fieldForGroup[hiddenGroupName];\nfieldForGroup = _.merge({ [defaultGroupName]: defaultGroup }, fieldForGroup, { [hiddenGroupName]: hiddenGroup });\n\n//根据fieldForGroup调整groups顺序，设置分组与保存时需要groups按照顺序\nconst keys = _.keys(fieldForGroup);\nsetting_groups = _.sortBy(setting_groups, function (group) { return _.findIndex(keys, function (key) { return key == group.group_name }) });\n\ndoAction({\n  actionType: 'setValue',\n  componentId: 'service_field_design',\n  args: {\n    value: {\n      groups: setting_groups\n    }\n  }\n});\n\ndoAction({\n  actionType: 'setValue',\n  componentId: \"form_field_design\",\n  args: {\n    value: { design_field: fieldForGroup }\n  }\n});"
+                                    },
+                                    {
+                                      "actionType": "closeDialog"
+                                    }
+                                  ]
                                 }
-                              ]
+                              }
                             }
-                          },
+                          ],
                           "id": "u:e02c8f59216e",
                           "closeOnEsc": false,
                           "closeOnOutside": false,
