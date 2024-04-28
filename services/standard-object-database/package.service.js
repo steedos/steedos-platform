@@ -166,8 +166,9 @@ module.exports = {
 				const dbRecord = await object.directFind({filters: ['_id','=',id]});
 				if(dbRecord.length === 0){
 					// const newId = await object._makeNewID();
-					const objectConfig = await object.toConfig();
-					let field_groups = objectConfig.field_groups || null;
+					const curentObject = await this.getObject(name);
+					const curentObjectConfig = await curentObject.toConfig();
+					let field_groups = curentObjectConfig.field_groups || null;
 					
 					const now = new Date();
 					await object.directInsert(Object.assign({}, data, {
