@@ -199,6 +199,18 @@
     "data": {
         "context": {}
     },
+    "onEvent": {
+        "init": {
+            "weight": 0,
+            "actions": [
+                {
+                    "actionType": "custom",
+                    "script": "//初始化时给外层dialog加上类名，使过滤组件popover正常显示\n$('.steedos-object-fields-form-page').closest('.amis-dialog-widget.antd-Modal').addClass('steedos-overflow-visible-dialog');"
+                }
+            ]
+        }
+    },
     "name": "object_fields_form",
+    "className": "steedos-object-fields-form-page",
     "id": "steedos_object_fields_service"
 }
