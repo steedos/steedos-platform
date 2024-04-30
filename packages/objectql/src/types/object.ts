@@ -2292,6 +2292,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             }
             // 这里把previousDoc, doc合并后传入，因为公式运算可能需要完整的doc参与
             let formulaDoc = Object.assign({}, previousDoc, doc);
+            // 这里如果doc中有$inc等语句，formulaDoc中拿到的值是$inc等操作前的数据，所以$inc中影响的字段如果在当前记录中有公式字段引用了，其公式字段值是不准的，需要在after操作中，即runRecordQuotedByObjectFieldFormulas函数中再重算一次
             // 只有修改记录时才需要传入quotedByConfigs，该参数为空时，getCurrentObjectFieldFormulasDoc函数内会找到当前对象所有公式字段，比如新建记录时需要计算所有公式字段值
             setDoc = await getCurrentObjectFieldFormulasDoc(objectName, formulaDoc, userSession, quotedByConfigs);
         }
@@ -2308,7 +2309,14 @@ export class SteedosObjectType extends SteedosObjectProperties {
             const onlyForOwn = false;//method === "insert";
             // 修改记录后，因为当前记录的所有公式字段已经提前计算存入变量doc了，不需要再计算当前记录中的公式字段了，所以这里排除掉
             // 而删除记录后，本身就不需要再计算当前记录中的公式字段了，所以这里也排除掉
-            const withoutCurrent = true;//method === "delete";
+            let withoutCurrent = true;//method === "delete";
+            if(method === "update"){
+                let updatedDocFieldNames = _.keys(doc);
+                // 如果doc中有$inc等语句，需要重算当前记录中的$inc修改过的字段级联的公式字段，因为$inc是在after操作后更新数据，无法在before中提前算出来
+                if(_.intersection(['$inc','$min','$max','$mul'], updatedDocFieldNames).length){
+                    withoutCurrent = false;
+                }
+            }
             // 更新记录后，只需要查找和重算与doc中传入的字段相关的公式字段，不需要把所有公式字段都重算，优化性能
             let fieldNames = method === "update" ? getFieldNamesFromDoc(doc, this.fields) : null;
             await runQuotedByObjectFieldFormulas(objectName, recordId, userSession, { onlyForOwn, withoutCurrent, fieldNames });

@@ -10,204 +10,255 @@
           "id": "service_field_design",
           "body": [
             {
-              "type": "panel",
-              "header": {
-                "type": "flex",
-                "id": "u:b2c8374e93fe",
-                "items": [
-                  {
-                    "type": "tpl",
-                    "tpl": "<p><h4><strong>设计字段布局</strong></h4> ${designObjectLabel}<span style=\"color: rgb(149, 165, 166);\">  ${designObjectName}</span></p>",
-                    "id": "u:4c7bef616400"
-                  },
-                  {
-                    "type": "flex",
-                    "id": "u:1bfde03380f8",
-                    "items": [
-                      {
-                        "type": "button",
-                        "id": "u:ec9931ea883c",
-                        "actionType": "dialog",
-                        "dialog": {
-                          "type": "dialog",
-                          "title": "设置分组",
-                          "size": "lg",
-                          "data": {
-                            "&": "$$",
-                            "groups": "${groups|filter:is_default:isFalse|filter:is_hidden:isFalse}",
-                            "designObjectName": "${designObjectName}"
-                          },
-                          "body": [
-                            {
-                              "type": "form",
-                              "mode": "normal",
-                              "body": [
-                                {
-                                  "type": "service",
-                                  "body": [
-                                    {
-                                      "type": "steedos-input-table",
-                                      "enableDialog": false,
-                                      "fields": [
-                                        {
-                                          "name": "group_name",
-                                          "label": "名称",
-                                          "type": "text",
-                                          "id": "u:31952daa443c"
-                                        },
-                                        {
-                                          "name": "visible_on",
-                                          "label": "显示条件",
-                                          "type": "text",
-                                          "amis": {
-                                            "type": "input-formula",
-                                            "name": "formula",
-                                            "evalMode": false,
-                                            "variableMode": "tabs",
-                                            "variables": "${variables}"
-                                          },
-                                          "id": "u:8d7551abcd28",
-                                          "value": null
-                                        },
-                                        {
-                                          "name": "collapsed",
-                                          "label": "默认折叠",
-                                          "type": "boolean"
-                                        }
-                                      ],
-                                      "columns": [
-                                        {
-                                          "name": "group_name"
-                                        },
-                                        {
-                                          "name": "visible_on"
-                                        },
-                                        {
-                                          "name": "collapsed",
-                                          "width": 50
-                                        }
-                                      ],
-                                      "name": "groups",
-                                      "addable": true,
-                                      "editable": true,
-                                      "removable": true,
-                                      "draggable": false,
-                                      "id": "u:776ec89804c0",
-                                      "label": "",
-                                      "visibleOn": "${variables}"
-                                    }
-                                  ],
-                                  "api": {
-                                    "method": "get",
-                                    "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${designObjectName}/fields/options",
-                                    "adaptor": "payload = {data: {variables: SteedosUI.getFormulaVariables(payload.data.options)}};return payload;",
-                                    "cache": 30000,
-                                    "headers": {
-                                      "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                                    }
-                                  }
-                                }
-                              ]
-                            }
-                          ],
-                          "onEvent": {
-                            "confirm": {
-                              "actions": [
-                                {
-                                  "actionType": "custom",
-                                  "script": "///整理分组数据\nconst defaultGroupName = \"未分组\";\nconst hiddenGroupName = \"隐藏\";\nlet setting_groups = _.cloneDeep(event.data.groups);\nif (!_.find(setting_groups, { is_default: true })) {\n  setting_groups.unshift({\n    \"id\": defaultGroupName,\n    \"group_name\": defaultGroupName,\n    \"visible_on\": \"\",\n    \"is_default\": true\n  })\n}\nif (!_.find(setting_groups, { is_hidden: true })) {\n  setting_groups.push({\n    id: hiddenGroupName,\n    group_name: hiddenGroupName,\n    visible_on: \"\",\n    is_hidden: true\n  });\n}\nsetting_groups.forEach(function (group) {\n  if (!group.id || group.id != group.group_name) {\n    group.id = group.group_name;\n  }\n  if (/\\$\\{.+\\}/.test(group.visible_on)) {\n    group.visible_on = group.visible_on.replaceAll('${', '\\\\${');\n  }\n})\n\n//整理字段与分组关系的数据\nlet fieldForGroup = {};\nlet oldGroup = _.cloneDeep(event.data.fieldForGroup);\nsetting_groups.forEach(function (group) {\n  if (_.has(oldGroup, group.id)) {\n    fieldForGroup[group.id] = oldGroup[group.id];\n    oldGroup = _.omit(oldGroup, group.id);\n  } else {\n    fieldForGroup[group.id] = [];\n  }\n})\nif (oldGroup && !_.isEmpty(oldGroup)) {\n  _.forEach(oldGroup, function (value, key) {\n    fieldForGroup[defaultGroupName] = _.unionBy(fieldForGroup[defaultGroupName], value);\n  });\n}\n\n//未分组 放在所有分组开头，隐藏 放在所有分组最后\nconst defaultGroup = fieldForGroup[defaultGroupName];\nconst hiddenGroup = fieldForGroup[hiddenGroupName];\ndelete fieldForGroup[defaultGroupName];\ndelete fieldForGroup[hiddenGroupName];\nfieldForGroup = _.merge({ [defaultGroupName]: defaultGroup }, fieldForGroup, { [hiddenGroupName]: hiddenGroup });\n\n//根据fieldForGroup调整groups顺序，设置分组与保存时需要groups按照顺序\nconst keys = _.keys(fieldForGroup);\nsetting_groups = _.sortBy(setting_groups, function (group) { return _.findIndex(keys, function (key) { return key == group.group_name }) });\n\ndoAction({\n  actionType: 'setValue',\n  componentId: 'service_field_design',\n  args: {\n    value: {\n      groups: setting_groups\n    }\n  }\n});\n\ndoAction({\n  actionType: 'setValue',\n  componentId: \"form_field_design\",\n  args: {\n    value: { design_field: fieldForGroup }\n  }\n});"
-                                }
-                              ]
-                            }
-                          },
-                          "id": "u:e02c8f59216e",
-                          "closeOnEsc": false,
-                          "closeOnOutside": false,
-                          "showCloseButton": true,
-                          "showErrorMsg": true,
-                          "showLoading": true
-                        },
-                        "label": "设置分组",
-                        "className": ""
-                      },
-                      {
-                        "type": "button",
-                        "label": "新增字段",
-                        "actionType": "dialog",
-                        "id": "u:5857ae729799",
-                        "visible": false,
-                        "dialog": {
-                          "type": "dialog",
-                          "title": "新增字段",
-                          "data": {
-                            "appId": "${appId}",
-                            "global": "${global}",
-                            "context": "${context}",
-                            "designObjectName": "${designObjectName}",
-                            "_master": "${_master}"
-                          },
-                          "body": [
-                            {
-                              "type": "steedos-object-form",
-                              "label": "对象表单",
-                              "objectApiName": "object_fields",
-                              "recordId": "",
-                              "mode": "edit",
-                              "defaultData": {
-                                "object": "${designObjectName}"
-                              },
-                              "fieldsExtend": {
-                                "object": {
-                                  "amis": {
-                                    "disabledOn": "true"
-                                  }
-                                },
-                                "group": {
-                                  "amis": {
-                                    "hidden": true
-                                  }
-                                }
-                              },
-                              "fields": "",
-                              "id": "u:b71796d3cb8c",
-                              "className": "mb-4",
-                              "enableTabs": true,
-                              "tabsMode": "line"
-                            }
-                          ],
-                          "showCloseButton": true,
-                          "showErrorMsg": true,
-                          "showLoading": true,
-                          "closeOnEsc": false,
-                          "dataMapSwitch": false,
-                          "size": "lg",
-                          "id": "u:066b3884bdd8"
-                        }
-                      },
-                      {
-                        "type": "button",
-                        "label": "保存",
-                        "actionType": "submit",
-                        "id": "u:d9039421ea6b",
-                        "target": "form_field_design",
-                        "level": "primary"
-                      }
-                    ]
-                  }
-                ],
-                "style": {
-                  "position": "static",
-                  "flexWrap": "nowrap",
-                  "justifyContent": "space-between",
-                  "alignItems": "baseline"
-                },
-                "isFixedHeight": false,
-                "isFixedWidth": false
-              },
+              "type": "form",
+              "title": "",
               "body": [
                 {
-                  "type": "form",
-                  "title": "",
+                  "type": "panel",
+                  "header": {
+                    "type": "flex",
+                    "id": "u:b2c8374e93fe",
+                    "items": [
+                      {
+                        "type": "tpl",
+                        "tpl": "<p><h4><strong>设计字段布局</strong></h4> ${designObjectLabel}<span style=\"color: rgb(149, 165, 166);\">  ${designObjectName}</span></p>",
+                        "id": "u:4c7bef616400"
+                      },
+                      {
+                        "type": "flex",
+                        "id": "u:1bfde03380f8",
+                        "items": [
+                          {
+                            "type": "button",
+                            "id": "u:ec9931ea883c",
+                            "actionType": "dialog",
+                            "dialog": {
+                              "type": "dialog",
+                              "title": "设置分组",
+                              "size": "lg",
+                              "data": {
+                                "&": "$$",
+                                "groups": "${groups|filter:is_default:isFalse|filter:is_hidden:isFalse}",
+                                "designObjectName": "${designObjectName}",
+                                "__updateDone": false
+                              },
+                              "body": [
+                                {
+                                  "type": "form",
+                                  "mode": "normal",
+                                  "onEvent": {
+                                    "change": {
+                                      "actions": [
+                                        {
+                                          "actionType": "setValue",
+                                          "componentId": "steedos-set-group",
+                                          "args": {
+                                            "value": {
+                                              "__updateDone": true
+                                            }
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "body": [
+                                    {
+                                      "type": "service",
+                                      "body": [
+                                        {
+                                          "type": "steedos-input-table",
+                                          "enableDialog": false,
+                                          "input-table": {
+                                            "onEvent": {
+                                              "change": {
+                                                "actions": [
+                                                  {
+                                                    "actionType": "setValue",
+                                                    "componentId": "steedos-set-group",
+                                                    "args": {
+                                                      "value": {
+                                                        "__updateDone": false
+                                                      }
+                                                    }
+                                                  }
+                                                ]
+                                              }
+                                            }
+                                          },
+                                          "fields": [
+                                            {
+                                              "name": "group_name",
+                                              "label": "名称",
+                                              "type": "text",
+                                              "id": "u:31952daa443c"
+                                            },
+                                            {
+                                              "name": "visible_on",
+                                              "label": "显示条件",
+                                              "type": "text",
+                                              "amis": {
+                                                "type": "input-formula",
+                                                "name": "formula",
+                                                "evalMode": false,
+                                                "variableMode": "tabs",
+                                                "variables": "${variables}"
+                                              },
+                                              "id": "u:8d7551abcd28",
+                                              "value": null
+                                            },
+                                            {
+                                              "name": "collapsed",
+                                              "label": "默认折叠",
+                                              "type": "boolean"
+                                            }
+                                          ],
+                                          "columns": [
+                                            {
+                                              "name": "group_name"
+                                            },
+                                            {
+                                              "name": "visible_on"
+                                            },
+                                            {
+                                              "name": "collapsed",
+                                              "width": 50
+                                            }
+                                          ],
+                                          "name": "groups",
+                                          "addable": true,
+                                          "editable": true,
+                                          "removable": true,
+                                          "draggable": false,
+                                          "id": "u:776ec89804c0",
+                                          "label": "",
+                                          "visibleOn": "${variables}"
+                                        }
+                                      ],
+                                      "api": {
+                                        "method": "get",
+                                        "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${designObjectName}/fields/options",
+                                        "adaptor": "payload = {data: {variables: SteedosUI.getFormulaVariables(payload.data.options)}};return payload;",
+                                        "cache": 30000,
+                                        "headers": {
+                                          "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              ],
+                              "actions": [
+                                {
+                                  "type": "action",
+                                  "label": "取消",
+                                  "actionType": "cancel"
+                                },
+                                {
+                                  "type": "action",
+                                  "label": "确认",
+                                  "level": "primary",
+                                  "onEvent": {
+                                    "click": {
+                                      "actions": [
+                                        {
+                                          "actionType": "custom",
+                                          "script": "///整理分组数据\nconst defaultGroupName = \"未分组\";\nconst hiddenGroupName = \"隐藏\";\nlet setting_groups = _.cloneDeep(event.data.groups);\nif (!_.find(setting_groups, { is_default: true })) {\n  setting_groups.unshift({\n    \"id\": defaultGroupName,\n    \"group_name\": defaultGroupName,\n    \"visible_on\": \"\",\n    \"is_default\": true\n  })\n}\nif (!_.find(setting_groups, { is_hidden: true })) {\n  setting_groups.push({\n    id: hiddenGroupName,\n    group_name: hiddenGroupName,\n    visible_on: \"\",\n    is_hidden: true\n  });\n}\nsetting_groups.forEach(function (group) {\n  if (!group.id || group.id != group.group_name) {\n    group.id = group.group_name;\n  }\n  if (/\\$\\{.+\\}/.test(group.visible_on)) {\n    group.visible_on = group.visible_on.replaceAll('${', '\\\\${');\n  }\n})\n\n//整理字段与分组关系的数据\nlet design_field = {};\nlet oldGroup = _.cloneDeep(event.data.design_field);\nsetting_groups.forEach(function (group) {\n  if (_.has(oldGroup, group.id)) {\n    design_field[group.id] = oldGroup[group.id];\n    oldGroup = _.omit(oldGroup, group.id);\n  } else {\n    design_field[group.id] = [];\n  }\n})\nif (oldGroup && !_.isEmpty(oldGroup)) {\n  _.forEach(oldGroup, function (value, key) {\n    design_field[defaultGroupName] = _.unionBy(design_field[defaultGroupName], value);\n  });\n}\n\n//未分组 放在所有分组开头，隐藏 放在所有分组最后\nconst defaultGroup = design_field[defaultGroupName];\nconst hiddenGroup = design_field[hiddenGroupName];\ndelete design_field[defaultGroupName];\ndelete design_field[hiddenGroupName];\ndesign_field = _.merge({ [defaultGroupName]: defaultGroup }, design_field, { [hiddenGroupName]: hiddenGroup });\n\n//根据design_field调整groups顺序，设置分组与保存时需要groups按照顺序\nconst keys = _.keys(design_field);\nsetting_groups = _.sortBy(setting_groups, function (group) { return _.findIndex(keys, function (key) { return key == group.group_name }) });\n\ndoAction({\n  actionType: 'setValue',\n  componentId: 'form_field_design',\n  args: {\n    value: {\n      groups: setting_groups,\n      design_field\n    }\n  }\n});"
+                                        },
+                                        {
+                                          "actionType": "closeDialog"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "disabledOn": "${!__updateDone}"
+                                }
+                              ],
+                              "id": "steedos-set-group",
+                              "closeOnEsc": false,
+                              "closeOnOutside": false,
+                              "showCloseButton": true,
+                              "showErrorMsg": true,
+                              "showLoading": true
+                            },
+                            "label": "设置分组",
+                            "className": "",
+                            "disabledOn": "${!__changeDone}"
+                          },
+                          {
+                            "type": "button",
+                            "label": "新增字段",
+                            "actionType": "dialog",
+                            "id": "u:5857ae729799",
+                            "visible": false,
+                            "dialog": {
+                              "type": "dialog",
+                              "title": "新增字段",
+                              "data": {
+                                "appId": "${appId}",
+                                "global": "${global}",
+                                "context": "${context}",
+                                "designObjectName": "${designObjectName}",
+                                "_master": "${_master}"
+                              },
+                              "body": [
+                                {
+                                  "type": "steedos-object-form",
+                                  "label": "对象表单",
+                                  "objectApiName": "object_fields",
+                                  "recordId": "",
+                                  "mode": "edit",
+                                  "defaultData": {
+                                    "object": "${designObjectName}"
+                                  },
+                                  "fieldsExtend": {
+                                    "object": {
+                                      "amis": {
+                                        "disabledOn": "true"
+                                      }
+                                    },
+                                    "group": {
+                                      "amis": {
+                                        "hidden": true
+                                      }
+                                    }
+                                  },
+                                  "fields": "",
+                                  "id": "u:b71796d3cb8c",
+                                  "className": "mb-4",
+                                  "enableTabs": true,
+                                  "tabsMode": "line"
+                                }
+                              ],
+                              "showCloseButton": true,
+                              "showErrorMsg": true,
+                              "showLoading": true,
+                              "closeOnEsc": false,
+                              "dataMapSwitch": false,
+                              "size": "lg",
+                              "id": "u:066b3884bdd8"
+                            }
+                          },
+                          {
+                            "type": "button",
+                            "label": "保存",
+                            "actionType": "submit",
+                            "id": "u:d9039421ea6b",
+                            "target": "form_field_design",
+                            "level": "primary",
+                            "disabledOn": "${!__changeDone}"
+                          }
+                        ]
+                      }
+                    ],
+                    "style": {
+                      "position": "static",
+                      "flexWrap": "nowrap",
+                      "justifyContent": "space-between",
+                      "alignItems": "baseline"
+                    },
+                    "isFixedHeight": false,
+                    "isFixedWidth": false
+                  },
                   "body": [
                     {
                       "type": "steedos-board",
@@ -340,55 +391,73 @@
                       },
                       "cardSource": "${fields}",
                       "vertical": true,
+                      "value": "${fieldForGroup}",
                       "onEvent": {
                         "change": {
                           "actions": [
                             {
-                              "actionType": "custom",
-                              "script": "const newGroups = _.keys(event.data.value);\nconst lastGroups = _.map(context.props.data.groups, 'group_name');\nif (newGroups != lastGroups) {\n  doAction({\n    actionType: 'setValue',\n    componentId: 'service_field_design',\n    args: {\n      value: {\n        fieldForGroup: event.data.value, groups: field_groups = _.sortBy(context.props.data.groups, function (group) { return _.findIndex(newGroups, function (group_name) { return group.group_name === group_name; }); })\n      }\n    }\n  });\n}\n"
+                              "actionType": "setValue",
+                              "componentId": "service_field_design",
+                              "args": {
+                                "value": {
+                                  "__changeDone": false
+                                }
+                              }
                             }
                           ]
                         }
-                      },
-                      "value": "${fieldForGroup}"
+                      }
                     }
                   ],
-                  "id": "form_field_design",
-                  "api": {
-                    "url": "${context.rootUrl}/graphql",
-                    "method": "post",
-                    "dataType": "json",
-                    "headers": {
-                      "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                    },
-                    "requestAdaptor": "var graphqlOrder = \"\";\nvar field_groups = _.cloneDeep(api.data.groups);\n//先修改字段，使系统对象自行自定义\n//根据design_field,修改对象字段的sort_no与groups\nvar index = 1;\nconst defaultGroupName = _.find(field_groups, { 'is_default': true })?.name || \"未分组\";\nconst hiddenGroupName = _.find(field_groups, { 'is_hidden': true })?.name || \"隐藏\";\n_.forEach(api.data.design_field, function (items, key) {\n  let group = key;\n  if (key == defaultGroupName || key == hiddenGroupName) {\n    group = null;\n  }\n  _.forEach(items, function (item) {\n    const field = _.find(api.data.fields, { 'id': item });\n    //如果是在隐藏分组里的字段，就给visible_on属性赋予{{false}};如果不在隐藏分组里，就判断来自数据库内的visible_on属性是不是{{false}},是就清除，不是就保持不变\n    const visible_on = key == hiddenGroupName ? \"{{false}}\" : (field.attr_visible_on == \"{{false}}\" ? \"{{true}}\" : field.attr_visible_on);\n    let docJson = {\n      sort_no: index * 10,\n      group, visible_on\n    }\n    if (field.id == field._id && field.is_system) {\n      docJson = {\n        object: api.data.$self.designObjectName,\n        type: field.type,\n        _name: field._name,\n        label: field.label,\n        sort_no: index * 10,\n        group,\n        visible_on,\n        is_system: field.is_system\n      }\n    }\n    if (key != hiddenGroupName) {\n      docJson.hidden = false;\n    }\n    let itemOrder = 'upsert' + index + ':object_fields__upsert(id:\"' + item + '\" , doc:' + JSON.stringify(JSON.stringify(docJson)) + '){_id}\\n';\n    graphqlOrder += itemOrder;\n    index++;\n  })\n})\n\n//根据groups，修改对象的字段分组field_groups\n_.remove(field_groups, { is_default: true });\n_.remove(field_groups, { is_hidden: true });\nfield_groups = field_groups.map(function (group) {\n  return _.omit(group, 'id');\n})\nconst keys = _.keys(api.data.design_field);\nfield_groups = _.sortBy(field_groups, function (group) { return _.findIndex(keys, function (key) { return key == group.group_name }) });\nconst groupOrder = 'upsert0:objects__upsert(id:\"' + api.data.$self.designObjectId + '\" , doc:' + JSON.stringify(JSON.stringify({ field_groups, name: api.data.$self.designObjectName })) + ') {_id}';\ngraphqlOrder += groupOrder;\n\n\ngraphqlOrder = 'mutation {' + graphqlOrder + '}';\nreturn {\n  ...api,\n  data: {\n    query: graphqlOrder\n  }\n}",
-                    "adaptor": "if (payload.errors) {\n  payload.status = 2;\n  payload.msg = window.t ? window.t(payload.errors[\n    0\n  ].message) : payload.errors[\n    0\n  ].message;\n}\nreturn payload;",
-                    "messages": {},
-                    "data": {
-                      "design_field": "${design_field}",
-                      "groups": "${groups}",
-                      "fields": "${fields}",
-                      "$self": "$$"
-                    }
-                  },
-                  "visibleOn": "${dataInitialed}",
-                  "wrapWithPanel": false,
-                  "name": "form_field_design",
-                  "onEvent": {
-                    "submitSucc": {
-                      "weight": 0,
-                      "actions": [
-                        {
-                          "actionType": "custom",
-                          "script": "setTimeout(() => {\n  doAction({\n    \"actionType\": \"broadcast\",\n    \"args\": {\n      \"eventName\": \"@data.changed.object_fields\"\n    }\n  });\n}, 500);\n\n\n"
-                        }
-                      ]
-                    }
-                  }
+                  "className": "Panel--default max-w-4xl m-auto",
+                  "id": "u:3a90104cb6b4"
                 }
               ],
-              "className": "Panel--default max-w-4xl m-auto",
-              "id": "u:3a90104cb6b4"
+              "id": "form_field_design",
+              "api": {
+                "url": "${context.rootUrl}/graphql",
+                "method": "post",
+                "dataType": "json",
+                "headers": {
+                  "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                },
+                "requestAdaptor": "var graphqlOrder = \"\";\nvar field_groups = _.cloneDeep(api.data.groups);\n//先修改字段，使系统对象自行自定义\n//根据design_field,修改对象字段的sort_no与groups\nvar index = 1;\nconst defaultGroupName = _.find(field_groups, { 'is_default': true })?.name || \"未分组\";\nconst hiddenGroupName = _.find(field_groups, { 'is_hidden': true })?.name || \"隐藏\";\n_.forEach(api.data.design_field, function (items, key) {\n  let group = key;\n  if (key == defaultGroupName || key == hiddenGroupName) {\n    group = null;\n  }\n  _.forEach(items, function (item) {\n    const field = _.find(api.data.fields, { 'id': item });\n    //如果是在隐藏分组里的字段，就给visible_on属性赋予{{false}};如果不在隐藏分组里，就判断来自数据库内的visible_on属性是不是{{false}},是就清除，不是就保持不变\n    const visible_on = key == hiddenGroupName ? \"{{false}}\" : (field.attr_visible_on == \"{{false}}\" ? \"{{true}}\" : field.attr_visible_on);\n    let docJson = {\n      sort_no: index * 10,\n      group, visible_on\n    }\n    if (field.id == field._id && field.is_system) {\n      docJson = {\n        object: api.data.$self.designObjectName,\n        type: field.type,\n        _name: field._name,\n        label: field.label,\n        sort_no: index * 10,\n        group,\n        visible_on,\n        is_system: field.is_system\n      }\n    }\n    if (key != hiddenGroupName) {\n      docJson.hidden = false;\n    }\n    let itemOrder = 'upsert' + index + ':object_fields__upsert(id:\"' + item + '\" , doc:' + JSON.stringify(JSON.stringify(docJson)) + '){_id}\\n';\n    graphqlOrder += itemOrder;\n    index++;\n  })\n})\n\n//根据groups，修改对象的字段分组field_groups\n_.remove(field_groups, { is_default: true });\n_.remove(field_groups, { is_hidden: true });\nfield_groups = field_groups.map(function (group) {\n  return _.omit(group, 'id');\n})\nconst keys = _.keys(api.data.design_field);\nfield_groups = _.sortBy(field_groups, function (group) { return _.findIndex(keys, function (key) { return key == group.group_name }) });\nconst groupOrder = 'upsert0:objects__upsert(id:\"' + api.data.$self.designObjectId + '\" , doc:' + JSON.stringify(JSON.stringify({ field_groups, name: api.data.$self.designObjectName })) + ') {_id}';\ngraphqlOrder += groupOrder;\n\n\ngraphqlOrder = 'mutation {' + graphqlOrder + '}';\nreturn {\n  ...api,\n  data: {\n    query: graphqlOrder\n  }\n}",
+                "adaptor": "if (payload.errors) {\n  payload.status = 2;\n  payload.msg = window.t ? window.t(payload.errors[\n    0\n  ].message) : payload.errors[\n    0\n  ].message;\n}\nreturn payload;",
+                "messages": {},
+                "data": {
+                  "design_field": "${design_field}",
+                  "groups": "${groups}",
+                  "fields": "${fields}",
+                  "$self": "$$"
+                }
+              },
+              "visibleOn": "${dataInitialed}",
+              "wrapWithPanel": false,
+              "name": "form_field_design",
+              "onEvent": {
+                "submitSucc": {
+                  "weight": 0,
+                  "actions": [
+                    {
+                      "actionType": "custom",
+                      "script": "setTimeout(() => {\n  doAction({\n    \"actionType\": \"broadcast\",\n    \"args\": {\n      \"eventName\": \"@data.changed.object_fields\"\n    }\n  });\n}, 500);\n\n\n"
+                    }
+                  ]
+                },
+                "change": {
+                  "actions": [
+                    {
+                      "actionType": "setValue",
+                      "componentId": "service_field_design",
+                      "args": {
+                        "value": {
+                          "__changeDone": true
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
             }
           ],
           "api": {
@@ -424,7 +493,8 @@
           },
           "initFetch": false,
           "data": {
-            "eventData": ""
+            "eventData": "",
+            "__changeDone": true
           }
         }
       ],
