@@ -1,5 +1,4 @@
 name: sortable
-defaultValue: true
 group: Advanced
 hidden: false
 label: Sortable
