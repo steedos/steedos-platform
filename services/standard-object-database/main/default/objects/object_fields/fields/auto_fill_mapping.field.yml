@@ -13,4 +13,4 @@ sort_no: 500
 type: table
 visible_on: >-
   {{(formData.type === 'lookup' || formData.type === 'master_detail') &&
-  formData.reference_to && !!!formData.multiple}}
+  formData.reference_to}}

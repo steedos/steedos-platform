@@ -4,17 +4,19 @@ depend_on:
 filtersFunction: !<tag:yaml.org,2002:js/function> |-
   function(filters,values
   ) {
-
-
-
-    if(values && values.reference_to){
-      return ['object', '=', values.reference_to]
-    }else{
-      return ['_id', '=', 'no']
+    var currentFilter = [];
+    var referenceObject = BuilderAmisObject && BuilderAmisObject.AmisLib && BuilderAmisObject.AmisLib.getUISchemaSync(values.reference_to);
+    if (values.multiple) {
+      currentFilter.push(['multiple', '!=', true]);
     }
 
+    if(values && values.reference_to){
+      currentFilter.push(['object', '=', values.reference_to]);
+    }else{
+      currentFilter.push(['_id', '=', 'no']);
+    }
 
-
+    return currentFilter;
   }
 group: auto_fill
 hidden: false

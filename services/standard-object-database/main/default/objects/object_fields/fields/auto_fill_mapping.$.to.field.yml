@@ -24,6 +24,17 @@ filtersFunction: !<tag:yaml.org,2002:js/function> |-
     var referenceObject = BuilderAmisObject && BuilderAmisObject.AmisLib && BuilderAmisObject.AmisLib.getUISchemaSync(values.reference_to);
     var fromField = referenceObject && referenceObject.fields[values.from];
 
+    if (values.multiple) {
+      if (_.includes(["lookup","master_detail","select"], fromField.type)) {
+        currentFilter.push(['multiple', '=', true]);
+      }
+    }else {
+      if (fromField.multiple){
+        currentFilter.push(['multiple', '=', true]);
+      } else {
+        currentFilter.push(['multiple', '!=', true]);
+      }
+    }
     if (fromField && fromField.data_type) {
         currentFilter.push(['type', 'in', fieldFilters[fromField.data_type] || fromField.data_type.split()]);
     }else if (fromField) {
