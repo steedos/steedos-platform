@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2024-04-23 14:35:03
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-04-26 12:02:56
+ * @LastEditTime: 2024-05-06 11:39:14
  * @Description: 
  */
 
@@ -50,7 +50,6 @@ module.exports = {
           const { url, data } = ctx.params
           const result = await axios.post(url, data);
           ctx.locals.job.updateProgress(100)
-          console.log('====>send', url, data.doc?.name)
           return result.data;
         }
       }
@@ -71,14 +70,14 @@ module.exports = {
           const userSession  = await ctx.call('@steedos/service-accounts.getUserSession', {userId, spaceId})
           if(userSession){
             sender = {
-              id: userSession.userId,
+              _id: userSession.userId,
               username: userSession.username,
               name: userSession.name,
               email: userSession.email
             }
 
             space = {
-              id: userSession.space._id,
+              _id: userSession.space._id,
               name: userSession.space.name
             }
           }
