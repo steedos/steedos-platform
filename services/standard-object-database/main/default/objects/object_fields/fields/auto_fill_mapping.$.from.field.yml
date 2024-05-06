@@ -5,7 +5,7 @@ filtersFunction: !<tag:yaml.org,2002:js/function> |-
   function(filters,values
   ) {
     var currentFilter = [];
-    var referenceObject = BuilderAmisObject && BuilderAmisObject.AmisLib && BuilderAmisObject.AmisLib.getUISchemaSync(values.reference_to);
+    //当前字段为多选时，from的字段不能选择multiple为true的
     if (values.multiple) {
       currentFilter.push(['multiple', '!=', true]);
     }

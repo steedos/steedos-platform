@@ -25,10 +25,12 @@ filtersFunction: !<tag:yaml.org,2002:js/function> |-
     var fromField = referenceObject && referenceObject.fields[values.from];
 
     if (values.multiple) {
+      //当前字段为多选时，若from的字段类型为lookup、master_detail、select时，to的字段则必须选择multiple为true的
       if (_.includes(["lookup","master_detail","select"], fromField.type)) {
         currentFilter.push(['multiple', '=', true]);
       }
     }else {
+      //当前字段为单选时，若from的字段多选，to的字段则也必须多选；若from不是多选，则to也不能是多选
       if (fromField.multiple){
         currentFilter.push(['multiple', '=', true]);
       } else {
