@@ -80,6 +80,10 @@
             "type": "boolean",
             "description": "允许创建备忘"
         },
+        "enable_form_tabs": {
+            "type": "boolean",
+            "description": "表单启用选项卡模式"
+        },
         "enable_events": {
             "type": "boolean",
             "description": "允许创建事件"

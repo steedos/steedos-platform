@@ -51,6 +51,10 @@ fields:
     label: 允许添加备注
     help: 
     description: 
+  enable_form_tabs:
+    label: 表单启用选项卡模式
+    help: 该功能只影响编辑页面，但会优先识别组件上的配置
+    description: 
   enable_events:
     label: 允许添加日程
     help: 
