@@ -16,7 +16,7 @@
                         "method": "get",
                         "url": "/service/api/amis-metadata-objects/objects/${object_name}/fields/options",
                         "cache": 30000,
-                        "adaptor": "const visibleOnVariables = SteedosUI.getFormulaVariables(payload.data.options);\n const defaultValueVariables = [visibleOnVariables[1]];\n const variables = [];\n const varItem = {\n     label: '对象字段',\n     children: _.map(payload.data.options, (item)=>{\n         return {\n             label: item.label,\n             value: item.value\n         }\n     })\n };\n variables.push(varItem);\n payload.data={label: '准入条件', type:'input-formula', name: 'condition', variables: variables} \n return payload;",
+                        "adaptor": "const field = context.uiSchema.fields.condition; const visibleOnVariables = SteedosUI.getFormulaVariables(payload.data.options);\n const defaultValueVariables = [visibleOnVariables[1]];\n const variables = [];\n const varItem = {\n     label: '对象字段',\n     children: _.map(payload.data.options, (item)=>{\n         return {\n             label: item.label,\n             value: item.value\n         }\n     })\n };\n variables.push(varItem);\n payload.data={label: field.label, type:'input-formula', name: 'condition', variables: variables, labelRemark: field.inlineHelpText, description: field.description } \n return payload;",
                         "trackExpression": "${object_name}",
                         "sendOn": "${object_name}"
                     }

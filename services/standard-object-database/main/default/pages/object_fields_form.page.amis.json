@@ -143,15 +143,18 @@
                 "amis": {
                     "onEvent": {
                         "change": {
-                            "actions": [{
-                                "actionType": "setValue",
-                                "args": {
-                                    "value": {
-                                        "defaultValue": null
-                                    }
-                                },
-                                "componentId": "steedos_object_fields_form"
-                            }]
+                            "actions": [
+                                {
+                                    "actionType": "setValue",
+                                    "args": {
+                                        "value": {
+                                            "defaultValue": null,
+                                            "sortable": "${ARRAYSOME(allowSort, item => item === event.data.value)}"
+                                        }
+                                    },
+                                    "componentId": "steedos_object_fields_form"
+                                }
+                            ]
                         }
                     },
                     "disabledOn": "${is_system == true}",
@@ -197,7 +200,20 @@
         "tabsMode": "line"
     }],
     "data": {
-        "context": {}
+        "context": {},
+        "allowSort": [
+            "text",
+            "select",
+            "date",
+            "datetime",
+            "time",
+            "number",
+            "currency",
+            "percent",
+            "autoumber",
+            "summary",
+            "formula"
+        ]
     },
     "onEvent": {
         "init": {

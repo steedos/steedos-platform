@@ -1,0 +1,6 @@
+# 只影响编辑页面
+name: enable_form_tabs
+label: Enable Form Tabs
+sort_no: 461
+type: boolean
+inlineHelpText: This feature exclusively affects the editable pages, with precedence given to configurations specified on the components.

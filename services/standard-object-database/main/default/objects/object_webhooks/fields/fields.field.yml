@@ -4,6 +4,7 @@ label: Fields
 multiple: true
 is_wide: true
 sort_no: 60
+description: 如果未配置, 则推送所有字段
 depend_on:
   - object_name
 optionsFunction: !!js/function |
