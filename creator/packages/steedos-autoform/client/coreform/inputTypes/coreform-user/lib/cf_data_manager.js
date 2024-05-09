@@ -430,9 +430,11 @@ CFDataManager.getRoot = function (spaceId, options) {
 	}
 
 	var showLimitedCompanyOnly = options && options.showLimitedCompanyOnly;
+	var needSort = false;
 	if(showLimitedCompanyOnly){
 		user_company_ids = Steedos.getUserCompanyOrganizationIds();
 		if (user_company_ids && user_company_ids.length) {
+			needSort = true;
 			query._id = {
 				$in: user_company_ids
 			};
@@ -445,7 +447,7 @@ CFDataManager.getRoot = function (spaceId, options) {
 		}
 	}
 
-	return SteedosDataManager.organizationRemote.find(query, {
+	var result = SteedosDataManager.organizationRemote.find(query, {
 		fields: {
 			_id: 1,
 			name: 1,
@@ -457,6 +459,13 @@ CFDataManager.getRoot = function (spaceId, options) {
 			hidden: 1,
 		}
 	});
+
+	if(needSort){
+		var curSpaceUser = db.space_users.findOne({space: Creator.USER_CONTEXT.user.spaceId,'user': Creator.USER_CONTEXT.user.userId});
+		return Creator.getOrderlySetByIds(result, curSpaceUser.organizations);
+	}
+
+	return result
 };
 
 CFDataManager.getOrganizationsByIds = function(ids) {
