@@ -90,24 +90,166 @@ actions:
   standard_open_view:
     label: Open
     visible: true
-  online_preview:
-    label: Preview
-    sort: 110
-    visible: !<tag:yaml.org,2002:js/function> |-
-      function (object_name, record_id, record_permissions, record) {
-              if(!record){
-                return false;
-              }
-              if (Meteor.isCordova){
-                return false;
-              }
-              var file = record;
-              if (Creator.showPreviewButton(file.name) || Creator.isImageAttachment(file.name) || Creator.isHtmlAttachment(file.name))
-                return true;
+  # online_preview:
+  #   label: Preview
+  #   sort: 110
+  #   visible: !<tag:yaml.org,2002:js/function> |-
+  #     function (object_name, record_id, record_permissions, record) {
+  #             if(!record){
+  #               return false;
+  #             }
+  #             if (Meteor.isCordova){
+  #               return false;
+  #             }
+  #             var file = record;
+  #             if (Creator.showPreviewButton(file.name) || Creator.isImageAttachment(file.name) || Creator.isHtmlAttachment(file.name))
+  #               return true;
               
-              return false;
+  #             return false;
+  #           }
+  #   'on': record
+  preview_amis:
+    amis_schema: |-
+      {
+        "type": "page",
+        "title": "Welcome to Steedos",
+        "body": [
+            {
+                "type": "button",
+                "label": "预览",
+                "id": "u:preview_amis",
+                "onEvent": {
+                    "click": {
+                        "weight": 0,
+                        "actions": [
+                            {
+                                "ignoreError": false,
+                                "actionType": "drawer",
+                                "drawer": {
+                                    "type": "drawer",
+                                    "className": {
+                                        "drawer-container-office-preview": true,
+                                        "drawer-excel-file": "${ARRAYINCLUDES(['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],versions[0].type)}"
+                                    },
+                                    "title": {
+                                        "type": "tpl",
+                                        "id": "u:63440f27b2fc",
+                                        "tpl": "${name}",
+                                        "className": "flex justify-center items-center"
+                                    },
+                                    "body": [
+                                        {
+                                            "type": "office-viewer",
+                                            "id": "u:d27be9cc371d",
+                                            "wordOptions": {
+                                                "ignoreWidth": false,
+                                                "padding": "",
+                                                "bulletUseFont": true,
+                                                "enableVar": false
+                                            },
+                                            "src": "/api/files/files/${versions[0]._id}",
+                                            "visibleOn": "${ARRAYINCLUDES(['application/vnd.openxmlformats-officedocument.wordprocessingml.document'],versions[0].type)}",
+                                            "className": "flex justify-center items-center h-full",
+                                            "loading": true
+                                        },
+                                        {
+                                            "type": "office-viewer",
+                                            "wordOptions": {
+                                                "ignoreWidth": false,
+                                                "padding": "",
+                                                "bulletUseFont": true,
+                                                "enableVar": false
+                                            },
+                                            "src": "/api/files/files/${versions[0]._id}",
+                                            "visibleOn": "${ARRAYINCLUDES(['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],versions[0].type)}",
+                                            "className": "office-viewer-excel",
+                                            "loading": true
+                                        },
+                                        {
+                                            "type": "pdf-viewer",
+                                            "src": "/api/files/files/${versions[0]._id}",
+                                            "visibleOn": "${ARRAYINCLUDES(['application/pdf'],versions[0].type)}",
+                                            "id": "u:dc63f1f2d0ab",
+                                            "source": "src"
+                                        },
+                                        {
+                                            "type": "image",
+                                            "id": "u:4d9071791016",
+                                            "visibleOn": "${ARRAYINCLUDES(['image/jpeg'],versions[0].type)}",
+                                            "src": "/api/files/files/${versions[0]._id}"
+                                        }
+                                    ],
+                                    "id": "u:cd1199c49cc7",
+                                    "actions": [
+                                        {
+                                            "type": "button",
+                                            "actionType": "cancel",
+                                            "label": "关闭",
+                                            "id": "u:6f9d5665a14f"
+                                        }
+                                    ],
+                                    "showCloseButton": true,
+                                    "closeOnOutside": false,
+                                    "closeOnEsc": false,
+                                    "showErrorMsg": true,
+                                    "showLoading": true,
+                                    "draggable": false,
+                                    "actionType": "drawer",
+                                    "size": "lg",
+                                    "resizable": false,
+                                    "editorSetting": {
+                                        "displayName": ""
+                                    },
+                                    "position": "right",
+                                    "hideActions": false,
+                                    "width": "100%",
+                                    "themeCss": {
+                                        "drawerTitleClassName": {
+                                            "font": {
+                                                "text-decoration": "underline"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                "visibleOn": "${abc}"
             }
+        ],
+        "regions": [
+            "body"
+        ],
+        "data": {
+            "context": {},
+            "dataComponentId": "",
+            "record_id": "",
+            "record": {},
+            "permissions": {}
+        },
+        "id": "u:0e8700f3bbdd",
+        "bodyClassName": "p-0 abc111",
+        "dsType": "api",
+        "definitions": {},
+        "asideResizor": false,
+        "editorState": "default",
+        "pullRefresh": {
+            "disabled": true
+        },
+        "css": {
+            ".drawer-container-office-preview .office-viewer-excel": {
+                "height": "100%"
+            },
+            ".drawer-excel-file .antd-Drawer-body>div": {
+                "height": "100%"
+            }
+        }
+      }
+    label: 预览
     'on': record
+    type: amis_button
+    visible: true
   standard_edit:
     label: Edit
     sort: 0
