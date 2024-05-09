@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2024-04-23 14:35:03
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-04-26 12:02:56
+ * @LastEditTime: 2024-05-06 11:45:46
  * @Description: 
  */
 
@@ -22,22 +22,28 @@ module.exports = {
     },
     events: {
       "*.inserted": async function(ctx){
-        // TODO 校验是否是objectql的记录新增事件.  使用@objectApiName + .inserted 后,与ctx.eventName对比,看是否相同
         const { objectApiName, id, spaceId, userId  } = ctx.params;
+        if(ctx.eventName != `@${objectApiName}.inserted`){
+          return
+        }
         if(objectApiName && id && spaceId){
           await this.addQueue(ctx, objectApiName, "create", id, spaceId, userId)
         }
       },
       "*.updated": async function(ctx){
-        // TODO 校验是否是objectql的记录新增事件.  使用@objectApiName + .updated 后,与ctx.eventName对比,看是否相同
         const { objectApiName, id, spaceId, userId, previousDoc } = ctx.params;
+        if(ctx.eventName != `@${objectApiName}.updated`){
+          return
+        }
         if(objectApiName && id && spaceId){
           await this.addQueue(ctx, objectApiName, "update", id, spaceId, userId, previousDoc)
         }
       },
       "*.deleted": async function(ctx){
-        // TODO 校验是否是objectql的记录新增事件.  使用@objectApiName + .deleted 后,与ctx.eventName对比,看是否相同
         const { objectApiName, id, spaceId, userId, previousDoc } = ctx.params;
+        if(ctx.eventName != `@${objectApiName}.deleted`){
+          return
+        }
         if(objectApiName && id){
           await this.addQueue(ctx, objectApiName, "delete", id, spaceId, userId, previousDoc)
         }
@@ -50,7 +56,6 @@ module.exports = {
           const { url, data } = ctx.params
           const result = await axios.post(url, data);
           ctx.locals.job.updateProgress(100)
-          console.log('====>send', url, data.doc?.name)
           return result.data;
         }
       }
@@ -71,14 +76,14 @@ module.exports = {
           const userSession  = await ctx.call('@steedos/service-accounts.getUserSession', {userId, spaceId})
           if(userSession){
             sender = {
-              id: userSession.userId,
+              _id: userSession.userId,
               username: userSession.username,
               name: userSession.name,
               email: userSession.email
             }
 
             space = {
-              id: userSession.space._id,
+              _id: userSession.space._id,
               name: userSession.space.name
             }
           }

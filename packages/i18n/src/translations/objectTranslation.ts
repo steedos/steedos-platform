@@ -271,9 +271,6 @@ const translationListviewLabel = function(lng, objectName, name, def, datasource
 
 export const translationObject = function(lng: string, objectName: string, object: StringMap, convert?: boolean, ignoreBase = false){
     const cacheKey = getCacherKey(lng, object);
-    if(objectName === 'test_obj_layout1'){
-        console.log('translationObject', objectName, cacheKey)
-    }
     const fromCacher = Cacher.get(cacheKey);
     if(fromCacher){
         return Object.assign(object, cloneDeep(fromCacher));
@@ -286,9 +283,8 @@ export const translationObject = function(lng: string, objectName: string, objec
     object.description = translationObjectDescription(lng, objectName, object.description);
     _.each(object.fields, function(field, fieldName){
         field.label = translationFieldLabel(lng, objectName, fieldName, field.label, object.datasource, ignoreBase);
-        if(field.inlineHelpText){
-            field.inlineHelpText = translationFieldHelp(lng, objectName, fieldName, field.inlineHelpText, object.datasource, ignoreBase)
-        }
+        field.inlineHelpText = translationFieldHelp(lng, objectName, fieldName, field.inlineHelpText, object.datasource, ignoreBase)
+        field.description = translationFieldDescription(lng, objectName, fieldName, field.description, object.datasource, ignoreBase)
         if(field.group){
             field.group = translationFieldGroup(lng, objectName, field.group, field.group, object.datasource, ignoreBase);
         }

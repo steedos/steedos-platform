@@ -154,7 +154,11 @@ Creator.getOrderlySetByIds = (docs, ids, id_key, hit_first)->
 						return ids.length + _.indexOf(values, doc[id_key])
 	else
 		return	_.sortBy docs, (doc)->
-			return ids.indexOf(doc[id_key])
+			v = ids.indexOf(doc[id_key]);
+			if v < 0
+				return 99999
+			else 
+				return v
 
 ###
 	按用户所属本地化语言进行排序，支持中文、数值、日期等字段排序

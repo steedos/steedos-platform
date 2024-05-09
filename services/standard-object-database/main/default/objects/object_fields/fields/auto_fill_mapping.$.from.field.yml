@@ -4,17 +4,19 @@ depend_on:
 filtersFunction: !<tag:yaml.org,2002:js/function> |-
   function(filters,values
   ) {
-
-
-
-    if(values && values.reference_to){
-      return ['object', '=', values.reference_to]
-    }else{
-      return ['_id', '=', 'no']
+    var currentFilter = [];
+    //当前字段为多选时，from的字段不能选择multiple为true的
+    if (values.multiple) {
+      currentFilter.push(['multiple', '!=', true]);
     }
 
+    if(values && values.reference_to){
+      currentFilter.push(['object', '=', values.reference_to]);
+    }else{
+      currentFilter.push(['_id', '=', 'no']);
+    }
 
-
+    return currentFilter;
   }
 group: auto_fill
 hidden: false

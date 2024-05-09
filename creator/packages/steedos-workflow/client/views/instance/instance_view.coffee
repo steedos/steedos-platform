@@ -159,6 +159,7 @@ Template.instance_view.onRendered ->
 
 			# 当申请单在草稿箱，但是申请单的状态不是草稿时，页面切换到草稿箱列表
 			if "draft" != ins.state && "draft" == Session.get("box")
+				Session.set("instance_change", false)
 				window.history.back()
 
 			Tracker.nonreactive ()->
