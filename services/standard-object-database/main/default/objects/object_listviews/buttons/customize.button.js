@@ -26,6 +26,6 @@ customize:function (object_name, record_id, fields) {
   },
 customizeVisible:function(object_name, record_id, record_permissions, data){
     var record = data && data.record;
-    return Creator.baseObject.actions.standard_new.visible() && record.is_system;
+    return Creator.baseObject.actions.standard_new.visible(object_name) && record.is_system;
   }
  }
