@@ -112,3 +112,11 @@
 .steedos-amis-form .antd-Form-control--withSize{
     width: 100%;
 }
+
+.antd-PdfViewer svg{
+    display: inline !important;
+}
+
+.antd-PdfViewer-Tool .page-input {
+    color: #000000 !important;
+}

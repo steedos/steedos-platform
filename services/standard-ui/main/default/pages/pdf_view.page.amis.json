@@ -1,0 +1,28 @@
+{
+    "type": "page",
+    "title": "PDF View",
+    "body": [
+        {
+            "type": "pdf-viewer",
+            "id": "pdf-viewer",
+            "name": "file",
+            "width": 500,
+            "source": "src",
+            "src": "${context.rootUrl}/api/files/files/${fileId}"
+        }
+    ],
+    "regions": [
+        "body"
+    ],
+    "data": {
+        "initialValues": {},
+        "appId": "builder",
+        "title": ""
+    },
+    "id": "u:015f6bd7ecd0",
+    "asideResizor": false,
+    "editorState": "default",
+    "pullRefresh": {
+        "disabled": true
+    }
+}

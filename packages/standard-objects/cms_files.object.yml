@@ -166,8 +166,8 @@ actions:
                                             "loading": true
                                         },
                                         {
-                                            "type": "pdf-viewer",
-                                            "src": "/api/files/files/${versions[0]._id}",
+                                            "type": "iframe",
+                                            "src": "${context.rootUrl}/api/page/public/pdf_view?fileId=${versions[0]._id}",
                                             "visibleOn": "${ARRAYINCLUDES(['application/pdf'],versions[0].type)}",
                                             "id": "u:dc63f1f2d0ab",
                                             "source": "src"
