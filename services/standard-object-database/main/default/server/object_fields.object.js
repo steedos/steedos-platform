@@ -299,8 +299,10 @@ function allowChangeObject(){
 }
 
 function checkNameField(nameField){
-  if(["text", "textarea", "autonumber", "date", "datetime", "time", "formula"].indexOf(nameField.type) < 0){
-    throw new Error("只有文本、长文本、自动编号、日期、日期时间、时间、公式这些类型的字段可以被设置为名称字段");
+  if(["text", "textarea", "autonumber", "date", "datetime", "time", "formula", "lookup"].indexOf(nameField.type) < 0){
+    throw new Error("只有文本、长文本、自动编号、日期、日期时间、时间、公式、相关表这些类型的字段可以被设置为名称字段");
+  } else if(nameField.type == "lookup" && nameField.multiple) {
+    throw new Error("多选的相关表字段不可以被设置为名称字段");
   }
 }
 

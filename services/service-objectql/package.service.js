@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-03-11 14:28:56
+ * @LastEditTime: 2024-05-11 13:44:56
  * @Description: 
  */
 "use strict";
@@ -408,7 +408,7 @@ module.exports = {
                 const userSession = ctx.meta.user;
                 const { objectName, recordId } = ctx.params;
                 const obj = getObject(objectName)
-                const record = await obj.findOne(recordId)
+                const record = await obj.findOne(recordId, {}, userSession)
                 return obj.getRecordPermissions(record, userSession);
             }
         },

@@ -7,6 +7,7 @@ const InternalData = require('@steedos/standard-objects').internalData;
 const objectql = require('@steedos/objectql');
 const auth = require('@steedos/auth');
 const _ = require('underscore');
+const clone = require('clone');
 //由于新版lookup 组件限制。需编写trigger处理在只读页面不显示已选中项的问题
 //由于lookup组件强依赖_id 字段，所以必须返回_id
 
@@ -35,14 +36,15 @@ module.exports = {
             dataList.push({_id: 'meteor', name: 'meteor', label: TAPi18n.__(`objects_field_datasource_meteor`, {}, lng), ...BASERECORD})
         }
         if (!_.isEmpty(dataList)) {
+            const cloneValues = clone(this.data.values, false);
             dataList.forEach((doc) => {
                 if (!_.find(this.data.values, (value) => {
                     return value.name === doc.name
                 })) {
-                    this.data.values.push(doc);
+                    cloneValues.push(doc);
                 }
             })
-            const records = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
+            const records = objectql.getSteedosSchema().metadataDriver.find(cloneValues, this.query, spaceId);
             if (records.length > 0) {
                 this.data.values = records;
             } else {
