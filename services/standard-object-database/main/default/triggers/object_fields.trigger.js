@@ -231,15 +231,16 @@ module.exports = {
         if(objectName){ 
             let fields = await InternalData.getObjectFields(objectName, this.userId, filters.name ? true : false);
             if(fields){
+                const cloneValues = clone(this.data.values, false);
                 _.each(fields, (field)=>{
                     if(!_.find(this.data.values, (item)=>{
                         return item.object == field.object && item.name == field.name
                     })){
-                        this.data.values.push(Object.assign({_id: `${objectName}.${field.name}`}, field))
+                        cloneValues.push(Object.assign({_id: `${objectName}.${field.name}`}, field))
                     }
                 })
                 // this.data.values = this.data.values.concat(fields)
-                this.data.values = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, this.spaceId);
+                this.data.values = objectql.getSteedosSchema().metadataDriver.find(cloneValues, this.query, this.spaceId);
             }
         }
 
@@ -282,29 +283,6 @@ module.exports = {
         }
 
        
-    },
-    beforeAggregate: async function(){
-        const { query } = this;
-        if(query.fields && _.isArray(query.fields) && !_.include(query.fields, 'object')){
-            query.fields.push('object')
-        }
-    },
-    afterAggregate: async function(){
-        let filters = InternalData.parserFilters(this.query.filters);
-        let objectName = filters.object;
-        if(!objectName && filters._id && filters._id.indexOf(".") > -1){
-            objectName = filters._id.split('.')[0];
-        }
-        if(objectName){
-            let fields = await InternalData.getObjectFields(objectName, this.userId, true);
-            if(fields){
-                _.each(fields, (field)=>{
-                    this.data.values.push(Object.assign({_id: `${objectName}.${field.name}`}, field))
-                })
-                // this.data.values = this.data.values.concat(fields)
-                this.data.values = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, this.spaceId);
-            }
-        }
     },
     afterCount: async function(){
         let result = await objectql.getObject('object_fields').find(this.query, await auth.getSessionByUserId(this.userId, this.spaceId))

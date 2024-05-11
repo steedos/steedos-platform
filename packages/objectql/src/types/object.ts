@@ -2220,7 +2220,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
             returnValue = await adapterMethod.apply(this._datasource, args);
             if (method === 'find' || method == 'findOne' || method == 'count' || method == 'aggregate' || method == 'aggregatePrefixalPipeline') {
-                let values = clone(returnValue) || {}
+                let values = returnValue || {}
                 if (method === 'count') {
                     values = returnValue || 0
                 } 
