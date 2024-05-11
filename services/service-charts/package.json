@@ -20,6 +20,7 @@
     "@steedos/service-metadata-server": "2.7.1-beta.8",
     "@steedos/service-package-loader": "2.7.1-beta.8",
     "@steedos/service-steedos-server": "2.7.1-beta.8",
+    "clone": "^2.1.2",
     "cross-env": "^7.0.3",
     "dotenv-flow": "^3.2.0",
     "ioredis": "^4.22.0",

@@ -1,13 +1,14 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-05-28 11:07:57
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-03-20 16:00:17
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2024-05-11 13:57:23
  * @Description: 
  */
 const InternalData = require('@steedos/standard-objects').internalData;
 const objectql = require('@steedos/objectql');
 const auth = require("@steedos/auth");
+const clone = require('clone');
 const sleep = async (ms) => new Promise(resolve => setTimeout(resolve, ms));
 module.exports = {
     beforeInsert: async function(){
@@ -35,14 +36,15 @@ module.exports = {
         if(objectName){
             let dataList = await InternalData.getObjectActions(objectName, this.userId);
             if (!_.isEmpty(dataList)) {
+                const cloneValues = clone(this.data.values, false);
                 dataList.forEach((doc) => {
                     if (!_.find(this.data.values, (value) => {
                         return value.name === doc.name
                     })) {
-                        this.data.values.push(Object.assign({_id: `${objectName}.${doc.name}`}, doc));
+                        cloneValues.push(Object.assign({_id: `${objectName}.${doc.name}`}, doc));
                     }
                 })
-                const records = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
+                const records = objectql.getSteedosSchema().metadataDriver.find(cloneValues, this.query, spaceId);
                 if (records.length > 0) {
                     this.data.values = records;
                 } else {

@@ -1,14 +1,15 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-03-31 14:24:43
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-04-06 10:31:49
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2024-05-11 14:04:15
  * @Description: 
  */
 
 const objectql = require('@steedos/objectql');
 const auth = require('@steedos/auth');
 const _ = require('lodash');
+const clone = require('clone');
 
 async function getAll() {
     const schema = objectql.getSteedosSchema();
@@ -41,22 +42,19 @@ module.exports = {
         delete this.query.fields;
     },
 
-    beforeAggregate: async function () {
-        delete this.query.fields;
-    },
-
     afterFind: async function () {
         const { spaceId } = this;
         let dataList = await getAll();
         if (dataList) {
+            const cloneValues = clone(this.data.values, false);
             dataList.forEach((doc) => {
                 if (!_.find(this.data.values, (value) => {
                     return value._id === doc._id
                 })) {
-                    this.data.values.push(doc);
+                    cloneValues.push(doc);
                 }
             })
-            const records = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
+            const records = objectql.getSteedosSchema().metadataDriver.find(cloneValues, this.query, spaceId);
             if (records.length > 0) {
                 this.data.values = records;
             } else {
@@ -64,25 +62,6 @@ module.exports = {
             }
         }
 
-    },
-    afterAggregate: async function () {
-        const { spaceId } = this;
-        let dataList = await getAll();
-        if (dataList) {
-            dataList.forEach((doc) => {
-                if (!_.find(this.data.values, (value) => {
-                    return value._id === doc._id
-                })) {
-                    this.data.values.push(doc);
-                }
-            })
-            const records = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
-            if (records.length > 0) {
-                this.data.values = records;
-            } else {
-                this.data.values.length = 0;
-            }
-        }
     },
     afterCount: async function () {
         delete this.query.fields;
