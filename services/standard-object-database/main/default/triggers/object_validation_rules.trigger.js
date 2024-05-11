@@ -8,26 +8,25 @@ const util = require('@steedos/standard-objects').util;
 const objectql = require("@steedos/objectql");
 const register = require('@steedos/metadata-registrar')
 const auth = require('@steedos/auth');
+const clone = require('clone');
 
 module.exports = {
     beforeFind: async function(){
-        delete this.query.fields;
-    },
-    beforeAggregate: async function(){
         delete this.query.fields;
     },
     afterFind: async function(){
         const { spaceId } = this;
         let dataList = await register.getAllObjectValidationRules();
         if (!_.isEmpty(dataList)) {
+            const cloneValues = clone(this.data.values, false);
             dataList.forEach((doc) => {
                 if (!_.find(this.data.values, (value) => {
                     return value.name === doc.name
                 })) {
-                    this.data.values.push(doc);
+                    cloneValues.push(doc);
                 }
             })
-            const records = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
+            const records = objectql.getSteedosSchema().metadataDriver.find(cloneValues, this.query, spaceId);
             if (records.length > 0) {
                 this.data.values = records;
             } else {

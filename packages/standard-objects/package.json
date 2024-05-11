@@ -16,6 +16,7 @@
     "@steedos/filters": "2.7.1-beta.8",
     "@steedos/i18n": "2.7.1-beta.8",
     "@steedos/metadata-core": "2.7.1-beta.8",
-    "@steedos/metadata-registrar": "2.7.1-beta.8"
+    "@steedos/metadata-registrar": "2.7.1-beta.8",
+    "clone": "^2.1.2"
   }
 }

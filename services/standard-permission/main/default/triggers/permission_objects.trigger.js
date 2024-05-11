@@ -2,6 +2,7 @@ const _ = require('underscore');
 const objectql = require("@steedos/objectql");
 const InternalData = require('@steedos/standard-objects').internalData;
 const auth = require("@steedos/auth");
+const clone = require('clone');
 
 
 const permissions = {
@@ -86,11 +87,12 @@ module.exports = {
         const { spaceId } = this;
         let dataList = await getInternalPermissionObjects();
         if (!_.isEmpty(dataList)) {
+            const cloneValues = clone(this.data.values, false);
             dataList.forEach((doc) => {
                 if (!_.find(this.data.values, (value) => {
                     return value.name === doc.name
                 })) {
-                    this.data.values.push(doc);
+                    cloneValues.push(doc);
                 }
             })
             
@@ -114,7 +116,7 @@ module.exports = {
                 }
             }
             
-            const records = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
+            const records = objectql.getSteedosSchema().metadataDriver.find(cloneValues, this.query, spaceId);
             if (records.length > 0) {
                 this.data.values = records;
             } else {

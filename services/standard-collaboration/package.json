@@ -12,5 +12,8 @@
     "description": "steedos package",
     "repository": {},
     "license": "MIT",
-    "gitHead": "6c6d45b547b6f1f511f1d3f8a4bd5b06caf0b113"
+    "gitHead": "6c6d45b547b6f1f511f1d3f8a4bd5b06caf0b113",
+    "dependencies": {
+      "clone": "^2.1.2"
+    }
 }
