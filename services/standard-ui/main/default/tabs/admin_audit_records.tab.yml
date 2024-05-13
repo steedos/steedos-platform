@@ -1,6 +1,6 @@
 name: admin_audit_records
 desktop: true
-icon: record
+icon: medication
 is_new_window: false
 label: 审计日志
 mobile: true

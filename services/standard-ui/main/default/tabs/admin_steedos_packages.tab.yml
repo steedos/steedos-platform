@@ -1,6 +1,6 @@
 name: admin_steedos_packages
 desktop: true
-icon: apex
+icon: all
 is_new_window: false
 label: 软件包
 mobile: true

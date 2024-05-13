@@ -1,6 +1,6 @@
 name: admin_webhooks
 desktop: true
-icon: output
+icon: sales_cadence
 is_new_window: false
 label: 流程触发器
 mobile: true

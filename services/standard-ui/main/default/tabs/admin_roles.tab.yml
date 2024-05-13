@@ -1,6 +1,6 @@
 name: admin_roles
 desktop: true
-icon: groups
+icon: job_family
 is_new_window: false
 label: 角色
 mobile: true

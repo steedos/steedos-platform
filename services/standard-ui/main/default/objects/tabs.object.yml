@@ -1,6 +1,6 @@
 name: tabs
 label: Tabs
-icon: apps
+icon: timeslot
 hidden: true
 version: 2.0
 enable_dataloader: false

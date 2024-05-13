@@ -1,6 +1,6 @@
 name: admin_flow_roles
 desktop: true
-icon: queue
+icon: messaging_user
 is_new_window: false
 label: 审批岗位
 mobile: true

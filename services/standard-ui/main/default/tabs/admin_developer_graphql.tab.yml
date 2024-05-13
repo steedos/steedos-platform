@@ -1,6 +1,6 @@
 name: admin_developer_graphql
 desktop: true
-icon: entity
+icon: portal
 is_new_window: true
 label: Graphql IDE
 mobile: true
