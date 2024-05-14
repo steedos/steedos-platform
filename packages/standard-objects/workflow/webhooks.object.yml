@@ -1,5 +1,5 @@
 name: webhooks
-icon: output
+icon: sales_cadence
 label: Webhook
 hidden: true
 enable_dataloader: false

@@ -1,6 +1,6 @@
 name: admin_space_info
 desktop: true
-icon: account
+icon: household
 is_new_window: false
 label: 公司
 mobile: true

@@ -1,5 +1,5 @@
 name: flow_roles
-icon: queue
+icon: messaging_user
 label: Workflow Role
 hidden: true
 version: 2

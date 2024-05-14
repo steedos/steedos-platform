@@ -1,6 +1,6 @@
 name: admin_flow_positions
 desktop: true
-icon: queue
+icon: person_account
 is_new_window: false
 label: 审批岗位成员
 mobile: true

@@ -1,6 +1,6 @@
 name: admin_process_delegation_rules
 desktop: true
-icon: metrics
+icon: rtc_presence
 is_new_window: false
 label: 流程委托
 mobile: true
