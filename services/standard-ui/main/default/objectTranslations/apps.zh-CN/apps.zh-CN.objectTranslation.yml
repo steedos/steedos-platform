@@ -46,6 +46,10 @@ fields:
     label: 显示左侧导航
     help: 
     description: 
+  visible_on:
+    label: 显示公式
+    help: 根据公式判断是否显示应用
+    description: 
   enable_nav_schema: 
     label: 启用自定义导航
     help: 
