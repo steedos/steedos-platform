@@ -1,0 +1,13 @@
+name: preview
+is_active: true
+label: 预览
+locked: false
+object_name: cms_files
+pageAssignments:
+  - type: orgDefault
+    page: preview
+    desktop: true
+    mobile: true
+render_engine: amis
+type: record
+widgets: []

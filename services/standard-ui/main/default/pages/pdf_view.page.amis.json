@@ -1,6 +1,12 @@
 {
     "type": "page",
     "title": "PDF View",
+    "className": "page-pdf-file",
+    "css": {
+        ".page-pdf-file .antd-Page-body>div": {
+          "height": "100%"
+        }
+    },
     "body": [
         {
             "type": "pdf-viewer",
