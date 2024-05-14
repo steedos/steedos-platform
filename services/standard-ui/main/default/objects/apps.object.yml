@@ -197,6 +197,7 @@ fields:
     name: visible_on
     is_wide: true
     label: Visible On
+    inlineHelpText: Visible On
     type: textarea
     group: other
   enable_nav_schema: 
