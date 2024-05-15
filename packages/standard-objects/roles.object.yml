@@ -1,6 +1,6 @@
 name: roles
 label: Role
-icon: groups
+icon: job_family
 hidden: true
 version: 2
 fields:

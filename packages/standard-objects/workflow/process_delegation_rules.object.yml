@@ -1,5 +1,5 @@
 name: process_delegation_rules
-icon: metrics
+icon: rtc_presence
 label: Delegation
 hidden: true
 enable_dataloader: false

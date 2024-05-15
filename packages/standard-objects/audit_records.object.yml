@@ -1,6 +1,6 @@
 name: audit_records
 label: Audit Record
-icon: record
+icon: audit_records
 hidden: false
 version: 2
 fields:

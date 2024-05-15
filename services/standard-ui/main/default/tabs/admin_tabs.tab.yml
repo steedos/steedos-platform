@@ -1,6 +1,6 @@
 name: admin_tabs
 desktop: true
-icon: apps
+icon: timeslot
 is_new_window: false
 label: 选项卡
 mobile: true

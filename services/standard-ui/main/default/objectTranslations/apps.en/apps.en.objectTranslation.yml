@@ -46,6 +46,10 @@ fields:
     label: Show Left Navigation
     help: 
     description: 
+  visible_on:
+    label: Visible On
+    help: 
+    description: 
   enable_nav_schema: 
     label: Enable Custom Navigation
     help: 
