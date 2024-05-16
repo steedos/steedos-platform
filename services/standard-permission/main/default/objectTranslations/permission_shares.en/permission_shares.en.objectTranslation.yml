@@ -6,6 +6,8 @@ fields:
     label: Name
     help: 
     description: 
+  allowEdit:
+    label: Allow Edit
   object_name:
     label: Object
     help: 

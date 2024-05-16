@@ -7,8 +7,6 @@ amis_schema: |-
               "type": "button",
               "label": "删除",
               "id": "u:instance_delete",
-              "className": "p-0 m-0",
-              "level": "link",
               "onEvent": {
                   "click": {
                       "actions": [

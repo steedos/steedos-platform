@@ -1,6 +1,6 @@
 name: audit_records
 label: Audit Record
-icon: audit_records
+icon: medication
 hidden: false
 version: 2
 fields:

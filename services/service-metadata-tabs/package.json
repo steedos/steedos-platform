@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-metadata-tabs",
-  "version": "2.7.1-beta.11",
+  "version": "2.7.1-beta.12",
   "description": "",
   "main": "lib/tabs.service.js",
   "scripts": {
@@ -32,5 +32,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "093b8da3f0f0b54bff9ec6202b2ade87fbb97a6e"
+  "gitHead": "a8c074b6a1346d60e509e71406de1e02c831a919"
 }
