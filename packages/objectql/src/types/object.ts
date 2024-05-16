@@ -1999,10 +1999,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return await this.runTriggerActions(meteorWhen, context)
     }
 
-    private async appendRecordPermission(records, userSession) {
+    private async appendRecordPermission(records, allowEditShareRulesFilters, userSession) {
         const _ids = _.pluck(records, '_id');
         const objPm = await this.getUserObjectPermission(userSession, false);
-        const permissionFilters = this.getObjectEditPermissionFilters(objPm, userSession);
+        const permissionFilters = this.getObjectEditPermissionFilters(objPm, allowEditShareRulesFilters, userSession);
         if (_.isEmpty(permissionFilters)) {
             return;
         }
@@ -2179,11 +2179,14 @@ export class SteedosObjectType extends SteedosObjectProperties {
             paramRecordId = args[1];
         }
 
+        //共享规则
+        const { rulesFilters: shareRuleFilters , allowEditRulesFilters: allowEditShareRulesFilters } = await ShareRules.getUserObjectFilters(this.name, userSession);
+
         // 判断处理工作区权限，公司级权限，owner权限
         if(!(this.enable_space_global === true && _.include(['find', 'findOne'], method))){
             if (!_.isEmpty(userSession) && this._datasource.enable_space) {
                 this.dealWithFilters(method, args);
-                await this.dealWithMethodPermission(method, args);
+                await this.dealWithMethodPermission(method, args, shareRuleFilters, allowEditShareRulesFilters);
             }
         }
         let returnValue: any;
@@ -2230,7 +2233,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                         if (method == 'findOne' && values) {
                             _records = [_records]
                         }
-                        await this.appendRecordPermission(_records, userSession);
+                        await this.appendRecordPermission(_records, allowEditShareRulesFilters, userSession);
                     }
                 }
                 Object.assign(afterTriggerContext, { data: { values: values } })
@@ -2349,10 +2352,16 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
     }
 
-    private getObjectEditPermissionFilters(objectPermission, userSession) {
+    private getObjectEditPermissionFilters(objectPermission, allowEditShareRulesFilters, userSession) {
         const objectPermissionFilters = [];
+        // 修改指定分部
         if (!_.isEmpty(objectPermission.modifyAssignCompanysRecords)) {
             objectPermissionFilters.push(`(${formatFiltersToODataQuery([['company_id', 'in', objectPermission.modifyAssignCompanysRecords], 'or', ['company_ids', 'in', objectPermission.modifyAssignCompanysRecords]], userSession)})`)
+        }
+
+        // 修改共享记录
+        if(allowEditShareRulesFilters && allowEditShareRulesFilters.length > 0){
+            objectPermissionFilters.push(`(${allowEditShareRulesFilters.join(' or ')})`)
         }
         return objectPermissionFilters;
     }
@@ -2376,7 +2385,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
     }
 
-    private async dealWithMethodPermission(method: string, args: any[]) {
+    private async dealWithMethodPermission(method: string, args: any[], shareRuleFilters, allowEditShareRulesFilters) {
         let userSession = args[args.length - 1];
         if (userSession) {
             let spaceId = userSession.spaceId;
@@ -2399,7 +2408,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     return
                 }
 
-                let spaceFilter, companyFilter, ownerFilter, sharesFilter, shareRuleFilters, restrictionRuleFilters, clientFilter = query.filters, filters, permissionFilters = [], userFilters = [];
+                let spaceFilter, companyFilter, ownerFilter, sharesFilter, restrictionRuleFilters, clientFilter = query.filters, filters, permissionFilters = [], userFilters = [];
 
                 //space 权限
                 if (spaceId) {
@@ -2432,8 +2441,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     permissionFilters.push(`(${viewAssignCompanysRecordsFilter.join(' or ')})`);
                 }
 
-                //共享规则
-                shareRuleFilters = await ShareRules.getUserObjectFilters(this.name, userSession);
 
                 if (!_.isEmpty(shareRuleFilters) && !objPm.viewAllRecords) { // 如果用户没有查看所有的权限，才考虑共享规则；如有查看所有的权限，则无需考虑共享规则。
                     permissionFilters.push(`(${shareRuleFilters.join(' or ')})`);
@@ -2490,7 +2497,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 }
             }
             else if (method === 'update' || method === 'updateOne') {
-                const permissionFilters = this.getObjectEditPermissionFilters(objPm, userSession);
+                const permissionFilters = this.getObjectEditPermissionFilters(objPm, allowEditShareRulesFilters, userSession);
                 if (!objPm.allowEdit && _.isEmpty(permissionFilters)) {
                     throw new Error(`no ${method} permission!`);
                 }
@@ -2558,7 +2565,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 }
             }
             else if (method === 'delete') {
-                const permissionFilters = this.getObjectEditPermissionFilters(objPm, userSession);
+                const permissionFilters = this.getObjectEditPermissionFilters(objPm, allowEditShareRulesFilters, userSession);
                 if (!objPm.allowDelete && _.isEmpty(permissionFilters)) {
                     throw new Error(`no ${method} permission!`);
                 }
