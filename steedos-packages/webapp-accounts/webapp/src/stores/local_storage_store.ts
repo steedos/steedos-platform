@@ -62,6 +62,9 @@ class LocalStorageStoreClass {
       this.removeItem('token')
       this.removeItem('spaceId')
       localStorage.removeItem('spaceId');
+      localStorage.removeItem('Meteor.loginToken');
+      localStorage.removeItem('Meteor.loginTokenExpires');
+      localStorage.removeItem('Meteor.userId');
       this.setItem(getWasLoggedInKey(), 'false');
     }
   }
