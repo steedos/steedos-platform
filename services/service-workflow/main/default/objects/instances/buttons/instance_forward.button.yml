@@ -7,8 +7,6 @@ amis_schema: |-
               "type": "button",
               "label": "转发",
               "id": "u:instance_forward",
-              "className": "p-0 m-0",
-              "level": "link",
               "onEvent": {
                   "click": {
                       "actions": [

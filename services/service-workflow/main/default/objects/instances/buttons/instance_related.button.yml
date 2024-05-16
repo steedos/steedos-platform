@@ -7,8 +7,6 @@ amis_schema: |-
               "type": "button",
               "label": "关联文件",
               "id": "u:instance_link",
-              "className": "p-0 m-0",
-              "level": "link",
               "onEvent": {
                   "click": {
                       "actions": [
