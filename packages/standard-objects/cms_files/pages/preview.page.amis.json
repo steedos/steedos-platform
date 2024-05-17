@@ -10,7 +10,7 @@
         },
         {
             "type": "tabs",
-            "className": "steedos-record-tabs bg-white p-4 mt-3 border-y m-l-xs",
+            "className": "steedos-record-tabs bg-white p-4 m-2 border rounded",
             "tabs": [
                 {
                     "title": "预览",
@@ -50,7 +50,7 @@
                                 },
                                 {
                                     "type": "iframe",
-                                    "src": "${context.rootUrl}/api/page/public/pdf_view?fileId=${versions[0].value}",
+                                    "src": "${context.rootUrl}/api/page/public/pdf_view?fileUrl=/api/files/files/${versions[0].value}",
                                     "visibleOn": "${ARRAYINCLUDES(['pdf'],extention)}",
                                     "id": "u:dc63f1f2d0ab",
                                     "source": "src"
@@ -58,15 +58,26 @@
                                 {
                                     "type": "image",
                                     "id": "u:4d9071791016",
-                                    "visibleOn": "${ARRAYINCLUDES(['jpg'],extention)}",
+                                    "visibleOn": "${ARRAYINCLUDES(['png', 'jpg', 'jpeg', 'bmp', 'gif', 'webp', 'psd', 'svg', 'tiff'],extention)}",
                                     "src": "/api/files/files/${versions[0].value}",
-                                    "imageMode": "original"
+                                    "imageMode": "original",
+                                    "enlargeAble": false,
+                                    "maxScale": 200,
+                                    "minScale": 50,
+                                    "style": {
+                                        "display": "inline-block"
+                                    },
+                                    "editorState": "default"
                                 }
                             ],
                             "className": {
                                 "page-excel-file": "${ARRAYINCLUDES(['xlsx'],record.extention)}"
                             },
                             "id": "u:25709be82e35",
+                            "asideResizor": false,
+                            "pullRefresh": {
+                                "disabled": true
+                            },
                             "css": {
                                 ".drawer-container-office-preview .office-viewer-excel": {
                                     "height": "100% !important"
@@ -77,11 +88,29 @@
                                 ".drawer-container-office-preview": {
                                     "height": "calc(100vh - 15rem)",
                                     "overflow-y": "auto"
+                                },
+                                ".mobile-preview-page .drawer-container-office-preview": {
+                                    "height": "calc(100vh - 18rem)",
+                                    "overflow-y": "auto"
+                                },
+                                ".mobile-preview-page .office-viewer article section": {
+                                    "width": "100% !important",
+                                    "padding": "1rem !important"
+                                },
+                                ".mobile-preview-page .office-viewer article p div,.mobile-preview-page .office-viewer article table": {
+                                    "max-width": "100%"
+                                },
+                                ".mobile-preview-page .office-viewer article p": {
+                                    "text-indent": "unset !important"
+                                },
+                                ".mobile-preview-page .office-viewer article": {
+                                    "width": "100%"
                                 }
                             }
                         }
                     ],
-                    "id": "u:c0a7c758f451"
+                    "id": "u:c0a7c758f451",
+                    "visibleOn": "${ARRAYINCLUDES(['docx', 'xlsx', 'pdf', 'png', 'jpg', 'jpeg', 'bmp', 'gif', 'webp', 'psd', 'svg', 'tiff'],${extention})}"
                 },
                 {
                     "title": "详细",
@@ -125,10 +154,14 @@
     "name": "page_cms_files_record_detail",
     "objectApiName": "${objectName}",
     "bodyClassName": "",
-    "className": "object-detail-page",
-    "asideResizor": false,
+    "className": {
+        "mobile-preview-page": "${window:innerWidth<768}",
+        "object-detail-page steedos-record-content overflow-y-auto p-0 m-0 flex-1 h-full bg-gray-100": "true"
+    },
     "editorState": "default",
     "pullRefresh": {
         "disabled": true
-    }
+    },
+    "asideResizor": false,
+    "rueasideResizor": false
 }

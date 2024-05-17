@@ -1,4 +1,6 @@
 name: preview
+__filename: >-
+  /workspace/steedos-platform/packages/standard-objects/cms_files/pages/preview.page.yml
 is_active: true
 label: 预览
 locked: false

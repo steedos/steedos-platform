@@ -5,6 +5,9 @@
     "css": {
         ".page-pdf-file .antd-Page-body>div": {
           "height": "100%"
+        },
+        ".page-pdf-file .react-pdf__Page__canvas": {
+            "width": "100% !important"
         }
     },
     "body": [
@@ -14,7 +17,7 @@
             "name": "file",
             "width": 500,
             "source": "src",
-            "src": "${context.rootUrl}/api/files/files/${fileId}"
+            "src": "${context.rootUrl}${fileUrl}"
         }
     ],
     "regions": [

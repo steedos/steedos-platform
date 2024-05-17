@@ -46,6 +46,37 @@ Template.instance_attachments.onRendered(function() {
 });
 
 Template.instance_attachment.helpers({
+	amisButtonCalssName: function () {
+		return Steedos.getInstnaceFilePreviewAmisButtonClass();
+	},
+
+	amisButtonDivClassName: function () {
+		return "steedos-amis-button-instance-preview preview-" + this._id;
+	},
+
+	amisButtonData: function () {
+		return Steedos.getInstnaceFilePreviewAmisData(this);
+	},
+
+	amisButton: function () {
+		return Steedos.getInstnaceFilePreviewAmisSchema(this);
+	},
+
+	canAmisPreview: function (filename){
+		if (Steedos.isNode() || Steedos.isCordova())
+			return false
+
+		// 无文件类型时
+		if (filename.split('.').length < 2)
+			return false
+
+		// 获取文件类型
+		_exp = filename.split('.').pop().toLowerCase()
+		type = ['docx', 'xlsx', 'pdf', 'png', 'jpg', 'jpeg', 'bmp', 'gif', 'webp', 'psd', 'svg', 'tiff']
+		
+		return type.indexOf(_exp) != -1
+
+	},
 
 	can_delete: function(currentApproveId, parent_id) {
 		var ins = WorkflowManager.getInstance();

@@ -14,15 +14,15 @@
 							{{#if canView this.name}}
 								<a data-downloadurl="{{getUrl this._id}}" style="cursor: pointer" name="ins_attach_isView" id="{{this._id}}" data-parent="{{this.metadata.parent}}" data-name="{{this.name}}">{{this.name}}</a>
 							{{else}}
-								{{#if IsImageAttachment this}}
+								<!-- {{#if IsImageAttachment this}}
 									<a name="ins_attach_preview" style="cursor: pointer" id="{{this._id}}">{{this.name}}</a>
-								{{else}}
+								{{else}} -->
 									{{#if IsHtmlAttachment this}}
 										<a name="ins_attach_preview" style="cursor: pointer" id="{{this._id}}">{{this.name}}</a>
 									{{else}}
 										<a href="{{getUrl this._id}}" class="ins_attach_href" target="_parent">{{this.name}}</a>
 									{{/if}}
-								{{/if}}
+								<!-- {{/if}} -->
 							{{/if}}
 						{{/if}}
 					{{else}}
@@ -37,15 +37,21 @@
 								<span class="sr-only">Toggle Dropdown</span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
-								{{#if IsImageAttachment this}}
+								<!-- {{#if IsImageAttachment this}}
 									<li><a name="ins_attach_preview" id="{{this._id}}"><i class="ion ion-ios-search"></i>{{_ "workflow_attachment_view"}}</a></li>
-								{{else}}
+								{{else}} -->
 									{{#if IsHtmlAttachment this}}
 										<li><a name="ins_attach_preview" id="{{this._id}}"><i class="ion ion-ios-search"></i>{{_ "workflow_attachment_view"}}</a></li>
 									{{/if}}
-								{{/if}}
+								<!-- {{/if}} -->
 								{{#if canOfficeOnlinePreview this.name}}
 									<li><a data-downloadurl="{{getUrl this._id}}" name="ins_attach_office_online_preview" id="{{this._id}}" data-name="{{this.name}}"><i class="ion ion-ios-search"></i>{{_ "workflow_attachment_office_online_preview"}}</a></li>
+								{{/if}}
+								{{#if canAmisPreview this.name}}
+									<li><a name="ins_attach_amis_preview">
+										<div class="{{amisButtonDivClassName}}"><i class="ion ion-ios-search"></i>{{> amis_action button=amisButton buttonClassName=amisButtonCalssName data=amisButtonData }}</div>
+										</a>
+									</li>
 								{{/if}}
 								<li><a name="ins_attach_version" data-parent="{{this.metadata.parent}}"><i class="ion ion-ios-copy-outline"></i>{{_ "workflow_attachment_versions"}}</a></li>
 								{{#if can_delete this.metadata.approve this.metadata.parent}}
@@ -62,12 +68,17 @@
 					{{/if}}
 					{{#if isNode}}
 					{{else}}
-						{{#if IsImageAttachment this}}
+						<!-- {{#if IsImageAttachment this}}
 							<a name="ins_attach_preview" class="mouse-hover" id="{{this._id}}">{{_ "workflow_attachment_view"}}</a>
-						{{else}}
-							{{#if IsHtmlAttachment this}}
-								<a name="ins_attach_preview" class="mouse-hover" id="{{this._id}}">{{_ "workflow_attachment_view"}}</a>
-							{{/if}}
+						{{else}} -->
+						{{#if IsHtmlAttachment this}}
+							<a name="ins_attach_preview" class="mouse-hover" id="{{this._id}}">{{_ "workflow_attachment_view"}}</a>
+						{{/if}}
+						<!-- {{/if}} -->
+						{{#if canAmisPreview this.name}}
+							<a name="ins_attach_amis_preview" class="mouse-hover">
+								<div class="{{amisButtonDivClassName}}">{{> amis_action button=amisButton buttonClassName=amisButtonCalssName data=amisButtonData }}</div>
+							</a>
 						{{/if}}
 					{{/if}}
 					{{#if canOfficeOnlinePreview this.name}}
