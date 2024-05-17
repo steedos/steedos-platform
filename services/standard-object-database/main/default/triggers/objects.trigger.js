@@ -2,7 +2,7 @@ const InternalData = require('@steedos/standard-objects').internalData;
 const _ = require('underscore');
 const objectql = require('@steedos/objectql');
 const objectTree = require('../server/objects.tree.js');
-
+const clone = require('clone');
 const sleep = async (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 module.exports = {
@@ -18,13 +18,25 @@ module.exports = {
         let userId = this.userId
         let spaceId = this.spaceId;
 
+        let filters = InternalData.parserFilters(this.query.filters);
+
         _.each(this.data.values, (item)=>{
             item.is_customize = true
         })
 
-        this.data.values = this.data.values.concat(await InternalData.getObjects(userId));
+        let cloneValues = clone(this.data.values, false);
 
-        this.data.values = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
+        if(filters.is_customize){
+            const dbObjects = await objectql.getObject('objects').directFind({space: spaceId});
+            _.each(dbObjects, (item)=>{
+                item.is_customize = true
+            })
+            cloneValues = cloneValues.concat(dbObjects);
+        }
+
+        cloneValues = cloneValues.concat(await InternalData.getObjects(userId));
+
+        this.data.values = objectql.getSteedosSchema().metadataDriver.find(cloneValues, this.query, spaceId);
 
         _.each(this.data.values, function(value){
             if(value){
@@ -39,6 +51,11 @@ module.exports = {
     afterCount: async function(){
         let userId = this.userId
         let spaceId = this.spaceId;
+        let filters = InternalData.parserFilters(this.query.filters);
+        if(filters.is_customize){
+            const dbObjects = await objectql.getObject('objects').directFind({space: spaceId});
+            return this.data.values = dbObjects.length;
+        }
         this.data.values = this.data.values + objectql.getSteedosSchema().metadataDriver.count(await InternalData.getObjects(userId), this.query, spaceId);
     },
     afterFindOne: async function(){

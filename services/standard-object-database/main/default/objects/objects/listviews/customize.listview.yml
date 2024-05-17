@@ -12,7 +12,7 @@ extra_columns:
 filter_scope: space
 filters:
   - - is_customize
-    - <>
+    - =
     - true
 label: Customize
 shared: true
