@@ -304,3 +304,13 @@ tbody .color-priority-muted *{
 .instance-print #instanceAmisView .antd-Table-table tbody > tr > td{
     white-space: normal;
 }
+
+/* 统一审批详细页的amisbutton样式 */
+.instance-wrapper .instance-left-buttons .slds-button-group .steedos-amis-button button.antd-Button{
+    padding: 0;
+    margin: 0;
+    color: #1890ff;
+}
+.instance-wrapper .instance-left-buttons .slds-button-group .steedos-amis-button button.antd-Button:hover{
+    color: #40a9ff
+}

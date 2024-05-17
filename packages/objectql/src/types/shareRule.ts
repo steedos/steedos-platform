@@ -1,3 +1,10 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2023-08-30 15:26:07
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-05-16 15:56:16
+ * @Description: 
+ */
 import { getSteedosSchema } from '../types'
 import * as _ from 'lodash'
 import { isExpression, parseSingleExpression } from '../util'
@@ -24,12 +31,13 @@ export class ShareRules {
     static async getUserObjectFilters(objectApiName, userSession: any) {
         const rules = await this.find(objectApiName);
         if (_.isEmpty(rules)) {
-            return;
+            return {};
         }
         const rulesFilters = [];
+        const allowEditRulesFilters = []
         const globalData = { now: new Date() };
         _.each(rules, (rule) => {
-            const { active, entry_criteria, record_filter } = rule.metadata;
+            const { active, entry_criteria, record_filter, allowEdit } = rule.metadata;
             if (active) {
                 if (_.isString(entry_criteria) && isExpression(entry_criteria.trim())) {
                     try {
@@ -39,7 +47,11 @@ export class ShareRules {
                                 try {
                                     const filters = parseSingleExpression(record_filter, {}, "#", globalData, userSession);
                                     if (filters && !_.isString(filters)) {
-                                        rulesFilters.push(`(${formatFiltersToODataQuery(filters, userSession)})`)
+                                        const filter = `(${formatFiltersToODataQuery(filters, userSession)})`
+                                        rulesFilters.push(filter)
+                                        if(allowEdit){
+                                            allowEditRulesFilters.push(filter)
+                                        }
                                     }
                                 } catch (error) {
                                     console.error(`ShareRules.getUserObjectFilters record_filter error`, objectApiName, record_filter, error.message);
@@ -52,6 +64,9 @@ export class ShareRules {
                 }
             }
         })
-        return rulesFilters;
+        return {
+            rulesFilters,
+            allowEditRulesFilters
+        };
     }
 }

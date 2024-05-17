@@ -88,7 +88,7 @@ const getRecordPageInitSchema = async function (objectApiName, userSession) {
     }
     const content = {
         "type": "tabs",
-        "className": "steedos-record-tabs bg-white p-4 mt-3 border-y",
+        "className": "steedos-record-tabs bg-white p-4 m-2 border rounded",
         "tabs": [
             detailed
         ]
@@ -111,7 +111,7 @@ const getRecordPageInitSchema = async function (objectApiName, userSession) {
         name: getScopeId(objectApiName, "record_detail"),
         objectApiName: "${objectName}",
         bodyClassName: '',
-        className: "object-detail-page",
+        className: "object-detail-page steedos-record-content overflow-y-auto p-0 m-0 flex-1 h-full bg-gray-100",
         regions: [
             "body"
         ],

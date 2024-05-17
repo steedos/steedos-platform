@@ -6,6 +6,8 @@ fields:
     label: 名称
     help: 
     description: 
+  allowEdit:
+    label: 允许编辑
   object_name:
     label: 对象
     help: 
