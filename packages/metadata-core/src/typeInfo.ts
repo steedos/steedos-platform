@@ -44,6 +44,7 @@ export enum SteedosMetadataTypeInfoKeys {
     Question = "Question",
     Dashboard = "Dashboard",
     Print = "Print",
+    FunctionYML = "FunctionYML",
 }
 
 const loadType = function (filePath){

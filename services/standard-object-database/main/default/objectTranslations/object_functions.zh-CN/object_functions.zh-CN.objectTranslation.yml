@@ -1,0 +1,53 @@
+name: object_functions
+label: 对象函数
+description:
+fields:
+  _name:
+    label: API 名称
+    help: API 名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符
+    description:
+  is_rest:
+    label: 启用API
+    help:
+    description: 允许使用API接口访问：{POST} /api/v1/:objectName/functions/:functionApiName
+  is_system:
+    label: 系统
+    help:
+    description:
+  isEnabled:
+    label: 已启用
+    help:
+    description:
+  name:
+    label: 名称
+    help:
+    description:
+  objectApiName:
+    label: 所属对象
+    help:
+    description:
+  script:
+    label: 代码
+    help:
+    description: |
+      async function run({
+          input,
+          params,
+          broker,
+          getObject,
+          getUser
+      } = ctx) {
+          // ...
+      }
+  type:
+    label: 类型
+    help:
+    description:
+    options:
+      - label: "Script"
+        value: "script"
+listviews:
+  all:
+    label: 所有
+  customize:
+    label: 自定义

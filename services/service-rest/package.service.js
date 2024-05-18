@@ -1,14 +1,16 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-04-25 16:54:55
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2024-05-15 13:46:12
  * @Description: 
  */
 "use strict";
 // @ts-check
 const serviceObjectMixin = require('@steedos/service-object-mixin');
-const { QUERY_DOCS_TOP, REQUEST_SUCCESS_STATUS } = require('./consts')
+const { 
+    QUERY_DOCS_TOP, REQUEST_SUCCESS_STATUS, METADATA_CACHER_SERVICE_NAME
+ } = require('./consts')
 const { translateRecords } = require('./translate');
 const _ = require('lodash')
 const { getObject } = require('@steedos/objectql');
@@ -719,7 +721,66 @@ module.exports = {
                     }
                 }
             }
-        }
+        },
+        /**
+         * @api {POST} /api/v1/:objectName/functions/:functionApiName 函数
+         * @apiVersion 0.0.0
+         * @apiName functions
+         * @apiGroup @steedos/service-rest
+         * @apiParam {String} objectName 对象API Name，如：contracts
+         * @apiParam {String} functionApiName 函数API Name，如：pay
+         * @apiBody {Object} doc 新增的内容，如：{ name: 'test', description: 'test' }
+         * @apiSuccess {Object} result  执行结果
+         * @apiSuccessExample {json} Success-Response:
+         *     HTTP/1.1 200 OK
+         *     {
+         *       "status": 0, // 返回 0，表示当前接口正确返回，否则按错误请求处理
+         *       "msg": "", // 返回接口处理信息
+         *       "data": {
+         *          "_id": "5a6b1c3c8d6d1d0b7c6d1d0b",
+         *          "name": "",
+         *          ...
+         *        }
+         *       }
+         *     }
+         * @apiErrorExample {json} Error-Response:
+         *     HTTP/1.1 500 Error
+         *     {
+         *       "status": -1,
+         *       "msg": "",
+         *       "data": {}
+         *     }
+         */
+        functions: {
+            rest: {
+                method: "POST",
+                path: "/:objectName/functions/:functionApiName",
+            },
+            async handler(ctx) {
+                const userSession = ctx.meta.user;
+                const { objectName, functionApiName } = ctx.params;
+                const object = getObject(objectName)
+
+                // 启用API(is_rest === true) 的函数才在这里执行
+                // 从缓存获取
+                const fDocs = await broker.call(`${METADATA_CACHER_SERVICE_NAME}.find`, {metadataName: 'object_functions', filters: [
+                    ["objectApiName", "=", objectName],
+                    ["_name", "=", functionApiName],
+                    ["is_rest", "=", true]
+                ]});
+
+                if (!fDocs || fDocs.length == 0) {
+                    throw new Error(`function need to enable api access.`);
+                }
+
+                const result = await object.runFunction(functionApiName, ctx.params, userSession);
+                return {
+                    "status": REQUEST_SUCCESS_STATUS,
+                    "msg": "",
+                    "data": result
+                }
+            }
+        },
     },
 
     /**

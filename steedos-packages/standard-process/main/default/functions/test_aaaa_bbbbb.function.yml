@@ -1,0 +1,9 @@
+name: test_aaaa_bbbbb
+objectApiName: test
+isEnabled: true
+is_rest: true
+script: |-
+  // global: {_:lodash, moment, validator, filters}
+  // objects
+  // ctx.input
+locked: false

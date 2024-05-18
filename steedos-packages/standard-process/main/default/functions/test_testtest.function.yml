@@ -1,0 +1,16 @@
+name: test_testtest
+objectApiName: test
+isEnabled: true
+is_rest: true
+script: |-
+  // global: {_:lodash, moment, validator, filters}
+  // objects
+  console.log(this);
+  const obj = this.getObject("test");
+  const input = {};
+  const params = ctx.params;
+  return await obj.runFunction("test", input, params);
+  return ctx.input;
+label: test_testtest
+locked: false
+type: script
