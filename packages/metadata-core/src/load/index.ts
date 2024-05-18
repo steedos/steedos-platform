@@ -2,7 +2,7 @@
  * @Author: baozhoutao@hotoa.com
  * @Date: 2022-03-28 14:16:02
  * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-12-10 16:02:11
+ * @LastEditTime: 2024-05-15 10:14:31
  * @Description: 
  */
 export * from './loadChartFile'
@@ -22,3 +22,4 @@ export * from './loadImportFile'
 export * from './loadQuestionFile'
 export * from './loadDashboardFile'
 export * from './loadPrintFile'
+export * from './loadFunctionFile'

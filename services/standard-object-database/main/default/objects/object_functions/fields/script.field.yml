@@ -1,0 +1,24 @@
+name: script
+label: Script
+type: code
+language: javascript
+is_wide: true
+required: true
+defaultValue: |-
+  // global: {_:lodash, moment, validator, filters}
+  // objects
+  // ctx.input
+editorDidMount: >-
+  if(window._registerCompletionItemProviderTrigger){
+    return ;
+  }
+
+  window._registerCompletionItemProviderTrigger = true;
+
+  const result = Steedos.authRequest("/service/api/suggestions/trigger.d.ts",
+  {async: false});
+
+  monaco.languages.typescript.javascriptDefaults.addExtraLib(
+    result
+  );
+sort_no: 150

@@ -1,0 +1,56 @@
+name: object_functions
+label: Object Functions
+description:
+fields:
+  _name:
+    label: API Name
+    help: >-
+      Can only contain lowercase letters and numbers, must start with a letter,
+      cannot end with an underscore character or contain two consecutive
+      underscore characters
+    description:
+  is_rest:
+    label: Enable API
+    help:
+    description: allow the use of api interface access：/api/v1/:objectName/functions/:functionApiName
+  is_system:
+    label: System
+    help:
+    description:
+  isEnabled:
+    label: Enable
+    help:
+    description:
+  name:
+    label: Name
+    help:
+    description:
+  objectApiName:
+    label: Object
+    help:
+    description:
+  script:
+    label: Script
+    help:
+    description: |
+      async function run({
+          input,
+          params,
+          broker,
+          getObject,
+          getUser
+      } = ctx) {
+          // ...
+      }
+  type:
+    label: Type
+    help:
+    description:
+    options:
+      - label: "Script"
+        value: "script"
+listviews:
+  all:
+    label: All
+  customize:
+    label: Customize

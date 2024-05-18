@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2024-03-22 14:37:50
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-04-24 15:07:09
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2024-05-18 13:31:28
  * @Description: 由于 collection observe 在 steedos-server.started 事件中被触发报错需要 Fiber ,添加Fiber 后, 不报错,但是无法订阅到数据. 所以单写服务处理此问题.
  * 
  */
@@ -10,7 +10,9 @@
 "use strict";
 const _ = require('lodash')
 const register = require('@steedos/metadata-registrar');
-const { ActionFieldUpdateCacher, WorkflowOutboundMessageCacher, WorkflowNotificationCacher, WorkflowRuleCacher, ObjectValidationRulesCacher, SettingsCacher, ObjectWebhookCacher } = require('./lib/index')
+const { ActionFieldUpdateCacher, WorkflowOutboundMessageCacher, WorkflowNotificationCacher, WorkflowRuleCacher, ObjectValidationRulesCacher, SettingsCacher, ObjectWebhookCacher
+	, ObjectFunctionsCacher
+ } = require('./lib/index')
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * 软件包服务启动后也需要抛出事件。
@@ -26,7 +28,9 @@ module.exports = {
 	events: {
 		'$packages.changed': function(){
 			this.loadMetadataWorkflows();
-			this.loadMetadataValidationRule()
+			this.loadMetadataValidationRule();
+			this.loadMetadataObjectFunctions();
+
 		}
 	},
 
@@ -68,7 +72,19 @@ module.exports = {
 			_.each(res, (item)=>{
 				this.objectValidationRulesCacher.set(item._id, item)
 			})
-		}
+		},
+		loadMetadataObjectFunctions: async function(){
+			const res = await broker.call(`object_functions.getAll`);
+			_.each(res, (item)=>{
+				const metadata = item.metadata;
+				const idKey = `${metadata.objectApiName}__${metadata.name}`
+				// 缓存里没有的才加
+				const doc = this.objectFunctionsCacher.get(idKey)
+				if (!doc) {
+					this.objectFunctionsCacher.set(idKey, metadata)
+				}
+			})
+		},
 	},
 
 	async started() {
@@ -86,6 +102,8 @@ module.exports = {
 
 		this.objectWebhooksCacher = new ObjectWebhookCacher();
 
+		this.objectFunctionsCacher = new ObjectFunctionsCacher();
+
 		await this.loadMetadataWorkflows()
 	},
 
@@ -96,6 +114,7 @@ module.exports = {
 		this.workflowRuleCacher?.destroy();
 		this.objectValidationRulesCacher?.destroy();
 		this.settingsCacher?.destroy();
-		this.objectWebhooksCacher?.destroy()
+		this.objectWebhooksCacher?.destroy();
+		this.objectFunctionsCacher?.destroy();
 	}
 };
