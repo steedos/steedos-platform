@@ -1,0 +1,9 @@
+name: pdf_view
+allow_anonymous: true
+is_active: true
+label: pdf view
+locked: false
+pageAssignments: []
+render_engine: amis
+type: app
+widgets: []

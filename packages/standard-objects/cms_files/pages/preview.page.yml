@@ -1,0 +1,15 @@
+name: preview
+__filename: >-
+  /workspace/steedos-platform/packages/standard-objects/cms_files/pages/preview.page.yml
+is_active: true
+label: 附件记录详细
+locked: false
+object_name: cms_files
+pageAssignments:
+  - type: orgDefault
+    page: preview
+    desktop: true
+    mobile: true
+render_engine: amis
+type: record
+widgets: []

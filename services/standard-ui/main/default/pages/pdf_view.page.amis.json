@@ -1,0 +1,37 @@
+{
+    "type": "page",
+    "title": "PDF View",
+    "className": "page-pdf-file",
+    "css": {
+        ".page-pdf-file .antd-Page-body>div": {
+          "height": "100%"
+        },
+        ".page-pdf-file .react-pdf__Page__canvas": {
+            "width": "100% !important"
+        }
+    },
+    "body": [
+        {
+            "type": "pdf-viewer",
+            "id": "pdf-viewer",
+            "name": "file",
+            "width": 500,
+            "source": "src",
+            "src": "${context.rootUrl}${fileUrl}"
+        }
+    ],
+    "regions": [
+        "body"
+    ],
+    "data": {
+        "initialValues": {},
+        "appId": "builder",
+        "title": ""
+    },
+    "id": "u:015f6bd7ecd0",
+    "asideResizor": false,
+    "editorState": "default",
+    "pullRefresh": {
+        "disabled": true
+    }
+}

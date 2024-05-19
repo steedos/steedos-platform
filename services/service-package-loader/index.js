@@ -4,6 +4,7 @@ const triggerLoader = require('./lib').triggerLoader;
 const processLoader = require('./lib').processLoader;
 const processTriggerLoader = require('./lib').processTriggerLoader;
 const triggerYmlLoader = require('./lib').triggerYmlLoader;
+const functionYmlLoader = require('./lib').functionYmlLoader;
 const importLoader = require('./lib').importLoader;
 const printLoader = require('./lib').printLoader;
 const path = require('path');
@@ -171,6 +172,7 @@ module.exports = {
             await triggerLoader.load(this.broker, packagePath, name);
             await processTriggerLoader.load(this.broker, packagePath, name);
             await triggerYmlLoader.load(this.broker, packagePath, name);
+            await functionYmlLoader.load(this.broker, packagePath, name);
             await importLoader.load(this.broker, packagePath, name);
             await printLoader.load(this.broker, packagePath, name);
             if(this.core){

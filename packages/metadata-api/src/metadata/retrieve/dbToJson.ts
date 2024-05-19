@@ -33,6 +33,7 @@ import { ImportCollection } from '../collection/import'
 import { QuestionCollection } from '../collection/question';
 import { DashboardCollection } from '../collection/dashboard';
 import { PrintCollection } from '../collection/print';
+import { FunctionCollection } from '../collection/function';
 
 const queryCollection = new QueryCollection();
 const chartCollection = new ChartCollection();
@@ -46,6 +47,7 @@ const importCollection = new ImportCollection();
 const questionCollection = new QuestionCollection();
 const dashboardCollection = new DashboardCollection();
 const printCollection = new PrintCollection();
+const functionCollection = new FunctionCollection();
 
 import { hasParent, getParentMetadataName, hasChild, getMetadataTypeInfo, getFunctionFields,
    SteedosMetadataTypeInfoKeys as TypeInfoKeys } from '@steedos/metadata-core';
@@ -170,6 +172,9 @@ export async function dbToJson(reqYml, steedosPackage, dbManager){
         break;
       case TypeInfoKeys.Print:
         await printCollection.retrieve(dbManager, reqYml[metadataName], container);
+        break;
+      case TypeInfoKeys.FunctionYML:
+        await functionCollection.retrieve(dbManager, reqYml[metadataName], container);
         break;
       default:
         break;
