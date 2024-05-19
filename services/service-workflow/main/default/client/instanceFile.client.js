@@ -10,7 +10,7 @@ Steedos.getInstnaceFilePreviewAmisSchema = function (ctx) {
                     "body": "预览",
                     "level": "link",
                     "id": "u:instance_preview",
-                    "className": "inline",
+                    "className": "inline-block",
                     "onEvent": {
                         "click": {
                             "weight": 0,
@@ -80,6 +80,19 @@ Steedos.getInstnaceFilePreviewAmisSchema = function (ctx) {
                                                     },
                                                     ".drawer-excel-file .antd-Page-body>div": {
                                                         "height": "100%"
+                                                    },
+                                                    ".mobile-preview-drawer .office-viewer article section": {
+                                                        "width": "100% !important",
+                                                        "padding": "1rem !important"
+                                                    },
+                                                    ".mobile-preview-drawer .office-viewer article p div,.mobile-preview-drawer .office-viewer article table": {
+                                                        "max-width": "100%"
+                                                    },
+                                                    ".mobile-preview-drawer .office-viewer article p": {
+                                                        "text-indent": "unset !important"
+                                                    },
+                                                    ".mobile-preview-drawer .office-viewer article": {
+                                                        "width": "100%"
                                                     }
                                                 },
                                                 "id": "u:61fd47ac9afc"
@@ -87,10 +100,12 @@ Steedos.getInstnaceFilePreviewAmisSchema = function (ctx) {
                                         ],
                                         "className": {
                                             "drawer-container-office-preview": true,
-                                            "drawer-excel-file": "${ARRAYINCLUDES(['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],original.type)}"
+                                            "drawer-excel-file": "${ARRAYINCLUDES(['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],original.type)}",
+                                            "mobile-preview-drawer": "${window:innerWidth<768}"
                                         },
                                         "id": "u:cd1199c49cc7",
                                         "actions": [],
+                                        "bodyClassName": "p-0",
                                         "showCloseButton": true,
                                         "closeOnOutside": false,
                                         "closeOnEsc": false,
@@ -150,5 +165,5 @@ Steedos.getInstnaceFilePreviewAmisData = function (ctx) {
 }
 
 Steedos.getInstnaceFilePreviewAmisButtonClass = function () {
-    return "mouse-hover hover:inline-block hover:cursor-pointer hover:ml-2.5";
+    return "mouse-hover hover:inline-block hover:cursor-pointer hover:ml-2.5 ";
 }
