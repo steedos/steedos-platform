@@ -25,6 +25,7 @@ import { runTriggerFunction } from '../triggers/trigger';
 import { MONGO_BASE_OBJECT, getObjectConfig, getPatternListeners } from "@steedos/metadata-registrar";
 import { getMongoInsertBaseDoc, getMongoUpdateBaseDoc } from "./method_base";
 import { getDefaultValuesDoc } from "./defaultValue";
+import { runFunction } from "../functions/function";
 
 declare var TAPi18n;
 
@@ -35,6 +36,7 @@ const clone = require('clone')
 const PLATFORM_ENTERPRISE = 'platform-enterprise';
 const PLATFORM_PROFESSIONAL = 'platform-professional';
 const LICENSE_SERVICE = '@steedos/service-license';
+const METADATA_CACHER_SERVICE_NAME = 'metadata-cachers-service'
 
 // 主子表有层级限制，超过3层就报错，该函数判断当前对象作为主表对象往下的层级最多不越过3层，
 // 其3层指的是A-B-C-D，它们都有父子关系，A作为最顶层，该对象上不可以再创建主表子表关系字段，但是B、C、D上可以；
@@ -655,6 +657,49 @@ export class SteedosObjectType extends SteedosObjectProperties {
             }
         }
 
+    }
+
+    /**
+     * 执行函数
+     * @param functionName 函数Api Name
+     * @param input 参数
+     * @param userSession userSession
+     * @returns result
+     */
+    async runFunction(functionName: string, input: object, userSession?: object) {
+        // 查找function
+        const objectName = this.name
+        // 从缓存获取
+        const fDocs = await broker.call(`${METADATA_CACHER_SERVICE_NAME}.find`, {metadataName: 'object_functions', filters: [
+            ["objectApiName", "=", objectName],
+            ["_name", "=", functionName]
+        ]});
+        const len = fDocs.length
+        if (0 == len) {
+            throw new Error(`can not find function: ${functionName}.`)
+        }
+        if (len > 1) {
+            throw new Error(`found multiple functions by ${functionName}.`)
+        }
+        if (1 == len) {
+            const fDoc = fDocs[0]
+            const params = {}
+            if (userSession) {
+                params["userId"] = userSession["userId"];
+                params["spaceId"] = userSession["spaceId"];
+            }
+            const result = await runFunction(fDoc, {
+                getObject: getObject,
+                getUser: auth.getSessionByUserId
+            }, {
+                input: input,
+                params: params,
+                broker: broker,
+                getObject: getObject,
+                getUser: auth.getSessionByUserId
+            })
+            return result
+        }
     }
 
     toConfig() {

@@ -1,0 +1,12 @@
+metadataName: Function
+defaultDirectory: functions
+ext: function
+hasStandardMembers: true
+hasContent: false
+contentIsBinary: false
+isAddressable: true
+isSourceTracked: true
+nameForMsgs: Custom Function
+nameForMsgsPlural: Custom Functions
+deleteSupported: true
+tableName: object_functions

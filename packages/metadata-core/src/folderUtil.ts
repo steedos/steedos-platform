@@ -155,6 +155,7 @@ export function getRetrievePackageInfo(option) {
                     requestJson[TypeInfoKeys.RestrictionRule] = ['*']
                     requestJson[TypeInfoKeys.Import] = ['*']
                     requestJson[TypeInfoKeys.Print] = ['*']
+                    requestJson[TypeInfoKeys.FunctionYML] = ['*']
                 }
     
             }

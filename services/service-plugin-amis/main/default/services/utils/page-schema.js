@@ -101,7 +101,8 @@ const getRecordPageInitSchema = async function (objectApiName, userSession) {
             "type": "steedos-record-detail-header",
             "label": "标题面板",
             "objectApiName": "${objectName}",
-            "recordId": "${recordId}"
+            "recordId": "${recordId}",
+            "showBackButton": "${!_inDrawer}"
         },
         content
     ];

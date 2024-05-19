@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@hotoa.com
  * @Date: 2022-03-28 14:16:03
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-01-27 17:26:30
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2024-05-15 15:23:49
  * @Description: 
  */
 
@@ -31,6 +31,7 @@ const clientJSService = require('./lib/clientJSService');
 const questionService = require('./lib/questionService')
 const dashboardService = require('./lib/dashboardService')
 const printService = require('./lib/printService')
+const objectFunctionService = require('./lib/objectFunctionService')
 
 const approvalProcessService = require('./lib/approvalProcessService')
 const flowRoleService = require('./lib/flowRoleService')
@@ -69,6 +70,7 @@ module.exports = {
     this.broker.createService(questionService);
     this.broker.createService(dashboardService);
     this.broker.createService(printService);
+    this.broker.createService(objectFunctionService);
 
     this.broker.createService(approvalProcessService);
     this.broker.createService(flowRoleService);

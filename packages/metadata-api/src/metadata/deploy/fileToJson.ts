@@ -15,6 +15,7 @@ import {
     LoadQuestionFile,
     LoadDashboardFile,
     LoadPrintFile,
+    LoadFunctionFile,
 } from '@steedos/metadata-core';
 import { checkNameEquals } from '../../util/check_name_equals'
 
@@ -35,6 +36,7 @@ const loadImportFile = new LoadImportFile();
 const loadQuestionFile = new LoadQuestionFile();
 const loadDashboardFile = new LoadDashboardFile();
 const loadPrintFile = new LoadPrintFile();
+const loadFunctionFile = new LoadFunctionFile();
 
 //扫描Permissionsets并输出为json
 async function loadPermissionsets(filePath){
@@ -701,6 +703,7 @@ export async function loadFileToJson(packagePath:string, packageYml?){
     let questions = {};
     let dashboards = {};
     let prints = {};
+    let functions = {};
     let mark:boolean = false;
 
     for(const metadataname in packageYml){
@@ -816,6 +819,9 @@ export async function loadFileToJson(packagePath:string, packageYml?){
         }else if (metadataname === TypeInfoKeys.Print) {
             dashboards = loadPrintFile.load(packagePath);
             mark = true;
+        }else if (metadataname === TypeInfoKeys.FunctionYML) {
+            functions = loadFunctionFile.load(packagePath);
+            mark = true;
         }
 
     }
@@ -857,6 +863,7 @@ export async function loadFileToJson(packagePath:string, packageYml?){
     steedosPackage[TypeInfoKeys.Question] = questions;
     steedosPackage[TypeInfoKeys.Dashboard] = dashboards;
     steedosPackage[TypeInfoKeys.Print] = prints;
+    steedosPackage[TypeInfoKeys.FunctionYML] = functions;
 
     //用于测试查看本地生成的steedosPackage结构和属性是否完整
     // let targetFolderName = './data';
