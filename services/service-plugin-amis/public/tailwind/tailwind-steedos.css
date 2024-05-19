@@ -103,6 +103,10 @@
   margin: auto
 }
 
+.m-2 {
+  margin: 0.5rem
+}
+
 .mx-4 {
   margin-left: 1rem;
   margin-right: 1rem
@@ -413,6 +417,10 @@
   padding-left: 2.5rem
 }
 
+.pt-4 {
+  padding-top: 1rem
+}
+
 .text-left {
   text-align: left
 }
@@ -486,6 +494,22 @@
 
 .ease-in-out {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1)
+}
+
+.hover\:ml-2\.5:hover {
+  margin-left: 0.625rem
+}
+
+.hover\:ml-2:hover {
+  margin-left: 0.5rem
+}
+
+.hover\:inline-block:hover {
+  display: inline-block
+}
+
+.hover\:cursor-pointer:hover {
+  cursor: pointer
 }
 
 .focus\:outline-none:focus {
