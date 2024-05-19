@@ -314,3 +314,11 @@ tbody .color-priority-muted *{
 .instance-wrapper .instance-left-buttons .slds-button-group .steedos-amis-button button.antd-Button:hover{
     color: #40a9ff
 }
+
+
+@media (max-width: 768px){
+    /* 审批单详细页手机端附件预览按钮样式 */
+    .instance-wrapper .instance_attachments .steedos-amis-button-instance-preview li.steedos-amis-button{
+        width: -webkit-fill-available;
+    }
+}
