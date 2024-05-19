@@ -4484,15 +4484,6 @@ aliyun-sdk@1.12.3:
     xml2js "0.4.4"
     xmlbuilder "^13.0.2"
 
-amis-formula@3.6.3:
-  version "3.6.3"
-  resolved "https://registry.yarnpkg.com/amis-formula/-/amis-formula-3.6.3.tgz#da0e8f36ec96a38a5fb2a0494285708ed6756e85"
-  integrity sha512-h6ou5qVFBzrcOH2Eh56uYsZAUeM8o8NdNVGGpsAn5REo5FWQ2Nf9sWyxccmYx8TFsA6NNG/5ppvzhLca506eHw==
-  dependencies:
-    lodash "^4.17.15"
-    moment "^2.19.4"
-    tslib "^2.3.1"
-
 amis-formula@~6.3.0:
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/amis-formula/-/amis-formula-6.3.0.tgz#da990a5c30ad3f663aba407c9b5d4c675c8aed53"

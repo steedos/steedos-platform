@@ -27,7 +27,7 @@
     "@steedos/odata-v4-typeorm": "2.7.1-beta.12",
     "@steedos/schemas": "2.7.1-beta.12",
     "@steedos/standard-objects": "2.7.1-beta.12",
-    "amis-formula": "3.6.3",
+    "amis-formula": "~6.3.0",
     "app-root-path": "^2.2.1",
     "body-parser": "^1.18.1",
     "bunyan-sfdx-no-dtrace": "^1.8.2",
