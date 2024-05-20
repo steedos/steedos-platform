@@ -77,6 +77,11 @@ module.exports = {
                 }
             }
             
+            if(_.isEmpty(this.data.values)){
+                const records = await objectql.getObject('datasources').find({filters: ['name', '=', this.id]})
+                this.data.values = records.length > 0 ? records[0]: null
+            }
+            
         }
     }
 }

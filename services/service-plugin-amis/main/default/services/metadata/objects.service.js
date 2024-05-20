@@ -238,7 +238,7 @@ module.exports = {
                 const include_hide = ctx.params.include_hide === "true";
                 const include_related = ctx.params.include_related === "true";
                 
-                if(objectConfig.enable_workflow){
+                if(objectConfig.enable_workflow && objectConfig.fields?.instance_state){
                     try {
                         objectConfig.fields.instance_state.hidden = false;
                     } catch (error) {

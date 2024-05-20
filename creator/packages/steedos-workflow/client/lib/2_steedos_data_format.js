@@ -84,6 +84,11 @@ var s_autoform = function (schema, field) {
 
     var autoform = {};
 
+
+    if(type === 'master_detail'){
+        type = 'lookup'
+    }
+
     //字段类型转换
     switch (type) {
         case 'input':
