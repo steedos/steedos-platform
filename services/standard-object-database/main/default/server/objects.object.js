@@ -315,7 +315,8 @@ let objectTriggers = {
                 required: true,
                 index: true,
                 searchable: true,
-                filterable: true
+                filterable: true,
+                sort_no: 10
             });
             // Creator.getCollection("object_fields").insert({
             //     object: doc.name,
