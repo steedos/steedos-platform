@@ -45,7 +45,8 @@
             "body": [{
                 "type": "tpl",
                 "className": "flex-1 w-6/12",
-                "tpl": "${label}"
+                "tpl": "${label}",
+                "id": "u:8147616a7b50"
               },
               {
                 "type": "tpl",
@@ -60,9 +61,11 @@
                   "mode": "text",
                   "text": "${tag | toInt}",
                   "overflowCount": 999
-                }
+                },
+                "id": "u:94f078e62361"
               }
-            ]
+            ],
+            "id": "u:decad07ad26b"
           },
           "unfoldedLevel": 2,
           "source": "${options}"
@@ -74,7 +77,8 @@
           "headers": {
             "Authorization": "Bearer ${context.tenantId},${context.authToken}"
           }
-        }
+        },
+        "dsType": "api"
       }],
       "id": "u:3723a0a5ded0",
       "mobile": {
@@ -121,7 +125,8 @@
             "isFixedWidth": false
           }
         ],
-        "className": "h-full"
+        "className": "h-full",
+        "dsType": "api"
       }],
       "id": "u:f101829e8710"
     }
@@ -129,18 +134,9 @@
   "regions": [
     "body"
   ],
-  "data": {
-    "objectName": "instances",
-    "recordId": "eAzA6SZNCEzL9RuJR",
-    "context": {
-      "rootUrl": "http://127.0.0.1:5000",
-      "tenantId": "644484b7aff6100247b3e6cf",
-      "userId": "6c017281-b966-49fe-aa2b-f09b835feed7",
-      "authToken": "ec7b993f86f01162b471f17d9063241beb7c57987a45d40f911e40269ca2e21b8f806cba87de7be1a07c41"
-    }
-  },
-  "className": "steedos-instance-wrapper",
+  "data": {},
   "id": "u:d37465183f56",
+  "className": "steedos-instance-wrapper",
   "bodyClassName": "p-0 flex flex-1 overflow-hidden h-full",
   "name": "amis-root-workflow",
   "initApi": null,
@@ -148,5 +144,6 @@
   "asideResizor": false,
   "pullRefresh": {
     "disabled": true
-  }
+  },
+  "editorState": "default"
 }
