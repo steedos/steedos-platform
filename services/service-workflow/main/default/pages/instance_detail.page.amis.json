@@ -2,7 +2,7 @@
   "type": "page",
   "body": [{
       "type": "wrapper",
-      "visibleOn": "${AND(display != 'split', ${window:innerWidth > 768})}",
+      "visibleOn": "${AND(display != 'split', ${window:innerWidth > 768},!!!_inDrawer)}",
       "className": "bg-white m-0 p-0 flex-shrink-0 min-w-[240px] lg:order-first lg:flex lg:flex-col border-r border-gray-300",
       "body": [{
         "type": "service",
@@ -112,7 +112,7 @@
             "body": [{
               "type": "custom",
               "html": "<div className='workflow-main flex w-full h-full no-columns instance-show instance-detail-service-wrapper'></div>",
-              "onMount": "try {\n        Session.set(\"instance_change\", false);\n\n        Session.set(\"instance_loading\", true);\n        Session.set(\"judge\", null);\n        Session.set(\"next_step_id\", null);\n        Session.set(\"next_step_multiple\", null);\n        Session.set(\"next_user_multiple\", null);\n        Session.set(\"box\", props.data.side_listview_id);\n        Session.set(\"instanceId\", Session.get(\"record_id\"));\n        Session.set(\"instanceTaskId\", null);\nwindow.instanceDetailBlazeRenderView=Blaze.render(Blaze._getTemplate('instance_view_wrapper'),document.getElementsByClassName('instance-detail-service-wrapper')[0])\n    } catch (error) {\n        console.error(error)\n    };\n    if (window.instanceDetailBlazeRenderView) {\n        window.instanceDetailBlazeRenderView.autorun(()=>{\n            if(FlowRouter.current().params.object_name==\"instances\"){\n                console.debug('====onMount=', props);\n                Session.set(\"instanceId\", Session.get(\"record_id\"));\n                Session.set(\"instanceTaskId\", null)\n            }\n        }\n        )\n    };",
+              "onMount": "try {\n    Session.set(\"instance_change\", false);\n\n    Session.set(\"instance_loading\", true);\n    Session.set(\"judge\", null);\n    Session.set(\"next_step_id\", null);\n    Session.set(\"next_step_multiple\", null);\n    Session.set(\"next_user_multiple\", null);\n    let box;\n    let recordId;\n    if (props.data._inDrawer) {\n        // 主表记录详细页面审批相关列表中点击名称字段右侧弹出drawer时，box写死，recordId取作用域中值\n        box = \"outbox\";\n        recordId = props.data.recordId;\n    }\n    else {\n        box = props.data.side_listview_id;\n        recordId = Session.get(\"record_id\");\n    }\n    Session.set(\"box\", box);\n    Session.set(\"instanceId\", recordId);\n    Session.set(\"instanceTaskId\", null);\n    window.instanceDetailBlazeRenderView = Blaze.render(Blaze._getTemplate('instance_view_wrapper'), document.getElementsByClassName('instance-detail-service-wrapper')[0])\n} catch (error) {\n    console.error(error)\n};\nif (window.instanceDetailBlazeRenderView) {\n    window.instanceDetailBlazeRenderView.autorun(() => {\n        if (FlowRouter.current().params.object_name == \"instances\") {\n            console.debug('====onMount=', props);\n            Session.set(\"instanceId\", Session.get(\"record_id\"));\n            Session.set(\"instanceTaskId\", null)\n        }\n    }\n    )\n};",
               "id": "u:a6e0685d1da3",
               "onUnmount": "if(window.instanceDetailBlazeRenderView){console.log('Blaze.remove===>instanceDetailBlazeRenderView');Blaze.remove(window.instanceDetailBlazeRenderView); window.instanceDetailBlazeRenderView = null;}"
             }],
