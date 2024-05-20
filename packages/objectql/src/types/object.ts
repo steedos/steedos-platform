@@ -2239,6 +2239,12 @@ export class SteedosObjectType extends SteedosObjectProperties {
             args.splice(args.length - 1, 1, userSession ? userSession.userId : undefined)
             returnValue = await adapterMethod.apply(this._datasource, args);
         } else {
+            let beforeTriggerContext = await this.getTriggerContext('before', method, args)
+            if (paramRecordId) {
+                beforeTriggerContext = Object.assign({} , beforeTriggerContext, { id: paramRecordId });
+            }
+            await this.runBeforeTriggers(method, beforeTriggerContext)
+
             let previousDoc: any;
             // update/delete时始终查一次整个record doc，公式中依赖了完整doc（比如单元格编辑等情况下doc不完整），after trigger中需要previousDoc
             if (method === 'update' || method === 'delete') {
@@ -2251,11 +2257,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             if(docAfterFormulaRun){
                 Object.assign(doc, docAfterFormulaRun);
             }
-            let beforeTriggerContext = await this.getTriggerContext('before', method, args)
-            if (paramRecordId) {
-                beforeTriggerContext = Object.assign({} , beforeTriggerContext, { id: paramRecordId });
-            }
-            await this.runBeforeTriggers(method, beforeTriggerContext)
+
             await runValidationRules(method, beforeTriggerContext, args[0], userSession)
             let afterTriggerContext = await this.getTriggerContext('after', method, args)
             if (method === 'update' || method === 'delete') {
