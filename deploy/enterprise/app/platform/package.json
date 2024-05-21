@@ -7,7 +7,7 @@
     "dependencies": {
       "@steedos/service-community": "~2.7",
       "@steedos/service-enterprise": "^2.5",
-      "@steedos-labs/analytics": "^0.1.23"
+      "@steedos-labs/analytics": "^0.1.24"
     },
     "resolutions": {
       "@azure/core-auth": "1.5.0",
