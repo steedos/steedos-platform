@@ -1,6 +1,6 @@
 {
     "name": "@steedos/standard-collaboration",
-    "version": "2.7.1-beta.14",
+    "version": "2.7.1-beta.15",
     "main": "package.service.js",
     "private": false,
     "publishConfig": {
@@ -12,7 +12,7 @@
     "description": "steedos package",
     "repository": {},
     "license": "MIT",
-    "gitHead": "8e3f33f7b41c049424006ca336af8f327c3cb1be",
+    "gitHead": "cf3eb8bd2b0b729ada0b8e5e9d6d9b4d652b4de0",
     "dependencies": {
         "clone": "^2.1.2"
     }
