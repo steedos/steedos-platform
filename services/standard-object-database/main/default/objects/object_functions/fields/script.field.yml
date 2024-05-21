@@ -9,13 +9,13 @@ defaultValue: |-
   // objects
   // ctx.input
 editorDidMount: >-
-  if(window._registerCompletionItemProviderTrigger){
+  if(window._registerCompletionItemProviderFunction){
     return ;
   }
 
-  window._registerCompletionItemProviderTrigger = true;
+  window._registerCompletionItemProviderFunction = true;
 
-  const result = Steedos.authRequest("/service/api/suggestions/trigger.d.ts",
+  const result = Steedos.authRequest("/service/api/suggestions/function.d.ts",
   {async: false});
 
   monaco.languages.typescript.javascriptDefaults.addExtraLib(

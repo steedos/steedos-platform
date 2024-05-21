@@ -46,6 +46,10 @@ fields:
     options:
       - label: "Script"
         value: "script"
+  description:
+    label: 备注
+    help:
+    description:
 listviews:
   all:
     label: 所有

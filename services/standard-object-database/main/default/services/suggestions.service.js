@@ -129,6 +129,98 @@ module.exports = {
                     ${servicesTypes}
                 `
             }
+        },
+        functionTSExtraLib: {
+            rest: {
+                method: "GET",
+                path: "/function.d.ts",
+            },
+            async handler(ctx) {
+                let objectsTypes = 'declare const objects: {';
+                _.each(global.objects, (v, k)=>{
+                    objectsTypes = `${objectsTypes} ${k}: SteedosObjectType;`
+                });
+
+                objectsTypes = objectsTypes + '}'
+
+                return `
+                    
+                    declare var global = {_: any, moment: any, validator: any, filters: any};
+
+                    declare type Params = {
+                        userId: SteedosIDType;
+                        spaceId?: SteedosIDType;
+                    }
+
+                    declare type CTXType = {
+                        input: any;
+                        params: Params;
+                        broker: {
+                            meta: any;
+                            call: any;
+                            mcall: any;
+                            emit: any;
+                            broadcast: any;
+                            broadcastLocal: any;
+                            namespace: string;
+                            nodeID: string;
+                            instanceID: string;
+                            logger: any;
+                            metadata: any;
+                        },
+                        getObject(objectName: string): SteedosObjectType;
+                        getUser(userId: string, spaceId: string): Promise<SteedosUserSession>;
+                    };
+
+                    declare var ctx: CTXType;
+
+                    declare type SteedosQueryFilters = any;
+                    declare type SteedosIDType = number | string;
+                    declare type SteedosQueryOptions = {
+                        fields?: Array<string> | string;
+                        readonly filters?: SteedosQueryFilters;
+                        readonly top?: number;
+                        readonly skip?: number;
+                        readonly sort?: string;
+                    };
+                    declare type SteedosUserSession = {
+                        userId: SteedosIDType;
+                        spaceId?: string;
+                        name: string;
+                        username?: string;
+                        mobile?: string;
+                        email?: string;
+                        utcOffset?: number;
+                        locale?: string;
+                        roles?: string[];
+                        space?: any;
+                        spaces?: any;
+                        company?: any;
+                        companies?: any;
+                        organization?: any;
+                        organizations?: any;
+                        permission_shares?: any;
+                        company_id?: string;
+                        company_ids?: string[];
+                        is_space_admin?: boolean;
+                        steedos_id?: string;
+                    };
+                    declare class SteedosObjectType {
+                        find(query: SteedosQueryOptions, userSession?: SteedosUserSession): Promise<any>;
+                        findOne(id: SteedosIDType, query: SteedosQueryOptions, userSession?: SteedosUserSession): Promise<any>;
+                        insert(doc: Dictionary<any>, userSession?: SteedosUserSession): Promise<any>;
+                        update(id: SteedosIDType, doc: Dictionary<any>, userSession?: SteedosUserSession): Promise<any>;
+                        delete(id: SteedosIDType, userSession?: SteedosUserSession): Promise<any>;
+                        directFind(query: SteedosQueryOptions, userSession?: SteedosUserSession): Promise<any>;
+                        directInsert(doc: Dictionary<any>, userSession?: SteedosUserSession): Promise<any>;
+                        directUpdate(id: SteedosIDType, doc: Dictionary<any>, userSession?: SteedosUserSession): Promise<any>;
+                        directDelete(id: SteedosIDType, userSession?: SteedosUserSession): Promise<any>;
+                        count(query: SteedosQueryOptions, userSession?: SteedosUserSession): Promise<any>;
+                        _makeNewID(): Promise<any>;
+                    }
+                    ${objectsTypes}
+                `
+            }
         }
 	},
 
