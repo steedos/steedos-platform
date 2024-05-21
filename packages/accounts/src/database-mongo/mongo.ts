@@ -11,7 +11,7 @@ import { Collection, Db, ObjectId } from 'mongodb';
 
 import { AccountsMongoOptions, MongoUser } from './types';
 import { getSessionByUserId, hashStampedToken } from '@steedos/auth';
-import { isNumber } from "lodash";
+import { isNumber, isString } from "lodash";
 
 import { getDataSource } from '@steedos/objectql';
 
@@ -845,6 +845,12 @@ export class Mongo implements DatabaseInterface {
   }
 
   private async verifyCodeByName(name, code) {
+    if(!isString(code)){
+      throw new Error('accounts.invalidCode')
+    }
+    if(!isString(name)){
+      throw new Error('accounts.invalidCode')
+    }
     const now: any = new Date();
     let query = {
       name: name,
@@ -865,6 +871,12 @@ export class Mongo implements DatabaseInterface {
   }
 
   private async verifyCodeByOwner(owner, code) {
+    if(!isString(code)){
+      throw new Error('accounts.invalidCode')
+    }
+    if(!isString(owner)){
+      throw new Error('accounts.invalidCode')
+    }
     const now: any = new Date();
     let query = {
       owner: owner,
