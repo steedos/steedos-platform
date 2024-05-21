@@ -42,7 +42,7 @@ const METADATA_CACHER_SERVICE_NAME = 'metadata-cachers-service'
 // 其3层指的是A-B-C-D，它们都有父子关系，A作为最顶层，该对象上不可以再创建主表子表关系字段，但是B、C、D上可以；
 // 或者如果当前对象上创建的主表子表关系字段指向的对象是D，那么也会超过3层的层级限制；
 // 又或者中间加一层M先连接B再连接C，形成A-B-M-C-D，也会超过3层的层级限制；
-export const MAX_MASTER_DETAIL_LEAVE = 3;
+export const MAX_MASTER_DETAIL_LEAVE = 6;
 
 /**
  * 判断传入的paths中每条path下是否有重复对象名称，返回第一个重复的对象名称
