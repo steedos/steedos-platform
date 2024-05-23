@@ -1,5 +1,5 @@
 name: description
-filterable: false
+filterable: true
 hidden: false
 index: false
 is_name: false
@@ -9,7 +9,7 @@ omit: false
 readonly: false
 required: false
 rows: 2
-searchable: false
+searchable: true
 sort_no: 450
 sortable: false
 type: textarea

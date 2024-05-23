@@ -3,3 +3,4 @@ type: lookup
 reference_to: users
 label: 操作人
 sort_no: 22
+filterable: true

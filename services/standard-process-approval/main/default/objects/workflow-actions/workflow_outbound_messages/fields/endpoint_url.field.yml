@@ -4,3 +4,5 @@ type: url
 required: true
 sort_no: 50
 is_wide: true
+filterable: true
+searchable: true

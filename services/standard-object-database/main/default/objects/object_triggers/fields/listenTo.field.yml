@@ -5,3 +5,4 @@ reference_to: objects
 reference_to_field: name
 required: true
 sort_no: 120
+filterable: true

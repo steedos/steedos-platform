@@ -11,6 +11,7 @@ fields:
     name: name
     searchable: true
     required: true
+    filterable: true
   app:
     label: Apps
     type: lookup

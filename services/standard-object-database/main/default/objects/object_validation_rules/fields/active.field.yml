@@ -5,3 +5,4 @@ inlineHelpText: >-
   Indicates whether this validation rule is active, (true), or not active
   (false).
 sort_no: 120
+filterable: true

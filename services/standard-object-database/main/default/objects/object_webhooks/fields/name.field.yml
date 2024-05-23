@@ -3,3 +3,5 @@ type: text
 label: Name
 required: true
 sort_no: 10
+filterable: true
+searchable: true

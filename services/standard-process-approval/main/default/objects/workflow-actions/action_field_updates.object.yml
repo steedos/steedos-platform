@@ -9,16 +9,21 @@ fields:
   name:
     type: text
     required: true
+    filterable: true
+    searchable: true
   label:
     type: text
     required: true
     is_name: true
+    filterable: true
+    searchable: true
   object_name:
     label: Object Name
     type: lookup
     reference_to: objects
     reference_to_field: name
     required: true
+    filterable: true
   target_object:
     required: true
     type: lookup
@@ -80,6 +85,7 @@ fields:
     label: Description
     type: textarea
     is_wide: true
+    filterable: true
   reevaluate_on_change:
     type: boolean
     label: Re-evaluate Workflow Rules after Field Change

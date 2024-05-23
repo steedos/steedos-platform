@@ -11,6 +11,7 @@ fields:
     required: true
     name: name
     searchable: true
+    filterable: true
   year:
     type: number
     label: Year
@@ -33,6 +34,8 @@ fields:
     label: Appearance Formular
     required: true
     name: rules
+    searchable: true
+    filterable: true
   # company_id:
   #   required: false
   #   omit: false
@@ -47,6 +50,10 @@ list_views:
       - number
       - rules
     label: All Rules
+    searchable_fields:
+      - field: name
+      - field: rules
+      - field: company_id
 permission_set:
   user:
     allowCreate: false

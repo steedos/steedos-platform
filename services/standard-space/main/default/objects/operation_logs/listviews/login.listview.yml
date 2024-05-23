@@ -18,8 +18,9 @@ sort:
     order: desc
 searchable_fields: 
   - field: name
-  - field: remote_user
-  - field: related_to
-  - field: is_mobile
-  - field: is_tablet
   - field: status
+  - field: type
+  - field: object
+  - field: related_to
+  - field: remote_user
+  - field: created

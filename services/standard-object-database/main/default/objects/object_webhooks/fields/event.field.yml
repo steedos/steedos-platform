@@ -13,3 +13,4 @@ options:
     value: createAndUpdate
   - label: 记录已删除
     value: delete
+filterable: true

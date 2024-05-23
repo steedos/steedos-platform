@@ -14,10 +14,12 @@ fields:
     type: number
     label: Year
     name: year
+    filterable: true
   month:
     type: number
     label: Month
     name: month
+    filterable: true
   month_finished_count:
     type: number
     label: Total Number of Processed Instances

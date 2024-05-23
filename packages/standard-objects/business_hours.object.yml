@@ -14,11 +14,13 @@ fields:
     required: true
     searchable: true
     index: true
+    filterable: true
   is_default:
     type: boolean
     label: Use as default
     inlineHelpText: 'Whether to use this working time as the default setting will only take effect if checked.'
     defaultValue: true
+    filterable: true
   start:
     type: text
     label: Start Time

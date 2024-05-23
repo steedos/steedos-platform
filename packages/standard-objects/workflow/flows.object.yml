@@ -13,6 +13,7 @@ fields:
     searchable: true
     # readonly: true
     name: name
+    filterable: true
   api_name:
     type: text
     label: Api Name
@@ -20,6 +21,7 @@ fields:
     inlineHelpText: "配置了Api Name 的流程才能同步为元数据"
     searchable: true
     name: api_name
+    filterable: true
   form:
     label: Form
     type: lookup
@@ -27,7 +29,6 @@ fields:
     readonly: true
     visible_on: "{{global.mode !='read' ? false : true}}"
     name: form
-    filterable: true
   category:
     label: Category
     type: lookup

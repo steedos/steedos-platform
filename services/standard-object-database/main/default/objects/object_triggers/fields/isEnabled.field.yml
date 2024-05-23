@@ -3,3 +3,4 @@ label: Enabled
 type: boolean
 defaultValue: true
 sort_no: 140
+filterable: true

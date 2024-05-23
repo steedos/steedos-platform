@@ -10,6 +10,8 @@ fields:
     index: true
     required: true
     is_name: true
+    filterable: true
+    searchable: true
   field_name:
     label: Field Name
     type: text
@@ -30,6 +32,8 @@ fields:
     label: Rule
     type: text
     readonly: true
+    filterable: true
+    searchable: true
     visible_on: "{{global.mode ==='read' ? true : false}}"
 list_views:
   all:

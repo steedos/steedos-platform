@@ -6,3 +6,4 @@ searchable: true
 index: true
 is_name: true
 sort_no: 20
+filterable: true

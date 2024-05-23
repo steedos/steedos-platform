@@ -6,3 +6,4 @@ write_requires_master_read: true
 reference_to_field: name
 required: true
 sort_no: 110
+filterable: true

@@ -9,23 +9,27 @@ fields:
     type: text
     required: true
     searchable: true
+    filterable: true
   api_name:
     type: text
     label: API Name
     required: true
     searchable: true
     name: api_name
+    filterable: true
   parent:
     label: Parent Role
     type: lookup
     reference_to: roles
     reference_to_field: api_name
+    filterable: true
   users:
     label: Users
     type: lookup
     reference_to: users
     multiple: true
     is_wide: true
+    filterable: true
   description:
     label: Description
     type: textarea

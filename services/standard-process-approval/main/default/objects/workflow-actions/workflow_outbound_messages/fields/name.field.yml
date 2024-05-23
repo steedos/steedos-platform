@@ -5,3 +5,4 @@ required: true
 searchable: true
 index: true
 sort_no: 30
+filterable: true

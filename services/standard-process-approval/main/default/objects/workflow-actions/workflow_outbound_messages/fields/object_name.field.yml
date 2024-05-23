@@ -7,3 +7,4 @@ reference_to: objects
 reference_to_field: name
 index: true
 sort_no: 10
+filterable: true

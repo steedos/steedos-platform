@@ -1,5 +1,5 @@
 name: version
-filterable: false
+filterable: true
 hidden: false
 index: false
 is_name: false
@@ -12,3 +12,4 @@ searchable: true
 sort_no: 110
 sortable: true
 type: text
+

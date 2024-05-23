@@ -9,3 +9,4 @@ options:
   - label: 失败
     value: fail
     color: ff0000
+filterable: true

@@ -2,3 +2,5 @@ name: type
 type: text
 label: 类型
 sort_no: 20
+filterable: true
+searchable: true
