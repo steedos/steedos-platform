@@ -12,6 +12,8 @@ fields:
     type: text
     label: Edition
     is_name: true
+    filterable: true
+    searchable: true
   license:
     type: textarea
     rows: 8
@@ -29,6 +31,8 @@ fields:
   product_label:
     type: text
     label: Product
+    filterable: true
+    searchable: true
   is_trial:
     type: boolean
     label: Trial
@@ -52,12 +56,15 @@ fields:
   verify_status:
     type: select
     options: FAIL,SUCCESS
+    filterable: true
   invalid:
     type: boolean
     label: Invalid
     hidden: true
   lid:
     type: text
+    filterable: true
+    searchable: true
   verify_error:
     type: textarea
     hidden: true

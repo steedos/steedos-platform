@@ -9,3 +9,4 @@ inlineHelpText: >-
   cannot end with an underscore character or contain two consecutive underscore
   characters
 sort_no: 120
+filterable: true

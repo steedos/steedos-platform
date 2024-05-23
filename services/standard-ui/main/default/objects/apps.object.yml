@@ -20,6 +20,7 @@ fields:
     type: text
     required: true
     searchable: true
+    filterable: true
   icon_slds:
     label: SLDS Icon
     type: lookup
@@ -49,6 +50,8 @@ fields:
     label: Description
     type: textarea
     is_wide: true
+    searchable: true
+    filterable: true
   tabs:
     label: Tabs
     type: lookup
@@ -146,17 +149,20 @@ fields:
     label: Open in IE (Using Steedos Desktop)
     defaultValue: false
     group: External Application
+    filterable: true
   is_use_iframe:
     type: boolean
     label: Open with iframe
     defaultValue: false
     group: External Application
     visible_on: "{{false}}"
+    filterable: true
   is_new_window:
     type: boolean
     label: Open in New Window
     defaultValue: false
     group: External Application
+    filterable: true
   on_click:
     type: textarea
     label: onClick

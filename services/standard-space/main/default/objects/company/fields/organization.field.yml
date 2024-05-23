@@ -5,3 +5,4 @@ required: true
 reference_to: organizations
 omit: false
 sort_no: 130
+filterable: true

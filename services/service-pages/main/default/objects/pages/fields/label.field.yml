@@ -6,3 +6,4 @@ searchable: true
 sort_no: 120
 is_name: true
 type: text
+filterable: true

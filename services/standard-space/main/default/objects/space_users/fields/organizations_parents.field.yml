@@ -5,6 +5,6 @@ reference_to: organizations
 multiple: true
 readonly: true
 visible_on: '{{global.mode ===''read'' ? true : false}}'
-filterable: true
+filterable: false
 hidden: false
 sort_no: 170

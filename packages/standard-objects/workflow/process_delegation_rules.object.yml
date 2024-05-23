@@ -28,11 +28,13 @@ fields:
     label: Start Time
     required: true
     name: start_time
+    filterable: true
   end_time:
     type: datetime
     label: End Time
     required: true
     name: end_time
+    filterable: true
   enabled:
     type: boolean
     label: Enabled

@@ -15,3 +15,4 @@ optionsFunction: !<tag:yaml.org,2002:js/function> |-
 
   }
 sort_no: 170
+filterable: true

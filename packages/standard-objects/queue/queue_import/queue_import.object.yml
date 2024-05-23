@@ -13,6 +13,7 @@ fields:
     searchable: true
     sort_no: 10
     type: text
+    filterable: true
   description:
     label: Description
     type: text
@@ -21,6 +22,7 @@ fields:
     is_name: true
     name: description
     searchable: true
+    filterable: true
   object_name:
     label: Object
     type: lookup
@@ -56,7 +58,6 @@ fields:
     readonly: true
     visible_on: "{{global.mode ==='read' ? true : false}}"
     name: encoding
-    filterable: true
   value_separator:
     label: Separator
     type: select
@@ -67,7 +68,6 @@ fields:
     visible_on: "{{global.mode ==='read' ? true : false}}"
     defaultValue: '","'
     name: value_separator
-    filterable: true
   
   operation:
     type: select
@@ -80,6 +80,7 @@ fields:
       - label: upsert
         value: upsert
     required: true
+    filterable: true
   fire_workflows:
     name: fire_workflows
     label: Fire Workflows
@@ -93,7 +94,6 @@ fields:
     defaultIcon: service_contract
     required: true
     name: field_mappings
-    filterable: true
     amis:
       showIndex: true,
       enableDialog: false
@@ -168,7 +168,6 @@ fields:
     visible_on: "{{formData.operation != 'insert' ? true : false}}"
     required: true
     name: external_id_name
-    filterable: true
   template_url:
     label: 导入模板
     type: url
@@ -202,12 +201,11 @@ list_views:
   all:
     label: All Queues
     columns:
-      - name
       - description
+      - name
       - object_name
+      - operation
       - template_url
-      - encoding
-      - is_system
     filter_scope: space
 permission_set:
   user:

@@ -12,10 +12,14 @@ fields:
     type: text
     is_name: true
     required: true
+    filterable: true
+    searchable: true
   name:
     label: Api Name
     type: text
     required: true
+    filterable: true
+    searchable: true
   icon:
     label: Icon
     type: lookup
@@ -49,14 +53,17 @@ fields:
       value: url
     - label: Page
       value: page
+    filterable: true
   mobile: 
     label: Display on the Mobile
     type: boolean
     defaultValue: true
+    filterable: true
   desktop:
     label: Display on the Desktop
     type: boolean
     defaultValue: true
+    filterable: true
   frame_height:
     hidden: true
     inlineHelpText: The height, in pixels of the tab frame. Required for frame and page tabs.

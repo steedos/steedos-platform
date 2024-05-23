@@ -2,3 +2,4 @@ name: is_enable
 type: boolean
 label: Enable
 sort_no: 250
+filterable: true

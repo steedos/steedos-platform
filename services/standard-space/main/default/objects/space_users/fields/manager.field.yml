@@ -2,5 +2,5 @@ name: manager
 type: lookup
 label: Superior
 reference_to: users
-filterable: true
+filterable: false
 sort_no: 220

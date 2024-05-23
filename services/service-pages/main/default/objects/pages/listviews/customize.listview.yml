@@ -2,7 +2,6 @@ name: customize
 columns:
   - field: label
   - field: name
-  - field: render_engine
   - field: type
   - field: object_name
   - field: is_active
