@@ -1,8 +1,8 @@
 name: all
 columns:
-  - field: object_name
   - field: label
   - field: name
+  - field: object_name
   - field: description
   - field: endpoint_url
   - field: modified

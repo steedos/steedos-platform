@@ -13,6 +13,7 @@ fields:
     reference_to: users
     required: true
     filterable: true
+    is_name: true
   token: 
     label: Token
     type: text

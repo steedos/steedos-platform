@@ -10,6 +10,7 @@ fields:
     reference_to: users
     name: user
     filterable: true
+    is_name: true
   year:
     type: number
     label: Year
