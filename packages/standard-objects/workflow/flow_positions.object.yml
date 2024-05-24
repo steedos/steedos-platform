@@ -12,6 +12,7 @@ fields:
     required: true
     name: role
     filterable: true
+    is_name: true
   users:
     type: master_detail
     label: Users
