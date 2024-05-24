@@ -4,3 +4,4 @@ sort_no: 130
 type: toggle
 defaultValue: true
 visible_on: "{{'redash' != formData.render_engine ? true: false}}"
+filterable: true

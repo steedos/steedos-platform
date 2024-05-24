@@ -688,10 +688,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 params["userId"] = userSession["userId"];
                 params["spaceId"] = userSession["spaceId"];
             }
-            const result = await runFunction(fDoc, {
-                getObject: getObject,
-                getUser: auth.getSessionByUserId
-            }, {
+            const result = await runFunction(fDoc, {}, {
                 input: input,
                 params: params,
                 broker: broker,

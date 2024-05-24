@@ -10,3 +10,4 @@ options:
     value: trueEveryTime
   - label: 仅在更新记录以满足条件要求时
     value: trueOnChangeOnly
+filterable: true

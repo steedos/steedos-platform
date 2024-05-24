@@ -1,5 +1,5 @@
 name: active
-filterable: false
+filterable: true
 hidden: false
 index: false
 is_name: false
@@ -12,3 +12,4 @@ searchable: false
 sort_no: 150
 sortable: false
 type: boolean
+

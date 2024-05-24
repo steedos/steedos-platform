@@ -8,6 +8,8 @@ fields:
     label: Name
     type: text
     required: true
+    searchable: true
+    filterable: true
   object_name:
     label: Object
     type: master_detail
@@ -16,11 +18,13 @@ fields:
     reference_to: objects
     reference_to_field: name
     filters: [["enable_workflow", "=", true]]
+    filterable: true
   flow_id:
     label: Workflow
     type: lookup
     required: true
     reference_to: flows
+    filterable: true
   field_map:
     label: Field Mappings（from Object to Workflow）
     type: table

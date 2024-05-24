@@ -12,6 +12,8 @@ fields:
     type: lookup
     reference_to: users
     required: true
+    filterable: true
+    is_name: true
   token: 
     label: Token
     type: text
@@ -22,15 +24,19 @@ fields:
   ip: 
     label: IP Address
     type: text
+    filterable: true
+    searchable: true
   valid:
     label: valid
     type: boolean
   is_phone:
     label: 手机
     type: boolean
+    filterable: true
   is_tablet:
     label: 平板电脑
     type: boolean
+    filterable: true
   client_id: 
     label: Client ID
     type: text
@@ -40,6 +46,7 @@ fields:
     reference_to: connected_apps
   modified:
     label: Last Login Time
+    filterable: true
   created:
     label: First Login Time
 list_views:

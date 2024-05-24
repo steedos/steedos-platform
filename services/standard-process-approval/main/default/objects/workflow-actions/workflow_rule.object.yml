@@ -12,15 +12,21 @@ fields:
     is_wide: true
     reference_to: objects
     reference_to_field: name
+    filterable: true
   name:
     type: text
     required: true
+    filterable: true
+    searchable: true
   label:
     type: text
     required: true
     is_name: true
+    filterable: true
+    searchable: true
   active:
     type: boolean
+    filterable: true
     # hidden: true
   trigger_type:
     type: select
@@ -32,6 +38,7 @@ fields:
       - onAllChanges
       - onCreateOrTriggeringUpdate
     defaultValue: onCreateOrTriggeringUpdate
+    filterable: true
   formula:
     type: textarea
     is_wide: true

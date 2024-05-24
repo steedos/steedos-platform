@@ -16,6 +16,7 @@ fields:
     is_wide: true
     is_name: true
     name: name
+    filterable: true
   flow:
     label: Workflow
     type: lookup
@@ -32,6 +33,7 @@ fields:
     required: true
     is_wide: true
     name: payload_url
+    filterable: true
   content_type:
     label: Format of Request
     type: text
@@ -43,6 +45,7 @@ fields:
     type: boolean
     defaultValue: false
     name: active
+    filterable: true
   description:
     type: text
     label: Description

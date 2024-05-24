@@ -25,6 +25,7 @@ fields:
             }
       }
     filterable: true
+    is_name: true
   created:
     label: "时间"
     filterable: true

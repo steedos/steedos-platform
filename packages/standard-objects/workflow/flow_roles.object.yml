@@ -11,12 +11,14 @@ fields:
     label: Name
     name: name
     searchable: true
+    filterable: true
   api_name:
     type: text
     label: API Name
     required: true
     searchable: true
     name: api_name
+    filterable: true
   # company_id:
   #   required: false
   #   omit: false

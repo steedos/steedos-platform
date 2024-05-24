@@ -14,6 +14,7 @@ fields:
     defaultValue: "{{ global.userId }}"
     visible_on: "{{global.mode ==='read' ? true : false}}"
     name: from
+    is_name: true
     filterable: true
   to:
     type: lookup
@@ -28,11 +29,13 @@ fields:
     label: Start Time
     required: true
     name: start_time
+    filterable: true
   end_time:
     type: datetime
     label: End Time
     required: true
     name: end_time
+    filterable: true
   enabled:
     type: boolean
     label: Enabled

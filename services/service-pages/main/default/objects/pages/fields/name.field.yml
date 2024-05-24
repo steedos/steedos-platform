@@ -5,3 +5,4 @@ required: true
 searchable: true
 sort_no: 100
 type: text
+filterable: true

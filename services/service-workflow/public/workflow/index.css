@@ -322,3 +322,8 @@ tbody .color-priority-muted *{
         width: -webkit-fill-available;
     }
 }
+
+/* amis 弹出窗口，包括弹出drawer中的审批单详细界面不显示左上角返回按钮 */
+.amis-dialog-widget .instance-detail-service-wrapper .btn-instance-back{
+    display: none;
+}

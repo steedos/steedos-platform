@@ -180,6 +180,9 @@ export class Mongo implements DatabaseInterface {
   }
 
   public async findUserByEmail(email: string): Promise<User | null> {
+    if(!isString(email)){
+      return null
+    }
     const user:any = await this.collection.findOne({
       email: email.toLowerCase(),
     });
@@ -190,6 +193,9 @@ export class Mongo implements DatabaseInterface {
   }
 
   public async findUserByMobile(mobile: string): Promise<User | null> {
+    if(!isString(mobile)){
+      return null
+    }
     const selector = {
       mobile,
     }
@@ -205,6 +211,9 @@ export class Mongo implements DatabaseInterface {
   }
 
   public async findUserByUsername(username: string): Promise<User | null> {
+    if(!isString(username)){
+      return null
+    }
     const filter = this.options.caseSensitiveUserName
       ? { username }
       : {
@@ -228,6 +237,9 @@ export class Mongo implements DatabaseInterface {
   public async findUserByEmailVerificationToken(
     token: string
   ): Promise<User | null> {
+    if(!isString(token)){
+      return null
+    }
     const user:any = await this.collection.findOne({
       "services.email.verificationTokens.token": token,
     });
@@ -240,6 +252,9 @@ export class Mongo implements DatabaseInterface {
   public async findUserByResetPasswordToken(
     token: string
   ): Promise<User | null> {
+    if(!isString(token)){
+      return null
+    }
     const user:any = await this.collection.findOne({
       "services.password.reset.token": token,
     });
@@ -253,6 +268,9 @@ export class Mongo implements DatabaseInterface {
     serviceName: string,
     serviceId: string
   ): Promise<User | null> {
+    if(!isString(serviceId)){
+      return null
+    }
     const user:any = await this.collection.findOne({
       [`services.${serviceName}.id`]: serviceId,
     });
@@ -367,6 +385,9 @@ export class Mongo implements DatabaseInterface {
   }
 
   public async verifyMobile(userId: string, mobile: string): Promise<void> {
+    if(!isString(mobile)){
+      return null
+    }
     const id = this.options.convertUserIdToMongoObjectId
       ? toMongoID(userId)
       : userId;
@@ -399,6 +420,9 @@ export class Mongo implements DatabaseInterface {
   }
 
   public async setMobile(userId: string, newMobile: string): Promise<void> {
+    if(!isString(newMobile)){
+      return null
+    }
     const id = this.options.convertUserIdToMongoObjectId
       ? toMongoID(userId)
       : userId;
@@ -443,6 +467,9 @@ export class Mongo implements DatabaseInterface {
   }
 
   public async setEmail(userId: string, newEmail: string): Promise<void> {
+    if(!isString(newEmail)){
+      return null
+    }
     const id = this.options.convertUserIdToMongoObjectId
       ? toMongoID(userId)
       : userId;
@@ -791,6 +818,9 @@ export class Mongo implements DatabaseInterface {
     EFFECTIVE_TIME
   ) {
     const now: any = new Date();
+    if(!isString(name)){
+      throw new Error('accounts.invalidCode')
+    }
     const query: any = {
       name: name,
       verifiedAt: null,

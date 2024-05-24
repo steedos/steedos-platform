@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2024-05-15 13:46:12
+ * @LastEditTime: 2024-05-21 13:22:25
  * @Description: 
  */
 "use strict";
@@ -752,10 +752,15 @@ module.exports = {
          *     }
          */
         functions: {
-            rest: {
-                method: "POST",
-                path: "/:objectName/functions/:functionApiName",
-            },
+            rest: [
+                {
+                    method: "GET",
+                    path: "/:objectName/functions/:functionApiName",
+                }, {
+                    method: "POST",
+                    path: "/:objectName/functions/:functionApiName",
+                }
+            ],
             async handler(ctx) {
                 const userSession = ctx.meta.user;
                 const { objectName, functionApiName } = ctx.params;

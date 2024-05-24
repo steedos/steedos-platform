@@ -11,11 +11,14 @@ fields:
     searchable: true
     index: true
     required: true
+    filterable: true
     inlineHelpText: Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters
   label:
     type: text
     required: true
     is_name: true
+    filterable: true
+    searchable: true
   object_name:
     label: Object Name
     type: lookup
@@ -23,6 +26,7 @@ fields:
     is_wide: true
     reference_to: objects
     reference_to_field: name
+    filterable: true
   title:
     label: Title
     type: textarea

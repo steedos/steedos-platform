@@ -10,14 +10,17 @@ fields:
     reference_to: users
     name: user
     filterable: true
+    is_name: true
   year:
     type: number
     label: Year
     name: year
+    filterable: true
   month:
     type: number
     label: Month
     name: month
+    filterable: true
   month_finished_count:
     type: number
     label: Total Number of Processed Instances

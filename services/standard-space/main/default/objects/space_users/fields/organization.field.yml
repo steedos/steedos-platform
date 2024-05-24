@@ -4,5 +4,5 @@ type: lookup
 reference_to: organizations
 readonly: true
 visible_on: '{{global.mode ===''read'' ? true : false}}'
-filterable: true
+filterable: false
 sort_no: 180

@@ -49,6 +49,10 @@ fields:
     options:
       - label: "Script"
         value: "script"
+  description:
+    label: Description
+    help:
+    description:
 listviews:
   all:
     label: All

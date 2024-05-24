@@ -6,4 +6,4 @@ hidden: false
 label: Is Name
 sort_no: 650
 type: boolean
-visible_on: ${ARRAYSOME(['text', 'textarea', 'autonumber', 'date', 'datetime', 'time', 'formula', 'lookup'], item => item === type) && !multiple}
+visible_on: ${ARRAYSOME(['text', 'textarea', 'autonumber', 'date', 'datetime', 'time', 'formula', 'lookup', 'master_detail'], item => item === type) && !multiple}

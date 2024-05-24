@@ -5,5 +5,5 @@ reference_to: organizations
 multiple: true
 visible_on: '{{false}}'
 group: systemfields
-filterable: true
+filterable: false
 sort_no: 140

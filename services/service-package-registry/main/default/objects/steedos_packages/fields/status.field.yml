@@ -1,5 +1,5 @@
 name: status
-filterable: false
+filterable: true
 hidden: false
 index: true
 is_name: false

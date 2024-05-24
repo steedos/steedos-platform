@@ -18,5 +18,9 @@ sort:
     order: desc
 searchable_fields: 
   - field: name
-  - field: remote_user
   - field: status
+  - field: type
+  - field: object
+  - field: related_to
+  - field: remote_user
+  - field: created

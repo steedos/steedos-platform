@@ -82,7 +82,6 @@ list_views:
   all:
     label: All Queues
     columns:
-      - object_name
       - queue_import
       - success_count
       - failure_count

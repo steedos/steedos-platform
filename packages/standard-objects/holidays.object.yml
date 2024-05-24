@@ -13,6 +13,7 @@ fields:
     required: true
     searchable: true
     index: true
+    filterable: true
   type:
     label: Type
     type: select
@@ -25,11 +26,13 @@ fields:
         value: adjusted_holiday
       - label: Adjusted Working Day
         value: adjusted_working_day
+    filterable: true
   date:
     label: Date
     type: date
     index: true
     required: true
+    filterable: true
   adjusted_to:
     label: Corresponding working day
     type: select

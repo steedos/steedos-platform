@@ -21,10 +21,12 @@ fields:
     index: true
     is_name: true
     required: true
+    filterable: true
   type:
     label: Type
     type: select
     firstOption: false
+    filterable: true
     options: Profile:profile,Permission set:permission_set
     defaultValue: permission_set
     amis:
@@ -36,7 +38,7 @@ fields:
     reference_to: apps
     reference_to_field: code
     name: assigned_apps
-    filterable: true
+    filterable: false
   default_standard_buttons:
     label: Default Standard Buttons
     type: select

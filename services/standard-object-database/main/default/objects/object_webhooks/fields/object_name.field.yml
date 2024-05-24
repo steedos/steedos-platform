@@ -6,3 +6,5 @@ label: Object
 required: true
 index: true
 sort_no: 20
+searchable: true
+filterable: true

@@ -6,3 +6,4 @@ readonly: true
 sort_no: 110
 type: boolean
 visible_on: '{{global.mode ===''read'' ? true : false}}'
+filterable: true

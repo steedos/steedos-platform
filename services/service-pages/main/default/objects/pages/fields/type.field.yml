@@ -14,3 +14,4 @@ options:
     value: form
 sort_no: 130
 visible_on: "{{'redash' != formData.render_engine ? true: false}}"
+filterable: true

@@ -8,10 +8,14 @@ fields:
   name:
     type: text
     required: true
+    filterable: true
+    searchable: true
   label:
     type: text
     required: true
     is_name: true
+    filterable: true
+    searchable: true
   object_name:
     type: lookup
     required: true
@@ -24,6 +28,8 @@ fields:
     label: Description
     type: textarea
     is_wide: true
+    filterable: true
+    searchable: true
   order: #TODO 必须是连续的数字
     type: number
     required: true
@@ -36,6 +42,7 @@ fields:
     # omit: true
     readonly: true
     defaultValue: false
+    filterable: true
     visible_on: "{{global.mode ==='read' ? true : false}}"
   entry_criteria:
     type: textarea
@@ -91,6 +98,7 @@ fields:
     type: boolean
     is_wide: true
     label: Allow submitters to recall approval requests
+    filterable: true
     # group: 提交设置
   initial_submission_record_lock:
     type: select

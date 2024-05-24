@@ -20,3 +20,4 @@ options:
   - label: 查询记录之前
     value: beforeFind
 sort_no: 130
+filterable: true

@@ -1,5 +1,5 @@
 name: label
-filterable: false
+filterable: true
 hidden: false
 index: true
 is_name: true
@@ -12,3 +12,5 @@ searchable: true
 sort_no: 100
 sortable: true
 type: text
+
+

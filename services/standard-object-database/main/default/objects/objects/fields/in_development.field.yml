@@ -13,3 +13,5 @@ options:
 required: true
 sort_no: 40
 type: select
+filterable: true
+

@@ -18,3 +18,4 @@ filtersFunction: !<tag:yaml.org,2002:js/function> |-
   }
 defaultValue: user
 sort_no: 230
+filterable: true

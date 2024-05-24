@@ -6,3 +6,4 @@ options: >-
   Server:sqlserver,PostgreSQL:postgres,Oracle:oracle,MySQL:mysql,Sqlite:sqlite
 required: true
 sort_no: 100
+filterable: true

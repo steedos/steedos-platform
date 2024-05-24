@@ -13,6 +13,7 @@ fields:
     name: user
     filterable: true
     searchable: true
+    is_name: true
   sign:
     type: avatar
     label: Sign

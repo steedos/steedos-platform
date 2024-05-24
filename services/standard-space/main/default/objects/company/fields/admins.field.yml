@@ -3,5 +3,5 @@ label: Admin Users
 type: lookup
 reference_to: users
 multiple: true
-filterable: true
+filterable: false
 sort_no: 150
