@@ -10,7 +10,7 @@
         },
         {
             "type": "tabs",
-            "className": "steedos-record-tabs bg-white p-4 m-2 border rounded",
+            "className": "steedos-record-tabs bg-white p-4 sm:m-2 sm:border sm:rounded",
             "tabs": [
                 {
                     "title": "预览",
