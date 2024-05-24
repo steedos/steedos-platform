@@ -99,7 +99,7 @@ fields:
           }
           var object_name = Creator.odata.get("process_definition", pid, "object_name").object_name;
           var userFields = _.filter(Creator.getObject(object_name).fields, function(field){
-            return (field.type === 'lookup' || field.type === 'master_detail') && field.omit != true && field.reference_to === 'users'
+            return (field.type === 'lookup' || field.type === 'master_detail') && field.omit != true && (field.reference_to === 'users' || (field.reference_to === 'space_users' && field.reference_to_field === 'user'))
           });
           _.each(userFields, function(field){
             options.push({label:field.label, value:field.name});
