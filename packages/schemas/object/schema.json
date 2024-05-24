@@ -156,6 +156,10 @@
             "type": "boolean",
             "description": "允许单个字段编辑"
         },
+        "enable_lock_detail": {
+            "type": "boolean",
+            "description": "当主表锁定时，所有子表只读。"
+        },
         "is_view": {
             "type": "boolean",
             "description": "此对象是否对应数据库中的视图"
