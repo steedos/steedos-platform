@@ -1,0 +1,166 @@
+{
+    "type": "steedos-record-service",
+    "body": [
+        {
+            "type": "steedos-record-detail-header",
+            "label": "标题面板",
+            "objectApiName": "${objectName}",
+            "recordId": "${recordId}",
+            "showBackButton": "${!_inDrawer}",
+            "id": "u:17d958f9200c"
+        },
+        {
+            "type": "tabs",
+            "className": "steedos-record-tabs bg-white p-4 sm:m-2 sm:border sm:rounded",
+            "tabs": [
+                {
+                    "title": "预览",
+                    "body": [
+                        {
+                            "type": "page",
+                            "id": "u:25709be82e35",
+                            "bodyClassName": "p-0",
+                            "body": [
+                                {
+                                    "type": "office-viewer",
+                                    "id": "u:d27be9cc371d",
+                                    "wordOptions": {
+                                        "ignoreWidth": false,
+                                        "padding": "",
+                                        "bulletUseFont": true,
+                                        "enableVar": false
+                                    },
+                                    "src": "/api/files/files/${_id}",
+                                    "visibleOn": "${ARRAYINCLUDES(['application/vnd.openxmlformats-officedocument.wordprocessingml.document'],record.original.type)}",
+                                    "className": "flex justify-center items-center h-full",
+                                    "loading": true
+                                },
+                                {
+                                    "type": "office-viewer",
+                                    "wordOptions": {
+                                        "ignoreWidth": false,
+                                        "padding": "",
+                                        "bulletUseFont": true,
+                                        "enableVar": false
+                                    },
+                                    "src": "/api/files/files/${_id}",
+                                    "visibleOn": "${ARRAYINCLUDES(['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],record.original.type)}",
+                                    "className": "office-viewer-excel",
+                                    "id": "u:07ef4d92d664",
+                                    "loading": true
+                                },
+                                {
+                                    "type": "iframe",
+                                    "src": "${context.rootUrl}/api/page/public/pdf_view?fileUrl=/api/files/files/${_id}",
+                                    "visibleOn": "${ARRAYINCLUDES(['application/pdf'],record.original.type)}",
+                                    "id": "u:dc63f1f2d0ab",
+                                    "source": "src"
+                                },
+                                {
+                                    "type": "image",
+                                    "id": "u:4d9071791016",
+                                    "visibleOn": "${ARRAYINCLUDES(['image/png','image/jpeg','image/bmp','image/gif','image/webp','image/psd','image/svg','image/tiff'],record.original.type)}",
+                                    "src": "/api/files/files/${_id}",
+                                    "imageMode": "original",
+                                    "enlargeAble": false,
+                                    "maxScale": 200,
+                                    "minScale": 50,
+                                    "style": {
+                                        "display": "inline-block"
+                                    }
+                                }
+                            ],
+                            "className": {
+                                "page-excel-file": "${ARRAYINCLUDES(['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],record.original.type)}"
+                            },
+                            "asideResizor": false,
+                            "pullRefresh": {
+                                "disabled": true
+                            },
+                            "css": {
+                                ".page-detail-cms_file-preview .tab-container-office-preview .office-viewer-excel": {
+                                    "height": "100% !important"
+                                },
+                                ".page-detail-cms_file-preview .tab-container-office-preview .page-excel-file .antd-Page-body>div": {
+                                    "height": "100%"
+                                },
+                                ".page-detail-cms_file-preview .tab-container-office-preview": {
+                                    "height": "calc(100vh - 15rem)",
+                                    "overflow-y": "auto"
+                                },
+                                ".steedos-record-detail-drawer .page-detail-cms_file-preview .tab-container-office-preview": {
+                                    "height": "calc(100vh - 9.5rem)",
+                                    "overflow-y": "auto"
+                                },
+                                ".page-detail-cms_file-preview.mobile-preview-page .tab-container-office-preview": {
+                                    "height": "calc(100vh - 18rem)",
+                                    "overflow-y": "auto"
+                                },
+                                ".page-detail-cms_file-preview.mobile-preview-page .office-viewer article section": {
+                                    "width": "100% !important",
+                                    "padding": "1rem !important"
+                                },
+                                ".page-detail-cms_file-preview.mobile-preview-page .office-viewer article p div,.mobile-preview-page .office-viewer article table": {
+                                    "max-width": "100%"
+                                },
+                                ".page-detail-cms_file-preview.mobile-preview-page .office-viewer article p": {
+                                    "text-indent": "unset !important"
+                                },
+                                ".page-detail-cms_file-preview.mobile-preview-page .office-viewer article": {
+                                    "width": "100%"
+                                }
+                            }
+                        }
+                    ],
+                    "id": "u:0bed5e9e0a6f",
+                    "visibleOn": "${ARRAYINCLUDES(['application/vnd.openxmlformats-officedocument.wordprocessingml.document','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/pdf','image/png','image/jpeg','image/bmp','image/gif','image/webp','image/psd','image/svg','image/tiff'],${record.original.type})}"
+                },
+                {
+                    "title": "详细",
+                    "className": "px-0 py-4",
+                    "body": [
+                        {
+                            "type": "steedos-object-form",
+                            "label": "对象表单",
+                            "objectApiName": "${objectName}",
+                            "recordId": "${recordId}",
+                            "appId": "${appId}",
+                            "id": "u:350521e7739c"
+                        }
+                    ],
+                    "id": "u:5d4e7e3f6ecc"
+                },
+                {
+                    "title": "相关",
+                    "body": [
+                        {
+                            "type": "steedos-object-related-lists",
+                            "label": "相关列表",
+                            "objectApiName": "${objectName}",
+                            "recordId": "${recordId}",
+                            "appId": "${appId}",
+                            "id": "u:abe0d7c11971"
+                        }
+                    ],
+                    "className": "px-0 pt-4",
+                    "id": "u:b6be46d7691d"
+                }
+            ],
+            "id": "u:66cbbea10bb6"
+        }
+    ],
+    "regions": [
+        "body"
+    ],
+    "data": {},
+    "id": "page_announcements_record_detail",
+    "name": "page_announcements_record_detail",
+    "objectApiName": "${objectName}",
+    "bodyClassName": "",
+    "className": "object-detail-page steedos-record-content overflow-y-auto p-0 m-0 flex-1 h-full bg-gray-100",
+    "asideResizor": false,
+    "editorState": "default",
+    "pullRefresh": {
+        "disabled": true
+    }
+}
