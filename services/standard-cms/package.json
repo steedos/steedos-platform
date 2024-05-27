@@ -1,6 +1,6 @@
 {
     "name": "@steedos/standard-cms",
-    "version": "2.7.1-beta.19",
+    "version": "2.7.1-beta.20",
     "main": "package.service.js",
     "private": false,
     "publishConfig": {
@@ -12,5 +12,5 @@
     "description": "steedos package",
     "repository": {},
     "license": "MIT",
-    "gitHead": "d950ce9c8a241a4aad08d2d7d7ccd7b53d32747a"
+    "gitHead": "339152347c1bd6a71c01c225ea7d83eae90b086f"
 }
