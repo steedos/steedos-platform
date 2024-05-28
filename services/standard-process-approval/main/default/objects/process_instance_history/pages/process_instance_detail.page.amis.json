@@ -30,7 +30,8 @@
                                             "recordId": "${target_object.ids[0]}",
                                             "visibleOn": "${!!target_object}",
                                             "className": "antd-Form antd-Form--normal steedos-amis-form bg-white",
-                                            "mode": "read"
+                                            "mode": "read",
+                                            "enableInitApi": true
                                         }
                                     ]
                                 }
