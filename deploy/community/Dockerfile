@@ -19,45 +19,21 @@ RUN apt-get update \
 # Install MongoDB 4.4.25
 # https://www.mongodb.com/docs/v4.4/tutorial/install-mongodb-on-ubuntu/
 # https://github.com/docker-library/mongo/blob/66197d92be6eafc0a36b2570172de0a5f7a905e1/4.4/Dockerfile
-RUN set -ex; \
-	export GNUPGHOME="$(mktemp -d)"; \
-	set -- '20691EEC35216C63CAF66CE1656408E390CFB1F5'; \
-	for key; do \
-		gpg --batch --keyserver keyserver.ubuntu.com --recv-keys "$key"; \
-	done; \
-	mkdir -p /etc/apt/keyrings; \
-	gpg --batch --export "$@" > /etc/apt/keyrings/mongodb.gpg; \
-	gpgconf --kill all; \
-	rm -rf "$GNUPGHOME"
-
-# Allow build-time overrides (eg. to build image with MongoDB Enterprise version)
-# Options for MONGO_PACKAGE: mongodb-org OR mongodb-enterprise
-# Options for MONGO_REPO: repo.mongodb.org OR repo.mongodb.com
-# Example: docker build --build-arg MONGO_PACKAGE=mongodb-enterprise --build-arg MONGO_REPO=repo.mongodb.com .
-ARG MONGO_PACKAGE=mongodb-org
-ARG MONGO_REPO=repo.mongodb.org
-ENV MONGO_PACKAGE=${MONGO_PACKAGE} MONGO_REPO=${MONGO_REPO}
-
-ENV MONGO_MAJOR 4.4
-RUN echo "deb [ signed-by=/etc/apt/keyrings/mongodb.gpg ] http://$MONGO_REPO/apt/ubuntu focal/${MONGO_PACKAGE%-unstable}/$MONGO_MAJOR multiverse" | tee "/etc/apt/sources.list.d/${MONGO_PACKAGE%-unstable}.list"
-
-# https://docs.mongodb.org/master/release-notes/4.4/
-ENV MONGO_VERSION 4.4.25
-# 09/26/2023, https://github.com/mongodb/mongo/tree/3e18c4c56048ddf22a6872edc111b542521ad1d5
-
-RUN set -x \
-# installing "mongodb-enterprise" pulls in "tzdata" which prompts for input
-	&& export DEBIAN_FRONTEND=noninteractive \
-	&& apt-get update \
-	&& apt-get install -y \
-		${MONGO_PACKAGE}=$MONGO_VERSION \
-		${MONGO_PACKAGE}-server=$MONGO_VERSION \
-		${MONGO_PACKAGE}-shell=$MONGO_VERSION \
-		${MONGO_PACKAGE}-mongos=$MONGO_VERSION \
-		${MONGO_PACKAGE}-tools=$MONGO_VERSION \
-	&& rm -rf /var/lib/apt/lists/* \
-	&& rm -rf /var/lib/mongodb \
-	&& mv /etc/mongod.conf /etc/mongod.conf.orig
+# https://github.com/appsmithorg/appsmith/blob/release/deploy/docker/base.dockerfile
+RUN set -o xtrace \
+  && apt-get update \
+  && apt-get upgrade --yes \
+  && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends --yes \
+    supervisor curl nfs-common gnupg wget netcat openssh-client \
+    gettext \
+    ca-certificates \
+  # Install MongoDB v4.4
+  && curl --silent --show-error --location https://www.mongodb.org/static/pgp/server-4.4.asc | apt-key add - \
+  && echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-4.0.list \
+  && apt update \
+  && apt-get install --no-install-recommends --yes mongodb-org \
+  && mv /etc/mongod.conf /etc/mongod.conf.orig \
+  && apt-get clean
 
 # Install nginx && redis
 RUN apt-get update \
