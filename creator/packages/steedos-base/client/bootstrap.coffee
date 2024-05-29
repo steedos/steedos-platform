@@ -36,7 +36,7 @@ Steedos.logout = (redirect)->
 	if accountsUrl
 		if !redirect
 			if Meteor.isCordova
-				redirect = Meteor.absoluteUrl();
+				redirect = getRedirectUrl();
 			# else
 			# 	redirect = getRedirectUrl();
 	if redirect
