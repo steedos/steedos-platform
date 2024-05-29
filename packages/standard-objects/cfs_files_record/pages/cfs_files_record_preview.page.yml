@@ -1,0 +1,13 @@
+name: cfs_files_record_preview
+is_active: true
+label: 附件历史版本详细
+locked: false
+object_name: cfs_files_filerecord
+pageAssignments:
+  - type: orgDefault
+    page: cfs_files_record_preview
+    desktop: true
+    mobile: true
+render_engine: amis
+type: record
+widgets: []

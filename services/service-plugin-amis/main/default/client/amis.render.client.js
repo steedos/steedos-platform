@@ -275,6 +275,10 @@
                 theme: 'antd',
                 isCurrentUrl: isCurrentUrl,
                 requestAdaptor: (config)=>{
+                    if(config.allowCredentials == false){
+                      config.withCredentials = false;
+                      delete config.allowCredentials
+                    }
                     // url是相对路径
                     if(config.url && (!/^http[s]?:\/\//i.test(config.url))){
                       if(Meteor.isCordova){
