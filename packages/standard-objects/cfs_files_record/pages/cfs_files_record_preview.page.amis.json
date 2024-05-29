@@ -78,42 +78,43 @@
                                 "disabled": true
                             },
                             "css": {
-                                ".page-detail-cms_file-preview .tab-container-office-preview .office-viewer-excel": {
+                                ".page-detail-cfs_files_filerecord-preview .tab-container-office-preview .office-viewer-excel": {
                                     "height": "100% !important"
                                 },
-                                ".page-detail-cms_file-preview .tab-container-office-preview .page-excel-file .antd-Page-body>div": {
+                                ".page-detail-cfs_files_filerecord-preview .tab-container-office-preview .page-excel-file .antd-Page-body>div": {
                                     "height": "100%"
                                 },
-                                ".page-detail-cms_file-preview .tab-container-office-preview": {
+                                ".page-detail-cfs_files_filerecord-preview .tab-container-office-preview": {
                                     "height": "calc(100vh - 15rem)",
                                     "overflow-y": "auto"
                                 },
-                                ".steedos-record-detail-drawer .page-detail-cms_file-preview .tab-container-office-preview": {
+                                ".steedos-record-detail-drawer .page-detail-cfs_files_filerecord-preview .tab-container-office-preview": {
                                     "height": "calc(100vh - 9.5rem)",
                                     "overflow-y": "auto"
                                 },
-                                ".page-detail-cms_file-preview.mobile-preview-page .tab-container-office-preview": {
-                                    "height": "calc(100vh - 18rem)",
+                                ".page-detail-cfs_files_filerecord-preview.mobile-preview-page .tab-container-office-preview": {
+                                    "height": "calc(100vh - 17rem)",
                                     "overflow-y": "auto"
                                 },
-                                ".page-detail-cms_file-preview.mobile-preview-page .office-viewer article section": {
+                                ".page-detail-cfs_files_filerecord-preview.mobile-preview-page .office-viewer article section": {
                                     "width": "100% !important",
                                     "padding": "1rem !important"
                                 },
-                                ".page-detail-cms_file-preview.mobile-preview-page .office-viewer article p div,.mobile-preview-page .office-viewer article table": {
+                                ".page-detail-cfs_files_filerecord-preview.mobile-preview-page .office-viewer article p div,.mobile-preview-page .office-viewer article table": {
                                     "max-width": "100%"
                                 },
-                                ".page-detail-cms_file-preview.mobile-preview-page .office-viewer article p": {
+                                ".page-detail-cfs_files_filerecord-preview.mobile-preview-page .office-viewer article p": {
                                     "text-indent": "unset !important"
                                 },
-                                ".page-detail-cms_file-preview.mobile-preview-page .office-viewer article": {
+                                ".page-detail-cfs_files_filerecord-preview.mobile-preview-page .office-viewer article": {
                                     "width": "100%"
                                 }
                             }
                         }
                     ],
                     "id": "u:0bed5e9e0a6f",
-                    "visibleOn": "${ARRAYINCLUDES(['application/vnd.openxmlformats-officedocument.wordprocessingml.document','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/pdf','image/png','image/jpeg','image/bmp','image/gif','image/webp','image/psd','image/svg','image/tiff'],${record.original.type})}"
+                    "visibleOn": "${ARRAYINCLUDES(['application/vnd.openxmlformats-officedocument.wordprocessingml.document','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/pdf','image/png','image/jpeg','image/bmp','image/gif','image/webp','image/psd','image/svg','image/tiff'],${record.original.type})}",
+                    "className": "tab-container-office-preview"
                 },
                 {
                     "title": "详细",
@@ -157,7 +158,10 @@
     "name": "page_announcements_record_detail",
     "objectApiName": "${objectName}",
     "bodyClassName": "",
-    "className": "object-detail-page steedos-record-content overflow-y-auto p-0 m-0 flex-1 h-full bg-gray-100",
+    "className": {
+        "mobile-preview-page": "${window:innerWidth<768}",
+        "object-detail-page steedos-record-content overflow-y-auto p-0 m-0 flex-1 h-full bg-gray-100 page-detail-cfs_files_filerecord-preview": "true"
+    },
     "asideResizor": false,
     "editorState": "default",
     "pullRefresh": {
