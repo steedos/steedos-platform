@@ -73,3 +73,5 @@ reference_to_field: name
 required: true
 sort_no: 530
 type: lookup
+amis: 
+  disabledOn: ${!from}
