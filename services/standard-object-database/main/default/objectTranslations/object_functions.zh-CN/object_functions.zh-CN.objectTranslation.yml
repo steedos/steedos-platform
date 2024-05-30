@@ -9,7 +9,7 @@ fields:
   is_rest:
     label: 启用API
     help:
-    description: 允许使用API接口访问：{POST} /api/v1/:objectName/functions/:functionApiName
+    description: 允许使用API接口访问：{POST/GET} /api/v1/:objectName/functions/:functionApiName
   is_system:
     label: 系统
     help:
@@ -30,22 +30,9 @@ fields:
     label: 代码
     help:
     description: |
-      async function run({
-          input,
-          params,
-          broker,
-          getObject,
-          getUser
-      } = ctx) {
+      async function run(ctx) {
           // ...
       }
-  type:
-    label: 类型
-    help:
-    description:
-    options:
-      - label: "Script"
-        value: "script"
   description:
     label: 备注
     help:
