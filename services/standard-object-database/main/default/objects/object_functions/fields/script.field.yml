@@ -7,7 +7,7 @@ required: true
 defaultValue: |-
   // global: {_:lodash, moment, validator, filters}
   // objects
-  // ctx.input
+  // ctx: {input, params, broker, getObject, getUser}
 editorDidMount: >-
   if(window._registerCompletionItemProviderFunction){
     return ;

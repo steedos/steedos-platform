@@ -12,7 +12,7 @@ fields:
   is_rest:
     label: Enable API
     help:
-    description: allow the use of api interface access：/api/v1/:objectName/functions/:functionApiName
+    description: allow the use of api interface access：{POST/GET} /api/v1/:objectName/functions/:functionApiName
   is_system:
     label: System
     help:
@@ -33,22 +33,9 @@ fields:
     label: Script
     help:
     description: |
-      async function run({
-          input,
-          params,
-          broker,
-          getObject,
-          getUser
-      } = ctx) {
+      async function run(ctx) {
           // ...
       }
-  type:
-    label: Type
-    help:
-    description:
-    options:
-      - label: "Script"
-        value: "script"
   description:
     label: Description
     help:

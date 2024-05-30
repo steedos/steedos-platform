@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-08-30 15:26:07
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-05-16 15:56:16
+ * @LastEditTime: 2024-05-30 16:32:50
  * @Description: 
  */
 import { getSteedosSchema } from '../types'
@@ -31,6 +31,9 @@ export class ShareRules {
     static async getUserObjectFilters(objectApiName, userSession: any) {
         const rules = await this.find(objectApiName);
         if (_.isEmpty(rules)) {
+            return {};
+        }
+        if(_.isEmpty(userSession)){
             return {};
         }
         const rulesFilters = [];
