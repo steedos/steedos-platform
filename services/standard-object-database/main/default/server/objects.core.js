@@ -349,6 +349,10 @@ function reloadObject(changeLog){
         //获取到最新的对象
         const object = register.getOriginalObjectConfig(objectName);
 
+        if (object.name) {
+            delete object.extend; // 因为objects.addConfig中会将extend赋值给name导致metadataApiName错误，故这里提前删除。
+        }
+
         let _mf =  _.max(_.values(object.fields), function (field) { return field.sort_no; });
         if(_mf && object.name){
             object.fields_serial_number = _mf.sort_no + 10;
