@@ -56,7 +56,7 @@ fields:
     description: 
   enable_form_tabs:
     label: Enable Form Tabs
-    help: This feature exclusively affects the editable pages, with precedence given to configurations specified on the components.
+    help: Displays groups in tabbed mode in the form, recognizing this property only when editing mode.
     description: 
   enable_events:
     label: Enable Events
