@@ -4,3 +4,4 @@ hidden: false
 label: Sortable
 sort_no: 580
 type: boolean
+visible_on: '{{ ["image","file","lookup","master_detail","select"].indexOf(formData.type)<0 }}'
