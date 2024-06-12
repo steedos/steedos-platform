@@ -50,6 +50,7 @@ class Account {
                 phone_login_expiration_in_days,
                 space,
                 provider: provider._id,
+                jwtToken: options.accessToken
             }));
             (0, accounts_1.setAuthCookies)(req, res, loginResult.user._id, loginResult.token, loginResult.tokens.accessToken);
             if (options.redirect) {
