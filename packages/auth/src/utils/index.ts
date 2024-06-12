@@ -56,7 +56,7 @@ export const setAuthCookies = function (req, res, userId, authToken, spaceId?) {
   cookies.set("X-Auth-Token", authToken, options);
   if (spaceId) {
     cookies.set("X-Space-Id", spaceId, options);
-    cookies.set("X-Space-Token", spaceId + ',' + authToken, options);
+    // cookies.set("X-Space-Token", spaceId + ',' + authToken, options);
   }
 
   return;

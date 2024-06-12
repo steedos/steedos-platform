@@ -66,7 +66,7 @@ export class Account {
                 phone_login_expiration_in_days,
                 space,
                 provider: provider._id,
-                // jwtToken: options.accessToken  // 如果使用jwt token 会导致cookie太大
+                jwtToken: options.accessToken  // 如果使用jwt token 会导致cookie太大 【方案：调整accessToken大小、废弃X-Space-Token】
             })
         );
         setAuthCookies(req, res, loginResult.user._id, loginResult.token, loginResult.tokens.accessToken);
