@@ -55,7 +55,9 @@ class LocalStorageStoreClass {
   setUserId(userId, token?:string) {
     if (userId) {
       this.setItem('userId', userId)
-      this.setItem('token', token)
+      if (token) {
+        this.setItem('token', token)
+      }
       this.setItem(getWasLoggedInKey(), 'true');
     } else {
       this.removeItem('userId')
