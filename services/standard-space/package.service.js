@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 13:17:06
  * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2024-04-18 10:09:00
+ * @LastEditTime: 2024-06-14 10:29:14
  * @Description: 
  */
 "use strict";
@@ -34,7 +34,12 @@ module.exports = {
             path: __dirname,
             name: packageName,
             isPackage: false
-        }
+        },
+        STEEDOS_IDENTITY_OIDC_ENABLED: process.env.STEEDOS_IDENTITY_OIDC_ENABLED,
+        STEEDOS_IDENTITY_OIDC_CONFIG_URL: process.env.STEEDOS_IDENTITY_OIDC_CONFIG_URL,
+        STEEDOS_IDENTITY_OIDC_CLIENT_ID: process.env.STEEDOS_IDENTITY_OIDC_CLIENT_ID,
+        MAIL_URL: process.env.MAIL_URL,
+        ROOT_URL: process.env.ROOT_URL
     },
 
     /**
