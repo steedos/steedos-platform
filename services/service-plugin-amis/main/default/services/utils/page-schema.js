@@ -120,7 +120,66 @@ const getRecordPageInitSchema = async function (objectApiName, userSession) {
     }
 }
 
+// 获取字段布局页面初始化amisSchema
+const getFieldLayoutInitSchema = async function (objectApiName, userSession) {
+    var body = [];
+    const uiSchema = await getUISchema(objectApiName, userSession);
+    const fields = uiSchema.fields;
+    const groups = uiSchema.field_groups;
+
+    _.forEach(fields, field => {
+        if (field.group) {
+            let current_group = _.find(groups, function (group) { return group.group_name == field.group; });
+            if (!current_group) {
+                groups.push({
+                    group_name: field.group
+                })
+            }
+        }
+    });
+
+    const no_group_fields = _.filter(fields, field => !field.group);
+    body.push({
+        "type": "fieldSet",
+        "title": "",
+        "body": _.map(no_group_fields, field => {
+            return {
+                "type": "steedos-field",
+                "config": field
+            }
+        })
+    })
+
+    // 无法根据字段显示条件控制分组显示条件
+    _.forEach(groups, group => {
+        const filter_fields = _.filter(fields, field => field.group == group.group_name);
+        const field_set = {
+            "type": "fieldSet",
+            "title": group.group_name,
+            "body": _.map(filter_fields, field => {
+                return {
+                    "type": "steedos-field",
+                    "config": field
+                }
+            })
+        };
+        if (group.visible_on) {
+            field_set.visibleOn = group.visible_on;
+        }
+        if (group.collapsed) {
+            field_set.collapsed = group.collapsed;
+        }
+        body.push(field_set)
+    })
+    return {
+        type: 'service',
+        name: getScopeId(objectApiName, "form"),
+        body
+    }
+}
+
 
 exports.getFormPageInitSchema = getFormPageInitSchema;
 exports.getListPageInitSchema = getListPageInitSchema;
 exports.getRecordPageInitSchema = getRecordPageInitSchema;
+exports.getFieldLayoutInitSchema = getFieldLayoutInitSchema;

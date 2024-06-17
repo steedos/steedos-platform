@@ -12,6 +12,8 @@ options:
     value: list
   - label: 表单
     value: form
+  - label: 字段布局页面
+    value: field_layout
 sort_no: 130
 visible_on: "{{'redash' != formData.render_engine ? true: false}}"
 filterable: true
