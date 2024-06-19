@@ -48,7 +48,6 @@
     "compressing": "^1.5.1",
     "dotenv": "^8.2.0",
     "dotenv-flow": "^3.2.0",
-    "fibers": "^5.0.3",
     "fs-extra": "^7.0.1",
     "glob": "^7.1.6",
     "inquirer": "^6.2.2",
