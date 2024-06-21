@@ -145,12 +145,15 @@ const getFieldLayoutInitSchema = async function (objectApiName, userSession) {
         "body": _.map(no_group_fields, field => {
             return {
                 "type": "steedos-field",
-                "config": field
+                "config": {
+                    "amis": {
+                    },
+                    ...field
+                }
             }
         })
     })
 
-    // 无法根据字段显示条件控制分组显示条件
     _.forEach(groups, group => {
         const filter_fields = _.filter(fields, field => field.group == group.group_name);
         const field_set = {
@@ -159,7 +162,11 @@ const getFieldLayoutInitSchema = async function (objectApiName, userSession) {
             "body": _.map(filter_fields, field => {
                 return {
                     "type": "steedos-field",
-                    "config": field
+                    "config": {
+                        "amis": {
+                        },
+                        ...field
+                    }
                 }
             })
         };
