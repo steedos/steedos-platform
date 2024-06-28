@@ -106,7 +106,7 @@ module.exports = {
 		ServiceObjectGraphql
 	],
 
-    projectStarted: false,
+	projectStarted: false,
 
 	// More info about settings: https://moleculer.services/docs/0.14/moleculer-web.html
 	settings: {
@@ -120,7 +120,7 @@ module.exports = {
 
 		// Global Express middlewares. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Middlewares
 		use: [
-			function(req, res, next) {
+			function (req, res, next) {
 				// 如果service-object-grapqhl未结算完成，则提示服务未就绪，刷新重试
 				if (!this.projectStarted) {
 					const message = 'service is not ready, please refresh later.';
@@ -182,7 +182,7 @@ module.exports = {
 					// Set request headers to context meta
 					ctx.meta.userAgent = req.headers["user-agent"];
 					ctx.meta.clientIp = requestIp.getClientIp(req);
-				}, 
+				},
 
 				/**
 				 * After call hook. You can modify the data.
@@ -224,7 +224,7 @@ module.exports = {
 						res.end(JSON.stringify({ error: err.message, detail: err }));
 					} catch (error) {
 						res.writeHead(500);
-						res.end(JSON.stringify({ error: err.message}));
+						res.end(JSON.stringify({ error: err.message }));
 					}
 				}
 			},
@@ -308,7 +308,7 @@ module.exports = {
 
 						let msg = err.message;
 
-						if(err.code === 422 && err.type === 'VALIDATION_ERROR'){
+						if (err.code === 422 && err.type === 'VALIDATION_ERROR') {
 							msg = err.data.map(item => item.message).join('');
 						}
 
@@ -356,8 +356,8 @@ module.exports = {
 		getObjectDataLoaderMapKey(objectName, referenceToField = '_id', spaceId) {
 			if (objectName) {
 				const key = `${spaceId}_object:${objectName}.${referenceToField}`;
-				if(!ObjectDataLoaderMapKeys[objectName]){
-					ObjectDataLoaderMapKeys[objectName] = [] ;
+				if (!ObjectDataLoaderMapKeys[objectName]) {
+					ObjectDataLoaderMapKeys[objectName] = [];
 				}
 				ObjectDataLoaderMapKeys[objectName].push(key);
 				return key;
@@ -369,7 +369,7 @@ module.exports = {
 
 		async objectDataLoaderHandler(actionName, staticParams, rootParams, graphqlCtx) {
 			const rootKeys = Object.keys(rootParams);
-			const {root, args, context, resolveInfo} = graphqlCtx;
+			const { root, args, context, resolveInfo } = graphqlCtx;
 			const userSession = context.ctx.meta.user;
 			const spaceId = userSession.spaceId;
 			const dataLoaderMapKey = this.getObjectDataLoaderMapKey(
@@ -437,7 +437,7 @@ module.exports = {
 		 * @returns {Promise}
 		 */
 		async authenticate(ctx, route, req, res, alias) {
-			if(alias.authentication === false){
+			if (alias.authentication === false) {
 				return null;
 			}
 			let user = await steedosAuth.auth(req, res);
@@ -457,8 +457,10 @@ module.exports = {
 		 * @returns {Promise}
 		 */
 		async authorize(ctx, route, req, res, alias) {
-			if(alias.authorization === false){
-				return ;
+			ctx.meta.requestHeaders = req.headers;
+
+			if (alias.authorization === false) {
+				return;
 			}
 			// Get the authenticated user.
 			const user = ctx.meta.user;
@@ -491,9 +493,9 @@ module.exports = {
 			const rootKeys = Object.keys(rootParams);
 			return async (root, args, context, resolveInfo) => {
 				try {
-					if(useObjectDataLoader){
-						return await this.objectDataLoaderHandler(actionName, staticParams, rootParams, {root, args, context, resolveInfo});
-					}else if (useDataLoader) {
+					if (useObjectDataLoader) {
+						return await this.objectDataLoaderHandler(actionName, staticParams, rootParams, { root, args, context, resolveInfo });
+					} else if (useDataLoader) {
 						const userSession = context.ctx.meta.user;
 						const spaceId = userSession.spaceId;
 						const dataLoaderMapKey = this.getDataLoaderMapKey(
@@ -688,7 +690,7 @@ module.exports = {
 
 
 							for (const objectName in this.ObjectsUIResolvers) {
-								if(resolvers[objectName]){
+								if (resolvers[objectName]) {
 									resolvers[objectName]['_ui'] = this.ObjectsUIResolvers[objectName];
 								}
 							}
@@ -997,33 +999,33 @@ module.exports = {
 		this.objectDataLoaders = new Map();
 		this.app = SteedosRouter.staticRouter();
 	},
-	events:{
-		'@objectRecordEvent.*.*': function(ctx){
+	events: {
+		'@objectRecordEvent.*.*': function (ctx) {
 			const { objectApiName, isUpdate, isDelete, id, doc } = ctx.params;
-			if(objectApiName && (isUpdate || isDelete)){
+			if (objectApiName && (isUpdate || isDelete)) {
 				const keys = ObjectDataLoaderMapKeys[objectApiName] || [];
 				let dataLoaderKeys = [id];
-				if(objectApiName === 'space_users'){
+				if (objectApiName === 'space_users') {
 					dataLoaderKeys.push(doc.user)
 				}
-				_.each(keys, (key)=>{
+				_.each(keys, (key) => {
 					const loader = this.objectDataLoaders.get(key);
-					if(loader){
-						for(const dataLoaderKey of dataLoaderKeys){
+					if (loader) {
+						for (const dataLoaderKey of dataLoaderKeys) {
 							loader.clear(dataLoaderKey);
 						}
 					}
 				})
 			}
 		},
-		'service-ui.started': function(){
+		'service-ui.started': function () {
 			this.app.use("/", this.express());
 		},
-		"$packages.changed": function(){
+		"$packages.changed": function () {
 			if (!this.projectStarted) {
 				this.projectStarted = true
 				// 开发环境, 显示耗时
-				if(process.env.NODE_ENV == 'development' && global.__startDate){
+				if (process.env.NODE_ENV == 'development' && global.__startDate) {
 					console.log('耗时: ' + (new Date().getTime() - global.__startDate.getTime()) + ' ms');
 				}
 				console.log(`Project is running at ${process.env.ROOT_URL}`);
@@ -1037,7 +1039,7 @@ module.exports = {
 							console.error('auto open browser failed.');
 						}
 					}, 100)
-					
+
 				}
 			}
 		}
