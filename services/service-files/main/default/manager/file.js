@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-09 09:36:43
  * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2024-04-19 14:47:44
+ * @LastEditTime: 2024-07-02 11:31:43
  * @Description: 文件类，处理文件保存
  */
 'use strict';
@@ -59,12 +59,13 @@ class File {
         locked_by,
         locked_by_name,
         overwrite,
-        current
+        current,
+        object_name
      }
      */
     set metadata(metadata) {
         this._metadata = metadata;
-        this._fileKey = this.fileKeyMaker({ _id: this._id, filename: this._name, instance: metadata.instance, fsCollectionName: this._fsCollectionName });
+        this._fileKey = this.fileKeyMaker({ _id: this._id, filename: this._name, instance: metadata.instance, fsCollectionName: this._fsCollectionName, objectName: metadata.object_name });
     }
 
     /**
@@ -97,7 +98,7 @@ class File {
 
         const doc = {
             "_id": _id,
-            "link": process.env.ROOT_URL+`/api/files/${fsCollectionName}/`+_id,
+            "link": process.env.ROOT_URL + `/api/files/${fsCollectionName}/` + _id,
             "original": {
                 "type": mimetype,
                 "size": size,
@@ -125,7 +126,7 @@ class File {
      * @param {{ _id, filename, instance, fsCollectionName }} param0 
      * @returns 
      */
-    fileKeyMaker({ _id, filename, instance, fsCollectionName }) {
+    fileKeyMaker({ _id, filename, instance, fsCollectionName, objectName }) {
 
         const storeName = getStoreName();
 
@@ -139,6 +140,9 @@ class File {
             const month = now.getMonth() + 1;
 
             let customPathPrefix = year + '/' + month + '/';
+            if (objectName) {
+                customPathPrefix = objectName + '/' + customPathPrefix;
+            }
             if (instance) {
                 customPathPrefix += instance;
             }
