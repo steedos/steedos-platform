@@ -146,20 +146,33 @@ const afterDeleteBase = async function () {
 
     _.each(fieldsName, function (fieldName) {
         const fieldProps = fields[fieldName];
-        const indexOfType = fieldProps && ['file','image'].indexOf(fieldProps.type);
-        if( indexOfType > -1 && previousDoc[fieldName] && previousDoc[fieldName].length ){
-            const collection = [cfs.files,cfs.images][indexOfType];
+        const indexOfType = fieldProps && ['file', 'image'].indexOf(fieldProps.type);
+        if (indexOfType > -1 && previousDoc[fieldName] && previousDoc[fieldName].length) {
+            const collection = [cfs.files, cfs.images][indexOfType];
             let ids = previousDoc[fieldName]
-            if(typeof ids === 'string'){
+            if (typeof ids === 'string') {
                 ids = [ids]
             }
-            _.each(ids,function (id){
+            _.each(ids, function (id) {
                 collection.remove({
                     "_id": id
                 });
             })
         }
     });
+    if ("cms_files" != object_name) {
+        // 删除附件
+        const cmsFilesObj = objectql.getObject('cms_files')
+        const cmsFiles = await cmsFilesObj.find({
+            filters: [
+                ["parent/o", "=", object_name],
+                ["parent/ids", "=", previousDoc._id]
+            ]
+        })
+        for (const cmsFile of cmsFiles) {
+            await cmsFilesObj.delete(cmsFile._id)
+        }
+    }
 }
 
 module.exports = {

@@ -37,19 +37,25 @@ _.each stores, (store_name)->
                         filename = fileObj.name();
                         filenameInStore = fileObj.name({store: store_name})
 
+                        metadata = fileObj.metadata || {};
+                        objectName = metadata.object_name;
+                        objectFoldPath = ''
+                        if objectName
+                          objectFoldPath = objectName + '/'
+
                         now = new Date
                         year = now.getFullYear()
                         month = now.getMonth() + 1
                         path = require('path')
                         mkdirp = require('mkdirp')
-                        pathname = path.join(process.env.STEEDOS_STORAGE_DIR, "files/#{store_name}/" + year + '/' + month)
+                        pathname = path.join(process.env.STEEDOS_STORAGE_DIR, "files/#{store_name}/" + objectFoldPath + year + '/' + month)
                         # Set absolute path
                         absolutePath = path.resolve(pathname)
                         # Ensure the path exists
                         mkdirp.sync(absolutePath)
 
                         # If no store key found we resolve / generate a key
-                        return year + '/' + month + '/' + fileObj.collectionName + '-' + fileObj._id + '-' + (filenameInStore || filename)
+                        return objectFoldPath + year + '/' + month + '/' + fileObj.collectionName + '-' + fileObj._id + '-' + (filenameInStore || filename)
 
                 })
 
