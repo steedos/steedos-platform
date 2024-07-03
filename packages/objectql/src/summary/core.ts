@@ -40,7 +40,7 @@ export const runQuotedByObjectFieldSummaries = async function (objectName: strin
         // let quotedByReferenceTosForSummaryTypeConfigs = [];
         for (const config of itemQuotedByConfigs) {
             let values = await getQuotedByObjectFieldSummaryValues(objectName, recordId, previousDoc, config, userSession);
-            if(!_.isEmpty(values)){
+            if (!_.isEmpty(values)) {
                 // quotedByReferenceTosForSummaryTypeConfigs.push({
                 //     masterRecordIds: _.keys(values), 
                 //     config
@@ -88,6 +88,7 @@ export const getSummaryAggregateGroups = (summary_type: SteedosSummaryTypeValue,
     let group: any = {
         _id: "summary_group"
     };
+    const addFields = {};
     const groupKey = getSummaryAggregateGroupKey(summary_type, summary_field);
     switch (summary_type) {
         case SteedosSummaryTypeValue.COUNT:
@@ -100,16 +101,30 @@ export const getSummaryAggregateGroups = (summary_type: SteedosSummaryTypeValue,
             group[groupKey] = { $min: `$${summary_field}` };
             break;
         case SteedosSummaryTypeValue.SUM:
-            group[groupKey] = { $sum: `$${summary_field}` };
+            group[groupKey] = {
+                $sum: {
+                    $toDecimal: `$${summary_field}`
+                }
+            };
+            addFields[summary_field] = {
+                $toDouble: `$${summary_field}`
+            }
             break;
         case SteedosSummaryTypeValue.AVG:
             group[groupKey] = { $avg: `$${summary_field}` };
             break;
 
     }
-    return [{
+
+    const aggregation: any = [{
         $group: group
-    }];
+    }]
+    if (!_.isEmpty(addFields)) {
+        aggregation.push({
+            $addFields: addFields
+        });
+    }
+    return aggregation;
 }
 
 /**
@@ -149,14 +164,14 @@ export const getQuotedByObjectFieldSummaryValues = async (objectName: string, re
     const { reference_to_field } = fieldSummaryConfig;
     const referenceToRecord = await getSteedosSchema().getObject(objectName).findOne(recordId, { fields: [reference_to_field] });
     let referenceToId: string;
-    if(referenceToRecord){
+    if (referenceToRecord) {
         referenceToId = referenceToRecord[reference_to_field];
     }
     let referenceToIds = [];
     let previousReferenceToId = previousDoc && previousDoc[reference_to_field];
-    if(referenceToId){
+    if (referenceToId) {
         referenceToIds.push(referenceToId);
-        if(previousReferenceToId && previousReferenceToId != referenceToId){
+        if (previousReferenceToId && previousReferenceToId != referenceToId) {
             // 应该额外再判断子表中master_detail字段值是否变更了，如果变更了，则需要额外对变更前的记录做汇总
             referenceToIds.push(previousReferenceToId);
         }
@@ -164,12 +179,12 @@ export const getQuotedByObjectFieldSummaryValues = async (objectName: string, re
     else {
         // 当子表中master_detail字段值为空，说明可能是直接删除了子表记录或者把子表记录的master_detail字段值修改为空了
         // 这里要区别下原来是否有值，如果原来本来就是空就不需要进一步汇总了，如果原来不是空则还是要拿到原来的值进行汇总
-        if(previousReferenceToId){
+        if (previousReferenceToId) {
             referenceToIds.push(previousReferenceToId);
         }
     }
     // console.log("===getQuotedByObjectFieldSummaryValues===referenceToIds====", referenceToIds);
-    if(!referenceToIds.length){
+    if (!referenceToIds.length) {
         return;
     }
     return await getReferenceTosFieldSummaryValues(referenceToIds, fieldSummaryConfig, userSession);
@@ -186,7 +201,7 @@ export const getQuotedByObjectFieldSummaryValues = async (objectName: string, re
 export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<string> | Array<JsonMap> | any, fieldSummaryConfig: SteedosFieldSummaryTypeConfig, userSession: any) => {
     // docs表示要更新的主表记录内容按masterRecordId拼成键值对象，其格式为：{masterRecordId:{sumFieldName1: sumValue1, sumFieldName2: sumValue2}}, 比如：{ '65fea8c5585318611ab701a2': { sum_a__c: 33, sum_amount__c: 100 } }
     let docs = await getReferenceTosFieldSummaryValues(referenceToIds, fieldSummaryConfig, userSession);
-    if(!_.isEmpty(docs)){
+    if (!_.isEmpty(docs)) {
         for (const masterRecordId in docs) {
             await updateReferenceToFieldSummaryValue(masterRecordId, docs[masterRecordId], fieldSummaryConfig, userSession);
         }
@@ -216,20 +231,20 @@ export const getReferenceTosFieldSummaryValues = async (referenceToIds: Array<st
     let aggregateGroups = getSummaryAggregateGroups(summary_type, summary_field);
     // console.log("===getReferenceTosFieldSummaryValues====aggregateGroups==", aggregateGroups);
     for (let referenceToId of referenceToIds) {
-        if(typeof referenceToId !== "string"){
+        if (typeof referenceToId !== "string") {
             referenceToId = <string>referenceToId[reference_to_field_reference_to || "_id"];
         }
-        let referenceToFilters:any = [[reference_to_field, "=", referenceToId]];
-        let aggregateFilters:any = referenceToFilters;
-        if(summary_filters && summary_filters.length){
-            if(typeof summary_filters === "string"){
+        let referenceToFilters: any = [[reference_to_field, "=", referenceToId]];
+        let aggregateFilters: any = referenceToFilters;
+        if (summary_filters && summary_filters.length) {
+            if (typeof summary_filters === "string") {
                 // 传入的过滤条件为odata字符串时，需要把aggregateFilters也解析为odata串并取AND
                 aggregateFilters = formatFiltersToODataQuery(referenceToFilters);
                 aggregateFilters = `(${aggregateFilters}) and (${summary_filters})`;
             }
-            else{
+            else {
                 const summaryObject = getObjectConfig(summary_object);
-                if(!summaryObject){
+                if (!summaryObject) {
                     throw new Error(`The summary_object '${summary_object}' of the field '${field_name}' on the object '${object_name}' is not found in the default datasource.`);
                 }
                 processFilters(summary_filters, summaryObject.fields);
@@ -256,7 +271,7 @@ export const getReferenceTosFieldSummaryValues = async (referenceToIds: Array<st
             // 说明referenceToId对应的主表记录找不到了，可能被删除了，不用报错或其他处理
             // 也可能是要汇总的子表记录全部删除了，或者不再有任何子表记录符合汇总字段过滤条件，这时应该重置汇总字段值
             const masterRecord = await getSteedosSchema().getObject(object_name).findOne(referenceToId, { fields: ["_id"] });
-            if(masterRecord){
+            if (masterRecord) {
                 // sum和count类型直接按0值处理而不是空值，min/max类型（包括数值和日期时间字段）显示为空值
                 let defaultValue = SteedosSummaryTypeBlankValue[summary_type];
                 setReferenceToFieldSummaryValuesByReferenceToId(referenceToId, field_name, defaultValue, setDocs);
@@ -271,8 +286,8 @@ export const getReferenceTosFieldSummaryValues = async (referenceToIds: Array<st
     return setDocs;
 }
 
-export const setReferenceToFieldSummaryValuesByReferenceToId = (referenceToId: string, field_name: string,  value: any, setDocs: any) => {
-    if(!setDocs[referenceToId]){
+export const setReferenceToFieldSummaryValuesByReferenceToId = (referenceToId: string, field_name: string, value: any, setDocs: any) => {
+    if (!setDocs[referenceToId]) {
         setDocs[referenceToId] = {};
     }
     setDocs[referenceToId][field_name] = value;
@@ -283,12 +298,12 @@ export const updateReferenceToFieldSummaryValue = async (referenceToId: string, 
     const { field_name, object_name, reference_to_field_reference_to } = fieldSummaryConfig;
     // let setDoc = {};
     // setDoc[field_name] = value;
-    if(reference_to_field_reference_to && reference_to_field_reference_to !== "_id") {
-        const referenceToRecords = await getSteedosSchema().getObject(object_name).directFind({ filters: [ reference_to_field_reference_to, "=", referenceToId ] });
-        if(referenceToRecords && referenceToRecords.length){
+    if (reference_to_field_reference_to && reference_to_field_reference_to !== "_id") {
+        const referenceToRecords = await getSteedosSchema().getObject(object_name).directFind({ filters: [reference_to_field_reference_to, "=", referenceToId] });
+        if (referenceToRecords && referenceToRecords.length) {
             referenceToId = referenceToRecords[0]["_id"];
         }
-        else{
+        else {
             // 如果没找到关联记录，说明可能关联到的主表记录的reference_to_field属性值被修改了，无法更新统计结果
             return;
         }
@@ -305,7 +320,7 @@ export const updateQuotedByReferenceTosForSummaryType = async (referenceToIds: A
     }
     const fieldNames = [field_name];
     for (let referenceToId of referenceToIds) {
-        if(typeof referenceToId !== "string"){
+        if (typeof referenceToId !== "string") {
             referenceToId = <string>referenceToId._id;
         }
         // console.log("===updateQuotedByReferenceTosForSummaryType====object_name, referenceToId, field_name===", object_name, referenceToId, field_name);
@@ -334,11 +349,11 @@ export const runCurrentObjectFieldSummaries = async function (objectName: string
     for (const config of configs) {
         // sum和count类型直接按0值处理而不是空值，min/max类型（包括数值和日期时间字段）显示为空值
         let defaultValue = SteedosSummaryTypeBlankValue[config.summary_type];
-        if(defaultValue != null){
+        if (defaultValue != null) {
             setDoc[config.field_name] = defaultValue;
         }
     }
-    if(_.isEmpty(setDoc)){
+    if (_.isEmpty(setDoc)) {
         return;
     }
     await getSteedosSchema().getObject(objectName).directUpdate(recordId, setDoc);
