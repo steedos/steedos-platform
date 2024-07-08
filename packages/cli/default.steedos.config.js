@@ -9,39 +9,39 @@ require('dotenv-flow').config(
 		silent: true
 	});
 
-if(_.isEmpty(process.env.STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN)) {
+if (_.isEmpty(process.env.STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN)) {
 	process.env.STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN = 'true';
 }
 
-if(_.isEmpty(process.env.STEEDOS_UNPKG_URL)) {
+if (_.isEmpty(process.env.STEEDOS_UNPKG_URL)) {
 	process.env.STEEDOS_UNPKG_URL = 'https://unpkg.steedos.cn';
 }
-process.env.STEEDOS_UNPKG_URL =  process.env.STEEDOS_UNPKG_URL.replace(/\/+$/, "");
+process.env.STEEDOS_UNPKG_URL = process.env.STEEDOS_UNPKG_URL.replace(/\/+$/, "");
 
-if(_.isEmpty(process.env.STEEDOS_BUILDER_URL)) {
+if (_.isEmpty(process.env.STEEDOS_BUILDER_URL)) {
 	process.env.STEEDOS_BUILDER_URL = 'https://6-3.builder.steedos.com';
 }
-process.env.STEEDOS_BUILDER_URL =  process.env.STEEDOS_BUILDER_URL.replace(/\/+$/, "");
+process.env.STEEDOS_BUILDER_URL = process.env.STEEDOS_BUILDER_URL.replace(/\/+$/, "");
 
 
-if(_.isEmpty(process.env.STEEDOS_AMIS_VERSION)) {
+if (_.isEmpty(process.env.STEEDOS_AMIS_VERSION)) {
 	process.env.STEEDOS_AMIS_VERSION = '6.3.0-patch.3';
 }
 
-if(_.isEmpty(process.env.STEEDOS_AMIS_URL)) {
+if (_.isEmpty(process.env.STEEDOS_AMIS_URL)) {
 	// process.env.STEEDOS_AMIS_URL = process.env.STEEDOS_UNPKG_URL + '/amis@' + process.env.STEEDOS_AMIS_VERSION;
 	// 默认加载 https://unpkg.steedos.cn/@steedos-widgets/amis@3.6.3-patch.2， STEEDOS_AMIS_VERSION可变更版本号
 	process.env.STEEDOS_AMIS_URL = process.env.STEEDOS_UNPKG_URL + '/@steedos-widgets/amis@' + process.env.STEEDOS_AMIS_VERSION;
-}else{
+} else {
 	process.env.STEEDOS_AMIS_URL = process.env.STEEDOS_AMIS_URL.replace("https://unpkg.com", process.env.STEEDOS_UNPKG_URL)
 }
-process.env.STEEDOS_AMIS_URL =  process.env.STEEDOS_AMIS_URL.replace(/\/+$/, "");
+process.env.STEEDOS_AMIS_URL = process.env.STEEDOS_AMIS_URL.replace(/\/+$/, "");
 
-if(_.isEmpty(process.env.STEEDOS_WIDGETS_VERSION)) {
-	process.env.STEEDOS_WIDGETS_VERSION = '6.3.0-beta.23';
+if (_.isEmpty(process.env.STEEDOS_WIDGETS_VERSION)) {
+	process.env.STEEDOS_WIDGETS_VERSION = '6.3.0';
 }
 
-if(_.isEmpty(process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS)) {
+if (_.isEmpty(process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS)) {
 	const widgetsVersion = process.env.STEEDOS_WIDGETS_VERSION;
 	const unpkgUrl = process.env.STEEDOS_UNPKG_URL;
 	let steedosPublicPageAsseturls = `${unpkgUrl}/@steedos-widgets/amis-object@${widgetsVersion}/dist/assets.json`;
@@ -53,7 +53,7 @@ if(_.isEmpty(process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS)) {
 	process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS = steedosPublicPageAsseturls
 }
 
-if(_.isEmpty(process.env.SERIALIZER)){
+if (_.isEmpty(process.env.SERIALIZER)) {
 	process.env.SERIALIZER = 'JSON'
 }
 
@@ -316,7 +316,7 @@ module.exports = {
 		broker.logger.warn('Clear all cache entries on startup.')
 		broker.cacher.clean();
 
-		const objectql = require(require.resolve('@steedos/objectql', {paths: [process.cwd()]}));
+		const objectql = require(require.resolve('@steedos/objectql', { paths: [process.cwd()] }));
 		objectql.broker.init(broker);
 
 		//TODO 此处不考虑多个node服务模式.
