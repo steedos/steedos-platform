@@ -4,8 +4,12 @@ columns:
   - name
   - shared_to
   - owner
+  - sort_no
   - modified
   - is_enable
   - is_system
 label: All List Views
 filter_scope: space
+sort:
+  - field_name: sort_no
+    order: asc

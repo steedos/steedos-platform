@@ -146,12 +146,20 @@ UUflow_api.post_submit = function (instance) {
 					}
 				});
 
-				FlowRouter.go("/workflow/space/" + Session.get('spaceId') + "/draft/");
+				if(instance.distribute_from_instance || instance.distribute_from_instances.length > 0) {
+					window.goBack();
+				}else{
+					FlowRouter.go("/workflow/space/" + Session.get('spaceId') + "/draft/");
+				}
 				return;
 			}
 
-			FlowRouter.go("/workflow/space/" + Session.get("spaceId") + "/" + Session.get("box"));
-
+			if(instance.distribute_from_instance  || instance.distribute_from_instances.length > 0) {
+				window.goBack();
+			}else{
+				FlowRouter.go("/workflow/space/" + Session.get("spaceId") + "/" + Session.get("box"));
+			}
+			
 			toastr.success(TAPi18n.__('Submitted successfully'));
 
 			Session.set("instance_submitting", false);
