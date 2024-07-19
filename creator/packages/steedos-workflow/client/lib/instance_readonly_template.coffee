@@ -396,7 +396,7 @@ InstanceReadOnlyTemplate.getValue = (value, field, locale, utcOffset) ->
 					fileName = item.original.name;
 					fileUrl = Steedos.absoluteUrl('/api/files/files/'+item._id);
 					filePreviewHtml = '';
-					if [".pdf", ".jpg", ".jpeg", ".png", ".gif"].indexOf(fileName.slice(-4)) > -1
+					if [".pdf", ".jpg", ".jpeg", ".png", ".gif"].indexOf(fileName.toLowerCase().slice(-4)) > -1
 						filePreviewHtml = "&ensp;<a href='#{fileUrl}' target='_blank' class='antd-Link'><span class='antd-TplField'><span>预览</span></span></a>"
 					return "<div><a href='#{fileUrl+'?download=true'}' target='_blank'>#{fileName}</a> #{filePreviewHtml ? filePreviewHtml : ''}</div>"
 
