@@ -15,7 +15,7 @@ var websocketExtensions = _.once(function () {
   var extensions = [];
 
   var websocketCompressionConfig = process.env.SERVER_WEBSOCKET_COMPRESSION
-        ? JSON.parse(process.env.SERVER_WEBSOCKET_COMPRESSION) : {};
+    ? JSON.parse(process.env.SERVER_WEBSOCKET_COMPRESSION) : {};
   if (websocketCompressionConfig) {
     extensions.push(Npm.require('permessage-deflate').configure(
       websocketCompressionConfig
@@ -25,7 +25,7 @@ var websocketExtensions = _.once(function () {
   return extensions;
 });
 
-var pathPrefix = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX ||  "";
+var pathPrefix = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX || "";
 
 StreamServer = function () {
   var self = this;
@@ -41,7 +41,7 @@ StreamServer = function () {
   var sockjs = Npm.require('sockjs');
   var serverOptions = {
     prefix: self.prefix,
-    log: function() {},
+    log: function () { },
     // this is the default, but we code it explicitly because we depend
     // on it in stream_client:HEARTBEAT_TIMEOUT
     heartbeat_delay: 45000,
@@ -55,7 +55,9 @@ StreamServer = function () {
     // Set the USE_JSESSIONID environment variable to enable setting the
     // JSESSIONID cookie. This is useful for setting up proxies with
     // session affinity.
-    jsessionid: !!process.env.USE_JSESSIONID
+    jsessionid: !!process.env.USE_JSESSIONID,
+    // 禁用cors，防止请求response返回Access-Control-Allow-Origin:*
+    disable_cors: true
   };
 
   // If you know your server environment (eg, proxies) will prevent websockets
@@ -98,8 +100,8 @@ StreamServer = function () {
     // livedata_server.js.
     socket.setWebsocketTimeout = function (timeout) {
       if ((socket.protocol === 'websocket' ||
-           socket.protocol === 'websocket-raw')
-          && socket._session.recv) {
+        socket.protocol === 'websocket-raw')
+        && socket._session.recv) {
         socket._session.recv.connection.setTimeout(timeout);
       }
     };
@@ -118,7 +120,7 @@ StreamServer = function () {
     // concerned about people upgrading from a pre-0.7.0 release. Also,
     // remove the clause in the client that ignores the welcome message
     // (livedata_connection.js)
-    socket.send(JSON.stringify({server_id: "0"}));
+    socket.send(JSON.stringify({ server_id: "0" }));
 
     // call all our callbacks when we get a new socket. they will do the
     // work of setting up handlers and such for specific messages.
@@ -148,21 +150,21 @@ _.extend(StreamServer.prototype, {
 
   // Redirect /websocket to /sockjs/websocket in order to not expose
   // sockjs to clients that want to use raw websockets
-  _redirectWebsocketEndpoint: function() {
+  _redirectWebsocketEndpoint: function () {
     var self = this;
     // Unfortunately we can't use a connect middleware here since
     // sockjs installs itself prior to all existing listeners
     // (meaning prior to any connect middlewares) so we need to take
     // an approach similar to overshadowListeners in
     // https://github.com/sockjs/sockjs-node/blob/cf820c55af6a9953e16558555a31decea554f70e/src/utils.coffee
-    _.each(['request', 'upgrade'], function(event) {
+    _.each(['request', 'upgrade'], function (event) {
       var httpServer = WebApp.httpServer;
       var oldHttpServerListeners = httpServer.listeners(event).slice(0);
       httpServer.removeAllListeners(event);
 
       // request and upgrade have different arguments passed but
       // we only care about the first one which is always request
-      var newListener = function(request /*, moreArguments */) {
+      var newListener = function (request /*, moreArguments */) {
         // Store arguments for use within the closure below
         var args = arguments;
 
@@ -170,11 +172,11 @@ _.extend(StreamServer.prototype, {
         // preserving query string.
         var parsedUrl = url.parse(request.url);
         if (parsedUrl.pathname === pathPrefix + '/websocket' ||
-            parsedUrl.pathname === pathPrefix + '/websocket/') {
+          parsedUrl.pathname === pathPrefix + '/websocket/') {
           parsedUrl.pathname = self.prefix + '/websocket';
           request.url = url.format(parsedUrl);
         }
-        _.each(oldHttpServerListeners, function(oldListener) {
+        _.each(oldHttpServerListeners, function (oldListener) {
           oldListener.apply(httpServer, args);
         });
       };
