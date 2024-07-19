@@ -52,12 +52,13 @@ StreamServer = function () {
     // combining CPU-heavy processing with SockJS termination (eg a proxy which
     // converts to Unix sockets) but for now, raise the delay.
     disconnect_delay: 60 * 1000,
+    // Allow disabling of CORS requests to address
+    // https://github.com/meteor/meteor/issues/8317.
+    disable_cors: !!process.env.DISABLE_SOCKJS_CORS,
     // Set the USE_JSESSIONID environment variable to enable setting the
     // JSESSIONID cookie. This is useful for setting up proxies with
     // session affinity.
-    jsessionid: !!process.env.USE_JSESSIONID,
-    // 禁用cors，防止请求response返回Access-Control-Allow-Origin:*
-    disable_cors: true
+    jsessionid: !!process.env.USE_JSESSIONID
   };
 
   // If you know your server environment (eg, proxies) will prevent websockets
