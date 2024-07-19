@@ -280,7 +280,10 @@ objectRoutes.route '/view/:record_id',
 		, 10
 	triggersExit: [
 		(context, redirect) ->
-			if Session.get("instance_change") && ((context.params?.object_name == 'instances' && context.queryParams?.side_listview_id == 'draft') || (context.params?.object_name == 'instance_tasks' && context.queryParams?.side_listview_id == 'inbox'))
+			side_listview_id = context.queryParams?.side_listview_id
+			if window._.isArray(side_listview_id)
+				side_listview_id = side_listview_id[0]
+			if Session.get("instance_change") && ((context.params?.object_name == 'instances' && side_listview_id == 'draft') || (context.params?.object_name == 'instance_tasks' && side_listview_id == 'inbox'))
 				ins = WorkflowManager.getInstance()
 				if !("draft" != ins.state && "draft" == Session.get("box"))
 					InstanceManager.saveIns(false);
