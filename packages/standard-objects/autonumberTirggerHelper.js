@@ -116,7 +116,7 @@ const caculateAutonumber = async function (objectName, fieldName, rule, spaceId)
                 setDoc.date_from = date_from;
                 setDoc.date_to = date_to;
             }
-            const id = Buffer.from(`${spaceId}-${objectName}-${fieldName}-${rule}`, 'utf-8').toString('base64')
+            const id = Buffer.from(`${spaceId}-${objectName}-${fieldName}-${rule}-${date_from || ''}-${date_to || ''}`, 'utf-8').toString('base64')
             try {
                 // 新增
                 const result = await atColl.findOneAndUpdate(
