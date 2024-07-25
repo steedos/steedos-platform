@@ -3,7 +3,7 @@ defaultValue: 100
 group: ui
 hidden: false
 label: Sort Number
-readonly: true
+# readonly: true
 scale: 0
 sort_no: 490
 sortable: true
