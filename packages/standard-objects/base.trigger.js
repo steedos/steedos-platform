@@ -52,19 +52,18 @@ const checkCompany = async (object_name, userId, doc) => {
 
 const beforeInsertBase = async function () {
     const { doc, userId } = this;
-    // 迁移到insert函数中提前执行了
-    // doc.created = new Date();
-    // doc.modified = new Date();
-    // if (userId) {
-    //     if (!doc.owner) {
-    //         doc.owner = userId;
-    //     }
-    //     if (doc.owner === '{userId}') {
-    //         doc.owner = userId;
-    //     }
-    //     doc.created_by = userId;
-    //     doc.modified_by = userId;
-    // }
+    doc.created = new Date();
+    doc.modified = new Date();
+    if (userId) {
+        if (!doc.owner) {
+            doc.owner = userId;
+        }
+        if (doc.owner === '{userId}') {
+            doc.owner = userId;
+        }
+        doc.created_by = userId;
+        doc.modified_by = userId;
+    }
     var extras = ["spaces", "company", "organizations", "users", "space_users"];
     if (extras.indexOf(this.object_name) < 0 && doc.space) {
         /* company_ids/company_id默认值逻辑*/
@@ -101,11 +100,10 @@ const beforeUpdateBase = async function () {
     if (!doc) {
         return;
     }
-    // 迁移到update函数中提前执行了
-    // doc.modified = new Date();
-    // if (userId) {
-    //     doc.modified_by = userId;
-    // }
+    doc.modified = new Date();
+    if (userId) {
+        doc.modified_by = userId;
+    }
     var extras = ["spaces", "company", "organizations", "users", "space_users"];
     if (extras.indexOf(this.object_name) < 0) {
         /* company_ids/company_id级联修改逻辑*/
@@ -146,37 +144,30 @@ const afterDeleteBase = async function () {
 
     _.each(fieldsName, function (fieldName) {
         const fieldProps = fields[fieldName];
-        const indexOfType = fieldProps && ['file', 'image'].indexOf(fieldProps.type);
-        if (indexOfType > -1 && previousDoc[fieldName] && previousDoc[fieldName].length) {
-            const collection = [cfs.files, cfs.images][indexOfType];
+        const indexOfType = fieldProps && ['file','image'].indexOf(fieldProps.type);
+        if( indexOfType > -1 && previousDoc[fieldName] && previousDoc[fieldName].length ){
+            const collection = [cfs.files,cfs.images][indexOfType];
             let ids = previousDoc[fieldName]
-            if (typeof ids === 'string') {
+            if(typeof ids === 'string'){
                 ids = [ids]
             }
-            _.each(ids, function (id) {
+            _.each(ids,function (id){
                 collection.remove({
                     "_id": id
                 });
             })
         }
     });
-    if ("cms_files" != object_name) {
-        // 删除附件
-        const cmsFilesObj = objectql.getObject('cms_files')
-        const cmsFiles = await cmsFilesObj.find({
-            filters: [
-                ["parent/o", "=", object_name],
-                ["parent/ids", "=", previousDoc._id]
-            ]
-        })
-        for (const cmsFile of cmsFiles) {
-            await cmsFilesObj.delete(cmsFile._id)
-        }
-    }
 }
 
 module.exports = {
     listenTo: 'base',
+    beforeInsert: async function () {
+        return await beforeInsertBase.apply(this, arguments)
+    },
+    beforeUpdate: async function () {
+        return await beforeUpdateBase.apply(this, arguments)
+    },
     afterDelete: async function () {
         return await afterDeleteBase.apply(this, arguments)
     }
