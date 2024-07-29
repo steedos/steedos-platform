@@ -146,7 +146,7 @@ UUflow_api.post_submit = function (instance) {
 					}
 				});
 
-				if(instance.distribute_from_instance || instance.distribute_from_instances.length > 0) {
+				if (instance.distribute_from_instance || (instance.distribute_from_instances && instance.distribute_from_instances.length > 0)) {
 					window.goBack();
 				}else{
 					FlowRouter.go("/workflow/space/" + Session.get('spaceId') + "/draft/");
@@ -154,7 +154,7 @@ UUflow_api.post_submit = function (instance) {
 				return;
 			}
 
-			if(instance.distribute_from_instance  || instance.distribute_from_instances.length > 0) {
+			if (instance.distribute_from_instance || (instance.distribute_from_instances && instance.distribute_from_instances.length > 0)) {
 				window.goBack();
 			}else{
 				FlowRouter.go("/workflow/space/" + Session.get("spaceId") + "/" + Session.get("box"));
