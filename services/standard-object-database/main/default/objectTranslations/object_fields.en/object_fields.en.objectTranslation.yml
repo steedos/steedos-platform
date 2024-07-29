@@ -303,13 +303,13 @@ fields:
     help: 
     description:
   deleted_lookup_record_behavior:
-    label: What to do if the lookup record is deleted?
+    label: The rule for deleting related table records
     help: 
-    description: 
+    description: If the field is mandatory, then by default, deletion is not allowed and modification is prohibited.
     options:
-      - label: Clear the value of this field. You can't choose this option if you make this field required.
+      - label: When deleting related table records, also delete the value of this field.
         value: clear
-      - label: Don't allow deletion of the lookup record that's part of a lookup relationship.
+      - label: Do not allow deletion.
         value: retain
   is_wide:
     label: Is Wide
