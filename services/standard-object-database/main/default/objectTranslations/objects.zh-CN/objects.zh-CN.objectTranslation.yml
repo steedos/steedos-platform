@@ -52,7 +52,7 @@ fields:
     help: 
     description: 
   enable_form_tabs:
-    label: 是否显示为选项卡模式
+    label: 启用选项卡
     help: 在表单中以选项卡模式显示分组，只在编辑模式时识别该属性
     description: 
   enable_events:

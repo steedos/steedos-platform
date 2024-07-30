@@ -65,13 +65,13 @@ fields:
     help: 
     description: 
   deleted_lookup_record_behavior:
-    label: 如果相关表记录被删除怎么办？
+    label: 相关表记录删除规则
     help: 
-    description: 
+    description: 如果该字段是必填项，则默认不允许删除且禁止修改。
     options:
-      - label: 清除此字段的值。 如果您将此字段设为必填，您不能选择此选项。
+      - label: 相关表记录删除时，同时删除该字段值
         value: clear
-      - label: 不允许删除＂作为相关表关系的一部分的相关表记录＂。
+      - label: 不允许删除
         value: retain
   depend_on:
     label: 依赖字段
