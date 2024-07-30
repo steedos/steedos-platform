@@ -2,10 +2,11 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2024-07-30 13:43:46
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-07-30 13:49:42
+ * @LastEditTime: 2024-07-30 13:53:23
  * @Description: 
  */
 "use strict";
+const Fiber = require("fibers");
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
