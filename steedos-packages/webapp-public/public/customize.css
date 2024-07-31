@@ -80,3 +80,24 @@ body.steedos {
   /*此样式可能造成ios17系统的iphone svg显示不出来，移除就好了*/
   -webkit-overflow-scrolling: unset;
 }
+
+/* fix A标签在ios safari上点击后字体会变小再变大，包括列表页面名称字段，审批王详细页面顶部操作按钮等 */
+@media (max-width: 768px) {
+  a {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    font-size: inherit;
+    line-height: inherit;
+    padding: inherit;
+  }
+
+  a:active,
+  a:hover,
+  a:focus {
+    font-size: inherit;
+  }
+
+  .slds-button a {
+    font-size: inherit;
+  }
+}
