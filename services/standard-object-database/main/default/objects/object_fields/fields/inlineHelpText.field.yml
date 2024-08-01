@@ -5,4 +5,4 @@ is_wide: true
 label: Prompt text
 sort_no: 420
 type: textarea
-description: 在字段名称的右侧增加一个叹号提示，可查看对该字段的解释说明
+inlineHelpText: 在字段名称的右侧增加一个叹号提示，可查看对该字段的解释说明
