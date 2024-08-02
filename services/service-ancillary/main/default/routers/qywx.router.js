@@ -7,6 +7,7 @@ const objectql = require('@steedos/objectql');
 const xmlparser = require('express-xml-bodyparser');
 const xml2js = require('xml2js');
 const fetch = require('node-fetch');
+const { clearCookie } = require('@steedos/utils');
 
 const qywxSync = {
     write: async function (content) {
@@ -540,23 +541,8 @@ let getAbsoluteUrl = function (url) {
 };
 
 let clearAuthCookies = function (req, res) {
-    var cookies, uri;
-    cookies = new Cookies(req, res);
-    cookies.set("X-User-Id");
-    cookies.set("X-Auth-Token");
-    if (req.headers.origin) {
-        uri = new URI(req.headers.origin);
-    } else if (req.headers.referer) {
-        uri = new URI(req.headers.referer);
-    }
-    cookies.set("X-User-Id", "", {
-        domain: uri != null ? uri.domain() : void 0,
-        overwrite: true
-    });
-    return cookies.set("X-Auth-Token", "", {
-        domain: uri != null ? uri.domain() : void 0,
-        overwrite: true
-    });
+    clearCookie(req, res, 'X-User-Id');
+    clearCookie(req, res, 'X-Auth-Token');
 };
 
 destroyToken = async function (userId, loginToken) {

@@ -1,7 +1,14 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2024-06-16 17:46:33
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-08-02 10:55:54
+ * @Description: 
+ */
 import crypto = require('crypto');
 import { default as Random } from './random';
 import { getSteedosSchema } from '@steedos/objectql';
-const Cookies = require('cookies');
+import { setCookie, clearCookie } from '@steedos/utils';
 
 export const hashLoginToken = function (loginToken) {
   const hash = crypto.createHash('sha256');
@@ -43,19 +50,17 @@ export const insertHashedLoginToken = async function (userId, hashedToken) {
   return await userObject.update(userId, data);
 }
 
-
-
 export const setAuthCookies = function (req, res, userId, authToken, spaceId?) {
-  let cookies = new Cookies(req, res);
   let options = {
     maxAge: 90 * 60 * 60 * 24 * 1000,
     httpOnly: true,
     overwrite: true
   }
-  cookies.set("X-User-Id", userId, options);
-  cookies.set("X-Auth-Token", authToken, options);
+  setCookie(req, res, "X-User-Id", userId, options as any);
+  setCookie(req, res, "X-Auth-Token", authToken, options as any)
+
   if (spaceId) {
-    cookies.set("X-Space-Id", spaceId, options);
+    setCookie(req, res, "X-Space-Id", spaceId, options as any);
     // cookies.set("X-Space-Token", spaceId + ',' + authToken, options);
   }
 
@@ -64,16 +69,18 @@ export const setAuthCookies = function (req, res, userId, authToken, spaceId?) {
 
 
 export const clearAuthCookies = function (req, res) {
-  let cookies = new Cookies(req, res);
   let options = {
     maxAge: 0,
     httpOnly: true,
     overwrite: true
   }
-  cookies.set("X-User-Id", null, options);
-  cookies.set("X-Auth-Token", null, options);
-  cookies.set("X-Access-Token", null, options);
-  cookies.set("X-Space-Token", null, options);
+
+  clearCookie(req, res, "X-User-Id", options as any)
+  clearCookie(req, res, "X-Auth-Token", options as any)
+
+  clearCookie(req, res, "X-Access-Token", options as any)
+  clearCookie(req, res, "X-Space-Token", options as any)
+
   return;
 }
 
