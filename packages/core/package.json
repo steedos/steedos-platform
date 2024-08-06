@@ -1,7 +1,7 @@
 {
   "name": "@steedos/core",
   "private": false,
-  "version": "2.6.24-beta.1",
+  "version": "2.6.24",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -14,15 +14,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@steedos/auth": "2.6.24-beta.1",
-    "@steedos/filters": "2.6.24-beta.1",
-    "@steedos/i18n": "2.6.24-beta.1",
-    "@steedos/metadata-core": "2.6.24-beta.1",
-    "@steedos/migrate": "2.6.24-beta.1",
-    "@steedos/objectql": "2.6.24-beta.1",
-    "@steedos/odata-v4-mongodb": "2.6.24-beta.1",
-    "@steedos/process": "2.6.24-beta.1",
-    "@steedos/standard-objects": "2.6.24-beta.1",
+    "@steedos/auth": "2.6.24",
+    "@steedos/filters": "2.6.24",
+    "@steedos/i18n": "2.6.24",
+    "@steedos/metadata-core": "2.6.24",
+    "@steedos/migrate": "2.6.24",
+    "@steedos/objectql": "2.6.24",
+    "@steedos/odata-v4-mongodb": "2.6.24",
+    "@steedos/process": "2.6.24",
+    "@steedos/standard-objects": "2.6.24",
     "body-parser": "^1.18.1",
     "bunyan-sfdx-no-dtrace": "^1.8.2",
     "clone": "^2.1.2",
@@ -45,7 +45,7 @@
   "devDependencies": {
     "@salesforce/kit": "1.0.4",
     "@salesforce/ts-types": "1.1.2",
-    "@steedos/meteor-bundle-runner": "2.6.24-beta.1",
+    "@steedos/meteor-bundle-runner": "2.6.24",
     "@types/express": "^4.16.1",
     "@types/node": "^11.10.4",
     "@types/underscore": "^1.8.13",
@@ -57,5 +57,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "ec8262bcbd48b7726085ad619b7bc22abc88dc30"
+  "gitHead": "b5442f67775005d13963ae52dcc122d1de177fe6"
 }
