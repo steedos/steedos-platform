@@ -3,7 +3,7 @@ const config = objectql.getSteedosConfig();
 
 const objectUpdate = function (objectApiName, id, data) {
   return objectql.wrapAsync(async function () {
-      return await objectql.getObject(this.objectApiName).update(this.id, this.data)
+    return await objectql.getObject(this.objectApiName).update(this.id, this.data)
   }, { objectApiName: objectApiName, id: id, data: data })
 }
 
@@ -147,7 +147,7 @@ if (Meteor.isServer) {
         // if (recordObj) {
         //   recordObj.update(recordId, { $unset: { "instances": 1, "instance_state": 1, "locked": 1 } });
         // }
-        objectUpdate(recordObjName, recordId, { "instances": null, "instance_state": null, "locked": null })
+        objectUpdate(recordObjName, recordId, { "instances": null, "instance_state": null, "locked": false })
       }
     }
   });
