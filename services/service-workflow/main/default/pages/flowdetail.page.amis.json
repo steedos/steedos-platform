@@ -35,8 +35,6 @@
 										"instance_table_fields.$.detail_field_fullname",
 										"instance_table_fields.$.label",
 										"instance_table_fields.$.field_names",
-										"created_by",
-										"modified_by",
 										"current",
 										"current.steps.$.name",
 										"current.steps.$.disableCC",
