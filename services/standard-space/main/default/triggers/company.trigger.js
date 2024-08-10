@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-08 15:16:53
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-08 16:15:10
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-08-10 11:35:53
  * @Description: 
  */
 "use strict";
@@ -97,7 +97,7 @@ module.exports = {
             // 自动新建根组织下对应的组织关联到新分部，就算存在同名组织，也要新建，同名的老组织用户应该手动删除
             // 组织的其他属性，比如fullname，parents等在organizations.before.insert，organizations.after.insert处理
             // 因为没办法保证company与organizations表的关联记录_id值一定相同，所以不再把它们_id值设置为相同值
-            var orgId = await orgObj.insert({
+            var newOrg = await orgObj.insert({
                 name: doc.name,
                 parent: rootOrg._id,
                 space: doc.space,
@@ -106,7 +106,7 @@ module.exports = {
                 sort_no: 100
             });
             await companyObj.directUpdate(doc._id, {
-                organization: orgId,
+                organization: newOrg._id,
                 company_id: doc._id
             });
         }
