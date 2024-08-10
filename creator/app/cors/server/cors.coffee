@@ -1,5 +1,34 @@
 # Adding CORS headers so we can use CDNs for static content
 cors = require("cors");
+parseOrigin = (originEnv) ->
+    if originEnv is 'true'
+        true
+    else if originEnv is 'false'
+        false
+    else if /^\/.*\/$/.test(originEnv)
+        new RegExp(originEnv.slice(1, -1)) # 去掉两边的斜杠
+    else if originEnv.startsWith('[') && originEnv.endsWith(']')
+        originsArray = JSON.parse(originEnv)
+        originsArray.map (item) ->
+            if typeof item is 'string'
+                item
+            else if /^\/.*\/$/.test(item)
+                new RegExp(item.slice(1, -1))
+            else
+                throw new Error 'Invalid origin value in array'
+    else if typeof originEnv is 'string'
+        originEnv
+    else
+        throw new Error 'Invalid origin value'
+
+originEnv = process.env.STEEDOS_CORS_ORIGIN
+origin = true
+try
+    origin = parseOrigin(originEnv)
+    console.log 'Parsed origin:', origin
+catch error
+    console.error 'Error parsing origin:', error.message
+
 
 # Try to parse all request bodies as JSON
 WebApp.rawConnectHandlers.use (req, res, next) ->
@@ -27,7 +56,7 @@ WebApp.rawConnectHandlers.use (req, res, next) ->
 		req._body = true
 		next()
 
-WebApp.rawConnectHandlers.use(cors({origin: true, credentials: true}));
+WebApp.rawConnectHandlers.use(cors({origin: origin, credentials: true}));
 
 WebApp.rawConnectHandlers.use (req, res, next) ->
 	#if /^\/(api|_timesync|sockjs|tap-i18n)(\/|$)/.test req.url

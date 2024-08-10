@@ -2,13 +2,49 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-11-15 14:48:43
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-11-17 11:15:40
+ * @LastEditTime: 2024-08-10 15:25:45
  * @Description: 
  */
 const express = require("express");
 const cors = require('cors');
 const compression = require('compression');
-const session = require('express-session')
+const session = require('express-session');
+
+function parseOrigin(originEnv) {
+    if (originEnv === 'true') {
+        return true;
+    } else if (originEnv === 'false') {
+        return false;
+    } else if (/^\/.*\/$/.test(originEnv)) { // 正则表达式检查
+        return new RegExp(originEnv.slice(1, -1)); // 去掉两边的斜杠
+    } else if (originEnv.startsWith('[') && originEnv.endsWith(']')) { // 数组检查
+        const originsArray = JSON.parse(originEnv);
+        return originsArray.map(item => {
+            if (typeof item === 'string') {
+                return item;
+            } else if (/^\/.*\/$/.test(item)) {
+                return new RegExp(item.slice(1, -1));
+            } else {
+                throw new Error('Invalid origin value in array');
+            }
+        });
+    } else if (typeof originEnv === 'string') {
+        return originEnv;
+    } else {
+        throw new Error('Invalid origin value');
+    }
+}
+
+const originEnv = process.env.STEEDOS_CORS_ORIGIN;
+let origin = true;
+try {
+    origin = parseOrigin(originEnv);
+    console.log('Parsed origin:', origin);
+} catch (error) {
+    console.error('Error parsing origin:', error.message);
+}
+
+console.log(`origin----<`, origin)
 
 class ExpressAppStatic{
     app = null;
@@ -19,7 +55,7 @@ class ExpressAppStatic{
         this.router = express.Router();
         // 读取环境变量、配置文件, 启动端口, 控制中间件
         const app = express();
-		app.use(cors({origin: true, credentials: true}))
+		app.use(cors({origin: origin, credentials: true}))
 		app.use(compression());
         app.use(session({
             secret: process.env.STEEDOS_SESSION_SECRET || 'steedos',
