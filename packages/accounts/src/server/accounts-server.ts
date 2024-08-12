@@ -491,8 +491,8 @@ export class AccountsServer {
       // token,
       isImpersonated,
       userId,
-      name,
-      email
+      // name,
+      // email
     };
     const accessToken = generateAccessToken({
       data: jwtData,
