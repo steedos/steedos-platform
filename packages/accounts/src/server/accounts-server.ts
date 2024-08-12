@@ -267,8 +267,8 @@ export class AccountsServer {
     const { accessToken, refreshToken } = this.createTokens({
       token,
       userId: user.id,
-      name: user.name,
-      email: user.email
+      name: "",
+      email: ""
     });
     const spaces = await this.db.getMySpaces(user.id);
     return {
