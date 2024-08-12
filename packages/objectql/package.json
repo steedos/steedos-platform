@@ -49,6 +49,7 @@
     "node-fetch": "2",
     "reflect-metadata": "^0.1.10",
     "routing-controllers": "^0.7.7",
+    "sanitize-html": "2.13.0",
     "tslib": "^2.4.0",
     "typeorm": "0.2.28",
     "underscore": "1.5.2",

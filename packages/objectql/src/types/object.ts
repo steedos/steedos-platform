@@ -27,6 +27,7 @@ import { MONGO_BASE_OBJECT, getObjectConfig, getPatternListeners } from "@steedo
 declare var TAPi18n;
 
 const auth = require("@steedos/auth");
+const sanitizeHtml = require('sanitize-html');
 
 const clone = require('clone')
 
@@ -2094,10 +2095,35 @@ export class SteedosObjectType extends SteedosObjectProperties {
     //     // })
     // }
 
+    private sanitizeJsonValues(data) {
+        const sanitizedData = {};
+    
+        for (const key in data) {
+            if (typeof data[key] === 'string') {
+                // 对字符串值进行清理
+                sanitizedData[key] = sanitizeHtml(data[key]);
+            } else {
+                // 如果值不是字符串，直接复制
+                sanitizedData[key] = data[key];
+            }
+        }
+    
+        return sanitizedData;
+    }
+
     private formatRecord(doc: JsonMap) {
         let adapterFormat = this._datasource["formatRecord"];
         if (typeof adapterFormat == 'function') {
             doc = adapterFormat.apply(this._datasource, [doc, this.toConfig()]);
+        }
+
+        if(process.env.STEEDOS_ENABLE_SANITIZE_HTML === 'true'){
+            if(broker.options?.settings?.sanitizeHtml && _.isFunction(broker.options.settings.sanitizeHtml)){
+                doc = broker.options.settings.sanitizeHtml(doc)
+            }else{
+                doc = this.sanitizeJsonValues(doc)
+            }
+            
         }
         return doc;
     }

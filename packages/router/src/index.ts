@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-11-15 14:48:43
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-08-10 15:25:45
+ * @LastEditTime: 2024-08-12 15:40:45
  * @Description: 
  */
 const express = require("express");
@@ -43,8 +43,6 @@ try {
 } catch (error) {
     console.error('Error parsing origin:', error.message);
 }
-
-console.log(`origin----<`, origin)
 
 class ExpressAppStatic{
     app = null;
