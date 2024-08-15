@@ -73,7 +73,7 @@ RUN npm install --only=prod && npm install --only=prod -g
 COPY ./app/unpkg /opt/steedos/unpkg
 WORKDIR /opt/steedos/unpkg
 
-RUN npm i --production  && npm cache clean --force
+RUN yarn && yarn cache clean
 
 COPY ./fs /
 
