@@ -10,5 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "@steedos/ee_unpkg": "1.0.0"
+  },
+  "resolutions": {
+    "undici": "5.16.0"
   }
 }
