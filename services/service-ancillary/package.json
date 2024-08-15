@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-ancillary",
-  "version": "2.7.5-beta.1",
+  "version": "2.7.5-beta.2",
   "description": "",
   "main": "package.service.js",
   "scripts": {
@@ -13,10 +13,10 @@
   },
   "license": "ISC",
   "dependencies": {
-    "@steedos/utils": "2.7.5-beta.1",
+    "@steedos/utils": "2.7.5-beta.2",
     "express": "^4.17.1",
     "express-xml-bodyparser": "0.3.0",
     "xml2js": "0.4.23"
   },
-  "gitHead": "d5be55b023c94a02a44c3a8251e9ed5ff9ce16ec"
+  "gitHead": "f2329953eaec1b40409010ad050e7770bb325e59"
 }
