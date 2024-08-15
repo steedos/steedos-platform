@@ -12,6 +12,6 @@
     "@steedos/ee_unpkg": "1.0.0"
   },
   "resolutions": {
-    "undici": "5.16.0"
+    "cheerio":"1.0.0-rc.2"
   }
 }
