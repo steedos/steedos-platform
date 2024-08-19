@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-metadata",
-  "version": "2.7.5-beta.5",
+  "version": "2.7.5",
   "description": "",
   "main": "lib/metadata.service.js",
   "scripts": {
@@ -18,7 +18,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@steedos/metadata-registrar": "2.7.5-beta.5",
+    "@steedos/metadata-registrar": "2.7.5",
     "dotenv-flow": "^3.1.0",
     "ioredis": "^4.22.0",
     "lodash": "^4.17.21",
@@ -33,5 +33,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "d3d9f33d98679e8e826432445e1dd9eb5a6aba1d"
+  "gitHead": "9b944094a6998705a9f0d1721952f403f55c3bd2"
 }
