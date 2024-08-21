@@ -139,6 +139,10 @@ const beforeUpdateBase = async function () {
 }
 const afterDeleteBase = async function () {
     const { object_name, previousDoc } = this;
+    if (!previousDoc) {
+        return;
+    }
+
     const object = objectql.getObject(object_name);
     const objectConfig = object.toConfig();
     const fields = objectConfig.fields;
