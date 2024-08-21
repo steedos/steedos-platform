@@ -64,7 +64,7 @@ module.exports = {
                 // console.log(require('chalk').red('-------------------@*.deleted-------------------'), ctx.params)
                 const params = ctx.params
                 const { isDelete, isAfter, previousDoc, objectName } = params;
-                if (isAfter && isDelete) {
+                if (isAfter && isDelete && previousDoc) {
                     const spaceId = previousDoc.space;
                     const obj = objectql.getObject(objectName);
                     const detailsInfo = await obj.getDetailsInfo(); // 查找当前哪些对象有masterDetail字段引用当前对象
