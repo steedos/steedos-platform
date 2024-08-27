@@ -80,8 +80,10 @@ fields:
     label: Main Division
   created_by:
     label: Created by
+    sort_no: 9999
   modified_by:
     label: Modified by
+    sort_no: 9999
   current:
     label: Current
     type: object

@@ -19,6 +19,7 @@
       "@azure/logger": "1.0.4",
       "@azure/core-tracing": "1.0.1",
       "@azure/core-paging": "1.5.0",
-      "@types/mime": "3.0.0"
+      "@types/mime": "3.0.0",
+      "undici": "5.16.0"
     }
   }

@@ -168,7 +168,7 @@ Setup.clearAuthLocalStorage = ()->
 	i = 0
 	while i < localStorage.length
 		key = localStorage.key(i)
-		if key?.startsWith("Meteor.loginToken") || key?.startsWith("Meteor.userId")  || key?.startsWith("Meteor.loginTokenExpires") || key?.startsWith('accounts:')
+		if key?.startsWith("Meteor.loginToken") || key?.startsWith("Meteor.userId")  || key?.startsWith("Meteor.loginTokenExpires") || key?.startsWith('accounts:') || key?.startsWith('steedos:token')
 			keysforRemove.push(key)
 		i++
 	keysforRemove.forEach (k) ->

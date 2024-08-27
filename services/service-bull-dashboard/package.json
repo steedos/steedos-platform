@@ -1,6 +1,6 @@
 {
     "name": "@steedos/service-bull-dashboard",
-    "version": "2.7.1-beta.31",
+    "version": "2.7.6",
     "description": "",
     "main": "package.service.js",
     "license": "MIT",
@@ -10,10 +10,10 @@
     },
     "dependencies": {
         "@bull-board/express": "^4.6.4",
-        "@steedos/auth": "2.7.1-beta.31",
-        "@steedos/router": "2.7.1-beta.31",
-        "@steedos/service-package-loader": "2.7.1-beta.31",
+        "@steedos/auth": "2.7.6",
+        "@steedos/router": "2.7.6",
+        "@steedos/service-package-loader": "2.7.6",
         "bullmq": "5.7.4"
     },
-    "gitHead": "c27f9dec3a111f34677f3276a915d9e3afb9ac9b"
+    "gitHead": "e1be21d540af9eef27104cc26815752885707422"
 }

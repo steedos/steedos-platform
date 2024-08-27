@@ -125,10 +125,14 @@ export async function auth(request: Request, response: Response): Promise<any> {
     if (isAPIKey(spaceAuthToken)) {
       authToken = spaceAuthToken;
     } else {
-      if (!spaceId) {
-        spaceId = spaceAuthToken.split(",")[0];
+      const splitSpaceId = spaceAuthToken.split(",")[0];
+      const splitAuthtoken = spaceAuthToken.split(",")[1];
+      if (!spaceId && splitSpaceId) {
+        spaceId = splitSpaceId;
       }
-      authToken = spaceAuthToken.split(",")[1];
+      if (splitAuthtoken) {
+        authToken = splitAuthtoken;
+      }
     }
   }
 

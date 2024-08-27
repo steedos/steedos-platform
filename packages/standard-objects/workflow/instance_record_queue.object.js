@@ -326,7 +326,7 @@ const updateLookupOrMasterDetailFieldValues = function (field_map_back, values, 
                     var objField = temObjFields[0];
                     var referObjField = temObjFields[1];
                     var oField = objectFields[objField];
-                    if (!oField.multiple && ['lookup', 'master_detail'].includes(oField.type) && _.isString(oField.reference_to)) {
+                    if (oField && !oField.multiple && ['lookup', 'master_detail'].includes(oField.type) && _.isString(oField.reference_to)) {
                         var oCollection = objectql.getObject(oField.reference_to)
                         if (oCollection && record && record[objField]) {
                             var referSetObj = {};
@@ -345,7 +345,7 @@ const updateLookupOrMasterDetailFieldValues = function (field_map_back, values, 
                         var objField = temObjFields[0];
                         var referObjField = temObjFields[1];
                         var oField = objectFields[objField];
-                        if (!oField.multiple && ['lookup', 'master_detail'].includes(oField.type) && _.isString(oField.reference_to)) {
+                        if (oField && !oField.multiple && ['lookup', 'master_detail'].includes(oField.type) && _.isString(oField.reference_to)) {
                             var oCollection = objectql.getObject(oField.reference_to)
                             if (oCollection && record && record[objField]) {
                                 var referSetObj = {};

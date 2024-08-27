@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-07 14:19:57
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-03-22 09:57:48
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2024-08-02 11:05:58
  * @Description: 
  */
 "use strict";
@@ -72,7 +72,7 @@ async function insertVaildate(doc) {
         if (!user) {
             throw new Error("space_users_error_user_not_found");
         }
-        spaceUserCount = await suObj.find({
+        spaceUserCount = await suObj.count({
             filters: [
                 ['space', '=', doc.space],
                 ['user', '=', doc.user]
@@ -196,7 +196,7 @@ async function insertVaildate(doc) {
                 // throw new Error("space_users_error_user_exists");
                 // 如果user已存在且只有1条时, 则return user
                 return users[0];
-            }else if(users.length > 1){
+            } else if (users.length > 1) {
                 // 如果user已存在且有多条时, 则抛错, 需要人工介入.
                 throw new Error("space_users_error_user_exists");
             }
@@ -390,11 +390,11 @@ module.exports = {
             doc.email = doc.email.toLowerCase().trim();
         }
         const userRecord = await insertVaildate(doc);
-        if(!doc.user && userRecord){
+        if (!doc.user && userRecord) {
             doc.user = userRecord._id;
-            if(enableSaas){
+            if (enableSaas) {
                 doc.user_accepted = enableSaas != true;
-                if(enableSaas){
+                if (enableSaas) {
                     doc.invite_state = "pending";
                 }
             }
@@ -407,7 +407,7 @@ module.exports = {
         } else {
             doc.profile = 'user'
         }
-        
+
         if (doc.user) {
             doc.owner = doc.user
             let userDoc = await userObj.findOne(doc.user);
@@ -430,7 +430,7 @@ module.exports = {
                     }
                 } else {
                     doc.user_accepted = enableSaas != true;
-                    if(enableSaas){
+                    if (enableSaas) {
                         doc.invite_state = "pending";
                     }
                 }
@@ -538,7 +538,7 @@ module.exports = {
             }
         }
 
-        if(suDoc.user != userId && _.has(doc, 'invite_state') && doc.invite_state != 'pending' && suDoc.invite_state !=doc.invite_state){
+        if (suDoc.user != userId && _.has(doc, 'invite_state') && doc.invite_state != 'pending' && suDoc.invite_state != doc.invite_state) {
             throw new Error('禁止修改用户邀请状态');
         }
 
@@ -641,9 +641,9 @@ module.exports = {
         const { doc, previousDoc, id } = this
         const broker = getSteedosSchema().broker
         // 从db中查一次, 避免前端传过来的doc不安全
-        const spaceUsers = await getObject("space_users").directFind({filters: ["_id", "=", id], fields: ["invite_state"]});
+        const spaceUsers = await getObject("space_users").directFind({ filters: ["_id", "=", id], fields: ["invite_state"] });
         const spaceUser = spaceUsers.length > 0 ? spaceUsers[0] : null;
-        if(spaceUser?.invite_state != "refused" && spaceUser.invite_state != "pending"){
+        if (spaceUser?.invite_state != "refused" && spaceUser.invite_state != "pending") {
             await spaceUserCore.syncUserInfo(previousDoc, doc);
         }
 

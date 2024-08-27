@@ -11,18 +11,14 @@ options:
     value: textarea
   - label: Html
     value: html
-  - label: Code
-    value: code
-  - label: Markdown
-    value: markdown
+  - label: Lookup
+    value: lookup
+  - label: Master Detail
+    value: master_detail
   - label: Select
     value: select
-  - label: Color
-    value: color
   - label: Boolean
     value: boolean
-  - label: Toggle
-    value: toggle
   - label: Date
     value: date
   - label: Datetime
@@ -35,12 +31,20 @@ options:
     value: currency
   - label: Percent
     value: percent
+  - label: Image
+    value: image
+  - label: File
+    value: file
+  - label: Code
+    value: code
+  - label: Markdown
+    value: markdown
+  - label: Color
+    value: color
+  - label: Toggle
+    value: toggle
   - label: Password
     value: password
-  - label: Lookup
-    value: lookup
-  - label: Master Detail
-    value: master_detail
   - label: Autonumber
     value: autonumber
   - label: Url
@@ -49,10 +53,6 @@ options:
     value: email
   - label: Location
     value: location
-  - label: Image
-    value: image
-  - label: File
-    value: file
   - label: Formula
     value: formula
   - label: 累计汇总

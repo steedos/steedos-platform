@@ -6,6 +6,7 @@ const fs = require('fs');
 const steedosConfig = objectql.getSteedosConfig();
 const steedosSchema = objectql.getSteedosSchema();
 const auth = require("@steedos/auth");
+const { clearCookie } = require('@steedos/utils');
 
 //钉钉文档：http://ddtalk.github.io/dingTalkDoc/?spm=a3140.7785475.0.0.p5bAUd#2-回调接口（分为五个回调类型）
 
@@ -15,23 +16,8 @@ const auth = require("@steedos/auth");
 
 
 clearAuthCookies = function(req, res) {
-    let cookies, uri;
-    cookies = new Cookies(req, res);
-    cookies.set("X-User-Id");
-    cookies.set("X-Auth-Token");
-    if (req.headers.origin) {
-        uri = new URI(req.headers.origin);
-    } else if (req.headers.referer) {
-        uri = new URI(req.headers.referer);
-    }
-    cookies.set("X-User-Id", "", {
-        domain: uri != null ? uri.domain() : void 0,
-        overwrite: true
-    });
-    return cookies.set("X-Auth-Token", "", {
-        domain: uri != null ? uri.domain() : void 0,
-        overwrite: true
-    });
+    clearCookie(req, res, 'X-User-Id');
+    clearCookie(req, res, 'X-Auth-Token');
 };
 
 // Accounts.destroyToken

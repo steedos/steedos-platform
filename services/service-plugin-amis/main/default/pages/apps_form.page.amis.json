@@ -268,6 +268,40 @@
             },
             "autoComplete": ""
           }
+        },
+        "visible_on": {
+          "amis": {
+            "type": "control",
+            "body": [
+              {
+                "type": "service",
+                "id": "u:edcd865de7d8",
+                "body": [
+                  {
+                    "type": "input-formula",
+                    "name": "visible_on",
+                    "evalMode": false,
+                    "variableMode": "tabs",
+                    "variables": "${visibleOnVariables}",
+                    "visibleOn": "${visibleOnVariables}",
+                    "id": "u:618105d5bfad",
+                    "labelClassName": "none"
+                  }
+                ],
+                "api": {
+                  "method": "get",
+                  "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/apps/fields/options",
+                  "cache": 30000,
+                  "adaptor": "const visibleOnVariables = SteedosUI.getFormulaVariables(payload.data.options);\nconst defaultValueVariables = [visibleOnVariables[1]];\npayload = {\n  data: {\n    visibleOnVariables,\n    defaultValueVariables\n  }\n};\nreturn payload;",
+                  "headers": {
+                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                  }
+                },
+                "dsType": "api"
+              }
+            ],
+            "id": "u:996ef29c6851"
+          }
         }
       },
       "enableTabs": true,

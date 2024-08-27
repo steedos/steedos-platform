@@ -129,15 +129,11 @@ module.exports = {
                     if(_.isString(value) && regDoubleQuote.test(value)){
                         // 只读时值是公式就显示公式
                         steedos_field = {
-                            "type": "control",
+                            "type": "static",
                             "label": translatedLabel,
-                            "body": {
-                                "name": "defaultValue",
-                                "label": translatedLabel,
-                                "labelClassName": "text-left",
-                                "type": "tpl",
-                                "tpl": value.replace(regDoubleQuote, '\\${$1}')
-                            }
+                            "tpl": value.replace(regDoubleQuote, '\\${$1}'),
+                            "labelClassName": "text-left",
+                            "name": "defaultValue"
                         }
                     }else if(['number','currency','percent'].includes(type)){
                         steedos_field = {

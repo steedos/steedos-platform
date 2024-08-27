@@ -4,3 +4,4 @@ is_wide: true
 label: Description
 sort_no: 340
 type: textarea
+inlineHelpText: 在字段下方增加解释说明

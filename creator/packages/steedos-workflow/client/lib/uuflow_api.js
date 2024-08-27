@@ -124,7 +124,7 @@ UUflow_api.post_submit = function (instance) {
 		dataType: "json",
 		processData: false,
 		contentType: "application/json",
-		beforeSend: function(request) {
+		beforeSend: function (request) {
 			request.setRequestHeader('Authorization', 'Bearer ' + Session.get("spaceId") + ',' + Accounts._storedLoginToken())
 		},
 
@@ -146,11 +146,19 @@ UUflow_api.post_submit = function (instance) {
 					}
 				});
 
-				FlowRouter.go("/workflow/space/" + Session.get('spaceId') + "/draft/");
+				if (instance.distribute_from_instance || (instance.distribute_from_instances && instance.distribute_from_instances.length > 0)) {
+					window.goBack();
+				} else {
+					FlowRouter.go("/workflow/space/" + Session.get('spaceId') + "/draft/");
+				}
 				return;
 			}
 
-			FlowRouter.go("/workflow/space/" + Session.get("spaceId") + "/" + Session.get("box"));
+			if (instance.distribute_from_instance || (instance.distribute_from_instances && instance.distribute_from_instances.length > 0)) {
+				window.goBack();
+			} else {
+				FlowRouter.go("/workflow/space/" + Session.get("spaceId") + "/" + Session.get("box"));
+			}
 
 			toastr.success(TAPi18n.__('Submitted successfully'));
 
@@ -158,7 +166,7 @@ UUflow_api.post_submit = function (instance) {
 
 			var scope = SteedosUI.refs["serviceSteedosKeyvaluesSubscribe"];
 			var button = scope && scope.getComponentByName("serviceSteedosKeyvaluesSubscribe.buttonTriggerDataChange");
-			if(button){
+			if (button) {
 				button.props.dispatchEvent('click', {});
 			}
 		},
@@ -198,7 +206,7 @@ UUflow_api.post_engine = function (approve) {
 		dataType: "json",
 		processData: false,
 		contentType: "application/json",
-		beforeSend: function(request) {
+		beforeSend: function (request) {
 			request.setRequestHeader('Authorization', 'Bearer ' + Session.get("spaceId") + ',' + Accounts._storedLoginToken())
 		},
 
@@ -254,7 +262,7 @@ UUflow_api.post_terminate = function (instance) {
 		dataType: "json",
 		processData: false,
 		contentType: "application/json",
-		beforeSend: function(request) {
+		beforeSend: function (request) {
 			request.setRequestHeader('Authorization', 'Bearer ' + Session.get("spaceId") + ',' + Accounts._storedLoginToken())
 		},
 
@@ -276,7 +284,7 @@ UUflow_api.post_terminate = function (instance) {
 
 			var scope = SteedosUI.refs["serviceSteedosKeyvaluesSubscribe"];
 			var button = scope && scope.getComponentByName("serviceSteedosKeyvaluesSubscribe.buttonTriggerDataChange");
-			if(button){
+			if (button) {
 				button.props.dispatchEvent('click', {});
 			}
 		},
@@ -316,7 +324,7 @@ UUflow_api.put_reassign = function (instance) {
 		dataType: "json",
 		processData: false,
 		contentType: "application/json",
-		beforeSend: function(request) {
+		beforeSend: function (request) {
 			request.setRequestHeader('Authorization', 'Bearer ' + Session.get("spaceId") + ',' + Accounts._storedLoginToken())
 		},
 
@@ -371,7 +379,7 @@ UUflow_api.put_relocate = function (instance) {
 		dataType: "json",
 		processData: false,
 		contentType: "application/json",
-		beforeSend: function(request) {
+		beforeSend: function (request) {
 			request.setRequestHeader('Authorization', 'Bearer ' + Session.get("spaceId") + ',' + Accounts._storedLoginToken())
 		},
 
@@ -470,7 +478,7 @@ UUflow_api.caculate_nextstep_users = function (deal_type, spaceId, body, nextSte
 		dataType: 'json',
 		processData: false,
 		contentType: "application/json",
-		beforeSend: function(request) {
+		beforeSend: function (request) {
 			request.setRequestHeader('Authorization', 'Bearer ' + spaceId + ',' + Accounts._storedLoginToken())
 		},
 		success: function (responseText, status) {
@@ -508,7 +516,7 @@ UUflow_api.caculateNextstepUsers = function (deal_type, spaceId, body, nextStepI
 		dataType: 'json',
 		processData: false,
 		contentType: "application/json",
-		beforeSend: function(request) {
+		beforeSend: function (request) {
 			request.setRequestHeader('Authorization', 'Bearer ' + spaceId + ',' + Accounts._storedLoginToken())
 		},
 		success: function (responseText, status) {
@@ -548,7 +556,7 @@ UUflow_api.getSpaceUsers = function (spaceId, userIds) {
 		dataType: 'json',
 		processData: false,
 		contentType: "application/json",
-		beforeSend: function(request) {
+		beforeSend: function (request) {
 			request.setRequestHeader('Authorization', 'Bearer ' + spaceId + ',' + Accounts._storedLoginToken())
 		},
 		success: function (responseText, status) {
@@ -561,16 +569,16 @@ UUflow_api.getSpaceUsers = function (spaceId, userIds) {
 
 			spaceUsers = [];
 
-			if(_.isArray(userIds)){
-				_.each(userIds, function(uid){
-					var stepApprove = _.find(_spaceUsers, function(su){
+			if (_.isArray(userIds)) {
+				_.each(userIds, function (uid) {
+					var stepApprove = _.find(_spaceUsers, function (su) {
 						return su.id == uid;
 					})
-					if(stepApprove){
+					if (stepApprove) {
 						spaceUsers.push(stepApprove)
 					}
 				})
-			}else{
+			} else {
 				spaceUsers = _spaceUsers
 			}
 
@@ -754,7 +762,7 @@ UUflow_api.post_forward = function (instance_id, space_id, flow_id, hasSaveInsta
 			if (action_type == "forward") {
 				toastr.success(TAPi18n.__("forward_instance_success"));
 				var new_ins_id = responseText && responseText.new_ins_ids && responseText.new_ins_ids[0];
-				if(new_ins_id && !Steedos.isMobile()){
+				if (new_ins_id && !Steedos.isMobile()) {
 					var newInstanceUrl = "/workflow/space/" + Steedos.getSpaceId() + "/inbox/" + new_ins_id;
 					newInstanceUrl = Steedos.absoluteUrl(newInstanceUrl);
 					Steedos.openWindow(newInstanceUrl);

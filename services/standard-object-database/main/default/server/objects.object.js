@@ -341,7 +341,7 @@ let objectTriggers = {
                 shared_to: "space",
                 filter_scope: "space",
                 crud_mode: 'table',
-                columns: [{field: 'name'}],
+                columns: [{field: 'name'}, {field: 'created_by'}, {field: 'created'}],
                 "sort" : [
                     {
                         "field_name" : "created",
