@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2024-01-26 11:40:59
- * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2024-08-06 16:56:04
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2024-08-29 10:36:05
  * @Description: 
  */
 
@@ -80,7 +80,7 @@ amisLib.registerAction('steedos_actions_standard_approve', {
             {
                 "actionType": "custom",
                 "script": afterDrafts,
-                "expression": "${event.data.flowCount == 1}"
+                "expression": "${event.data.flowCount == 1 && event.data.draftUrl}"
             },
             {
                 "actionType": "dialog",
