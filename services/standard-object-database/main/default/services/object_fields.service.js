@@ -278,9 +278,12 @@ module.exports = {
                     const groups = object.field_groups;
 
                     const getGroup = (groupName)=>{
+                        if(groupName == 'undefined' || groupName == 'null'){
+                            groupName = '';
+                        }
                         return _.find(groups, (group)=>{
                             return group.group_name === groupName;
-                        })
+                        }) || {group_name: groupName}
                     }
 
                     const objectName = object.name;
