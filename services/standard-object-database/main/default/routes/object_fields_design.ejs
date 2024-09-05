@@ -1,0 +1,411 @@
+<!--
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-06-02 17:45:15
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-09-04 18:09:08
+ * @Description: 
+-->
+<html>
+  <head>
+    <script src="/unpkg.com/@steedos-builder/fiddle@0.0.5/dist/builder-fiddle.umd.js"></script>
+    <script src="/unpkg.com/axios@0.26.1/dist/axios.min.js"></script>
+    <script src="https://unpkg.steedos.cn/flowbite@2.3.0/dist/flowbite.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body>
+    <!-- Main modal -->
+    <div id="fieldLayoutModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+      <div class="relative p-4 w-full max-w-2xl max-h-full">
+          <!-- Modal content -->
+          <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+              <!-- Modal header -->
+              <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                  <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                      字段保存结果
+                  </h3>
+                  <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="fieldLayoutModal">
+                      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                      </svg>
+                      <span class="sr-only">Close modal</span>
+                  </button>
+              </div>
+              <!-- Modal body -->
+              <div class="p-4 md:p-5 space-y-4">
+                <ul class="space-y-4 text-gray-500 list-disc list-inside dark:text-gray-400" id="fieldLayoutList">
+                </ul>
+              </div>
+          </div>
+      </div>
+    </div>
+    <builder-fiddle host="<%=builderHost%>"></builder-fiddle>
+    <script>
+      const useOpenAPI= <%=(useOpenAPI === "true" || useOpenAPI === true)%>;
+      const settings = {
+        assetUrls: "<%=assetUrls%>",
+        rootUrl: "<%=rootUrl%>",
+        userId: "<%=userId%>",
+        tenantId: "<%=tenantId%>",
+        authToken: "<%=authToken%>",
+        messageOnly: true,
+        useOpenAPI: useOpenAPI,
+        oid: "<%=id%>",
+        pageId: "<%=id%>",
+        hiddenDeploy: true
+      };
+
+      let comp = document.querySelector("builder-fiddle");
+
+      // set the modal menu element
+      const $targetEl = document.getElementById('fieldLayoutModal');
+      // options with default values
+      const options = {
+          placement: 'top-center',
+          backdrop: 'dynamic',
+          backdropClasses:
+              'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
+          closable: true,
+          onHide: () => {
+              console.log('modal is hidden');
+          },
+          onShow: () => {
+              console.log('modal is shown');
+          },
+          onToggle: () => {
+              console.log('modal has been toggled');
+          },
+      };
+      // instance options object
+      const instanceOptions = {
+        id: 'fieldLayoutModal',
+        override: true
+      };
+      const modal = new Flowbite.default.Modal($targetEl, options, instanceOptions);
+
+      const loadPage = async () => {
+        const { assetUrls, rootUrl, userId, tenantId, authToken, oid } = settings;
+
+        // 如果传入 steedos rooturl
+        if (rootUrl && !authToken) return;
+
+        const initialContent = {
+          type: "page",
+          title: "Welcome to Steedos",
+          body: [],
+          regions: ["body"],
+          data: {
+            objectName: "space_users",
+            recordId: "",
+            initialValues: {},
+            appId: "builder",
+            title: "",
+            context: {
+              rootUrl,
+              userId,
+              tenantId,
+              authToken,
+            },
+          },
+        };
+
+        if (oid) {
+          const result = await axios.get(
+            `${rootUrl}/service/api/object_fields/amis/design/schema?oid=${oid}`,
+            {
+              withCredentials: true,
+              headers: { Authorization: `Bearer ${tenantId},${authToken}` },
+            }
+          );
+          if (result?.data) {
+            let schema = result.data.schema || initialContent;
+
+            // let objectName = result.data.object_name;
+            // let pageType = result.data.type;
+            if (typeof schema === "string") {
+              schema = JSON.parse(schema);
+            }
+
+            if (!schema.data) {
+              schema.data = {};
+            }
+
+            if (!schema.data.context) {
+              schema.data.context = {};
+            }
+
+            // schema.data.objectName = objectName;
+
+            schema.data.context.rootUrl = rootUrl;
+            schema.data.context.tenantId = tenantId;
+            schema.data.context.userId = userId;
+            schema.data.context.authToken = authToken;
+            schema.data.context.user = <%- JSON.stringify(userSession) %>;
+
+            // if (objectName && pageType === "record") {
+            //   const record = await axios.get(
+            //     `${rootUrl}/api/v4/${objectName}?$orderby=modified&$top=1`,
+            //     {
+            //       withCredentials: true,
+            //       headers: { Authorization: `Bearer ${tenantId},${authToken}` },
+            //     }
+            //   );
+            //   const value = record?.data?.value;
+            //   if (value?.length > 0) {
+            //     schema.data.recordId = value[0]._id;
+            //   }
+            // }
+
+            return schema || initialContent
+          }
+        } else {
+          return initialContent
+        }
+      };
+
+      const savePage = async (data) => {
+        const { rootUrl, userId, tenantId, authToken, oid } = settings;
+
+        if (!oid) {
+          return;
+        }
+
+        // 保存schema时,清理context下的认证信息
+        const schema = JSON.parse(
+          JSON.stringify(data.data.AmisSchema, null, 4)
+        );
+        if (schema.data && typeof schema.data.context === 'object' ) {
+          delete schema.data.context
+        }
+
+        try {
+          delete schema.data.recordId;
+          delete schema.data.objectName;
+        } catch (error) {
+          
+        }
+
+        return await axios.post(
+            `${rootUrl}/service/api/object_fields/amis/design/schema?oid=${oid}`,
+            {
+              withCredentials: true,
+              schema: schema,
+            },
+            {
+              headers: { Authorization: `Bearer ${tenantId},${authToken}` },
+            }
+          )
+          .catch(function (error) {
+            // handle error
+            console.log(error);
+          });
+      };
+      window.addEventListener('message', function (event) {
+        const { data } = event;
+        if (data) {
+          if(data.type === 'builder.loaded'){
+            comp.messageFrame('builder.EditorPropsChanged', { editorProps :  JSON.stringify({
+                onDndAccept: function(event){
+                  console.log(`onDndAccept===>`, event);
+                  return true;
+                },
+                onInit: function(){
+                  // 创建一个新的 style 元素
+                  var style = document.createElement('style');
+                  style.type="text/css";
+                  style.media="screen";
+                  // 将 CSS 样式写入 style 元素
+                  style.innerHTML = `
+                  .ae-RendererList-groupWrap .ae-RendererList-group:nth-child(n+3) {
+                      display: none;
+                  }
+                 .ae-RendererList-groupWrap .ae-RendererList-head:nth-child(n+2) {
+                      display: none !important;
+                  }
+                  .ae-RendererList-tabs-header .antd-Tabs-link:nth-child(n+2) {
+                      display: none !important;
+                  }
+                  `;
+
+                  // 将 style 元素插入到 head 中
+                  document.head.appendChild(style);
+                },
+                disableBultinPlugin: false,
+                disablePluginList2: function(id, plugin){
+                  if(lodash.includes([
+                    "FlexPlugin",
+                    "GridPlugin",
+                    "ContainerPlugin",
+                    "Layout_free_container",
+                    "Layout_fixed_top",
+                    "Layout_fixed",
+                    "CollapseGroupPlugin",
+                    "PanelPlugin",
+                    "TabsPlugin",
+                    "SwitchContainerPlugin",
+                    "CRUDPlugin",
+                    "Table2Plugin",
+                    "TableCRUDPlugin",
+                    "FormPlugin",
+                    "ServicePlugin",
+                    // "TextControlPlugin",
+                    // "TextareaControlPlugin",
+                    // "NumberControlPlugin",
+                    // "SelectControlPlugin",
+                    // "NestedSelectControlPlugin",
+                    // "ChainedSelectControlPlugin",
+                    // "DropDownButtonPlugin",
+                    // "CheckboxesControlPlugin",
+                    // "RadiosControlPlugin",
+                    // "CheckboxControlPlugin",
+                    // "DateControlPlugin",
+                    // "DateRangeControlPlugin",
+                    // "FileControlPlugin",
+                    // "ImageControlPlugin",
+                    // "ExcelControlPlugin",
+                    // "TreeControlPlugin",
+                    // "TagControlPlugin",
+                    // "ListControlPlugin",
+                    // "ButtonGroupControlPlugin",
+                    // "ButtonToolbarControlPlugin",
+                    // "PickerControlPlugin",
+                    // "SwitchControlPlugin",
+                    // "RangeControlPlugin",
+                    // "RateControlPlugin",
+                    // "CityControlPlugin",
+                    // "TransferPlugin",
+                    // "TabsTransferPlugin",
+                    // "ColorControlPlugin",
+                    // "ConditionBilderPlugin",
+                    // "FieldSetControlPlugin",
+                    // "ComboControlPlugin",
+                    // "InputGroupControlPlugin",
+                    // "TableControlPlugin",
+                    // "MatrixControlPlugin",
+                    // "RichTextControlPlugin",
+                    // "DiffEditorControlPlugin",
+                    // "CodeEditorControlPlugin",
+                    // "SearchBoxPlugin",
+                    // "KVControlPlugin",
+                    // "RepeatControlPlugin",
+                    // "UUIDControlPlugin",
+                    // "LocationControlPlugin",
+                    // "SubFormControlPlugin",
+                    // "HiddenControlPlugin",
+                    // "SignaturePlugin",
+                    // "StaticControlPlugin",
+                    "ButtonPlugin",
+                    "ButtonGroupPlugin",
+                    "NavPlugin",
+                    "AnchorNavPlugin",
+                    "TooltipWrapperPlugin",
+                    "AlertPlugin",
+                    "WizardPlugin",
+                    "TableViewPlugin",
+                    "WebComponentPlugin",
+                    "AudioPlugin",
+                    "VideoPlugin",
+                    "CustomPlugin",
+                    "TasksPlugin",
+                    "EachPlugin",
+                    "PropertyPlugin",
+                    "IFramePlugin",
+                    "QRCodePlugin",
+                    "TplPlugin",
+                    "IconPlugin",
+                    "LinkPlugin",
+                    "ListPlugin",
+                    "List2Plugin",
+                    "MappingPlugin",
+                    "AvatarPlugin",
+                    "CardPlugin",
+                    "Card2Plugin",
+                    "CardsPlugin",
+                    "TablePlugin",
+                    "TableCell2Plugin",
+                    "ChartPlugin",
+                    "SparklinePlugin",
+                    "CarouselPlugin",
+                    "ImagePlugin",
+                    "ImagesPlugin",
+                    "DatePlugin",
+                    "TimePlugin",
+                    "DatetimePlugin",
+                    "CalendarPlugin",
+                    "TagPlugin",
+                    "JsonPlugin",
+                    "ProgressPlugin",
+                    "StatusPlugin",
+                    "StepsPlugin",
+                    "TimelinePlugin",
+                    // "DividerPlugin",
+                    // "CodeViewPlugin",
+                    // "MarkdownPlugin",
+                    // "CollapsePlugin",
+                    "OfficeViewerPlugin",
+                    "PdfViewerPlugin",
+                    "LogPlugin",
+                    "ActionPlugin",
+                    "TableCellPlugin",
+                    "ArrayControlPlugin",
+                    "ControlPlugin",
+                    "DateTimeControlPlugin",
+                    "DateTimeRangeControlPlugin",
+                    "EmailControlPlugin",
+                    "FormulaControlPlugin",
+                    "GroupControlPlugin",
+                    "ItemPlugin",
+                    "MonthControlPlugin",
+                    "MonthRangeControlPlugin",
+                    "PasswordControlPlugin",
+                    "InputQuarterPlugin",
+                    "QuarterRangePlugin",
+                    "TimeControlPlugin",
+                    "TimeRangeControlPlugin",
+                    "TreeSelectControlPlugin",
+                    "URLControlPlugin",
+                    "YearControlPlugin",
+                    "YearRangeControlPlugin",
+                    "BreadcrumbPlugin",
+                    "CustomRegionPlugin",
+                    "DialogPlugin",
+                    "DrawerPlugin",
+                    "HBoxPlugin",
+                    "ListItemPlugin",
+                    "OperationPlugin",
+                    // "PagePlugin",
+                    "PaginationPlugin",
+                    "PlainPlugin",
+                    "ResetPlugin",
+                    "SubmitPlugin",
+                    "WrapperPlugin",
+                    "ColumnToggler"
+                  ]
+                   ,id)){
+                    return true;
+                  }
+                  return false
+                }
+              }, (key, value) => {
+                if (typeof value === 'function') {
+                  return value.toString();
+                }
+                return value;
+            })} )
+          }
+          if (data.type === 'builder.loadContent') {
+            loadPage().then((content)=>{
+              comp.messageFrame('builder.contentChanged', { AmisSchema : content } )
+            })
+          }
+          if (data.type === 'builder.saveContent') {
+            savePage(data.data).then(()=>{
+              comp.messageFrame('builder.contentSaved')
+            })
+          }
+        }
+      })
+      comp.settings = settings;
+    </script>
+  </body>
+</html>

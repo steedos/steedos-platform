@@ -106,6 +106,9 @@ module.exports = {
                         case "record":
                             schema = await PageSchema.getRecordPageInitSchema(objectApiName, userSession);
                             break;
+                        case "field_layout":
+                            schema = await PageSchema.getFieldLayoutInitSchema(objectApiName, userSession);
+                            break;
                     }
                     return schema;
                     //    return AmisSchema.getRecordSchema(objectApiName, '${recordId}', false, userSession); 

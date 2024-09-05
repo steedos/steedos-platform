@@ -43,8 +43,14 @@ module.exports = {
                 const { pageId } = ctx.params;
                 const userSession = ctx.meta.user;
                 const lastVersion = await this.getLatestPageVersion(pageId);
+                const page = await objectql.getObject('pages').findOne(pageId);
+                const response = {};
                 if(lastVersion){
-                    return await objectql.getObject('page_versions').update(lastVersion._id, { is_active: true }, userSession);
+                    if(page && page.type == 'field_layout'){
+                        response.fieldLayoutLog = await this.fieldLayoutSave(lastVersion.schema, page.object_name, userSession)
+                    }
+                    response.page_versions = await objectql.getObject('page_versions').update(lastVersion._id, { is_active: true }, userSession);
+                    return response;
                 }
             }
         },
@@ -421,6 +427,140 @@ module.exports = {
                 }
             }
         },
+        fieldLayoutSave: {
+            async handler(schemaString, object_name, userSession) {
+                const submitProps = ["_name", "name", "type", "amis", "auto_fill_mapping", "autonumber_enable_modify", "column_name", "coordinatesType", "create", "data_type",
+                    "defaultValue", "deleted_lookup_record_behavior", "depend_on", "description", "enable_enhanced_lookup", "enable_thousands", "filterable", "filters", "filtersFunction", "formula_blank_value", "formula",
+                    "generated", "group", "hidden", "index", "inlineHelpText", "is_customize", "is_name", "is_system", "is_wide", "label", "language", "multiple", "object", "options", "precision", "primary", "readonly", "reference_to_field",
+                    "reference_to", "required", "rows", "scale", "searchable", "show_as_qr", "sort_no", "sortable", "static", "summary_field", "summary_object", "summary_filters", "summary_type", "unique", "visible_on", "write_requires_master_read"
+                ];
+                const schema = JSON.parse(schemaString);
+                let steedosFields = [];
+                //提取schema中的steedos-field
+                function findSteedosFields(obj) {
+                    if (Array.isArray(obj)) {
+                        for (let i = 0; i < obj.length; i++) {
+                            findSteedosFields(obj[i]);
+                        }
+                    } else if (typeof obj === 'object' && obj !== null) {
+                        if (obj.type === 'steedos-field') {
+                            steedosFields.push(obj);
+                        } else {
+                            for (let key in obj) {
+                                findSteedosFields(obj[key]);
+                            }
+                        }
+                    }
+                }
+                findSteedosFields(schema);
+
+                const fields = [];
+                //根据object_fields的字段，提取对应属性
+                _.forEach(steedosFields, item => {
+                    item._name = item.name;
+                    fields.push(_.pick(item.config, submitProps))
+                })
+                const object_fields = await objectql.getObject('object_fields');
+                const dbFields = await object_fields.directFind({filters: ['object','=', object_name]});
+                /*
+                    若fields中存在，dbFields中不存在，将该对象name值存入insertFields
+                    若fields中存在，dbFields中也存在，将该对象name值存入updateFields
+                    若fields中不存在，dbFields中存在，将该对象name值存入deleteFields
+                */
+                let insertFields = _.differenceBy(fields, dbFields, 'name').map(field => field.name);
+                let updateFields = _.intersectionBy(fields, dbFields, 'name').map(field => field.name);
+                let deleteFields = _.differenceBy(dbFields, fields, 'name').map(field => field.name);
+                
+                // 用于记录成功和失败的字段
+                const log = {
+                    insert: {
+                        success: [],
+                        error: []
+                    },
+                    update: {
+                        success: [],
+                        error: []
+                    },
+                    delete: {
+                        success: [],
+                        error: []
+                    }
+                };
+                
+                // 循环需要增加的字段
+                for (const fieldName of insertFields) {
+                    try {
+                        const newId = await object_fields._makeNewID();
+                        const now = new Date();
+                        const field = _.find(fields, { name: fieldName });
+                        await object_fields.directInsert(Object.assign({}, field, {
+                            _id: newId,
+                            owner: userSession.userId,
+                            space: userSession.spaceId,
+                            object: object_name,
+                            created: now,
+                            modified: now,
+                            created_by: userSession.userId,
+                            modified_by: userSession.userId,
+                            company_id: userSession.company_id,
+                            company_ids: userSession.company_ids
+                        }));
+                        log.insert.success.push(fieldName);
+                    } catch (e) {
+                        log.insert.error.push(fieldName);
+                        console.error(`新增字段 ${fieldName} 时出错：`, e);
+                    }
+                }
+                
+                // const fieldsToUpdate = [];
+                // _.forEach(updateFields, field => {
+                //     const fieldInFields = _.find(fields, {name: field});
+                //     const sameKeys = _.keys(fieldInFields);
+                //     const fieldInDbFields = _.pick(_.find(dbFields, {name: field}), sameKeys);
+
+
+                //     // 比较这两个对象，如果不相等，则添加到fieldsToUpdate数组中
+                //     if (!_.isEqual(fieldInFields, fieldInDbFields)) {
+                //         fieldsToUpdate.push(field);
+                //     }
+                // });
+                // // 更新updateFields为fieldsToUpdate
+                // updateFields = fieldsToUpdate;
+                // 循环需要修改的字段
+                const now = new Date();
+                for (const fieldName of updateFields) {
+                    try {
+                        const field = _.find(fields, { name: fieldName });
+                        const id = _.find(dbFields, { name: fieldName })._id;
+                        const submitField = _.omit(field, ['name', '_name']);
+                        await object_fields.directUpdate(id, Object.assign({}, submitField, {
+                            modified: now,
+                            modified_by: userSession.userId
+                        }));
+                        log.update.success.push(fieldName);
+                    } catch (e) {
+                        log.update.error.push(fieldName);
+                        console.error(`更新字段 ${fieldName} 时出错：`, e);
+                    }
+                }
+                // 循环需要删除的字段
+                for (const fieldName of deleteFields) {
+                    try {
+                        const id = _.find(dbFields, { name: fieldName })._id;
+                        await object_fields.directDelete(id);
+                        log.delete.success.push(fieldName);
+                    } catch (e) {
+                        log.delete.error.push(fieldName);
+                        console.error(`删除字段 ${fieldName} 时出错：`, e);
+                    }
+                }
+                //label和修改时间未实时生效
+                const object = await objectql.getObject('objects');
+                const current_object = await object.findOne({filters:[["name","=",object_name]]});
+                await object.update(current_object._id,{reload_time: new Date()})
+                return log;
+            }   
+        }
     },
 
     /**

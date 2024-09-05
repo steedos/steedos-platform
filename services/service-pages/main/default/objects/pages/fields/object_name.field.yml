@@ -9,5 +9,5 @@ filtersFunction: !!js/function |
     return ['name', '!=', 'cfs_instances_filerecord']
   }
 filterable: true
-required: "{{'record' == formData.type || 'list' == formData.type || 'form' == formData.type ? true: false}}"
-visible_on: "{{'record' == formData.type || 'list' == formData.type || 'form' == formData.type ? true: false}}"
+required: "{{'record' == formData.type || 'list' == formData.type || 'form' == formData.type || 'field_layout' == formData.type ? true: false}}"
+visible_on: "{{'record' == formData.type || 'list' == formData.type || 'form' == formData.type || 'field_layout' == formData.type ? true: false}}"

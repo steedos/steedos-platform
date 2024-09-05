@@ -120,7 +120,81 @@ const getRecordPageInitSchema = async function (objectApiName, userSession) {
     }
 }
 
+// 获取字段布局页面初始化amisSchema
+const getFieldLayoutInitSchema = async function (objectApiName, userSession) {
+    const fieldProps = ["_name", "name", "type", "amis", "auto_fill_mapping", "autonumber_enable_modify", "column_name", "coordinatesType", "create", "data_type",
+        "defaultValue", "deleted_lookup_record_behavior", "depend_on", "description", "enable_enhanced_lookup", "enable_thousands", "filterable", "filters", "filtersFunction", "formula_blank_value", "formula",
+        "generated", "group", "hidden", "index", "inlineHelpText", "is_customize", "is_name", "is_system", "is_wide", "label", "language", "multiple", "object", "options", "precision", "primary", "readonly", "reference_to_field",
+        "reference_to", "required", "rows", "scale", "searchable", "show_as_qr", "sort_no", "sortable", "static", "summary_field", "summary_object", "summary_filters", "summary_type", "unique", "visible_on", "write_requires_master_read"
+    ];
+    var body = [];
+    const uiSchema = await getUISchema(objectApiName, userSession);
+    const groups = uiSchema.field_groups || [];
+    const object = await objectql.getObject('object_fields');
+    const fields = await object.find({filters: ['object','=', objectApiName]});
+
+    _.forEach(fields, (field,index) => {
+        if (field.group) {
+            let current_group = _.find(groups, function (group) { return group.group_name == field.group; });
+            if (!current_group) {
+                groups.push({
+                    group_name: field.group
+                })
+            }
+        }
+        fields[index] = _.pick(field,fieldProps)
+    });
+
+    const no_group_fields = _.filter(fields, field => !field.group);
+    body.push({
+        "type": "fieldSet",
+        "title": "",
+        "body": _.map(no_group_fields, field => {
+            return {
+                "type": "steedos-field",
+                "config": {
+                    "amis": {
+                    },
+                    ...field
+                }
+            }
+        })
+    })
+
+    _.forEach(groups, group => {
+        const filter_fields = _.filter(fields, field => field.group == group.group_name);
+        const field_set = {
+            "type": "fieldSet",
+            "title": group.group_name,
+            "body": _.map(filter_fields, field => {
+                return {
+                    "type": "steedos-field",
+                    "config": {
+                        "amis": {
+                        },
+                        ...field
+                    }
+                }
+            })
+        };
+        if (group.visible_on) {
+            field_set.visibleOn = group.visible_on;
+        }
+        if (group.collapsed) {
+            field_set.collapsed = group.collapsed;
+        }
+        body.push(field_set)
+    })
+    return {
+        type: 'service',
+        name: getScopeId(objectApiName, "form"),
+        className: "steedos-amis-form steedos-field-layout-page",
+        body
+    }
+}
+
 
 exports.getFormPageInitSchema = getFormPageInitSchema;
 exports.getListPageInitSchema = getListPageInitSchema;
 exports.getRecordPageInitSchema = getRecordPageInitSchema;
+exports.getFieldLayoutInitSchema = getFieldLayoutInitSchema;
