@@ -3634,10 +3634,10 @@
   resolved "https://registry.yarnpkg.com/@sqltools/formatter/-/formatter-1.2.2.tgz#9390a8127c0dcba61ebd7fdcc748655e191bdd68"
   integrity sha512-/5O7Fq6Vnv8L6ucmPjaWbVG1XkP4FO+w5glqfkIsq3Xw4oyNAdJddbnYodNDAfjVUvo/rrSCTom4kAND7T1o5Q==
 
-"@steedos-builder/amis-editor@6.3.0-beta.11":
-  version "6.3.0-beta.11"
-  resolved "https://registry.npmjs.org/@steedos-builder/amis-editor/-/amis-editor-6.3.0-beta.11.tgz#a21a0e7805de82098659576f5f94f1aa09fa6152"
-  integrity sha512-vlEwRLQizfZOf/My5Qp0JCthrDsFABZ55zOQHKjknKfOH+T2w3BdJtee6Vg3IKNnriPu6eeAufjXZ2WMQ+oCjw==
+"@steedos-builder/amis-editor@6.3.0-beta.12":
+  version "6.3.0-beta.12"
+  resolved "https://registry.yarnpkg.com/@steedos-builder/amis-editor/-/amis-editor-6.3.0-beta.12.tgz#92722b33adc473103236a51b1ab9d32be71a712c"
+  integrity sha512-Pa+cuBI9xe/2lmv23JjLkg9HR/R6AcWXKs9KEklohir8pV91tsm1sjDEA/DRsKpd2jjQ/3OYKDUUDE1ZSEigOg==
 
 "@steedos-widgets/amis-lib@^1.0.22":
   version "1.1.7"
