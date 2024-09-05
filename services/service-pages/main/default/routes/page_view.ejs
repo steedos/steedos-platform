@@ -1,8 +1,8 @@
 <!--
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-08-01 17:47:18
- * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2024-03-14 18:26:27
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-09-04 13:55:15
  * @Description: 
 -->
 <!DOCTYPE html>
@@ -145,6 +145,9 @@
     window.moment = amisRequire('moment');
     window.React = amisRequire('react');
     window.ReactDOM = amisRequire('react-dom');  	
+    window.AmisCore = amisRequire("amis-core")
+    window.AmisUI = amisRequire("amis-ui");
+    window.Amis = amisRequire('amis');
 
     window.addEventListener('message', function (event) {
     const { data } = event;

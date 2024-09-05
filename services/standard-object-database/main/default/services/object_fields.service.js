@@ -6,12 +6,11 @@ const register = require("@steedos/metadata-registrar");
 const steedosI18n = require("@steedos/i18n");
 const _ = require("lodash");
 const clone = require("clone");
-
+const serviceObjectMixin = require('@steedos/service-object-mixin');
 // 默认值字段代码：services/standard-object-database/main/default/services/object_fields.service.js
-
 module.exports = {
     name: "object_fields",
-    mixins: [],
+    mixins: [serviceObjectMixin],
     /**
      * Settings
      */
@@ -37,6 +36,27 @@ module.exports = {
             async handler(ctx) {
                 const data = await this.getDefaultValueSchema(ctx);
                 return { status: 0, msg: "", data: data }
+            }
+        },
+        getAmisDesignSchema: {
+            // 需要传 objectName, targetObject(非必填), field_name 参数进来。
+            rest: {
+                method: "GET",
+                path: "/amis/design/schema"
+            },
+            async handler(ctx) {
+                const schema = await this.getAmisDesignSchema(ctx);
+                return { status: 0, msg: "", schema: schema }
+            }
+        },
+        saveAmisDesignSchema: {
+            rest: {
+                method: "POST",
+                path: "/amis/design/schema"
+            },
+            async handler(ctx) {
+                const data = await this.saveAmisDesignSchema(ctx);
+                return { status: 0, msg: "", data: data}
             }
         }
     },
@@ -242,6 +262,198 @@ module.exports = {
                 return {
                     body
                 }
+            }
+        },
+        getAmisDesignSchema: {
+            async handler(ctx) {
+                // console.log('ctx==>', ctx);
+                const userSession = ctx.meta.user;
+                const lng = userSession.language || 'zh-CN';
+                const oid = ctx.params.oid || 'text';
+
+                const object = await this.getObject("objects").findOne(oid);
+
+                if(object){
+
+                    const groups = object.field_groups;
+
+                    const getGroup = (groupName)=>{
+                        return _.find(groups, (group)=>{
+                            return group.group_name === groupName;
+                        })
+                    }
+
+                    const objectName = object.name;
+                    let objectFields = await this.getObject('object_fields').find({filters: [['object', '=', objectName]]});
+
+                    _.map(objectFields, (objectField)=>{
+                        if(!objectField.group){
+                            objectField.group = '基本信息'
+                        }
+                    })
+
+                    return {
+                        type: 'steedos-object',
+                        name: objectName,
+                        label: object.label,
+                        description: object.description,
+                        data: {
+                            objectName
+                        },
+                        className: "steedos-amis-form steedos-field-layout-page m-4",
+                        body: _.map(_.groupBy(_.orderBy(objectFields, function(o) { return o.sort_no || 100 }), 'group'), (items, groupName)=>{
+                            const group = getGroup(groupName)
+                            return {
+                                type: 'steedos-field-group',
+                                title: group.group_name,
+                                collapsed: group.collapsed,
+                                visible_on: group.visible_on,
+                                body: _.map(items, (field)=>{
+                                    return {
+                                        type: `sfield-${field.type}`,
+                                        config: Object.assign({amis: {name: field.name}}, field)
+                                    }
+                                })
+                            }
+                        })
+                    }
+                }
+
+            }
+        },
+        saveAmisDesignSchema: {
+            async handler(ctx) {
+                // console.log('ctx==>', ctx);
+                const userSession = ctx.meta.user;
+
+                if(!userSession.is_space_admin){
+                    return {
+                        message: '无权限'
+                    }
+                }
+
+
+                const lng = userSession.language || 'zh-CN';
+                // TODO 必须是管理员
+
+                const oid = ctx.params.oid || 'text';
+                const schema = ctx.params.schema;
+                const object = await this.getObject("objects").findOne(oid);
+                const fields = [];
+                const groups = [];
+                const objectSet = {
+                    name: schema.name,
+                    label: schema.label,
+                    description: schema.description
+                };
+                if(!object){
+                    return {}
+                }
+                let sort_no = 50;
+                _.each(schema.body, (group)=>{
+                    if(group.type === 'steedos-field-group'){
+                        const groupName = group.title;
+                        _.each(group.body, (field)=>{
+                            if(_.startsWith(field.type, 'sfield-')){
+                                fields.push(Object.assign({}, field.config, {group: groupName, sort_no}));
+                                sort_no += 50;
+                            }
+                        })
+                        groups.push({
+                            group_name: group.title,
+                            collapsed: group.collapsed,
+                            visible_on: group.visible_on
+                        })
+                    }else if(_.startsWith(field.type, 'sfield-')){
+                        fields.push(Object.assign({}, field.config, {sort_no}));
+                        sort_no += 50;
+                    }
+                })
+
+                objectSet.field_groups = groups;
+
+                const object_fields = await this.getObject('object_fields');
+                const dbFields = await object_fields.directFind({filters: ['object','=', object.name]});
+
+                let insertFields = _.differenceBy(fields, dbFields, 'name').map(field => field.name);
+                let updateFields = _.intersectionBy(fields, dbFields, 'name').map(field => field.name);
+                let deleteFields = _.differenceBy(dbFields, fields, 'name').map(field => field.name);
+
+                // 用于记录成功和失败的字段
+                const log = {
+                    insert: {
+                        success: [],
+                        error: []
+                    },
+                    update: {
+                        success: [],
+                        error: []
+                    },
+                    delete: {
+                        success: [],
+                        error: []
+                    }
+                };
+                
+                // 循环需要增加的字段
+                for (const fieldName of insertFields) {
+                    try {
+                        const newId = await object_fields._makeNewID();
+                        const now = new Date();
+                        const field = _.find(fields, { name: fieldName });
+                        await object_fields.directInsert(Object.assign({}, field, {
+                            _id: newId,
+                            owner: userSession.userId,
+                            space: userSession.spaceId,
+                            object: object.name,
+                            created: now,
+                            modified: now,
+                            created_by: userSession.userId,
+                            modified_by: userSession.userId,
+                            company_id: userSession.company_id,
+                            company_ids: userSession.company_ids
+                        }));
+                        log.insert.success.push(fieldName);
+                    } catch (e) {
+                        log.insert.error.push(fieldName);
+                        console.error(`新增字段 ${fieldName} 时出错：`, e);
+                    }
+                }
+                
+                // 循环需要修改的字段
+                const now = new Date();
+                for (const fieldName of updateFields) {
+                    try {
+                        const field = _.find(fields, { name: fieldName });
+                        const id = _.find(dbFields, { name: fieldName })._id;
+                        const submitField = _.omit(field, ['name', '_name']);
+                        await object_fields.directUpdate(id, Object.assign({}, submitField, {
+                            modified: now,
+                            modified_by: userSession.userId
+                        }));
+                        log.update.success.push(fieldName);
+                    } catch (e) {
+                        log.update.error.push(fieldName);
+                        console.log(`dbFields`, fieldName, dbFields)
+                        console.error(`更新字段 ${fieldName} 时出错：`, e);
+                    }
+                }
+                // 循环需要删除的字段
+                for (const fieldName of deleteFields) {
+                    try {
+                        const id = _.find(dbFields, { name: fieldName })._id;
+                        await object_fields.directDelete(id);
+                        log.delete.success.push(fieldName);
+                    } catch (e) {
+                        log.delete.error.push(fieldName);
+                        console.error(`删除字段 ${fieldName} 时出错：`, e);
+                    }
+                }
+                //label和修改时间未实时生效
+                const objectConn = await this.getObject('objects');
+                const current_object = await objectConn.findOne({filters:[["name","=",object.name]]});
+                await objectConn.update(current_object._id, Object.assign({}, objectSet, {reload_time: new Date()}))
+                return log;
             }
         }
     }
