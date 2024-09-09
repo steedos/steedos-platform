@@ -118,6 +118,6 @@ VOLUME [ "/steedos-storage" ]
 
 ENTRYPOINT [ "/opt/steedos/entrypoint.sh" ]
 
-HEALTHCHECK --interval=15s --timeout=15s --start-period=45s CMD "/opt/steedos/healthcheck.sh"
+# HEALTHCHECK --interval=15s --timeout=15s --start-period=45s CMD "/opt/steedos/healthcheck.sh"
 
 CMD ["/usr/bin/supervisord", "-n"]
