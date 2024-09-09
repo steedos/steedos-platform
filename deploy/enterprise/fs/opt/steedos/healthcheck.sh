@@ -1,14 +1,6 @@
 #!/usr/bin/env bash
 healthy=true
 
-if [ -f "/data/.env" ]; then
-  export $(cat /data/.env | xargs)
-elif [ -f "/home/.env" ]; then
-  export $(cat /home/.env | xargs)
-else
-  echo "No .env file found"
-  healthy=false
-fi
 
 if [[ $(curl -Lfk -s -w "%{http_code}\n" http://localhost:3000/ -o /dev/null) -ne 200 ]]; then
   echo 'ERROR: Steedos is not running';
