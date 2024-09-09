@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-07 14:19:57
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2024-08-02 11:05:58
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-09-09 17:42:29
  * @Description: 
  */
 "use strict";
@@ -472,7 +472,7 @@ module.exports = {
                     password.parsePassword(doc.password, options);
                     delete doc.password;
                 }
-
+                options.password_expired = doc.password_expired
                 doc.user = (await userObj.insert(options))._id;
             }
             if (!doc.user) {
