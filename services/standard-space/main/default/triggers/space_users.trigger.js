@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-07 14:19:57
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-03-22 09:57:48
+ * @LastEditTime: 2024-09-09 17:39:13
  * @Description: 
  */
 "use strict";
@@ -472,7 +472,7 @@ module.exports = {
                     password.parsePassword(doc.password, options);
                     delete doc.password;
                 }
-
+                options.password_expired = doc.password_expired
                 doc.user = (await userObj.insert(options))._id;
             }
             if (!doc.user) {
