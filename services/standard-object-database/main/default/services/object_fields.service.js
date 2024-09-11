@@ -381,7 +381,7 @@ module.exports = {
                         const groupName = group.title;
                         _.each(group.body, (field)=>{
                             if(_.startsWith(field.type, 'sfield-')){
-                                fields.push(Object.assign({}, field.config, {group: groupName, sort_no}));
+                                fields.push(Object.assign({}, field.config, {group: groupName, sort_no, _name: field.name}));
                                 sort_no += 50;
                             }
                         })
@@ -391,7 +391,7 @@ module.exports = {
                             visible_on: group.visible_on
                         })
                     }else if(_.startsWith(field.type, 'sfield-')){
-                        fields.push(Object.assign({}, field.config, {sort_no}));
+                        fields.push(Object.assign({}, field.config, {sort_no, _name: field.name}));
                         sort_no += 50;
                     }
                 })
