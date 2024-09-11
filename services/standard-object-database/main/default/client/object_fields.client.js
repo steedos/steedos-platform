@@ -239,12 +239,6 @@ Steedos.ObjectFieldManager.getSummaryFiltersOperation = function(field_type) {
         display: none;
       }
       
-      .defaultValue_field.steedos-defaultValue-html-edit .defaultValue_field_formula_hidden .antd-Form-label {
-        /*html字段类型默认值，显示为静态值编辑器时，因为移除了flex样式类，不再把amis公式配置按钮显示在右侧，而是换行显示，此时label不可以display: none，否则缩进不对*/
-        display: block;
-        visibility: hidden;
-      }
-      
       .defaultValue_field .defaultValue_field_formula_hidden {
         flex-grow: 0;
       }
@@ -255,14 +249,6 @@ Steedos.ObjectFieldManager.getSummaryFiltersOperation = function(field_type) {
       
       .defaultValue_field.steedos-defaultValue-html-edit .defaultValue_field_formula_hidden {
         margin-left: 0px;
-      }
-      
-      .defaultValue_field .defaultValue_field_formula_hidden .antd-Form-label {
-        display: none;
-      }
-      
-      .defaultValue_field .defaultValue_field_formula_hidden .antd-FormulaPicker-input {
-        display: none;
       }
       </style>`);
     $("head").append(styleCss);

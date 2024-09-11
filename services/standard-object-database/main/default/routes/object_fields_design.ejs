@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-02 17:45:15
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-09-04 18:09:08
+ * @LastEditTime: 2024-09-11 11:49:37
  * @Description: 
 -->
 <html>
@@ -206,7 +206,6 @@
           if(data.type === 'builder.loaded'){
             comp.messageFrame('builder.EditorPropsChanged', { editorProps :  JSON.stringify({
                 onDndAccept: function(event){
-                  console.log(`onDndAccept===>`, event);
                   return true;
                 },
                 onInit: function(){
@@ -224,6 +223,9 @@
                   }
                   .ae-RendererList-tabs-header .antd-Tabs-link:nth-child(n+2) {
                       display: none !important;
+                  }
+                  .ae-RendererList-groupWrap .ae-RendererList-group.collapse-content .ae-RendererList-item:hover .ae-RendererIcon{
+                    display: none !important;
                   }
                   `;
 

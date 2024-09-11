@@ -5,7 +5,7 @@ var objectCore = require('./objects.core.js');
 
 const objectFieldsFind = function (filter) {
     return objectql.wrapAsync(async function () {
-        return await objectql.getObject('object_fields').find(this.filter);
+        return await objectql.getObject('object_fields').directFind(this.filter);
     }, { filter: filter })
 }
 

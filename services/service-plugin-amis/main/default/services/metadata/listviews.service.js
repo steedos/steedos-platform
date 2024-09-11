@@ -252,6 +252,27 @@ const getField = (objectName, fieldName, type, lng)=>{
     return field;
 }
 
+function getSelectFieldOptions(field){
+    const dataType = field.data_type || 'text';
+    const options = [];
+    _.each(field.options, (item)=>{
+        switch (dataType) {
+            case 'number':
+                options.push({label: item.label, value: Number(item.value)});
+                break;
+            case 'text':
+                options.push({label: item.label, value: String(item.value)});
+                break;
+            case 'boolean':
+                options.push({label: item.label, value: item.value === 'false' ? false : true});
+                break;
+            default:
+                break;
+        }
+    });
+    return options;
+}
+
 module.exports = {
     name: "amis-metadata-listviews",
     mixins: [],
@@ -353,7 +374,6 @@ module.exports = {
         getSelectFieldOptions: {
             async handler(ctx) {
                 const userSession = ctx.meta.user;
-                console.log("user===",userSession,userSession.spaceId);
                 const { objectName, fieldName } = ctx.params;
                 const lng = userSession.language || "zh-CN";
                 const objectConfig = await objectql.getObjectConfig(objectName);
@@ -362,7 +382,7 @@ module.exports = {
 
                 const field = objectConfig.fields[fieldName];
                 if(field.type === 'select'){
-                    return field.options;
+                    return getSelectFieldOptions(field);
                 }else if(field.reference_to){
                     let referenceTo = field.reference_to;
                     let reference_to_field = field.reference_to_field || objectConfig._idFieldName || '_id'
