@@ -7,7 +7,30 @@ const steedosI18n = require("@steedos/i18n");
 const _ = require("lodash");
 const clone = require("clone");
 const serviceObjectMixin = require('@steedos/service-object-mixin');
+const objectql = require('@steedos/objectql');
 // 默认值字段代码：services/standard-object-database/main/default/services/object_fields.service.js
+
+const initSummaryDoc = async (doc) => {
+    if (!doc.summary_object) {
+        throw new Error("object_fields_error_summary_object_required");
+    }
+    let summaryObject = register.getObjectConfig(doc.summary_object);
+    let summaryConfig = {
+        summary_object: doc.summary_object,
+        summary_type: doc.summary_type,
+        summary_field: doc.summary_field,
+        field_name: doc.name,
+        object_name: doc.object
+    };
+    const dataType = await objectql.getSummaryDataType(summaryConfig, summaryObject);
+    if (!dataType) {
+        throw new Error("object_fields_error_summary_data_type_not_found");
+    }
+    doc.data_type = dataType;
+    // objectql.validateFilters(doc.summary_filters, summaryObject.fields);
+}
+
+
 module.exports = {
     name: "object_fields",
     mixins: [serviceObjectMixin],
@@ -291,7 +314,7 @@ module.exports = {
 
                     _.map(objectFields, (objectField)=>{
                         if(!objectField.group){
-                            objectField.group = '基本信息'
+                            objectField.group = '通用'
                         }
                     })
 
@@ -404,7 +427,7 @@ module.exports = {
                         const newId = await object_fields._makeNewID();
                         const now = new Date();
                         const field = _.find(fields, { name: fieldName });
-                        await object_fields.directInsert(Object.assign({}, field, {
+                        const doc = Object.assign({}, field, {
                             _id: newId,
                             owner: userSession.userId,
                             space: userSession.spaceId,
@@ -415,7 +438,11 @@ module.exports = {
                             modified_by: userSession.userId,
                             company_id: userSession.company_id,
                             company_ids: userSession.company_ids
-                        }));
+                        });
+                        if(doc.type === "summary"){
+                            await initSummaryDoc(doc);
+                        }
+                        await object_fields.directInsert(doc);
                         log.insert.success.push(fieldName);
                     } catch (e) {
                         log.insert.error.push(fieldName);
@@ -430,6 +457,10 @@ module.exports = {
                         const field = _.find(fields, { name: fieldName });
                         const id = _.find(dbFields, { name: fieldName })._id;
                         const submitField = _.omit(field, ['name', '_name']);
+
+                        if(submitField.type === "summary"){
+                            await initSummaryDoc(submitField);
+                        }
                         await object_fields.directUpdate(id, Object.assign({}, submitField, {
                             modified: now,
                             modified_by: userSession.userId

@@ -318,6 +318,59 @@ let objectTriggers = {
                 filterable: true,
                 sort_no: 10
             });
+            Creator.getCollection("object_fields").insert({
+                object: doc.name,
+                owner: userId,
+                _name: "created",
+                label: "创建时间",
+                space: doc.space,
+                type: "datetime",
+                group: '',
+                sort_no: 9999,
+                readonly: true,
+                disabled: true,
+                sortable: true
+            });
+            Creator.getCollection("object_fields").insert({
+                object: doc.name,
+                owner: userId,
+                _name: "created_by",
+                label: "创建人",
+                space: doc.space,
+                type: "lookup",
+                reference_to: 'users',
+                group: '',
+                sort_no: 9999,
+                readonly: true,
+                disabled: true,
+            });
+            Creator.getCollection("object_fields").insert({
+                object: doc.name,
+                owner: userId,
+                _name: "modified",
+                label: "修改时间",
+                space: doc.space,
+                type: "datetime",
+                group: '',
+                sort_no: 9999,
+                readonly: true,
+                disabled: true,
+                sortable: true
+            });
+            Creator.getCollection("object_fields").insert({
+                object: doc.name,
+                owner: userId,
+                _name: "modified_by",
+                label: "修改人",
+                space: doc.space,
+                space: doc.space,
+                type: "lookup",
+                reference_to: 'users',
+                group: '',
+                sort_no: 9999,
+                readonly: true,
+                disabled: true,
+            });
             // Creator.getCollection("object_fields").insert({
             //     object: doc.name,
             //     owner: userId,
