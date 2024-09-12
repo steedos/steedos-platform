@@ -39,6 +39,7 @@ fields:
     reference_to_field: code
     name: assigned_apps
     filterable: false
+    is_wide: true
   default_standard_buttons:
     label: Default Standard Buttons
     type: select
