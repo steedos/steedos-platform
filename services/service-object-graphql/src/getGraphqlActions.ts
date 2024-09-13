@@ -521,7 +521,7 @@ export async function translateToUI(objConfig, doc, userSession: any, selectorFi
                                 }
 
                                 let refValue = doc[name];
-                                if (!refValue) {
+                                if (!refValue || _.isEmpty(refValue)) {
                                     continue;
                                 }
                                 let refObj = steedosSchema.getObject(refTo);

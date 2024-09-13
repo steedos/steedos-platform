@@ -416,7 +416,7 @@ module.exports = {
                             "url": "${context.rootUrl}/graphql",
                             "method": "post",
                             "messages": {
-                                "failed": ""
+                                "failed": "打印功能需要企业许可证"
                             },
                             "requestAdaptor": "",
                             "adaptor": "const buttonOptions = [];\nfor (const row of payload.data.rows) {\n  buttonOptions.push({\n    \"type\": \"button\",\n    \"label\": row.label,\n    \"onEvent\": {\n      \"click\": {\n        \"actions\": [\n          {\n            \"actionType\": \"url\",\n            \"args\": {\n              \"url\": \"${context.rootUrl}/api/page/render\",\n              \"blank\": true,\n              \"params\": {\n                \"schemaApi\": \"${context.rootUrl}/service/api/@steedos/print-template/getPrintSchema/\" + row._id,\n                \"data\": {\n                  \"filters\": [\"_id\", \"=\", \"${recordId}\"]\n                }      \n              }\n            }\n          }\n        ]\n      }\n    }\n  })\n}\n\npayload.data = {\n  buttonOptions: buttonOptions \n}\nreturn payload",

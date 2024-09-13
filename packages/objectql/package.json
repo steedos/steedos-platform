@@ -1,7 +1,7 @@
 {
   "name": "@steedos/objectql",
   "private": false,
-  "version": "2.7.8-beta.8",
+  "version": "2.7.8",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -16,17 +16,17 @@
   "dependencies": {
     "@salesforce/kit": "1.0.4",
     "@salesforce/ts-types": "1.1.1",
-    "@steedos/cachers": "2.7.8-beta.8",
-    "@steedos/filters": "2.7.8-beta.8",
-    "@steedos/formula": "2.7.8-beta.8",
-    "@steedos/i18n": "2.7.8-beta.8",
-    "@steedos/metadata-core": "2.7.8-beta.8",
-    "@steedos/metadata-registrar": "2.7.8-beta.8",
-    "@steedos/odata-v4-mongodb": "2.7.8-beta.8",
-    "@steedos/odata-v4-sql": "2.7.8-beta.8",
-    "@steedos/odata-v4-typeorm": "2.7.8-beta.8",
-    "@steedos/schemas": "2.7.8-beta.8",
-    "@steedos/standard-objects": "2.7.8-beta.8",
+    "@steedos/cachers": "2.7.8",
+    "@steedos/filters": "2.7.8",
+    "@steedos/formula": "2.7.8",
+    "@steedos/i18n": "2.7.8",
+    "@steedos/metadata-core": "2.7.8",
+    "@steedos/metadata-registrar": "2.7.8",
+    "@steedos/odata-v4-mongodb": "2.7.8",
+    "@steedos/odata-v4-sql": "2.7.8",
+    "@steedos/odata-v4-typeorm": "2.7.8",
+    "@steedos/schemas": "2.7.8",
+    "@steedos/standard-objects": "2.7.8",
     "amis-formula": "~6.3.0",
     "app-root-path": "^2.2.1",
     "body-parser": "^1.18.1",
@@ -56,7 +56,7 @@
     "vm2": "^3.9.17"
   },
   "devDependencies": {
-    "@steedos/meteor-bundle-runner": "2.7.8-beta.8",
+    "@steedos/meteor-bundle-runner": "2.7.8",
     "@types/express": "^4.16.1",
     "@types/node": "^11.10.4",
     "@types/underscore": "^1.8.13",
@@ -66,5 +66,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "28a04e959c048afaabd8450b51e42326e20fa072"
+  "gitHead": "3f1e65005b0e7bd84f51c532d6bde531605095a4"
 }
