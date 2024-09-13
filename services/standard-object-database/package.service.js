@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 1985-10-26 16:15:00
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-03-20 14:30:13
+ * @LastEditTime: 2024-09-13 16:02:32
  * @Description: 
  */
 "use strict";
@@ -13,6 +13,9 @@ const serviceObjectMixin = require('@steedos/service-object-mixin');
 const validator = require('validator');
 const triggers = require('./src/triggers');
 const { checkAPIName } = require('@steedos/standard-objects').util
+
+const { customAlphabet } = require('nanoid');
+const nanoid = customAlphabet('1234567890abcdef', 10)
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -133,6 +136,139 @@ module.exports = {
 				await checkAPIName(objectName, fieldName, fieldValue, recordId, filters)
 			}
 		},
+		create_object: {
+			rest: {
+				method: "POST",
+                fullPath: "/service/api/objects/create_by_design"
+			},
+			async handler(ctx) {
+				const { appId, groupId, name, label, icon } = ctx.params;
+				const userSession = ctx.meta.user;
+
+				if(!appId){
+					return;
+				}
+
+				const records = await this.getObject('apps').find({
+					filters: ['code', '=', appId]
+				});
+				const app = records.length > 0 ? records[0] : null;
+
+				if(!app){
+					return ;
+				}
+
+				// 1 创建对象
+				const obj = await this.getObject('objects').insert({
+					name: name || `o_${nanoid(5)}`,
+					label: label || '未命名对象',
+					datasource: 'default',
+					icon: icon || 'account'
+				}, userSession);
+				
+				// 2 将选项卡绑定到app的group下
+				const tab_items = app.tab_items || {};
+				tab_items[`object_${obj.name}`] = {
+					group: groupId
+				}
+
+				await this.getObject('apps').update(app._id, {
+					tab_items
+				}, userSession);
+				
+				return obj;
+			}
+		},
+		create_app_group: {
+			rest: {
+				method: "POST",
+                fullPath: "/service/api/apps/create_app_group_by_design"
+			},
+			async handler(ctx) {
+				const { appId, name, defaultOpen } = ctx.params;
+				const userSession = ctx.meta.user;
+
+				if(!appId){
+					return {};
+				}
+
+				const records = await this.getObject('apps').find({
+					filters: ['code', '=', appId]
+				});
+				const app = records.length > 0 ? records[0] : null;
+
+				if(!app){
+					return {};
+				}
+
+				await this.getObject('apps').update(app._id, {
+					$push: {
+						tab_groups: {
+							group_name: name,
+							default_open: defaultOpen
+						}
+					}
+				}, userSession);
+				
+				return {};
+			}
+		},
+		create_by_design: {
+			rest: {
+				method: "POST",
+                fullPath: "/service/api/apps/create_by_design"
+			},
+			async handler(ctx) {
+				const { code, name } = ctx.params;
+				const userSession = ctx.meta.user;
+
+				if(!code || !name){
+					return {};
+				}
+
+				return await this.getObject('apps').insert({
+					name: name,
+					code: code,
+					sort : 9100,
+					is_creator : true,
+					mobile : true,
+					visible : true,
+					showSidebar : true,
+					icon_slds : "account",
+				}, userSession);
+			}
+		},
+		update_app_by_design: {
+			rest: {
+				method: "POST",
+                fullPath: "/service/api/apps/update_app_by_design"
+			},
+			async handler(ctx) {
+				const { appId, tab_groups, tab_items } = ctx.params;
+				const userSession = ctx.meta.user;
+
+				if(!appId){
+					return {};
+				}
+
+				const records = await this.getObject('apps').find({
+					filters: ['code', '=', appId]
+				});
+				const app = records.length > 0 ? records[0] : null;
+
+				if(!app){
+					return {};
+				}
+
+				await this.getObject('apps').update(app._id, {
+					tab_groups: tab_groups,
+					tab_items: tab_items
+				}, userSession);
+				
+			}
+		}
+		
+		
 	},
 
 	/**
