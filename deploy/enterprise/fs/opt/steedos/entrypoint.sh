@@ -298,15 +298,15 @@ else
 fi
 
 
-configure_supervisord
-
 mkdir -p /steedos-storage/unpkg
 
 # Ensure the restore path exists in the container, so an archive can be copied to it, if need be.
-mkdir -p /steedos-storage/data/{backup,restore}
+mkdir -p /steedos-storage/data/{backup,restore,nodered,unpkg}
 
 # Create sub-directory to store services log in the container mounting folder
 mkdir -p /steedos-storage/logs/{supervisor,steedos,cron,mongodb,redis,nginx,unpkg,nodered}
+
+configure_supervisord
 
 # Stop nginx gracefully
 nginx -s quit
