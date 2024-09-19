@@ -75,6 +75,12 @@ WORKDIR /opt/steedos/unpkg
 
 RUN yarn && yarn cache clean
 
+# nodered
+COPY ./app/nodered /opt/steedos/nodered
+WORKDIR /opt/steedos/nodered
+
+RUN yarn && yarn cache clean
+
 COPY ./fs /
 
 # Remove cached files
