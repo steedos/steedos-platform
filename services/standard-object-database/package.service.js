@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 1985-10-26 16:15:00
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-09-13 16:02:32
+ * @LastEditTime: 2024-09-14 15:39:53
  * @Description: 
  */
 "use strict";
@@ -266,9 +266,145 @@ module.exports = {
 				}, userSession);
 				
 			}
+		},
+		update_app_tabs_by_design: {
+			rest: {
+				method: "POST",
+                fullPath: "/service/api/apps/update_app_tabs_by_design"
+			},
+			async handler(ctx) {
+				const { appId, addTabNames, groupId } = ctx.params;
+				const userSession = ctx.meta.user;
+
+				if(!appId){
+					return {};
+				}
+
+				const records = await this.getObject('apps').find({
+					filters: ['code', '=', appId]
+				});
+				const app = records.length > 0 ? records[0] : null;
+
+				if(!app){
+					return {};
+				}
+
+				const tab_items = app.tab_items || {};
+
+				_.each(addTabNames, (tabName)=>{
+					if(tabName){
+						tab_items[tabName] = {
+							group: groupId
+						}
+					}
+				})
+
+				await this.getObject('apps').update(app._id, {
+					tab_items
+				}, userSession);
+				
+			}
+		},
+		create_link_tab_by_design: {
+			rest: {
+				method: "POST",
+                fullPath: "/service/api/tabs/create_link_tab_by_design"
+			},
+			async handler(ctx) {
+				const { appId, groupId, name, label, icon, url } = ctx.params;
+				const userSession = ctx.meta.user;
+
+				if(!appId){
+					return;
+				}
+
+				const records = await this.getObject('apps').find({
+					filters: ['code', '=', appId]
+				});
+				const app = records.length > 0 ? records[0] : null;
+
+				if(!app){
+					return ;
+				}
+
+				const tab = await this.getObject('tabs').insert({
+					name: name || `t_${nanoid(5)}`,
+					label: label || '未命名选项卡',
+					icon: icon || 'account',
+					mobile : true,
+					desktop : true,
+					is_new_window : false,
+					is_use_iframe : true,
+					type : "url",
+					url : url,
+				}, userSession);
+				
+				// 2 将选项卡绑定到app的group下
+				const tab_items = app.tab_items || {};
+				tab_items[tab.name] = {
+					group: groupId
+				}
+				await this.getObject('apps').update(app._id, {
+					tab_items
+				}, userSession);
+				
+				return tab;
+			}
+		},
+		create_page_by_design: {
+			rest: {
+				method: "POST",
+                fullPath: "/service/api/pages/create_page_by_design"
+			},
+			async handler(ctx) {
+				const { appId, groupId, name, label, icon } = ctx.params;
+				const userSession = ctx.meta.user;
+
+				if(!appId){
+					return;
+				}
+
+				const records = await this.getObject('apps').find({
+					filters: ['code', '=', appId]
+				});
+				const app = records.length > 0 ? records[0] : null;
+
+				if(!app){
+					return ;
+				}
+
+				const page = await this.getObject('pages').insert({
+					name: name || `t_${nanoid(5)}`,
+					label : label,
+					is_active : true,
+					render_engine : "amis",
+					type : "app"
+				}, userSession);
+				
+				const tab = await this.getObject('tabs').insert({
+					name: `page_${page.name}`,
+					mobile : true,
+					desktop : true,
+					is_new_window : false,
+					is_use_iframe : false,
+					icon : icon,
+					type : "page",
+					label : label,
+					page : page.name,
+				}, userSession);
+				
+				// 2 将选项卡绑定到app的group下
+				const tab_items = app.tab_items || {};
+				tab_items[tab.name] = {
+					group: groupId
+				}
+				await this.getObject('apps').update(app._id, {
+					tab_items
+				}, userSession);
+				
+				return page;
+			}
 		}
-		
-		
 	},
 
 	/**
