@@ -5,7 +5,8 @@ const lodash = require('lodash');
 // Node-Red Configuration
 // https://nodered.org/docs/user-guide/runtime/configuration
 
-process.env.PORT = 3200;
+const uiPort = process.env.NODERED_PORT || "1880";
+
 
 const storageDir = path.join(process.env.STEEDOS_STORAGE_DIR, "data", "node-red");
 
@@ -17,5 +18,7 @@ module.exports = {
     functionGlobalContext: {
         lodash
     },
+    uiPort,
     httpStatic: path.join(__dirname, 'public'),
+    httpRoot: "/nodered/"
 };

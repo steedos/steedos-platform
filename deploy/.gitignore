@@ -2,3 +2,4 @@ storage
 .env
 mongo-data
 info.json
+yarn.lock
