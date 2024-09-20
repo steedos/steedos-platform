@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 1985-10-26 16:15:00
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-09-14 15:39:53
+ * @LastEditTime: 2024-09-20 11:30:31
  * @Description: 
  */
 "use strict";
@@ -349,6 +349,44 @@ module.exports = {
 				}, userSession);
 				
 				return tab;
+			}
+		},
+		update_link_tab_by_design: {
+			rest: {
+				method: "POST",
+                fullPath: "/service/api/tabs/update_link_tab_by_design"
+			},
+			async handler(ctx) {
+				const { appId, groupId, name, label, icon, url } = ctx.params;
+				const userSession = ctx.meta.user;
+
+				if(!appId){
+					return;
+				}
+
+				const records = await this.getObject('apps').find({
+					filters: ['code', '=', appId]
+				});
+				const app = records.length > 0 ? records[0] : null;
+
+				if(!app){
+					return ;
+				}
+
+				const dbTab = await this.getObject('tabs').find({
+					filters: ['name', '=', name]
+				}, userSession);
+
+				if(dbTab.length > 0){
+					const tab = await this.getObject('tabs').update(dbTab[0]._id, {
+						name: name,
+						label: label,
+						icon: icon,
+						url : url,
+					}, userSession);
+					return tab;
+				}
+				return dbTab;
 			}
 		},
 		create_page_by_design: {
