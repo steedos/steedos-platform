@@ -7,7 +7,7 @@ const lodash = require('lodash');
 // https://nodered.org/docs/user-guide/runtime/configuration
 
 const uiPort = process.env.NODERED_PORT || "1880";
-const storageDir = path.join(process.env.STEEDOS_STORAGE_DIR, "data", "nodered");
+const storageDir = path.join(process.env.STEEDOS_STORAGE_DIR || "./storage", "data", "nodered");
 
 const flowFilePath = path.join(storageDir, 'flows.json');
 const templateFlowFilePath = path.join(__dirname, 'flows-template.json'); // 模板文件路径
@@ -26,7 +26,13 @@ module.exports = {
     functionGlobalContext: {
         lodash
     },
+    header: {
+        title: "Steedos Flows",
+    },
+    page: {
+        title: "Steedos Flows",
+    },
     uiPort,
     httpStatic: path.join(__dirname, 'public'),
-    httpRoot: "/nodered/"
+    httpRoot: "/flows/"
 };
