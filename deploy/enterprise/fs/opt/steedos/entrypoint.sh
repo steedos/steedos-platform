@@ -27,6 +27,10 @@ init_env_file() {
       tr -dc A-Za-z0-9 </dev/urandom | head -c 13
       echo ""
     )
+    local generated_steedos_nodered_password=$(
+      tr -dc A-Za-z0-9 </dev/urandom | head -c 13
+      echo ""
+    )
     local generated_steedos_encryption_password=$(
       tr -dc A-Za-z0-9 </dev/urandom | head -c 13
       echo ""
@@ -39,7 +43,7 @@ init_env_file() {
       tr -dc A-Za-z0-9 </dev/urandom | head -c 13
       echo ''
     )
-    bash "$TEMPLATES_PATH/docker.env.sh" "$default_steedos_mongodb_user" "$generated_steedos_mongodb_password" "$generated_steedos_encryption_password" "$generated_steedos_encription_salt" "$generated_steedos_supervisor_password" > "$ENV_PATH"
+    bash "$TEMPLATES_PATH/docker.env.sh" "$default_steedos_mongodb_user" "$generated_steedos_mongodb_password" "$generated_steedos_encryption_password" "$generated_steedos_encription_salt" "$generated_steedos_supervisor_password" "$generated_steedos_nodered_password" > "$ENV_PATH"
   fi
 
 
