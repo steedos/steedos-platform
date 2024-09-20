@@ -147,13 +147,13 @@ fi
   }
 
 
-  location /nodered/ {
+  location /flows/ {
     proxy_http_version       1.1;
     proxy_set_header Upgrade \$http_upgrade;
     proxy_set_header Connection "upgrade";
     proxy_cache_bypass \$http_upgrade;
     proxy_set_header  Host \$host;
-    proxy_pass http://localhost:1880/nodered/;
+    proxy_pass http://localhost:1880/flows/;
   }
 
   location /nginx/ {
