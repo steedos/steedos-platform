@@ -2626,7 +2626,7 @@ camel-case@4.1.2:
 
 camelcase@5.0.0:
   version "5.0.0"
-  resolved "https://registry.nlark.com/camelcase/download/camelcase-5.0.0.tgz#03295527d58bd3cd4aa75363f35b2e8d97be2f42"
+  resolved "https://registry.npmmirror.com/camelcase/download/camelcase-5.0.0.tgz#03295527d58bd3cd4aa75363f35b2e8d97be2f42"
   integrity sha1-AylVJ9WL081Kp1Nj81sujZe+L0I=
 
 camelcase@^5.0.0:
@@ -4786,7 +4786,7 @@ invariant@^2.2.0, invariant@^2.2.4:
 
 ioredis@^4.22.0:
   version "4.27.2"
-  resolved "https://registry.nlark.com/ioredis/download/ioredis-4.27.2.tgz#6a79bca05164482da796f8fa010bccefd3bf4811"
+  resolved "https://registry.npmmirror.com/ioredis/download/ioredis-4.27.2.tgz#6a79bca05164482da796f8fa010bccefd3bf4811"
   integrity sha1-anm8oFFkSC2nlvj6AQvM79O/SBE=
   dependencies:
     cluster-key-slot "^1.1.0"
@@ -5477,7 +5477,7 @@ lru-cache@^4.0.1, lru-cache@^4.1.5:
 
 lru-cache@^6.0.0:
   version "6.0.0"
-  resolved "https://registry.nlark.com/lru-cache/download/lru-cache-6.0.0.tgz#6d6fe6570ebd96aaf90fcad1dafa3b2566db3a94"
+  resolved "https://registry.npmmirror.com/lru-cache/download/lru-cache-6.0.0.tgz#6d6fe6570ebd96aaf90fcad1dafa3b2566db3a94"
   integrity sha1-bW/mVw69lqr5D8rR2vo7JWbbOpQ=
   dependencies:
     yallist "^4.0.0"
@@ -6851,7 +6851,7 @@ rechoir@^0.6.2:
 
 recursive-watch@^1.1.4:
   version "1.1.4"
-  resolved "https://registry.nlark.com/recursive-watch/download/recursive-watch-1.1.4.tgz#7a340f860dd715836a592f008cceba5a1dd0b734"
+  resolved "https://registry.npmmirror.com/recursive-watch/download/recursive-watch-1.1.4.tgz#7a340f860dd715836a592f008cceba5a1dd0b734"
   integrity sha1-ejQPhg3XFYNqWS8AjM66Wh3QtzQ=
   dependencies:
     ttl "^1.3.0"
@@ -7947,7 +7947,7 @@ tslib@~2.2.0:
 
 ttl@^1.3.0:
   version "1.3.1"
-  resolved "https://registry.nlark.com/ttl/download/ttl-1.3.1.tgz#d8fa510bedb6a956d85b60ec56a57339ae0d5b2c"
+  resolved "https://registry.npmmirror.com/ttl/download/ttl-1.3.1.tgz#d8fa510bedb6a956d85b60ec56a57339ae0d5b2c"
   integrity sha1-2PpRC+22qVbYW2DsVqVzOa4NWyw=
 
 tty-browserify@0.0.0:

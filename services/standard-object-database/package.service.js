@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 1985-10-26 16:15:00
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-09-20 11:30:31
+ * @LastEditTime: 2024-09-24 15:00:31
  * @Description: 
  */
 "use strict";
@@ -15,6 +15,7 @@ const triggers = require('./src/triggers');
 const { checkAPIName } = require('@steedos/standard-objects').util
 
 const { customAlphabet } = require('nanoid');
+const { group } = require('console');
 const nanoid = customAlphabet('1234567890abcdef', 10)
 
 /**
@@ -166,7 +167,7 @@ module.exports = {
 					icon: icon || 'account'
 				}, userSession);
 				
-				// 2 将选项卡绑定到app的group下
+				
 				const tab_items = app.tab_items || {};
 				tab_items[`object_${obj.name}`] = {
 					group: groupId
@@ -185,7 +186,7 @@ module.exports = {
                 fullPath: "/service/api/apps/create_app_group_by_design"
 			},
 			async handler(ctx) {
-				const { appId, name, defaultOpen } = ctx.params;
+				const { appId, name, defaultOpen, oldName } = ctx.params;
 				const userSession = ctx.meta.user;
 
 				if(!appId){
@@ -208,6 +209,59 @@ module.exports = {
 							default_open: defaultOpen
 						}
 					}
+				}, userSession);
+				
+				return {};
+			}
+		},
+		update_app_group: {
+			rest: {
+				method: "POST",
+                fullPath: "/service/api/apps/update_app_group_by_design"
+			},
+			async handler(ctx) {
+				const { appId, name, defaultOpen, oldName } = ctx.params;
+				const userSession = ctx.meta.user;
+
+				if(!oldName){
+					return {}
+				}
+
+				if(!appId){
+					return {};
+				}
+
+				const records = await this.getObject('apps').find({
+					filters: ['code', '=', appId]
+				});
+				const app = records.length > 0 ? records[0] : null;
+
+				if(!app){
+					return {};
+				};
+
+				const tab_groups = app.tab_groups;
+
+				const tab_items = app.tab_items;
+
+				_.each(tab_groups, (tGroup)=>{
+					if(tGroup.group_name == oldName){
+						tGroup.group_name = name;
+						tGroup.default_open = defaultOpen
+					}
+				});
+
+
+				_.each(tab_items, (tItem, key)=>{
+					if(tItem.group === oldName){
+						tab_items[key] = {
+							group: name
+						}
+					}
+				})
+
+				await this.getObject('apps').update(app._id, {
+					tab_groups, tab_items
 				}, userSession);
 				
 				return {};
@@ -339,7 +393,7 @@ module.exports = {
 					url : url,
 				}, userSession);
 				
-				// 2 将选项卡绑定到app的group下
+				
 				const tab_items = app.tab_items || {};
 				tab_items[tab.name] = {
 					group: groupId
@@ -431,7 +485,7 @@ module.exports = {
 					page : page.name,
 				}, userSession);
 				
-				// 2 将选项卡绑定到app的group下
+				
 				const tab_items = app.tab_items || {};
 				tab_items[tab.name] = {
 					group: groupId
@@ -442,7 +496,116 @@ module.exports = {
 				
 				return page;
 			}
-		}
+		},
+		delete_app_tab: {
+			rest: {
+				method: "POST",
+                fullPath: "/service/api/apps/delete_app_tab"
+			},
+			async handler(ctx) {
+				const { appId, tabName } = ctx.params;
+				const userSession = ctx.meta.user;
+
+				if(!appId){
+					return;
+				}
+
+				const records = await this.getObject('apps').find({
+					filters: ['code', '=', appId]
+				});
+				const app = records.length > 0 ? records[0] : null;
+
+				if(!app){
+					return ;
+				}
+				
+				
+				const tab_items = app.tab_items || {};
+
+				delete tab_items[tabName]
+
+				await this.getObject('apps').update(app._id, {
+					tab_items
+				}, userSession);
+				
+				return app;
+			}
+		},
+		delete_app_group: {
+			rest: {
+				method: "POST",
+                fullPath: "/service/api/apps/delete_app_group"
+			},
+			async handler(ctx) {
+				const { appId, groupName } = ctx.params;
+				const userSession = ctx.meta.user;
+
+				if(!appId){
+					return;
+				}
+
+				const records = await this.getObject('apps').find({
+					filters: ['code', '=', appId]
+				});
+				const app = records.length > 0 ? records[0] : null;
+
+				if(!app){
+					return ;
+				}
+				
+				const tab_groups = app.tab_groups || [];
+				const newTabGroups = [];
+				
+				_.each(tab_groups, (tGroup)=>{
+					if(tGroup.group_name != groupName){
+						newTabGroups.push(tGroup);
+					}
+				});
+				await this.getObject('apps').update(app._id, {
+					tab_groups: newTabGroups
+				}, userSession);
+				
+				return app;
+			}
+		},
+		move_app_tab: {
+			rest: {
+				method: "POST",
+                fullPath: "/service/api/apps/move_app_tab"
+			},
+			async handler(ctx) {
+				const { appId, tabName, groupName, oldGroupName } = ctx.params;
+				const userSession = ctx.meta.user;
+
+				if(!appId){
+					return;
+				}
+
+				const records = await this.getObject('apps').find({
+					filters: ['code', '=', appId]
+				});
+				const app = records.length > 0 ? records[0] : null;
+
+				if(!app){
+					return ;
+				}
+				
+				
+				const tab_items = app.tab_items || {};
+
+				_.each(tab_items, (item, k)=>{
+					if(k === tabName){
+						tab_items[k].group = groupName == 0 ? '' : groupName
+					}
+				})
+
+				await this.getObject('apps').update(app._id, {
+					tab_items
+				}, userSession);
+				
+				return app;
+			}
+		},
 	},
 
 	/**
