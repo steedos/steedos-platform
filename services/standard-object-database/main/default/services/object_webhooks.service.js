@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2024-04-23 14:35:03
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-05-06 11:45:46
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2024-09-14 11:24:08
  * @Description: 
  */
 
@@ -10,6 +10,7 @@ const BullMqMixin = require('moleculer-bullmq');
 const axios = require('axios');
 const { evaluate } = require("amis-formula")
 const serviceObjectMixin = require('@steedos/service-object-mixin');
+const _ = require("lodash");
 
 module.exports = {
     name: "object_webhooks",

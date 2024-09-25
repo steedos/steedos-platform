@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 16:53:23
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-01-13 11:44:40
+ * @LastEditTime: 2024-09-20 10:51:35
  * @Description: 
  */
 "use strict";
@@ -190,7 +190,7 @@ module.exports = {
                 return;
             }
 
-            let profile = 'user';
+            let profile = process.env.STEEDOS_TENANT_REGISTER_DEFAULT_PROFILE || 'user';
 
             const space = await spaceObj.findOne(spaceId, { fields: ['default_profile', 'default_organization'] })
             if (space) {
@@ -200,6 +200,10 @@ module.exports = {
                 if (!organization_id && space.default_organization) {
                     organization_id = space.default_organization
                 }
+            }
+
+            if(process.env.STEEDOS_TENANT_REGISTER_PROFILE ){
+                profile = process.env.STEEDOS_TENANT_REGISTER_PROFILE;
             }
 
             if (!organization_id) {

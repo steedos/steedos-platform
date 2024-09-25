@@ -27,6 +27,10 @@ init_env_file() {
       tr -dc A-Za-z0-9 </dev/urandom | head -c 13
       echo ""
     )
+    local generated_steedos_nodered_password=$(
+      tr -dc A-Za-z0-9 </dev/urandom | head -c 13
+      echo ""
+    )
     local generated_steedos_encryption_password=$(
       tr -dc A-Za-z0-9 </dev/urandom | head -c 13
       echo ""
@@ -39,7 +43,7 @@ init_env_file() {
       tr -dc A-Za-z0-9 </dev/urandom | head -c 13
       echo ''
     )
-    bash "$TEMPLATES_PATH/docker.env.sh" "$default_steedos_mongodb_user" "$generated_steedos_mongodb_password" "$generated_steedos_encryption_password" "$generated_steedos_encription_salt" "$generated_steedos_supervisor_password" > "$ENV_PATH"
+    bash "$TEMPLATES_PATH/docker.env.sh" "$default_steedos_mongodb_user" "$generated_steedos_mongodb_password" "$generated_steedos_encryption_password" "$generated_steedos_encription_salt" "$generated_steedos_supervisor_password" "$generated_steedos_nodered_password" > "$ENV_PATH"
   fi
 
 
@@ -237,6 +241,7 @@ configure_supervisord() {
   cp -f "$supervisord_conf_source"/nginx.conf "$SUPERVISORD_CONF_TARGET"
   cp -f "$supervisord_conf_source"/steedos.conf "$SUPERVISORD_CONF_TARGET"
   cp -f "$supervisord_conf_source"/unpkg.conf "$SUPERVISORD_CONF_TARGET"
+  cp -f "$supervisord_conf_source"/nodered.conf "$SUPERVISORD_CONF_TARGET"
 
   # Disable services based on configuration
   if [[ -z "${DYNO}" ]]; then
@@ -297,15 +302,15 @@ else
 fi
 
 
-configure_supervisord
-
 mkdir -p /steedos-storage/unpkg
 
 # Ensure the restore path exists in the container, so an archive can be copied to it, if need be.
-mkdir -p /steedos-storage/data/{backup,restore}
+mkdir -p /steedos-storage/data/{backup,restore,nodered,unpkg}
 
 # Create sub-directory to store services log in the container mounting folder
-mkdir -p /steedos-storage/logs/{supervisor,steedos,cron,mongodb,redis,nginx,unpkg}
+mkdir -p /steedos-storage/logs/{supervisor,steedos,cron,mongodb,redis,nginx,unpkg,nodered}
+
+configure_supervisord
 
 # Stop nginx gracefully
 nginx -s quit

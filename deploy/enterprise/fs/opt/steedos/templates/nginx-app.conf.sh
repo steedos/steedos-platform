@@ -146,6 +146,16 @@ fi
     proxy_pass http://localhost:3100/unpkg/;
   }
 
+
+  location /flows/ {
+    proxy_http_version       1.1;
+    proxy_set_header Upgrade \$http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_cache_bypass \$http_upgrade;
+    proxy_set_header  Host \$host;
+    proxy_pass http://localhost:1880/flows/;
+  }
+
   location /nginx/ {
     root ${NGINX_WWW_PATH};
     try_files \$uri \$uri/ /index.html =404;

@@ -14,7 +14,7 @@ const steedosI18n = require("@steedos/i18n");
  */
 const beforeDeleteBase = async function () {
     const { id, object_name, userId } = this;
-    if(object_name === 'objects'){
+    if(object_name === 'objects' || object_name === 'object_fields'){
         return ;
     }
     const obj = getObject(object_name);

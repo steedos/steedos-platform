@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-07 14:19:57
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-09-09 17:42:29
+ * @LastEditTime: 2024-09-20 10:43:52
  * @Description: 
  */
 "use strict";
@@ -401,7 +401,7 @@ module.exports = {
         }
         if (doc.profile) {
             const isSpaceOwner = await broker.call('spaces.isSpaceOwner', { spaceId: doc.space, userId: userId })
-            if (doc.profile === 'admin' && !isSpaceOwner) {
+            if (doc.profile === 'admin' && !isSpaceOwner && this.userId) {
                 throw new Error("Only the administrator can set the profile to admin");
             }
         } else {
