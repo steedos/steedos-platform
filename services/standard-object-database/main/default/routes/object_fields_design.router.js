@@ -42,7 +42,7 @@ router.get('/api/amisObjectFieldsDesign', core.requireAuthentication, async func
         } else if (req.query.locale == "zh-cn") {
             locale = "zh-CN";
         }
-        const retUrl = __meteor_runtime_config__.ROOT_URL + '/app/admin/objects/view/' + req.query.oid
+        const retUrl = req.query.retUrl || __meteor_runtime_config__.ROOT_URL + '/app/admin/objects/view/' + req.query.oid
         const steedosBuilderUrl = process.env.STEEDOS_BUILDER_URL || 'https://builder.steedos.cn';
         const builderHost = `${steedosBuilderUrl}/object?${assetUrl}retUrl=${retUrl}&locale=${locale}&isObjectDesign=1&pType=objectDesign`;
 
