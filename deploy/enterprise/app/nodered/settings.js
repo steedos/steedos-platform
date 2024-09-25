@@ -38,25 +38,7 @@ module.exports = {
         title: "Steedos Flows",
     },
     uiPort,
-    // adminAuth: {
-    //     type: "credentials",
-    //     users: [{
-    //         username: "admin",
-    //         permissions: "*"
-    //     }],
-    //     authenticate: function(username, password) {
-    //         if (username === 'admin') {
-    //             // 将环境变量中的密码与输入的密码进行比较
-    //             if (password === process.env.NODERED_PASSWORD) {
-    //                 return Promise.resolve({username: "admin", permissions: "*"});
-    //             } else {
-    //                 return Promise.resolve(null);
-    //             }
-    //         } else {
-    //             return Promise.resolve(null);
-    //         }
-    //     }
-    // },
+    
     httpStatic: path.join(__dirname, 'public'),
     httpRoot: "/flows/",
     adminAuth: {
@@ -70,6 +52,14 @@ module.exports = {
             });
         },
         authenticate: function(username, password) {
+            /* 使用环境变量密码登录 */
+            if (username === 'admin') {
+                // 将环境变量中的密码与输入的密码进行比较
+                if (password === process.env.NODERED_PASSWORD) {
+                    return Promise.resolve({username: "admin", permissions: "*"});
+                }
+            }
+            /* 非saas模式下，支持 admin 简档登录 */
             return new Promise(function(resolve) {
                 // 构建请求体
                 const requestBody = {
@@ -80,11 +70,38 @@ module.exports = {
                 // 发送 POST 请求到身份验证接口
                 axios.post(`${steedosRootUrl}/accounts/password/login`, requestBody)
                     .then(response => {
-                        console.log(response)
                         // 根据接口返回的数据判断验证是否成功
                         if (response.status === 200) {
-                            // 验证成功，返回包含用户名和权限的用户对象
-                            resolve({ username: username, permissions: "*" });
+                            console.log('login', response.data)
+                            const space = response.data.space;
+                            const token = response.data.token;
+
+                            axios.post(`${steedosRootUrl}/api/v4/users/validate`, {}, {
+                                headers: {
+                                  'Authorization': `Bearer ${space},${token}`
+                                }
+                            })
+                            .then(response2 => {
+                                // 根据接口返回的数据判断验证是否成功
+                                if (response2.status === 200) {
+                                    console.log('validate', response2.data)
+                                    const roles = response2.data.roles;
+                                    if (roles.includes('admin')) {
+                                        // 验证成功，返回包含用户名和权限的用户对象
+                                        resolve({ username: username, permissions: "*" });
+                                    } else {
+                                        console.log('The user does not have the admin role.');
+                                        // Perform actions for non-admin users
+                                        // 验证失败
+                                        resolve(null);
+                                    }
+                                }
+                            // Handle the response here
+                            })
+                            .catch(error => {
+                                // 验证失败
+                                resolve(null);
+                            });
                         } else {
                             // 验证失败
                             resolve(null);
