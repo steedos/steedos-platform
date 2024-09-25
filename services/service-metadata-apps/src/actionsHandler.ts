@@ -87,7 +87,14 @@ async function getAllTabs(ctx: any) {
 }
 
 async function getContext(ctx: any) {
-    const allTabs = await getAllTabs(ctx)
+    const userSession = ctx.meta.user;
+    const allTabs = await getAllTabs(ctx);
+    if(userSession.is_space_admin){
+        return {
+            tabs: allTabs,
+            hiddenTabNames: []
+        }
+    }
     // const allObject = await getSteedosSchema().getAllObject()
     let hiddenTabNames = await getHiddenTabNames(ctx, allTabs)
     const notLicensedTabNames = await getNotLicensedTabNames(ctx, allTabs)
@@ -207,6 +214,11 @@ async function tabMenus(ctx: any, appPath, tabApiName, menu, mobile, userSession
         if(props.group){
             props.group = _.find(menu.tab_groups, { id: props.group })?.group_name || props.group;
         }
+
+        if(tabApiName){
+            props.tabApiName = tabApiName;
+        }
+
         if (tab) {
             const isMobileChecked = checkTabMobile(tab, mobile)
             if (!isMobileChecked) {
@@ -514,6 +526,11 @@ async function getAppMenus(ctx) {
         }
         const context = await getContext(ctx)
         const appMenus = await transformAppToMenus(ctx, appConfig, mobile, userSession, context);
+
+        if(userSession.is_space_admin && appConfig._id && appConfig._id != appConfig.code){
+            appMenus.allowEditApp = true;
+        }
+
         return appMenus;
     }
 
