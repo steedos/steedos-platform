@@ -10,7 +10,8 @@
         "steedos"
     ],
     "dependencies": {
-        "@steedos/process": "2.7.10-beta.1"
+        "@steedos/process": "2.7.10-beta.1",
+        "nanoid": "^3.3.4"
     },
     "description": "steedos package",
     "repository": {},
