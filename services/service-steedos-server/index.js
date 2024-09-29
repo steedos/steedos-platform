@@ -216,6 +216,16 @@ module.exports = {
 					});
 					connectHandlersExpress.use(require('@steedos/router').staticRouter());
 					connectHandlersExpress.use(SteedosApi.express());
+					if(process.env.STEEDOS_HTTP_DISABLE_METHOD){
+						WebApp.connectHandlers.use((req, res, next) => {
+							if (_.split(process.env.STEEDOS_HTTP_DISABLE_METHOD).includes(req.method)){
+								res.statusCode = 405;
+								return res.end('Method Not Allowed')
+							}
+							return next()
+						});
+					}
+
 					WebApp.connectHandlers.use(connectHandlersExpress)
 					const steedosSchema = require('@steedos/objectql').getSteedosSchema(this.broker);
 					this.wrapAsync(this.startStandardObjectsPackageLoader, {});
