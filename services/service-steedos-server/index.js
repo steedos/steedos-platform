@@ -10,6 +10,8 @@ const express = require('express');
 const validator = require('validator');
 const core = require('@steedos/core');
 
+const helmet = require('helmet');
+
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
@@ -224,6 +226,15 @@ module.exports = {
 							}
 							return next()
 						});
+					}
+
+					if(process.env.STEEDOS_HTTP_ENABLED_HELMET===true || process.env.STEEDOS_HTTP_ENABLED_HELMET=='true'){
+						
+						const steedosConfig = objectql.getSteedosConfig();
+
+						const helmetConfig = steedosConfig.helmet;
+
+						WebApp.connectHandlers.use(helmet(helmetConfig))
 					}
 
 					WebApp.connectHandlers.use(connectHandlersExpress)

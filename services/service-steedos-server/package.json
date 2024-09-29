@@ -34,6 +34,7 @@
     "@steedos/webapp-public": "2.7.10-beta.2",
     "@steedos/workflow": "2.7.10-beta.2",
     "dotenv-flow": "^3.2.0",
+    "helmet": "6.2.0",
     "moleculer": "^0.14.25",
     "moleculer-db": "^0.8.4",
     "moleculer-web": "^0.10.4",
