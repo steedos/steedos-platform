@@ -10,6 +10,8 @@ const express = require('express');
 const validator = require('validator');
 const core = require('@steedos/core');
 
+const helmet = require('helmet');
+
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
@@ -216,6 +218,25 @@ module.exports = {
 					});
 					connectHandlersExpress.use(require('@steedos/router').staticRouter());
 					connectHandlersExpress.use(SteedosApi.express());
+					if(process.env.STEEDOS_HTTP_DISABLE_METHOD){
+						WebApp.connectHandlers.use((req, res, next) => {
+							if (_.split(process.env.STEEDOS_HTTP_DISABLE_METHOD).includes(req.method)){
+								res.statusCode = 405;
+								return res.end('Method Not Allowed')
+							}
+							return next()
+						});
+					}
+
+					if(process.env.STEEDOS_HTTP_ENABLED_HELMET===true || process.env.STEEDOS_HTTP_ENABLED_HELMET=='true'){
+						
+						const steedosConfig = objectql.getSteedosConfig();
+
+						const helmetConfig = steedosConfig.helmet;
+
+						WebApp.connectHandlers.use(helmet(helmetConfig))
+					}
+
 					WebApp.connectHandlers.use(connectHandlersExpress)
 					const steedosSchema = require('@steedos/objectql').getSteedosSchema(this.broker);
 					this.wrapAsync(this.startStandardObjectsPackageLoader, {});
