@@ -326,12 +326,13 @@ module.exports = {
                         data: {
                             objectName
                         },
-                        className: "steedos-amis-form steedos-field-layout-page m-4",
+                        className: "steedos-amis-form steedos-field-layout-page",
                         body: _.map(_.groupBy(_.orderBy(objectFields, function(o) { return o.sort_no || 100 }), 'group'), (items, groupName)=>{
                             const group = getGroup(groupName)
                             return {
                                 type: 'steedos-field-group',
                                 title: group.group_name,
+                                collapsable: true,
                                 collapsed: group.collapsed,
                                 visible_on: group.visible_on,
                                 body: _.map(items, (field)=>{
