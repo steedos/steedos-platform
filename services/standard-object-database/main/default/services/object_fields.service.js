@@ -376,22 +376,22 @@ module.exports = {
                     return {}
                 }
                 let sort_no = 50;
-                _.each(schema.body, (group)=>{
-                    if(group.type === 'steedos-field-group'){
-                        const groupName = group.title;
-                        _.each(group.body, (field)=>{
+                _.each(schema.body, (bodyItem)=>{
+                    if(bodyItem.type === 'steedos-field-group'){
+                        const groupName = bodyItem.title;
+                        _.each(bodyItem.body, (field)=>{
                             if(_.startsWith(field.type, 'sfield-')){
                                 fields.push(Object.assign({}, field.config, {group: groupName, sort_no, _name: field.name}));
                                 sort_no += 50;
                             }
                         })
                         groups.push({
-                            group_name: group.title,
-                            collapsed: group.collapsed,
-                            visible_on: group.visible_on
+                            group_name: bodyItem.title,
+                            collapsed: bodyItem.collapsed,
+                            visible_on: bodyItem.visible_on
                         })
-                    }else if(_.startsWith(field.type, 'sfield-')){
-                        fields.push(Object.assign({}, field.config, {sort_no, _name: field.name}));
+                    }else if(_.startsWith(bodyItem.type, 'sfield-')){
+                        fields.push(Object.assign({}, bodyItem.config, {sort_no, _name: bodyItem.name}));
                         sort_no += 50;
                     }
                 })
@@ -460,6 +460,9 @@ module.exports = {
 
                         if(submitField.type === "summary"){
                             await initSummaryDoc(submitField);
+                        }
+                        if(submitField){
+                            delete submitField._id;
                         }
                         await object_fields.directUpdate(id, Object.assign({}, submitField, {
                             modified: now,
