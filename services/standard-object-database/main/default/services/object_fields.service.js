@@ -315,7 +315,15 @@ module.exports = {
                     _.map(objectFields, (objectField)=>{
                         if(!objectField.group){
                             objectField.group = '通用'
-                        }
+                        };
+                        delete objectField.owner;
+                        delete objectField.space;
+                        delete objectField.created;
+                        delete objectField.modified;
+                        delete objectField.created_by;
+                        delete objectField.modified_by;
+                        delete objectField.company_id;
+                        delete objectField.company_ids;
                     })
 
                     return {
