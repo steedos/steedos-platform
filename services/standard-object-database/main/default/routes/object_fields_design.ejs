@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-02 17:45:15
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-09-11 11:49:37
+ * @LastEditTime: 2024-10-09 15:25:54
  * @Description: 
 -->
 <html>
@@ -11,6 +11,15 @@
     <script src="/unpkg.com/axios@0.26.1/dist/axios.min.js"></script>
     <script src="https://unpkg.steedos.cn/flowbite@2.3.0/dist/flowbite.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="/toast/toastr.min.css" rel="stylesheet" />
+    <script src="/jquery.min.js" ></script>
+    <script src="/toast/toastr.min.js"></script>
+    <style>
+      #toast-container.toast-bottom-center>div, #toast-container.toast-top-center>div {
+        width: 450px;
+        opacity: 1;
+      }
+    </style>
   </head>
 
   <body>
@@ -185,7 +194,7 @@
           
         }
 
-        return await axios.post(
+        const result =  await axios.post(
             `${rootUrl}/service/api/object_fields/amis/design/schema?oid=${oid}`,
             {
               withCredentials: true,
@@ -199,6 +208,43 @@
             // handle error
             console.log(error);
           });
+        const actionNames = ['insert', 'update', 'delete'];
+
+        toastr.options = {
+          "closeButton": true,
+          "debug": false,
+          "newestOnTop": false,
+          "progressBar": false,
+          "positionClass": "toast-top-center",
+          "preventDuplicates": false,
+          "onclick": null,
+          "showDuration": "300",
+          "hideDuration": "1000",
+          "timeOut": "5000",
+          "extendedTimeOut": "1000",
+          "showEasing": "swing",
+          "hideEasing": "linear",
+          "showMethod": "fadeIn",
+          "hideMethod": "fadeOut"
+        }
+
+        actionNames.forEach(function(actionName){
+          const actionData = result.data.data[actionName];
+          let actionLabel = '';
+          if(actionName === 'insert'){
+            actionLabel = '新增';
+          }else if(actionName === 'update'){
+            actionLabel = '更新';
+          }else if(actionName === 'delete'){
+            actionLabel = '删除';
+          }
+          if(actionData.error && actionData.error.length > 0){
+          actionData.error.forEach((error)=>{
+            toastr.warning(error.message, `${actionLabel}字段「${error.fieldLabel}(${error.fieldName})」失败:`);
+            })
+          }
+        })
+        return result;
       };
       window.addEventListener('message', function (event) {
         const { data } = event;

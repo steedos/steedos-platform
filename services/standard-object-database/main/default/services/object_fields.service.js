@@ -424,10 +424,11 @@ module.exports = {
                 
                 // 循环需要增加的字段
                 for (const fieldName of insertFields) {
+                    const newId = await object_fields._makeNewID();
+                    const now = new Date();
+                    const field = _.find(fields, { name: fieldName });
                     try {
-                        const newId = await object_fields._makeNewID();
-                        const now = new Date();
-                        const field = _.find(fields, { name: fieldName });
+                        
                         const doc = Object.assign({}, field, {
                             _id: newId,
                             owner: userSession.userId,
@@ -446,7 +447,11 @@ module.exports = {
                         await object_fields.directInsert(doc);
                         log.insert.success.push(fieldName);
                     } catch (e) {
-                        log.insert.error.push(fieldName);
+                        log.insert.error.push({
+                            fieldName: fieldName,
+                            fieldLabel: field.label,
+                            message: steedosI18n.t(e.message, null, 'zh-CN')
+                        });
                         console.error(`新增字段 ${fieldName} 时出错：`, e);
                     }
                 }
