@@ -1,5 +1,4 @@
 name: design_fields_layout
 is_enable: true
-label: 设计对象（Beta)
-'on': record_more
-sort: 80
+label: 设计对象
+'on': record_only
