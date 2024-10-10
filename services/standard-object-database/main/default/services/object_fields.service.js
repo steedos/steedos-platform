@@ -390,6 +390,12 @@ module.exports = {
                         const groupName = bodyItem.title;
                         _.each(bodyItem.body, (field)=>{
                             if(_.startsWith(field.type, 'sfield-')){
+
+                                if(field.config && field.config.amis){
+                                    delete field.config.amis.name
+                                    delete field.config.amis.mode
+                                }
+
                                 fields.push(Object.assign({}, field.config, {group: groupName, sort_no, _name: field.name}));
                                 sort_no += 50;
                             }
@@ -400,6 +406,10 @@ module.exports = {
                             visible_on: bodyItem.visible_on
                         })
                     }else if(_.startsWith(bodyItem.type, 'sfield-')){
+                        if(bodyItem.config && bodyItem.config.amis){
+                            delete bodyItem.config.amis.name
+                            delete bodyItem.config.amis.mode
+                        }
                         fields.push(Object.assign({}, bodyItem.config, {sort_no, _name: bodyItem.name}));
                         sort_no += 50;
                     }
@@ -467,8 +477,8 @@ module.exports = {
                 // 循环需要修改的字段
                 const now = new Date();
                 for (const fieldName of updateFields) {
+                    const field = _.find(fields, { name: fieldName });
                     try {
-                        const field = _.find(fields, { name: fieldName });
                         const id = _.find(dbFields, { name: fieldName })._id;
                         const submitField = _.omit(field, ['name', '_name']);
 
@@ -484,18 +494,28 @@ module.exports = {
                         }));
                         log.update.success.push(fieldName);
                     } catch (e) {
-                        log.update.error.push(fieldName);
+                        log.update.error.push({
+                            fieldName: fieldName,
+                            fieldLabel: field.label,
+                            message: steedosI18n.t(e.message, null, 'zh-CN')
+                        });
                         console.log(`dbFields`, fieldName, dbFields)
                         console.error(`更新字段 ${fieldName} 时出错：`, e);
                     }
                 }
                 // 循环需要删除的字段
                 for (const fieldName of deleteFields) {
+                    const field = _.find(dbFields, { name: fieldName })._id;
                     try {
-                        const id = _.find(dbFields, { name: fieldName })._id;
+                        const id = field._id;
                         await object_fields.directDelete(id);
                         log.delete.success.push(fieldName);
                     } catch (e) {
+                        log.delete.error.push({
+                            fieldName: fieldName,
+                            fieldLabel: field.label,
+                            message: steedosI18n.t(e.message, null, 'zh-CN')
+                        });
                         log.delete.error.push(fieldName);
                         console.error(`删除字段 ${fieldName} 时出错：`, e);
                     }

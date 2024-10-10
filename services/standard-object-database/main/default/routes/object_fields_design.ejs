@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-02 17:45:15
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-10-10 09:44:47
+ * @LastEditTime: 2024-10-10 10:20:19
  * @Description: 
 -->
 <html>
@@ -255,8 +255,7 @@
                   return true;
                 },
                 beforeDelete: function(event){
-                    if(event.context.schema.type.startsWith('sfield') && event.context.schema.config.is_system){
-                      parent.toastr.warning('禁止删除系统字段', '', {
+                    const toastConfig = {
                         "closeButton": true,
                         "debug": false,
                         "newestOnTop": false,
@@ -272,7 +271,14 @@
                         "hideEasing": "linear",
                         "showMethod": "fadeIn",
                         "hideMethod": "fadeOut"
-                      })
+                      }
+                    if(event.context.schema.type.startsWith('sfield') && event.context.schema.config.is_system){
+                      parent.toastr.warning('禁止删除系统字段', '', toastConfig)
+                      return event.preventDefault();
+                    };
+
+                    if(event.context.schema.type.startsWith('sfield') && event.context.schema.config.name === 'name'){
+                      parent.toastr.warning('禁止删除名称字段', '', toastConfig)
                       return event.preventDefault();
                     }
                 },
