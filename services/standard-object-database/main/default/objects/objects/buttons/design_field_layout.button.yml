@@ -1,4 +1,5 @@
 name: design_field_layout
 is_enable: true
 label: 设计字段布局
-'on': record_only
+'on': record_more
+sort: 80

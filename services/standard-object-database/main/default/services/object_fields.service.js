@@ -315,7 +315,15 @@ module.exports = {
                     _.map(objectFields, (objectField)=>{
                         if(!objectField.group){
                             objectField.group = '通用'
-                        }
+                        };
+                        delete objectField.owner;
+                        delete objectField.space;
+                        delete objectField.created;
+                        delete objectField.modified;
+                        delete objectField.created_by;
+                        delete objectField.modified_by;
+                        delete objectField.company_id;
+                        delete objectField.company_ids;
                     })
 
                     return {
@@ -326,12 +334,13 @@ module.exports = {
                         data: {
                             objectName
                         },
-                        className: "steedos-amis-form steedos-field-layout-page m-4",
+                        className: "steedos-amis-form steedos-field-layout-page",
                         body: _.map(_.groupBy(_.orderBy(objectFields, function(o) { return o.sort_no || 100 }), 'group'), (items, groupName)=>{
                             const group = getGroup(groupName)
                             return {
                                 type: 'steedos-field-group',
                                 title: group.group_name,
+                                collapsable: true,
                                 collapsed: group.collapsed,
                                 visible_on: group.visible_on,
                                 body: _.map(items, (field)=>{
@@ -423,10 +432,11 @@ module.exports = {
                 
                 // 循环需要增加的字段
                 for (const fieldName of insertFields) {
+                    const newId = await object_fields._makeNewID();
+                    const now = new Date();
+                    const field = _.find(fields, { name: fieldName });
                     try {
-                        const newId = await object_fields._makeNewID();
-                        const now = new Date();
-                        const field = _.find(fields, { name: fieldName });
+                        
                         const doc = Object.assign({}, field, {
                             _id: newId,
                             owner: userSession.userId,
@@ -445,7 +455,11 @@ module.exports = {
                         await object_fields.directInsert(doc);
                         log.insert.success.push(fieldName);
                     } catch (e) {
-                        log.insert.error.push(fieldName);
+                        log.insert.error.push({
+                            fieldName: fieldName,
+                            fieldLabel: field.label,
+                            message: steedosI18n.t(e.message, null, 'zh-CN')
+                        });
                         console.error(`新增字段 ${fieldName} 时出错：`, e);
                     }
                 }
