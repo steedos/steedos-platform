@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-02 17:45:15
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-10-09 15:25:54
+ * @LastEditTime: 2024-10-10 09:44:47
  * @Description: 
 -->
 <html>
@@ -253,6 +253,28 @@
             comp.messageFrame('builder.EditorPropsChanged', { editorProps :  JSON.stringify({
                 onDndAccept: function(event){
                   return true;
+                },
+                beforeDelete: function(event){
+                    if(event.context.schema.type.startsWith('sfield') && event.context.schema.config.is_system){
+                      parent.toastr.warning('禁止删除系统字段', '', {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-top-center",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                      })
+                      return event.preventDefault();
+                    }
                 },
                 onInit: function(){
                   // 创建一个新的 style 元素
