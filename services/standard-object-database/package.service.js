@@ -169,7 +169,7 @@ module.exports = {
 				
 				
 				const tab_items = app.tab_items || {};
-				tab_items[`object_${obj.name}`] = {
+				tab_items[`object_${obj.name.replace(/__c$/, "")}`] = {
 					group: groupId
 				}
 

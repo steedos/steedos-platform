@@ -396,7 +396,7 @@ module.exports = {
                                     delete field.config.amis.mode
                                 }
 
-                                fields.push(Object.assign({}, field.config, {group: groupName, sort_no, _name: field.name}));
+                                fields.push(Object.assign({}, field.config, {group: groupName, sort_no, _name: field.config.name}));
                                 sort_no += 50;
                             }
                         })
@@ -410,7 +410,7 @@ module.exports = {
                             delete bodyItem.config.amis.name
                             delete bodyItem.config.amis.mode
                         }
-                        fields.push(Object.assign({}, bodyItem.config, {sort_no, _name: bodyItem.name}));
+                        fields.push(Object.assign({}, bodyItem.config, {sort_no, _name: bodyItem.config.name}));
                         sort_no += 50;
                     }
                 })
