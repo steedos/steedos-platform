@@ -21,6 +21,7 @@ amis_schema: |-
                 "dialog": {
                   "type": "dialog",
                   "size": "lg",
+                  "showLoading": true,
                   "title": {
                     "type": "tpl",
                     "id": "u:0bce3c33b6e5",
@@ -234,6 +235,14 @@ amis_schema: |-
                               "actionType": "closeDialog"
                             }
                           ]
+                        },
+                        "validateError": {
+                          "actions": [
+                            {
+                              "componentId": "u:f7f767bed23f",
+                              "actionType": "enabled"
+                            }
+                          ]
                         }
                       }
                     }
@@ -266,6 +275,10 @@ amis_schema: |-
                               "args": {},
                               "actionType": "validate",
                               "componentId": "u:742f9c0dc8a1"
+                            },
+                            {
+                              "componentId": "u:f7f767bed23f",
+                              "actionType": "disabled"
                             },
                             {
                               "componentId": "u:742f9c0dc8a1",
