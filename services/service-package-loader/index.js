@@ -14,6 +14,9 @@ const metaDataCore = require('@steedos/metadata-core');
 const { registerMetadataConfigs, loadStandardMetadata, loadRouters } = require('@steedos/metadata-registrar');
 const moment = require('moment');
 const objectMixin = require('@steedos/service-object-mixin')
+const {
+    compressFiles, deleteFolderRecursive, mkTempFolder
+} = require('@steedos/metadata-core');
 
 const loadFlowFile = new metaDataCore.LoadFlowFile();
 
@@ -83,6 +86,16 @@ module.exports = {
                 // 扫描main/default/data文件夹
                 await this.importData(path.join(this.settings.packageInfo.path, 'main', 'default', 'data'), false, spaceId);
                 await this.loadDataOnServiceStarted(spaceId);
+
+                let packageInfo = this.settings.packageInfo;
+                if (!packageInfo) {
+                    return;
+                }
+                const { path: packagePath, isUnmanaged } = packageInfo;
+                if (isUnmanaged && packagePath) {
+                    const userSession = { spaceId: spaceId, userId: spaceDoc.owner };
+                    await this.deployPackage(packagePath, userSession);
+                }
             }
         }
     },
@@ -335,7 +348,32 @@ module.exports = {
             if(datasource){
                 await datasource.init();
             }
+        },
+        async deployPackage(sourcePath, userSession){
+            try {
+                var tempDir = mkTempFolder('deploy-');
+                var option = { includeJs: false, tableTitle: 'Steedos Deploy', showLog: true, inDeploy: true };
+    
+                compressFiles(sourcePath, sourcePath, tempDir, option, async (base64, zipDir) => {
+                    const result = await this.broker.call('~packages-@steedos/metadata-api.deploy', {
+                        fileBase64: base64,
+                    }, {
+                        timeout: 0,
+                        meta: {
+                            user: userSession
+                        }
+                    })
+                    console.log(sourcePath, JSON.stringify(result))
+                    deleteFolderRecursive(tempDir);
+                });
+    
+            } catch (err) {
+                console.log(err);
+                throw err;
+            }
+            
         }
+
     },
 
     /**

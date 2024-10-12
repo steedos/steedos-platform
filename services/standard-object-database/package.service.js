@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 1985-10-26 16:15:00
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-10-09 15:24:35
+ * @LastEditTime: 2024-10-10 15:58:37
  * @Description: 
  */
 "use strict";
@@ -169,7 +169,7 @@ module.exports = {
 				
 				
 				const tab_items = app.tab_items || {};
-				tab_items[`object_${obj.name}`] = {
+				tab_items[`object_${obj.name.replace(/__c$/, "")}`] = {
 					group: groupId
 				}
 
@@ -273,7 +273,7 @@ module.exports = {
                 fullPath: "/service/api/apps/create_by_design"
 			},
 			async handler(ctx) {
-				const { code, name } = ctx.params;
+				const { code, name, icon } = ctx.params;
 				const userSession = ctx.meta.user;
 
 				if(!code || !name){
@@ -288,7 +288,7 @@ module.exports = {
 					mobile : true,
 					visible : true,
 					showSidebar : true,
-					icon_slds : "account",
+					icon_slds : icon || "account",
 				}, userSession);
 			}
 		},

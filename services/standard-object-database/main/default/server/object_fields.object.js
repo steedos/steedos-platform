@@ -2,6 +2,7 @@ var _ = require("underscore");
 var objectql = require('@steedos/objectql');
 var clone = require('clone');
 var objectCore = require('./objects.core.js');
+var lodash = require('lodash');
 
 const objectFieldsFind = function (filter) {
     return objectql.wrapAsync(async function () {
@@ -31,7 +32,7 @@ function getFieldName(objectName, fieldName, spaceId, oldFieldName){
   if(object && object.datasource && object.datasource != 'default'){
     return fieldName;
   }else{
-    if(fieldName != 'name' && fieldName != 'owner'){
+    if(!lodash.includes(['name', 'owner', 'created', 'created_by', 'modified', 'modified_by'], fieldName)  ){
       return objectql._makeNewFieldName(fieldName, spaceId, oldFieldName);
     }else{
       return fieldName
@@ -470,7 +471,7 @@ var triggers = {
       }
 
       checkName(doc._name);
-      if(['name','owner','parent','children'].indexOf(doc._name)>-1){
+      if(['name','owner','parent','children'].indexOf(doc._name)>-1 || doc._name && doc.is_system){
         doc.name = doc._name;
       }else{
         doc.name = getFieldName(doc.object,doc._name,doc.space);
