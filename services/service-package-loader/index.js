@@ -280,7 +280,7 @@ module.exports = {
             if (!packageInfo) {
                 return;
             }
-            const { path : _path, datasource, isPackage } = packageInfo;
+            const { path : _path, datasource, isPackage, isUnmanaged } = packageInfo;
             if (!_path) {
                 this.logger.error(`Please config packageInfo in your settings.`);
                 console.log(`service ${this.name} started`);
@@ -290,7 +290,10 @@ module.exports = {
                 await this.loadDataOnServiceStarted()
             });
             
-            await this.loadPackageMetadataFiles(_path, this.name, datasource);
+            if (true != isUnmanaged) {
+                // 受管软件包加载元数据文件，非受管软件包不加载
+                await this.loadPackageMetadataFiles(_path, this.name, datasource);
+            }
             if(isPackage !== false){
                 try {
                     let _packageInfo = {};
