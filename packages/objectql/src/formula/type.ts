@@ -106,4 +106,6 @@ export enum SteedosFormulaBlankValue {
 export type SteedosFormulaOptions = {
     returnType?: string,
     blankValue?: SteedosFormulaBlankValue,
+    record?: any,
+    userSession?: any
 }

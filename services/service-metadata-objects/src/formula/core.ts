@@ -1,13 +1,75 @@
-
 import { extract } from '@steedos/formula';
 import { getObjectFieldFormulaConfigs } from './field_formula';
 import { isFieldFormulaConfigQuotingObjectAndFields } from './util';
 import { SteedosFieldFormulaTypeConfig } from './type';
+import { parse } from "amis-formula"
+
+const isAmisFormula = (formula: string) => {
+    // 有${}包裹的表达式就识别为amis公式
+    return /\$\{.+\}/.test(formula);
+}
+
+// const extractAmisFormulaVariableNames = (node, result = []) => {
+//     // 检查当前节点是否有 "type" 属性，并且这个类型是 "variable"
+//     if (node.type === 'variable') {
+//         result.push(node.name);
+//     }
+
+//     // 如果当前节点是对象，递归检查所有子节点
+//     for (const key in node) {
+//         if (typeof node[key] === 'object' && node[key] !== null) {
+//             extractAmisFormulaVariableNames(node[key], result);
+//         }
+//     }
+
+//     return result;
+// }
+
+
+function extractAmisFormulaVariableNames(node) {
+    let result = [];
+
+    function traverse(node, currentPath) {
+        if (!node) return;
+
+        if (node.type === 'variable') {
+            // 如果是变量，初始化当前路径为变量名
+            currentPath = node.name;
+        }
+
+        if (node.type === 'getter') {
+            if (node.key && node.key.type === 'identifier') {
+                // 如果有 getter，先递归其 host，构建路径
+                const newPath = traverse(node.host, currentPath);
+                currentPath = newPath ? `${newPath}.${node.key.name}` : `${currentPath}.${node.key.name}`;
+                // 只在完整路径构建结束后添加
+                result.push(currentPath);
+            }
+        }
+
+        // 遍历当前节点的键值，以继续递归查找
+        for (const key in node) {
+            if (typeof node[key] === 'object' && node[key] !== null && key !== 'host') {
+                traverse(node[key], currentPath);
+            }
+        }
+
+        return currentPath;
+    }
+    
+    traverse(node, '');
+    return result;
+}
+
 /**
  * 根据公式内容，取出其中{}中的变量
  * @param formula 
  */
 export const pickFormulaVars = (formula: string): Array<string> => {
+    if(isAmisFormula(formula)){
+        const result = extractAmisFormulaVariableNames(parse(formula));
+        return result;
+    }
     return extract(formula);
 }
 

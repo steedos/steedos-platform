@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-02 17:45:15
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-10-10 10:20:19
+ * @LastEditTime: 2024-10-17 12:02:21
  * @Description: 
 -->
 <html>
@@ -251,6 +251,56 @@
         if (data) {
           if(data.type === 'builder.loaded'){
             comp.messageFrame('builder.EditorPropsChanged', { editorProps :  JSON.stringify({
+                onChange: function(value){
+                  const fields = [];
+                  _.each(value.body, (bodyItem)=>{
+                      if(bodyItem.type === 'steedos-field-group'){
+                          let groupName = bodyItem.title;
+                          _.each(bodyItem.body, (field)=>{
+                              if(_.startsWith(field.type, 'sfield-')){
+
+                                  if(field.config && field.config.amis){
+                                      delete field.config.amis.name
+                                      delete field.config.amis.mode
+                                  }
+
+                                  fields.push(Object.assign({}, field.config, {group: groupName}));
+                              }
+                          })
+                      }else if(_.startsWith(bodyItem.type, 'sfield-')){
+                          if(bodyItem.config && bodyItem.config.amis){
+                              delete bodyItem.config.amis.name
+                              delete bodyItem.config.amis.mode
+                          }
+                          fields.push(Object.assign({}, bodyItem.config, {group: '通用'}));
+                      }
+                  })
+
+
+                  const variables = [];
+
+                  _.each(_.groupBy(fields, 'group'), (v, k)=>{
+                      if(k=== '通用'){
+                          _.each(v, (field)=>{
+                              variables.push({
+                                  label: field.label,
+                                  value: field.name
+                              })
+                          })
+                      }else{
+                          variables.push({
+                              label: k,
+                              children: _.map(v, (field)=>{
+                                  return {
+                                      label: field.label,
+                                      value: field.name
+                                  }
+                              })
+                          })
+                      }
+                  })
+                  window._objectFieldsVariables = variables;
+                },
                 onDndAccept: function(event){
                   return true;
                 },

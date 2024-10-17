@@ -6,12 +6,23 @@ import { runQuotedByObjectFieldSummaries, getObjectQuotedByFieldSummaryConfigs }
 import { checkUserSessionNotRequiredForFieldFormulas, getFormulaVarPathsAggregateLookups, isFieldFormulaConfigQuotingObjectAndFields } from './util';
 import { wrapAsync } from '../index';
 import { JsonMap } from "@salesforce/ts-types";
-import { SteedosQueryFilters } from '../types';
+import { SteedosQueryFilters, SteedosUserSession } from '../types';
 import _ = require('lodash')
 // import _eval = require('eval')
 import { extract, parse } from '@steedos/formula';
 import { getFieldSubstitution, FormulonDataType } from './params'
 import { getSimpleParamSubstitution } from './simple_params'
+import { evaluate } from "amis-formula";
+
+function convertToNestedObject(flatObject) {
+    const nestedObject = {};
+
+    for (const flatKey in flatObject) {
+        _.set(nestedObject, flatKey, flatObject[flatKey]);
+    }
+
+    return nestedObject;
+}
 
 /**
  * 根据公式内容，取出其中{}中的变量
@@ -61,6 +72,7 @@ export const pickFormulaVarFields = (vars: Array<SteedosFormulaVarTypeConfig>): 
  * return Array<SteedosFormulaParamTypeConfig>
  */
 export const computeFormulaParams = async (doc: JsonMap, vars: Array<SteedosFormulaVarTypeConfig>, userSession: any) => {
+    // console.log(`computeFormulaParams=====>`, doc, JSON.stringify(vars))
     let params: Array<SteedosFormulaParamTypeConfig> = [];
     const spaceId = userSession?.spaceId;
     const currentUserId = userSession?.userId;
@@ -172,7 +184,9 @@ export const computeFieldFormulaValue = async (doc: JsonMap, fieldFormulaConfig:
     let params = await computeFormulaParams(doc, vars, userSession);
     return runFormula(formula, params, {
         returnType: data_type,
-        blankValue: formula_blank_value
+        blankValue: formula_blank_value,
+        record: doc,
+        userSession: userSession
     }, fieldFormulaConfig);
 }
 
@@ -198,6 +212,57 @@ export const evalFieldFormula = function (formula: string, formulaParams: object
  * @param messageTag 用于显示错误日志的标识信息，可以是一个json对象
  */
 export const runFormula = function (formula: string, params: Array<SteedosFormulaParamTypeConfig>, options?: SteedosFormulaOptions, messageTag?: any) {
+    if(isAmisFormula(formula)){
+        return runAmisFormula(formula, params, options, messageTag)
+    }else{
+        return runSFFormula(formula, params, options, messageTag)
+    }
+}
+
+const getAmisGlobalVariables = (userSession?: SteedosUserSession) => {
+    if (!userSession) {
+        return {};
+    }
+    return {
+        "global": {
+            "userId": userSession.userId,
+            "spaceId": userSession.spaceId,
+            "user": userSession
+        }
+    }
+}
+
+const isAmisFormula = (formula: string) => {
+    // 有${}包裹的表达式就识别为amis公式
+    return /\$\{.+\}/.test(formula);
+}
+
+const runAmisFormula = function (formula: string, params: Array<SteedosFormulaParamTypeConfig>, options?: SteedosFormulaOptions, messageTag?: any){
+    const { record, userSession } = options;
+    try {
+        const globalVariables = getAmisGlobalVariables(userSession);
+        // 这里执行amis公式特意不传入doc，因为按设计是不支持默认值中引用当前记录中字段值
+
+        let data = {};
+
+        _.each(params, (item)=>{
+            data[item.key] = item.value;
+        })
+
+        data = convertToNestedObject(data)
+
+        const amisFormulaValue = evaluate(formula, Object.assign({}, globalVariables, record, data) , { });
+        if (formula === amisFormulaValue) {
+            throw new Error(`Amis formula "${formula}" evaluate failed "Function is not defined".`);
+        } else {
+            return amisFormulaValue;
+        }
+    } catch (e) {
+        throw new Error(`Catch an error "${e.message}" while evaluate amis formula "${formula}".`);
+    }
+}
+
+const runSFFormula = function (formula: string, params: Array<SteedosFormulaParamTypeConfig>, options?: SteedosFormulaOptions, messageTag?: any) {
     if (!options) {
         options = {};
     }
@@ -211,6 +276,7 @@ export const runFormula = function (formula: string, params: Array<SteedosFormul
         // formula = formula.replace(`{${key}}`, `__params["${key}"]`);
         if(path){
             formulaParams[key] = getFieldSubstitution(path.reference_from, path.field_name, value, blankValue);
+            // console.log('path=======>', path, formulaParams, key)
         }
         else{
             // 变量中没有path属性说明是普通变量
@@ -219,9 +285,9 @@ export const runFormula = function (formula: string, params: Array<SteedosFormul
     });
     
     // console.log("===runFormula===formula====", formula);
-    // console.log("===runFormula===formulaParams====", formulaParams);
     let result = evalFieldFormula(formula, formulaParams);
     // console.log("===runFormula===result====", result);
+    // console.log("===runFormula===formulaParams====", result, formula, formulaParams);
     let formulaValue = result.value;
     let formulaValueType = result.dataType;
     if(result.type === 'error'){
@@ -359,6 +425,7 @@ export const getCurrentObjectFieldFormulasDoc = async function (objectName: stri
     //     doc = await getSteedosSchema().getObject(objectName).findOne(recordId, { fields: formulaVarFields });
     // }
     let setDoc = {};
+    // console.log(`configs====>`, configs)
     for (const config of configs) {
         doc = Object.assign({}, doc, setDoc);//setDoc中计算得到的结果应该重新并到doc中支持计算
         setDoc[config.field_name] = await computeFieldFormulaValue(doc, config, userSession);

@@ -184,7 +184,16 @@
             "visible_on": {
                 "amis": {
                     "type": "input-formula",
-                    "name": "formula",
+                    "evalMode": false,
+                    "variableMode": "tabs",
+                    "variables": "${visibleOnVariables}",
+                    "visibleOn": "${visibleOnVariables}",
+                    "id": "u:618105d5bfad"
+                }
+            },
+            "formula": {
+                "amis": {
+                    "type": "input-formula",
                     "evalMode": false,
                     "variableMode": "tabs",
                     "variables": "${visibleOnVariables}",
