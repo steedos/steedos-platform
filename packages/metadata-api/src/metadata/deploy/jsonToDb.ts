@@ -170,10 +170,20 @@ export async function jsonToDb(steedosPackage, dbManager, session) {
     try {
         await session.withTransaction(async () => {
 
-            const topKeys = [TypeInfoKeys.Profile, TypeInfoKeys.Permissionset, TypeInfoKeys.Role, TypeInfoKeys.FlowRole, TypeInfoKeys.Object]
-            var keys = _.sortBy(_.keys(steedosPackage), function (key) {
-                return _.include(topKeys, key) ? -1 : 1
-            })
+            const topKeys: string[] = [TypeInfoKeys.Profile, TypeInfoKeys.Permissionset, TypeInfoKeys.Role, TypeInfoKeys.FlowRole, TypeInfoKeys.Object]
+            var keys = Object.keys(steedosPackage).sort((a: string, b:string) => {
+                const indexA = topKeys.indexOf(a);
+                const indexB = topKeys.indexOf(b);
+
+                // 如果a或b在topKeys中，则根据其索引排序
+                if (indexA !== -1 || indexB !== -1) {
+                    return (indexA !== -1 ? indexA : Infinity) - (indexB !== -1 ? indexB : Infinity);
+                }
+
+                // 如果a和b都不在topKeys中，维持原顺序
+                return 0;
+            });
+
 
             for (const metadataName of keys) {
                 var metatdataRecords = steedosPackage[metadataName];
@@ -187,7 +197,7 @@ export async function jsonToDb(steedosPackage, dbManager, session) {
                             var childMetadataRecords = metatdataRecord[childMetadataName];
 
                             if (childMetadataName == TypeInfoKeys.Permission) {
-                                var assistRecords = steedosPackage[TypeInfoKeys.Permissionset]
+                                var assistRecords = _.values(steedosPackage[TypeInfoKeys.Permissionset])
                                 await metatdataRecordsToDb(dbManager, childMetadataName, childMetadataRecords, metatdataRecordName, assistRecords);
                             } else {
 
