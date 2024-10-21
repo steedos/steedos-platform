@@ -320,6 +320,13 @@ jobs:
             type=semver,pattern={{version}},value=${{ env.STEEDOS_VERSION }}
             type=semver,pattern={{major}}.{{minor}},value=${{ env.STEEDOS_VERSION }}
             type=semver,pattern={{major}},value=${{ env.STEEDOS_VERSION }}
+      
+      - name: Login to Aliyun Docker
+        uses: docker/login-action@v2
+        with:
+          registry: registry.cn-shanghai.aliyuncs.com
+          username: ${{ secrets.ALIYUN_DOCKER_USERNAME }}
+          password: ${{ secrets.ALIYUN_DOCKER_PASSWORD }}
 
       - uses: docker/login-action@v1
         name: Login Docker Hub
@@ -430,6 +437,13 @@ jobs:
             type=semver,pattern={{version}},value=${{ env.STEEDOS_VERSION }}
             type=semver,pattern={{major}}.{{minor}},value=${{ env.STEEDOS_VERSION }}
             type=semver,pattern={{major}},value=${{ env.STEEDOS_VERSION }}
+
+      - name: Login to Aliyun Docker
+        uses: docker/login-action@v2
+        with:
+          registry: registry.cn-shanghai.aliyuncs.com
+          username: ${{ secrets.ALIYUN_DOCKER_USERNAME }}
+          password: ${{ secrets.ALIYUN_DOCKER_PASSWORD }}
 
       - uses: docker/login-action@v1
         name: Login Docker Hub
