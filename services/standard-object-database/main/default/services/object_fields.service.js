@@ -345,7 +345,7 @@ module.exports = {
                                 visible_on: group.visible_on,
                                 body: _.map(items, (field)=>{
                                     return {
-                                        type: `sfield-${field.type}`,
+                                        type: `sfield-${_.camelCase(field.type).toLowerCase()}`,
                                         config: Object.assign({amis: {name: field.name}}, field)
                                     }
                                 })
@@ -505,8 +505,8 @@ module.exports = {
                 }
                 // 循环需要删除的字段
                 for (const fieldName of deleteFields) {
-                    const field = _.find(dbFields, { name: fieldName })._id;
-                    try {
+                    const field = _.find(dbFields, { name: fieldName });
+                 try {
                         const id = field._id;
                         await object_fields.directDelete(id);
                         log.delete.success.push(fieldName);

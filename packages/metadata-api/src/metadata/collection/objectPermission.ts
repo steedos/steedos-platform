@@ -108,7 +108,9 @@ export async function objectPermissionsToDb(dbManager, permissions, permissionse
             var foundPermissionset = false;
             for(var i=0; i<permissionsets.length;i++){
                 if(permission.permission_set_id == permissionsets[i].name){
-                    permission.permission_set_id = permissionsets[i]._id;
+                    if(permissionsets[i]._id) {
+                        permission.permission_set_id = permissionsets[i]._id;
+                    }
                     foundPermissionset = true;
                     break;
                 }
