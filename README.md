@@ -115,7 +115,7 @@ See [Contributing Guide](/CONTRIBUTING.md) for how to run and build our platform
 
 ## Licence
 
-Steedos Platform is licensed under the MIT. Everyone can build and distribute steedos apps for free. 
+Steedos Platform is licensed under the APGL 3.0. Everyone can build and distribute steedos apps for free. 
 
 ## Keep in Contact
 
