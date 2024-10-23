@@ -197,7 +197,7 @@
                     "evalMode": false,
                     "variableMode": "tabs",
                     "variables": "${visibleOnVariables}",
-                    "visibleOn": "${visibleOnVariables}",
+                    "visibleOn": "${visibleOnVariables && (type == 'formula' || type == 'autonumber') }",
                     "id": "u:618105d5bfad"
                 }
             }

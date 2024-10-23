@@ -31,6 +31,27 @@ amis_schema: |-
                                                   "name": "package",
                                                   "id": "u:524cb8f8d888",
                                                   "required": true
+                                              },
+                                              {
+                                                  "label": "镜像源",
+                                                  "type": "input-text",
+                                                  "name": "registry",
+                                                  "id": "u:524cb8f8d666",
+                                                  "required": false,
+                                                  "options": [
+                                                        {
+                                                            "label": "淘宝源",
+                                                            "value": "https://registry.npmmirror.com"
+                                                        },
+                                                        {
+                                                            "label": "cnpm",
+                                                            "value": "https://r.cnpmjs.org"
+                                                        },
+                                                        {
+                                                            "label": "官方源",
+                                                            "value": "https://registry.npmjs.org"
+                                                        }
+                                                    ]
                                               }
                                           ],
                                           "mode": "normal",
@@ -41,7 +62,7 @@ amis_schema: |-
                                                   "&": "$$"
                                               },
                                               "dataType": "json",
-                                              "requestAdaptor": "api.data = {package: api.body.package};",
+                                              "requestAdaptor": "api.data = {package: api.body.registry ? `${api.body.package} --registry ${api.body.registry}` : api.body.package};",
                                               "headers": {
                                                   "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                                               }
