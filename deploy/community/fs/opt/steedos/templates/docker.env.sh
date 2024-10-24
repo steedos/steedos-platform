@@ -33,4 +33,6 @@ NPM_CACHE_ENABLED=true
 NPM_CACHE_FOLDER=/steedos-storage/unpkg
 NPM_CACHE_PACKAGE_CONTENT=true
 
+STEEDOS_PACKAGE_STORAGE=/steedos-storage/.steedos
+
 EOF
