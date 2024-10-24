@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-07-03 18:46:55
- * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2024-03-01 15:02:27
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-10-24 11:35:43
  * @Description: 
  */
 ; (function () {
@@ -142,7 +142,7 @@
                 if(Session.get("box") === 'draft' || Session.get("box") === 'pending'){
                     const formChange = {
                         "actionType": "custom",
-                        "script": "Session.set('instance_change', true);Session.set('instance_form_values', {instanceId: event.data.instanceId, values: JSON.parse(JSON.stringify(event.data))});Session.set('instance_next_user_recalculate', new Date().getTime())"
+                        "script": "_.each(event.data, (item, key) => {if(_.isArray(item) && item.length > 0 && !_.isString(item) && _.isObject(item)){_.each(item, (item2)=>{try{if (!item2._id) {item2._id = Amis.uuidv4()}}catch(e){console.error(e)}})}});Session.set('instance_change', true);Session.set('instance_form_values', {instanceId: event.data.instanceId, values: JSON.parse(JSON.stringify(event.data))});Session.set('instance_next_user_recalculate', new Date().getTime())"
                     }; //
                     if(formSchema.onEvent && formSchema.onEvent.change && formSchema.onEvent.change.actions){
                         formSchema.onEvent.change.actions.push(formChange)
