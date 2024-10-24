@@ -527,7 +527,7 @@ async function getAppMenus(ctx) {
         const context = await getContext(ctx)
         const appMenus = await transformAppToMenus(ctx, appConfig, mobile, userSession, context);
 
-        if(userSession.is_space_admin && appConfig._id && appConfig._id != appConfig.code){
+        if (userSession.is_space_admin && appConfig._id && appConfig.code && appConfig._id != appConfig.code) {
             appMenus.allowEditApp = true;
         }
 
