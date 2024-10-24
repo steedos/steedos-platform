@@ -47,7 +47,7 @@ module.exports = {
     },
     /** @type {Object?} Sentry configuration wrapper. */
     sentry: {
-      enabled: process.env.STEEDOS_SENTRY_ENABLED != 'false',
+      enabled: process.env.STEEDOS_SENTRY_ENABLED == 'true',
       /** @type {String} DSN given by sentry. */
       dsn: process.env.STEEDOS_SENTRY_DSN,
       /** @type {String} Name of event fired by "Event" exported in tracing. */

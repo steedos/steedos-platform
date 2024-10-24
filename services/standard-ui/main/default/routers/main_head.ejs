@@ -41,7 +41,7 @@
 
     const platform = <%- JSON.stringify(platform) %>;
 
-    if (`${STEEDOS_SENTRY_ENABLED}` != 'false') {
+    if (`${STEEDOS_SENTRY_ENABLED}` == 'true') {
         loadJs(`${ROOT_URL}/sentry/sentry.min.js`, (script)=>{
             const nodeEnv = NODE_ENV || 'development';
             const DEFAULT_DSN_JS = {
