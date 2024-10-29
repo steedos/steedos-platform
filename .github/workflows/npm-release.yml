@@ -315,6 +315,7 @@ jobs:
         with:
           images: |
             steedos/steedos-community
+            252208178451.dkr.ecr.cn-northwest-1.amazonaws.com.cn/dockerhub/steedos/steedos-community
             registry.cn-shanghai.aliyuncs.com/steedos/steedos-community
           tags: |
             type=semver,pattern={{version}},value=${{ env.STEEDOS_VERSION }}
@@ -333,6 +334,19 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+      
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_NINGXIA }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_NINGXIA }}
+          aws-region: cn-northwest-1
+
+      -
+        name: Login to ECR
+        uses: docker/login-action@v2
+        with:
+          registry: 252208178451.dkr.ecr.cn-northwest-1.amazonaws.com.cn
 
       - name: Replace Version ~2.7 to Tag
         uses: jacobtomlinson/gha-find-replace@v2
@@ -420,6 +434,7 @@ jobs:
         with:
           images: |
             steedos/steedos-enterprise
+            252208178451.dkr.ecr.cn-northwest-1.amazonaws.com.cn/dockerhub/steedos/steedos-enterprise
             registry.cn-shanghai.aliyuncs.com/steedos/steedos-enterprise
           tags: |
             type=semver,pattern={{version}},value=${{ env.STEEDOS_VERSION }}
@@ -438,6 +453,19 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_NINGXIA }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_NINGXIA }}
+          aws-region: cn-northwest-1
+
+      -
+        name: Login to ECR
+        uses: docker/login-action@v2
+        with:
+          registry: 252208178451.dkr.ecr.cn-northwest-1.amazonaws.com.cn
 
       - name: Replace Version ~2.7 to Tag
         uses: jacobtomlinson/gha-find-replace@v2
