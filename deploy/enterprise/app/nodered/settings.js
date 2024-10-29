@@ -40,6 +40,9 @@ module.exports = {
             title: "Flow Builder",
             favicon: path.join(__dirname, 'logo.png'),
         },
+        login: {
+            image: path.join(__dirname, 'flow-builder.png'),
+        },
         tours: false,
     },
     uiPort,
