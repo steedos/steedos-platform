@@ -31,11 +31,16 @@ module.exports = {
     functionGlobalContext: {
         lodash
     },
-    header: {
-        title: "Steedos Flows",
-    },
-    page: {
-        title: "Steedos Flows",
+    editorTheme: {
+        header: {
+            title: "Flow Builder",
+            image: path.join(__dirname, 'logo.png'),
+        },
+        page: {
+            title: "Flow Builder",
+            favicon: path.join(__dirname, 'logo.png'),
+        },
+        tours: false,
     },
     uiPort,
     
