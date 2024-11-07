@@ -169,6 +169,7 @@ function _sendObjectMeta(objectConfig){
             if(res){
                 // console.log('send object meta success', length);
                 broker.broadcast("$packages.statisticsActivatedPackages", {});
+                broker.emit(`translations.object.change`, {});
             }
         })
         _objectConfigs = [];
