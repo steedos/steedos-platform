@@ -30,6 +30,10 @@ export const isFieldFormulaConfigQuoted = (configA: SteedosFieldFormulaTypeConfi
     return !!configAQuoteds.length;
 }
 
+function includesAny(mainString, stringArray) {
+    return _.some(stringArray, (substr) => mainString.includes(substr));
+  }
+
 /**
  * 公式字段配置是否引用了某个对象和字段
  * @param config 公式字段配置
@@ -47,6 +51,8 @@ export const isFieldFormulaConfigQuotingObjectAndFields =(config: SteedosFieldFo
                 return quote.object_name === objectName;
             }
         });
+    }else if(config.formula){
+        return includesAny(config.formula, fieldNames);
     }
     else {
         return false;
