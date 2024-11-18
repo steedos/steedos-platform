@@ -391,6 +391,10 @@ module.exports = {
                         _.each(bodyItem.body, (field)=>{
                             if(_.startsWith(field.type, 'sfield-')){
 
+                                if(field.config){
+                                    field.config.object = object.name
+                                }
+
                                 if(field.config && field.config.amis){
                                     delete field.config.amis.name
                                     delete field.config.amis.mode
@@ -406,6 +410,9 @@ module.exports = {
                             visible_on: bodyItem.visible_on
                         })
                     }else if(_.startsWith(bodyItem.type, 'sfield-')){
+                        if(bodyItem.config){
+                            bodyItem.config.object = object.name
+                        }
                         if(bodyItem.config && bodyItem.config.amis){
                             delete bodyItem.config.amis.name
                             delete bodyItem.config.amis.mode
