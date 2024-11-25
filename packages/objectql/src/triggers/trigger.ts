@@ -2,11 +2,13 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-04-23 13:35:17
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-04-02 14:00:47
+ * @LastEditTime: 2024-11-25 10:41:20
  * @Description: 
  */
 const { NodeVM } = require('vm2');
+const _  = require('lodash');
 import { ObjectId } from "mongodb";
+import axios from 'axios';
 
 function str2function(
     contents,
@@ -21,8 +23,68 @@ function str2function(
     }
 }
 
+const sendPost = async (url, body, options)=>{
+    try {
+        return await axios.post(url, body, options);
+    } catch (error) {
+        throw new Error(`请求失败(${error.message}): ${url}`)
+    }
+}
+
+
+
+/**
+ * 
+ * 请求参数(body): {
+       objectName,
+       userId,
+       spaceId,
+       doc
+ * } 
+ * 接口返回参数结构:
+        {
+            "error": {
+                "code": "",
+                "message": "",
+            },
+            "data": {
+
+            }
+        }
+ */
+const runUrlTrigger = async (trigger, thisArg, args)=>{
+    if(!trigger.url){
+        throw new Error(`触发器「${trigger.name}」缺少URL`)
+    }
+
+    const headers = {
+        'Content-Type': 'application/json',
+    };
+
+    if(trigger.authentication_type == 'header'){
+        headers[trigger.authentication_header_key] = trigger.authentication_header_value
+    }
+
+    const { data: rsBody, status: httpStatus } = await sendPost(trigger.url, args && args.length > 0 ? args[0].params : {}, { headers });
+    if(httpStatus !== 200){
+        throw new Error(`请求失败: ${trigger.url}`)
+    }
+    let { error, data } = rsBody;
+
+    if(error && error.message){
+        throw new Error(error.message)
+    }
+    return data
+}
+
 
 export const runTriggerFunction = async (trigger, thisArg, ...args)=>{
+    
+    if(trigger.type === 'url'){
+        return await runUrlTrigger(trigger, thisArg, args)
+    }
+
+    // ----- code trigger -----
     const vm = new NodeVM({
         sandbox: {
             str2function,

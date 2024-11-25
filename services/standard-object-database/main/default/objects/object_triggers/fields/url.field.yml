@@ -1,0 +1,6 @@
+name: url
+type: url
+label: URL
+sort_no: 160
+is_wide: true
+visible_on: ${type === 'url'}

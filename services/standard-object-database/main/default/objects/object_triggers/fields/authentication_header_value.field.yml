@@ -1,0 +1,6 @@
+name: authentication_header_value
+type: text
+label: Header Value
+group: 认证
+sort_no: 190
+visible_on: ${type === 'url' && authentication_type === 'header'}

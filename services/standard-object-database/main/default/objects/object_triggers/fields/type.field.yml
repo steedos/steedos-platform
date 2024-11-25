@@ -1,0 +1,10 @@
+name: type
+label: 类型
+type: select
+options: 
+  - label: 代码
+    value: code
+  - label: 接口
+    value: url
+defaultValue: code
+sort_no: 132
