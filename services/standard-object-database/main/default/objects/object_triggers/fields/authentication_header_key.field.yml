@@ -1,0 +1,10 @@
+name: authentication_header_key
+type: text
+label: Header Name
+group: 认证
+sort_no: 180
+visible_on: ${type === 'url' && authentication_type === 'header'}
+amis: 
+  - options:
+      - label: authorization
+        value: authorization

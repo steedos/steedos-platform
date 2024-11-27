@@ -1,0 +1,12 @@
+name: authentication_type
+label: 认证类型
+type: select
+group: 认证
+options:
+  - label: 不认证
+    value: none
+  - label: Header Auth
+    value: header
+defaultValue: none
+sort_no: 170
+visible_on: ${type === 'url'}
