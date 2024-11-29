@@ -1,3 +1,5 @@
+import { oplogV2V1Converter } from './oplog_v2_converter';
+
 var Future = Npm.require('fibers/future');
 
 var PHASE = {
@@ -598,11 +600,16 @@ _.extend(OplogObserveDriver.prototype, {
         if (self._matcher.documentMatches(op.o).result)
           self._addMatching(op.o);
       } else if (op.op === 'u') {
+         // we are mapping the new oplog format on mongo 5
+        // to what we know better, $set
+        op.o = oplogV2V1Converter(op.o)
         // Is this a modifier ($set/$unset, which may require us to poll the
         // database to figure out if the whole document matches the selector) or
         // a replacement (in which case we can just directly re-evaluate the
         // selector)?
-        var isReplace = !_.has(op.o, '$set') && !_.has(op.o, '$unset');
+        // oplog format has changed on mongodb 5, we have to support both now
+        // diff is the format in Mongo 5+ (oplog v2)
+        var isReplace = !_.has(op.o, '$set') && !_.has(op.o, 'diff') && !_.has(op.o, '$unset'); 
         // If this modifier modifies something inside an EJSON custom type (ie,
         // anything with EJSON$), then we can't try to use
         // LocalCollection._modify, since that just mutates the EJSON encoding,
