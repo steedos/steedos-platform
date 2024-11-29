@@ -315,8 +315,8 @@ jobs:
         with:
           images: |
             steedos/steedos-community
-            252208178451.dkr.ecr.cn-northwest-1.amazonaws.com.cn/dockerhub/steedos/steedos-community
             registry.cn-shanghai.aliyuncs.com/steedos/steedos-community
+            252208178451.dkr.ecr.cn-northwest-1.amazonaws.com.cn/dockerhub/steedos/steedos-community
           tags: |
             type=semver,pattern={{version}},value=${{ env.STEEDOS_VERSION }}
             type=semver,pattern={{major}}.{{minor}},value=${{ env.STEEDOS_VERSION }}
@@ -434,8 +434,8 @@ jobs:
         with:
           images: |
             steedos/steedos-enterprise
-            252208178451.dkr.ecr.cn-northwest-1.amazonaws.com.cn/dockerhub/steedos/steedos-enterprise
             registry.cn-shanghai.aliyuncs.com/steedos/steedos-enterprise
+            252208178451.dkr.ecr.cn-northwest-1.amazonaws.com.cn/dockerhub/steedos/steedos-enterprise
           tags: |
             type=semver,pattern={{version}},value=${{ env.STEEDOS_VERSION }}
             type=semver,pattern={{major}}.{{minor}},value=${{ env.STEEDOS_VERSION }}
