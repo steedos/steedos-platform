@@ -12,6 +12,12 @@ fields:
     type: text
     label: Name
     required: true
+  parent:
+    type: lookup
+    label: 上级选项
+    reference_to: picklist_options
+    filters: ["picklist", "=", "${picklist}"]
+    required: false
   value:
     type: text
     label: Value
