@@ -1,13 +1,14 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 16:53:23
- * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2024-03-29 10:00:48
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-12-06 14:06:03
  * @Description: 
  */
 "use strict";
 const { getObject } = require("@steedos/objectql")
 const _ = require('underscore')
+const lodash = require('lodash');
 
 /**
  * 
@@ -46,6 +47,23 @@ function getTreeRoot(rows) {
     });
     return treeRecords;
 }
+
+function getTreeRootIds(rows) {
+    const valueField = "_id";
+    const ids = [];
+    for (var i = 0; i < rows.length; i++) {
+        const row = rows[i];
+        if (!!row["parent"]) {
+            if (!lodash.some(rows, row2 => row["parent"] == row2[valueField])){
+                ids.push(row._id);
+            }
+        } else {
+            ids.push(row._id);
+        };
+    }
+    return ids;
+}
+
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -317,6 +335,18 @@ module.exports = {
          * @returns 
          */
         async getOrganizationsRootNode(ctx) {
+
+            const orgObj = getObject('organizations');
+
+            let userFilters = null;
+
+            if(ctx.params?.filters && lodash.isString(ctx.params.filters)){
+                userFilters = JSON.parse(ctx.params.filters)
+            }
+
+            const orgs = await orgObj.find({filters: userFilters, fields: ['_id','parent', 'children']})
+            const rootIds = getTreeRootIds(orgs)
+            
             let queryFields = ctx.params?.fields || `
                 _id,
                 name,
@@ -327,10 +357,11 @@ module.exports = {
                 parent,
                 children
             `;
+            const filters = ["_id", "in", rootIds];
             let graphqlResult = await this.broker.call('api.graphql', {
               query: `
                 query {
-                  rows: organizations(filters: ${ctx.params?.filters || "[]"},sort: \"sort_no desc\") {
+                  rows: organizations(filters: ${JSON.stringify(filters)},sort: \"sort_no desc\") {
                     ${queryFields}
                   }
                 }
@@ -341,20 +372,19 @@ module.exports = {
                 }
               }
             )
-            let orgs = graphqlResult.data.rows;
-            if(ctx.params?.filters) {
-                // 搜索时按普通列表返回，不拼成tree结构
-                graphqlResult.data.rows  = _.map(orgs, function (item) {
-                    delete item.children;
-                    delete item.parent;
-                    return item;
-                });
-            }
-            else{
-                graphqlResult.data.rows = getTreeRoot(orgs);
-            }
-            graphqlResult.data.count = orgs.length;
-            return graphqlResult;
+            let rootOrgs = graphqlResult.data.rows;
+            return {
+                data: {
+                    rows: _.map(rootOrgs, (item)=>{
+                        return {
+                            ...item,
+                            defer: !!(item.children && item.children.length),
+                            __reloadTag: new Date().getTime()
+                        }
+                    }),
+                    count: orgs.length
+                }
+            };
         }
     },
 
