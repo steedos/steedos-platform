@@ -112,7 +112,7 @@ Setup.validate = (onSuccess)->
 		xhrFields: 
 			withCredentials: true
 		crossDomain: true
-		headers: headers
+		# headers: headers
 	.done ( data ) ->
 		if Meteor.userId() != data.userId
 			Accounts.connection.setUserId(data.userId);
