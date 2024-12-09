@@ -5,7 +5,7 @@
     "start": "steedos start"
   },
   "dependencies": {
-    "@builder6/mongodb-api": "0.0.1",
+    "@builder6/mongodb-api": "0.0.2",
     "@steedos-labs/analytics": "^0.1.32",
     "@steedos/service-community": "~2.7",
     "@steedos/service-enterprise": "^2.5"
