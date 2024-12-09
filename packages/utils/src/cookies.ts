@@ -14,7 +14,7 @@ function getSubdomain(host) {
 }
 
 export function setCookie(req, res, name, value, options = {domain: null, maxAge: 0, httpOnly: true, overwrite: true}) {
-  const cookies = new Cookies(req, res);
+  const cookies = new Cookies(req, res, {secure: true});
   const host = req.headers.host;
   if(host && useSubdomainCookies && psl.isValid(host)){
     const domain = getSubdomain(host);
@@ -23,13 +23,16 @@ export function setCookie(req, res, name, value, options = {domain: null, maxAge
 
   if(sameSite){
     (options as any).sameSite = sameSite;
+    if (sameSite === 'None') {
+      (options as any).secure = true;
+    }
   }
 
   cookies.set(name, value, options);
 }
 
 export function clearCookie(req, res, name, options = {domain: null, maxAge: 0, httpOnly: true, overwrite: true}) {
-  const cookies = new Cookies(req, res);
+  const cookies = new Cookies(req, res, {secure: true});
   const host = req.headers.host;
   if(host && useSubdomainCookies && psl.isValid(host)){
     const domain = getSubdomain(host);
