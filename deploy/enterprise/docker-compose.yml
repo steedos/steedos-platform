@@ -2,16 +2,28 @@ version: "3.9"
 
 services:
 
+  traefik:
+    image: traefik:v2.10
+    command:
+      - "--api.dashboard=true"
+      - "--entrypoints.web.address=:80"
+      - "--providers.docker=true"
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
   steedos-enterprise:
     image: steedos/steedos-enterprise:latest
-    container_name: steedos-enterprise
     build: 
       context: ./
       dockerfile: ./Dockerfile
-    ports:
-      - "80:80"    
-      - "443:443"  
-      - "9001:9001"  
+    deploy:
+      replicas: 2
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.all.rule=PathPrefix(`/`)"
+      - "traefik.http.services.app1.loadbalancer.server.port=80"
     environment:
       - STEEDOS_LICENSE=6e890bc491b8c1d0edfcaa717d301478e12aa60015922ff31c55db96f74947d941a7201460baba3d9c53ffefc961a2e8e91f98db286a83f47874a004a786a40ddb52c76e6a94d328ac43fd9d338806cd5bc71ed342a90cfe42e81f557690ca653ec1d8dcb906c7e0fd344feafdf5def156242caa4f52a738d37fa52f45edfd390d3e85fb7a35d25755d980eee6164f5208a1019d616e805fad737ee9a549becd710c2e642129efd58439c90c3aa5ce3665a6503590d66505ed64b909fd95a76de9e36bf46b4ad656a896e486a773c1ea1b43108ecb5e9db77ef3a311f28753f10225cb538ba04198cbbdc74b0e5dd13ba2fe024f202d8b7d00c13d6a8363d8cc8a2bf4a79c9f8387c0ae815aa57d4df63e3194c1606df34f60abf2bdf8697da93fa27e29f1f4c193960febcf46a804ee3bbf92d98effa2e6f219e2ee503afa9dfb894aa5396a0351496a0526ec710b03bb70262123c16b23d6fa67639cd80567d1f50db0df441fa707272e6d5e4f3702b7485173702cafc81a0e2bd8aa2c9cf37ff1c3dff6738b6ed4d52b3bd24d35a9fdef2ce6109e58891e222ed712fce8b10af8883256facc8e907ba5e493b6fa47f5b00956abc53e4a63448d752bb65da619d8972a639a517b22946cf43322f3fd375d6deee8519d35265f3d9960a2668c06b5737bcc6b7b2f5a7e598ed6175a4f194637dd0c43c94a71bbe5015c8cf36c,2022-0001
       - ROOT_URL=http://127.0.0.1
@@ -22,3 +34,6 @@ services:
     volumes:
       - "./steedos-storage:/steedos-storage"
   
+volumes:
+  portainer_data:
+    driver: local
