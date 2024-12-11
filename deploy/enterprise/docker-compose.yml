@@ -19,7 +19,7 @@ services:
       context: ./
       dockerfile: ./Dockerfile
     deploy:
-      replicas: 2
+      replicas: 1
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.all.rule=PathPrefix(`/`)"
@@ -30,6 +30,7 @@ services:
       - NPM_CACHE_ENABLED=true
       - NPM_CACHE_PACKAGE_CONTENT=true
       - NPM_REGISTRY_URL=https://registry.npmmirror.com
+      - STEEDOS_WIDGETS_ADDITIONAL=@steedos-widgets/liveblocks
     tty: true
     volumes:
       - "./steedos-storage:/steedos-storage"
