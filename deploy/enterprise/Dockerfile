@@ -11,11 +11,6 @@ RUN apt-get update || : && apt-get install -y \
     curl \
     build-essential 
 
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - 
-
-RUN apt-get update \
-    && apt-get install -y gnupg curl nodejs
-
 # Install MongoDB 4.4.25
 # https://www.mongodb.com/docs/v4.4/tutorial/install-mongodb-on-ubuntu/
 # https://github.com/docker-library/mongo/blob/66197d92be6eafc0a36b2570172de0a5f7a905e1/4.4/Dockerfile
@@ -47,8 +42,21 @@ RUN apt-get update \
     && apt-get remove -y git python3-pip python3-venv \
     && apt-get clean -y
 
-# yarn 
 
+# 安装 nvm 并安装 Node.js
+ENV NVM_DIR=/root/.nvm
+
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash \
+    && chmod +x "$NVM_DIR/nvm.sh" \
+    && bash -c ". $NVM_DIR/nvm.sh && nvm install 14.21.3 && nvm install 20.18.1 && nvm alias default 14.21.3"
+
+# 确保在构建过程中可用
+ENV PATH=$NVM_DIR/versions/node/v14.21.3/bin:$PATH
+
+RUN apt-get update \
+    && apt-get install -y gnupg curl nodejs
+    
+# yarn 
 RUN npm install --global yarn
 
 # platform
@@ -80,6 +88,14 @@ COPY ./app/nodered /opt/steedos/nodered
 WORKDIR /opt/steedos/nodered
 
 RUN yarn && yarn cache clean
+
+# plugins
+COPY ./app/plugins /opt/steedos/plugins
+WORKDIR /opt/steedos/plugins
+
+RUN bash -c ". $NVM_DIR/nvm.sh && nvm use 20 && npm i --production"
+
+RUN bash -c ". $NVM_DIR/nvm.sh && nvm use 14"
 
 COPY ./fs /
 
