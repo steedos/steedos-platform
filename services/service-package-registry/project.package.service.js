@@ -394,6 +394,7 @@ module.exports = {
 			async handler(){
 				const settings = this.settings;
 				const packages = settings.STEEDOS_INITIAL_PACKAGES;
+				console.log('install initial packages: ', STEEDOS_INITIAL_PACKAGES);
 				if(_.isString(packages) && packages){
 					for (const packageName of packages.split(',')) {
 						try {
@@ -430,7 +431,7 @@ module.exports = {
 								await this.installPackageFromUrl(installProps.url, installProps.version, installProps.url, null, true, null, this.broker);
 							}else{
 								//module, version, label, description, enable, broker
-								await this.installPackage(installProps.name, installProps.version, null, null, true, this.broker);
+								await this.installPackage(process.env.NPM_REGISTRY_URL ? `${installProps.name} --registry ${process.env.NPM_REGISTRY_URL}` : installProps.name, installProps.version, null, null, true, this.broker);
 							}
 						} catch (error) {
 							this.broker.logger.error(`initialPackages: ${packageName}. ${error.message}`);
