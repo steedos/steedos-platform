@@ -1,9 +1,8 @@
 {
   "name": "steedos-plugins",
   "version": "0.0.0",
-  "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@builder6/mongodb-api": "^0.1.0"
+    "@builder6/mongodb-api": "^0.1.1"
   }
 }
