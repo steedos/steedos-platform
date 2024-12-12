@@ -47,7 +47,9 @@ if (_.isEmpty(process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS)) {
 	let steedosPublicPageAsseturls = `${unpkgUrl}/@steedos-widgets/amis-object@${widgetsVersion}/dist/assets.json`;
 	if (!_.isEmpty(process.env.STEEDOS_WIDGETS_ADDITIONAL)) {
 		process.env.STEEDOS_WIDGETS_ADDITIONAL.split(',').forEach(additional => {
-			steedosPublicPageAsseturls += `,${unpkgUrl}/${additional}@${widgetsVersion}/dist/assets.json`;
+			const [packageName, specifiedVersion] = additional.split('@');
+			const versionToUse = specifiedVersion ? specifiedVersion : widgetsVersion;
+			steedosPublicPageAsseturls += `,${unpkgUrl}/${packageName}@${versionToUse}/dist/assets.json`;
 		})
 	}
 	process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS = steedosPublicPageAsseturls
