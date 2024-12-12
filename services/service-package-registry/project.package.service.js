@@ -268,8 +268,8 @@ module.exports = {
 	 */
 	methods: {
 		installPackage: {
-			async handler(module, version, label, description, enable, broker) {
-				return await loader.installPackage(broker, {module, version, label, description, enable})
+			async handler(module, version, label, description, enable, broker, registry) {
+				return await loader.installPackage(broker, {module, version, label, description, enable, registry})
             }
 		},
 		getPackageVersions: {
@@ -431,7 +431,7 @@ module.exports = {
 								await this.installPackageFromUrl(installProps.url, installProps.version, installProps.url, null, true, null, this.broker);
 							}else{
 								//module, version, label, description, enable, broker
-								await this.installPackage(process.env.NPM_REGISTRY_URL ? `${installProps.name} --registry ${process.env.NPM_REGISTRY_URL}` : installProps.name, installProps.version, null, null, true, this.broker);
+								await this.installPackage(installProps.name, installProps.version, null, null, true, this.broker, process.env.NPM_REGISTRY_URL);
 							}
 						} catch (error) {
 							this.broker.logger.error(`initialPackages: ${packageName}. ${error.message}`);

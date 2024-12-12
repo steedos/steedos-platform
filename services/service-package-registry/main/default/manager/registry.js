@@ -193,8 +193,8 @@ async function installModule(module, version, url, registry_url) {
 
         var installDir = settings.userDir || ".";
         var args = ['install','--no-audit','--no-update-notifier','--no-fund','--save','--save-prefix=~','--production',installName];
-        var yarnArgs = ['add', '-E', ...installName.split(' '), '--json']; //yarnCommand  , '--json' --registry
-        if (false && registry_url) {
+        var yarnArgs = ['add', '-E', installName, '--json']; //yarnCommand  , '--json' --registry
+        if (registry_url) {
             yarnArgs.push('--registry')
             yarnArgs.push(registry_url)
         }
