@@ -121,7 +121,7 @@ async function installModule(module, version, url, registry_url) {
     // if( check !== false){
     //     return check;
     // }
-    console.log(`install page`, module, version, url)
+    console.log('install package: ', module, version, url)
     module = module || "";
     activePromise = activePromise.then(async function() {
         //TODO: ensure module is 'safe'
