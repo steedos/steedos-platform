@@ -364,8 +364,8 @@ const enablePackage = async (packageName)=>{
     return packageInfo;
 }
 const installPackage = async (broker, options)=>{
-    let {module, version, label, description, enable} = options;
-    const packagePath = await registry.installModule(module, version);
+    let {module, version, label, description, enable, registry: registryUrl} = options;
+    const packagePath = await registry.installModule(module, version, '', registryUrl);
     if(enable){
         await loadPackage(module, packagePath);
     }else{
