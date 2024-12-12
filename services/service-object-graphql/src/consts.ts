@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-20 19:02:47
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-06-06 11:02:35
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-12-12 16:10:21
  * @Description: 
  */
 
@@ -27,4 +27,4 @@ export const GRAPHQL_ACTION_PREFIX = 'graphql_';
 export const PERMISSIONS_PREFIX = '_permissions';
 export const OBJECT_FIELD_TYPE = '__object';
 export const GRID_FIELD_TYPE = '__grid';
-export const QUERY_DOCS_TOP = 5000;
+export const QUERY_DOCS_TOP = 10000;
