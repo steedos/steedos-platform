@@ -82,10 +82,10 @@ module.exports = {
 				steedosConfig.setTenant({ enable_create_tenant: true, enable_register: true });
 			}
 			// 工作区未初始化时，才初始化软件包
-			const allowInit = await this.allowInit(records);
-			if (!allowInit) {
-				return
-			}
+			// const allowInit = await this.allowInit(records);
+			// if (!allowInit) {
+			// 	return
+			// }
 			try {
 				await ctx.broker.call('@steedos/service-project.initialPackages', {}, {});
 			} catch (error) {

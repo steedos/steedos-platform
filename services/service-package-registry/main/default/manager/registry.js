@@ -121,7 +121,7 @@ async function installModule(module, version, url, registry_url) {
     // if( check !== false){
     //     return check;
     // }
-    // console.log(`installModule`, module,version,url)
+    console.log(`install page`, module, version, url)
     module = module || "";
     activePromise = activePromise.then(async function() {
         //TODO: ensure module is 'safe'
@@ -193,7 +193,7 @@ async function installModule(module, version, url, registry_url) {
 
         var installDir = settings.userDir || ".";
         var args = ['install','--no-audit','--no-update-notifier','--no-fund','--save','--save-prefix=~','--production',installName];
-        var yarnArgs = ['add', '-E', installName, '--json']; //yarnCommand  , '--json' --registry
+        var yarnArgs = ['add', '-E', ...installName.split(' '), '--json']; //yarnCommand  , '--json' --registry
         if (false && registry_url) {
             yarnArgs.push('--registry')
             yarnArgs.push(registry_url)
