@@ -47,8 +47,15 @@ if (_.isEmpty(process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS)) {
 	let steedosPublicPageAsseturls = `${unpkgUrl}/@steedos-widgets/amis-object@${widgetsVersion}/dist/assets.json`;
 	if (!_.isEmpty(process.env.STEEDOS_WIDGETS_ADDITIONAL)) {
 		process.env.STEEDOS_WIDGETS_ADDITIONAL.split(',').forEach(additional => {
-			const [packageName, specifiedVersion] = additional.split('@');
-			const versionToUse = specifiedVersion ? specifiedVersion : widgetsVersion;
+			const lastAtIndex = additional.lastIndexOf('@');
+            let packageName = additional;
+            let versionToUse = widgetsVersion;
+
+            // 只有当 '@' 不在字符串开头（即大于0的位置）才视为存在版本信息
+            if (lastAtIndex > 0) {
+                packageName = additional.substring(0, lastAtIndex);
+                versionToUse = additional.substring(lastAtIndex + 1) || widgetsVersion;
+            }
 			steedosPublicPageAsseturls += `,${unpkgUrl}/${packageName}@${versionToUse}/dist/assets.json`;
 		})
 	}
