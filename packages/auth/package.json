@@ -1,7 +1,7 @@
 {
   "name": "@steedos/auth",
   "private": false,
-  "version": "2.7.15-beta.10",
+  "version": "2.7.15-beta.12",
   "main": "lib/index.js",
   "scripts": {
     "watch": "tsc --watch",
@@ -13,9 +13,9 @@
     "access": "public"
   },
   "dependencies": {
-    "@steedos/cachers": "2.7.15-beta.10",
-    "@steedos/objectql": "2.7.15-beta.10",
-    "@steedos/utils": "2.7.15-beta.10",
+    "@steedos/cachers": "2.7.15-beta.12",
+    "@steedos/objectql": "2.7.15-beta.12",
+    "@steedos/utils": "2.7.15-beta.12",
     "bcryptjs": "^2.4.3",
     "cookies": "^0.8.0",
     "express": "^4.16.4",
@@ -27,5 +27,5 @@
   "devDependencies": {
     "typescript": "4.6.3"
   },
-  "gitHead": "d24d322d293794dc5cb354b51fb23e781e65b509"
+  "gitHead": "787e6681e92322380c98159850b310b851e3841e"
 }
