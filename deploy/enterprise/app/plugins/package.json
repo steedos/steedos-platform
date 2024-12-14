@@ -3,6 +3,6 @@
   "version": "0.0.0",
   "license": "MIT",
   "dependencies": {
-    "@builder6/mongodb-api": "^0.1.1"
+    "@builder6/mongodb-api": "^0.1.3"
   }
 }
