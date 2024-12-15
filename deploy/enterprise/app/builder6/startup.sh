@@ -13,7 +13,7 @@ if [ -z "$NODE_PATH" ]; then
 fi
 
 # 切换到工作目录
-cd /opt/steedos/plugins || exit
+cd /opt/steedos/builder6 || exit
 
 # 使用 Node.js 14 运行应用
-exec "$NODE_PATH" ./node_modules/@builder6/mongodb-api/dist/main.js
+exec "$NODE_PATH" ./node_modules/@builder6/server/dist/b6.server.js -u "$STEEDOS_STORAGE_DIR/builder6"

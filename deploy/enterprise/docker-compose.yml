@@ -31,6 +31,9 @@ services:
       - NPM_CACHE_PACKAGE_CONTENT=true
       - NPM_REGISTRY_URL=https://registry.npmmirror.com
       - STEEDOS_WIDGETS_ADDITIONAL=@steedos-widgets/liveblocks
+      - B6_PLUGIN_PACKAGES=@builder6/node-red,lodash
+      - B6_PLUGIN_SERVICES=@builder6/node-red
+      - B6_PLUGIN_NPMRC=registry=https://registry.npmmirror.com
     tty: true
     volumes:
       - "./steedos-storage:/steedos-storage"
