@@ -121,7 +121,7 @@ async function installModule(module, version, url, registry_url) {
     // if( check !== false){
     //     return check;
     // }
-    console.log('install package: ', module, version, url)
+    console.log('install package: ', module, version, url, registry_url)
     module = module || "";
     activePromise = activePromise.then(async function() {
         //TODO: ensure module is 'safe'
@@ -198,6 +198,7 @@ async function installModule(module, version, url, registry_url) {
             yarnArgs.push('--registry')
             yarnArgs.push(registry_url)
         }
+        console.log('command run:', yarnCommand, yarnArgs.join(' '))
         return exec.run(yarnCommand,yarnArgs,{
             cwd: installDir
         }, true).then(result => {

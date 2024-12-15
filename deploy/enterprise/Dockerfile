@@ -89,9 +89,9 @@ WORKDIR /opt/steedos/nodered
 
 RUN yarn && yarn cache clean
 
-# plugins
-COPY ./app/plugins /opt/steedos/plugins
-WORKDIR /opt/steedos/plugins
+# builder6
+COPY ./app/builder6 /opt/steedos/builder6
+WORKDIR /opt/steedos/builder6
 
 RUN bash -c ". $NVM_DIR/nvm.sh && nvm use 20 && npm i --production"
 

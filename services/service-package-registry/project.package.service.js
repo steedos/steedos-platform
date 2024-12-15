@@ -394,8 +394,8 @@ module.exports = {
 			async handler(){
 				const settings = this.settings;
 				const packages = settings.STEEDOS_INITIAL_PACKAGES;
-				console.log('install initial packages: ', packages);
 				if(_.isString(packages) && packages){
+					console.log('install initial packages: ', packages);
 					for (const packageName of packages.split(',')) {
 						try {
 							const parsed = npa(packageName);

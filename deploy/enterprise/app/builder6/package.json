@@ -1,8 +1,8 @@
 {
-  "name": "steedos-plugins",
+  "name": "builder6-server",
   "version": "0.0.0",
   "license": "MIT",
   "dependencies": {
-    "@builder6/mongodb-api": "^0.1.3"
+    "@builder6/server": "^0.2.3"
   }
 }
