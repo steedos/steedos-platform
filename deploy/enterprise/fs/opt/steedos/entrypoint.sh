@@ -242,7 +242,7 @@ configure_supervisord() {
   cp -f "$supervisord_conf_source"/steedos.conf "$SUPERVISORD_CONF_TARGET"
   cp -f "$supervisord_conf_source"/unpkg.conf "$SUPERVISORD_CONF_TARGET"
   cp -f "$supervisord_conf_source"/nodered.conf "$SUPERVISORD_CONF_TARGET"
-  cp -f "$supervisord_conf_source"/api.conf "$SUPERVISORD_CONF_TARGET"
+  cp -f "$supervisord_conf_source"/builder6.conf "$SUPERVISORD_CONF_TARGET"
 
   # Disable services based on configuration
   if [[ -z "${DYNO}" ]]; then
@@ -304,12 +304,13 @@ fi
 
 
 mkdir -p /steedos-storage/unpkg
+mkdir -p /steedos-storage/builder6
 
 # Ensure the restore path exists in the container, so an archive can be copied to it, if need be.
 mkdir -p /steedos-storage/data/{backup,restore,nodered,unpkg}
 
 # Create sub-directory to store services log in the container mounting folder
-mkdir -p /steedos-storage/logs/{supervisor,steedos,cron,mongodb,redis,nginx,unpkg,nodered,api}
+mkdir -p /steedos-storage/logs/{supervisor,steedos,cron,mongodb,redis,nginx,unpkg,nodered,builder6}
 
 configure_supervisord
 
