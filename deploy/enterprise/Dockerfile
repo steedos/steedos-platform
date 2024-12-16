@@ -9,6 +9,7 @@ ENV TZ=Etc/UTC
 RUN apt-get update || : && apt-get install -y \
     python \
     curl \
+    jq \
     build-essential 
 
 # Install MongoDB 4.4.25
