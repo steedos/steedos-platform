@@ -40,4 +40,4 @@ fi
 
 
 # 使用 Node.js 20 运行应用
-exec "$NODEJS_DIR" ./node_modules/@builder6/server/dist/b6.server.js -u "$STEEDOS_STORAGE_DIR"/builder6
+exec "$NODEJS_DIR" ./node_modules/@builder6/server/dist/b6.server.js -u /opt/steedos/builder6
