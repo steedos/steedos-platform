@@ -3,6 +3,6 @@
   "version": "0.0.0",
   "license": "MIT",
   "dependencies": {
-    "@builder6/server": "^0.3.6"
+    "@builder6/server": "^0.5.0"
   }
 }
