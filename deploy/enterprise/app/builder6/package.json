@@ -3,10 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "private": true,
-  "workspaces": [
-    "plugins"
-  ],
   "dependencies": {
-    "@builder6/server": "^0.5.0"
+    "@builder6/server": "^0.5.2"
   }
 }
