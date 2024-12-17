@@ -5,9 +5,9 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
 # 获取 Node.js 20 的实际路径
-NODEJS_DIR=$(nvm which 20)
+NODE_PATH=$(nvm which 20)
 
-if [ -z "$NODEJS_DIR" ]; then
+if [ -z "$NODE_PATH" ]; then
     echo "Error: Node.js 20 is not installed. Please install it with nvm."
     exit 1
 fi
@@ -40,4 +40,4 @@ fi
 
 
 # 使用 Node.js 20 运行应用
-exec "$NODEJS_DIR" ./node_modules/@builder6/server/dist/b6.server.js -u /opt/steedos/builder6
+nvm exec 20  "$NODE_PATH" ./node_modules/@builder6/server/dist/b6.server.js -u /opt/steedos/builder6
