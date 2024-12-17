@@ -1,0 +1,9 @@
+{
+    "name": "builder6-plugins",
+    "version": "0.0.0",
+    "license": "MIT",
+    "private": true,
+    "dependencies": {
+    }
+  }
+  
