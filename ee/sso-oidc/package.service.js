@@ -38,7 +38,8 @@ module.exports = {
         STEEDOS_IDENTITY_OIDC_CLIENT_SECRET: process.env.STEEDOS_IDENTITY_OIDC_CLIENT_SECRET,
         STEEDOS_IDENTITY_OIDC_NAME: process.env.STEEDOS_IDENTITY_OIDC_NAME || 'Steedos',
         STEEDOS_IDENTITY_OIDC_LABEL: process.env.STEEDOS_IDENTITY_OIDC_LABEL || 'Steedos ID',
-        STEEDOS_IDENTITY_OIDC_LOGO: process.env.STEEDOS_IDENTITY_OIDC_LOGO || '/images/logo.png'
+        STEEDOS_IDENTITY_OIDC_LOGO: process.env.STEEDOS_IDENTITY_OIDC_LOGO || '/images/logo.png',
+        STEEDOS_IDENTITY_OIDC_URL: process.env.STEEDOS_IDENTITY_OIDC_URL || '/api/global/auth/oidc/config'
     },
 
     /**
@@ -98,7 +99,7 @@ module.exports = {
                                 name: settings.STEEDOS_IDENTITY_OIDC_NAME,
                                 label: settings.STEEDOS_IDENTITY_OIDC_LABEL,
                                 logo: settings.STEEDOS_IDENTITY_OIDC_LOGO,
-                                url: '/api/global/auth/oidc/config'
+                                url: settings.STEEDOS_IDENTITY_OIDC_URL
                             }
                         }
                     });
