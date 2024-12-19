@@ -94,9 +94,7 @@ RUN yarn && yarn cache clean
 COPY ./app/builder6 /opt/steedos/builder6
 WORKDIR /opt/steedos/builder6
 
-RUN bash -c ". $NVM_DIR/nvm.sh && nvm use 20 && npm i --production"
-
-RUN bash -c ". $NVM_DIR/nvm.sh && nvm use 14"
+RUN bash -c ". $NVM_DIR/nvm.sh && nvm exec 20 npm i --production"
 
 COPY ./fs /
 

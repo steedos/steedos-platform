@@ -165,6 +165,19 @@ fi
     alias /opt/steedos/info.json;
   }
 
+  location /b6 {
+    proxy_http_version       1.1;
+    proxy_buffering          off;
+    proxy_max_temp_file_size 0;
+    proxy_redirect           off;
+    proxy_set_header  Host              \$http_host/b6;
+    proxy_set_header  X-Forwarded-For   \$proxy_add_x_forwarded_for;
+    proxy_set_header  X-Forwarded-Proto \$origin_scheme;
+    proxy_set_header  X-Forwarded-Host  \$origin_host;
+    proxy_set_header  Connection        "";
+    proxy_pass http://localhost:5100/b6;
+  }
+
   location /api/v6 {
     proxy_http_version       1.1;
     proxy_buffering          off;
