@@ -40,4 +40,4 @@ fi
 
 
 # 使用 Node.js 20 运行应用
-nvm exec 20  "$NODE_PATH" ./node_modules/@builder6/server/dist/b6.server.js -u /opt/steedos/builder6
+nvm run 20  ./node_modules/@builder6/server/dist/main.js 
