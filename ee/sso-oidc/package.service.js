@@ -39,7 +39,6 @@ module.exports = {
         STEEDOS_IDENTITY_OIDC_NAME: process.env.STEEDOS_IDENTITY_OIDC_NAME || 'Steedos',
         STEEDOS_IDENTITY_OIDC_LABEL: process.env.STEEDOS_IDENTITY_OIDC_LABEL || 'Steedos ID',
         STEEDOS_IDENTITY_OIDC_LOGO: process.env.STEEDOS_IDENTITY_OIDC_LOGO || '/images/logo.png',
-        STEEDOS_IDENTITY_OIDC_URL: process.env.STEEDOS_IDENTITY_OIDC_URL || '/api/global/auth/oidc/config'
     },
 
     /**
@@ -88,7 +87,7 @@ module.exports = {
             // 检查环境变量
             const settings = this.settings;
 
-            if (settings.STEEDOS_IDENTITY_OIDC_CONFIG_URL && settings.STEEDOS_IDENTITY_OIDC_CLIENT_ID) {
+            if (settings.STEEDOS_IDENTITY_OIDC_CONFIG_URL) {
 
                 authController.oidcStrategyFactory().then((strategy)=>{
                     passport.use("oidc", strategy);
@@ -99,13 +98,33 @@ module.exports = {
                                 name: settings.STEEDOS_IDENTITY_OIDC_NAME,
                                 label: settings.STEEDOS_IDENTITY_OIDC_LABEL,
                                 logo: settings.STEEDOS_IDENTITY_OIDC_LOGO,
-                                url: settings.STEEDOS_IDENTITY_OIDC_URL
+                                url: process.env.STEEDOS_IDENTITY_OIDC_URL || '/api/global/auth/oidc/config'
+                            },
+                            oidc_v6: {
+                                name: process.env.B6_OIDC_NAME,
+                                label: process.env.B6_OIDC_LABEL,
+                                logo: process.env.B6_OIDC_LOGO,
+                                url: process.env.B6_OIDC_URL || '/api/v6/oidc/default/login'
                             }
                         }
                     });
                 }).catch(err=>{
                     this.setError(err);
                 })
+            }
+
+            if (process.env.B6_OIDC_ENABLED) {
+                objectql.getSteedosConfig().setTenant({
+                    disabled_account_register: true,
+                    sso_providers: {
+                        oidc: {
+                            name: process.env.B6_OIDC_NAME,
+                            label: process.env.B6_OIDC_LABEL,
+                            logo: process.env.B6_OIDC_LOGO,
+                            url: process.env.B6_OIDC_URL || '/api/v6/oidc/default/login'
+                        }
+                    }
+                });
             }
 
             
