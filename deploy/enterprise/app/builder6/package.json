@@ -4,6 +4,6 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@builder6/server": "^0.7.4"
+    "@builder6/server": "^0.7.8"
   }
 }

@@ -31,18 +31,18 @@ services:
       - NPM_CACHE_PACKAGE_CONTENT=true
       - NPM_REGISTRY_URL=https://registry.npmmirror.com
       - STEEDOS_WIDGETS_ADDITIONAL=@steedos-widgets/liveblocks@6.3.11-beta.20
-      - B6_SERVER_VERSION=^0.7.3
+      - B6_SERVER_VERSION=^0.7.7
       - B6_PLUGIN_PACKAGES=@builder6/node-red@^0.7.2,lodash
       - B6_PLUGIN_SERVICES=@builder6/node-red
       - B6_PLUGIN_MODULES=@builder6/node-red
-      - STEEDOS_IDENTITY_OIDC_ENABLED=true
-      - STEEDOS_IDENTITY_OIDC_ISSUER=https://id.steedos.cn/realms/master
-      - STEEDOS_IDENTITY_OIDC_CONFIG_URL=https://id.steedos.cn/realms/master/.well-known/openid-configuration
-      - STEEDOS_IDENTITY_OIDC_CLIENT_ID=steedos-oidc-public
-      - STEEDOS_IDENTITY_OIDC_CLIENT_SECRET=none
-      - STEEDOS_IDENTITY_OIDC_NAME=Steedos ID
-      - STEEDOS_IDENTITY_OIDC_LABEL=Steedos ID
-      - STEEDOS_IDENTITY_OIDC_URL=/api/v6/oidc/default/login
+      - B6_OIDC_ENABLED=true
+      - B6_OIDC_ISSUER=https://id.steedos.cn/realms/master
+      - B6_OIDC_CLIENT_ID=steedos-oidc-public
+      - B6_OIDC_CLIENT_SECRET=none
+      - B6_OIDC_NAME=Steedos ID
+      - B6_OIDC_LABEL=Steedos ID
+      - B6_OIDC_ICON=https://www.steedos.com/favicon.png
+
     tty: true
     volumes:
       - "./steedos-storage:/steedos-storage"
