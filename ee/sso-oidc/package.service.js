@@ -99,12 +99,6 @@ module.exports = {
                                 label: settings.STEEDOS_IDENTITY_OIDC_LABEL,
                                 logo: settings.STEEDOS_IDENTITY_OIDC_LOGO,
                                 url: process.env.STEEDOS_IDENTITY_OIDC_URL || '/api/global/auth/oidc/config'
-                            },
-                            oidc_v6: {
-                                name: process.env.B6_OIDC_NAME,
-                                label: process.env.B6_OIDC_LABEL,
-                                logo: process.env.B6_OIDC_LOGO,
-                                url: process.env.B6_OIDC_URL || '/api/v6/oidc/default/login'
                             }
                         }
                     });
@@ -113,21 +107,6 @@ module.exports = {
                 })
             }
 
-            if (process.env.B6_OIDC_ENABLED) {
-                objectql.getSteedosConfig().setTenant({
-                    disabled_account_register: true,
-                    sso_providers: {
-                        oidc: {
-                            name: process.env.B6_OIDC_NAME,
-                            label: process.env.B6_OIDC_LABEL,
-                            logo: process.env.B6_OIDC_LOGO,
-                            url: process.env.B6_OIDC_URL || '/api/v6/oidc/default/login'
-                        }
-                    }
-                });
-            }
-
-            
         } catch (error) {
             this.setError(error);
         }

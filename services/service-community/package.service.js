@@ -9,6 +9,7 @@
 const project = require('./package.json');
 const serviceName = project.name;
 const validator = require('validator');
+const objectql = require('@steedos/objectql');
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * 软件包服务启动后也需要抛出事件。
@@ -53,6 +54,24 @@ module.exports = {
 	 */
 	events: {
 
+        "steedos-server.started": {
+            async handler() {
+                if (process.env.B6_OIDC_ENABLED) {
+                    objectql.getSteedosConfig().setTenant({
+                        disabled_account_register: true,
+                        sso_providers: {
+                            oidc: {
+                                name: process.env.B6_OIDC_NAME,
+                                label: process.env.B6_OIDC_LABEL,
+                                logo: process.env.B6_OIDC_LOGO,
+                                url: process.env.B6_OIDC_URL || '/api/v6/oidc/default/login'
+                            }
+                        }
+                    });
+                }
+
+            }
+        },
 	},
 
 	/**
