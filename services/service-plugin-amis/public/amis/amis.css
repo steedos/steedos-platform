@@ -1,4 +1,8 @@
 
+:root{
+    --Toast-paddingY: 10px;
+    --Toast-paddingX: 16px;
+}
 
 /* .amis-routes-wrapper{
     width: 100%;
