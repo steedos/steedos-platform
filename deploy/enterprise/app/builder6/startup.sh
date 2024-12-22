@@ -32,7 +32,7 @@ else
     if [ "$B6_SERVER_VERSION" != "$B6_SERVER_VERSION_INSTALLED" ]; then
         echo "B6_SERVER_VERSION mismatch, installed: @builder6/server@$B6_SERVER_VERSION_INSTALLED"
         echo "Install new version @builder6/server@$B6_SERVER_VERSION"
-        nvm exec 20 npm install @builder6/server@"$B6_SERVER_VERSION" --omit=dev --no-audit --no-update-notifier --no-fund
+        nvm exec 20 npm install @builder6/server@"$B6_SERVER_VERSION" --omit=dev --no-audit --no-update-notifier --no-fund --save-exact --verbose
     else
         echo "Version match: B6_SERVER_VERSION=$B6_SERVER_VERSION"
     fi
