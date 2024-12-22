@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-files",
-  "version": "2.7.15-beta.22",
+  "version": "2.7.15-beta.23",
   "main": "package.service.js",
   "scripts": {},
   "license": "MIT",
@@ -9,7 +9,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@steedos/utils": "2.7.15-beta.22",
+    "@steedos/utils": "2.7.15-beta.23",
     "aws-sdk": "2.0.23",
     "file-type": "16.5.4",
     "formidable": "2.0.1",
@@ -17,5 +17,5 @@
     "mkdirp": "^1.0.4",
     "moment": "^2.29.1"
   },
-  "gitHead": "f827efacbb0caf9f75ff07708e6f0295a7d1e235"
+  "gitHead": "4d8c5443c8b6e874ab12f8d5d82a20f5fd51d9b7"
 }
