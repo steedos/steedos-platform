@@ -348,7 +348,7 @@ export class SteedosMongoDriver implements SteedosDriver {
         const options = {$set: {}, $unset: {}};
         const keys = _.keys(data);
         _.each(keys, function(key){
-            if(_.include(['$inc','$min','$max','$mul', '$push'], key)){
+            if(_.include(['$inc','$min','$max','$mul', '$push', '$addToSet'], key)){
                 options[key] = data[key];
             }else{
                 if (null === data[key]) {

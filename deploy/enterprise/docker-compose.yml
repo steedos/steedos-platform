@@ -31,8 +31,8 @@ services:
       - NPM_CACHE_PACKAGE_CONTENT=true
       - NPM_REGISTRY_URL=https://registry.npmmirror.com
       - STEEDOS_WIDGETS_ADDITIONAL=@steedos-widgets/liveblocks@6.3.11-beta.20
-      - B6_SERVER_VERSION=^0.7.7
-      - B6_PLUGIN_PACKAGES=@builder6/node-red@^0.7.2,lodash
+      - B6_SERVER_VERSION=0.9.2
+      - B6_PLUGIN_PACKAGES=@builder6/node-red@,lodash
       - B6_PLUGIN_SERVICES=@builder6/node-red
       - B6_PLUGIN_MODULES=@builder6/node-red
       - B6_OIDC_ENABLED=true
