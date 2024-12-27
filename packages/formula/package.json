@@ -1,6 +1,6 @@
 {
   "name": "@steedos/formula",
-  "version": "2.7.16-beta.1",
+  "version": "2.7.16-beta.2",
   "description": "Salesforce Formula Parser",
   "main": "lib/formulon.js",
   "files": [
@@ -46,5 +46,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "0dd8f2b45a25260387a8c3fb96e95ab33edc5ca1"
+  "gitHead": "7e3d092927b57c616ac2751bfbef8b8e032ece46"
 }
