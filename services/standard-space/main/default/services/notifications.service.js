@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-11 10:54:51
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-08-17 15:06:54
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-12-30 17:37:52
  * @Description: 发送通知服务
  */
 "use strict";
@@ -73,7 +73,8 @@ module.exports = {
                 },
             },
             async handler(ctx) {
-                this.broker.logger.info('[service][notifications]===>', 'add', ctx.params)
+                const { from, to, message } = ctx.params;
+                this.broker.emit('notifications.add', {from, to, message})
                 return Fiber(function () {
                     Creator.addNotifications(
                         ctx.params.message,
