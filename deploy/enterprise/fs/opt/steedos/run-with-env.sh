@@ -12,6 +12,10 @@ set +o allexport
 #   export STEEDOS_UNPKG_URL=/unpkg
 # fi
 
+if [[ "${STEEDOS_UNPKG_URL}" == /unpkg* ]] && [[ ! -z "${STEEDOS_LICENSE}" ]]; then
+  export STEEDOS_UNPKG_ENABLED=true
+fi
+
 if [[ -z "${STEEDOS_STORAGE_DIR}" ]]; then
   export STEEDOS_STORAGE_DIR=/steedos-storage/
 fi
