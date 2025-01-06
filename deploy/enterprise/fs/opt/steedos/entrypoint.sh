@@ -15,6 +15,14 @@ init_env_file() {
   TEMPLATES_PATH="/opt/steedos/templates"
 
   mkdir -p "$CONF_PATH"
+
+  if [[ "${STEEDOS_UNPKG_URL}" == /unpkg* ]]; then
+    export STEEDOS_UNPKG_ENABLED=true
+  else
+    export STEEDOS_UNPKG_ENABLED=false
+  fi
+
+
   # Build an env file with current env variables. We single-quote the values, as well as escaping any single-quote characters.
   printenv | grep -E '^STEEDOS_|^B6_|^MONGO_|ROOT_URL|CACHER|TRANSPORTER|PORT|NODE_ENV' | sed "s/'/'\\\''/g; s/=/='/; s/$/'/" > "$CONF_PATH/pre-define.env"
 
