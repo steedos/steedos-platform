@@ -533,7 +533,7 @@ class Login extends React.Component {
                 <FormattedMessage
                   id='accounts.no_account'
                   defaultMessage='No Account?'
-                />
+                />&nbsp;
                 <button type="button" onClick={this.goSignup}
                   className="font-medium text-blue-600 hover:text-blue-500 focus:outline-none hover:underline transition ease-in-out duration-150">
                   <FormattedMessage

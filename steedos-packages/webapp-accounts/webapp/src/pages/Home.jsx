@@ -36,7 +36,8 @@ class Home extends React.PureComponent {
             });
             return
           }else{
-            this.goHome();
+            if (process.env.NODE_ENV == 'production')
+              this.goHome();
             return
           }
         }
