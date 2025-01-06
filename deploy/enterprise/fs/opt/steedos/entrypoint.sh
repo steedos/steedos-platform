@@ -23,7 +23,7 @@ init_env_file() {
   fi
 
   if [ -z "${STEEDOS_NODERED_ENABLED}" ]; then
-    export STEEDOS_NODERED_ENABLED=false
+    export STEEDOS_NODERED_ENABLED=true
   fi
 
 
