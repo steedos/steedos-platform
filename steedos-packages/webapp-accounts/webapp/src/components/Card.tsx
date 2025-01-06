@@ -31,7 +31,7 @@ class Card extends React.Component {
   { platform.is_oem != true && <div className="absolute bottom-0 left-0 right-0 text-center m-2 text-gray-500 text-sm">
     <FormattedMessage
       id='accounts.copyright'
-      defaultMessage='© 2023 Steedos Inc.'
+      defaultMessage='© 2025 Steedos Inc.'
     /> 
     <span className="ml-1 mr-1"> | </span>
     <a className="font-medium text-blue-600 hover:text-blue-500 focus:outline-none hover:underline transition ease-in-out duration-150"
