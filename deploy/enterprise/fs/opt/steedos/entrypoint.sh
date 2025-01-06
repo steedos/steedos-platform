@@ -22,6 +22,10 @@ init_env_file() {
     export STEEDOS_UNPKG_ENABLED=false
   fi
 
+  if [ -z "${STEEDOS_NODERED_ENABLED}" ]; then
+    export STEEDOS_NODERED_ENABLED=false
+  fi
+
 
   # Build an env file with current env variables. We single-quote the values, as well as escaping any single-quote characters.
   printenv | grep -E '^STEEDOS_|^B6_|^MONGO_|ROOT_URL|CACHER|TRANSPORTER|PORT|NODE_ENV' | sed "s/'/'\\\''/g; s/=/='/; s/$/'/" > "$CONF_PATH/pre-define.env"
