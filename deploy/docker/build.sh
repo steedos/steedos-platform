@@ -1,1 +1,0 @@
-docker build -t steedos/steedos-community:2.5  .
