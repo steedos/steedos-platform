@@ -305,6 +305,15 @@
                       }
                     }
                     return config;
+                },
+                responseAdaptor: function(api, payload, query, request, response){
+                  if(payload.statusCode === 500 && payload.message){
+                    payload = {
+                      "status": payload.statusCode,
+                      "msg": payload.message
+                    }
+                  }
+                  return payload;
                 }
             };
             // 已弃用
