@@ -114,12 +114,13 @@ export async function auth(request: Request, response: Response): Promise<any> {
   let cookies = new Cookies(request, response);
   let authToken: any =
     request.headers["x-auth-token"] || (cookies.get("X-Auth-Token") || "").replace(/"/g, "");
-    let spaceToken = (cookies.get("X-Space-Token") || "").replace(/"/g, "");
+  let spaceToken = (cookies.get("X-Space-Token") || "").replace(/"/g, "");
   let authorization = request.headers.authorization;
   let spaceId =
     (request.params ? request.params.spaceId : null) ||
     (request.query ? request.query.space_id : null) ||
-    request.headers["x-space-id"];
+    request.headers["x-space-id"] ||
+    cookies.get("X-Space-Id");
   if (authorization && authorization.split(" ")[0] == "Bearer") {
     let spaceAuthToken = authorization.split(" ")[1];
     if (isAPIKey(spaceAuthToken)) {
@@ -127,7 +128,7 @@ export async function auth(request: Request, response: Response): Promise<any> {
     } else {
       const splitSpaceId = spaceAuthToken.split(",")[0];
       const splitAuthtoken = spaceAuthToken.split(",")[1];
-      if (!spaceId && splitSpaceId) {
+      if (splitSpaceId) {
         spaceId = splitSpaceId;
       }
       if (splitAuthtoken) {

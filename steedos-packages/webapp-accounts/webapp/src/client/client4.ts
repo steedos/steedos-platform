@@ -46,6 +46,7 @@ export default class Client4 {
     defaultHeaders: {[x: string]: string} = {
         'Content-Type': 'application/json'
     };
+    spaceId = '';
     userId = '';
     diagnosticId = '';
     includeCookies = true;
@@ -84,6 +85,10 @@ export default class Client4 {
         this.userAgent = userAgent;
     }
 
+    getSpaceToken() {
+        return `${this.spaceId},${this.token}`;
+    }
+
     getToken() {
         return this.token;
     }
@@ -106,6 +111,10 @@ export default class Client4 {
 
     setIncludeCookies(include: boolean) {
         this.includeCookies = include;
+    }
+
+    setSpaceId(spaceId: string) {
+        this.spaceId = spaceId;
     }
 
     setUserId(userId: string) {
@@ -320,6 +329,18 @@ export default class Client4 {
         return this.doFetch<Space[]>(
             `${this.getAccountsRoute()}/user/spaces`,
             {method: 'get'},
+        );
+    };
+
+    validate = async (spaceId) => {
+        return await this.doFetch<UserProfile>(
+            `${this.getBaseRoute()}/api/v4/users/validate`,
+            {
+                method: 'post',
+                headers: {
+                    'Authorization': `Bearer ${spaceId},${this.token}`,
+                }
+            },
         );
     };
 

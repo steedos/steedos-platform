@@ -20,6 +20,7 @@ export function selectSpace(spaceId?: string | null): ActionFunc {
     if (!userId)
       return {data: false};
     let selectedSpaceId = spaceId;
+    // Client4.setSpaceId(selectedSpaceId);
     
     if (!selectedSpaceId)
       selectedSpaceId = LocalStorageStore.getPreviousSpaceId(userId);

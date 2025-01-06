@@ -9,6 +9,7 @@ import Card from '../components/Card';
 import Logo from '../components/Logo';
 import Navbar from '../components/Navbar';
 import Background from '../components/Background';
+import {Client4} from '../client';
 
 import { getCurrentUser } from '../selectors/entities/users';
 import { getSpaceCount, getCurrentSpace, getSpaces, getMySpaces } from '../selectors/entities/spaces';
@@ -46,13 +47,19 @@ class SelectSpace extends React.PureComponent {
     })
   }
 
-  handleSpaceClick = (space) => {
+  handleSpaceClick = async (space) => {
     if(space) {
-      this.props.actions.selectSpace(space._id);
-      hashHistory.push({
-        pathname: `/home/${space._id}`,
-        search: this.props.location.search
-      })
+      try {
+        const result = await Client4.validate(space._id);
+        this.props.actions.selectSpace(space._id);
+        hashHistory.push({
+          pathname: `/home/${space._id}`,
+          search: this.props.location.search
+        })
+      } catch (error) {
+        console.log(error);
+        return {data: false};
+      }
     }
   }
 
