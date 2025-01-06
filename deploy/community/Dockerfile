@@ -11,7 +11,17 @@ RUN apt-get update || : && apt-get install -y \
     curl \
     build-essential 
 
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - 
+# RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - 
+
+# 安装 nvm 并安装 Node.js
+ENV NVM_DIR=/root/.nvm
+
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash \
+    && chmod +x "$NVM_DIR/nvm.sh" \
+    && bash -c ". $NVM_DIR/nvm.sh && nvm install 14.21.3 && nvm alias default 14.21.3"
+
+# 确保在构建过程中可用
+ENV PATH=$NVM_DIR/versions/node/v14.21.3/bin:$PATH
 
 RUN apt-get update \
     && apt-get install -y gnupg curl nodejs

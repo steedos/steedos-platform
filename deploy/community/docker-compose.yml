@@ -14,9 +14,6 @@ services:
       - "9001:9001"  
     environment:
       - ROOT_URL=http://127.0.0.1
-      - NPM_CACHE_ENABLED=true
-      - NPM_CACHE_PACKAGE_CONTENT=true
-      - NPM_REGISTRY_URL=https://registry.npmmirror.com
     tty: true
     volumes:
       - "./steedos-storage:/steedos-storage"
