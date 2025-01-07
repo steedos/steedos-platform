@@ -1,4 +1,3 @@
-require('dotenv-flow').config({});
 
 // Moleculer Configuration
 // https://moleculer.services/docs/0.14/configuration.html
