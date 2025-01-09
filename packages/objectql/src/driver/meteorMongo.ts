@@ -432,7 +432,7 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
                     const options = { $set: {} };
                     const keys = _.keys(data);
                     _.each(keys, function (key) {
-                        if (_.include(['$inc', '$min', '$max', '$mul', '$push', '$addToSet'], key)) {
+                        if (_.include(['$inc','$min','$max','$mul', '$push', '$addToSet', '$pop', '$pull', '$pullAll'], key)) {
                             options[key] = data[key];
                         } else {
                             options.$set[key] = data[key];
