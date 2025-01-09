@@ -1884,17 +1884,19 @@ uuflowManager.engine_step_type_is_counterSign = function (instance_id, trace_id,
             if (instance_traces[i]._id === trace_id) {
                 h = 0;
                 while (h < instance_traces[i].approves.length) {
-                    if (instance_traces[i].approves[h]._id === approve_id || ((step.oneClickApproval && ['approved', 'readed'].includes(judge)) || (step.oneClickRejection && 'rejected' === judge))) {
-                        // 更新当前trace.approve记录
-                        approveFinishDate = new Date;
-                        setTraceObj[`traces.${i}.approves.${h}.is_finished`] = true;
-                        setTraceObj[`traces.${i}.approves.${h}.finish_date`] = approveFinishDate;
-                        setTraceObj[`traces.${i}.approves.${h}.cost_time`] = approveFinishDate - instance_traces[i].approves[h].start_date;
-                        setTraceObj[`traces.${i}.approves.${h}.auto_submitted`] = auto_submitted;
-                        finishedApproveIds.push(instance_traces[i].approves[h]._id)
-                    }
-                    else if (instance_traces[i].approves[h].is_finished === false && instance_traces[i].approves[h].type !== 'cc' && instance_traces[i].approves[h].type !== 'distribute') {
-                        isAllApproveFinished = false;
+                    if (instance_traces[i].approves[h].type !== 'cc' && instance_traces[i].approves[h].type !== 'distribute') {
+                        if (instance_traces[i].approves[h]._id === approve_id || ((step.oneClickApproval && ['approved', 'readed'].includes(judge)) || (step.oneClickRejection && 'rejected' === judge))) {
+                            // 更新当前trace.approve记录
+                            approveFinishDate = new Date;
+                            setTraceObj[`traces.${i}.approves.${h}.is_finished`] = true;
+                            setTraceObj[`traces.${i}.approves.${h}.finish_date`] = approveFinishDate;
+                            setTraceObj[`traces.${i}.approves.${h}.cost_time`] = approveFinishDate - instance_traces[i].approves[h].start_date;
+                            setTraceObj[`traces.${i}.approves.${h}.auto_submitted`] = auto_submitted;
+                            finishedApproveIds.push(instance_traces[i].approves[h]._id)
+                        }
+                        else if (instance_traces[i].approves[h].is_finished === false) {
+                            isAllApproveFinished = false;
+                        }
                     }
                     h++;
                 }
