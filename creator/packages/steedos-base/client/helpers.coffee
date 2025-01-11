@@ -823,6 +823,25 @@ TemplateHelpers =
 			url = url + '?token=' + token
 		return url
 
+	generateShortStringFromUrl = (url, length = 6) ->
+		# 简单哈希函数
+		hash = 0
+		for i in [0...url.length]
+			char = url.charCodeAt(i)
+			hash = (hash << 5) - hash + char
+			hash |= 0  # 转换为32位整数
+
+		# 基于哈希生成的随机字符串
+		characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+		shortString = ''
+
+		# 生成指定长度的短字符串
+		for i in [0...length]
+			shortString += characters[Math.abs(hash) % characters.length]
+			hash = Math.floor(hash / characters.length)
+
+		shortString
+
 	cordovaDownload: (url, filename, rev, length) ->
 		url = Steedos.addTokenTodownloadUrl(url)
 		
@@ -853,6 +872,10 @@ TemplateHelpers =
 		directory = ""
 		if Steedos.isAndroidApp()
 			directory = cordova.file.externalCacheDirectory
+			try
+				fileName = Steedos.generateShortStringFromUrl(url) + '-' + filename
+			catch e
+				console.log(e)
 		else
 			directory = cordova.file.cacheDirectory
 
