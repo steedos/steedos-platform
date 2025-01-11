@@ -823,7 +823,7 @@ TemplateHelpers =
 			url = url + '?token=' + token
 		return url
 
-	generateShortStringFromUrl = (url, length = 6) ->
+	generateShortStringFromUrl: (url, length = 6) ->
 		# 简单哈希函数
 		hash = 0
 		for i in [0...url.length]
