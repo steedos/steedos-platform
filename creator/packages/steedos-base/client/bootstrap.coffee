@@ -18,14 +18,20 @@ Creator.dataInit = new ReactiveVar(false);
 Blaze._allowJavascriptUrls() 
 FlowRouter.wait();
 
+baseUrlToDir: (baseUrl) ->
+	return encodeURIComponent baseUrl.replace(/[\s\.\\\/:]/g, '')
+
 getRedirectUrl = ()->
-	redirect = location.href.replace("/steedos/sign-in", "").replace("/accounts/a/#/logout", "");
-	u = new URL(redirect);
-	u.searchParams.delete('no_redirect');
-	u.searchParams.delete('X-Space-Id');
-	u.searchParams.delete('X-Auth-Token');
-	u.searchParams.delete('X-User-Id');
-	return u.toString();
+	if Meteor.isCordova
+		return 'http://' + baseUrlToDir(Meteor.absoluteUrl()) + '.meteor.local';
+	else 
+		redirect = location.href.replace("/steedos/sign-in", "").replace("/accounts/a/#/logout", "");
+		u = new URL(redirect);
+		u.searchParams.delete('no_redirect');
+		u.searchParams.delete('X-Space-Id');
+		u.searchParams.delete('X-Auth-Token');
+		u.searchParams.delete('X-User-Id');
+		return u.toString();
 
 
 Steedos.logout = (redirect)->
