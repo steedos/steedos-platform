@@ -346,7 +346,8 @@ module.exports = {
                                 body: _.map(items, (field)=>{
                                     return {
                                         type: `sfield-${_.camelCase(field.type).toLowerCase()}`,
-                                        config: Object.assign({amis: {name: field.name}}, field)
+                                        config: Object.assign({amis: {name: field.name}}, field),
+                                        visibleOn: field.visible_on
                                     }
                                 })
                             }
