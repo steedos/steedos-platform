@@ -19,10 +19,10 @@ module.exports = {
 				console.log("🎉 欢迎使用 Steedos 社区版！");
 				break;
 			case "ee":
-				console.log("🚀 欢迎使用 Steedos 企业版！");
+				console.log("🎉 欢迎使用 Steedos 企业版！");
 				break;
 			case "cloud":
-				console.log("☁️ 欢迎使用 Steedos Cloud 版！");
+				console.log("🎉 欢迎使用 Steedos Cloud 版！");
 				break;
 			default:
 				console.log("🤔 我们未能识别您启动的版本。");
