@@ -11,9 +11,32 @@ module.exports = {
 
 	// Called after broker started.
 	started(broker) {
-		broker.createService(require("@steedos/service-license"));
+		// 获取环境变量
+		const edition = process.env.STEEDOS_EDITION || 'ce';
+
+		switch (edition) {
+			case "ce":
+				console.log("🎉 欢迎使用 Steedos 社区版！");
+				break;
+			case "ee":
+				console.log("🚀 欢迎使用 Steedos 企业版！");
+				break;
+			case "cloud":
+				console.log("☁️ 欢迎使用 Steedos Cloud 版！");
+				break;
+			default:
+				console.log("🤔 我们未能识别您启动的版本。");
+		}
+
+		if(edition == 'ee' || edition == 'cloud'){
+			broker.createService(require("@steedos/service-license"));
+		}
+
 		broker.createService(require("@steedos/service-community"));
-		broker.createService(require("@steedos/service-enterprise"));
+		
+		if(edition == 'ee' || edition == 'cloud'){
+			broker.createService(require("@steedos/service-enterprise"));
+		}
 	},
 
 };
