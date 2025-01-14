@@ -39,6 +39,13 @@ jobs:
         if: ${{ !startsWith(steps.branch-name.outputs.tag, '2.')  }}
         run: exit 1
 
+      # checkout branch 3.0
+      - name: Checkout branch 3.0
+        uses: actions/checkout@v2
+        if: ${{ startsWith(steps.branch-name.outputs.tag, '3.0') }} 
+        with: 
+          ref: '3.0'
+
       # checkout branch 2.7
       - name: Checkout branch 2.7
         uses: actions/checkout@v2
@@ -205,6 +212,20 @@ jobs:
         env:
           CI: false
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+
+      - name: Lerna publish 3.0
+        if: ${{ startsWith(steps.branch-name.outputs.tag, '3.0') && steps.version.outputs.is_stable == 'true' }}
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
+          yarn lerna publish ${{ steps.branch-name.outputs.tag }}  --no-git-tag-version --no-git-reset --force-publish --exact --yes
+          git add . 
+          git commit -m "action: release ${{ steps.branch-name.outputs.tag }}"
+          git push
+        env:
+          CI: false
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
             
       - name: Lerna publish beta
         if: ${{ steps.version.outputs.is_stable != 'true' }}
@@ -229,141 +250,6 @@ jobs:
           from_branch: 2.7
           target_branch: master
           github_token: ${{ github.token }}
-
-     
-      # - name: Create Docker Release
-      #   # if: steps.version.outputs.is_stable == 'true'
-      #   id: create_release
-      #   uses: actions/create-release@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.DOCKER_GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-      #   with:
-      #     owner: steedos
-      #     repo: docker
-      #     commitish: main
-      #     tag_name: v${{ steps.branch-name.outputs.tag }}
-      #     release_name: Release v${{ steps.branch-name.outputs.tag }}
-      #     draft: false
-      #     prerelease: false
-  docker-community:
-    needs: npm-release
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14.x]
-    steps:
-      - uses: nowsprinting/check-version-format-action@v3
-        id: version
-        with:
-          prefix: 'v'
-
-      - name: Check valid tag format
-        if: steps.version.outputs.is_valid == 'false'
-        run: exit 1
-
-      - name: Get branch names
-        id: branch-name
-        uses: tj-actions/branch-names@v5.2
-        with: 
-          strip_tag_prefix: v
-
-      - name: Get the current tag
-        if: steps.branch-name.outputs.is_tag == 'true'  # Replaces: startsWith(github.ref, 'refs/tags/')
-        run: |
-          echo "tag: ${{ steps.branch-name.outputs.tag }}"
-          echo "current_branch: ${{ steps.branch-name.outputs.current_branch }}"
-          echo "ref_branch: ${{ steps.branch-name.outputs.ref_branch }}"
-
-      - name: Check valid branch
-        if: ${{ !startsWith(steps.branch-name.outputs.tag, '2.')  }}
-        run: exit 1
-
-      # checkout branch 2.7
-      - name: Checkout branch 2.7
-        uses: actions/checkout@v2
-        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.7') }} 
-        with: 
-          ref: '2.7'
-
-      # checkout branch 2.6
-      - name: Checkout branch 2.6
-        uses: actions/checkout@v2
-        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.6') }} 
-        with: 
-          ref: '2.6'
-
-      - name: Set Current Version
-        run: |
-          STEEDOS_VERSION=$(node -p 'require("./lerna.json").version')
-          echo "STEEDOS_VERSION=${STEEDOS_VERSION}" >> $GITHUB_ENV
-          echo "STEEDOS_VERSION=${STEEDOS_VERSION}"
-        
-      - name: Generate info.json
-        run: |
-          if [[ -f deploy/community/scripts/generate_info_json.sh ]]; then
-            deploy/community/scripts/generate_info_json.sh
-          fi
-
-      - uses: docker/setup-qemu-action@v1
-      - uses: docker/setup-buildx-action@v1
-        with:
-          driver-opts: network=host
-          
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v4
-        with:
-          images: |
-            steedos/steedos-community
-            registry.cn-shanghai.aliyuncs.com/steedos/steedos-community
-            252208178451.dkr.ecr.cn-northwest-1.amazonaws.com.cn/dockerhub/steedos/steedos-community
-          tags: |
-            type=semver,pattern={{version}},value=${{ env.STEEDOS_VERSION }}
-            type=semver,pattern={{major}}.{{minor}},value=${{ env.STEEDOS_VERSION }}
-            type=semver,pattern={{major}},value=${{ env.STEEDOS_VERSION }}
-      
-      - name: Login to Aliyun Docker
-        uses: docker/login-action@v2
-        with:
-          registry: registry.cn-shanghai.aliyuncs.com
-          username: ${{ secrets.ALIYUN_DOCKER_USERNAME }}
-          password: ${{ secrets.ALIYUN_DOCKER_PASSWORD }}
-
-      - uses: docker/login-action@v1
-        name: Login Docker Hub
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-      
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_NINGXIA }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_NINGXIA }}
-          aws-region: cn-northwest-1
-
-      -
-        name: Login to ECR
-        uses: docker/login-action@v2
-        with:
-          registry: 252208178451.dkr.ecr.cn-northwest-1.amazonaws.com.cn
-
-      - name: Replace Version ~2.7 to Tag
-        uses: jacobtomlinson/gha-find-replace@v2
-        with:
-          include: deploy/community/app/platform/package.json
-          find: "~2.7"
-          replace: ${{env.STEEDOS_VERSION}}
-          regex: false
-
-      - name: Build and push docker
-        uses: docker/build-push-action@v3
-        with:
-          context: ./deploy/community
-          platforms: linux/amd64,linux/arm64
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
   docker-enterprise:
     needs: npm-release
     runs-on: ubuntu-latest
@@ -433,9 +319,10 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
+            steedos/steedos-community
+            registry.cn-shanghai.aliyuncs.com/steedos/steedos-community
             steedos/steedos-enterprise
             registry.cn-shanghai.aliyuncs.com/steedos/steedos-enterprise
-            252208178451.dkr.ecr.cn-northwest-1.amazonaws.com.cn/dockerhub/steedos/steedos-enterprise
           tags: |
             type=semver,pattern={{version}},value=${{ env.STEEDOS_VERSION }}
             type=semver,pattern={{major}}.{{minor}},value=${{ env.STEEDOS_VERSION }}
@@ -454,24 +341,11 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_NINGXIA }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_NINGXIA }}
-          aws-region: cn-northwest-1
-
-      -
-        name: Login to ECR
-        uses: docker/login-action@v2
-        with:
-          registry: 252208178451.dkr.ecr.cn-northwest-1.amazonaws.com.cn
-
-      - name: Replace Version ~2.7 to Tag
+      - name: Replace Version ~3.0 to Tag
         uses: jacobtomlinson/gha-find-replace@v2
         with:
           include: deploy/enterprise/app/platform/package.json
-          find: "~2.7"
+          find: "~3.0"
           replace: ${{env.STEEDOS_VERSION}}
           regex: false
 
