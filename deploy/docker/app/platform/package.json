@@ -1,0 +1,31 @@
+{
+  "name": "steedos-enterprise",
+  "private": true,
+  "workspaces": [
+    "steedos-packages/*"
+  ],
+  "scripts": {
+    "start": "steedos start",
+    "build": "lerna run build"
+  },
+  "dependencies": {
+    "lerna": "^4.0.0",
+    "@steedos-labs/analytics": "^0.1.32",
+    "@steedos/service-community": "~2.7",
+    "@steedos/service-enterprise": "^2.5"
+  },
+  "resolutions": {
+    "@azure/core-auth": "1.5.0",
+    "@azure/core-client": "1.7.3",
+    "@azure/core-lro": "2.5.4",
+    "@azure/core-rest-pipeline": "1.12.1",
+    "@azure/core-util": "1.5.0",
+    "@azure/keyvault-keys": "4.7.2",
+    "@azure/logger": "1.0.4",
+    "@azure/core-tracing": "1.0.1",
+    "@azure/core-paging": "1.5.0",
+    "@types/mime": "3.0.0",
+    "undici": "5.16.0",
+    "mingo": "6.4.15"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "nodered-app",
+  "version": "1.0.0",
+  "private": "true",
+  "license": "MIT",
+  "scripts": {
+    "start": "node-red --settings settings.js"
+  },
+  "dependencies": {
+    "@steedos/node-red-contrib-steedos": "^2.4.1",
+    "axios": "1.7.7",
+    "ioredis": "^5.3.2",
+    "lodash": "^4.17.21",
+    "node-red": "^3.1.12",
+    "node-red-dashboard": "^3.4.0",
+    "passport": "0.7.0",
+    "passport-custom": "1.1.1"
+  }
+}
