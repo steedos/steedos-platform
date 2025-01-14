@@ -1,13 +1,12 @@
 /*
  * @Author: 孙浩林 sunhaolin@steedos.com
  * @Date: 2024-06-14 10:28:33
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2024-06-14 10:36:52
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2025-01-14 17:43:20
  * @FilePath: /steedos-platform-2.3/services/standard-space/src/triggers/space_users_trigger.js
  * @Description: 
  */
 "use strict";
-const Fiber = require("fibers");
 
 /**
  * 开启oidc服务后，新增人员后在触发器中发送keycloak邀请邮件
@@ -52,25 +51,22 @@ module.exports = {
 
         // 发送邀请邮件的函数
         const sendInvitationEmail = async (email) => {
-            const parts = STEEDOS_IDENTITY_OIDC_CONFIG_URL.split("/.well-known");
-            const registerUrl = `${parts[0]}/protocol/openid-connect/registrations?client_id=${STEEDOS_IDENTITY_OIDC_CLIENT_ID}&scope=openid%20profile&redirect_uri=${ROOT_URL}&response_type=code`;
-
-            const mailOptions = {
-                from: `"${suDoc.name}" <noreply@steedos.com>`,              // 发件人地址
-                to: email,                                                  // 收件人地址
-                subject: `${suDoc.name} 邀请您加入 ${spaceDoc.name}`,            // 主题
-                html: `<p>你好，${suDoc.name} 邀请您加入 ${spaceDoc.name}。请点击以下链接登录：</p>
-                        <p><a href="${ROOT_URL}">${ROOT_URL}</a></p>
-                        <p>如果没有账号请点击以下链接创建账号：</p>
-                        <p><a href="${registerUrl}">${registerUrl}</a></p>` // HTML内容
-            };
-
             try {
-                Fiber(function () {
-                    MailQueue.send(mailOptions);
-                }).run();
+                const parts = STEEDOS_IDENTITY_OIDC_CONFIG_URL.split("/.well-known");
+                const registerUrl = `${parts[0]}/protocol/openid-connect/registrations?client_id=${STEEDOS_IDENTITY_OIDC_CLIENT_ID}&scope=openid%20profile&redirect_uri=${ROOT_URL}&response_type=code`;
+
+                const mailOptions = {
+                    from: `"${suDoc.name}" <noreply@steedos.com>`,              // 发件人地址
+                    to: email,                                                  // 收件人地址
+                    subject: `${suDoc.name} 邀请您加入 ${spaceDoc.name}`,            // 主题
+                    html: `<p>你好，${suDoc.name} 邀请您加入 ${spaceDoc.name}。请点击以下链接登录：</p>
+                            <p><a href="${ROOT_URL}">${ROOT_URL}</a></p>
+                            <p>如果没有账号请点击以下链接创建账号：</p>
+                            <p><a href="${registerUrl}">${registerUrl}</a></p>` // HTML内容
+                };
+                await ctx.broker.call('@builder6/email.send', mailOptions)
             } catch (error) {
-                console.error('发送邮件失败:', error);
+                console.log(error)
             }
         };
 
