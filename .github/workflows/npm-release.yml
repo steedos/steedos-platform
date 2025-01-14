@@ -36,7 +36,7 @@ jobs:
           echo "ref_branch: ${{ steps.branch-name.outputs.ref_branch }}"
 
       - name: Check valid branch
-        if: ${{ !startsWith(steps.branch-name.outputs.tag, '2.')  }}
+        if: ${{ !startsWith(steps.branch-name.outputs.tag, '3.')  }}
         run: exit 1
 
       # checkout branch 3.0
@@ -280,8 +280,15 @@ jobs:
           echo "ref_branch: ${{ steps.branch-name.outputs.ref_branch }}"
 
       - name: Check valid branch
-        if: ${{ !startsWith(steps.branch-name.outputs.tag, '2.')  }}
+        if: ${{ !startsWith(steps.branch-name.outputs.tag, '3.')  }}
         run: exit 1
+
+      # checkout branch 3.0
+      - name: Checkout branch 3.0
+        uses: actions/checkout@v2
+        if: ${{ startsWith(steps.branch-name.outputs.tag, '3.0') }} 
+        with: 
+          ref: '3.0'
 
       # checkout branch 2.7
       - name: Checkout branch 2.7
