@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 13:17:06
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-01-15 12:05:03
+ * @LastEditTime: 2025-01-15 15:50:41
  * @Description: 
  */
 "use strict";
@@ -169,9 +169,7 @@ module.exports = {
     /**
      * Service created lifecycle event handler
      */
-    created() {
-        console.log('core-objects')
-    },
+    created() {},
 
     /**
      * Service started lifecycle event handler
