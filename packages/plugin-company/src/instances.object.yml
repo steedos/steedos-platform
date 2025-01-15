@@ -1,6 +1,0 @@
-extend: instances
-fields:
-  company_id:
-    required: false
-    omit: false
-    hidden: false

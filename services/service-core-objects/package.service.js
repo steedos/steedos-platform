@@ -2,13 +2,13 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 13:17:06
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-01-15 11:44:28
+ * @LastEditTime: 2025-01-15 12:05:03
  * @Description: 
  */
 "use strict";
 const project = require('./package.json');
 const packageName = project.name;
-const packageLoader = require('@steedos/service-meteor-package-loader');
+const packageLoader = require('@steedos/service-package-loader');
 const objectMixin = require('@steedos/service-object-mixin')
 const objectql = require('@steedos/objectql');
 const { MongoClient } = require('mongodb');
@@ -16,8 +16,8 @@ const _ = require('lodash')
 
 const triggers = require('./src/triggers')
 
-const methods = [];
-const actions = [];
+const methods = require('./src/methods');
+const actions = require('./src/actions')
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -25,7 +25,7 @@ const actions = [];
 module.exports = {
     name: packageName,
     namespace: "steedos",
-    mixins: [packageLoader, objectMixin],
+    mixins: [packageLoader],
     /**
      * Settings
      */
@@ -33,7 +33,7 @@ module.exports = {
         packageInfo: {
             path: __dirname,
             name: packageName,
-            isPackage: false
+            isPackage: true
         },
         STEEDOS_IDENTITY_OIDC_ENABLED: process.env.STEEDOS_IDENTITY_OIDC_ENABLED,
         STEEDOS_IDENTITY_OIDC_CONFIG_URL: process.env.STEEDOS_IDENTITY_OIDC_CONFIG_URL,
@@ -170,6 +170,7 @@ module.exports = {
      * Service created lifecycle event handler
      */
     created() {
+        console.log('core-objects')
     },
 
     /**

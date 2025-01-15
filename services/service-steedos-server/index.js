@@ -479,7 +479,6 @@ function getBuiltinPlugins () {
 		"@steedos/service-cachers-manager", // 依赖了 steedos/core
 		"@steedos/workflow",
 		"@steedos/accounts",
-		"@steedos/plugin-company",
 		// "@steedos/word-template",
 		"@steedos/metadata-api", // ? TODO: 为啥使用meteor package load
 		"@steedos/data-import", // main 文件不是 package.service.js
@@ -492,6 +491,7 @@ function getBuiltinPlugins () {
 		// "@steedos/standard-process"
 		// "@steedos/service-files",
 		// "@steedos/steedos-plugin-schema-builder",
+		"@steedos/service-core-objects"
 	]
 	if ("true" == process.env.STEEDOS_ENABLE_STANDARD_ACCOUNTS) {
 		plugins.unshift("@steedos/standard-accounts");

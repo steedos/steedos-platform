@@ -1,7 +1,7 @@
 name: is_company
 label: Divisional
 type: boolean
-hidden: true
+hidden: false
 index: true
 readonly: true
 visible_on: '{{global.mode ===''read'' ? true : false}}'

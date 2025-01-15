@@ -78,6 +78,10 @@ fields:
     name: help_text
   company_id:
     label: Main Division
+    required: false
+    omit: false
+    hidden: false
+    visible_on: "{{true}}"
   created_by:
     label: Created by
     sort_no: 9999

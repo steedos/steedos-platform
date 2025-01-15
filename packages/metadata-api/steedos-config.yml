@@ -13,7 +13,6 @@ public:
       folder: "./storage"
 plugins:
   - "@steedos/accounts"
-  - "@steedos/plugin-company"
 tenant:
   enable_register: true
   enable_forget_password: false

@@ -207,10 +207,10 @@ fields:
   #   type: '[text]'
   #   hidden: true
   #   name: record_ids.$.ids
-  # company_id:
-  #   required: false
-  #   omit: false
-  #   hidden: false
+  company_id:
+    required: false
+    omit: false
+    hidden: false
   current_step_name:
     label: Current Step Name
     type: text

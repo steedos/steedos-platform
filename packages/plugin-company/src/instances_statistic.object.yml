@@ -1,7 +1,0 @@
-extend: instances_statistic
-fields:
-  company_id:
-    required: false
-    omit: false
-    hidden: false
-    visible_on: "{{true}}"

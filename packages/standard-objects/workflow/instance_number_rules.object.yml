@@ -36,10 +36,11 @@ fields:
     name: rules
     searchable: true
     filterable: true
-  # company_id:
-  #   required: false
-  #   omit: false
-  #   hidden: false
+  company_id:
+    required: false
+    omit: false
+    hidden: false
+    visible_on: "{{true}}"
 list_views:
   all:
     filter_scope: space

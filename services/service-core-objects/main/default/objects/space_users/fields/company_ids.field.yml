@@ -1,5 +1,13 @@
-name: company_id
-label: Main Division
+name: company_ids
+label: All Divisions
+type: lookup
+reference_to: company
+multiple: true
+index: true
+readonly: true
+filterable: true
+visible_on: "{{global.mode ==='read' ? true : false}}"
+hidden: false
 defaultValue: !<tag:yaml.org,2002:js/function> |-
   function anonymous(
   ) {
@@ -14,8 +22,4 @@ optionsFunction: !<tag:yaml.org,2002:js/function> |-
     /* 主分部 company_id / 所属分部 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
 
   }
-readonly: true
-visible_on: "{{global.mode ==='read' ? true : false}}"
-hidden: false
-sort_no: 170
-filterable: true
+sort_no: 190

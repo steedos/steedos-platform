@@ -19,10 +19,11 @@ fields:
     searchable: true
     name: api_name
     filterable: true
-  # company_id:
-  #   required: false
-  #   omit: false
-  #   hidden: false
+  company_id:
+    required: false
+    omit: false
+    hidden: false
+    visible_on: "{{true}}"
 list_views:
   all:
     filter_scope: space

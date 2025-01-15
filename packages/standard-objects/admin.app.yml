@@ -265,3 +265,10 @@ admin_menus:
       - admin
     object_name: workflow_outbound_messages
     parent: workflow_actions
+  - _id: company
+    name: Division
+    permission_sets:
+      - admin
+    object_name: company
+    parent: menu_users
+    sort: 12

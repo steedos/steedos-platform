@@ -922,7 +922,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
      * 获取mongodb collection
      * @returns mongoCollection
      */
-    private async getCollection(){
+    async getCollection(){
         if (this.datasource.driver === SteedosDatabaseDriverType.Mongo || this.datasource.driver === SteedosDatabaseDriverType.MeteorMongo) {
             const adapter = this.datasource.adapter;
             await adapter.connect()

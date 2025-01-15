@@ -1,0 +1,7 @@
+name: company_id
+label: Main Division
+type: lookup
+visible_on: '{{global.mode ===''read'' ? true : false}}'
+readonly: true
+hidden: false
+sort_no: 200

@@ -1,8 +1,0 @@
-extend: space_users
-fields:
-  company_id:
-    hidden: false
-  company_ids:
-    readonly: true
-    visible_on: "{{global.mode ==='read' ? true : false}}"
-    hidden: false

@@ -206,10 +206,11 @@ fields:
     name: current.fields.$.visibleOn
     amis:
       visibleOn: ${!!_master.record.object_name}
-  # company_id:
-  #   required: false
-  #   omit: false
-  #   hidden: false
+  company_id:
+    required: false
+    omit: false
+    hidden: false
+    visible_on: "{{true}}"
 list_views:
   all:
     label: All Forms

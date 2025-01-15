@@ -9,7 +9,6 @@
     "@steedos/data-import": "3.0.0-beta.2",
     "@steedos/metadata-api": "3.0.0-beta.2",
     "@steedos/meteor-bundle-runner": "3.0.0-beta.2",
-    "@steedos/plugin-company": "3.0.0-beta.2",
     "@steedos/service-accounts": "3.0.0-beta.2",
     "@steedos/service-api": "3.0.0-beta.2",
     "@steedos/service-cachers-manager": "3.0.0-beta.2",

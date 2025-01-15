@@ -1,7 +1,0 @@
-extend: instance_number_rules
-fields:
-  company_id:
-    required: false
-    omit: false
-    hidden: false
-    visible_on: "{{true}}"

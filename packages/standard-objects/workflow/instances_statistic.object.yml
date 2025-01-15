@@ -68,10 +68,11 @@ fields:
     defaultValue: []
     name: owner_organizations
     filterable: true
-  # company_id:
-  #   required: false
-  #   omit: false
-  #   hidden: false
+  company_id:
+    required: false
+    omit: false
+    hidden: false
+    visible_on: "{{true}}"
 list_views:
   all:
     label: All 
