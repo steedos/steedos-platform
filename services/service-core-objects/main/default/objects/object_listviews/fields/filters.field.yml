@@ -1,0 +1,10 @@
+name: filters
+label: Filters
+type: code
+is_wide: true
+hidden: false
+readonly: false
+depend_on:
+  - object_name
+group: filters
+sort_no: 330

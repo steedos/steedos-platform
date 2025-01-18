@@ -1,0 +1,13 @@
+name: datasource
+amis:
+  disabledOn: '${is_system == true}'
+defaultValue: default
+filters: []
+group: advanced
+hidden: false
+label: Datasource
+reference_to: datasources
+required: false
+showIcon: false
+sort_no: 180
+type: master_detail

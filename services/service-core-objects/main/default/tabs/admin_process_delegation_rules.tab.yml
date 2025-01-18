@@ -1,0 +1,24 @@
+name: admin_process_delegation_rules
+desktop: true
+icon: rtc_presence
+is_new_window: false
+label: 流程委托
+mobile: true
+permissions:
+  - permission: 'on'
+    permission_set: admin
+  - permission: 'on'
+    permission_set: user
+  - permission: 'off'
+    permission_set: customer
+  - permission: 'off'
+    permission_set: supplier
+  - permission: 'off'
+    permission_set: organization_admin
+  - permission: 'off'
+    permission_set: workflow_admin
+type: object
+object: process_delegation_rules
+license:
+  - platform-professional
+  - platform-enterprise

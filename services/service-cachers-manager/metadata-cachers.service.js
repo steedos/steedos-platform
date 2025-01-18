@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2024-03-22 14:37:50
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2024-05-18 13:31:28
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2025-01-17 14:21:33
  * @Description: 由于 collection observe 在 steedos-server.started 事件中被触发报错需要 Fiber ,添加Fiber 后, 不报错,但是无法订阅到数据. 所以单写服务处理此问题.
  * 
  */
@@ -23,13 +23,13 @@ module.exports = {
 	/**
 	 * Dependencies
 	 */
-	dependencies: ['steedos-server'],
+	dependencies: [],
 
 	events: {
 		'$packages.changed': function(){
-			this.loadMetadataWorkflows();
-			this.loadMetadataValidationRule();
-			this.loadMetadataObjectFunctions();
+			// this.loadMetadataWorkflows();
+			// this.loadMetadataValidationRule();
+			// this.loadMetadataObjectFunctions();
 
 		}
 	},
@@ -37,12 +37,12 @@ module.exports = {
 	actions:{
 		find: function(ctx){
 			const { metadataName, filters, spaceId } = ctx.params;
-			const res = this[`${_.camelCase(metadataName)}Cacher`].find(filters, spaceId);
-			return res;
+			const res = this[`${_.camelCase(metadataName)}Cacher`]?.find(filters, spaceId);
+			return res || [];
 		},
 		get: function(ctx){
 			const { _id } = ctx.params;
-			return this[`${_.camelCase(metadataName)}Cacher`].get(_id)
+			return this[`${_.camelCase(metadataName)}Cacher`]?.get(_id)
 		}
 	},
 
@@ -88,23 +88,23 @@ module.exports = {
 	},
 
 	async started() {
-		this.actionFieldUpdatesCacher = new ActionFieldUpdateCacher()
+		// this.actionFieldUpdatesCacher = new ActionFieldUpdateCacher()
 
-        this.workflowOutboundMessagesCacher = new WorkflowOutboundMessageCacher();
+        // this.workflowOutboundMessagesCacher = new WorkflowOutboundMessageCacher();
 
-        this.workflowNotificationsCacher = new WorkflowNotificationCacher();
+        // this.workflowNotificationsCacher = new WorkflowNotificationCacher();
 
-        this.workflowRuleCacher = new WorkflowRuleCacher();
+        // this.workflowRuleCacher = new WorkflowRuleCacher();
 
-		this.objectValidationRulesCacher = new ObjectValidationRulesCacher()
+		// this.objectValidationRulesCacher = new ObjectValidationRulesCacher()
 
-		this.settingsCacher = new SettingsCacher();
+		// this.settingsCacher = new SettingsCacher();
 
-		this.objectWebhooksCacher = new ObjectWebhookCacher();
+		// this.objectWebhooksCacher = new ObjectWebhookCacher();
 
-		this.objectFunctionsCacher = new ObjectFunctionsCacher();
+		// this.objectFunctionsCacher = new ObjectFunctionsCacher();
 
-		await this.loadMetadataWorkflows()
+		// await this.loadMetadataWorkflows()
 	},
 
 	async stopped(){

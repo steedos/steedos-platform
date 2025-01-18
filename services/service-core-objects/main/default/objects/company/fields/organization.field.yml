@@ -1,0 +1,8 @@
+name: organization
+label: Corresponding Department
+type: lookup
+required: true
+reference_to: organizations
+omit: false
+sort_no: 130
+filterable: true

@@ -1,0 +1,21 @@
+name: admin_dashboard
+desktop: true
+icon: dashboard_ea
+is_new_window: false
+label: 自定义主页
+mobile: true
+permissions:
+  - permission: 'on'
+    permission_set: admin
+  - permission: 'off'
+    permission_set: user
+  - permission: 'off'
+    permission_set: customer
+  - permission: 'off'
+    permission_set: supplier
+  - permission: 'off'
+    permission_set: organization_admin
+  - permission: 'off'
+    permission_set: workflow_admin
+type: object
+object: dashboard

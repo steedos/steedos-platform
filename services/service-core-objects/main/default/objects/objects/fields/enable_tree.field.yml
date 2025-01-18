@@ -1,0 +1,7 @@
+name: enable_tree
+group: advanced
+hidden: false
+inlineHelpText: Enable a tree structure to display records
+label: Enable Tree
+sort_no: 200
+type: boolean

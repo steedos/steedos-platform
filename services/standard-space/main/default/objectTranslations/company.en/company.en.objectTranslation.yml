@@ -1,0 +1,50 @@
+name: company
+label: Division
+description: 
+fields:
+  name:
+    label: Name
+    help: 
+    description: 
+  code:
+    label: Code
+    help: 
+    description: 
+  parent:
+    label: Superior Department
+    help: 
+    description: 
+  organization:
+    label: Corresponding Department
+    help: 
+    description: 
+  currency_type:
+    label: Currency Type
+    help: 
+    description: 
+  admins:
+    label: Administrator
+    help: 
+    description: 
+  description:
+    label: Description
+    help: 
+    description: 
+  sort_no:
+    label: Sort Number
+    help: 
+    description: 
+  company_id:
+    label: 
+    help: 
+    description: 
+  company_ids:
+    label: 
+    help: 
+    description: 
+listviews:
+  all:
+    label: All Divisions
+actions:
+  updateOrgs:
+    label: Update The Whole Company

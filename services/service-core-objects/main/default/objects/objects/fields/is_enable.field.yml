@@ -1,0 +1,11 @@
+name: is_enable
+amis:
+  disabledOn: '${is_system == true}'
+defaultValue: true
+filters: []
+hidden: true
+label: Enable
+required: false
+sort_no: 250
+type: boolean
+visible_on: '{{false}}'

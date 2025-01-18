@@ -122,12 +122,12 @@ module.exports = {
 		use: [
 			function (req, res, next) {
 				// 如果service-object-grapqhl未结算完成，则提示服务未就绪，刷新重试
-				if (!this.projectStarted) {
-					const message = 'service is not ready, please refresh later.';
-					res.writeHead(503, { 'Content-Type': 'application/json' });
-					res.end(JSON.stringify({ status: 1, msg: message, data: {}, errors: [{ message: message }] }));
-					return;
-				}
+				// if (!this.projectStarted) {
+				// 	const message = 'service is not ready, please refresh later.';
+				// 	res.writeHead(503, { 'Content-Type': 'application/json' });
+				// 	res.end(JSON.stringify({ status: 1, msg: message, data: {}, errors: [{ message: message }] }));
+				// 	return;
+				// }
 				next();
 			}
 		],
@@ -1045,9 +1045,8 @@ module.exports = {
 		}
 	},
 	async started() {
-
+		console.log('started', this.name)
 		this.broker.createService(require("@steedos/service-ui"));
-
 		// if (this.settings.server != true && this.settings.steedos_api_port){
 		// 	/* istanbul ignore next */
 		// 	await new this.Promise((resolve, reject) => {
@@ -1063,7 +1062,6 @@ module.exports = {
 		this.broker.waitForServices('~packages-@steedos/service-ui').then(() => {
 			this.app.use("/", this.express());
 		})
-
 		global.SteedosApi = {
 			express: this.express
 		}

@@ -1,0 +1,12 @@
+name: objects
+custom: true
+enable_dataloader: false
+field_groups:
+  - group_name: switch
+  - group_name: advanced
+hidden: true
+icon: orders
+label: Objects
+paging:
+  enabled: false
+version: 2

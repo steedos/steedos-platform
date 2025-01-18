@@ -1,0 +1,6 @@
+name: app_unique_id
+hidden: true
+label: App Unique ID
+sort_no: 420
+type: text
+visible_on: '{{false}}'

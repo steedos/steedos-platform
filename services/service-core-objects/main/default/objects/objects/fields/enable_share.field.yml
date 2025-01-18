@@ -1,0 +1,7 @@
+name: enable_share
+defaultValue: false
+hidden: true
+label: Enable Share
+sort_no: 290
+type: boolean
+visible_on: '{{false}}'

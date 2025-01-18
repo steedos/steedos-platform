@@ -179,9 +179,9 @@ module.exports = {
 				this.countTimeoutId = setTimeout(async()=>{
 					const startingPackages = await Register.filterList(this.broker, {key: getStartingCacherKey()});
 					const startedPackages = await Register.filterList(this.broker, {key: getStartedCacherKey()});
-					// console.log(`startingPackages`, startingPackages.length, startedPackages.length);
+					console.log(`startingPackages`, startingPackages.length, startedPackages.length);
 					if(startingPackages.length <= startedPackages.length){
-						// console.log(`broadcast $packages.changed========`)
+						console.log(`broadcast $packages.changed========`)
 						this.broker.broadcast("$packages.changed", {});
 					}
 				}, 1000 * 3)
@@ -193,20 +193,20 @@ module.exports = {
 	 * Service created lifecycle event handler
 	 */
 	async created() {
-
+		console.log('created', packageName)
 	},
 
 	/**
 	 * Service started lifecycle event handler
 	 */
 	async started() {
-		
+		console.log('started', packageName)
 	},
 
 	/**
 	 * Service stopped lifecycle event handler
 	 */
 	async stopped() {
-
+		console.log('stopped', packageName)
 	}
 };

@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:35
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-03-22 14:40:23
+ * @LastEditTime: 2025-01-17 14:20:54
  * @Description: 维护内存缓存
  */
 "use strict";
@@ -13,6 +13,7 @@ const cachers = require('@steedos/cachers');
 const auth = require('@steedos/auth');
 const { getObject } = require('@steedos/objectql');
 const register = require('@steedos/metadata-registrar');
+const _ = require('underscore');
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * 软件包服务启动后也需要抛出事件。
@@ -31,7 +32,7 @@ module.exports = {
 	/**
 	 * Dependencies
 	 */
-	dependencies: [],
+	dependencies: ['metadata'],
 	methods: {
 		// 加载mo action规则的triggers
 		loadActionTriggers: async function (broker) {

@@ -1,0 +1,6 @@
+name: app_version
+hidden: true
+label: App Version
+sort_no: 430
+type: text
+visible_on: '{{false}}'

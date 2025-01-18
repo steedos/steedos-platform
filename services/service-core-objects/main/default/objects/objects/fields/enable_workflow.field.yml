@@ -1,0 +1,9 @@
+name: enable_workflow
+defaultValue: true
+filters: []
+hidden: true
+label: Enable Workflow
+required: false
+sort_no: 260
+type: boolean
+visible_on: '{{false}}'

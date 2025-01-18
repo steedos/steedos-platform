@@ -1,0 +1,23 @@
+name: admin_instance_number_rules
+desktop: true
+icon: topic2
+is_new_window: false
+label: 流程编号
+mobile: true
+permissions:
+  - permission: 'on'
+    permission_set: admin
+  - permission: 'off'
+    permission_set: user
+  - permission: 'off'
+    permission_set: customer
+  - permission: 'off'
+    permission_set: supplier
+  - permission: 'off'
+    permission_set: organization_admin
+  - permission: 'off'
+    permission_set: workflow_admin
+type: object
+object: instance_number_rules
+license:
+  - platform-enterprise

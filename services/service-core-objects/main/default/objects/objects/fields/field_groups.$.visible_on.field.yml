@@ -1,0 +1,5 @@
+name: field_groups.$.visible_on
+hidden: false
+label: 显示条件
+sort_no: 90
+type: text

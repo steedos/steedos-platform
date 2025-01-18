@@ -1,0 +1,6 @@
+name: code
+label: Code
+type: text
+sort_no: 110
+filterable: true
+searchable: true

@@ -1,0 +1,9 @@
+name: version
+defaultValue: 2
+hidden: true
+label: Version
+readonly: true
+scale: 0
+sort_no: 320
+type: number
+visible_on: '{{false}}'

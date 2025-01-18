@@ -42,7 +42,7 @@ module.exports = {
 	/**
 	 * Dependencies
 	 */
-	dependencies: ['~packages-standard-objects'],
+	dependencies: ['@steedos/service-packages'],
 
 	/**
 	 * Actions
@@ -556,14 +556,14 @@ module.exports = {
 	 * Service created lifecycle event handler
 	 */
 	async created() {
-
+		console.log(`created`, "@steedos/service-project")
 	},
 
 	/**
 	 * Service started lifecycle event handler
 	 */
 	async started() {
- 
+		console.log(`started`, "@steedos/service-project")
 		const PACKAGE_INSTALL_NODE = process.env.PACKAGE_INSTALL_NODE
 		if(PACKAGE_INSTALL_NODE){
 			await this.broker.call('metadata.add', {key: `#package_install_node.${this.broker.nodeID}`, data: {nodeID: PACKAGE_INSTALL_NODE}}, {meta: {}}) 

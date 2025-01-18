@@ -1,0 +1,17 @@
+name: in_development
+amis:
+  disabledOn: '${is_system == true}'
+defaultValue: '1'
+hidden: false
+inlineHelpText: Developing ( Only administrators can access. )
+label: Development State
+options:
+  - label: Developing ( Only administrators can access. )
+    value: '1'
+  - label: Deployed
+    value: '0'
+required: true
+sort_no: 40
+type: select
+filterable: true
+

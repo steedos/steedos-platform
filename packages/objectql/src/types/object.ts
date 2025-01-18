@@ -1603,7 +1603,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
     async getRecordView(userSession, context: any = {}) {
-        let versionsMap = {}
+        try {
+            let versionsMap = {}
         if (global['HAS_LICENSE_SERVICE']) {
             versionsMap = {
                 [PLATFORM_ENTERPRISE]: await broker.call(`${LICENSE_SERVICE}.isPlatformEnterprise`, { spaceId: userSession.spaceId }),
@@ -1831,6 +1832,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
 
         return objectConfig;
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     async getDefaultRecordView(userSession){

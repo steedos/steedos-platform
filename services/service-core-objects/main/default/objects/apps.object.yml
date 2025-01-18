@@ -1,0 +1,396 @@
+name: apps
+label: App
+icon: apps
+hidden: true
+version: 2
+enable_dataloader: false
+fields:
+  name:
+    label: Name
+    type: text
+    defaultValue: ''
+    description: ''
+    inlineHelpText: ''
+    required: true
+    searchable: true
+    filterable: true
+    index: true
+  code:
+    label: API Name
+    type: text
+    required: true
+    searchable: true
+    filterable: true
+  icon_slds:
+    label: SLDS Icon
+    type: lookup
+    required: true
+    optionsFunction: !!js/function |
+      function () {
+        var options;
+        options = [];
+
+        _.forEach(Creator.resources.sldsIcons.standard, function (svg) {
+          return options.push({
+            value: svg,
+            label: svg,
+            icon: svg
+          });
+        });
+
+        return options;
+      }
+    filterable: true
+  sort:
+    label: Sort Number
+    type: number
+    defaultValue: 9100
+    sortable: true
+  description:
+    label: Description
+    type: textarea
+    is_wide: true
+    searchable: true
+    filterable: true
+  tabs:
+    label: Tabs
+    type: lookup
+    multiple: true
+    group: Business object
+    is_wide: true
+    reference_to: tabs
+    reference_to_field: name
+    hidden: true
+  tab_groups:
+    type: grid
+    blackbox: true
+    is_wide: true
+    # hidden: true
+    visible_on: "{{false}}"
+  tab_groups.$.group_name:
+    type: text
+  tab_groups.$.default_open:
+    type: boolean
+  tab_items:
+    label: Tabs
+    type: object
+    blackbox: true
+    is_wide: true
+    required: false
+    group: Tabs
+    visible_on: "{{global.mode ==='read' ? false : true}}"
+  # tab_items.$:
+  #   label: Tabs
+  #   blackbox: true
+  #   type: object
+  # tab_items.$.tab_name:
+  #   label: Tab Name
+  #   type: lookup
+  #   multiple: false
+  #   is_wide: false
+  #   required: true
+  #   reference_to: tabs
+  #   reference_to_field: name
+  # tab_items.$.group:
+  #   label: Group
+  #   type: text
+  
+    # filterable: true
+  is_creator:
+    type: boolean
+    label: Show this app for Desktop
+    # defaultValue: true
+  mobile:
+    type: boolean
+    label: Show this app for Mobile
+    # defaultValue: true
+  icon:
+    label: Icon
+    type: text
+    hidden: true
+  visible:
+    label: Visible
+    type: boolean
+    # defaultValue: true
+
+  showSidebar:
+    label: 显示左侧导航
+    type: boolean
+    defaultValue: false
+
+  nav_schema:
+    label: 自定义导航
+    type: code
+    language: json
+    visible_on: "{{false}}"
+  # members:
+  #   type: object
+  #   label: Members
+  #   is_wide: true
+  # members.users:
+  #   type: lookup
+  #   label: User Members
+  #   reference_to: users
+  #   multiple: true
+  #   filterable: true
+  # members.organizations:
+  #   type: lookup
+  #   label: Department Members
+  #   reference_to: organizations
+  #   multiple: true
+  #   filterable: true
+
+  url:
+    label: URL
+    type: url
+    group: External Application
+  is_use_ie:
+    type: boolean
+    label: Open in IE (Using Steedos Desktop)
+    defaultValue: false
+    group: External Application
+    filterable: true
+  is_use_iframe:
+    type: boolean
+    label: Open with iframe
+    defaultValue: false
+    group: External Application
+    visible_on: "{{false}}"
+    filterable: true
+  is_new_window:
+    type: boolean
+    label: Open in New Window
+    defaultValue: false
+    group: External Application
+    filterable: true
+  on_click:
+    type: textarea
+    label: onClick
+    rows: 2
+    is_wide: true
+    group: External Application
+
+  auth_name:
+    label: Auth Name
+    type: text
+    group: External Application
+  secret:
+    label: API Secret Key
+    type: text
+    max: 16
+    min: 16
+    group: External Application
+  objects:
+    label: Desktop Menu(Invalid)
+    type: lookup
+    multiple: true
+    group: other
+    optionsFunction: !!js/function |
+      function () {
+        return Steedos.getObjectsOptions()
+      }
+    # filterable: true
+  mobile_objects:
+    label: Mobile Menus(Invalid)
+    type: lookup
+    multiple: true
+    group: other
+    optionsFunction: !!js/function |
+      function () {
+        return Steedos.getObjectsOptions()
+      }
+  visible_on:
+    name: visible_on
+    is_wide: true
+    label: Visible On
+    inlineHelpText: Visible On
+    type: textarea
+    group: other
+  enable_nav_schema: 
+    label: 启用自定义导航
+    type: boolean
+    required: false
+    group: other
+
+  oauth2_enabled:
+    group: OAuth2 
+    label: OAuth2 Enabled
+    type: boolean
+    hidden: true
+  oauth2_callback_url:
+    group: OAuth2
+    label: Callback URL
+    type: text
+    required: "{{formData.oauth2_enabled}}"
+    hidden: true
+  oauth2_scopes:
+    group: OAuth2
+    label: Scopes
+    type: select
+    hidden: true
+    multiple: true
+    required: "{{formData.oauth2_enabled}}"
+    options:
+      - label: Access to Your Unique Identifier (openid)
+        value: openid
+      - label: Access Basic Information (id, email, address, phone, locale)
+        value: profile
+      - label: Access Fully (full)
+        value: full
+  oauth2_logout_enabled: 
+    group: OAuth2
+    label: OAuth2 Logout Enabled
+    type: boolean
+    hidden: true
+  oauth2_logout_url:
+    group: OAuth2
+    label: OAuth2 Logout URL
+    type: url
+    hidden: true
+  oauth2_home_url:
+    group: OAuth2
+    label: Homepage URL
+    type: url
+    required: "{{formData.oauth2_enabled}}"
+    hidden: true
+  oauth2_logo:
+    group: OAuth2
+    label: OAuth2 Logo
+    type: image
+    required: "{{formData.oauth2_enabled}}"
+    hidden: true
+  oauth2_client_secret:
+    group: OAuth2
+    label: OAuth2 Client secret
+    type: text
+    omit: true
+    hidden: true
+  saml_enabled:
+    hidden: true
+    group: SAML
+    label: SAML Enabled
+    type: boolean
+  saml_entity_id:
+    hidden: true
+    group: SAML
+    label: Entity Id
+    type: text
+  saml_issuer:
+    hidden: true
+    group: SAML
+    label: Issuer
+    type: text
+  saml_idp_cert:
+    hidden: true
+    group: SAML
+    label: IDP Cert
+    type: text
+  saml_acs_url:
+    hidden: true
+    group: SAML
+    label: ACS URL
+    type: url
+  saml_name_id_format:
+    hidden: true
+    group: SAML
+    label: Name
+    type: text
+  saml_logout_enabled: 
+    hidden: true
+    group: SAML
+    label: SAML Logout Enabled
+    type: boolean
+  saml_logout_url:
+    hidden: true
+    group: SAML
+    label: SAML Logout URL
+    type: url
+  saml_logout_block:
+    hidden: true
+    group: SAML
+    label: SAML Logout Block
+    type: select
+    options: 
+      - label: HTTP Redirect
+        value: redirect
+      - label: HTTP Post
+        value: post
+  is_system:
+    type: boolean
+    label: System
+    # omit: true
+    readonly: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
+    disabled: true
+  from_code_id:
+    type: text
+    visible_on: "{{false}}"
+    disabled: true
+paging:
+  enabled: false
+actions:
+  customize:
+    label: Customize
+    on: record_only
+  reset:
+    label: Reset
+    on: record_only
+  createOAuth2App:
+    label: 创建 OAuth 应用
+    on: list
+    sort: 180
+  standard_edit:
+    visible: false
+  standard_new:
+    visible: false
+list_views:
+  all:
+    label: All Apps
+    filter_scope: space
+    columns:
+      - name
+      - code
+      - description
+      - visible
+      - sort
+      - is_system
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true
+# triggers:
+#   before.insert.server.apps:
+#     'on': server
+#     when: before.insert
+#     todo: !!js/function |
+#       function (userId, doc) {
+#               return doc.icon = doc.icon_slds;
+#             }
+#   after.update.server.apps:
+#     'on': server
+#     when: after.update
+#     todo: !!js/function |
+#       function (userId, doc, fieldNames, modifier, options) {
+#               var ref;
+
+#               if (modifier != null ? (ref = modifier.$set) != null ? ref.icon_slds : void 0 : void 0) {
+#                 return Creator.getCollection("apps").direct.update({
+#                   _id: doc._id
+#                 }, {
+#                   $set: {
+#                     icon: modifier.$set.icon_slds
+#                   }
+#                 });
+#               }
+#             }

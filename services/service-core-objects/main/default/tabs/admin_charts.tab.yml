@@ -1,0 +1,21 @@
+name: admin_charts
+desktop: true
+icon: case
+is_new_window: false
+label: 图表
+mobile: true
+permissions:
+  - permission: 'off' # 2.4禁用图表功能
+    permission_set: admin
+  - permission: 'off'
+    permission_set: user
+  - permission: 'off'
+    permission_set: customer
+  - permission: 'off'
+    permission_set: supplier
+  - permission: 'off'
+    permission_set: organization_admin
+  - permission: 'off'
+    permission_set: workflow_admin
+type: object
+object: charts

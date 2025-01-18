@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-04-11 11:50:53
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-08-08 12:30:59
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2025-01-17 14:19:27
  * @Description: 
  */
 "use strict";
@@ -23,11 +23,6 @@ module.exports = {
     metadata: {
         triggers: []
     },
-
-    /**
-     * Dependencies
-     */
-    dependencies: ['metadata'],
 
     /**
      * Actions
@@ -115,14 +110,14 @@ module.exports = {
      * Service created lifecycle event handler
      */
     async created() {
-
+        console.log('triggers created....')
     },
 
     /**
      * Service started lifecycle event handler
      */
     async started() {
-
+        console.log('triggers started....')
     },
 
     /**

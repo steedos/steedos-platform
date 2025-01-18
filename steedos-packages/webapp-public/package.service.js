@@ -56,14 +56,12 @@ module.exports = {
 	 * Service created lifecycle event handler
 	 */
 	async created() {
-
 	},
 
 	/**
 	 * Service started lifecycle event handler
 	 */
 	async started() {
-
 	},
 
 	/**

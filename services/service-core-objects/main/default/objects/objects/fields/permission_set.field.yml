@@ -1,0 +1,8 @@
+name: permission_set
+blackbox: true
+hidden: true
+label: Permission Set
+omit: true
+sort_no: 380
+type: object
+visible_on: '{{false}}'

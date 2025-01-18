@@ -222,7 +222,7 @@ module.exports = {
                 }
                 let publicPath = path.join(packagePath, 'public');
                 try {
-                    if (!fs.existsSync(publicPath) ||this.settings.loadedPackagePublicFiles || typeof WebApp == 'undefined') {
+                    if (!fs.existsSync(publicPath) || this.settings.loadedPackagePublicFiles) {
                         return;
                     }
                 } catch (error) {
@@ -235,9 +235,6 @@ module.exports = {
                     try {
                         const router = require('@steedos/router').staticRouter();
                         let routerPath = "";
-                        if (__meteor_runtime_config__.ROOT_URL_PATH_PREFIX) {
-                            routerPath = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX;
-                        }
                         const cacheTime = 86400000 * 1; // one day
                         router.use(routerPath, express.static(publicPath, { maxAge: cacheTime }));
                         // WebApp.connectHandlers.use(router);
@@ -286,9 +283,9 @@ module.exports = {
                 console.log(`service ${this.name} started`);
                 return;
             }
-            this.broker.waitForServices("steedos-server").then(async () => {
-                await this.loadDataOnServiceStarted()
-            });
+            // this.broker.waitForServices("steedos-server").then(async () => {
+            //     await this.loadDataOnServiceStarted()
+            // });
             
             if (true != isUnmanaged) {
                 // 受管软件包加载元数据文件，非受管软件包不加载
@@ -311,7 +308,7 @@ module.exports = {
     
             await this.loadPackageMetadataServices(_path);
     
-            // await this.loadPackagePublicFiles(_path);
+            await this.loadPackagePublicFiles(_path);
             this.started = true;
             const endTime = moment();
             console.log(`service ${this.name} started:`, `${endTime.diff(startTime, 'seconds', true)}s`);

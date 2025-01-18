@@ -1,0 +1,6 @@
+name: enable_tasks
+group: switch
+hidden: false
+label: Enable Tasks
+sort_no: 150
+type: boolean

@@ -1,0 +1,64 @@
+name: organizations
+label: 组织机构
+description: 
+fields:
+  name:
+    label: 名称
+    help: 
+    description: 
+  fullname:
+    label: 组织全称
+    help: 
+    description: 
+  parent:
+    label: 上级组织
+    help: 
+    description: 
+  parents:
+    label: 上级组织
+    help: 
+    description: 
+  children:
+    label: 下级组织
+    help: 
+    description: 
+  sort_no:
+    label: 排序号
+    help: 
+    description: 
+  users:
+    label: 成员
+    help: 
+    description: 
+  company_id:
+    label: 所属分部
+    help: 
+    description: 
+  company_ids:
+    label: 所属分部
+    help: 
+    description: 
+  is_company:
+    label: 分部级
+    help: 
+    description: 
+  hidden:
+    label: 隐藏
+    help: 
+    description: 
+groups:
+  systemfields: systemfields
+listviews:
+  all:
+    label: 所有
+  lookup: 
+    label: 相关
+  effective:
+    label: 有效组织
+actions:
+  standard_query:
+    label: 查找
+  addSubOrganization:
+    label: 添加子组织
+CustomLabels:
+  organizations_group_系统: 系统

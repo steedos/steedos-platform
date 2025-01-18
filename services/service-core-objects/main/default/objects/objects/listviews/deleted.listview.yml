@@ -1,0 +1,21 @@
+name: deleted
+columns:
+  - label
+  - name
+  - in_development
+  - is_system
+extra_columns:
+  - datasource
+  - fields
+  - is_deleted
+filter_scope: space
+filters:
+  - - is_system
+    - <>
+    - true
+  - - is_deleted
+    - '='
+    - true
+label: Deleted
+shared: true
+shared_to: space

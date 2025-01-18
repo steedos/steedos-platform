@@ -1,0 +1,323 @@
+name: process_definition
+label: Approval Processes
+hidden: true
+icon: approval
+enable_inline_edit: false
+version: 2
+fields:
+  name:
+    type: text
+    required: true
+    filterable: true
+    searchable: true
+  label:
+    type: text
+    required: true
+    is_name: true
+    filterable: true
+    searchable: true
+  object_name:
+    type: lookup
+    required: true
+    is_wide: true
+    filterable: true
+    create: false
+    reference_to: objects
+    reference_to_field: name
+  description:
+    label: Description
+    type: textarea
+    is_wide: true
+    filterable: true
+    searchable: true
+  order: #TODO 必须是连续的数字
+    type: number
+    required: true
+    scale: 0
+    min: 1
+  active:
+    type: boolean
+    label: Active
+    # hidden: true
+    # omit: true
+    readonly: true
+    defaultValue: false
+    filterable: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
+  entry_criteria:
+    type: textarea
+    label: Specify Entry Criteria
+    is_wide: true
+    required: true
+    # group: Specify Entry Criteria
+    inlineHelpText: If only certain types of records should enter this approval process, enter that criteria below. For example, only expense reports from employees at headquarters should use this approval process.
+  # user_hierarchy_field:
+  #   type: text
+  #   is_wide: true
+  #   label: Next Automated Approver Determined By
+  #   inlineHelpText: 可选项为对象的所有人员字段
+  #   group: next Automated Approver TODO
+  # use_approver_field_of_record_owner:
+  #   type: boolean
+  #   is_wide: true
+  #   label: Use Approver Field of Record Owner
+  #   group: next Automated Approver TODO
+  record_editability:
+    type: select
+    is_wide: true
+    required: true
+    firstOption: false
+    defaultValue: admin_only
+    inlineHelpText: When a record is submitted for approval, it’s locked to prevent users from editing it during the approval process. Use the record editability properties to determine who can edit records that are locked in this approval process.
+    label: Record Editability Properties
+    options:
+      - label: Administrators ONLY can edit records during the approval process
+        value: admin_only
+      # - label: Administrators OR the currently assigned approver can edit records during the approval process.
+      #   value: admin_or_current_approver
+  # approval_page_fields:
+  #   type: text
+  #   is_wide: true
+  #   group: 选择要在批准页面布局上显示的字段 TODO
+  #   # type: lookup
+  #   # reference_to: object_layout
+  #   label: Select Fields to Display on Approval Page Layout
+  #   inlineHelpText: The approval page is where an approver will actually approve or reject a request. Using the options below, choose the fields to display on this page.
+  # show_approval_history:
+  #   type: boolean
+  #   is_wide: true
+  #   label: Display approval history information in addition to the fields selected above.
+  #   group: 选择要在批准页面布局上显示的字段 TODO
+  # allowed_submitters:
+  #   type: text
+  #   multiple: true
+  #   is_wide: true
+  #   group: 指定初始提交人 TODO
+  #   inlineHelpText: 指定谁可以提交记录到批准过程。 如果该列表中不包括提交记录以待批准的用户，记录不会进入该批准过程，即使记录满足进入条件。
+  allow_recall:
+    type: boolean
+    is_wide: true
+    label: Allow submitters to recall approval requests
+    filterable: true
+    # group: 提交设置
+  initial_submission_record_lock:
+    type: select
+    # required: true
+    firstOption: false
+    options:
+      - label: Lock the record from being edited
+        value: lock
+      - label: Unlock the record for editing
+        value: unlock
+    defaultValue: lock
+    readonly: true
+    label: Record Lock
+    group: Initial Submission Actions
+  initial_submission_updates_field_actions:
+    type: lookup
+    multiple: true
+    label: Field Update
+    reference_to: action_field_updates
+    reference_to_field: name
+    depend_on:
+      - object_name
+    filtersFunction: !!js/function |
+      function (filters, dependValues) {
+        if(dependValues && dependValues.object_name){
+          return "object_name eq '" + dependValues.object_name + "'";
+        }
+      }
+    group: Initial Submission Actions
+  initial_submission_workflow_notifications_actions:
+    type: lookup
+    multiple: true
+    label: Workflow Notification
+    reference_to: workflow_notifications
+    reference_to_field: name
+    depend_on:
+      - object_name
+    filtersFunction: !!js/function |
+      function (filters, dependValues) {
+        if(dependValues && dependValues.object_name){
+          return "object_name eq '" + dependValues.object_name + "'";
+        }
+      }
+    group: Initial Submission Actions
+  final_approval_record_lock:
+    type: select
+    required: true
+    firstOption: false
+    options:
+      - label: Lock the record from being edited
+        value: lock
+      - label: Unlock the record for editing
+        value: unlock
+    defaultValue: lock
+    label: Record Lock
+    group: Final Approval Actions
+  final_approval_updates_field_actions:
+    type: lookup
+    multiple: true
+    label: Field Update
+    reference_to: action_field_updates
+    reference_to_field: name
+    depend_on:
+      - object_name
+    filtersFunction: !!js/function |
+      function (filters, dependValues) {
+        if(dependValues && dependValues.object_name){
+          return "object_name eq '" + dependValues.object_name + "'";
+        }
+      }
+    group: Final Approval Actions
+  final_approval_workflow_notifications_actions:
+    type: lookup
+    multiple: true
+    label: Workflow Notification
+    reference_to: workflow_notifications
+    reference_to_field: name
+    depend_on:
+      - object_name
+    filtersFunction: !!js/function |
+      function (filters, dependValues) {
+        if(dependValues && dependValues.object_name){
+          return "object_name eq '" + dependValues.object_name + "'";
+        }
+      }
+    group: Final Approval Actions
+  final_rejection_record_lock:
+    type: select
+    required: true
+    firstOption: false
+    options:
+      - label: Lock the record from being edited
+        value: lock
+      - label: Unlock the record for editing
+        value: unlock
+    defaultValue: unlock
+    label: Record Lock
+    group: Final Rejection Actions
+  final_rejection_updates_field_actions:
+    type: lookup
+    multiple: true
+    label: Field Update
+    reference_to: action_field_updates
+    reference_to_field: name
+    depend_on:
+      - object_name
+    filtersFunction: !!js/function |
+      function (filters, dependValues) {
+        if(dependValues && dependValues.object_name){
+          return "object_name eq '" + dependValues.object_name + "'";
+        }
+      }
+    group: Final Rejection Actions
+  final_rejection_workflow_notifications_actions:
+    type: lookup
+    multiple: true
+    label: Workflow Notification
+    reference_to: workflow_notifications
+    reference_to_field: name
+    depend_on:
+      - object_name
+    filtersFunction: !!js/function |
+      function (filters, dependValues) {
+        if(dependValues && dependValues.object_name){
+          return "object_name eq '" + dependValues.object_name + "'";
+        }
+      }
+    group: Final Rejection Actions
+  recall_record_lock:
+    type: select
+    # required: true
+    firstOption: false
+    options:
+      - label: Lock the record from being edited
+        value: lock
+      - label: Unlock the record for editing
+        value: unlock
+    defaultValue: unlock
+    readonly: true
+    label: Record Lock
+    group: Recall Actions
+  recall_updates_field_actions:
+    type: lookup
+    multiple: true
+    label: Field Update
+    reference_to: action_field_updates
+    reference_to_field: name
+    depend_on:
+      - object_name
+    filtersFunction: !!js/function |
+      function (filters, dependValues) {
+        if(dependValues && dependValues.object_name){
+          return "object_name eq '" + dependValues.object_name + "'";
+        }
+      }
+    group: Recall Actions
+  recall_workflow_notifications_actions:
+    type: lookup
+    multiple: true
+    label: Workflow Notification
+    reference_to: workflow_notifications
+    reference_to_field: name
+    depend_on:
+      - object_name
+    filtersFunction: !!js/function |
+      function (filters, dependValues) {
+        if(dependValues && dependValues.object_name){
+          return "object_name eq '" + dependValues.object_name + "'";
+        }
+      }
+    group: Recall Actions
+  is_system:
+    type: boolean
+    label: System
+    readonly: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
+    disabled: true
+    
+relatedList:
+  - process_node
+  # - action_field_updates
+list_views:
+  all:
+    label: All
+    filter_scope: space
+    filter_fields:
+      - object_name
+    columns:
+      - label
+      - name
+      - object_name
+      - order
+      - description
+      - active
+actions:
+  enable:
+    label: Enable
+    on: record
+  disable:
+    label: Disable
+    on: record
+  copy:
+    label: Copy
+    on: record
+  customize:
+    label: Customize
+    on: record
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

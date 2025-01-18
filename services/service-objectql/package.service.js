@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-05-11 13:44:56
+ * @LastEditTime: 2025-01-16 16:55:42
  * @Description: 
  */
 "use strict";
@@ -11,6 +11,8 @@ const objectql = require('@steedos/objectql');
 const { getObject } = objectql;
 
 const { ObjectId } = require('mongodb');
+
+const _ = require('lodash');
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context

@@ -61,13 +61,16 @@ router.get('/service/api/:objectServiceName/uiSchema', core.requireAuthenticatio
     try {
         const { objectServiceName } = req.params;
         const objectName = objectServiceName.substring(1);
-        const [ result, hasImportTemplates ] = await Promise.all([
+        // const [ result, hasImportTemplates ] = await Promise.all([
+        //     callObjectServiceAction(`objectql.getRecordView`, userSession, { objectName }),
+        //     callObjectServiceAction(`@steedos/data-import.hasImportTemplates`, userSession, {
+        //         objectName: objectName
+        //     })
+        // ])
+        // result.hasImportTemplates = hasImportTemplates  //TODO  这段查的有点多
+        const [ result ] = await Promise.all([
             callObjectServiceAction(`objectql.getRecordView`, userSession, { objectName }),
-            callObjectServiceAction(`@steedos/data-import.hasImportTemplates`, userSession, {
-                objectName: objectName
-            })
         ])
-        result.hasImportTemplates = hasImportTemplates 
         res.status(200).send(result);
     } catch (error) {
         res.status(500).send(error.message);

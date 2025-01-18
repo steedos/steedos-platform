@@ -1,0 +1,4 @@
+name: standard_delete
+is_enable: true
+label: Delete
+visible: false

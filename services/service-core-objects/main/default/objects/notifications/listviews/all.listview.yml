@@ -1,0 +1,12 @@
+name: all
+label: All Notifications
+filter_scope: space
+columns:
+  - name
+  - body
+  - related_to
+  - related_name
+  - url
+  - owner
+  - is_read
+  - created

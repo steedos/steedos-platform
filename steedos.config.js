@@ -1,6 +1,6 @@
-
 // Moleculer Configuration
 // https://moleculer.services/docs/0.14/configuration.html
+require('dotenv-flow').config({});
 module.exports = {
 	// Namespace of nodes to segment your nodes on the same network.
 	namespace: "steedos",
@@ -12,7 +12,7 @@ module.exports = {
 
 	// Called after broker started.
 	started(broker) {
-        broker.createService(require("@steedos/service-community"));
+        // broker.createService(require("@steedos/service-community"));
 	}
 	
 };

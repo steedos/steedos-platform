@@ -1,0 +1,8 @@
+name: fields
+blackbox: true
+hidden: true
+label: Fields
+omit: true
+sort_no: 340
+type: object
+visible_on: '{{false}}'

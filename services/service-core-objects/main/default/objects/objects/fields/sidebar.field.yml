@@ -1,0 +1,8 @@
+name: sidebar
+blackbox: true
+hidden: true
+label: Sidebar
+omit: true
+sort_no: 330
+type: object
+visible_on: '{{false}}'

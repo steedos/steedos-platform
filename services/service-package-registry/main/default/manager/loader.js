@@ -101,7 +101,6 @@ const appendToPackagesConfig = (packageName, options, actionName)=>{
 
 const loadPackages = async ()=>{
     let schema = objectql.getSteedosSchema();
-    let broker = schema.broker;
     const packages = loadPackagesConfig();
     for (const packageName in packages) {
         const package = packages[packageName]
@@ -116,7 +115,7 @@ const loadPackages = async ()=>{
                         }
                     }
                 } catch (error) {
-                    broker.logger.error(`start package ${packageName} error: ${error.message}`)
+                    console.error(`start package ${packageName} error: ${error.message}`)
                 }
 
             }else if(package.local !== true){
@@ -134,7 +133,7 @@ const loadPackages = async ()=>{
                         const packageInfo = await loadPackage(packageName);
                         appendToPackagesConfig(packageInfo.name, {version: packageInfo.version, description: packageInfo.description, local: false});
                     } catch (error) {
-                        broker.logger.error(`start package ${packageName} error: ${error.message}`)
+                        console.error(`start package ${packageName} error: ${error.message}`)
                     }
                 }
             }else if(package.local === true && package.static != true){
@@ -149,7 +148,7 @@ const loadPackages = async ()=>{
                             appendToPackagesConfig(packageInfo.name, {version: packageInfo.version, description: packageInfo.description, local: true});
                         }
                     } catch (error) {
-                        broker.logger.error(`start package ${packageName} error: ${error.message}`)
+                        console.error(`start package ${packageName} error: ${error.message}`)
                     }
                 }
             }
@@ -183,7 +182,7 @@ const destroyExistThePackageService = async (packageInfo)=>{
         });
     }
     if (svc) {
-        broker.logger.info(`Destroy previous '${schema.name}' service...`);
+        console.info(`Destroy previous '${schema.name}' service...`);
         await broker.destroyService(svc);
     }
 }
@@ -249,7 +248,7 @@ const loadPackage = async (packageName, packagePath)=>{
         let schema = objectql.getSteedosSchema();
         let broker = schema.broker;
         if(!fs.existsSync(packagePath) || !fs.existsSync(path.join(packagePath, 'package.json'))){
-            broker.logger.warn(`已经从 steedos-packages.yml 文件中删除无效的软件包配置 ${packageName} : ${packagePath}`)
+            console.warn(`已经从 steedos-packages.yml 文件中删除无效的软件包配置 ${packageName} : ${packagePath}`)
             removePackageConfig(packageName);
             return ;
         }

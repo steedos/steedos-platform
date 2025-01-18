@@ -1,0 +1,244 @@
+name: permission_set
+label: Profile & Permission Set
+icon: groups
+hidden: true
+enable_inline_edit: false
+version: 2
+enable_dataloader: false
+paging:
+  enabled: false
+fields:
+  name:
+    label: Name
+    type: text
+    searchable: true
+    index: true
+    required: true
+  label:
+    label: Label
+    type: text
+    searchable: true
+    index: true
+    is_name: true
+    required: true
+    filterable: true
+  type:
+    label: Type
+    type: select
+    firstOption: false
+    filterable: true
+    options: Profile:profile,Permission set:permission_set
+    defaultValue: permission_set
+    amis:
+      "disabledOn": "${global.mode !='read'}"
+  assigned_apps:
+    label: Assigned Apps
+    type: lookup
+    multiple: true
+    reference_to: apps
+    reference_to_field: code
+    name: assigned_apps
+    filterable: false
+    is_wide: true
+  default_standard_buttons:
+    label: Default Standard Buttons
+    type: select
+    multiple: true
+    options:
+      - label: 查找
+        value: standard_query
+      - label: 新建
+        value: standard_new
+      - label: 查看
+        value: standard_open_view
+      - label: 编辑
+        value: standard_edit
+      - label: 删除
+        value: standard_delete
+      - label: 删除
+        value: standard_delete_many
+      - label: 发起审批
+        value: standard_approve
+      - label: 查看审批单
+        value: standard_view_instance
+      - label: 关注
+        value: standard_follow
+      - label: 提请批准
+        value: standard_submit_for_approval
+      - label: 导入数据
+        value: standard_import_data
+    visible_on: "{{'profile' === formData.type ? true: false}}"
+  users:
+    label: Users
+    type: lookup
+    reference_to: users
+    multiple: true
+    is_wide: true
+    filterable: true
+    inlineHelpText: When the type is a profile, no user needs to be selected
+    visible_on: "{{'permission_set' === formData.type}}"
+  is_system:
+    type: boolean
+    label: System
+    # omit: true
+    readonly: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
+    disabled: true
+  password_history:
+    type: lookup
+    group: profile password policy
+    showIcon: false
+    label: 强制密码历史
+    optionsFunction: !!js/function |
+      function(){
+        var options = [];
+        //TODO 支持value = 0
+        for(var i= 1; i < 25; i++){
+          options.push({label: TAPi18n.__('permission_set_field_password_history_options', i), value: `${i}`})
+        }
+        return options;
+      }
+    defaultValue: "3"
+    visible_on: "{{'profile' === formData.type ? true: false}}"
+  max_login_attempts:
+    type: select
+    label: 最大无效登录尝试次数
+    group: profile password policy
+    firstOption: false
+    required: true
+    options:
+      - label: '3'
+        value: '3'
+      - label: '5'
+        value: '5'
+      - label: '10'
+        value: '10'
+      - label: '无限制'
+        value: '0'
+    defaultValue: "10"
+    visible_on: "{{'profile' === formData.type ? true: false}}"
+  lockout_interval:
+    type: select
+    group: profile password policy
+    label: 锁定有效期间
+    firstOption: false
+    required: true
+    options:
+      - label: '15 分钟'
+        value: '15'
+      - label: '30 分钟'
+        value: '30'
+      - label: '60 分钟'
+        value: '60'
+      - label: '始终(必须由管理员重置)'
+        value: '0'
+    defaultValue: "15"
+    visible_on: "{{'profile' === formData.type ? true: false}}"
+  enable_MFA:
+    type: boolean
+    label: 多重身份验证(需要开启短信服务)
+    inlineHelpText: 密码登陆的基础上增加短信验证的两种组合的鉴别技术进行系统登陆.
+    sort_no: 1200
+    group: login policy
+    visible_on: "{{'profile' === formData.type ? true: false}}"
+  logout_other_clients: 
+    type: boolean
+    label: 单例登录
+    inlineHelpText: 注销以当前用户身份登录的其他客户端。
+    sort_no: 1100
+    group: login policy
+    visible_on: "{{'profile' === formData.type ? true: false}}"
+  login_expiration_in_days:
+    type: number
+    scale: 4
+    label: 登录到期时间(天)
+    sort_no: 1000
+    defaultValue: 90
+    group: login policy
+    visible_on: "{{'profile' === formData.type ? true: false}}"
+  phone_logout_other_clients: 
+    type: boolean
+    label: 手机App单例登录
+    inlineHelpText: 注销以当前用户身份登录的其他客户端。
+    sort_no: 1100
+    group: login policy
+    visible_on: "{{'profile' === formData.type ? true: false}}"
+  phone_login_expiration_in_days:
+    type: number
+    scale: 4
+    label: 手机App登录到期时间(天)
+    sort_no: 1000
+    defaultValue: 90
+    group: login policy
+    visible_on: "{{'profile' === formData.type ? true: false}}"
+list_views:
+  all:
+    label: All
+    filter_scope: space
+    columns:
+      - label
+      - name
+      - users
+      - type
+      - license
+      - is_system
+  permission_set:
+    label: Permission Set
+    filter_scope: space
+    filters:
+      - [["type", "=", "permission_set"]]
+    columns:
+      - label
+      - name
+      - users
+      - type
+      - license
+      - is_system
+  profile:
+    label: Profile
+    filter_scope: space
+    filters:
+      - [["type", "=", "profile"]]
+    columns:
+      - label
+      - name
+      - type
+      - license
+      - is_system
+actions:
+  customize:
+    label: Customize
+    on: record_only
+# relatedList:
+#   - objectName: permission_objects
+#     filters: !!js/function | 
+#       function(parentRecord) {
+#         return [["is_system","=",true], ["permission_set_id","=",parentRecord._id]]
+#       }
+#   - objectName: permission_objects
+#     filters: !!js/function | 
+#       function(parentRecord) {
+#         return [["is_system","<>",true], ["permission_set_id","=",parentRecord._id]]
+#       }
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: false
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true
+  customer:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: false
+    modifyAllRecords: false
+    viewAllRecords: false

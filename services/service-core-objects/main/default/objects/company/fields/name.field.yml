@@ -1,0 +1,7 @@
+name: name
+label: Name
+type: text
+required: true
+sort_no: 100
+filterable: true
+searchable: true

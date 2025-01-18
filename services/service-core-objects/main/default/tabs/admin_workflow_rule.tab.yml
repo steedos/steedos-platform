@@ -1,0 +1,21 @@
+name: admin_workflow_rule
+desktop: true
+icon: maintenance_work_rule
+is_new_window: false
+label: 工作流规则
+mobile: true
+permissions:
+  - permission: 'on'
+    permission_set: admin
+  - permission: 'off'
+    permission_set: user
+  - permission: 'off'
+    permission_set: customer
+  - permission: 'off'
+    permission_set: supplier
+  - permission: 'off'
+    permission_set: organization_admin
+  - permission: 'off'
+    permission_set: workflow_admin
+type: object
+object: workflow_rule

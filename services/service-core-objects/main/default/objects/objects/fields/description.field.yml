@@ -1,0 +1,7 @@
+name: description
+hidden: false
+is_wide: true
+label: Description
+sort_no: 50
+type: textarea
+filterable: true

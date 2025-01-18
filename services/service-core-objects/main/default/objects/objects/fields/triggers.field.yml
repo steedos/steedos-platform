@@ -1,0 +1,8 @@
+name: triggers
+blackbox: true
+hidden: true
+label: Triggers
+omit: true
+sort_no: 390
+type: object
+visible_on: '{{false}}'

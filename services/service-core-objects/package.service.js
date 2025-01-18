@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 13:17:06
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-01-15 16:00:15
+ * @LastEditTime: 2025-01-15 18:34:50
  * @Description: 
  */
 "use strict";
@@ -45,7 +45,7 @@ module.exports = {
     /**
      * Dependencies
      */
-    dependencies: ['~packages-standard-objects'],
+    dependencies: [],
 
     /**
      * Actions
@@ -169,13 +169,15 @@ module.exports = {
     /**
      * Service created lifecycle event handler
      */
-    created() {},
+    created() {
+        console.log(`created`, packageName)
+    },
 
     /**
      * Service started lifecycle event handler
      */
     async started() {
-
+        console.log(`started`, packageName)
     },
 
     /**

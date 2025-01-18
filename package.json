@@ -15,7 +15,8 @@
     "docker:db": "docker-compose up mongodb mongodb-init redis nats",
     "i18n": "lerna run i18n",
     "start": "steedos start --config steedos.config.js",
-    "sync": "lerna exec --no-private  -- cnpm sync \\$LERNA_PACKAGE_NAME"
+    "sync": "lerna exec --no-private  -- cnpm sync \\$LERNA_PACKAGE_NAME",
+    "repl": "moleculer-runner  --config steedos.config.js --repl"
   },
   "resolutions": {
     "@salesforce/ts-types": "1.1.2",

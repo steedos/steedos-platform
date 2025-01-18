@@ -1,0 +1,5 @@
+name: currency_type
+label: Currency Type
+type: text
+sort_no: 140
+hidden: true

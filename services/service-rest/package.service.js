@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2024-05-21 13:22:25
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2025-01-17 16:12:30
  * @Description: 
  */
 "use strict";
@@ -534,6 +534,7 @@ module.exports = {
                 const userSession = ctx.meta.user;
                 const query = {}
                 if (fields) {
+                    console.log(`fields:`, fields)
                     query.fields = JSON.parse(fields)
                 }
                 const doc = await this.findOne(objectName, id, query, userSession)
