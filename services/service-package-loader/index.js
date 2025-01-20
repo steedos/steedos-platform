@@ -61,7 +61,7 @@ module.exports = {
     /**
      * Dependencies
      */
-    dependencies: ['metadata-server', '@steedos/service-project', '@steedos/service-packages', 'objectql', '@steedos/data-import'],
+    dependencies: ['metadata-server', '@steedos/service-project', '@steedos/service-packages', 'objectql'], //, '@steedos/data-import'
 
     /**
      * Actions

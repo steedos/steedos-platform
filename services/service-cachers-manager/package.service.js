@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:35
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-01-17 14:20:54
+ * @LastEditTime: 2025-01-18 18:35:36
  * @Description: 维护内存缓存
  */
 "use strict";
@@ -32,7 +32,7 @@ module.exports = {
 	/**
 	 * Dependencies
 	 */
-	dependencies: ['metadata'],
+	dependencies: ['metadata','~packages-@steedos/service-core-objects'],
 	methods: {
 		// 加载mo action规则的triggers
 		loadActionTriggers: async function (broker) {
@@ -261,8 +261,11 @@ module.exports = {
 			}
 		},
 	},
-
+	created(){
+		console.log('created', serviceName);
+	},
 	async started() {
+		console.log('started', serviceName);
 		core.loadTranslations();
 		core.loadObjectTranslations();
 		this.loadActionTriggers(this.broker);

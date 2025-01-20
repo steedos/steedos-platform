@@ -1,8 +1,8 @@
 /*
  * @Author: 孙浩林 sunhaolin@steedos.com
  * @Date: 2024-05-14 15:59:27
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2024-05-18 13:30:31
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2025-01-20 10:58:14
  * @FilePath: /steedos-platform-2.3/services/service-cachers-manager/src/metadata-cachers/object_functions.ts
  * @Description: 
  */
@@ -11,7 +11,7 @@ import { MetadataCacherBase } from './base'
 
 export class ObjectFunctionsCacher extends MetadataCacherBase{
     constructor(){
-        super('object_functions', false, { isEnabled: true });
+        super('apps', false, { isEnabled: true });
     }
 
     onAdded(doc){

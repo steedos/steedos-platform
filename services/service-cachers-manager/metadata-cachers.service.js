@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2024-03-22 14:37:50
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-01-17 14:21:33
+ * @LastEditTime: 2025-01-18 19:01:46
  * @Description: 由于 collection observe 在 steedos-server.started 事件中被触发报错需要 Fiber ,添加Fiber 后, 不报错,但是无法订阅到数据. 所以单写服务处理此问题.
  * 
  */
@@ -102,7 +102,7 @@ module.exports = {
 
 		// this.objectWebhooksCacher = new ObjectWebhookCacher();
 
-		// this.objectFunctionsCacher = new ObjectFunctionsCacher();
+		this.objectFunctionsCacher = new ObjectFunctionsCacher();
 
 		// await this.loadMetadataWorkflows()
 	},

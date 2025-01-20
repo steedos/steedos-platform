@@ -2,11 +2,12 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2024-03-22 09:49:22
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-04-24 15:55:16
+ * @LastEditTime: 2025-01-20 13:11:28
  * @Description: 
  */
 const cachers = require('@steedos/cachers');
 const { metadataDriver } = require('@steedos/utils')
+const { getObject } = require('@steedos/objectql')
 
 declare var Creator;
 
@@ -25,22 +26,32 @@ export class MetadataCacherBase {
         this.cacherName = `metadata.${collectionName}`
         this.cacher = cachers.getCacher(this.cacherName);
         this.observeQuery = observeQuery;
+        
+        const pipeline = observeQuery ? [{$match: observeQuery}] : null;
 
-        try {
-            this.observeHandle = Creator.getCollection(collectionName).find(observeQuery).observe({
-                added: (doc)=>{
-                    this.onAdded(doc)
-                },
-                changed: (doc, oldDoc)=>{
-                    this.onChanged(doc, oldDoc)
-                },
-                removed: (doc)=>{
-                    this.onRemoved(doc)
-                }
+        getObject(collectionName).getCollection().then((collection)=>{
+            const changeStream = collection.watch();
+            changeStream.on('change', (change) => {
+                console.log('Detected a change:', change);
+                // 处理变化...
             });
-        } catch (error) {
-            console.error(`${collectionName} observeHandle error`, error);
-        }
+        })
+
+        // try {
+        //     this.observeHandle = Creator.getCollection(collectionName).find(observeQuery).observe({
+        //         added: (doc)=>{
+        //             this.onAdded(doc)
+        //         },
+        //         changed: (doc, oldDoc)=>{
+        //             this.onChanged(doc, oldDoc)
+        //         },
+        //         removed: (doc)=>{
+        //             this.onRemoved(doc)
+        //         }
+        //     });
+        // } catch (error) {
+        //     console.error(`${collectionName} observeHandle error`, error);
+        // }
     }
     onAdded(doc){
         this.set(doc._id, doc);
@@ -81,7 +92,8 @@ export class MetadataCacherBase {
     // 销毁
     destroy() {
         if (this.observeHandle) {
-            this.observeHandle.stop();
+            this.observeHandle.close();
+            // this.observeHandle.stop();
             this.cacher.clearCacher(this.cacherName);
         }
     }
