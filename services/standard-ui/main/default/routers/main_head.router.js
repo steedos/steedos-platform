@@ -5,7 +5,7 @@
  */
 const express = require("express");
 const router = express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const ejs = require('ejs');
 const fs = require('fs');
 const _ = require('lodash');

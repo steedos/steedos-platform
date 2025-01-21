@@ -46,8 +46,8 @@ export class SecureBuffer<T> {
   public value(cb: DecipherCallback<T>): Optional<T> {
     if (cb) {
       const cipher = crypto.createDecipheriv(cipherName, this.key, this.iv);
-      const a = cipher.update(ensure(this.secret));
-      const b = cipher.final();
+      const a: any = cipher.update(ensure(this.secret));
+      const b: any = cipher.final();
       const c = Buffer.concat([a, b]);
       try {
         return cb(c);
@@ -67,7 +67,7 @@ export class SecureBuffer<T> {
       crypto.randomFillSync(this.secret);
     }
     const cipher = crypto.createCipheriv(cipherName, this.key, this.iv);
-    this.secret = Buffer.concat([cipher.update(Buffer.from('')), cipher.final()]);
+    this.secret = Buffer.concat([cipher.update(Buffer.from('')) as any, cipher.final()]);
   }
 
   /**
@@ -81,7 +81,7 @@ export class SecureBuffer<T> {
       targetBuffer = Buffer.from('');
     }
     const cipher = crypto.createCipheriv(cipherName, this.key, this.iv);
-    this.secret = Buffer.concat([cipher.update(targetBuffer), cipher.final()]);
+    this.secret = Buffer.concat([cipher.update(targetBuffer) as any, cipher.final()]);
     crypto.randomFillSync(targetBuffer);
   }
 }

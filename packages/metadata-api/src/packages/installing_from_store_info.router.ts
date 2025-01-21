@@ -5,7 +5,7 @@
  * @LastEditTime: 2022-11-29 11:55:49
  * @Description: 
  */
-import { requireAuthentication } from '@steedos/core';
+import { requireAuthentication } from '@steedos/auth';
 
 import { getInstallingInfo } from './util';
 

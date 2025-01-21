@@ -2,13 +2,14 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:35
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-01-18 18:35:36
+ * @LastEditTime: 2025-01-21 10:41:33
  * @Description: 维护内存缓存
  */
 "use strict";
 const project = require('./package.json');
 const serviceName = project.name;
-const core = require('@steedos/core');
+// TODO 国际化
+// const core = require('@steedos/core');
 const cachers = require('@steedos/cachers');
 const auth = require('@steedos/auth');
 const { getObject } = require('@steedos/objectql');
@@ -71,31 +72,31 @@ module.exports = {
 	 * Events
 	 */
 	events: {
-		"translations.change": {
-			handler() {
-				if (this.translationsChangeTimeoutId) {
-					clearTimeout(this.translationsChangeTimeoutId)
-				}
-				this.translationsChangeTimeoutId = setTimeout(() => {
-					core.loadTranslations()
-					this.translationsChangeTimeoutId = null;
-				}, 2000)
-			}
-		},
-		"translations.object.change": {
-			handler() {
-				if (this.objectTranslationsChangeTimeoutId) {
-					clearTimeout(this.objectTranslationsChangeTimeoutId)
-				}
-				this.objectTranslationsChangeTimeoutId = setTimeout(() => {
-					core.loadObjectTranslations().then(() => {
-						cachers.getCacher('lru.translations.objects').clear();
-					})
-					this.objectTranslationsChangeTimeoutId = null;
-				}, 2000)
+		// "translations.change": {
+		// 	handler() {
+		// 		if (this.translationsChangeTimeoutId) {
+		// 			clearTimeout(this.translationsChangeTimeoutId)
+		// 		}
+		// 		this.translationsChangeTimeoutId = setTimeout(() => {
+		// 			core.loadTranslations()
+		// 			this.translationsChangeTimeoutId = null;
+		// 		}, 2000)
+		// 	}
+		// },
+		// "translations.object.change": {
+		// 	handler() {
+		// 		if (this.objectTranslationsChangeTimeoutId) {
+		// 			clearTimeout(this.objectTranslationsChangeTimeoutId)
+		// 		}
+		// 		this.objectTranslationsChangeTimeoutId = setTimeout(() => {
+		// 			core.loadObjectTranslations().then(() => {
+		// 				cachers.getCacher('lru.translations.objects').clear();
+		// 			})
+		// 			this.objectTranslationsChangeTimeoutId = null;
+		// 		}, 2000)
 
-			}
-		},
+		// 	}
+		// },
 		"triggers.change": {
 			handler(ctx) {
 				this.loadActionTriggers(ctx.broker);
@@ -266,8 +267,8 @@ module.exports = {
 	},
 	async started() {
 		console.log('started', serviceName);
-		core.loadTranslations();
-		core.loadObjectTranslations();
+		// core.loadTranslations();
+		// core.loadObjectTranslations();
 		this.loadActionTriggers(this.broker);
 		this.loadTriggers(this.broker);
 

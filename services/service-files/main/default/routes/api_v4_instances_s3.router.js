@@ -2,12 +2,12 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-08 09:38:56
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-04-18 12:11:04
+ * @LastEditTime: 2025-01-21 17:26:51
  * @Description: 
  */
 const express = require("express");
 const router = express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const formidable = require('formidable');
 const { getSettings } = require('@steedos/utils')
 const _ = require('lodash')
@@ -22,7 +22,7 @@ const DB_COLLECTION_NAME = 'cfs.instances.filerecord';
 /**
  * 申请单上传附件
  */
-router.post('/api/v4/instances/s3/', core.requireAuthentication, async function (req, res) {
+router.post('/api/v4/instances/s3/', auth.requireAuthentication, async function (req, res) {
     try {
 
         const userSession = req.user;

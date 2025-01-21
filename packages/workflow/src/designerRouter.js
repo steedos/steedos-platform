@@ -5,7 +5,8 @@ const steedosAuth = require('@steedos/auth');
 const objectql = require("@steedos/objectql");
 const _ = require('underscore');
 const bodyParser = require('body-parser');
-const Fiber = require('fibers');
+// const Fiber = require('fibers');
+declare var Fiber;
 const steedosI18n = require("@steedos/i18n");
 
 const designerManager = require('./designerManager');

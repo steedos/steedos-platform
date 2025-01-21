@@ -8,7 +8,7 @@
 // @ts-check
 const express = require("express");
 const router = express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const objectql = require('@steedos/objectql');
 const _ = require('lodash');
 const Fiber = require("fibers");
@@ -26,7 +26,7 @@ const {
  *   ]
  * }
  */
-router.post('/api/workflow/terminate', core.requireAuthentication, async function (req, res) {
+router.post('/api/workflow/terminate', auth.requireAuthentication, async function (req, res) {
     try {
         let userSession = req.user;
         const spaceId = userSession.spaceId;

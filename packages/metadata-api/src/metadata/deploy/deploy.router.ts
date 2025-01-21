@@ -4,10 +4,11 @@ const fs = require('fs');
 const os = require('os');
 const path = require("path");
 const chalk = require("chalk");
-const Fiber = require('fibers');
+// const Fiber = require('fibers');
+declare var Fiber;
 
 import { DbManager } from '../../util/dbManager'
-import { requireAuthentication } from '@steedos/core';
+import { requireAuthentication } from '@steedos/auth';
 import { jsonToDb } from './jsonToDb';
 import { deleteFolderRecursive, SteedosMetadataTypeInfoKeys as TypeInfoKeys } from '@steedos/metadata-core'
 import { loadFileToJson } from './fileToJson';

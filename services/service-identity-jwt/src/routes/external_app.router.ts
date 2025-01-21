@@ -2,16 +2,16 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-11-23 15:54:33
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-11-28 17:59:06
+ * @LastEditTime: 2025-01-21 17:28:04
  * @Description: 新增jwt 接口(GET), 所有第三方应用都通过此接口转发出去, 自动带上 jwt 加密(app.secret)后的数据,比如username、email等.
  */
 const express = require('express');
 const router =express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const objectql = require('@steedos/objectql')
 const jwt = require('jsonwebtoken')
 
-router.get('/api/external/app/:appId', core.requireAuthentication, async function (req, res) {
+router.get('/api/external/app/:appId', auth.requireAuthentication, async function (req, res) {
     try {
         const userSession = req.user;
         // const spaceId = userSession.spaceId;

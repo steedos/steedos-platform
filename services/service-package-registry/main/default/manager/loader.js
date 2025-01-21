@@ -1,6 +1,5 @@
 const yaml = require('js-yaml');
 const _ = require('lodash');
-const steedos = require('@steedos/core');
 const fs = require("fs");
 const path = require('path');
 const objectql = require('@steedos/objectql');
@@ -263,7 +262,7 @@ const loadPackage = async (packageName, packagePath)=>{
         }
         
         await destroyExistThePackageService(packageInfo);
-        await steedos.loadPackage(packagePath);
+        await metaDataCore.loadPackage(packagePath);
         // const packageConfig = getPackageConfig(packageName);
         // if(packageInfo.dependencies){
         //     for (const dependencyName in packageInfo.dependencies) {

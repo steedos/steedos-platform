@@ -1,0 +1,58 @@
+{
+  "name": "moleculer-apollo-server",
+  "version": "0.3.9",
+  "description": "Apollo GraphQL server for Moleculer API Gateway",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon examples/index.js",
+    "ci": "jest --watch",
+    "test": "jest --coverage",
+    "ci:integration": "jest \"**/integration/**spec.js\" --watch",
+    "lint": "eslint --ext=.js src test",
+    "lint:fix": "eslint --fix --ext=.js src test",
+    "deps": "npm-check -u",
+    "postdeps": "npm test",
+    "coverall": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+  },
+  "keywords": [
+    "graphql",
+    "apollo-server",
+    "apollo",
+    "moleculer",
+    "microservice",
+    "gateway"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/moleculerjs/moleculer-apollo-server.git"
+  },
+  "author": "MoleculerJS",
+  "license": "MIT",
+  "jest": {
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node",
+    "rootDir": "./src",
+    "roots": [
+      "../test"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/test/services/"
+    ]
+  },
+  "engines": {
+    "node": ">= 10.x.x"
+  },
+  "dependencies": {
+    "@apollographql/graphql-playground-html": "^1.6.29",
+    "@hapi/accept": "^3.2.4",
+    "@types/graphql-upload": "^8.0.11",
+    "apollo-server-core": "^2.22.2",
+    "dataloader": "^2.1.0",
+    "graphql-subscriptions": "^1.2.1",
+    "graphql-tools": "^9.0.11",
+    "graphql-upload": "^11.0.0",
+    "lodash": "^4.17.21",
+    "object-hash": "^2.2.0"
+  }
+}

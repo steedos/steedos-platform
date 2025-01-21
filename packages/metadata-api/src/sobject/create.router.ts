@@ -7,9 +7,10 @@
  */
 const express = require("express");
 const router = express.Router();
-const Fiber = require('fibers');
+// const Fiber = require('fibers');
+declare var Fiber;
 
-import { requireAuthentication } from '@steedos/core';
+import { requireAuthentication } from '@steedos/auth';
 import { DbManager } from '../util/dbManager'
 import { insertObjectsToDB } from './index'
 

@@ -1,0 +1,147 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Service Test 'generateGraphQLSchema' should create a schema with global, service & action definitions 1`] = `
+Object {
+  "resolvers": Object {
+    "Date": Object {
+      "__parseValue": [Function],
+      "__serialize": [Function],
+    },
+    "Mutation": Object {
+      "upvote": [Function],
+    },
+    "Post": Object {
+      "author": [Function],
+      "voters": [Function],
+    },
+    "Query": Object {
+      "posts": [Function],
+      "users": [Function],
+    },
+    "Subscription": Object {
+      "vote": Object {
+        "resolve": [Function],
+        "subscribe": Array [
+          [Function],
+          [Function],
+        ],
+      },
+    },
+    "User": Object {
+      "postCount": [Function],
+      "posts": [Function],
+    },
+    "UserType": Object {
+      "ADMIN": "1",
+      "PUBLISHER": "2",
+      "READER": "3",
+    },
+  },
+  "schemaDirectives": null,
+  "typeDefs": Array [
+    "
+					scalar Date
+				",
+    "
+								type Query {
+									
+								categories(): [String]
+							
+posts(limit: Int): [Post]
+
+									users(limit: Int): [User]
+								
+								}
+							
+								type Mutation {
+									
+								addCategory(name: String!): String
+							
+upvote(input: PostVoteInput): Post
+								}
+							
+								type Subscription {
+									
+								categoryChanges(): String!
+							
+
+									vote(userID: Int!): String!
+								
+								}
+							
+								
+								type Post {
+									id: Int!
+									title: String!
+									author: User!
+									votes: Int!
+									voters: [User]
+									createdAt: Timestamp
+									error: String
+								}
+							
+
+									type VoteInfo {
+										votes: Int!,
+										voters: [User]
+									}
+								
+
+								\\"\\"\\"
+								This type describes a user entity.
+								\\"\\"\\"
+								type User {
+									id: Int!
+									name: String!
+									birthday: Date
+									posts(limit: Int): [Post]
+									postCount: Int
+									type: UserType
+								}
+							
+							
+								
+								interface Book {
+									title: String
+									author: Author
+								}
+							
+							
+								
+								union Result = User | Author
+							
+							
+								
+									enum VoteType {
+										VOTE_UP,
+										VOTE_DOWN
+									}
+								
+
+								\\"\\"\\"
+								Enumerations for user types
+								\\"\\"\\"
+								enum UserType {
+									ADMIN
+									PUBLISHER
+									READER
+								}
+							
+							
+								
+									input PostVoteInput {
+										id: Int!,
+										userID: Int!
+									}
+								
+
+								input PostAndMediaInput {
+									title: String
+									body: String
+									mediaUrls: [String]
+								}
+							
+							",
+  ],
+}
+`;

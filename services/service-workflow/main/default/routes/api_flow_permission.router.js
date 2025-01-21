@@ -2,16 +2,16 @@
  * @Author: baozhoutao@steedos.com
  * @Date:  2023-03-18 15:05:39
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-03-18 15:25:49
+ * @LastEditTime: 2025-01-21 17:30:09
  * @Description: 
  */
 const express = require("express");
 const router = express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const _ = require('lodash');
 const Fiber = require("fibers");
 
-router.get('/api/workflow/v2/flow_permissions/:flow', core.requireAuthentication, async function (req, res) {
+router.get('/api/workflow/v2/flow_permissions/:flow', auth.requireAuthentication, async function (req, res) {
     try {
         let userSession = req.user;
         const { flow } = req.params;

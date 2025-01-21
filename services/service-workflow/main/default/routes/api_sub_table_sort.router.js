@@ -9,7 +9,7 @@
 // @ts-check
 const express = require('express');
 const router = express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const _ = require('lodash');
 const Fiber = require('fibers');
 /**
@@ -32,7 +32,7 @@ const Fiber = require('fibers');
       errors: [{ errorMessage: e.message }]
     }
  */
-router.post('/api/workflow/sub_table_sort', core.requireAuthentication, async function (req, res) {
+router.post('/api/workflow/sub_table_sort', auth.requireAuthentication, async function (req, res) {
     try {
         Fiber(async function () {
             try {

@@ -13,8 +13,8 @@ const getUserAgent = (req) => {
     return userAgent;
 };
 class Account {
-    static ssoLogin(req, res, options = { user: null, err: null, redirect: true, accessToken: null }) {
-        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+    static ssoLogin(req_1, res_1) {
+        return tslib_1.__awaiter(this, arguments, void 0, function* (req, res, options = { user: null, err: null, redirect: true, accessToken: null }) {
             let { user, err } = options;
             if (err || !user) {
                 (0, objectql_1.getSteedosSchema)().broker.logger.error(`oidc sso login error: ${err}`);

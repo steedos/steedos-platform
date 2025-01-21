@@ -61,6 +61,7 @@
     "request": "^2.88.2",
     "request-promise": "^4.2.5",
     "rimraf": "3.0.2",
+    "ts-node": "10.9.2",
     "underscore": "^1.11.0",
     "validator": "^13.5.2",
     "yargs": "^13.2.1",

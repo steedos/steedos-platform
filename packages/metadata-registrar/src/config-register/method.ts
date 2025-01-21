@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-05-29 15:08:36
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-30 12:17:19
+ * @LastEditTime: 2025-01-21 16:33:12
  * @Description: 
  */
 import { syncMatchFiles } from '@steedos/metadata-core';
@@ -86,11 +86,11 @@ const loadMethods = (filePath: string) => {
     const matchedPaths: [string] = syncMatchFiles(filePatten);
     _.each(matchedPaths, (matchedPath: string) => {
       delete require.cache[require.resolve(matchedPath)];
-      let json: any = loadFile(matchedPath);
+      let json: {listenTo?: string, [key: string]: any; } = loadFile(matchedPath);
       if (!_.has(json, "listenTo")) {
         json.listenTo = path.basename(matchedPath).split(".")[0];
       }
       results.push(json);
-    });
+    });``
     return results;
   };

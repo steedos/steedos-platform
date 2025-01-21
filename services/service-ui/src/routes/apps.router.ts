@@ -2,10 +2,10 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-08 23:28:39
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-30 15:00:25
+ * @LastEditTime: 2025-01-21 17:24:29
  * @Description: 
  */
-import { requireAuthentication } from '@steedos/core';
+import { requireAuthentication } from '@steedos/auth';
 import { getSteedosSchema } from '@steedos/objectql';
 const express = require('express');
 const router =express.Router();

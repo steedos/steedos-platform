@@ -2,7 +2,7 @@
 // @ts-check
 const express = require('express');
 const router = express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const objectql = require('@steedos/objectql');
 /**
 @api {post} /api/workflow/instance/:instanceId 查看审批单
@@ -16,7 +16,7 @@ const objectql = require('@steedos/objectql');
     HTTP/1.1 500 OK
     e.message
  */
-router.get('/api/workflow/instance/:instanceId', core.requireAuthentication, async function (req, res) {
+router.get('/api/workflow/instance/:instanceId', auth.requireAuthentication, async function (req, res) {
     try {
         const userSession = req.user;
         const userId = userSession.userId;

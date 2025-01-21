@@ -2,13 +2,13 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-10 09:38:53
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-04-18 12:12:56
+ * @LastEditTime: 2025-01-21 17:27:54
  * @Description: 
  */
 
 const express = require("express");
 const router = express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const formidable = require('formidable');
 const { getSettings } = require('@steedos/utils')
 const _ = require('lodash')
@@ -20,7 +20,7 @@ const {
 /**
  * 上传记录的附件
  */
-router.post('/s3/:collection/', core.requireAuthentication, async function (req, res) {
+router.post('/s3/:collection/', auth.requireAuthentication, async function (req, res) {
     try {
 
         const userSession = req.user;

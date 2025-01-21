@@ -126,7 +126,7 @@ function transformMetadata(params, meta) {
 }
 
 function transformMetadatas(params, meta) {
-    const data = {};
+    const data: any = {};
     map(params.data, (value, key) => {
         data[key] = {
             ...meta.caller,

@@ -32,9 +32,6 @@
     "cpy": "7.3.0",
     "fs-extra": "8.1.0"
   },
-  "resolutions": {
-    "**/chalk": "3.0.0"
-  },
   "private": false,
   "publishConfig": {
     "access": "public"

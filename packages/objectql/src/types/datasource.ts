@@ -31,7 +31,6 @@ import path = require('path');
 import { getObjectConfig, registerMetadataConfigs, setObjectConfig } from '@steedos/metadata-registrar';
 const clone = require('clone')
 const cachers = require('@steedos/cachers');
-let Fiber = require('fibers');
 const defaultDatasourceName = 'default';
 // const meteorDatasourceName = 'meteor';
 declare var Creator: any;
@@ -534,7 +533,7 @@ export class SteedosDataSourceType implements Dictionary {
         })
     }
 
-    initTypeORM() {
+    async initTypeORM() {
         const _objects = {};
         _.map(this.cacheObjects, (item) => {
             if(item && item.metadata){
@@ -543,17 +542,7 @@ export class SteedosDataSourceType implements Dictionary {
         })
         
         if (this._adapter.init) {
-            let self = this;
-            Fiber(function(){
-                let fiber = Fiber.current;
-                self._adapter.init(_objects).then(result => {
-                    fiber.run();
-                }).catch(result => {
-                    console.error(result)
-                    fiber.run();
-                })
-                Fiber.yield();
-            }).run();
+            await this._adapter.init(_objects)
         }
     }
 

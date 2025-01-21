@@ -2,15 +2,15 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-11-17 16:29:17
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-11-28 18:01:27
+ * @LastEditTime: 2025-01-21 17:28:38
  * @Description: 
  */
 const express = require('express');
 const router = express.Router();
 const objectql = require('@steedos/objectql');
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 
-router.get('/api/pageSchema/:type', core.requireAuthentication, async function (req, res) {
+router.get('/api/pageSchema/:type', auth.requireAuthentication, async function (req, res) {
     try {
 
         const userSession = req.user;

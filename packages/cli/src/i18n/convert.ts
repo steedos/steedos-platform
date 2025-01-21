@@ -4,7 +4,8 @@ import { getObjectConfig, getOriginalObjectConfig } from '@steedos/metadata-regi
 const fs = require("fs-extra");
 const path = require("path");
 const colors = require('colors/safe');
-const Fiber = require('fibers');
+// const Fiber = require('fibers');
+declare var Fiber;
 
 const OBJECT_TRANSLATIONS = 'objectTranslations';
 const TRANSLATIONS = 'translations';

@@ -1,15 +1,15 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-24 10:44:11
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-24 10:55:39
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2025-01-21 17:30:14
  * @Description: 
  */
 'use strict';
 // @ts-check
 const express = require('express');
 const router = express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const Fiber = require('fibers');
 /**
 @api {post} /api/formula/orgs 获取组织
@@ -29,7 +29,7 @@ const Fiber = require('fibers');
       errors: ''
     }
  */
-router.post('/api/formula/orgs', core.requireAuthentication, async function (req, res) {
+router.post('/api/formula/orgs', auth.requireAuthentication, async function (req, res) {
     try {
         let userSession = req.user;
         const userId = userSession.userId;

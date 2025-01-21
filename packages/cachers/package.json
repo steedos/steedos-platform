@@ -14,7 +14,7 @@
     "lru-cache": "^7.10.1"
   },
   "devDependencies": {
-    "typescript": "4.6.3"
+    "typescript": "5.7.3"
   },
   "publishConfig": {
     "access": "public"

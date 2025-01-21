@@ -1,5 +1,6 @@
 import * as express from 'express';
-const Fiber = require('fibers');
+// const Fiber = require('fibers');
+declare var Fiber;
 import { getSteedosSchema } from '@steedos/objectql';
 import { translationObject } from '@steedos/i18n';
 import * as core from "express-serve-static-core";

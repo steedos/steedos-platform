@@ -9,10 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const express = require('express');
 const router = express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const objectql = require('@steedos/objectql');
 const jwt = require('jsonwebtoken');
-router.get('/api/external/app/:appId', core.requireAuthentication, function (req, res) {
+router.get('/api/external/app/:appId', auth.requireAuthentication, function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const userSession = req.user;

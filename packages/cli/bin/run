@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-
+console.log('111')
 require('@oclif/command').run()
 .then(require('@oclif/command/flush'))
 .catch(require('@oclif/errors/handle'))

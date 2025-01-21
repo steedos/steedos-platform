@@ -7,7 +7,7 @@
  */
 const express = require('express');
 const router = express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const objectql = require('@steedos/objectql');
 
 const callObjectServiceAction = async function(actionName, userSession, data){
@@ -19,7 +19,7 @@ const getUISchema = async function(objectName, userSession){
     return await callObjectServiceAction(`objectql.getRecordView`, userSession, { objectName });
 }
 
-router.post('/api/listview/filters', core.requireAuthentication, async function (req, res) {
+router.post('/api/listview/filters', auth.requireAuthentication, async function (req, res) {
     const {id, filters} = req.body;
     const record = await objectql.getObject('object_listviews').directUpdate(id, {filters: filters})
     res.status(200).send(record);

@@ -5,7 +5,7 @@
  */
 const express = require("express");
 const router = express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 //引入objectql模块
 const objectql = require('@steedos/objectql');
 const ejs = require('ejs');
@@ -24,7 +24,7 @@ const getPublicAssetUrls = function(assetUrls){
     return _.join(values, ',')
 }
 
-router.get('/api/amisFormDesign', core.requireAuthentication, async function (req, res) {
+router.get('/api/amisFormDesign', auth.requireAuthentication, async function (req, res) {
     try {
         res.set('Content-Type', 'text/html');
         const userSession = req.user;

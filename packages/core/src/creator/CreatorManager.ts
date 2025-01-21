@@ -1,6 +1,7 @@
 import { JsonMap } from '@salesforce/ts-types';
 import _ = require('underscore');
-import Fiber = require('fibers');
+// import Fiber = require('fibers');
+declare var Fiber;
 declare var Creator: any;
 declare var t: any;
 declare var Steedos: any;

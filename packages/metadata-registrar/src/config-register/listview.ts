@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-05-30 14:26:40
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-30 14:26:44
+ * @LastEditTime: 2025-01-21 16:33:46
  * @Description: 
  */
 import { Dictionary } from '@salesforce/ts-types';
@@ -34,7 +34,7 @@ export const loadObjectLazyListViews = function(objectName: string){
     })
 }
 
-export const addObjectListViewConfig = (objectName: string, json: any) => {
+export const addObjectListViewConfig = (objectName: string, json: Record<string, string | boolean>) => {
     _.each(DEFAULT_LISTVIEW, (value, key) => {
         if (!_.has(json, key)) {
             json[key] = value;
@@ -49,8 +49,8 @@ export const addObjectListViewConfig = (objectName: string, json: any) => {
         if(!object.list_views){
             object.list_views = {}
         }
-        extend(object.list_views, {[json.name]: json});
-        overrideOriginalObject(objectName, {list_views: {[json.name]: json}});
+        extend(object.list_views, {[(json.name as any)]: json});
+        overrideOriginalObject(objectName, {list_views: {[(json.name as any)]: json}});
     } else {
         addLazyLoadListViews(objectName, json);
     }

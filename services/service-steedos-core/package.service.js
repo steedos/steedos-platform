@@ -2,7 +2,7 @@
  * @Author: yinlianghui@steedos.com
  * @Date: 2022-07-20 21:31:37
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-01-17 10:21:24
+ * @LastEditTime: 2025-01-21 10:21:31
  * @Description: 
  */
 "use strict";
@@ -88,15 +88,16 @@ module.exports = {
 	 * Service created lifecycle event handler
 	 */
 	async created() {
+		console.log(`created`, serviceName)
 	},
 
 	/**
 	 * Service started lifecycle event handler
 	 */
 	async started(ctx) {
-
+		console.log(`started 1`, serviceName)
 		require('@steedos/objectql').getSteedosSchema(this.broker);
-
+		console.log(`started 2`, serviceName)
 		// 创建一个空的~packages-standard-objects 服务
 		this.broker.createService({
 			name: '~packages-standard-objects',
@@ -109,41 +110,42 @@ module.exports = {
 			created: function(){
 			}
 		});
-
+		console.log(`started 3`, serviceName)
 		// 国际化
         this.broker.createService(require("@steedos/service-i18n"));
-
+		console.log(`started 4`, serviceName)
 		// 启动 元数据服务
 		this.broker.createService(require("@steedos/service-metadata-server"));
+		console.log(`started 5`, serviceName)
 
 		this.broker.createService(require("@steedos/service-cachers-manager"));
-		
+		console.log(`started 6`, serviceName)
 
 		this.broker.createService(require("@steedos/data-import"));
-
+		console.log(`started 7`, serviceName)
 		this.broker.createService(require("@steedos/service-core-objects"));
-
+		console.log(`started 8`, serviceName)
 		this.broker.createService(require("@steedos/service-objectql"));
-
+		console.log(`started 9`, serviceName)
 		// rest api
 		this.broker.createService(require("@steedos/service-rest"));
-
+		console.log(`started 10`, serviceName)
 		//ApiGateway
 		this.broker.createService(require('@steedos/service-api'));
-		
+		console.log(`started 11`, serviceName)
 		this.broker.createService(require("@steedos/webapp-public"));
-
+		console.log(`started 12`, serviceName)
 		
 		// this.broker.createService(require("@steedos/accounts"));
 
 		this.broker.createService(require("@steedos/service-accounts"));
-		
+		console.log(`started 13`, serviceName)
 		this.broker.createService(require("@steedos/service-pages"));
-
+		console.log(`started 14`, serviceName)
 		// this.broker.createService(require("@steedos/service-workflow"));
 
 		this.broker.createService(require("@steedos/service-plugin-amis"));
-
+		console.log(`started 15`, serviceName)
 		// this.broker.createService(require("@steedos/service-files"));
 
 		// this.broker.createService(require("@steedos/service-ancillary"));
@@ -155,10 +157,10 @@ module.exports = {
 
 		// 启动 加载软件包服务
 		this.broker.createService(require("@steedos/service-package-registry"));
-
+		console.log(`started 16`, serviceName)
 		// 启动 软件包安装、卸载、重载等操作
 		this.broker.createService(require("@steedos/service-package-tool"));
-
+		console.log(`started 17`, serviceName)
 		// if(this.settings.jwt.enable){
 		// 	this.broker.createService(require("@steedos/service-identity-jwt"));
 		// }

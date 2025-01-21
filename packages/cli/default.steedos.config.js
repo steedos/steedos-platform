@@ -324,10 +324,11 @@ module.exports = {
 		// Clear all cache entries
 		broker.logger.warn('Clear all cache entries on startup.')
 		broker.cacher.clean();
-
+		console.log(`Clear all cache entries on startup===1>`)
 		const objectql = require(require.resolve('@steedos/objectql', { paths: [process.cwd()] }));
+		console.log(`Clear all cache entries on startup===2>`)
 		objectql.broker.init(broker);
-
+		console.log(`Clear all cache entries on startup===init>`)
 		//TODO 此处不考虑多个node服务模式.
 		process.on('SIGTERM', close.bind(broker, 'SIGTERM'));
 		process.on('SIGINT', close.bind(broker, 'SIGINT'));

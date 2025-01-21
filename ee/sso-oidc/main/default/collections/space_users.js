@@ -4,8 +4,8 @@ exports.SpaceUsers = void 0;
 const tslib_1 = require("tslib");
 const objectql_1 = require("@steedos/objectql");
 class SpaceUsers {
-    static insert(spaceId, userId, options = { user_accepted: true }) {
-        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+    static insert(spaceId_1, userId_1) {
+        return tslib_1.__awaiter(this, arguments, void 0, function* (spaceId, userId, options = { user_accepted: true }) {
             yield (0, objectql_1.getSteedosSchema)().broker.call(`spaces.addSpaceUsers`, {
                 spaceId,
                 userId,

@@ -3,7 +3,8 @@ import { sendNotifications } from './notifications';
 import { SteedosError } from '@steedos/objectql'
 
 const objectql = require('@steedos/objectql');
-const Fiber = require('fibers');
+// const Fiber = require('fibers');
+declare var Fiber;
 const _ = require("underscore");
 
 declare var getHandlersManager;

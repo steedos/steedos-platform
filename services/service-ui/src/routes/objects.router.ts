@@ -1,14 +1,14 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-09 10:19:47
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-11-14 11:11:06
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2025-01-21 17:29:20
  * @Description: 
  */
 import { getSteedosSchema } from "@steedos/objectql";
 const express = require('express');
 const router =express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 
 
 const callObjectServiceAction = async function(actionName, userSession, data?){
@@ -20,7 +20,7 @@ const getObjectName = function(objectServiceName){
     return objectServiceName.substring(1);
 }
 
-router.get('/service/api/:objectServiceName/fields', core.requireAuthentication, async function (req, res) {
+router.get('/service/api/:objectServiceName/fields', auth.requireAuthentication, async function (req, res) {
     const userSession = req.user;
     try {
         const { objectServiceName } = req.params;
@@ -31,7 +31,7 @@ router.get('/service/api/:objectServiceName/fields', core.requireAuthentication,
     }
 });
 
-router.get('/service/api/:objectServiceName/getUserObjectPermission', core.requireAuthentication, async function (req, res) {
+router.get('/service/api/:objectServiceName/getUserObjectPermission', auth.requireAuthentication, async function (req, res) {
     const userSession = req.user;
     try {
         const { objectServiceName } = req.params;
@@ -42,7 +42,7 @@ router.get('/service/api/:objectServiceName/getUserObjectPermission', core.requi
     }
 });
 
-router.get('/service/api/:objectServiceName/recordPermissions/:recordId', core.requireAuthentication, async function (req, res) {
+router.get('/service/api/:objectServiceName/recordPermissions/:recordId', auth.requireAuthentication, async function (req, res) {
     const userSession = req.user;
     try {
         const { objectServiceName, recordId } = req.params;
@@ -56,7 +56,7 @@ router.get('/service/api/:objectServiceName/recordPermissions/:recordId', core.r
     }
 });
 
-router.get('/service/api/:objectServiceName/uiSchema', core.requireAuthentication, async function (req, res) {
+router.get('/service/api/:objectServiceName/uiSchema', auth.requireAuthentication, async function (req, res) {
     const userSession = req.user;
     try {
         const { objectServiceName } = req.params;
@@ -77,7 +77,7 @@ router.get('/service/api/:objectServiceName/uiSchema', core.requireAuthenticatio
     }
 });
 
-router.post('/service/api/:objectServiceName/defUiSchema', core.requireAuthentication, async function (req, res) {
+router.post('/service/api/:objectServiceName/defUiSchema', auth.requireAuthentication, async function (req, res) {
     const userSession = req.user;
     try {
         const { objectServiceName } = req.params;
@@ -88,7 +88,7 @@ router.post('/service/api/:objectServiceName/defUiSchema', core.requireAuthentic
     }
 });
 
-router.get('/service/api/:objectServiceName/uiSchemaTemplate', core.requireAuthentication, async function (req, res) {
+router.get('/service/api/:objectServiceName/uiSchemaTemplate', auth.requireAuthentication, async function (req, res) {
     const userSession = req.user;
     try {
         const { objectServiceName } = req.params;
@@ -99,7 +99,7 @@ router.get('/service/api/:objectServiceName/uiSchemaTemplate', core.requireAuthe
     }
 });
 
-router.get('/service/api/:objectServiceName/relateds', core.requireAuthentication, async function (req, res) {
+router.get('/service/api/:objectServiceName/relateds', auth.requireAuthentication, async function (req, res) {
     const userSession = req.user;
     try {
         const { objectServiceName } = req.params;

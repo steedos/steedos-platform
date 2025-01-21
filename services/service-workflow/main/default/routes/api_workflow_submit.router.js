@@ -8,7 +8,7 @@
 // @ts-check
 const express = require("express");
 const router = express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const _ = require('lodash');
 const Fiber = require("fibers");
 const { excuteTriggers } = require('../utils/trigger');
@@ -40,7 +40,7 @@ const { excuteTriggers } = require('../utils/trigger');
  *   ]
  * }
  */
-router.post('/api/workflow/submit', core.requireAuthentication, async function (req, res) {
+router.post('/api/workflow/submit', auth.requireAuthentication, async function (req, res) {
     try {
         if (process.env.STEEDOS_DEBUG) {
             console.time('/api/workflow/submit')

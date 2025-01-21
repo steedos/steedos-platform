@@ -30,7 +30,6 @@
     "debug": "4.3.4",
     "express": "^4.15.4",
     "express-session": "1.17.1",
-    "fibers": "^5.0.3",
     "js-yaml": "^3.14.1",
     "jsen": "^0.6.6",
     "json2xls": "^0.1.2",
@@ -51,7 +50,7 @@
     "@types/underscore": "^1.8.13",
     "jslint": "^0.12.1",
     "tslib": "^2.4.0",
-    "typescript": "4.6.3"
+    "typescript": "5.7.3"
   },
   "types": "lib/index.d.ts",
   "publishConfig": {

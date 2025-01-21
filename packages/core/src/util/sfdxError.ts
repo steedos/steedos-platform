@@ -239,7 +239,7 @@ export class SfdxError extends NamedError {
    * @param exitCode The exit code which will be used by SfdxCommand.
    * @param cause The underlying error that caused this error to be raised.
    */
-  constructor(message: string, name?: string, actions?: string[], exitCode?: number, cause?: Error) {
+  constructor(message: string, name?: string, actions?: string[], exitCode?: number, cause?: NamedError) {
     super(name || 'SfdxError', message, cause);
     this.actions = actions;
     this.exitCode = exitCode || 1;

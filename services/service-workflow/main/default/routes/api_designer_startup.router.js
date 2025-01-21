@@ -1,15 +1,15 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-24 09:30:45
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-24 10:42:41
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2025-01-21 17:30:00
  * @Description: 
  */
 'use strict';
 // @ts-check
 const express = require('express');
 const router = express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const _ = require('underscore');
 const Fiber = require('fibers');
 /**
@@ -37,7 +37,7 @@ const Fiber = require('fibers');
       errors: [{ errorMessage: e.message }]
     }
  */
-router.get('/api/designer/startup', core.requireAuthentication, async function (req, res) {
+router.get('/api/designer/startup', auth.requireAuthentication, async function (req, res) {
     try {
         let userSession = req.user;
         const userId = userSession.userId;

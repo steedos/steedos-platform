@@ -4,7 +4,7 @@ const tslib_1 = require("tslib");
 const objectql_1 = require("@steedos/objectql");
 const express = require('express');
 const router = express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const callObjectServiceAction = function (actionName, userSession, data) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const broker = (0, objectql_1.getSteedosSchema)().broker;
@@ -14,7 +14,7 @@ const callObjectServiceAction = function (actionName, userSession, data) {
 const getObjectName = function (objectServiceName) {
     return objectServiceName.substring(1);
 };
-router.get('/service/api/:objectServiceName/fields', core.requireAuthentication, function (req, res) {
+router.get('/service/api/:objectServiceName/fields', auth.requireAuthentication, function (req, res) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const userSession = req.user;
         try {
@@ -27,7 +27,7 @@ router.get('/service/api/:objectServiceName/fields', core.requireAuthentication,
         }
     });
 });
-router.get('/service/api/:objectServiceName/getUserObjectPermission', core.requireAuthentication, function (req, res) {
+router.get('/service/api/:objectServiceName/getUserObjectPermission', auth.requireAuthentication, function (req, res) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const userSession = req.user;
         try {
@@ -40,7 +40,7 @@ router.get('/service/api/:objectServiceName/getUserObjectPermission', core.requi
         }
     });
 });
-router.get('/service/api/:objectServiceName/recordPermissions/:recordId', core.requireAuthentication, function (req, res) {
+router.get('/service/api/:objectServiceName/recordPermissions/:recordId', auth.requireAuthentication, function (req, res) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const userSession = req.user;
         try {
@@ -56,7 +56,7 @@ router.get('/service/api/:objectServiceName/recordPermissions/:recordId', core.r
         }
     });
 });
-router.get('/service/api/:objectServiceName/uiSchema', core.requireAuthentication, function (req, res) {
+router.get('/service/api/:objectServiceName/uiSchema', auth.requireAuthentication, function (req, res) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const userSession = req.user;
         try {
@@ -72,7 +72,7 @@ router.get('/service/api/:objectServiceName/uiSchema', core.requireAuthenticatio
         }
     });
 });
-router.post('/service/api/:objectServiceName/defUiSchema', core.requireAuthentication, function (req, res) {
+router.post('/service/api/:objectServiceName/defUiSchema', auth.requireAuthentication, function (req, res) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const userSession = req.user;
         try {
@@ -85,7 +85,7 @@ router.post('/service/api/:objectServiceName/defUiSchema', core.requireAuthentic
         }
     });
 });
-router.get('/service/api/:objectServiceName/uiSchemaTemplate', core.requireAuthentication, function (req, res) {
+router.get('/service/api/:objectServiceName/uiSchemaTemplate', auth.requireAuthentication, function (req, res) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const userSession = req.user;
         try {
@@ -98,7 +98,7 @@ router.get('/service/api/:objectServiceName/uiSchemaTemplate', core.requireAuthe
         }
     });
 });
-router.get('/service/api/:objectServiceName/relateds', core.requireAuthentication, function (req, res) {
+router.get('/service/api/:objectServiceName/relateds', auth.requireAuthentication, function (req, res) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const userSession = req.user;
         try {

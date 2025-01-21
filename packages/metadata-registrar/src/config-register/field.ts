@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-05-29 10:34:27
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-03-20 15:01:11
+ * @LastEditTime: 2025-01-21 16:34:58
  * @Description: 
  */
 import { getObjectConfig, getOriginalObjectConfig } from './core'
@@ -35,7 +35,7 @@ export const loadObjectLazyFields = function(objectName: string){
 export const addObjectFieldConfig = (objectName: string, json: any) => {
     _.each(DEFAULT_FIELD, (value, key) => {
         if (!_.has(json, key)) {
-            json[key] = value;
+            (json as { [key: string]: any })[key] = value;
         }
     });
     if (!json.name) {

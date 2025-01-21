@@ -386,11 +386,11 @@ module.exports = {
         this.packageServices = [];  //此属性不能放到settings下，否则会导致mo clone settings 时 内存溢出。
         this.logger.debug('service package loader created!!!');
         
-        try {
-            this.core = require('@steedos/core');
-        } catch (e) {
+        // try {
+        //     this.core = require('@steedos/core');
+        // } catch (e) {
             
-        }
+        // }
 
         try {
             this.objectql = require('@steedos/objectql');

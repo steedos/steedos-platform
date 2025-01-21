@@ -1,4 +1,5 @@
 const {Command, flags} = require('@oclif/command')
+console.log('========>')
 const path = require("path");
 import {ServiceBroker, Utils as utils} from "moleculer";
 import fs from "fs";

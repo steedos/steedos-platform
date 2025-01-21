@@ -15,7 +15,7 @@ const {
     update_instance_tasks,
     insert_many_instance_tasks,
 } = require('@steedos/workflow').workflowManagers.instance_tasks_manager
-router.post("/api/workflow/v2/instance/forward", core.requireAuthentication, async function (req, res) {
+router.post("/api/workflow/v2/instance/forward", auth.requireAuthentication, async function (req, res) {
     try {
       let userSession = req.user;
       Fiber(async function () {

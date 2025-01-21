@@ -7,7 +7,7 @@
  */
 const express = require("express");
 const router = express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const _ = require('lodash');
 const Fiber = require("fibers");
 const objectql = require('@steedos/objectql');
@@ -218,7 +218,7 @@ const getNextSteps = (flow, flowVersionId, instance, currentStep, judge, autoFor
 }
 
 
-router.post('/api/workflow/v2/nextStep', core.requireAuthentication, async function (req, res) {
+router.post('/api/workflow/v2/nextStep', auth.requireAuthentication, async function (req, res) {
     try {
         let userSession = req.user;
         const { instanceId, flowId, step, judge, values, flowVersionId } = req.body;

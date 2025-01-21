@@ -68,7 +68,7 @@ async function getListViewByName(dbManager, listviewName, objectName) {
 
 export async function listviewsToDb(dbManager, listviews, objectName){
   for(const listviewName in listviews){
-    var listview = listviews[listviewName];
+    var listview: {name: string, object_name: string, [key:string]: string} = listviews[listviewName];
     listview.name = listviewName;
     listview.object_name = objectName;
     _.each(DEFAULT_LISTVIEW, (value: any, key: any) => {

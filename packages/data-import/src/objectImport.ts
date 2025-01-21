@@ -1,12 +1,9 @@
-const fs = require("fs");
 const path = require("path");
 const _ = require("underscore");
 const objectql = require("@steedos/objectql");
-const Fiber = require("fibers");
 const moment = require("moment");
-declare var Creator: any;
 const auth = require("@steedos/auth");
-declare var TAPi18n;
+const i18n = require('@steedos/i18n')
 
 type ImportOptions = {
   objectName: string;
@@ -835,9 +832,9 @@ export async function importWithExcelFile(file, options) {
     const failure_count = importResult.failure_count;
 
     // let notificationBody = `总共导入${importResult.total_count}条记录;\n成功: ${importResult.success_count}条;\n失败: ${importResult.failure_count};`;
-    let notificationBody = TAPi18n.__('queue_import_success_notification_body', {returnObjects: true, total_count,success_count,failure_count }, locale);
+    let notificationBody = i18n.t('queue_import_success_notification_body', {returnObjects: true, total_count,success_count,failure_count }, locale);
     if (importResult.errorList && importResult.errorList.length > 0) {
-      notificationBody = `${notificationBody}\n${TAPi18n.__('queue_import_error_info', {returnObjects: true}, locale)}: ${importResult.errorList.join(
+      notificationBody = `${notificationBody}\n${i18n.t('queue_import_error_info', {returnObjects: true}, locale)}: ${importResult.errorList.join(
         "\n  "
       )}`;
     }
@@ -845,7 +842,7 @@ export async function importWithExcelFile(file, options) {
     //发送通知
     return objectql.getSteedosSchema().broker.call('notifications.add', {
       message: {
-        name: `${TAPi18n.__('queue_import_tips', {returnObjects: true}, locale)}: ${file.original.name}`,
+        name: `${i18n.t('queue_import_tips', {returnObjects: true}, locale)}: ${file.original.name}`,
         body: notificationBody,
         related_to: {
           o: "queue_import_history",

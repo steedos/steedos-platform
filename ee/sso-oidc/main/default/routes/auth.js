@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.oidcLogout = exports.oidcLogin = exports.oidcPreAuth = exports.oidcAuth = exports.oidcStrategyFactory = exports.oidcCallbackUrl = void 0;
+exports.oidcLogout = exports.oidcLogin = exports.oidcPreAuth = exports.oidcAuth = exports.oidcCallbackUrl = void 0;
+exports.oidcStrategyFactory = oidcStrategyFactory;
 const tslib_1 = require("tslib");
 const core = require("./core");
 const { oidc } = require("./middleware");
@@ -34,7 +35,6 @@ function oidcStrategyFactory() {
         return oidcStrategy.strategy;
     });
 }
-exports.oidcStrategyFactory = oidcStrategyFactory;
 const oidcAuth = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
     return passport.authenticate('oidc', (err, user) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
         var _a, _b;

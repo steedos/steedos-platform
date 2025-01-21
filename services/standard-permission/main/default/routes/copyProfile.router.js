@@ -12,7 +12,7 @@
 
 const express = require("express");
 const router = express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const objectql = require('@steedos/objectql');
 const InternalData = require('@steedos/standard-objects').internalData;
 const _ = require('underscore');
@@ -25,7 +25,7 @@ const { MongoClient } = require('mongodb');
  *  label: "", // 新简档的标签
  * }
  */
-router.post('/api/permission/permission_set/copy', core.requireAuthentication, async function (req, res) {
+router.post('/api/permission/permission_set/copy', auth.requireAuthentication, async function (req, res) {
     try {
         const userSession = req.user;
         const { userId, spaceId, company_id } = userSession;

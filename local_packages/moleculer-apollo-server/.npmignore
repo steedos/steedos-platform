@@ -1,0 +1,9 @@
+.vscode/
+.github/
+coverage/
+dev/
+docs/
+examples/
+typings
+test/
+CHANGELOG.md

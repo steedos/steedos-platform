@@ -1,0 +1,45 @@
+scalar Date
+
+scalar Timestamp
+
+type Query {
+  posts(limit: Int): [Post]
+  users(limit: Int): [User]
+}
+
+type Mutation {
+  upvote(id: Int!, userID: Int!): Post
+  downvote(id: Int!, userID: Int!): Post
+}
+
+type Subscription {
+  vote(userID: Int!): String!
+}
+
+"""This type describes a post entity."""
+type Post {
+  id: Int!
+  title: String!
+  author: User!
+  votes: Int!
+  voters: [User]
+  createdAt: Timestamp
+  error: String
+}
+
+"""This type describes a user entity."""
+type User {
+  id: Int!
+  name: String!
+  birthday: Date
+  posts(limit: Int): [Post]
+  postCount: Int
+  type: UserType
+}
+
+"""Enumerations for user types"""
+enum UserType {
+  ADMIN
+  PUBLISHER
+  READER
+}

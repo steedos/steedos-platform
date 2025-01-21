@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.strategyFactory = exports.getEmail = exports.buildVerifyFn = void 0;
+exports.strategyFactory = exports.buildVerifyFn = void 0;
+exports.getEmail = getEmail;
 const tslib_1 = require("tslib");
 const node_fetch_1 = require("node-fetch");
 const context_1 = require("../../../context");
@@ -40,7 +41,6 @@ function getEmail(profile, jwtClaims) {
     }
     throw new Error(`Could not determine user email from profile ${JSON.stringify(profile)} and claims ${JSON.stringify(jwtClaims)}`);
 }
-exports.getEmail = getEmail;
 function validEmail(value) {
     return (value &&
         !!value.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/));

@@ -1,15 +1,23 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-12-09 18:23:36
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2025-01-21 17:26:21
+ * @Description: 
+ */
 const SteedosRouter = require('@steedos/router');
 const router = SteedosRouter.staticRouter();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const objectql = require('@steedos/objectql');
-const Fiber = require('fibers');
+// const Fiber = require('fibers');
+declare var Fiber;
 /**
  * 将office文档转换为pdf，作为正文新版本
  * body {
  *   attachmentId 正文最新版本文件ID
  * }
  */
-router.post('/api/workflow/office_convert_to_pdf', core.requireAuthentication, async function (req, res) {
+router.post('/api/workflow/office_convert_to_pdf', auth.requireAuthentication, async function (req, res) {
     try {
         const userSession = req.user;
         const spaceId = userSession.spaceId;

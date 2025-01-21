@@ -3,12 +3,12 @@
 
 const express = require("express");
 const router = express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const objectql = require('@steedos/objectql');
 const { randomInt } = require("crypto");
 const { JSONStringify } = require("@steedos/objectql");
 
-router.get('/api/object_workflows/workflow_field/options', core.requireAuthentication, async function (req, res) {
+router.get('/api/object_workflows/workflow_field/options', auth.requireAuthentication, async function (req, res) {
     try {
 
         const userSession = req.user;

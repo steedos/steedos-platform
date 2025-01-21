@@ -177,9 +177,14 @@ const loadTriggers = (filePath: string) => {
     const matchedPaths: [string] = syncMatchFiles(filePatten);
     _.each(matchedPaths, (matchedPath: string) => {
         delete require.cache[require.resolve(matchedPath)];
-        let json: any = loadFile(matchedPath);
+        interface ListenerConfig {
+            listenTo?: string;
+            [key: string]: any; // Allow other properties
+        }
+
+        let json: ListenerConfig = loadFile(matchedPath);
         if (!_.has(json, "listenTo")) {
-        json.listenTo = path.basename(matchedPath).split(".")[0];
+            json.listenTo = path.basename(matchedPath).split(".")[0];
         }
         results.push(json);
     });

@@ -7,11 +7,11 @@
  */
 const express = require("express");
 const router = express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const _ = require('lodash');
 const Fiber = require("fibers");
 
-router.post('/api/object/workflow/drafts', core.requireAuthentication, async function (req, res) {
+router.post('/api/object/workflow/drafts', auth.requireAuthentication, async function (req, res) {
     try {
         let userSession = req.user;
         const { Instances } = req.body;

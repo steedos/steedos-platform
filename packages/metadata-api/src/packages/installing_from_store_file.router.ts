@@ -5,7 +5,7 @@
  * @LastEditTime: 2022-11-29 11:55:45
  * @Description: 
  */
-import { requireAuthentication } from '@steedos/core';
+import { requireAuthentication } from '@steedos/auth';
 import { deleteFolderRecursive } from '@steedos/metadata-core'
 import { getInstallingFile, getInstallingInfo, saveImportedPackage } from './util';
 import { jsonToDb } from '../metadata/deploy/jsonToDb';

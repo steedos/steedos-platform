@@ -214,13 +214,13 @@ export const loadPackageMetadatas = async function (packagePath: string, datasou
         }
         if(!_.has(element, 'extend')){
             let startNo = 10;
-            _.each(element.fields, function (field) {
+            _.each((element as any).fields, function (field) {
                 if (!_.has(field, 'sort_no')) {
-                    field.sort_no = startNo;
+                    (field as any).sort_no = startNo;
                     startNo = startNo + 10;
                 }
                 if((field.type === 'lookup' || field.type === 'master_detail') && field.reference_to ==='users'){
-                    if(element.name != 'space_users' && field.name != 'user'){
+                    if((element as any).name != 'space_users' && field.name != 'user'){
                         field.reference_to = 'space_users';
                         field.reference_to_field = 'user';
                     }
@@ -234,8 +234,8 @@ export const loadPackageMetadatas = async function (packagePath: string, datasou
         _.each(getLazyLoadFields(element.name), function (field) {
             extend(element.fields, { [field.name]: field })
         });
-        _.each(element.fields, (field)=>{
-            if(field.omit === true && !_.has(field, 'hidden')){
+        _.each(element.fields, (field: { omit?: boolean; hidden?: boolean }) => {
+            if (field.omit === true && !_.has(field, 'hidden')) {
                 field.hidden = true;
             }
         })

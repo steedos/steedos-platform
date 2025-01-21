@@ -5,7 +5,7 @@
  * @LastEditTime: 2022-11-29 11:56:12
  * @Description: 
  */
-import { requireAuthentication } from '@steedos/core';
+import { requireAuthentication } from '@steedos/auth';
 
 import { jsonToFile, mkTempFolder, compressFiles, deleteFolderRecursive, mkdirsSync } from '@steedos/metadata-core'
 
@@ -17,7 +17,8 @@ const router = express.Router();
 const fs = require('fs');
 const path = require('path');
 
-const Fiber = require('fibers');
+// const Fiber = require('fibers');
+declare var Fiber;
 const _ = require('underscore');
 const clone = require('clone');
 

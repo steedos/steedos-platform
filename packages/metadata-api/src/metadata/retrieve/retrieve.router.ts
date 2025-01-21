@@ -12,9 +12,10 @@ const path = require('path');
 const yaml = require('js-yaml');
 
 const chalk = require("chalk");
-const Fiber = require('fibers');
+// const Fiber = require('fibers');
+declare var Fiber;
 
-import { requireAuthentication } from '@steedos/core';
+import { requireAuthentication } from '@steedos/auth';
 
 import { getSteedosPackage } from './dbToJson';
 

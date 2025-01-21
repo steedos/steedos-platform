@@ -5,7 +5,7 @@
  */
 const express = require('express');
 const router = express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const ejs = require('ejs');
 const fs = require('fs');
 const _ = require('lodash');
@@ -23,7 +23,7 @@ const getPublicAssetUrls = function(assetUrls){
     return _.join(values, ',')
 }
 
-router.get('/api/pageDesign', core.requireAuthentication, async function (req, res) {
+router.get('/api/pageDesign', auth.requireAuthentication, async function (req, res) {
     try {
         res.set('Content-Type', 'text/html');
         const userSession = req.user;

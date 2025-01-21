@@ -1,6 +1,7 @@
 const objectql = require('@steedos/objectql');
 import { getUserLocale } from '@steedos/objectql';
-const Fiber = require('fibers');
+// const Fiber = require('fibers');
+declare var Fiber;
 declare var Creator;
 declare var TAPi18n;
 

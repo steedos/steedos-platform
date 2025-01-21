@@ -15,7 +15,6 @@
   "license": "ISC",
   "dependencies": {
     "@mapbox/node-pre-gyp": "1.0.9",
-    "fibers": "5.0.3",
     "meteor-promise": "0.8.5",
     "open": "^7.3.0",
     "promise": "8.0.1",

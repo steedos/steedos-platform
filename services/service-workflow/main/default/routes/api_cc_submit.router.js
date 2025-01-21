@@ -2,19 +2,19 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-02-11 14:50:02
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-02-15 17:12:18
+ * @LastEditTime: 2025-01-21 17:29:36
  * @Description: 
  */
 const express = require("express");
 const router = express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const objectql = require('@steedos/objectql')
 const _ = require('lodash');
 const Fiber = require("fibers");
 
 const { workflowMethods } = require('@steedos/workflow')
 
-router.post('/api/workflow/v2/cc_submit', core.requireAuthentication, async function (req, res) {
+router.post('/api/workflow/v2/cc_submit', auth.requireAuthentication, async function (req, res) {
     try {
         let userSession = req.user;
         const { instanceId, traceId, approveId, description } = req.body;

@@ -2,7 +2,6 @@ const path = require("path");
 import { getFullName } from '../index';
 
 export function checkNameEquals(json, name, filepath, metadataName){
-
     var fullName = getFullName(metadataName ,json);
 
     if(fullName != name){

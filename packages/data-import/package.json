@@ -18,7 +18,7 @@
     "node-xlsx": "^0.16.1"
   },
   "devDependencies": {
-    "typescript": "4.6.3"
+    "typescript": "5.7.3"
   },
   "private": false,
   "publishConfig": {

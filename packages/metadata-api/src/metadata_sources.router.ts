@@ -1,3 +1,10 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-11-17 16:29:16
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2025-01-21 17:25:12
+ * @Description: 
+ */
 const express = require("express");
 const router = express.Router();
 const fs = require('fs');
@@ -5,10 +12,11 @@ const path = require('path');
 const yaml = require('js-yaml');
 
 const chalk = require("chalk");
-const Fiber = require('fibers');
+// const Fiber = require('fibers');
+declare var Fiber;
 const _ = require('underscore');
 
-import { requireAuthentication } from '@steedos/core';
+import { requireAuthentication } from '@steedos/auth';
 import { getMetadataSources } from './metadata/collection';
 
 import { DbManager } from './util/dbManager';

@@ -9,7 +9,7 @@
 // @ts-check
 const express = require('express');
 const router = express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const _ = require('underscore');
 const Fiber = require('fibers');
 const moment = require('moment')
@@ -32,7 +32,7 @@ const path = require('path')
       errors: [{ errorMessage: e.message }]
     }
  */
-router.get('/api/workflow/export/instances', core.requireAuthentication, async function (req, res) {
+router.get('/api/workflow/export/instances', auth.requireAuthentication, async function (req, res) {
     try {
         let userSession = req.user;
         const spaceId = userSession.spaceId;

@@ -2,7 +2,8 @@ import querystring = require('querystring');
 import odataV4Mongodb = require('@steedos/odata-v4-mongodb');
 import { formatFiltersToODataQuery } from "@steedos/filters";
 import { requireAuthentication } from './';
-const Fiber = require('fibers');
+// const Fiber = require('fibers');
+declare var Fiber;
 const moment = require('moment');
 const json2xls = require('json2xls');
 const objectql = require('@steedos/objectql')

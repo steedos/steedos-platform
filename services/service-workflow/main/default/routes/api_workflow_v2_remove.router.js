@@ -7,7 +7,7 @@
  */
 const express = require("express");
 const router = express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const _ = require('lodash');
 const Fiber = require("fibers");
 const {
@@ -21,7 +21,7 @@ const {
  *  }
  * }
  */
-router.post('/api/workflow/v2/remove', core.requireAuthentication, async function (req, res) {
+router.post('/api/workflow/v2/remove', auth.requireAuthentication, async function (req, res) {
     try {
         let userSession = req.user;
         const { instance: data } = req.body;

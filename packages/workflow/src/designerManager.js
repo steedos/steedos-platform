@@ -3,7 +3,8 @@
 const _ = require('underscore');
 const objectql = require("@steedos/objectql");
 const steedosSchema = objectql.getSteedosSchema();
-const Fiber = require('fibers');
+// const Fiber = require('fibers');
+declare var Fiber;
 
 const lodash = require('lodash');
 

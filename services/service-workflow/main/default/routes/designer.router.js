@@ -9,7 +9,7 @@
 // @ts-check
 const express = require('express');
 const router = express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const { getObject } = require('@steedos/objectql')
 const he = require('he');
 
@@ -191,7 +191,7 @@ var DesignerAPI = {
       errors: [{ errorMessage: e.message }]
     }
  */
-router.get('/api/workflow/designer', core.requireAuthentication, async function (req, res) {
+router.get('/api/workflow/designer', auth.requireAuthentication, async function (req, res) {
     try {
 		res.writeHead(200, {
 			"Content-Type": "text/html;charset=utf-8"

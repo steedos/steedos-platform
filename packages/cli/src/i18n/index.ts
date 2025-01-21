@@ -4,7 +4,6 @@ const inquirer = require("inquirer");
 const path = require("path");
 const _ = require("underscore");
 const colors = require('colors/safe');
-const Fiber = require('fibers');
 const clone = require('clone');
 
 const OBJECT_TRANSLATIONS = 'objectTranslations';
@@ -14,9 +13,7 @@ const OBJECT_TRANSLATION_SUFFIX = 'objectTranslation';
 const TRANSLATION_SUFFIX = 'translation';
 
 export async function CliLogic(lng, packageDir) {
-    Fiber(async function(){
-        await translationPackage(lng, packageDir)
-    }).run();
+    await translationPackage(lng, packageDir)
 }
 
 async function translationPackage(lng, packageDir){

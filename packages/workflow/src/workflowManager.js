@@ -1,4 +1,5 @@
-const Fiber = require('fibers');
+// const Fiber = require('fibers');
+declare var Fiber;
 
 exports.hasInstancePermissions = async function(user, instance){
     let hasPermission = await new Promise(function (resolve, reject) {

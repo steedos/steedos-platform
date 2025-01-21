@@ -9,7 +9,7 @@
 // @ts-check
 const express = require('express');
 const router = express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const _ = require('underscore');
 const Fiber = require('fibers');
 const formidable = require('formidable');
@@ -68,7 +68,7 @@ const importWorkflow = function (jsonStr, uid, spaceId, company_id, flowId) {
       errors: [{ errorMessage: e.message }]
     }
  */
-router.post('/api/workflow/import/form', core.requireAuthentication, async function (req, res) {
+router.post('/api/workflow/import/form', auth.requireAuthentication, async function (req, res) {
     try {
         Fiber(async function () {
             try {

@@ -1,14 +1,11 @@
 const path = require("path");
-const fs = require("fs");
-const os = require("os");
 import * as _  from 'underscore';
-import * as fsLib from 'graceful-fs';
 import { SteedosMetadataTypeInfoKeys as TypeInfoKeys, 
     getMetadataTypeInfo, getChildMetadataTypeInfos, getMetadataTypeInfoByExt,
     getMetadataTypeInfoByDirectory, getMetadataTypeInfos, getAllowSyncMetadataKeys } from './typeInfo'
 
 import { getDefaultPackagePath } from './packages/index'
-import { getAllPackages, getProjectWorkPath, getServicesPackages } from './project/index'
+import { getAllPackages, getServicesPackages } from './project/index'
 
 export { SteedosMetadataTypeInfoKeys, getMetadataKeys, getMetadataTypeInfo, getAllowSyncMetadataKeys } from './typeInfo'
 export * from './metadata'

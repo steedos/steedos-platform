@@ -11,7 +11,7 @@
 const objectql = require('@steedos/objectql');
 const express = require('express');
 const router = express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const _ = require('underscore');
 const lodash = require('lodash');
 const { link } = require('fs');
@@ -253,7 +253,7 @@ const getCategoriesMonitor = async (userSession, req, currentUrl) => {
   };
 }
 
-router.get('/api/:appId/workflow/nav', core.requireAuthentication, async function (req, res) {
+router.get('/api/:appId/workflow/nav', auth.requireAuthentication, async function (req, res) {
   try {
     let currentUrl = decodeURIComponent(req.headers.referer);
     currentUrl = currentUrl.substring(currentUrl.indexOf("/app"));

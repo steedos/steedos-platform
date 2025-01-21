@@ -9,7 +9,7 @@
 // @ts-check
 const express = require('express');
 const router = express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const _ = require('underscore');
 const Fiber = require('fibers');
 /**
@@ -34,7 +34,7 @@ const Fiber = require('fibers');
       errors: [e]
     }
  */
-router.post('/api/workflow/forward_table_refill', core.requireAuthentication, async function (req, res) {
+router.post('/api/workflow/forward_table_refill', auth.requireAuthentication, async function (req, res) {
     try {
         let userSession = req.user;
         const spaceId = userSession.spaceId;

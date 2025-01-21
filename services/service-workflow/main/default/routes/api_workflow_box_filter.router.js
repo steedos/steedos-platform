@@ -7,10 +7,10 @@
  */
 const express = require("express");
 const router = express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const objectql = require('@steedos/objectql');
 
-router.get('/api/workflow/v2/:box/filter', core.requireAuthentication, async function (req, res) {
+router.get('/api/workflow/v2/:box/filter', auth.requireAuthentication, async function (req, res) {
     const userSession = req.user;
     const { userId, is_space_admin, spaceId } = userSession;
     // TODO 按应用分类显示

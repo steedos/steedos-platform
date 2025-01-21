@@ -184,7 +184,7 @@ export async function refreshObject(ctx, objectApiName) {
     if (mainConfigs.length == 1) {
         mainConfig = mainConfigs[0];
     } else if (mainConfigs.length > 1) {
-        let dbMainConfig = _.find(mainConfigs, (conf) => {
+        let dbMainConfig: any = _.find(mainConfigs, (conf) => {
             return _.has(conf, "_id") && !_.has(conf, "__filename");
         });
         if (dbMainConfig) {
@@ -220,7 +220,7 @@ export async function refreshObject(ctx, objectApiName) {
         objectApiName != MONGO_BASE_OBJECT &&
         objectApiName != SQL_BASE_OBJECT
     ) {
-        _.each(objectConfig.actions, (action) => {
+        _.each(objectConfig.actions, (action: { _visible?: string, visible?: string }) => {
             if (!_.has(action, "_visible") && _.has(action, "visible")) {
                 action._visible = `
                     function(){ 
@@ -289,7 +289,7 @@ export async function refreshObject(ctx, objectApiName) {
         }
     });
 
-    _.each(objectConfig.actions, (action, key) => {
+    _.each(objectConfig.actions, (action: { name?: string }, key) => {
         if (!_.has(action, "name")) {
             action.name = key;
         }

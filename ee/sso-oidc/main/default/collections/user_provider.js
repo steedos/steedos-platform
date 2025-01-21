@@ -6,8 +6,8 @@ const objectql_1 = require("@steedos/objectql");
 const context_1 = require("../context");
 class UserProvider {
     static link(user) {
-        var _a, _b, _c, _d;
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            var _a, _b, _c, _d;
             const { thirdPartyUser, _id } = user;
             const { params } = thirdPartyUser;
             const collection = (0, objectql_1.getObject)('user_providers');

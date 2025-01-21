@@ -9,7 +9,7 @@
 // @ts-check
 const express = require('express');
 const router = express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const _ = require('underscore');
 const Fiber = require('fibers');
 /**
@@ -35,7 +35,7 @@ const Fiber = require('fibers');
       errors: [{ errorMessage: e.message }]
     }
  */
-router.post('/api/workflow/open/cfs/:ins_id', core.requireAuthentication, async function (req, res) {
+router.post('/api/workflow/open/cfs/:ins_id', auth.requireAuthentication, async function (req, res) {
     try {
         let userSession = req.user;
         const spaceId = userSession.spaceId;
@@ -232,7 +232,7 @@ router.post('/api/workflow/open/cfs/:ins_id', core.requireAuthentication, async 
       errors: [{ errorMessage: e.message }]
     }
  */
-router.delete('/api/workflow/open/cfs/:ins_id', core.requireAuthentication, async function (req, res) {
+router.delete('/api/workflow/open/cfs/:ins_id', auth.requireAuthentication, async function (req, res) {
     try {
         let userSession = req.user;
         const spaceId = userSession.spaceId;
@@ -308,7 +308,7 @@ router.delete('/api/workflow/open/cfs/:ins_id', core.requireAuthentication, asyn
       errors: [{ errorMessage: e.message }]
     }
  */
-router.get('/api/workflow/open/cfs/:attach_id', core.requireAuthentication, async function (req, res) {
+router.get('/api/workflow/open/cfs/:attach_id', auth.requireAuthentication, async function (req, res) {
     try {
         let userSession = req.user;
         const spaceId = userSession.spaceId;

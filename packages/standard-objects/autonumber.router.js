@@ -1,8 +1,8 @@
 /*
  * @Author: 孙浩林 sunhaolin@steedos.com
  * @Date: 2024-01-25 13:23:33
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2024-01-25 15:32:13
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2025-01-21 17:26:04
  * @FilePath: /steedos-platform-2.3/packages/standard-objects/autonumber.router.js
  * @Description: 
  */
@@ -10,7 +10,7 @@
 // @ts-check
 const express = require('express');
 const router = express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const objectql = require('@steedos/objectql');
 const { generateAutonumber } = require('./autonumberTirggerHelper')
 
@@ -39,7 +39,7 @@ const { generateAutonumber } = require('./autonumberTirggerHelper')
 *       "data": {}
 *     }
 */
-router.post('/api/autonumber/generator/:objectName/:fieldName', core.requireAuthentication, async function (req, res) {
+router.post('/api/autonumber/generator/:objectName/:fieldName', auth.requireAuthentication, async function (req, res) {
     try {
         let userSession = req.user;
         const spaceId = userSession.spaceId;

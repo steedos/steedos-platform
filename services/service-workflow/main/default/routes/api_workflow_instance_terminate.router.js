@@ -13,7 +13,7 @@ const Fiber = require("fibers");
 const {
   remove_many_instance_tasks,
 } = require('@steedos/workflow').workflowManagers.instance_tasks_manager
-router.post("/api/workflow/v2/instance/terminate",core.requireAuthentication,async function (req, res) {
+router.post("/api/workflow/v2/instance/terminate",auth.requireAuthentication,async function (req, res) {
     try {
       let userSession = req.user;
       const { terminate_reason, instance_id } = req.body;

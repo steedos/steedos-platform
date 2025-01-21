@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const objectql = require('@steedos/objectql');
 let schema = objectql.getSteedosSchema();
 const validator = require('validator');
@@ -14,7 +14,7 @@ const disabledChangePackageWithSaas = async (req, res, next) => {
     }
 }
 
-router.get('/api/nodes/install', disabledChangePackageWithSaas, core.requireAuthentication, async function (req, res) {
+router.get('/api/nodes/install', disabledChangePackageWithSaas, auth.requireAuthentication, async function (req, res) {
     const userSession = req.user;
     const isSpaceAdmin = userSession.is_space_admin;
     const body = JSON.parse(decodeURIComponent(Buffer.from(req.query.data, "base64").toString('utf8')));
@@ -37,7 +37,7 @@ router.get('/api/nodes/install', disabledChangePackageWithSaas, core.requireAuth
     }
 });
 
-router.post('/api/nodes/uninstall', disabledChangePackageWithSaas, core.requireAuthentication, async function (req, res) {
+router.post('/api/nodes/uninstall', disabledChangePackageWithSaas, auth.requireAuthentication, async function (req, res) {
     const userSession = req.user;
     const isSpaceAdmin = userSession.is_space_admin;
     const body = req.body;
@@ -59,7 +59,7 @@ router.post('/api/nodes/uninstall', disabledChangePackageWithSaas, core.requireA
     }
 });
 
-router.post('/api/nodes/reload', disabledChangePackageWithSaas, core.requireAuthentication, async function (req, res) {
+router.post('/api/nodes/reload', disabledChangePackageWithSaas, auth.requireAuthentication, async function (req, res) {
     const userSession = req.user;
     const isSpaceAdmin = userSession.is_space_admin;
     const body = req.body;
@@ -81,7 +81,7 @@ router.post('/api/nodes/reload', disabledChangePackageWithSaas, core.requireAuth
     }
 });
 
-router.post('/api/nodes/disable', disabledChangePackageWithSaas, core.requireAuthentication, async function (req, res) {
+router.post('/api/nodes/disable', disabledChangePackageWithSaas, auth.requireAuthentication, async function (req, res) {
     const userSession = req.user;
     const isSpaceAdmin = userSession.is_space_admin;
     const body = req.body;
@@ -103,7 +103,7 @@ router.post('/api/nodes/disable', disabledChangePackageWithSaas, core.requireAut
     }
 });
 
-router.post('/api/nodes/enable', disabledChangePackageWithSaas, core.requireAuthentication, async function (req, res) {
+router.post('/api/nodes/enable', disabledChangePackageWithSaas, auth.requireAuthentication, async function (req, res) {
     const userSession = req.user;
     const isSpaceAdmin = userSession.is_space_admin;
     const body = req.body;
@@ -129,7 +129,7 @@ router.post('/api/nodes/enable', disabledChangePackageWithSaas, core.requireAuth
         // res.status(500).send(error.message);
     }
 });
-router.get('/api/nodes/versions', disabledChangePackageWithSaas, core.requireAuthentication, async function (req, res) {
+router.get('/api/nodes/versions', disabledChangePackageWithSaas, auth.requireAuthentication, async function (req, res) {
     const userSession = req.user;
     const isSpaceAdmin = userSession.is_space_admin;
     // console.log(`req.query`, req.query)
@@ -154,7 +154,7 @@ router.get('/api/nodes/versions', disabledChangePackageWithSaas, core.requireAut
     }
 });
 
-router.post('/api/nodes/upgrade', disabledChangePackageWithSaas, core.requireAuthentication, async function (req, res) {
+router.post('/api/nodes/upgrade', disabledChangePackageWithSaas, auth.requireAuthentication, async function (req, res) {
     const userSession = req.user;
     const isSpaceAdmin = userSession.is_space_admin;
     const body = req.body;
@@ -174,7 +174,7 @@ router.post('/api/nodes/upgrade', disabledChangePackageWithSaas, core.requireAut
     }
 });
 
-router.get('/api/nodes/cloud/saas/packages/purchased', disabledChangePackageWithSaas, core.requireAuthentication, async function (req, res) {
+router.get('/api/nodes/cloud/saas/packages/purchased', disabledChangePackageWithSaas, auth.requireAuthentication, async function (req, res) {
     const userSession = req.user;
     try {
         let broker = schema.broker;
@@ -191,7 +191,7 @@ router.get('/api/nodes/cloud/saas/packages/purchased', disabledChangePackageWith
     }
 });
 
-router.post('/api/nodes/cloud/saas/packages/purchased', disabledChangePackageWithSaas, core.requireAuthentication, async function(req, res){
+router.post('/api/nodes/cloud/saas/packages/purchased', disabledChangePackageWithSaas, auth.requireAuthentication, async function(req, res){
     const userSession = req.user;
     try {
         let broker = schema.broker;
@@ -207,7 +207,7 @@ router.post('/api/nodes/cloud/saas/packages/purchased', disabledChangePackageWit
     }
 });
 
-router.post('/api/nodes/cloud/saas/packages/url', disabledChangePackageWithSaas, core.requireAuthentication, async function(req, res){
+router.post('/api/nodes/cloud/saas/packages/url', disabledChangePackageWithSaas, auth.requireAuthentication, async function(req, res){
     const userSession = req.user;
     try {
         let broker = schema.broker;
@@ -224,7 +224,7 @@ router.post('/api/nodes/cloud/saas/packages/url', disabledChangePackageWithSaas,
     }
 })
 
-router.get('/api/nodes/npmrc', disabledChangePackageWithSaas, core.requireAuthentication, async function(req, res){
+router.get('/api/nodes/npmrc', disabledChangePackageWithSaas, auth.requireAuthentication, async function(req, res){
     const userSession = req.user;
     const isSpaceAdmin = userSession.is_space_admin;
     if(!isSpaceAdmin){
@@ -244,7 +244,7 @@ router.get('/api/nodes/npmrc', disabledChangePackageWithSaas, core.requireAuthen
     }
 })
 
-router.post('/api/nodes/npmrc', disabledChangePackageWithSaas, core.requireAuthentication, async function(req, res){
+router.post('/api/nodes/npmrc', disabledChangePackageWithSaas, auth.requireAuthentication, async function(req, res){
     const userSession = req.user;
     const isSpaceAdmin = userSession.is_space_admin;
     if(!isSpaceAdmin){
@@ -265,7 +265,7 @@ router.post('/api/nodes/npmrc', disabledChangePackageWithSaas, core.requireAuthe
     }
 });
 
-router.post('/api/nodes/package/add', disabledChangePackageWithSaas, core.requireAuthentication, async function(req, res){
+router.post('/api/nodes/package/add', disabledChangePackageWithSaas, auth.requireAuthentication, async function(req, res){
     const userSession = req.user;
     const isSpaceAdmin = userSession.is_space_admin;
     if(!isSpaceAdmin){

@@ -10,7 +10,7 @@
 // @ts-check
 const express = require('express');
 const router = express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const objectql = require('@steedos/objectql');
 /**
 @api {post} /api/workflow/instance/check_is_removed/:instanceId 检查申请单是否已被删除，及删除后处理相关数据
@@ -24,7 +24,7 @@ const objectql = require('@steedos/objectql');
     HTTP/1.1 500 OK
     e.message
  */
-router.post('/api/workflow/instance/check_is_removed/:instanceId', core.requireAuthentication, async function (req, res) {
+router.post('/api/workflow/instance/check_is_removed/:instanceId', auth.requireAuthentication, async function (req, res) {
     try {
         const insId = req.params.instanceId;
         const { objectName, recordId } = req.body;

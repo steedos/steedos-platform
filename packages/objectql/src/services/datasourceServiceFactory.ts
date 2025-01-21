@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-11-09 16:16:57
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-30 10:33:34
+ * @LastEditTime: 2025-01-20 15:03:09
  * @Description: 
  */
 import * as _ from 'underscore';
@@ -39,7 +39,7 @@ export async function createDataSourceService(broker, dataSource) {
         name: serviceName,
         events: {
             [`${dataSourceName}.*.metadata.objects.inserted`]: {
-                handler(ctx) {
+                async handler(ctx) {
                     let objectConfig = ctx.params.data;
                     jsonToObject(objectConfig)
 
@@ -52,7 +52,7 @@ export async function createDataSourceService(broker, dataSource) {
                     /**
                      * 每次都需要初始化，TypeORM不适用于微服务模式
                      */
-                    dataSource.initTypeORM();
+                    await dataSource.initTypeORM();
                 }
             },
             [`${dataSourceName}.*.metadata.objects.deleted`]: {

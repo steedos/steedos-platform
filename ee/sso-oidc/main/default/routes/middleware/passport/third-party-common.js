@@ -14,7 +14,7 @@ const authError = function (done, message, err = null) {
 const createASession = function (userId, session) {
     return Object.assign(Object.assign({ createdAt: new Date().toISOString(), lastAccessedAt: new Date().toISOString() }, session), { userId });
 };
-const authenticateThirdParty = (thirdPartyUser, requireLocalAccount = true, done, saveUserFn) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+const authenticateThirdParty = (thirdPartyUser_1, ...args_1) => tslib_1.__awaiter(void 0, [thirdPartyUser_1, ...args_1], void 0, function* (thirdPartyUser, requireLocalAccount = true, done, saveUserFn) {
     if (!saveUserFn) {
         throw new Error("Save user function must be provided");
     }

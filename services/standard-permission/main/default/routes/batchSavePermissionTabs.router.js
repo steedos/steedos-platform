@@ -10,7 +10,7 @@
 
 const express = require("express");
 const router = express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const objectql = require('@steedos/objectql');
 
 /**
@@ -29,7 +29,7 @@ const objectql = require('@steedos/objectql');
  * ]
  * }
  */
-router.post('/api/permission/permission_set/batchSavePermissionTabs', core.requireAuthentication, async function (req, res) {
+router.post('/api/permission/permission_set/batchSavePermissionTabs', auth.requireAuthentication, async function (req, res) {
     try {
         const userSession = req.user;
         const { spaceId } = userSession;

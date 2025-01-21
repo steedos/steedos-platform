@@ -1,0 +1,1 @@
+export function formatFiltersToODataQuery(filters: any, session?: any): string;

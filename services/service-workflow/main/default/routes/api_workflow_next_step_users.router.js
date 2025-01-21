@@ -8,7 +8,7 @@
 // @ts-check
 const express = require("express");
 const router = express.Router();
-const core = require('@steedos/core');
+const auth = require('@steedos/auth');
 const _ = require('lodash');
 const Fiber = require("fibers");
 const { excuteTriggers } = require('../utils/trigger');
@@ -21,7 +21,7 @@ const objectql = require('@steedos/objectql');
  *   values: 最新的表单值
  * }
  */
-router.post('/api/workflow/v2/nextStepUsers', core.requireAuthentication, async function (req, res) {
+router.post('/api/workflow/v2/nextStepUsers', auth.requireAuthentication, async function (req, res) {
     try {
         let userSession = req.user;
         const userId = userSession.userId;
