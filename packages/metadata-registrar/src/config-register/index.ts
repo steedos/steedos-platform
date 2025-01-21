@@ -14,7 +14,7 @@ import { registerPackageRestrictionRules } from "./restrictionRules";
 import { addTranslationsFiles } from "./translations";
 import { addObjectTranslationsFiles } from "./object_translations";
 import { registerPackageApps } from "./app";
-import { addObjectConfigFiles, addObjectDataFiles, addRouterFiles, addServerScriptFiles } from "./core";
+import { addObjectConfigFiles, addObjectDataFiles, addServerScriptFiles } from "./core";  // addRouterFiles
 import { addConfigFiles } from "../config";
 import { loadPackageClientScripts } from "./client_script";
 import { registerPackageQuestion } from './question'
@@ -24,7 +24,7 @@ export { loadStandardMetadata } from './core'
 
 export const registerMetadataConfigs = async (filePath, datasourceApiName, serviceName) => {
     //TODO 仅主服务需要?
-    addRouterFiles(filePath);
+    // addRouterFiles(filePath);
 
     await addObjectConfigFiles(filePath, datasourceApiName, serviceName);
     await registerPackageApps(filePath, serviceName);

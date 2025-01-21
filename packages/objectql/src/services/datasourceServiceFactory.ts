@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-11-09 16:16:57
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-01-20 15:03:09
+ * @LastEditTime: 2025-01-21 17:53:30
  * @Description: 
  */
 import * as _ from 'underscore';
@@ -42,7 +42,7 @@ export async function createDataSourceService(broker, dataSource) {
                 async handler(ctx) {
                     let objectConfig = ctx.params.data;
                     jsonToObject(objectConfig)
-
+                    console.log(`${serviceName} inserted`, objectConfig.name)
                     if(!getOriginalObjectConfig(objectConfig.name)){
                         // 此处的objectConfig是已继承了base之后的结果. 已无法识别出原始定义.
                         addOriginalObjectConfigs(objectConfig.name, dataSourceName, clone(objectConfig));
@@ -58,6 +58,7 @@ export async function createDataSourceService(broker, dataSource) {
             [`${dataSourceName}.*.metadata.objects.deleted`]: {
                 handler(ctx) {
                     try {
+                        console.log(`${serviceName} deleted`, ctx.params.objectApiName)
                         // console.log(`${dataSourceName} removeLocalObject`, ctx.params.objectApiName)
                         getDataSource(dataSourceName).removeLocalObject(ctx.params.objectApiName)
                     } catch (error) {
@@ -80,7 +81,13 @@ export async function createDataSourceService(broker, dataSource) {
                 }
             },
         },
-        actions: actions
+        actions: actions,
+        created: ()=>{
+            console.log(`created ${serviceName}...`)
+        },
+        started: ()=>{
+            console.log(`started ${serviceName}...`)
+        }
     })
     if (!broker.started) { //如果broker未启动则手动启动service
         await broker._restartService(service)

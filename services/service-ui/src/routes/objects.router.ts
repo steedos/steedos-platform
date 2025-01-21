@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-09 10:19:47
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-01-21 17:29:20
+ * @LastEditTime: 2025-01-21 18:19:10
  * @Description: 
  */
 import { getSteedosSchema } from "@steedos/objectql";
@@ -10,7 +10,7 @@ const express = require('express');
 const router =express.Router();
 const auth = require('@steedos/auth');
 
-
+console.log('===uiSchema===api')
 const callObjectServiceAction = async function(actionName, userSession, data?){
     const broker = getSteedosSchema().broker;
     return broker.call(actionName, data, { meta: { user: userSession}})

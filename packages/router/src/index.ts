@@ -2,13 +2,14 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-11-15 14:48:43
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-11-17 11:15:40
+ * @LastEditTime: 2025-01-21 18:55:45
  * @Description: 
  */
 const express = require("express");
 const cors = require('cors');
 const compression = require('compression');
 const session = require('express-session')
+const _ = require('lodash');
 
 class ExpressAppStatic{
     app = null;
@@ -62,6 +63,39 @@ export const staticRouter = ()=>{
 
 export const staticBeforeRouter = ()=>{
     return expressApp.staticBeforeRouter();
+}
+
+const routersApp = staticRouter();
+
+export const loadRouters = (routers)=>{
+    _.each(routers, (router)=>{
+        if(router.router.default !== routersApp){
+            if(router.router.default){
+                _.each(router.router.default.stack, (layer)=>{
+                    routersApp.stack.push(layer)
+                })
+            }
+        }
+    })
+}
+
+export const removeRouter = (path, methods)=>{
+    routersApp?.stack.forEach(function(route,i,routes) {
+        if (route.route && route.route.path === path) {
+            if(JSON.stringify(route.route.methods) === JSON.stringify(methods)){
+                routes.splice(i,1);
+            }
+        }
+        if(route.handle.stack){
+            route.handle.stack.forEach(function(_route,i,routes) {
+                if (_route.route && _route.route.path === path) {
+                    if(JSON.stringify(_route.route.methods) === JSON.stringify(methods)){
+                        routes.splice(i,1);
+                    }
+                }
+            });
+        }
+    });
 }
 
 // setInterval(()=>{

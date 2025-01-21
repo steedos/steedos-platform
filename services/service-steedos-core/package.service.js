@@ -2,7 +2,7 @@
  * @Author: yinlianghui@steedos.com
  * @Date: 2022-07-20 21:31:37
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-01-21 10:21:31
+ * @LastEditTime: 2025-01-21 18:33:21
  * @Description: 
  */
 "use strict";
@@ -211,36 +211,11 @@ module.exports = {
 		// 	]
 		// });
 
-
-		this.broker.waitForServices('api').then(() => {
-			const port = 6900
-			const express = require('express');
-			const app = express();
-			const session = require('express-session');
-			app.use(session({
-				secret: process.env.STEEDOS_SESSION_SECRET || 'steedos',
-				resave: false,
-				saveUninitialized: true,
-				cookie: { secure: false, maxAge: 800000 },
-				name: 'ivan'
-			}))
-			app.use((req, res, next)=>{
-				next();
-			});
-			app.use(require('@steedos/router').staticRouter());
-
-			app.use(SteedosApi.express());
-
-			app.listen(port, () => {
-				console.log(`Server is running at http://127.0.0.1:${port}`);
-			});
-		})
-
 		
 	},
 
 	/**
-	 * Service stopped lifecycle event handler
+	 * Service stopped lifecycle event handler`
 	 */
 	async stopped() {
 		

@@ -17,6 +17,7 @@ const objectMixin = require('@steedos/service-object-mixin')
 const {
     compressFiles, deleteFolderRecursive, mkTempFolder
 } = require('@steedos/metadata-core');
+const sRouter = require('@steedos/router');
 
 const loadFlowFile = new metaDataCore.LoadFlowFile();
 
@@ -107,11 +108,6 @@ module.exports = {
         ...methods,
 
         checkPackageMetadataFiles: async function (packagePath) {
-
-            if(this.core){
-                return ;
-            }
-
             let publicPath = path.join(packagePath, 'public');
             if (this.settings.packageInfo.loadPublicFolder && fs.existsSync(publicPath)) {
                 this.broker.logger.warn(`The public folder has been deprecated. ${publicPath}`); 
@@ -188,11 +184,9 @@ module.exports = {
             await functionYmlLoader.load(this.broker, packagePath, name);
             await importLoader.load(this.broker, packagePath, name);
             await printLoader.load(this.broker, packagePath, name);
-            if(this.core){
-                // this.core.loadClientScripts();
-                const routersInfo = await this.loadPackageRouters(packagePath, name);
-                await this.broker.call(`@steedos/service-packages.setPackageRoutersInfo`, {packageName: name, data: routersInfo});
-            }
+            // this.core.loadClientScripts();
+            const routersInfo = await this.loadPackageRouters(packagePath, name);
+            await this.broker.call(`@steedos/service-packages.setPackageRoutersInfo`, {packageName: name, data: routersInfo});
             await this.broker.emit(`translations.object.change`, {});
             return;
         },
@@ -321,6 +315,7 @@ module.exports = {
             }
         },
         async loadPackageRouters(packagePath, name){
+            console.log(`loadPackageRouters====>`, packagePath, name)
             let routersData = loadRouters(packagePath);
             let oldRoutersInfo = await this.broker.call(`@steedos/service-packages.getPackageRoutersInfo`, {packageName: name})
             let routersInfo = _.flattenDeep(_.map(routersData, 'infoList'));
@@ -330,7 +325,7 @@ module.exports = {
                         return item.path == info.path && JSON.stringify(item.methods) == JSON.stringify(info.methods) && item.md5 == info.md5
                     })
                     if(!_info){
-                        this.core.removeRouter(info.path, info.methods)
+                        sRouter.removeRouter(info.path, info.methods)
                     }
                 })
             }
@@ -338,7 +333,7 @@ module.exports = {
             routersData.forEach(element => {
                 _routers.push(element)
             });
-            this.core.loadRouters(_routers);
+            sRouter.loadRouters(_routers);
             return routersInfo
         },
         async initDataSource(packagePath, datasourceName){
@@ -386,12 +381,6 @@ module.exports = {
         this.packageServices = [];  //此属性不能放到settings下，否则会导致mo clone settings 时 内存溢出。
         this.logger.debug('service package loader created!!!');
         
-        // try {
-        //     this.core = require('@steedos/core');
-        // } catch (e) {
-            
-        // }
-
         try {
             this.objectql = require('@steedos/objectql');
         } catch (e) {
@@ -439,20 +428,18 @@ module.exports = {
             try {
                 await this.broker.destroyService(packageService);
             } catch (error) {
-                this.logger.errorr(error);
+                this.logger.error(error);
             }
         };
 
-        if(this.core){
-            let oldRoutersInfo = await this.broker.call(`@steedos/service-packages.getPackageRoutersInfo`, {packageName: this.name})
-            if(oldRoutersInfo){
-                _.each(oldRoutersInfo.metadata, (info)=>{
-                    this.core.removeRouter(info.path, info.methods)
-                })
-            }
-            await this.objectql.deletePackageClientScripts(this.name);
-            // await this.core.loadClientScripts();
+        let oldRoutersInfo = await this.broker.call(`@steedos/service-packages.getPackageRoutersInfo`, {packageName: this.name})
+        if(oldRoutersInfo){
+            _.each(oldRoutersInfo.metadata, (info)=>{
+                sRouter.removeRouter(info.path, info.methods)
+            })
         }
+        await this.objectql.deletePackageClientScripts(this.name);
+        // await this.core.loadClientScripts();
         this.broker.call(`@steedos/service-packages.offline`, {serviceInfo: {name: this.name, nodeID: this.broker.nodeID, instanceID: this.broker.instanceID}})
         await this.broker.call(`metadata.refreshServiceMetadatas`, { offlinePackageServices: [{
             name: this.name,
