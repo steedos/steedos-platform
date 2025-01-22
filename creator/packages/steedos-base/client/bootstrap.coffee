@@ -18,7 +18,7 @@ Creator.dataInit = new ReactiveVar(false);
 Blaze._allowJavascriptUrls() 
 FlowRouter.wait();
 
-baseUrlToDir: (baseUrl) ->
+baseUrlToDir = (baseUrl) ->
 	return encodeURIComponent baseUrl.replace(/[\s\.\\\/:]/g, '')
 
 getRedirectUrl = ()->
