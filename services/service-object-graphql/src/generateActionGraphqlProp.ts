@@ -1,11 +1,11 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-02-06 16:57:03
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-03-26 14:37:39
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2025-01-23 09:57:52
  * @Description: 
  */
-const { moleculerGql: gql } = require("moleculer-apollo-server");
+const { moleculerGql: gql } = require("@steedos/moleculer-apollo-server");
 import { SteedosObjectTypeConfig } from "@steedos/objectql";
 
 export function generateActionGraphqlProp(actionName: string, objectConfig: SteedosObjectTypeConfig) {

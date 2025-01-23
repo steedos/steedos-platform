@@ -1,6 +1,6 @@
 {
-  "name": "moleculer-apollo-server",
-  "version": "0.3.9",
+  "name": "@steedos/moleculer-apollo-server",
+  "version": "3.0.0-beta.2",
   "description": "Apollo GraphQL server for Moleculer API Gateway",
   "main": "index.js",
   "scripts": {

@@ -13,7 +13,7 @@
     "graphql-type-json": "^0.3.2",
     "lru_map": "^0.4.1",
     "moleculer": "^0.14.25",
-    "moleculer-apollo-server": "/Users/try/github/steedos-platform/local_packages/moleculer-apollo-server",
+    "@steedos/moleculer-apollo-server": "3.0.0-beta.2",
     "moleculer-web": "^0.10.4",
     "react-dev-utils": "12.0.1",
     "validator": "^13.6.0"

@@ -2,7 +2,7 @@
 
 const ApiGateway = require("moleculer-web");
 const steedosAuth = require('@steedos/auth');
-const { ApolloService } = require("moleculer-apollo-server");
+const { ApolloService } = require("@steedos/moleculer-apollo-server");
 const { MoleculerServerError } = require("moleculer").Errors;
 const GraphQLJSON = require('graphql-type-json');
 const {

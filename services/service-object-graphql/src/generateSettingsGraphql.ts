@@ -2,10 +2,10 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-02-06 17:00:46
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-01-04 14:47:33
+ * @LastEditTime: 2025-01-23 09:57:59
  * @Description: 
  */
-const { moleculerGql: gql } = require("moleculer-apollo-server");
+const { moleculerGql: gql } = require("@steedos/moleculer-apollo-server");
 import { SteedosObjectTypeConfig, getObject } from "@steedos/objectql";
 import {
     BASIC_TYPE_MAPPING,
