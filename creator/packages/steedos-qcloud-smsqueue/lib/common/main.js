@@ -1,1 +1,0 @@
-QcloudSMSQueue = new EventState();

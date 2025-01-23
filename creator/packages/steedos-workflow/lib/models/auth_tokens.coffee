@@ -1,1 +1,0 @@
-db.auth_tokens = new Meteor.Collection('auth_tokens')

@@ -55,19 +55,6 @@
     "url-join": "^4.0.1",
     "validator": "^13.6.0"
   },
-  "devDependencies": {
-    "@steedos/auth": "3.0.0-beta.2",
-    "@steedos/meteor-bundle-runner": "3.0.0-beta.2",
-    "@steedos/objectql": "3.0.0-beta.2",
-    "@types/dotenv-flow": "^3.0.0",
-    "@types/node": "12.6.8",
-    "cross-env": "^7.0.3",
-    "dotenv": "^8.2.0",
-    "dotenv-flow": "^3.1.0",
-    "nodemon": "^2.0.19",
-    "steedos-server": "3.0.0-beta.2",
-    "typescript": "5.7.3"
-  },
   "publishConfig": {
     "access": "public"
   },

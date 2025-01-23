@@ -8,7 +8,6 @@
     "@steedos/core": "3.0.0-beta.2",
     "@steedos/data-import": "3.0.0-beta.2",
     "@steedos/metadata-api": "3.0.0-beta.2",
-    "@steedos/meteor-bundle-runner": "3.0.0-beta.2",
     "@steedos/service-accounts": "3.0.0-beta.2",
     "@steedos/service-api": "3.0.0-beta.2",
     "@steedos/service-cachers-manager": "3.0.0-beta.2",
@@ -36,8 +35,7 @@
     "helmet": "6.2.0",
     "moleculer": "^0.14.25",
     "moleculer-db": "^0.8.4",
-    "moleculer-web": "^0.10.4",
-    "steedos-server": "3.0.0-beta.2"
+    "moleculer-web": "^0.10.4"
   },
   "private": false,
   "publishConfig": {

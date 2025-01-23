@@ -1,3 +1,0 @@
-/* global RestMiddleware:true */
-
-RestMiddleware = {};

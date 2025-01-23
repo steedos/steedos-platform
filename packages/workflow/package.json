@@ -18,10 +18,5 @@
     "express": "^4.17.1",
     "underscore": "^1.9.1"
   },
-  "devDependencies": {
-    "@steedos/core": "3.0.0-beta.2",
-    "@steedos/meteor-bundle-runner": "3.0.0-beta.2",
-    "steedos-server": "3.0.0-beta.2"
-  },
   "gitHead": "72fa51bda8ff714d5fdb933bf0a45ea4cb82df74"
 }

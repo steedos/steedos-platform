@@ -1,1 +1,0 @@
-Template.imageSign.helpers ImageSign.helpers

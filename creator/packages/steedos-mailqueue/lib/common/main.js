@@ -1,1 +1,0 @@
-MailQueue = new EventState();
