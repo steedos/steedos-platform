@@ -97,7 +97,7 @@ const ObjectDataLoaderMapKeys = {};
 
 const startServer = (broker)=>{
 	broker.waitForServices('api').then(() => {
-		const port = 6900
+		const port = process.env.PORT || 5000;
 		const express = require('express');
 		const app = express();
 		const session = require('express-session');
@@ -116,7 +116,7 @@ const startServer = (broker)=>{
 		app.use(SteedosApi.express());
 
 		app.listen(port, () => {
-			console.log(`Project is running at ${process.env.ROOT_URL}`);
+			console.log(`Project is running at ${port}`);
 		});
 	})
 }
@@ -142,7 +142,7 @@ module.exports = {
 		server: false,
 
 		// Exposed port
-		port: process.env.PORT || 3001,
+		port: process.env.PORT || 5000,
 
 		// Exposed IP
 		// ip: "0.0.0.0",

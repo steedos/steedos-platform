@@ -1,5 +1,3 @@
-image:
-  file: .gitpod.Dockerfile
 
 # List the ports you want to expose and what to do when they are served. See https://www.gitpod.io/docs/config-ports/
 ports:
@@ -14,9 +12,6 @@ ports:
   - port: 27017
     onOpen: ignore
   - port: 3100 # Creator
-    onOpen: open-browser
-    visibility: public
-  - port: 16686 # Jaeger UI
     onOpen: open-browser
     visibility: public
   - port: 5432
