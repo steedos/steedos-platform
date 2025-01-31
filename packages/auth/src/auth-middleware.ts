@@ -6,14 +6,13 @@
  * @Description: 
  */
 import { setRequestUser } from "./session";
-import { Response } from 'express-serve-static-core';
 import * as core from "express-serve-static-core";
 import { compact, split, includes } from "lodash";
 interface Request extends core.Request {
     user: any;
 }
 
-export const requireAuthentication = async (req: Request, res: Response, next: () => void) => {
+export const requireAuthentication = async (req: Request, res: any, next: () => void) => {
     await setRequestUser(req, res, function () {
         if (req.user) {
             next();
@@ -25,13 +24,13 @@ export const requireAuthentication = async (req: Request, res: Response, next: (
 
 }
 
-export const authentication = async (req: Request, res: Response, next: () => void) => {
+export const authentication = async (req: Request, res: any, next: () => void) => {
     await setRequestUser(req, res, function () {
         next();
     });
 }
 
-export const superAdminAuthentication= async (req: Request, res: Response, next: () => void) => {
+export const superAdminAuthentication= async (req: Request, res: any, next: () => void) => {
     await setRequestUser(req, res, function () {
         if (req.user) {
             const { userId } = req.user;

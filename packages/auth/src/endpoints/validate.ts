@@ -6,12 +6,12 @@
  * @Description: 
  */
 
-import { Request, Response } from 'express-serve-static-core';
+import { Request } from 'express-serve-static-core';
 import { auth } from '../session';
 import { setAuthCookies, clearAuthCookies } from '../utils';
 import { getSteedosSchema } from '@steedos/objectql';
 
-export const validate = async (req: Request, res: Response) => {
+export const validate = async (req: Request, res: any) => {
     let utcOffset = req.body.utcOffset;
     let userSession = await auth(req, res);
     let spaceUser = await getSteedosSchema().getObject('space_users').find({filters: [['space', '=', userSession.spaceId], ['user', '=', userSession.userId], ['user_accepted', '=', true]]});
