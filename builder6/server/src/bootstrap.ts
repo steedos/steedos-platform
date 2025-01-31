@@ -108,7 +108,6 @@ export async function bootstrap() {
   // 获取 Express App
   const expressApp = app.getHttpAdapter().getInstance();
   
-  global.SteedosExpressApp = expressApp;
   expressApp.use(require('@steedos/router').staticRouter());
 
 
