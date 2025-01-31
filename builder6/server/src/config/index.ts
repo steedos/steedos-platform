@@ -1,6 +1,6 @@
 import SteedosConfig from './steedos.config';
 import getEnvConfigs from './env.config';
-import moleculerConfigs from './default.steedos.config';
+import moleculerConfigs from './moleculler.config';
 import getProjectConfigs from './project.config';
 
 export const projectConfigs = getProjectConfigs(process.cwd());

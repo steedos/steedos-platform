@@ -173,6 +173,7 @@ module.exports = {
             if (!datasourceName) {
                 datasourceName = 'default';
             }
+
             if(this.objectql){
                 await this.initDataSource(packagePath, datasourceName);
                 await loadStandardMetadata(name, datasourceName);
@@ -340,6 +341,7 @@ module.exports = {
             this.objectql.getSteedosSchema(this.broker);
             packagePath = path.join(packagePath, '**');
             const datasource = this.objectql.getDataSource(datasourceName);
+            console.log('initDataSource', datasourceName, datasource)
             if(datasource){
                 await datasource.init();
             }
@@ -384,7 +386,7 @@ module.exports = {
         try {
             this.objectql = require('@steedos/objectql');
         } catch (e) {
-            
+            this.logger.error(e)
         }
     },
 

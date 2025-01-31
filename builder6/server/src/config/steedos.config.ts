@@ -84,7 +84,7 @@ export default class SteedosConfig{
     }
     
     static loadDefaultSettings(){
-        const filePath = path.join(__dirname, "default.steedos.settings.yml");
+        const filePath = path.join(__dirname, '..', '..', "default.steedos.settings.yml");
         if(fs.existsSync(filePath) && !fs.statSync(filePath).isDirectory() ){
             return SteedosConfig.loadSettings(filePath)
         }else{
@@ -96,6 +96,8 @@ export default class SteedosConfig{
         let configPath = path.join(process.cwd(), 'steedos-config.yml')
         if (fs.existsSync(configPath) && !fs.statSync(configPath).isDirectory()) {
             return SteedosConfig.loadSettings(configPath)
+        } else {
+            return {}
         }
     }
 
