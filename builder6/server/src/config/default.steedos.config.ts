@@ -107,7 +107,7 @@ export default {
   skipProcessEventRegistration: true,
 
   created(broker: any) {
-    global.SteedosBroker = broker;
+    global.broker = broker;
     	// Clear all cache entries
 		broker.logger.warn('Clear all cache entries on startup.')
 		broker.cacher.clean();

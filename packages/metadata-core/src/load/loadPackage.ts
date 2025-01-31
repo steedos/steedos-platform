@@ -28,7 +28,7 @@ function loadService(broker, filename){
 
 export async function loadPackage(packagePath){
     // let schema = getSteedosSchema();
-    let broker = global['SteedosBroker']; //schema.broker;
+    let broker = global['broker']; //schema.broker;
     if(broker){
         const filePatten = [
           path.join(packagePath, "**", "package.service.js"),
