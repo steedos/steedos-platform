@@ -9,6 +9,7 @@
     "steedos-packages/*"
   ],
   "scripts": {
+    "clean": "lerna clean",
     "build": "lerna run build",
     "docker": "docker-compose up",
     "docker:db": "docker-compose up mongodb mongodb-init redis nats",
