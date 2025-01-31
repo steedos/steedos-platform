@@ -10,8 +10,6 @@
 **/lerna-debug.log
 **/pnpm-debug.log
 
-**/.vscode/launch.*
-
 .migrate
 
 .rpt2_cache

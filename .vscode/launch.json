@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Launch NestJS",
+        "args": ["${workspaceFolder}/builder6/server/src/main.ts"],
+        "runtimeArgs": ["--nolazy", "-r", "ts-node/register"],
+        "sourceMaps": true,
+        "cwd": "${workspaceFolder}/builder6/server",
+        "restart": true,
+        "protocol": "inspector",
+        "console": "integratedTerminal",
+        "internalConsoleOptions": "neverOpen",
+        "outFiles": ["${workspaceFolder}/dist/**/*.js"]
+      }
+    ]
+  }

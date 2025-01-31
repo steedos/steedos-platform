@@ -111,14 +111,6 @@ export async function bootstrap() {
   global.SteedosExpressApp = expressApp;
   expressApp.use(require('@steedos/router').staticRouter());
 
-  // //ApiGateway
-  // const api = global.SteedosBroker.createService(require('@steedos/service-api'));
-
-  // require('@steedos/router').staticRouter().get('/test1', (req, res) => {
-  //   res.send('This is a new route 1!');
-  // });
-  // require('@steedos/router').staticRouter().use('/', api.express());
-
 
   // if (process.env.B6_PROXY_TARGET) {
   //   // 获取 Nest 应用的请求处理器
