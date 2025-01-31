@@ -1,6 +1,8 @@
 "use strict";
 
 const ApiGateway = require("moleculer-web");
+const cors = require('cors');
+
 const steedosAuth = require('@steedos/auth');
 const { ApolloService } = require("@steedos/moleculer-apollo-server");
 const { MoleculerServerError } = require("moleculer").Errors;
@@ -95,31 +97,33 @@ const mixinOptions = {
 const ObjectDataLoaderMapKeys = {};
 
 
-const startServer = (broker)=>{
-	broker.waitForServices('api').then(() => {
-		const port = process.env.PORT || 5000;
-		const express = require('express');
-		const app = express();
-		const session = require('express-session');
-		app.use(session({
-			secret: process.env.STEEDOS_SESSION_SECRET || 'steedos',
-			resave: false,
-			saveUninitialized: true,
-			cookie: { secure: false, maxAge: 800000 },
-			name: 'ivan'
-		}))
-		app.use((req, res, next)=>{
-			next();
-		});
-		app.use(require('@steedos/router').staticRouter());
+// const startServer = (broker)=>{
+// 	broker.waitForServices('api').then(() => {
+// 		const port = process.env.PORT || 5000;
+// 		const express = require('express');
+// 		const app = express();
+// 		app.use(cors());
 
-		app.use(SteedosApi.express());
+// 		const session = require('express-session');
+// 		app.use(session({
+// 			secret: process.env.STEEDOS_SESSION_SECRET || 'steedos',
+// 			resave: false,
+// 			saveUninitialized: true,
+// 			cookie: { secure: false, maxAge: 800000 },
+// 			name: 'ivan'
+// 		}))
+// 		app.use((req, res, next)=>{
+// 			next();
+// 		});
+// 		app.use(require('@steedos/router').staticRouter());
 
-		app.listen(port, () => {
-			console.log(`Project is running at ${port}`);
-		});
-	})
-}
+// 		app.use(SteedosApi.express());
+
+// 		app.listen(port, () => {
+// 			console.log(`Project is running at ${port}`);
+// 		});
+// 	})
+// }
 
 
 /**
@@ -1050,27 +1054,27 @@ module.exports = {
 		'service-ui.started': function () {
 			this.app.use("/", this.express());
 		},
-		"$packages.changed": function (ctx) {
-			if (!this.projectStarted) {
-				this.projectStarted = true
-				// 开发环境, 显示耗时
-				if (process.env.NODE_ENV == 'development' && global.__startDate) {
-					console.log('耗时: ' + (new Date().getTime() - global.__startDate.getTime()) + ' ms');
-				}
-				startServer(ctx.broker);
-				if (process.env.STEEDOS_AUTO_OPEN_BROWSER != 'false') { // 默认打开，如果不想打开，设置STEEDOS_AUTO_OPEN_BROWSER=false
-					setTimeout(function () {
-						try {
-							openBrowser(process.env.ROOT_URL);
-						} catch (error) {
-							console.error(error);
-							console.error('auto open browser failed.');
-						}
-					}, 100)
+		// "$packages.changed": function (ctx) {
+		// 	if (!this.projectStarted) {
+		// 		this.projectStarted = true
+		// 		// 开发环境, 显示耗时
+		// 		if (process.env.NODE_ENV == 'development' && global.__startDate) {
+		// 			console.log('耗时: ' + (new Date().getTime() - global.__startDate.getTime()) + ' ms');
+		// 		}
+		// 		startServer(ctx.broker);
+		// 		if (process.env.STEEDOS_AUTO_OPEN_BROWSER != 'false') { // 默认打开，如果不想打开，设置STEEDOS_AUTO_OPEN_BROWSER=false
+		// 			setTimeout(function () {
+		// 				try {
+		// 					openBrowser(process.env.ROOT_URL);
+		// 				} catch (error) {
+		// 					console.error(error);
+		// 					console.error('auto open browser failed.');
+		// 				}
+		// 			}, 100)
 
-				}
-			}
-		}
+		// 		}
+		// 	}
+		// }
 	},
 	async started() {
 		console.log('started', this.name)

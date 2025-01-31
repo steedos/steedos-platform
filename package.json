@@ -5,18 +5,17 @@
     "packages/*",
     "services/*",
     "ee/*",
-    "server",
+    "builder6/*",
     "steedos-packages/*"
   ],
   "scripts": {
-    "bootstrap": "lerna clean --yes && lerna bootstrap",
-    "build": "yarn bootstrap && lerna run build",
+    "build": "lerna run build",
     "docker": "docker-compose up",
     "docker:db": "docker-compose up mongodb mongodb-init redis nats",
-    "i18n": "lerna run i18n",
-    "start": "steedos start --config steedos.config.js",
-    "sync": "lerna exec --no-private  -- cnpm sync \\$LERNA_PACKAGE_NAME",
-    "repl": "moleculer-runner  --config steedos.config.js --repl"
+    "i18n": "lerna run i18n",    
+    "repl": "moleculer-runner  --config steedos.config.js --repl",
+    "start": "cd builder6/server && yarn start",
+    "sync": "lerna exec --no-private  -- cnpm sync \\$LERNA_PACKAGE_NAME"
   },
   "resolutions": {},
   "devDependencies": {
