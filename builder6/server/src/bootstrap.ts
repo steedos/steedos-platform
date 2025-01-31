@@ -26,6 +26,7 @@ export async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     bufferLogs: true,
   });
+
   app.useLogger(app.get(Logger));
   app.useGlobalFilters(new AllExceptionsFilter());
   app.useWebSocketAdapter(new WsAdapter(app));
@@ -104,9 +105,19 @@ export async function bootstrap() {
   );
   app.use(compression());
 
-  app.use(require('@steedos/router').staticRouter());
-  // app.use(SteedosApi.express());
+  // 获取 Express App
+  const expressApp = app.getHttpAdapter().getInstance();
+  
+  global.SteedosExpressApp = expressApp;
+  expressApp.use(require('@steedos/router').staticRouter());
 
+  // //ApiGateway
+  // const api = global.SteedosBroker.createService(require('@steedos/service-api'));
+
+  // require('@steedos/router').staticRouter().get('/test1', (req, res) => {
+  //   res.send('This is a new route 1!');
+  // });
+  // require('@steedos/router').staticRouter().use('/', api.express());
 
 
   // if (process.env.B6_PROXY_TARGET) {

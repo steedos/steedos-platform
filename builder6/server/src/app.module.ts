@@ -16,15 +16,14 @@ import { PluginModule } from '@builder6/core';
 import { EmailModule } from '@builder6/email';
 import { PagesModule } from '@builder6/pages';
 import { ServicesModule } from '@builder6/services';
-import { getConfigs, getEnvConfigs, getMoleculerConfigs } from '@builder6/core';
+import { getConfigs, getEnvConfigs, getMoleculerConfigs, getSteedosConfigs } from './config';
 import project from '../package.json';
 import { ScheduleModule } from '@nestjs/schedule';
 
 import { pinoConfig } from '@builder6/core';
 import { AppMoleculer } from './app.moleculer';
-import { AppConfig } from './app.config'
 
-const steedosConfig = AppConfig.getSteedosConfig();
+const steedosConfig = getSteedosConfigs();
 const moleculerConfig = {
     // brokerName: "builder6", // if you have multiple broker
     // hotReload: true, // hotReload feature from moleculer will not work
@@ -34,7 +33,6 @@ const moleculerConfig = {
     namespace: 'steedos', // some moleculer options
     transporter: process.env.B6_TRANSPORTER,
 }
-console.log(moleculerConfig)
 
 @Module({
   imports: [

@@ -46,7 +46,7 @@ function calcSteedosConfig(config: any){
     return config
 }
 
-export class AppConfig{
+export default class SteedosConfig{
 
     static loadSettings = (filePath: string)=>{
         try {
@@ -84,9 +84,9 @@ export class AppConfig{
     }
     
     static loadDefaultSettings(){
-        const filePath = path.join(__dirname, '../', "default.steedos.settings.yml");
+        const filePath = path.join(__dirname, "default.steedos.settings.yml");
         if(fs.existsSync(filePath) && !fs.statSync(filePath).isDirectory() ){
-            return AppConfig.loadSettings(filePath)
+            return SteedosConfig.loadSettings(filePath)
         }else{
             return null;
         }
@@ -95,29 +95,17 @@ export class AppConfig{
     static loadProjectSettings(){
         let configPath = path.join(process.cwd(), 'steedos-config.yml')
         if (fs.existsSync(configPath) && !fs.statSync(configPath).isDirectory()) {
-            return AppConfig.loadSettings(configPath)
+            return SteedosConfig.loadSettings(configPath)
         }
     }
 
-    static loadDefaultConfig(){
-        const filePath = path.join(__dirname, '../', "default.steedos.config.js");
-        if (filePath) {
-
-			if (!fs.existsSync(filePath))
-				return Promise.reject(new Error(`Config file not found: ${filePath}`));
-
-            return require(filePath);
-		}
-    }
-
     static getSteedosConfig(){
-        const loadProjectSettings = AppConfig.loadProjectSettings();
+        const loadProjectSettings = SteedosConfig.loadProjectSettings();
         const _projectConfig = defaultsDeep({}, {settings: loadProjectSettings});
 
-        const defaultConfig = AppConfig.loadDefaultConfig();
-        const defaultSettings = AppConfig.loadDefaultSettings();
+        const defaultSettings = SteedosConfig.loadDefaultSettings();
 
-        const _defaultConfig = defaultsDeep(defaultConfig, {settings: defaultSettings})
+        const _defaultConfig = defaultsDeep({}, {settings: defaultSettings})
 
         const res = cloneDeep(_defaultConfig);
 
@@ -125,7 +113,7 @@ export class AppConfig{
 
         Object.keys(mods).forEach(key => {
             if (["created", "started", "stopped"].indexOf(key) !== -1) {
-                const functionArray = AppConfig.mergeSchemaLifecycleHandlers(mods[key], res[key]);
+                const functionArray = SteedosConfig.mergeSchemaLifecycleHandlers(mods[key], res[key]);
                 if(functionArray.length > 0){
                     res[key] = function(broker){
                         functionArray.forEach((fn: any) => fn.call(this, broker))
@@ -142,7 +130,7 @@ export class AppConfig{
     }
 
     static mergeSchemaLifecycleHandlers(src, target) {
-		return compact(AppConfig.flatten([target, src]));
+		return compact(SteedosConfig.flatten([target, src]));
 	}
 
     static flatten(arr) {
