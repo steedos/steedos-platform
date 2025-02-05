@@ -6,6 +6,11 @@ import getProjectConfigs from './project.config';
 export const projectConfigs = getProjectConfigs(process.cwd());
 export const steedosConfig = SteedosConfig.getSteedosConfig();
 
+// 兼容 Meteor.settings 变量
+global.Meteor = {
+  settings: steedosConfig
+};
+
 export async function getDbConfigs() {
   return {};
 }

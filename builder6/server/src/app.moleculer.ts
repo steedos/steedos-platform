@@ -72,7 +72,7 @@ export class AppMoleculer extends Service {
     this.broker.createService(require("@steedos/webapp-public"));
     console.log(`started 12`, serviceName)
     
-    // this.broker.createService(require("@steedos/accounts"));
+    this.broker.createService(require("@steedos/accounts/package.service"));
 
     this.broker.createService(require("@steedos/service-accounts"));
     console.log(`started 13`, serviceName)

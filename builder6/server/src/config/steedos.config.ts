@@ -166,3 +166,5 @@ export function isPlainObject(value) {
 export function isJsonMap(value){
     return isPlainObject(value);
 }
+
+export const steedosConfig = SteedosConfig.getSteedosConfig();
