@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Steedos</title>
+
+
+    <script src="https://unpkg.steedos.cn/@steedos-widgets/amis@6.3.0-patch.3/sdk/sdk.js"></script>
+
+    <script src="https://unpkg.com/lodash@4.17.21/lodash.js"></script>
+    <link rel="stylesheet" href="https://unpkg.steedos.cn/@fortawesome/fontawesome-free@6.2.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://unpkg.steedos.cn/@salesforce-ux/design-system@2.22.2/assets/styles/salesforce-lightning-design-system.min.css">
+
+    <link rel="stylesheet" href="https://unpkg.steedos.cn/@steedos-widgets/amis@6.3.0-patch.3/lib/themes/antd.css">
+    <link rel="stylesheet" href="https://unpkg.steedos.cn/@steedos-widgets/amis@6.3.0-patch.3/lib/helper.css">
+    <link rel="stylesheet" href="https://unpkg.steedos.cn/@steedos-widgets/amis@6.3.0-patch.3/sdk/iconfont.css">
+    <script src="https://unpkg.steedos.cn/lodash@4.17.21/lodash.js"></script>
+
+    <script async="">
+      window['React'] = amisRequire('react');
+      window['ReactDOM'] = amisRequire('react-dom');
+      window['moment'] = amisRequire('moment');
+      window['Amis'] = amisRequire('amis');
+      window['AmisCore'] = amisRequire('amis-core');
+      window['AmisUI'] = amisRequire('amis-ui');
+
+      // 监听窗口的 load 事件，确保所有脚本都加载完成
+      window.addEventListener('load', function() {
+          window.lodash = window._; // 将 window.lodash 设置为 window._
+      });
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
