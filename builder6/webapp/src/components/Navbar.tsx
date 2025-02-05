@@ -4,11 +4,12 @@ import { connect } from 'react-redux';
 import { getSettings, getTenant } from '../selectors';
 import { Transition } from '@tailwindui/react'
 import { useState } from 'react'
-import * as GlobalActions from '../actions/global_actions';
 import Logo from './Logo';
 import {  useNavigate } from "react-router";
+import { getCurrentUser } from '../selectors/entities/users';
+import { AppLauncher } from './AppLauncher';
 
-const Navbar = ({ tenant, user }: any) => {
+const Navbar = ({ tenant, currentUser }: any) => {
   const [menuOpen, setMenuOpen] = useState(false)
   const navigate = useNavigate();
 
@@ -25,9 +26,10 @@ const Navbar = ({ tenant, user }: any) => {
       <div className="flex items-center justify-between h-15">
         <div className="flex items-center">
           <div className="flex-shrink-0">
-            <a href="/">
-              <Logo/>
-            </a>
+            <AppLauncher/>
+          </div>
+          <div className="flex-shrink-0">
+            <Logo/>
           </div>
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
@@ -71,7 +73,7 @@ const Navbar = ({ tenant, user }: any) => {
                       <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
                     </svg>
                   </span>
-                  <p className="hidden ml-3 text-cool-gray-700 text-sm leading-5 font-medium lg:block">{user && user.name &&(user.name)}</p>
+                  <p className="hidden ml-3 text-cool-gray-700 text-sm leading-5 font-medium lg:block">{currentUser && currentUser.name &&(currentUser.name)}</p>
                   <svg className="hidden flex-shrink-0 ml-1 h-5 w-5 text-cool-gray-400 lg:block" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                   </svg>
@@ -121,6 +123,7 @@ const Navbar = ({ tenant, user }: any) => {
 function mapStateToProps(state: any) {
   return {
       tenant: getTenant(state),
+      currentUser: getCurrentUser(state),
   };
 }
 

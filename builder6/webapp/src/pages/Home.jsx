@@ -71,7 +71,7 @@ class Home extends React.PureComponent {
 
     return (
       <div>
-        <Navbar user={currentUser}/>
+        <Navbar/>
 <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 border-b border-gray-200 md:flex md:items-center md:justify-between">
   <div className="flex-1 min-w-0">
     <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">

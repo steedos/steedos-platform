@@ -22,6 +22,8 @@ import VerifyEmail from './pages/VerifyEmail';
 import VerifyMobile from './pages/VerifyMobile';
 import LocalStorageStore from './stores/local_storage_store';
 
+import { AppLayout } from './components/AppLayout';
+
 import { ObjectListView } from './pages/object/listview';
 import { ObjectDetail } from './pages/object/detail';
 
@@ -203,13 +205,17 @@ class Root extends React.PureComponent {
 
             <Route path="/app/:appId/:objectName/grid/:listviewId" element={(
               <LoggedIn>
-                <ObjectListView/>
+                <AppLayout>
+                  <ObjectListView/>
+                </AppLayout>
               </LoggedIn>
             )}/>
 
             <Route path="/app/:appId/:objectName/view/:recordId" element={(
               <LoggedIn>
-                <ObjectDetail/>
+                <AppLayout>
+                  <ObjectDetail/>
+                </AppLayout>
               </LoggedIn>
             )}/>
 

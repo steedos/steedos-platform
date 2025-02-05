@@ -7,6 +7,7 @@ import {logError} from './errors';
 import {bindClientFunc, forceLogoutIfNecessary, debounce} from './helpers';
 import { getMySpaces, selectSpace } from './spaces';
 import LocalStorageStore from '../stores/local_storage_store';
+import { Builder } from '@builder6/react';
 
 export function createUser(user: UserProfile, token: string, inviteId: string, redirect: string): ActionFunc {
     return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
@@ -123,6 +124,7 @@ export function loadMe(): ActionFunc {
       if (currentUserId) {
           Client4.setUserId(currentUserId);
       }
+      Builder.settings.context.user = user;
 
       return {data: true};
   };
