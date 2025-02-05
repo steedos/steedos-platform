@@ -341,7 +341,6 @@ module.exports = {
             this.objectql.getSteedosSchema(this.broker);
             packagePath = path.join(packagePath, '**');
             const datasource = this.objectql.getDataSource(datasourceName);
-            console.log('initDataSource', datasourceName, datasource)
             if(datasource){
                 await datasource.init();
             }
