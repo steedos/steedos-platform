@@ -1,0 +1,12 @@
+name: status
+type: select
+label: 状态
+sort_no: 26
+options: 
+  - label: 成功
+    value: success
+    color: 008000
+  - label: 失败
+    value: fail
+    color: ff0000
+filterable: true

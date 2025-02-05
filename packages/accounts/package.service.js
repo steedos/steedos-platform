@@ -1,7 +1,8 @@
 "use strict";
 const project = require('./package.json');
 const packageName = project.name;
-const packageLoader = require('@steedos/service-meteor-package-loader');
+const packageLoader = require('@steedos/service-package-loader');
+const SteedosRouter = require('@steedos/router');
 const init = require('./lib').init;
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -16,7 +17,9 @@ module.exports = {
      */
     settings: {
         packageInfo: {
-
+            path: __dirname,
+            name: packageName,
+            isPackage: false
         }
     },
 
@@ -43,16 +46,17 @@ module.exports = {
      * Methods
      */
     methods: {
-        init: function (context) {
-            init(context);
-        }
     },
 
     /**
      * Service created lifecycle event handler
      */
     async created() {
-
+        const context = {
+            app: SteedosRouter.staticRouter(),
+            settings: {}
+        }
+        init(context);
     },
 
     /**

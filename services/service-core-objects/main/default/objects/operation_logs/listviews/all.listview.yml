@@ -1,0 +1,26 @@
+name: all
+label: 所有
+columns:
+  - name
+  - type
+  - status
+  - remote_user
+  - related_to
+  - remote_addr
+  - http_user_agent
+  - is_mobile
+  - is_tablet
+  - message
+  - created
+filter_scope: space
+sort:
+  - field_name: created
+    order: desc
+searchable_fields: 
+  - field: name
+  - field: status
+  - field: type
+  - field: object
+  - field: related_to
+  - field: remote_user
+  - field: created

@@ -1,0 +1,4 @@
+name: remote_addr
+label: IP 地址
+type: text
+sort_no: 25
