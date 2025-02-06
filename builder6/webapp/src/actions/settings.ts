@@ -1,8 +1,6 @@
 
 
 import { Client4 } from "../client";
-import { loadMe } from "./users";
-import { GeneralState } from "../types/general";
 import { GeneralTypes } from "../action_types";
 import {bindClientFunc, forceLogoutIfNecessary, FormattedError} from './helpers';
 import {GetStateFunc, DispatchFunc, ActionFunc, batchActions} from '../types/actions';

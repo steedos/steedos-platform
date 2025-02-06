@@ -1,5 +1,5 @@
 import { hashHistory } from "../utils/hash_history";
-import { logout, loadMe } from "./users";
+import { logout } from "./users";
 import store from '../stores/redux_store';
 import { getCurrentUser } from "../selectors/entities/users";
 import { getMySpaces, getCurrentSpaceId, getSpace } from '../selectors/entities/spaces';

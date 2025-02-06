@@ -1,11 +1,11 @@
 import React from 'react';
 import {bindActionCreators} from 'redux';
 
-import { Routes, BrowserRouter, Route, Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getTenant, getSettings } from './selectors';
 import { getCurrentUser } from './selectors/entities/users'
 import { loadMeAndConfig } from './actions/root';
+import LocalStorageStore from './stores/local_storage_store';
 
 import { SteedosRouter } from './router';
 

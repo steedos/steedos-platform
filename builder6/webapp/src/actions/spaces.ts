@@ -14,27 +14,24 @@ import { checkRedirectUrlWhitelist } from '../utils/check';
 
 import { hashHistory } from "../utils/hash_history";
 
-export function selectSpace(spaceId?: string | null): ActionFunc {
+export function selectSpace(spaceId?: string): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
-    const userId = getCurrentUserId(getState());
-    if (!userId)
+
+    let selectedSpaceId = spaceId || LocalStorageStore.getItem('spaceId');
+    if (!selectedSpaceId) {
       return {data: false};
-    let selectedSpaceId = spaceId;
-    // Client4.setSpaceId(selectedSpaceId);
-    
-    if (!selectedSpaceId)
-      selectedSpaceId = LocalStorageStore.getPreviousSpaceId(userId);
-    else {
-      const space = getSpace(getState(), selectedSpaceId);
-      if (!space)
-        return {data: false};
     }
+
+    Client4.setSpaceId(selectedSpaceId);
+    
+    const space = getSpace(getState(), selectedSpaceId);
+    if (!space)
+      return {data: false};
 
     dispatch({
       type: SpaceTypes.SELECT_SPACE,
       data: selectedSpaceId,
     });
-    LocalStorageStore.setPreviousSpaceId(userId, selectedSpaceId);
 
     return {data: selectedSpaceId};
   };

@@ -10,6 +10,10 @@ const currentUserId = (state = '', action: GenericAction) => {
             const data = action.data || action.payload;
             return data._id;
         }
+        case UserTypes.RECEIVED_VALIDATE: {
+            const data = action.data || action.payload;
+            return data.userId;
+        }
 
         case UserTypes.LOGIN: { // Used by the mobile app
             const {user} = action.data;
@@ -34,6 +38,15 @@ const users = (state: IDMappedObjects<UserProfile> = {}, action: GenericAction) 
             return {
                 ...state,
                 [data._id]: user,
+            };
+        }
+        case UserTypes.RECEIVED_VALIDATE: {
+            const data = action.data || action.payload;
+            const user = { ...data };
+
+            return {
+                ...state,
+                [data.userId]: user,
             };
         }
         case UserTypes.LOGIN: { // Used by the mobile app

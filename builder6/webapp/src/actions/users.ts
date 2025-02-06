@@ -67,14 +67,10 @@ function completeLogin(data: any): ActionFunc {
       LocalStorageStore.setUserId(data.user._id, data.token);    
     }
     
-    const promises = [
-        dispatch(getMySpaces()),
-        dispatch(selectSpace()),
-      //   dispatch(getClientConfig()),
-    ];
 
     try {
-        await Promise.all(promises);
+      await dispatch(getMySpaces());
+      await dispatch(selectSpace());
     } catch (error: any) {
         dispatch(batchActions([
             {type: UserTypes.LOGIN_FAILURE, error},
@@ -89,35 +85,22 @@ function completeLogin(data: any): ActionFunc {
       },
     ]));
 
-
-    if(window.ReactNativeWebView && window.ReactNativeWebView.postMessage){
-      window.ReactNativeWebView.postMessage(JSON.stringify({
-        "X-Auth-Token": data.token,
-        "X-User-Id": data.user._id,
-        "X-Access-Token": data.tokens.accessToken
-      }))
-    }
-
     return {data: true, _next: data._next, ...data};
   };
 }
 
 export function loadMe(): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
-      const state = getState();
 
-      // const deviceId = state.entities.general.deviceToken;
-      // if (deviceId) {
-      //     Client4.attachDevice(deviceId);
-      // }
-
-      const promises = [
-          dispatch(getMe()),
-          dispatch(getMySpaces()),
-          dispatch(selectSpace()),
-      ];
-
-      await Promise.all(promises);
+      
+      await dispatch(getMySpaces());
+      await dispatch(selectSpace());
+      const {currentSpaceId} = getState().entities.spaces;
+      if (currentSpaceId) {
+        await dispatch(validate());
+      } else {
+        await dispatch(getMe())
+      }
 
       const {currentUserId} = getState().entities.users;
       const user = getState().entities.users.users[currentUserId];
@@ -164,9 +147,29 @@ export function getMe(): ActionFunc {
         LocalStorageStore.removeItem('userId');
         return me;
       }
-      // if ('data' in me) {
-      //     dispatch(loadRolesIfNeeded(me.data.roles.split(' ')));
-      // }
+      return me;
+  };
+}
+
+export function validate(): ActionFunc {
+  return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
+
+      if (!LocalStorageStore.getItem('userId'))
+        return {error: 'userId not found.'} 
+
+      if (!LocalStorageStore.getItem('spaceId'))
+        return {error: 'spaceId not found.'} 
+
+      const validateFunc = bindClientFunc({
+          clientFunc: Client4.validate,
+          onSuccess: UserTypes.RECEIVED_VALIDATE,
+      });
+      const me = await validateFunc(dispatch, getState);
+
+      if ('error' in me) {
+        LocalStorageStore.removeItem('userId');
+        return me;
+      }
       return me;
   };
 }
