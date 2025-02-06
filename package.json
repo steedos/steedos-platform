@@ -10,12 +10,13 @@
   ],
   "scripts": {
     "clean": "lerna clean",
+    "start": "concurrently -n \"UI,API\" -c \"bgBlue.bold,bgGreen.bold\" \"yarn:start:frontend\" \"yarn:start:backend\"",
+    "start:backend": "cd builder6/server && yarn start",
+    "start:frontend": "cd builder6/webapp && yarn dev",
     "build": "lerna run build",
     "docker": "docker-compose up",
-    "docker:db": "docker-compose up mongodb mongodb-init redis nats",
     "i18n": "lerna run i18n",    
     "repl": "moleculer-runner  --config steedos.config.js --repl",
-    "start": "cd builder6/server && yarn start",
     "sync": "lerna exec --no-private  -- cnpm sync \\$LERNA_PACKAGE_NAME"
   },
   "resolutions": {},
@@ -24,6 +25,7 @@
     "@types/express-serve-static-core": "~4.17.29",
     "@types/node": "18.0.3",
     "cnpm": "9.0.1",
+    "concurrently": "8.2.1",
     "lerna": "^4.0.0",
     "nodemon": "^2.0.19",
     "tslib": "^2.4.0",
