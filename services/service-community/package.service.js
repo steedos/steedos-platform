@@ -99,7 +99,6 @@ module.exports = {
 		//ApiGateway
 		this.broker.createService(require('@steedos/service-api'));
 		
-		this.broker.createService(require("@steedos/webapp-public"));
 
 		this.broker.createService(require("@steedos/service-accounts"));
 		

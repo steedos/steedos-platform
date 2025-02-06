@@ -69,8 +69,6 @@ export class AppMoleculer extends Service {
     //ApiGateway
     this.broker.createService(require('@steedos/service-api'));
     console.log(`started 11`, serviceName)
-    this.broker.createService(require("@steedos/webapp-public"));
-    console.log(`started 12`, serviceName)
     
     this.broker.createService(require("@steedos/accounts/package.service"));
 
