@@ -7,7 +7,6 @@ import { useState } from 'react'
 import Logo from './Logo';
 import {  useNavigate } from "react-router";
 import { getCurrentUser } from '../selectors/entities/users';
-import { AppLauncher } from './AppLauncher';
 
 const Navbar = ({ tenant, currentUser }: any) => {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -25,9 +24,6 @@ const Navbar = ({ tenant, currentUser }: any) => {
     <div className="mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex items-center justify-between h-15">
         <div className="flex items-center">
-          <div className="flex-shrink-0">
-            <AppLauncher/>
-          </div>
           <div className="flex-shrink-0">
             <Logo/>
           </div>

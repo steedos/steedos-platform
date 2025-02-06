@@ -1,10 +1,11 @@
 import Navbar from "./Navbar"
+import { AppHeader } from "./AppHeader"
 
 export const AppLayout = ({ children }) => {
 
   return (
     <>
-      <Navbar />
+      <AppHeader />
       <div className="container">
         {children}
       </div>

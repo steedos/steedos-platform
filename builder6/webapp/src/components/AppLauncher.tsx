@@ -17,12 +17,6 @@ export const AppLauncher = () => {
     }} data={{
         context: {
             ...Builder.settings.context,
-            app: appId,
-            appId: appId,
-            app_id: appId,
         },
-        app: appId,
-        appId: appId,
-        app_id: appId,
     }} env={{}}></AmisRender>
 }

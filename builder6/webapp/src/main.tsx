@@ -25,9 +25,11 @@ Builder.settings.context = {
   userId: localStorage.getItem('steedos:userId'),
   tenantId: localStorage.getItem('steedos:spaceId'),
   authToken: localStorage.getItem('steedos:token'),
+  appId: '-',
 };
 Builder.settings.unpkgUrl = 'https://unpkg.steedos.cn';
 Builder.settings.assetUrls = ['https://unpkg.steedos.cn/@steedos-widgets/amis-object@v6.3.12-beta.6/dist/assets.json'];
+
 
 (window as any)['builder'] = builder;
 
