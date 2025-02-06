@@ -5,8 +5,7 @@
     "packages/*",
     "services/*",
     "ee/*",
-    "builder6/*",
-    "steedos-packages/*"
+    "builder6/*"
   ],
   "scripts": {
     "clean": "lerna clean",
