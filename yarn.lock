@@ -6439,6 +6439,13 @@
     express "^4.17.1"
     underscore "^1.9.1"
 
+"@steedos/webapp-accounts@3.0.0-beta.2":
+  version "3.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@steedos/webapp-accounts/-/webapp-accounts-3.0.0-beta.2.tgz#025b1273ad9920b94ea9cfc7539cabc33871a151"
+  integrity sha512-lsBOutYYc9cjS9/UDmkQv5UtnwA8/Zl054WoQy2q+iMuSjLAuWT68TdCxnHBH0jlic0aLij4CfmTCZRbraLyNQ==
+  dependencies:
+    lodash "^4.17.21"
+
 "@surma/rollup-plugin-off-main-thread@^2.2.3":
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/@surma/rollup-plugin-off-main-thread/-/rollup-plugin-off-main-thread-2.2.3.tgz#ee34985952ca21558ab0d952f00298ad2190c053"
