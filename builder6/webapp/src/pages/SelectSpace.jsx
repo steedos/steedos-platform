@@ -53,7 +53,6 @@ class SelectSpace extends React.PureComponent {
   handleSpaceClick = async (space) => {
     if(space) {
       try {
-        const result = await Client4.validate(space._id);
         this.props.actions.selectSpace(space._id);
         this.props.navigate(`/home/${space._id}`);
         // hashHistory.push({

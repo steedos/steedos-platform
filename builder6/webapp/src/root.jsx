@@ -4,6 +4,7 @@ import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import { getTenant, getSettings } from './selectors';
 import { getCurrentUser } from './selectors/entities/users'
+import { getCurrentSpaceId } from './selectors/entities/spaces'
 import { loadMeAndConfig } from './actions/root';
 import LocalStorageStore from './stores/local_storage_store';
 
@@ -28,7 +29,6 @@ class Root extends React.PureComponent {
   }
 
   componentDidMount() {
-    
     this.props.actions.loadMeAndConfig().then((response) => {
       const tenant = this.props.tenant;
 
@@ -62,6 +62,7 @@ function mapStateToProps(state) {
     tenant: getTenant(state),
     settings: getSettings(state),
     currentUser: getCurrentUser(state),
+    currentSpaceId: getCurrentSpaceId(state),
   };
 }
 

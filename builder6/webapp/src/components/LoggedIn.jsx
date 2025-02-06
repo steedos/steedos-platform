@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { getSettings, getTenant } from '../selectors';
 import { getCurrentUser } from "../selectors/entities/users";
+import { getCurrentSpaceId } from "../selectors/entities/spaces";
 import Loading from './Loading';
 import { useNavigate } from "react-router";
 
@@ -10,6 +11,7 @@ const LoggedIn = ({ children }) => {
   const currentUser = useSelector(getCurrentUser);
   const tenant = useSelector(getTenant);
   const settings = useSelector(getSettings);
+  const currentSpaceId = useSelector(getCurrentSpaceId);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,6 +25,9 @@ const LoggedIn = ({ children }) => {
 
     if (!currentUser) {
       navigate('/login?redirect_to=' + encodeURIComponent(window.location.pathname));
+    }
+    if (!currentSpaceId) {
+      navigate('/select-space?redirect_to=' + encodeURIComponent(window.location.pathname));
     }
   }, [currentUser]);
 

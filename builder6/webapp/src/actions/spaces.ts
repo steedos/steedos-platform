@@ -32,6 +32,9 @@ export function selectSpace(spaceId?: string): ActionFunc {
       type: SpaceTypes.SELECT_SPACE,
       data: selectedSpaceId,
     });
+    LocalStorageStore.setItem('spaceId', selectedSpaceId);    
+    localStorage.setItem('spaceId', selectedSpaceId);
+
 
     return {data: selectedSpaceId};
   };
