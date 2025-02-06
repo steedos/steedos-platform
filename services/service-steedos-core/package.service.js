@@ -183,9 +183,6 @@ module.exports = {
 
         // this.broker.createService(require("@steedos-builder/amis-editor"));
 
-        // 产品分析
-        // this.broker.createService(require("@steedos/service-analytics"));
-
 
 		// if (this.settings.saas.enable) {
 		// 	this.broker.createService(require('@steedos/service-saas'));
