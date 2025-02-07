@@ -9,6 +9,7 @@ import { selectSpace, goSpaceHome } from '../actions/spaces';
 import { hashHistory } from "../utils/hash_history";
 import LocalStorageStore from '../stores/local_storage_store';
 import { useLocation, useNavigate, Navigate } from "react-router";
+import { t } from 'i18next';
 
 class Home extends React.PureComponent {
 
@@ -20,35 +21,6 @@ class Home extends React.PureComponent {
   constructor(props, context) {
     super(props, context);
   }
-
-  // componentDidMount() {
-  //   const previousSpaceId = LocalStorageStore.getPreviousSpaceId();
-  //   const paramSpaceId = (this.props.match && this.props.match.params)?this.props.match.params.spaceId:null;
-  //   const {currentSpaceId, settingsTenantId} = this.props;
-  //   const spaceId = paramSpaceId ? paramSpaceId : currentSpaceId ? currentSpaceId : (previousSpaceId && previousSpaceId !== 'null') ? previousSpaceId : settingsTenantId
-  //   if (spaceId) {
-  //     this.props.actions.selectSpace(spaceId).then(async (result) => {
-  //       if (result) {
-  //         if(result.data == false){
-
-  //           this.setState({ navigateTo: '/select-space' });
-
-  //           return
-  //         }else{
-  //           if (process.env.NODE_ENV == 'production')
-  //             this.goHome();
-  //           return
-  //         }
-  //       }
-  //     });
-  //   } else {
-  //     this.setState({ navigateTo: '/select-space' });
-
-  //   }
-  //   if (process.env.NODE_ENV == 'production')
-  //     if (this.props.currentUser && this.props.currentSpace) 
-  //       this.goHome();
-  // }
 
   goHome = async () => {
     this.setState({ navigateTo: '/' });
@@ -87,7 +59,7 @@ class Home extends React.PureComponent {
     <span className="shadow-sm rounded-md">
       <button type="button" className="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-700 active:bg-blue-700 transition duration-150 ease-in-out"
         onClick={this.goHome}>
-          进入首页
+          {t('Go Home')}
       </button>
     </span>
   </div>

@@ -21,7 +21,6 @@
   "resolutions": {},
   "devDependencies": {
     "@babel/core": "^7.8.4",
-    "@types/express-serve-static-core": "~4.17.29",
     "@types/node": "18.0.3",
     "cnpm": "9.0.1",
     "concurrently": "8.2.1",

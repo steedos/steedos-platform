@@ -13,12 +13,13 @@ import IntlProvider from './components/intl_provider';
 
 import store from './stores/redux_store';
 
+import './i18n';
 import './index.css'
 
 
 const container = document.getElementById("root") as HTMLElement;
 const root = createRoot(container);
-// React.StrictMode
+
 root.render(
   <> 
     <Provider store={store}>
