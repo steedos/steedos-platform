@@ -21,6 +21,8 @@
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
+    
+    "allowSyntheticDefaultImports" : true,
 
     "paths": {
       "@/*": [

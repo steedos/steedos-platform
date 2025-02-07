@@ -10,7 +10,7 @@ interface Props {
 }
 
 const Logo = ({ tenant, location }: any) => {
-  let logoUrl = `${Client4.getUrl()}${localizeMessage('accounts.logoURL')}`;
+  let logoUrl = `${localizeMessage('accounts.logoURL')}`;
   if (tenant.logo_url) {
     logoUrl = tenant.logo_url
   }

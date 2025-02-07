@@ -14,6 +14,7 @@ import * as GlobalAction from '../actions/global_actions';
 import { getCurrentUserId } from '../selectors/entities/users';
 import { useCountDown } from "../components/countdown";
 import { validatePassword } from '../client/password';
+import { useLocation, useNavigate, Navigate } from "react-router";
 
 const totalSeconds = 60;
 const ReApplyCodeBtn = ({ onClick, id, loginId, disabled }) => {
@@ -379,12 +380,9 @@ class Signup extends React.Component {
 
     if (redirectTo && redirectTo.match(/^\/([^/]|$)/)) {
       this.props.history.push(redirectTo);
-      // } else if (team) {
-      //     browserHistory.push(`/${team.name}`);
     } else {
       this.state.loginSuccess = true;
-      GlobalAction.redirectUserToDefaultSpace(this.props.location);
-
+      this.props.navigate('/');
     }
   }
 
@@ -638,4 +636,12 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Signup);
+
+
+// A wrapper component to pass location to class component
+const withRouter = (props) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  return <Signup {...props} location={location} navigate={navigate} />;
+};
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter);

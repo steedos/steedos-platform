@@ -21,34 +21,34 @@ class Home extends React.PureComponent {
     super(props, context);
   }
 
-  componentDidMount() {
-    const previousSpaceId = LocalStorageStore.getPreviousSpaceId();
-    const paramSpaceId = (this.props.match && this.props.match.params)?this.props.match.params.spaceId:null;
-    const {currentSpaceId, settingsTenantId} = this.props;
-    const spaceId = paramSpaceId ? paramSpaceId : currentSpaceId ? currentSpaceId : (previousSpaceId && previousSpaceId !== 'null') ? previousSpaceId : settingsTenantId
-    if (spaceId) {
-      this.props.actions.selectSpace(spaceId).then(async (result) => {
-        if (result) {
-          if(result.data == false){
+  // componentDidMount() {
+  //   const previousSpaceId = LocalStorageStore.getPreviousSpaceId();
+  //   const paramSpaceId = (this.props.match && this.props.match.params)?this.props.match.params.spaceId:null;
+  //   const {currentSpaceId, settingsTenantId} = this.props;
+  //   const spaceId = paramSpaceId ? paramSpaceId : currentSpaceId ? currentSpaceId : (previousSpaceId && previousSpaceId !== 'null') ? previousSpaceId : settingsTenantId
+  //   if (spaceId) {
+  //     this.props.actions.selectSpace(spaceId).then(async (result) => {
+  //       if (result) {
+  //         if(result.data == false){
 
-            this.setState({ navigateTo: '/select-space' });
+  //           this.setState({ navigateTo: '/select-space' });
 
-            return
-          }else{
-            if (process.env.NODE_ENV == 'production')
-              this.goHome();
-            return
-          }
-        }
-      });
-    } else {
-      this.setState({ navigateTo: '/select-space' });
+  //           return
+  //         }else{
+  //           if (process.env.NODE_ENV == 'production')
+  //             this.goHome();
+  //           return
+  //         }
+  //       }
+  //     });
+  //   } else {
+  //     this.setState({ navigateTo: '/select-space' });
 
-    }
-    if (process.env.NODE_ENV == 'production')
-      if (this.props.currentUser && this.props.currentSpace) 
-        this.goHome();
-  }
+  //   }
+  //   if (process.env.NODE_ENV == 'production')
+  //     if (this.props.currentUser && this.props.currentSpace) 
+  //       this.goHome();
+  // }
 
   goHome = async () => {
     this.setState({ navigateTo: '/' });

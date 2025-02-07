@@ -30,61 +30,6 @@ export function emitUserLoggedOutEvent(redirectToPath, shouldSignalLogout = true
 }
 
 
-export async function selectDefaultSpace(location) {
-    let state = getState();
-
-    // Assume we need to load the user if they don't have any team memberships loaded or the user loaded
-    let user = getCurrentUser(state);
-    
-    if (!user) {
-        return;
-    }
-    
-    // const locale = getCurrentLocale(state);
-    const spaceId = LocalStorageStore.getPreviousSpaceId(user.id);
-
-    const space = getSpace(state, spaceId);
-    if (space) {
-        dispatch(selectSpace(space._id));
-        return space._id;
-    } else {
-        redirect('/select-space');
-        // hashHistory.push({
-        //     pathname: '/select-space',
-        //     search: location.search
-        // });
-    }
-}
-
-export async function redirectUserToDefaultSpace(location) {
-    const spaceId = await selectDefaultSpace(location);
-    hashHistory.push({
-        pathname: `/home/${spaceId}`,
-        search: location.search
-    });
-}
-
-// export async function redirectUserToUpdatePassword(location){
-//     hashHistory.push({
-//         pathname: '/update-password',
-//         search: location.search
-//     });
-// }
-
-// export async function redirectUserToVerifyEmail(location){
-//     hashHistory.push({
-//         pathname: '/verify/email',
-//         search: location.search
-//     });
-// }
-
-// export async function redirectUserToVerifyMobile(location){
-//     hashHistory.push({
-//         pathname: '/verify/mobile',
-//         search: location.search
-//     });
-// }
-
 export function redirectTo(redirectTo, location) {
     if (!redirectTo) 
         return;

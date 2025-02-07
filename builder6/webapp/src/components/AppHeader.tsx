@@ -8,7 +8,7 @@ export const AppHeader = () => {
     const  appId = 's3';
 
     const isMobile = window.innerWidth < 1024
-    const logoSrc= `${Builder.settings.context.rootUrl}/images/logo_platform.png`
+    const logoSrc= `/images/logo_platform.png`
     const schema = {
       "type": "service",
       name: "globalHeader",
