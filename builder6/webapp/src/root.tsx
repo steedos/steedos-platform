@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { getTenant, getSettings } from './selectors';
 import { getCurrentUser } from './selectors/entities/users';
 import { getCurrentSpaceId } from './selectors/entities/spaces';
-import { loadMeAndConfig } from './actions/root';
 import LocalStorageStore from './stores/local_storage_store';
 import { SteedosRouter } from './router';
 import { Builder, builder, BuilderComponent, AssetsLoader } from '@builder6/react';
