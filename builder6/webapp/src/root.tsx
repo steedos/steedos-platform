@@ -15,6 +15,7 @@ import { Creator } from './utils/Creator';
 
 const _window: any = window;
 _window['Builder'] = Builder;
+_window['builder'] = builder;
 _window['Session'] = Session;
 _window['Creator'] = Creator;
 
@@ -28,8 +29,19 @@ Builder.settings.context = {
 };
 Builder.settings.unpkgUrl = 'https://unpkg.steedos.cn';
 Builder.settings.assetUrls = ['https://unpkg.steedos.cn/@steedos-widgets/amis-object@v6.3.12-beta.6/dist/assets.json'];
-
-_window['builder'] = builder;
+Builder.settings.env = {
+  requestAdaptor: (config: any)=>{
+    // 请求中转到 rootUrl
+    if (config.url.startsWith('/')) {
+      config.url = Builder.settings.context.rootUrl + config.url;
+    }
+    // if(config.allowCredentials != true){
+    //   config.withCredentials = false;
+    //   delete config.allowCredentials
+    // }
+    return config;
+  },
+}
 
 
 const Root: React.FC<any> = (props) => {

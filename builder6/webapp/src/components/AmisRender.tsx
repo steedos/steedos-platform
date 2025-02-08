@@ -21,13 +21,6 @@ export const AmisRender = function ({schema = {}, data = {}, env = {}}) {
     ...data,
   }
   const mergedEnv = {
-    assetUrls: Builder.settings.assetUrls,
-    unpkgUrl: Builder.settings.unpkgUrl,
-    jumpTo: (to: string, action: string)=>{
-      //TODO
-      debugger;
-      console.log('jumpTo to, action', to, action)
-    },
     ...env,
   }
 
