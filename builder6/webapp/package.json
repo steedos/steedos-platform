@@ -11,6 +11,7 @@
     "i18n:extract": "i18next --config i18next-parser.config.js && jq 'to_entries | map({(.key): .key}) | add' public/locales/en/translation.json > public/locales/en/translation.tmp.json && mv public/locales/en/translation.tmp.json public/locales/en/translation.json"
   },
   "dependencies": {
+    "@salesforce-ux/design-system": "2.26.2",
     "crypto-js": "^4.1.1",
     "i18next": "24.2.2",
     "i18next-browser-languagedetector": "8.0.2",

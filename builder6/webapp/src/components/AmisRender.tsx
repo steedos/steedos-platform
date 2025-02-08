@@ -22,7 +22,7 @@ export const AmisRender = function ({schema = {}, data = {}, env = {}}) {
   }
   const mergedEnv = {
     assetUrls: Builder.settings.assetUrls,
-    unpkgUrl: 'https://unpkg.steedos.cn',
+    unpkgUrl: Builder.settings.unpkgUrl,
     jumpTo: (to: string, action: string)=>{
       //TODO
       debugger;
@@ -31,7 +31,6 @@ export const AmisRender = function ({schema = {}, data = {}, env = {}}) {
     ...env,
   }
 
-  const assetUrls = mergedEnv.assetUrls || []
   const content = {
     data: {
       blocks: [

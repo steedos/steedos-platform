@@ -9,9 +9,14 @@ import { SteedosRouter } from './router';
 import { Builder, builder, BuilderComponent, AssetsLoader } from '@builder6/react';
 import { loadSettings } from './actions/settings';
 import { loadMe } from './actions/users';
+import { Session } from './utils/Session';
+import { Creator } from './utils/Creator';
+
 
 const _window: any = window;
 _window['Builder'] = Builder;
+_window['Session'] = Session;
+_window['Creator'] = Creator;
 
 Builder.settings.appId = '-';
 Builder.settings.context = {
