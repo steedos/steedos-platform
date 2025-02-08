@@ -20,7 +20,7 @@ import Preference from '../pages/Preference';
 import Loading from '../components/Loading';
 import VerifyEmail from '../pages/VerifyEmail';
 import VerifyMobile from '../pages/VerifyMobile';
-import LocalStorageStore from '../stores/local_storage_store';
+import {AppHome} from '../pages/app';
 
 import { AppLayout } from '../components/AppLayout';
 
@@ -109,6 +109,16 @@ const routes = [
     element: (
       <LoggedIn>
         <Home />
+      </LoggedIn>
+    ),
+  },
+  {
+    path: '/app/:appId',
+    element: (
+      <LoggedIn>
+        <AppLayout>
+          <AppHome />
+        </AppLayout>
       </LoggedIn>
     ),
   },
