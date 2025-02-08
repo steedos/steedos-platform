@@ -10,7 +10,14 @@ import { Builder, builder, BuilderComponent } from '@builder6/react';
 export const AmisRender = function ({schema = {}, data = {}, env = {}}) {
 
   const mergedData = {
-    ...Builder.settings,
+    app_id: Builder.settings.appId,
+    context: Builder.settings.context,
+    global: {
+      userId: Builder.settings.context.userId,
+      spaceId: Builder.settings.context.tenantId,
+      user: Builder.settings.context.user, 
+      now: new Date(),
+    },
     ...data,
   }
   const mergedEnv = {

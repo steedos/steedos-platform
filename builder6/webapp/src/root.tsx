@@ -13,12 +13,13 @@ import { loadMe } from './actions/users';
 const _window: any = window;
 _window['Builder'] = Builder;
 
+Builder.settings.appId = '-';
 Builder.settings.context = {
   rootUrl: import.meta.env.VITE_B6_ROOT_URL as string,
   userId: localStorage.getItem('steedos:userId'),
   tenantId: localStorage.getItem('steedos:spaceId'),
   authToken: localStorage.getItem('steedos:token'),
-  appId: '-',
+  user: {},
 };
 Builder.settings.unpkgUrl = 'https://unpkg.steedos.cn';
 Builder.settings.assetUrls = ['https://unpkg.steedos.cn/@steedos-widgets/amis-object@v6.3.12-beta.6/dist/assets.json'];
