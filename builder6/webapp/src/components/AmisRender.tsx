@@ -28,19 +28,6 @@ export const AmisRender = function ({schema = {}, data = {}, env = {}}) {
   const content = {
     data: {
       blocks: [
-        {
-          "@type": "@builder.io/sdk:Element",
-          "@version": 2,
-          layerName: "Page",
-          id: `builder-assets`,
-          component: {
-            name: "Core:AssetsLoader",
-            options: {
-              urls: assetUrls,
-              unpkgUrl: 'https://unpkg.steedos.cn'
-            },
-          },
-          children: [
             {
               id: `builder-amis`,
               "@type": "@builder.io/sdk:Element",
@@ -76,8 +63,6 @@ export const AmisRender = function ({schema = {}, data = {}, env = {}}) {
             },
           },
         },
-      ],
-    },
   };
 
   return <BuilderComponent model="pages" content={content} data={data}/>

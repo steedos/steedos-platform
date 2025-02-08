@@ -65,7 +65,10 @@ const Root: React.FC<any> = (props) => {
 
   return (
     <div className="absolute w-full h-full">
-      <SteedosRouter />
+      <AssetsLoader
+          urls = {Builder.settings.assetUrls}>
+        <SteedosRouter />
+      </AssetsLoader>
     </div>
   );
 };
