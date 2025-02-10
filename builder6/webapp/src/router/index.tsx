@@ -16,7 +16,6 @@ import Home from '../pages/Home';
 import UpdatePassword from '../pages/updatePassword';
 import CreateTenant from '../pages/CreateTenant';
 import SelectSpace from '../pages/SelectSpace';
-import Preference from '../pages/Preference';
 import Loading from '../components/Loading';
 import VerifyEmail from '../pages/VerifyEmail';
 import VerifyMobile from '../pages/VerifyMobile';
@@ -85,14 +84,6 @@ const routes = [
     element: (
       <LoggedIn>
         <VerifyMobile />
-      </LoggedIn>
-    ),
-  },
-  {
-    path: '/preference',
-    element: (
-      <LoggedIn>
-        <Preference />
       </LoggedIn>
     ),
   },

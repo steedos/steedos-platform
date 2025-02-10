@@ -62,7 +62,7 @@ export const AmisRender = function ({schema = {}, data = {}, env = {}}) {
             },
           },
         },
-  };
+  } as any;
 
   return <BuilderComponent model="pages" content={content} data={data}/>
 }

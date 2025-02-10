@@ -11,7 +11,6 @@
     "i18n:extract": "i18next --config i18next-parser.config.js && jq 'to_entries | map({(.key): .key}) | add' public/locales/en/translation.json > public/locales/en/translation.tmp.json && mv public/locales/en/translation.tmp.json public/locales/en/translation.json"
   },
   "dependencies": {
-    "@salesforce-ux/design-system": "2.26.2",
     "crypto-js": "^4.1.1",
     "i18next": "24.2.2",
     "i18next-browser-languagedetector": "8.0.2",
@@ -60,10 +59,7 @@
     "redux-thunk": "^2.4.1",
     "serialize-error": "^7.0.1",
     "tslib": "^2.3.1",
-    "typescript": "^5.2.2",
-    "vite": "^5.2.0",
-    "vite-plugin-external": "^4.3.1",
-    "yarn": "^1.22.5"
+    "typescript": "5.7.3"
   },
   "publishConfig": {
     "access": "public"

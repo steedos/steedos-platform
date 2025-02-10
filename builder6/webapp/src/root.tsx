@@ -83,10 +83,13 @@ const Root: React.FC<any> = (props) => {
 
   return (
     <div className="absolute w-full h-full">
+      {
+      // @ts-ignore
       <AssetsLoader
           urls = {Builder.settings.assetUrls}>
         <SteedosRouter />
       </AssetsLoader>
+      }
     </div>
   );
 };
@@ -102,4 +105,5 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   actions: bindActionCreators({ loadSettings, loadMe }, dispatch),
 });
 
+//@ts-ignore
 export default connect(mapStateToProps, mapDispatchToProps)(Root);

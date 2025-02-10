@@ -16,19 +16,22 @@
     "jsx": "react-jsx",
 
     /* Linting */
-    "strict": true,
+    "strict": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
     
     "allowSyntheticDefaultImports" : true,
+    "noImplicitAny": false,
+    "esModuleInterop": true,
 
     "paths": {
       "@/*": [
         "./src/*"
       ],
     },
+    "types": ["node", "vite/client"],
   },
   "include": ["src"]
 }

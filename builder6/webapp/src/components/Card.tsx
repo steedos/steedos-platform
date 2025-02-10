@@ -13,7 +13,7 @@ import Logo from './Logo';
 import { localizeMessage } from '../utils/utils';
 import PropTypes from 'prop-types';
 
-class Card extends React.Component {
+class Card extends React.Component<any> {
   static propTypes = {
     settings: PropTypes.object,
   }
@@ -50,13 +50,7 @@ class Card extends React.Component {
 
   openPrivacyPage = async () => {
     const href=localizeMessage('accounts.privacyURL');
-    if(window && window.AppBrowserOpen){
-      // TODO:暂时没效果，等webapp包整合到meteor中再处理
-      window.AppBrowserOpen(href, "_blank");
-    }
-    else{
-      window.open(href);
-    }
+    window.open(href);
   };
 }
 

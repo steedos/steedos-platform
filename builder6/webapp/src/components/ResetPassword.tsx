@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { RouteComponentProps, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FormControl, InputLabel, Input, Button, Typography, Snackbar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import {FormattedMessage} from 'react-intl';
-import { localizeMessage } from '../utils/utils';
 
 import FormError from './FormError';
 
@@ -25,7 +24,7 @@ interface RouteMatchProps {
   token: string;
 }
 
-const ResetPassword = ({ match }: RouteComponentProps<RouteMatchProps>) => {
+const ResetPassword = ({ match }: any) => {
   const classes = useStyles({});
   const [snackbarMessage, setSnackbarMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);

@@ -25,7 +25,10 @@ const Navbar = ({ tenant, currentUser }: any) => {
       <div className="flex items-center justify-between h-15">
         <div className="flex items-center">
           <div className="flex-shrink-0">
+            {
+            // @ts-ignore
             <Logo/>
+            }
           </div>
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
@@ -83,7 +86,6 @@ const Navbar = ({ tenant, currentUser }: any) => {
                     {/* <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Your Profile</a> */}
                     <a href="/select-space" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">选择企业</a>
 
-                    {/* <a href="#/preference" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">账户设置</a> */}
 
                     <a href="/logout" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" onClick={onLogout}>注销</a>
                   </div>

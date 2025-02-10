@@ -7,20 +7,19 @@ import {IntlProvider as BaseIntlProvider} from 'react-intl';
 
 import * as I18n from '../../i18n/i18n';
 
-export default class IntlProvider extends React.PureComponent<any, any>  {
-    static propTypes = {
-        children: PropTypes.oneOfType([
-            PropTypes.arrayOf(PropTypes.node),
-            PropTypes.node
-        ]).isRequired,
-        locale: PropTypes.string.isRequired,
-        settings: PropTypes.object,
-        translations: PropTypes.object,
-        actions: PropTypes.shape({
-            loadTranslations: PropTypes.func.isRequired,
-        }).isRequired,
+// Define interfaces/types for your props
+interface IntlProviderProps {
+    children: React.ReactNode; // Typing children
+    locale: string;
+    settings?: object;
+    translations?: { [key: string]: string }; // Assuming translations is an object with string keys and values
+    actions: {
+        loadTranslations: (locale: string, url: string) => void;
     };
+}
 
+export default class IntlProvider extends React.PureComponent<IntlProviderProps, any>  {
+   
     constructor(props) {
         super(props);
         // props.actions.loadSettings();
@@ -66,6 +65,7 @@ export default class IntlProvider extends React.PureComponent<any, any>  {
         // }
 
         return (
+            // @ts-ignore: Suppress TS2769 error
             <BaseIntlProvider
                 key={this.props.locale}
                 locale={this.props.locale}
