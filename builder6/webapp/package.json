@@ -2,6 +2,9 @@
   "name": "@steedos/webapp",
   "version": "3.0.0-beta.2",
   "private": true,
+  "files": [
+    "dist"
+  ],
   "license": "MIT",
   "scripts": {
     "dev": "vite",

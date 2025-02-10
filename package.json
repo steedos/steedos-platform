@@ -9,9 +9,8 @@
   ],
   "scripts": {
     "clean": "lerna clean",
-    "start": "concurrently -n \"UI,API\" -c \"bgBlue.bold,bgGreen.bold\" \"yarn:start:frontend\" \"yarn:start:backend\"",
-    "start:backend": "cd builder6/server && yarn start",
-    "start:frontend": "cd builder6/webapp && yarn dev",
+    "start": "cd builder6/server && yarn start",
+    "webapp": "cd builder6/webapp && yarn dev",
     "build": "lerna run build",
     "docker": "docker-compose up",
     "i18n": "lerna run i18n",    

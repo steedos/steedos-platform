@@ -41,6 +41,7 @@
     "@builder6/sharepoint": "^0.14.2",
     "@builder6/steedos": "^0.14.2",
     "@builder6/tables": "^0.14.2",
+    "@steedos/webapp": "3.0.0-beta.2",
     "@nestjs/common": "^11.0.0",
     "@nestjs/config": "^3.3.0",
     "@nestjs/core": "^11.0.0",

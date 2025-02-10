@@ -1,11 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { join } from 'path';
+import path, { join } from 'path';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
-import { urlencoded, json } from 'express';
+import express, { urlencoded, json } from 'express';
 import { WsAdapter } from '@nestjs/platform-ws';
 import { Logger } from 'nestjs-pino';
 
@@ -110,42 +110,18 @@ export async function bootstrap() {
   
   expressApp.use(require('@steedos/router').staticRouter());
 
+  // 加载 webapp
+  const webappPackagePath = require.resolve('@steedos/webapp/package.json');
+  // Derive the path to the 'dist' directory
+  const webappDistPath = path.join(path.dirname(webappPackagePath), 'dist');
 
-  // if (process.env.B6_PROXY_TARGET) {
-  //   // 获取 Nest 应用的请求处理器
-  //   const server = app.getHttpAdapter().getInstance();
-  //   // 配置代理中间件
-  //   server.use(
-  //     '/',
-  //     createProxyMiddleware({
-  //       pathFilter: (path) => {
-  //         return (
-  //           !path.match('^/api/v6') &&
-  //           !path.match('^/b6/') &&
-  //           !path.match('^/api/automation') &&
-  //           !path.match('^/v7') &&
-  //           !path.match('^/v2/c/')
-  //         );
-  //       },
-  //       target: process.env.B6_PROXY_TARGET, // 目标 Express 应用的 URL
-  //       changeOrigin: true,
-  //       toProxy: true,
-  //       ws: true, // 启用 WebSocket 支持
-  //       on: {
-  //         proxyReq: fixRequestBody,
-  //       },
-  //       followRedirects: true,
-  //       ejectPlugins: true,
-  //       logger: console,
-  //       plugins: [
-  //         debugProxyErrorsPlugin,
-  //         loggerPlugin,
-  //         errorResponsePlugin,
-  //         proxyEventsPlugin,
-  //       ],
-  //     }),
-  //   );
-  // }
+  // Use express.static to serve files from the 'dist' directory
+  if (webappPackagePath) {
+    expressApp.use('/', express.static(webappDistPath));
+    expressApp.get('/*react', (req, res) => {
+      res.sendFile(path.join(webappDistPath, 'index.html'));
+    });
+  }
 
   await app.listen(process.env.B6_PORT ?? 5100);
 }
