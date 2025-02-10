@@ -4,10 +4,14 @@ Steedos WebApp 是一个基于 React 的 Web 应用程序，用于展示和管�
 
 ## 开发
 
+启动开发服务可以单独调试前端。环境变量 `VITE_B6_ROOT_URL` 用于指定后端 API 服务地址。
+
 ```bash
 yarn
 yarn dev
 ```
+
+访问 `http://localhost:5173` 查看效果。
 
 ## 构建
 
@@ -16,3 +20,5 @@ yarn dev
 ```bash 
 yarn build
 ```
+
+访问 `http://localhost:5000` 查看效果。
