@@ -1,26 +1,18 @@
-# react-rest)typescript
+# Steedos WebApp
 
-This example demonstrate how to use [accounts-js](https://github.com/accounts-js/accounts).
+Steedos WebApp 是一个基于 React 的 Web 应用程序，用于展示和管理 Steedos 应用程序的数据。替代了 Steedos 2.x 中的 Meteor Clint。
 
-## Getting Started
+## 开发
 
-```
-git clone https://github.com/accounts-js/accounts.git
-cd examples/react-typescript
-yarn install
-```
-
-Start the app.
-
-```
-yarn start
+```bash
+yarn
+yarn dev
 ```
 
-Open a browser and navigate to [http://localhost:3000](http://localhost:3000).
+## 构建
 
-## 功能说明
-- 登录及注册页面前台
+构建后会生成 dist 文件夹，@steedos/server 启动时会默认加载此文件夹，并将所有非API路由重定位到此 App。
 
-## Build
-执行命令`build-disabled`
-注意: steedos-frontend需要与steedos-platform文件夹路径需要平级
+```bash 
+yarn build
+```
