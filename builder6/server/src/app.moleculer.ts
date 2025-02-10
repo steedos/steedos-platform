@@ -112,9 +112,6 @@ export class AppMoleculer extends Service {
     // 启动 本地 CDN
     // this.broker.createService(require("@steedos/unpkg"));
 
-    // 启动 登录页面
-    this.broker.createService(require("@steedos/webapp-accounts"));
-
     // this.broker.createService(require("@steedos-builder/amis-editor"));
 
     // if (this.settings.saas.enable) {

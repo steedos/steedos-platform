@@ -28,7 +28,6 @@
     "@steedos/standard-space": "3.0.0-beta.2",
     "@steedos/standard-ui": "3.0.0-beta.2",
     "@steedos/unpkg": "3.0.0-beta.2",
-    "@steedos/webapp-accounts": "3.0.0-beta.2",
     "@steedos/workflow": "3.0.0-beta.2",
     "dotenv-flow": "^3.2.0",
     "helmet": "6.2.0",
