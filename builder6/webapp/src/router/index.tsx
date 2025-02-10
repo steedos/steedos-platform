@@ -19,7 +19,8 @@ import SelectSpace from '../pages/SelectSpace';
 import Loading from '../components/Loading';
 import VerifyEmail from '../pages/VerifyEmail';
 import VerifyMobile from '../pages/VerifyMobile';
-import {AppHome} from '../pages/app';
+import {AppDashboard} from '../pages/app';
+import {AppView} from '../pages/app/id';
 
 import { AppLayout } from '../components/AppLayout';
 
@@ -42,9 +43,7 @@ const routes = [
   {
     path: '/',
     element: (
-      <LoggedIn>
-        <Home />
-      </LoggedIn>
+      <Home />
     ),
   },
   {
@@ -104,11 +103,21 @@ const routes = [
     ),
   },
   {
+    path: '/app',
+    element: (
+      <LoggedIn>
+        <AppLayout>
+          <AppDashboard />
+        </AppLayout>
+      </LoggedIn>
+    ),
+  },
+  {
     path: '/app/:appId',
     element: (
       <LoggedIn>
         <AppLayout>
-          <AppHome />
+          <AppView />
         </AppLayout>
       </LoggedIn>
     ),
