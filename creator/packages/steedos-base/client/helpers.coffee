@@ -877,6 +877,10 @@ TemplateHelpers =
 			catch e
 				console.log(e)
 		else
+			try
+				fileName = Steedos.generateShortStringFromUrl(url) + '-' + filename
+			catch e
+				console.log(e)
 			directory = cordova.file.cacheDirectory
 
 		window.resolveLocalFileSystemURL directory, ((directoryEntry) ->
