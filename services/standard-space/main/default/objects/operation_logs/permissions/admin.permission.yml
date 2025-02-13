@@ -3,5 +3,5 @@ allowCreate: false
 allowDelete: false
 allowEdit: false
 allowRead: true
-modifyAllRecords: true
+modifyAllRecords: false
 viewAllRecords: true
