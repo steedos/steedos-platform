@@ -26,6 +26,7 @@ import { AppLayout } from '../components/AppLayout';
 
 import { ObjectListView } from '../pages/object/listview';
 import { ObjectDetail } from '../pages/object/detail';
+import { PageView } from '../pages/page';
 
 const routes = [
   {
@@ -118,6 +119,16 @@ const routes = [
       <LoggedIn>
         <AppLayout>
           <AppView />
+        </AppLayout>
+      </LoggedIn>
+    ),
+  },
+  {
+    path: '/app/:appId/page/:pageId',
+    element: (
+      <LoggedIn>
+        <AppLayout>
+          <PageView />
         </AppLayout>
       </LoggedIn>
     ),
