@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-30 14:04:38
+ * @LastEditTime: 2025-02-15 16:58:46
  * @Description: 
  */
 import * as I18n from '@steedos/i18n';
@@ -10,7 +10,6 @@ import { InitCoreTranslations } from '@steedos/i18n/lib/core_i18n'
 import { initExportObjectI18nTemplateRouter, initLocalesRouter} from '@steedos/i18n/lib/router'
 import { getObjectTranslations, getTranslations } from '@steedos/metadata-registrar';
 const SteedosRouter = require('@steedos/router');
-const app = SteedosRouter.staticRouter();
 
 export const InitTranslations = async function(){
     InitCoreTranslations();
@@ -20,6 +19,7 @@ export const InitTranslations = async function(){
 }
 
 export const InitTranslationRouter = function(){
+    const app = SteedosRouter.staticRouter();
     const pluginContext = {
         app,
         settings: Meteor.settings

@@ -28,7 +28,8 @@ Builder.settings.context = {
   user: {},
 };
 Builder.settings.unpkgUrl = 'https://unpkg.steedos.cn';
-Builder.settings.assetUrls = ['https://unpkg.steedos.cn/@steedos-widgets/amis-object@v6.3.12-beta.6/dist/assets.json'];
+Builder.settings.assetUrls = ['http://127.0.0.1:8080/@steedos-widgets/amis-object/dist/assets-dev.json'];
+
 Builder.settings.env = {
   requestAdaptor: (config: any)=>{
     // 请求中转到 rootUrl
@@ -82,7 +83,7 @@ const Root: React.FC<any> = (props) => {
   }
 
   return (
-    <div className="absolute w-full h-full">
+    <>
       {
       // @ts-ignore
       <AssetsLoader
@@ -90,7 +91,7 @@ const Root: React.FC<any> = (props) => {
         <SteedosRouter />
       </AssetsLoader>
       }
-    </div>
+    </>
   );
 };
 

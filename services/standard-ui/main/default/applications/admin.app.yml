@@ -4,6 +4,7 @@ description: 管理员设置公司、人员、权限等。
 icon: ion-ios-people-outline
 icon_slds: settings
 is_creator: true
+showSidebar: true
 mobile: true
 tab_groups:
   - group_name: personal_settings

@@ -95,6 +95,12 @@ export class AppMoleculer extends Service {
     // 启动 软件包安装、卸载、重载等操作
     this.broker.createService(require("@steedos/service-package-tool"));
     console.log(`started 17`, serviceName)
+
+    this.broker.createService(require("@steedos/standard-permission"));
+    this.broker.createService(require("@steedos/standard-ui"));
+
+    console.log(`started 18`, serviceName)
+
     // if(this.settings.jwt.enable){
     // 	this.broker.createService(require("@steedos/service-identity-jwt"));
     // }

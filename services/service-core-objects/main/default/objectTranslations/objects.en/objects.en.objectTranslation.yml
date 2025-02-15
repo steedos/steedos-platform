@@ -1,0 +1,202 @@
+name: objects
+label: Object
+description: 
+fields:
+  datasource:
+    label: Datasource
+    help: 
+    description: 
+  label:
+    label: Label
+    help: 
+    description: 
+  name:
+    label: API Name
+    help: >-
+      Can only contain lowercase letters and numbers, must start with a letter,
+      cannot end with an underscore character or contain two consecutive
+      underscore characters
+    description: 
+  table_name:
+    label: Table Name
+    help: The default data source does not support this property
+    description: 
+  icon:
+    label: Icon
+    help: 
+    description: 
+  is_enable:
+    label: Enable
+    help: 
+    description: 
+  in_development:
+    label: Development State
+    help: 
+    options:
+      - label: Developing ( Only administrators can access. )
+        value: '1'
+      - label: Deployed
+        value: '0'
+    description: 
+  enable_search:
+    label: Enable Search
+    help: 
+    description: 
+  enable_files:
+    label: Enable Files
+    help: 
+    description: 
+  enable_tasks:
+    label: Enable Tasks
+    help: 
+    description: 
+  enable_notes:
+    label: Enable Notes
+    help: 
+    description: 
+  enable_form_tabs:
+    label: Enable Form Tabs
+    help: Displays groups in tabbed mode in the form, recognizing this property only when editing mode.
+    description: 
+  enable_events:
+    label: Enable Events
+    help: 
+    description: 
+  enable_api:
+    label: Enable API
+    help: 
+    description: 
+  enable_share:
+    label: Enable Share
+    help: 
+    description: 
+  enable_workflow:
+    label: Enable Workflow
+    help: 
+    description: 
+  enable_instances:
+    label: Enable Instances
+    help: 
+    description: 
+  enable_chatter:
+    label: Enable Chatter
+    help: 
+    description: 
+  enable_inline_edit:
+    label: Enable Single Field Edit
+    help: 
+    description: 
+  enable_tree:
+    label: Enable Tree
+    help: Enable a tree structure to display records
+    description: 
+  enable_enhanced_lookup:
+    label: Enable Enhanced Lookup
+    help: When enabled, the lookup field associated with this object displays its options as a pop-up window.
+    description: 
+  enable_split:
+    label: Enable Split
+    help: 
+    description: 
+  enable_lock_detail:
+    label: Enable Lock Details
+    help: When the main watch is locked all sub tables are read only.
+    description: 
+  description:
+    label: Description
+    help: 
+    description: 
+  sidebar:
+    label: Sidebar
+    help: 
+    description: 
+  fields:
+    label: Fields
+    help: 
+    description: 
+  list_views:
+    label: ListViews
+    help: 
+    description: 
+  actions:
+    label: Actions
+    help: 
+    description: 
+  relatedList:
+    label: Related List
+    help: 
+    description: 
+  permission_set:
+    label: Permission Set
+    help: 
+    description: 
+  triggers:
+    label: Triggers
+    help: 
+    description: 
+  custom:
+    label: Custom
+    help: 
+    description: 
+  owner:
+    label: Owner
+    help: 
+    description: 
+  app_unique_id:
+    label: App Unique ID
+    help: 
+    description: 
+  app_version:
+    label: App Version
+    help: 
+    description: 
+  is_system:
+    label: System
+    help: 
+    description: 
+  fields_serial_number:
+    label: 
+    help: 
+    description: 
+  is_deleted:
+    label: Deleted
+    help: 
+    description: 
+  reload_time:
+    label: 
+    help: 
+    description: 
+  compactLayouts:
+    label: Highlight Fields
+  is_customize:
+    label: Customize
+groups:
+  external_data_source: External data source
+  switch: Switch
+  script: Script
+  advanced: Advanced
+listviews:
+  all:
+    label: All Objects
+  customize:
+    label: Customize
+  system:
+    label: System
+  deleted:
+    label: Deleted
+actions:
+  schemaBuilder:
+    label: Schema Builder
+  show_object:
+    label: Preview
+  copy_odata:
+    label: Copy OData URL
+  createDefaultRecordView:
+    label: Create Default Page Layout
+CustomLabels:
+  objects_field_datasource_defaultValue: Default data source
+  objects_field_datasource_meteor: Meteor
+  objects_field_enable_approvals: Display Request History Steps
+  objects_field_enable_space_global: Accessing Data Across Workspaces
+  objects_field_enable_web_forms: Allow Online Forms
+  object_object__error_name_invalid_format: Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters

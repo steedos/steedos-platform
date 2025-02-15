@@ -1,0 +1,23 @@
+name: roles
+label: Role
+description: 
+fields:
+  name:
+    label: Name
+    help: 
+    description: 
+  parent:
+    label: Parent Role
+    help: 
+    description: 
+  users:
+    label: Users
+    help: 
+    description: 
+  description:
+    label: Description
+    help: 
+    description: 
+listviews:
+  all:
+    label: All Roles

@@ -1,0 +1,55 @@
+name: instances_statistic
+label: Statistic of Processing Instances
+description: 
+fields:
+  user:
+    label: User
+    help: 
+    description: 
+  year:
+    label: Year
+    help: 
+    description: 
+  month:
+    label: Month
+    help: 
+    description: 
+  month_finished_count:
+    label: Total Number of Processed Instances
+    help: 
+    description: 
+  inbox_count:
+    label: Total Number of Pending Instances
+    help: 
+    description: 
+  month_finished_time:
+    label: Total Time of Processed Instances
+    help: 
+    description: 
+  inbox_time:
+    label: Total Time of Pending Instances
+    help: 
+    description: 
+  month_finished_avg:
+    label: Average Time of Processed Instances
+    help: 
+    description: 
+  inbox_avg:
+    label: Average Time of Pending Instances
+    help: 
+    description: 
+  avg_time:
+    label: Average Time of all Instances
+    help: 
+    description: 
+  owner_organization:
+    label: Main Department
+    help: 
+    description: 
+  owner_organizations:
+    label: All Departments
+    help: 
+    description: 
+listviews:
+  all:
+    label: All Statistic of Processing Instances

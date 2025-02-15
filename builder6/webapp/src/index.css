@@ -1,3 +1,43 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.creator-content-wrapper {
+    overflow: auto !important;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin-top: 90px;
+}
+
+@media (min-width: 767px) {
+    .creator-content-wrapper {
+        height:calc(100% - 90px)
+    }
+
+    .creator-content-wrapper>.builder-component{
+        height: 100%;
+    }
+
+    .creator-content-wrapper>.builder-component>.builder-content{
+        height: 100%;
+    }
+
+    .creator-content-wrapper>.builder-component>.builder-content>div{
+        height: 100%;
+    }
+
+    .creator-content-wrapper>.builder-component>.builder-content>div>.builder-blocks{
+        height: 100%;
+    }
+
+    .creator-content-wrapper>.builder-component>.builder-content>div>.builder-blocks>.builder-block{
+        height: 100%;
+    }
+    .creator-content-wrapper>.builder-component>.builder-content>div>.builder-blocks>.builder-block>.amis-scope{
+        height: 100%;
+    }
+}

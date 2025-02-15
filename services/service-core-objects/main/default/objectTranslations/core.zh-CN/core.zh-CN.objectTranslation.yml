@@ -1,0 +1,17 @@
+name: core
+label: 
+description: 
+fields: {}
+actions:
+  standard_query:
+    label: 查找
+  standard_new:
+    label: 新建
+  standard_open_view:
+    label: 查看
+  standard_edit:
+    label: 编辑
+  standard_delete:
+    label: 删除
+  standard_delete_many:
+    label: 删除

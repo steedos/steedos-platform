@@ -1,0 +1,50 @@
+name: cms_files
+label: 附件
+description: 
+fields:
+  name:
+    label: 名称
+    help: 
+    description: 
+  description:
+    label: 描述
+    help: 
+    description: 
+  extention:
+    label: 文件后缀
+    help: 
+    description: 
+  size:
+    label: 文件大小
+    help: 
+    description: 
+  versions:
+    label: 历史版本
+    help: 
+    description: 
+  parent:
+    label: 所属记录
+    help: 
+    description: 
+  allow_anonymous_downloads:
+    label: 允许匿名下载
+    help:
+    description:
+listviews:
+  all:
+    label: 所有
+actions:
+  standard_new:
+    label: 新建
+  standard_open_view:
+    label: 查看
+  online_preview:
+    label: 预览
+  standard_edit:
+    label: 编辑
+  standard_delete:
+    label: 删除
+  download:
+    label: 下载
+  new_version:
+    label: 上传新版本

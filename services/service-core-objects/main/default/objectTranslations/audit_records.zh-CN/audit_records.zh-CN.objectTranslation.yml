@@ -1,0 +1,35 @@
+name: audit_records
+label: 审计日志
+description: 
+fields:
+  related_to:
+    label: 相关项
+    help: 
+    description: 
+  created:
+    label: 时间
+    help: 
+    description: 
+  field_name:
+    label: 字段
+    help: 
+    description: 
+  created_by:
+    label: 用户
+    help: 
+    description: 
+  previous_value:
+    label: 原始值
+    help: 
+    description: 
+  new_value:
+    label: 新值
+    help: 
+    description: 
+listviews:
+  all:
+    label: 全部
+  recent:
+    label: 最近查看
+CustomLabels:
+  audit_records_created: 已创建。

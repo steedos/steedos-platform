@@ -1,14 +1,14 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-07-29 09:40:31
- * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2023-09-11 15:45:29
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2025-02-15 13:49:38
  * @Description: 
  */
 "use strict";
 const project = require('./package.json');
 const packageName = project.name;
-const packageLoader = require('@steedos/service-meteor-package-loader');
+const packageLoader = require('@steedos/service-package-loader');
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */

@@ -1,0 +1,314 @@
+name: flows
+label: 流程
+description:
+fields:
+  name:
+    label: 流程名
+    help:
+    description:
+  form:
+    label: 流程表单
+    help:
+    description:
+  category:
+    label: 分类
+    help:
+    description:
+  state:
+    label: 流程状态
+    help:
+    options:
+      - label: 启用
+        value: enabled
+      - label: 停用
+        value: disabled
+    description:
+  is_valid:
+    label: 流程有效
+    help:
+    description:
+  current_no:
+    label: 当前序号
+    help:
+    description:
+  description:
+    label: 备注
+    help:
+    description:
+  help_text:
+    label: 帮助文本
+    help:
+    description:
+  company_id:
+    label: 分部
+    help:
+    description:
+  created_by:
+    label: 创建人
+    help:
+    description:
+  modified_by:
+    label: 修改人
+    help:
+    description:
+  current:
+    label: 当前版本
+    help:
+    description:
+  current.modified:
+    label: 修改时间
+    help:
+    description:
+  current.modified_by:
+    label: 修改人
+    help:
+    description:
+  current.created:
+    label: 创建时间
+    help:
+    description:
+  current.created_by:
+    label: 创建人
+    help:
+    description:
+  current.steps:
+    label: 步骤
+    help:
+    description:
+  current.steps.$._id:
+    label:
+    help:
+    description:
+  current.steps.$.name:
+    label: 名称
+    help:
+    description:
+  current.steps.$.disableCC:
+    label: 禁止传阅
+    help:
+    description:
+  current.steps.$.allowDistribute:
+    label: 允许分发
+    help:
+    description:
+  current.steps.$.can_edit_main_attach:
+    label: 允许修改正文
+    help:
+    description:
+  current.steps.$.can_edit_normal_attach:
+    label: 允许修改附件
+    help:
+    description:
+  current.steps.$.distribute_optional_flows:
+    label: 此步骤分发时可选的流程范围
+    help:
+    description:
+  current.steps.$.cc_must_finished:
+    label: 必须等待传阅完成
+    help:
+    description:
+  current.steps.$.cc_alert:
+    label: 弹出传阅提醒
+    help:
+    description:
+  current.steps.$.allowBatch:
+    label: 批量审批
+    help:
+    description:
+  current.steps.$.oneClickApproval:
+    label: 一键核准
+    help:
+    description:
+  current.steps.$.oneClickRejection:
+    label: 一键驳回
+    help:
+    description:
+  perms:
+    label: 权限
+    help:
+    description:
+  perms.users_can_add:
+    label: '授权用户: 新建申请单'
+    help:
+    description:
+  perms.orgs_can_add:
+    label: '授权部门: 新建申请单'
+    help:
+    description:
+  perms.users_can_monitor:
+    label: '授权用户: 查看所有申请单'
+    help:
+    description:
+  perms.orgs_can_monitor:
+    label: '授权部门: 查看所有申请单'
+    help:
+    description:
+  perms.users_can_admin:
+    label: '授权用户: 查看所有申请单，并能执行重定位、转签核、删除操作'
+    help:
+    description:
+  perms.orgs_can_admin:
+    label: '授权部门: 查看所有申请单，并能执行重定位、转签核、删除操作'
+    help:
+    description:
+  app:
+    label: 所属应用
+    help:
+    description:
+  historys:
+    label: 历史版本
+    help:
+    description:
+  instance_template:
+    label: 表单模板
+    help:
+    description:
+  print_template:
+    label: 打印模板
+    help:
+    description:
+  field_map:
+    label: 映射关系
+    help:
+    description:
+  events:
+    label: 相关事件
+    help:
+    description:
+  distribute_optional_users:
+    label: 流程被分发时分发对象选择范围
+    help:
+    description:
+  distribute_to_self:
+    label: 分发给自己
+    help:
+    description:
+  upload_after_being_distributed:
+    label: 被分发后是否允许上传附件
+    help:
+    description:
+  name_formula:
+    label: 标题公式
+    help:
+    description:
+  code_formula:
+    label: 系统公式
+    help:
+    description:
+  auto_remind:
+    label: 自动催办
+    help:
+    description:
+  sort_no:
+    label: 排序号
+    help:
+    description:
+  timeout_auto_submit:
+    label: 超时自动流转
+    help:
+    description:
+  allow_select_step:
+    label: 申请人指定步骤、审批人
+    help: '允许申请人提交申请单时指定流转步骤及步骤处理人, 需要通过流程设计器修改步骤上的属性'
+    description:
+  object_name:
+    label: 绑定对象
+  instance_fields:
+    label: 审批单字段
+    help:
+    description:
+  instance_fields.$:
+    label: 字段
+    help:
+    description:
+  instance_fields.$.name:
+    label: 字段
+    help:
+    description:
+  instance_fields.$.readonly:
+    label: 只读
+    help:
+    description:
+  instance_fields.$.required:
+    label: 必填
+    help:
+    description:
+  instance_table_fields:
+    label: 审批单子表
+    help:
+    description:
+  instance_table_fields.$.label:
+    label: 显示标题
+    help: 默认为对象名称
+    description:
+  instance_table_fields.$.detail_field_fullname:
+    label: 子表名称
+    help:
+    description:
+  instance_table_fields.$.field_names:
+    label: 显示的字段
+    help:
+    description:
+  forbid_initiate_instance:
+    label: 审批王端禁止发起流程
+    help:
+    description:
+  enable_distribute_instance_to_attachment:
+    label: 分发时允许将原表单存储为附件
+  enable_distribute_instance_related:
+    label: 分发时允许自动创建关联文件
+groups:
+  template: 模板
+  synchronization: 归档
+  develop: 开发
+  distribution: 分发
+  others: 高级
+  flowbindobject: 流程绑定对象
+  permissions: 权限
+listviews:
+  all:
+    label: 所有
+  customize:
+    label: 自定义
+actions:
+  standard_new:
+    label: 新建
+  standard_new_by_template:
+    label: 从模板新建
+  design:
+    label: 流程设计器
+  standard_edit:
+    label: 编辑
+  standard_delete:
+    label: 删除
+  designFlow:
+    label: 流程设计器
+  designForm:
+    label: 表单设计器
+  enableFlow:
+    label: 启用
+  disableFlow:
+    label: 停用
+  export_default_template:
+    label: 导出默认模板
+  exportFlow:
+    label: 导出流程
+  importFlow:
+    label: 导入流程
+  exportFlows:
+    label: 导出流程
+  upgradeFlow:
+    label: 导入流程(升级)
+  copyFlow:
+    label: 复制流程
+  distributeAdmin:
+    label: 设置分发
+  removeFlow:
+    label: 删除
+  addFormFields:
+    label: 添加字段
+CustomLabels:
+  import_flows_error_title: 导入失败
+  import_flows_error_not_find_object: '未找到对象[ %s ]'
+  import_flows_error_not_allow_enable_workflow: '对象[ %s ]未启用配置对象流程'
+  import_flows_error_not_find_fields: '缺少字段[ %s ]'

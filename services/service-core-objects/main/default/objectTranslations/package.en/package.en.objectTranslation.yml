@@ -1,0 +1,59 @@
+name: package
+label: Package
+description: 
+fields:
+  description:
+    label: Description
+    help: 
+    description: 
+  label:
+    label: Package Name
+    help: 
+    description: 
+  name:
+    label: API Name
+    help: 
+    description: 
+  namespace:
+    label: Namespace Prefix
+    help: 
+    description: 
+  owner:
+    label: Owner
+    help: 
+    description: 
+  package_type:
+    label: Type
+    help: 
+    options:
+      - label: Managed
+        value: managed
+      - label: Unmanaged
+        value: unmanaged
+    description: 
+listviews:
+  all:
+    label: All
+  recent:
+    label: Recent
+actions:
+  upload:
+    label: Upload
+CustomLabels:
+  Next: 
+  steedos_developer_service_exception: Steedos Developer Service Exception
+  package_action_upload: Upload
+  package_action_upload_success: Upload Success
+  package_action_upload_form_title: Upload Package
+  package_action_upload_form_name: Version Name
+  package_action_upload_form_version: Version Number
+  package_action_upload_form_release_notes: Release Notes
+  package_action_upload_form_post_install: Post Install Instructions
+  package_action_upload_form_description: Description
+  package_action_upload_form_install_password: Password
+  package_action_upload_form_confirm_install_password: Confirm Password
+  package_action_upload_form_group_password: Password (Optional)
+  package_action_upload_form_install_password_inlineHelpText: >-
+    Password protect this Package by entering a password below. Leave blank if
+    you do not want to require a password.
+  package_action_upload_form__error_password_ne: Password and Confirm Password must match exactly

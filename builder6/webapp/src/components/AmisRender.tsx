@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2025-01-22 12:51:08
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-01-24 17:24:14
+ * @LastEditTime: 2025-02-15 11:12:56
  * @Description: 
  */
 import { Builder, builder, BuilderComponent } from '@builder6/react';
@@ -63,6 +63,6 @@ export const AmisRender = function ({schema = {}, data = {}, env = {}}) {
           },
         },
   } as any;
-
+  console.log(`AmisRender`, content, data)
   return <BuilderComponent model="pages" content={content} data={data}/>
 }

@@ -123,6 +123,16 @@ const routes = [
     ),
   },
   {
+    path: '/app/:appId/:objectName',
+    element: (
+      <LoggedIn>
+        <AppLayout>
+          <ObjectListView/>
+        </AppLayout>
+      </LoggedIn>
+    ),
+  },
+  {
     path: '/app/:appId/:objectName/grid/:listviewId',
     element: (
       <LoggedIn>

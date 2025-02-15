@@ -1,0 +1,46 @@
+name: object_webhooks
+label: WebHooks
+description: 
+fields:
+  name:
+    label: 名称
+    help: 
+    description: 
+  object_name:
+    label: 对象
+    help: 
+    description: 
+  events:
+    label: 事件
+    help: 
+    options:
+      - label: 新增
+        value: create
+      - label: 修改
+        value: update
+      - label: 删除
+        value: delete
+    description: 
+  fields:
+    label: 推送字段
+    help: 
+    description: 
+  payload_url:
+    label: URL
+    help: 
+    description: 
+  content_type:
+    label: 请求数据格式
+    help: 
+    description: 
+  active:
+    label: 激活
+    help: 
+    description: 
+  space:
+    label: 所属工作区
+    help: 
+    description: 
+listviews:
+  all:
+    label: 所有

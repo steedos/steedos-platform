@@ -1,0 +1,113 @@
+name: object_workflows
+label: 对象流程映射
+description: 
+fields:
+  name:
+    label: 名称
+    help: 
+    description: 
+  object_name:
+    label: 对象
+    help: 
+    description: 
+  flow_id:
+    label: 流程
+    help: 
+    description: 
+  field_map:
+    label: 字段映射关系（对象至表单）
+    help: 
+    description: 
+  field_map.$.workflow_field:
+    label: 表单字段
+    help: 
+    description: 
+  field_map.$.object_field:
+    label: 对象字段
+    help: 
+    description: 
+  field_map_back:
+    label: 字段映射关系（表单至对象）
+    help: 
+    description: 
+  field_map_back.$.object_field:
+    label: 对象字段
+    help: 
+    description: 
+  field_map_back.$.workflow_field:
+    label: 表单字段
+    help: 
+    description: 
+  field_map_script:
+    label: 对象至表单
+    help: 
+    description: 
+  field_map_back_script:
+    label: 表单至对象
+    help: 
+    description: 
+  sync_attachment:
+    label: 附件同步方式
+    help: 
+    options:
+      - label: 不同步
+        value: 'null'
+      - label: 同步最新版本
+        value: lastest
+      - label: 同步所有版本
+        value: all
+    description: 
+  sync_type:
+    label: 表单至对象同步模式
+    help: 
+    options:
+      - label: 每个节点同步
+        value: "every_step"
+      - label: 结束节点同步
+        value: "final_step"
+    description: 
+  sync_direction:
+    label: 同步方向
+    help: 
+    options:
+      - label: 双向同步
+        value: "both"
+      - label: 审批单至对象
+        value: "ins_to_obj"
+      - label: 对象至审批单
+        value: "obj_to_ins"
+    description:
+  lock_record_after_approval:
+    label: 审批完成后锁定记录
+    description:
+  required_details:
+    label: 必填子表
+    help: 台账里发起审批时校验子表是否有记录。
+    description:
+groups:
+  script: 脚本
+listviews:
+  default:
+    label: 默认
+  all:
+    label: 全部
+  customize:
+    label: 自定义
+actions:
+  forceSync:
+    label: 同步历史申请单
+CustomLabels:
+  object_workflows_field_field_map_$_workflow_field_instance_name: 申请单名称
+  object_workflows_field_field_map_$_workflow_field_submitter_name: 提交人姓名
+  object_workflows_field_field_map_$_workflow_field_applicant_name: 申请人姓名
+  object_workflows_field_field_map_$_workflow_field_applicant_company: 申请人所属公司
+  object_workflows_field_field_map_$_workflow_field_applicant_organization: 申请人所属部门
+  object_workflows_field_field_map_$_workflow_field_applicant_organization_name: 申请人所属部门名称
+  object_workflows_field_field_map_$_workflow_field_applicant_organization_fullname: 申请人所属部门全名
+  object_workflows_field_field_map_$_workflow_field_state: 申请单状态
+  object_workflows_field_field_map_$_workflow_field_current_step_name: 申请单当前步骤名称
+  object_workflows_field_field_map_$_workflow_field_flow_name: 流程名称
+  object_workflows_field_field_map_$_workflow_field_category_name: 分类名称
+  object_workflows_field_field_map_$_workflow_field_submit_date: 提交时间
+  object_workflows_field_field_map_$_workflow_field_finish_date: 结束时间
+  object_workflows_field_field_map_$_workflow_field_final_decision: 最终意见

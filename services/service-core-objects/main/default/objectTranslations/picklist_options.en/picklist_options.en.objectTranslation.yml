@@ -1,0 +1,37 @@
+name: picklist_options
+label: Picklist Options
+description: 
+fields:
+  picklist:
+    label: Picklist
+    help: 
+    description: 
+  name:
+    label: Name
+    help: 
+    description: 
+  value:
+    label: Value
+    help: Default Value = Name
+    description: 
+  color:
+    label: Background Color
+    help: >-
+      Please enter a color code in the format '#bad6f2', with the prefix '#'
+      omitted, and the selection will appear as the color background.
+    description: 
+  sort_no:
+    label: Sort Number
+    help: High Value First.
+    description: 
+  enable:
+    label: Enable
+    help: 
+    description: 
+  default:
+    label: Default
+    help: Use this value as the default for the picklist.
+    description: 
+listviews:
+  all:
+    label: All Picklist Options

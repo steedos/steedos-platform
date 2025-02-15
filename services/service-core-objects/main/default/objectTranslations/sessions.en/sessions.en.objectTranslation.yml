@@ -1,0 +1,55 @@
+name: sessions
+label: Session
+description: 
+fields:
+  name:
+    label: Name
+    help: 
+    description: 
+  userId:
+    label: User
+    help: 
+    description: 
+  token:
+    label: Token
+    help: 
+    description: 
+  userAgent:
+    label: User Agent
+    help: 
+    description: 
+  ip:
+    label: IP Address
+    help: 
+    description: 
+  valid:
+    label: valid
+    help: 
+    description: 
+  is_phone:
+    label: Phone
+    help: 
+    description: 
+  is_tablet:
+    label: Tablet Computer
+    help: 
+    description: 
+  client_id:
+    label: Client ID
+    help: 
+    description: 
+  connected_app_id:
+    label: connected App ID
+    help: 
+    description: 
+  modified:
+    label: Last Login Time
+    help: 
+    description: 
+  created:
+    label: First Login Time
+    help: 
+    description: 
+listviews:
+  all:
+    label: All Sessions

@@ -1,0 +1,33 @@
+name: webhooks
+label: Webhook
+description: 
+fields:
+  name:
+    label: Name
+    help: 
+    description: 
+  flow:
+    label: Workflow
+    help: >-
+      If no workflow is selected, the scope of webhook will be all the workflows
+      of this company.
+    description: 
+  payload_url:
+    label: Payload URL
+    help: 
+    description: 
+  content_type:
+    label: Format of Request
+    help: 
+    description: 
+  active:
+    label: Active
+    help: 
+    description: 
+  description:
+    label: Description
+    help: 
+    description: 
+listviews:
+  all:
+    label: All Webhooks

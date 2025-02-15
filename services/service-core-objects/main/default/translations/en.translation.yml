@@ -1,0 +1,121 @@
+CustomApplications:
+  apps_admin:
+    name: Apps
+    description: 
+  admin:
+    name: Setup
+    description: Manage company , users , permissions and so on .
+    groups: 
+      personal_settings: Personal Settings
+      company_settings: Company Settings
+      apps: Custom Apps
+      object_settings: Object Settings
+      user_interface: User Interface
+      statistical_analysis: Data Analysis
+      development: Development
+      process_automation: Process Automation
+      approval_workflow: Approval Workflow
+      advanced_settings: Advanced Settings
+CustomLabels:
+  app_object_manager_name: app_object_manager_name
+  menu_account: My Account
+  menu_account_profile: 
+  menu_account_background: Background
+  menu_menu_users: 
+  menu_spaces: 
+  menu_organizations: 
+  menu_space_users: 
+  menu_permission_set: 
+  menu_profile: 
+  menu_apps: Apps
+  menu_steedos_packages: Packages
+  menu_tabs: Custom Tabs
+  menu_dashboard: 
+  menu_sessions: 
+  menu_objects_manager: 
+  menu_permission_objects: 
+  menu_permission_shares: 
+  menu_audit_records: 
+  menu_object_webhooks: 
+  menu_autonumber: 
+  menu_picklists: 
+  menu_object_workflows: 
+  menu_web_forms: 
+  menu_about: 
+  menu_object_manager: 
+  menu_datasources_manager: External Data Sources
+  menu_company: 
+  menu_advanced: 
+  menu_holidays: 
+  menu_license: 
+  menu_license_view: 
+  menu_business_hours: 
+  menu_queue_import: 
+  menu_process_automation: 
+  menu_workflow_rules: 
+  menu_workflow_actions: 
+  menu_field_updates: 
+  menu_object_validation_rules: 
+  menu_api_keys: API Key
+  menu_app_manager: App Manager
+  menu_packaging: Packaging
+  menu_package_manager: Package Manager
+  menu_installed_packages: Installed Packages
+  process_definition_entity_lock__object: 
+  process_definition_entity_lock_field_name: 
+  app_workflow_name: 
+  menu_menu_workflow: 
+  menu_flows: 
+  menu_flow_roles: 
+  menu_flow_positions: 
+  menu_categories: 
+  menu_instance_number_rules: 
+  menu_space_user_signs: 
+  menu_instances_statistic: 
+  menu_webhooks: 
+  menu_process_delegation_rules: 
+  menu_roles: 
+  delete_required_lookup_record_error: "Your attempt to delete 1 could not be completed because it is associated with the following {$objectLabel}. ：{$recordName}"
+CustomTabs:
+  admin_process_delegation_rules: Process Delegations
+  admin_space_info: Company
+  admin_organizations: Departments
+  admin_company: Divisions
+  admin_space_users: Users
+  admin_permission_set: Profiles & Permission Sets
+  admin_personal_information: Personal Information
+  admin_license: 
+  admin_apps: Apps
+  admin_steedos_packages: Packages
+  admin_objects: Objects
+  admin_datasources: External Data Sources
+  admin_queue_import: Data Import
+  admin_pages: Micro Pages
+  admin_tabs: Tabs
+  admin_queries: Queries
+  admin_charts: Charts
+  admin_stimulsoft_reports: Reports
+  admin_developer_triggers: Triggers
+  admin_developer_graphql: GraphQL IDE
+  admin_process_definition: Approval Processes
+  admin_workflow_rule: Workflow Rules
+  admin_object_validation_rules: Object Validation Rules
+  admin_action_field_updates: Field Updates
+  admin_workflow_notifications: Workflow Notifications
+  admin_workflow_outbound_messages: Outbound Messages
+  admin_roles: Roles
+  admin_flow_roles: Workflow Roles
+  admin_flows: Workflows
+  admin_categories: Workflow Categories
+  admin_instance_number_rules: Instance Number Rules
+  admin_space_user_signs: User Sign
+  admin_instances_statistic: Efficiency Statistics
+  admin_webhooks: Webhooks
+  admin_object_workflows: Object Synchronization Rules
+  admin_sessions: Sessions
+  admin_audit_records: Audit Records
+  admin_autonumber: Auto Number
+  admin_holidays: Holidays
+  admin_business_hours: Business Hours
+  admin_api_keys: API Keys
+  admin_metadata: Metadata

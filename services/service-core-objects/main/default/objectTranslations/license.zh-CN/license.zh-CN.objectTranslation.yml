@@ -1,0 +1,88 @@
+name: license
+label: 许可证
+description: 
+fields:
+  edition:
+    label: Edition
+    help: 
+    description: 
+  edition_label:
+    label: 版本
+    help: 
+    description: 
+  license:
+    label: 
+    help: 
+    description: 
+  key:
+    label: 
+    help: 
+    description: 
+  product:
+    label: Product
+    help: 
+    description: 
+  product_label:
+    label: 产品
+    help: 
+    description: 
+  is_trial:
+    label: 试用
+    help: 
+    description: 
+  user_number:
+    label: 用户数
+    help: 
+    description: 
+  end_date:
+    label: 过期
+    help: 
+    description: 
+  verify_status:
+    label: 状态
+    help: 
+    options:
+      - label: 无效
+        value: FAIL
+      - label: 有效
+        value: SUCCESS
+    description: 
+  invalid:
+    label: Invalid
+    help: 
+    description: 
+  lid:
+    label: 许可证ID
+    help: 
+    description: 
+  verify_error:
+    label: 
+    help: 
+    description: 
+  license_last_verify:
+    label: 
+    help: 
+    description: 
+  is_local:
+    label: 
+    help: 
+    description: 
+listviews:
+  all:
+    label: 全部
+actions:
+  apply:
+    label: 购买许可证
+  changeSpaceLicense:
+    label: 导入许可证
+  copySpaceId:
+    label: 复制魔方ID
+  upgrade:
+    label: 升级
+CustomLabels:
+  license_action_sync: 同步许可证
+  license_action_changeSpaceLicense: 导入许可证
+  license_action_changeSpaceLicense_confirmBtnText: 确定
+  license_field_custom_objects_number: 自定义对象数
+  license_field_flow_number: 流程数
+  license_field_end_invalid: 终止

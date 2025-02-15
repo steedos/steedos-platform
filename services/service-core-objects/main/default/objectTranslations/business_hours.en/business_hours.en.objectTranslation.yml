@@ -1,0 +1,70 @@
+name: business_hours
+label: Business Hours
+description: 
+fields:
+  name:
+    label: Name
+    help: 
+    description: 
+  is_default:
+    label: Use as default
+    help: >-
+      Whether to use this working time as the default setting will only take
+      effect if checked.
+    description: 
+  start:
+    label: Start Time
+    help: 'Please enter the HH:MM format of the 24 - hour time character.'
+    description: 
+  end:
+    label: End Time
+    help: >-
+      Please enter the HH:MM format of the 24 hour time character, must be
+      greater than the start time.
+    description: 
+  lunch_start:
+    label: Lunch Start Time
+    help: 'Please enter the HH:MM format of the 24 - hour time character.'
+    description: 
+  lunch_end:
+    label: Lunch End Time
+    help: >-
+      Please enter the HH:MM format of the 24 hour time character, must be
+      greater than the lunch start time.
+    description: 
+  working_days:
+    label: Working Days
+    help: 
+    options:
+      - label: Sunday
+        value: '0'
+      - label: Monday
+        value: '1'
+      - label: Tuesday
+        value: '2'
+      - label: Wednesday
+        value: '3'
+      - label: Thursday
+        value: '4'
+      - label: Friday
+        value: '5'
+      - label: Saturday
+        value: '6'
+    description: 
+  utc_offset:
+    label: GMT Offset
+    help: >-
+      The business hours is based on this GMT offset, and it's value is the
+      user's own GMT offset.
+    description: 
+listviews:
+  all:
+    label: All Business Hours
+CustomLabels:
+  business_hours_field_working_days_options_0: 
+  business_hours_field_working_days_options_1: 
+  business_hours_field_working_days_options_2: 
+  business_hours_field_working_days_options_3: 
+  business_hours_field_working_days_options_4: 
+  business_hours_field_working_days_options_5: 
+  business_hours_field_working_days_options_6: 

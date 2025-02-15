@@ -1,0 +1,20 @@
+name: settings
+label: Setting
+description: 
+fields:
+  type:
+    label: Type
+    help: 
+    description: 
+  object_name:
+    label: Object
+    help: 
+    description: 
+  record_id:
+    label: Record ID
+    help: 
+    description: 
+  settings:
+    label: Settings
+    help: 
+    description: 

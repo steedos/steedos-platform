@@ -1,0 +1,27 @@
+name: process_delegation_rules
+label: 流程委托
+description: 
+fields:
+  from:
+    label: 委托人
+    help: 
+    description: 
+  to:
+    label: 被委托人
+    help: 
+    description: 
+  start_time:
+    label: 委托开始
+    help: 
+    description: 
+  end_time:
+    label: 委托结束
+    help: 
+    description: 
+  enabled:
+    label: 启用
+    help: 
+    description: 
+listviews:
+  all:
+    label: 所有

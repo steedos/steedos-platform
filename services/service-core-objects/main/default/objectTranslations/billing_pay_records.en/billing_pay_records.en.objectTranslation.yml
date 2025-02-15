@@ -1,0 +1,31 @@
+name: billing_pay_records
+label: Bill
+description: 
+fields:
+  info:
+    label: Info
+    help: 
+    description: 
+  total_fee:
+    label: Total Fee
+    help: 
+    description: 
+  paid:
+    label: Paid
+    help: 
+    description: 
+  modules:
+    label: Paid Apps
+    help: 
+    description: 
+  end_date:
+    label: End Date
+    help: 
+    description: 
+  user_count:
+    label: Number of Authorized Users
+    help: 
+    description: 
+listviews:
+  all:
+    label: All Bills
