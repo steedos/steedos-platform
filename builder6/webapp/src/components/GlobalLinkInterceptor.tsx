@@ -1,3 +1,10 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2025-02-07 14:36:24
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2025-02-15 19:35:22
+ * @Description: 
+ */
 // GlobalLinkInterceptor.jsx
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -21,7 +28,7 @@ const GlobalLinkInterceptor = () => {
         }
       }
     };
-
+    console.log(`init...GlobalLinkInterceptor..`)
     document.addEventListener('click', handleClick);
 
     return () => {

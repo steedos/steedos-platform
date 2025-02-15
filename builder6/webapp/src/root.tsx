@@ -12,7 +12,6 @@ import { loadMe } from './actions/users';
 import { Session } from './utils/Session';
 import { Creator } from './utils/Creator';
 
-
 const _window: any = window;
 _window['Builder'] = Builder;
 _window['builder'] = builder;
@@ -30,6 +29,8 @@ Builder.settings.context = {
 Builder.settings.unpkgUrl = 'https://unpkg.steedos.cn';
 Builder.settings.assetUrls = ['http://127.0.0.1:8080/@steedos-widgets/amis-object/dist/assets-dev.json'];
 
+
+
 Builder.settings.env = {
   requestAdaptor: (config: any)=>{
     // 请求中转到 rootUrl
@@ -41,7 +42,7 @@ Builder.settings.env = {
     //   delete config.allowCredentials
     // }
     return config;
-  },
+  }
 }
 
 

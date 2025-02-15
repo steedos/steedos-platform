@@ -24,7 +24,7 @@ root.render(
   <> 
     <Provider store={store}>
         <IntlProvider>
-            <Router />
+          <Router />
         </IntlProvider>
     </Provider>,
   </>
