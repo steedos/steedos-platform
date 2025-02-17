@@ -41,7 +41,7 @@ export class CreatorManager {
   }
 
   isSpaceAdmin(spaceId: string, userId: string) {
-    return Creator.isSpaceAdmin(spaceId, userId);
+    return Steedos.isSpaceAdmin(spaceId, userId);
   }
 
   isLegalVersion(spaceId: string, appVersion: string) {

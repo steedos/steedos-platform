@@ -113,7 +113,7 @@ actions:
     sort: 0
     visible: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, record_permissions, record) {
-        return Creator.USER_CONTEXT.user.is_space_admin
+        return Builder.settings.context.user.is_space_admin
       }
     'on': record
     todo: standard_edit

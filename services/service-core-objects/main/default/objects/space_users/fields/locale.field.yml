@@ -13,13 +13,5 @@ options:
     value: en-us
   - label: 日本語
     value: ja
-defaultValue: !<tag:yaml.org,2002:js/function> |-
-  function anonymous(
-  ) {
-
-    if(Meteor.isClient){
-      return Meteor.user().locale;
-    }
-
-  }
+defaultValue: 'zh-cn'
 sort_no: 280

@@ -3,7 +3,7 @@ module.exports = {
         if (!record_id) {
             return false;
         }
-        if(!Creator.isSpaceAdmin()){
+        if(!Steedos.isSpaceAdmin()){
             return false
         }
         var record = data && data.record;

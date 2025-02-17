@@ -8,7 +8,7 @@
 module.exports = {
   apply: function (object_name, record_id, fields) {
     var licenseServer = 'https://huayan.my.steedos.com:8443';
-    if (!Creator.isSpaceAdmin()) {
+    if (!Steedos.isSpaceAdmin()) {
       return toastr.info("请联系管理员");
     }
     window.open(licenseServer + "/accounts/a/");

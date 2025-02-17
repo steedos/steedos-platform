@@ -12,6 +12,6 @@ module.exports = {
         if(Meteor.settings.public.enable_saas){
             return false;
         }
-        return Creator.baseObject.actions.standard_new.visible.apply(this, arguments);
+        return Steedos.Object.base.actions.standard_new.visible.apply(this, arguments);
     },
 }

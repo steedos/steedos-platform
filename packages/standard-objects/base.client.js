@@ -233,7 +233,7 @@ Steedos.StandardObjects = {
             },
             standard_import_data:{
                 visible: function(objectName){
-                    var allowCreate = Creator.baseObject.actions.standard_new.visible.apply(this, arguments);
+                    var allowCreate = Steedos.Object.base.actions.standard_new.visible.apply(this, arguments);
                     var objectName = objectName || this.objectName || FlowRouter.current().params.object_name;
                     if(!window._hasImportTemplates){
                         window._hasImportTemplates = {};
@@ -354,7 +354,7 @@ Steedos.StandardObjects = {
 
                         /* 防止规则改动导致旧系统对象编辑异常，先放开此判断 */
                         if(true || perms.modifyCompanyRecords){
-                            company_ids = Creator.USER_CONTEXT.user.company_ids
+                            company_ids = Builder.settings.context.user.company_ids
                         }
 
                         /* 如果当前用户对当前业务对象的有修改指定分部，则允许选择指定分部。*/
@@ -433,7 +433,7 @@ Steedos.StandardObjects = {
 
                         /* 防止规则改动导致旧系统对象编辑异常，先放开此判断 */
                         if(true || perms.modifyCompanyRecords){
-                            company_ids = Creator.USER_CONTEXT.user.company_ids
+                            company_ids = Builder.settings.context.user.company_ids
                         }
 
                         /* 如果当前用户对当前业务对象的有修改指定分部，则允许选择指定分部。*/

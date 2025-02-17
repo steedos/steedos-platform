@@ -15,7 +15,7 @@ createDefaultRecordView:function (object_name, record_id, item_element) {
   },
 createDefaultRecordViewVisible:function(object_name, record_id, record_permissions, data){
   
-    if(!Creator.isSpaceAdmin()){
+    if(!Steedos.isSpaceAdmin()){
         return false
     }
     return true;

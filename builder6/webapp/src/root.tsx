@@ -11,12 +11,21 @@ import { loadSettings } from './actions/settings';
 import { loadMe } from './actions/users';
 import { Session } from './utils/Session';
 import { Creator } from './utils/Creator';
+import { Steedos } from './utils/steedos';
 
 const _window: any = window;
 _window['Builder'] = Builder;
 _window['builder'] = builder;
 _window['Session'] = Session;
 _window['Creator'] = Creator;
+
+if(_window['Steedos']){
+  console.log('has Steedos')
+  _window['Steedos'] = Object.assign(_window['Steedos'], Steedos);
+}else{
+  console.log('no has Steedos')
+  _window['Steedos'] = Steedos;
+}
 
 Builder.settings.appId = '-';
 Builder.settings.context = {

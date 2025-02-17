@@ -49,10 +49,10 @@
             context: {
                 rootUrl: Builder.settings.rootUrl,
                 tenantId: Creator.USER_CONTEXT.spaceId,
-                userId: Creator.USER_CONTEXT.userId,
-                authToken: Creator.USER_CONTEXT.user.authToken
+                userId: Builder.settings.context.userId,
+                authToken: Builder.settings.context.user.authToken
             },
-            locale: Creator.USER_CONTEXT.user.locale
+            locale: Builder.settings.context.user.locale
         })
     
         window.postMessage({ type: "Builder.loaded" }, "*")

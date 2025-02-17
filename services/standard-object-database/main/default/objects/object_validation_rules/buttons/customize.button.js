@@ -28,6 +28,6 @@ customizeVisible:function(object_name, record_id, record_permissions, data){
         if(!record){
             record = {}
         }
-        return Creator.baseObject.actions.standard_new.visible() && record.is_system;
+        return Steedos.Object.base.actions.standard_new.visible() && record.is_system;
     }
  }

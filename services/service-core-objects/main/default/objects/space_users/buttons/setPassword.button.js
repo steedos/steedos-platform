@@ -1,13 +1,13 @@
 module.exports = {
     setPassword: function (object_name, record_id) {
         var organization = Session.get("organization");
-        var isAdmin = Creator.isSpaceAdmin();
+        var isAdmin = Steedos.isSpaceAdmin();
         if (!isAdmin) {
             isAdmin = SpaceUsersCore.isCompanyAdmin(record_id, organization);
         }
         const username = this.record.username;
         var userSession = Creator.USER_CONTEXT;
-        var currentSpaceUser = db.space_users.findOne({ user: Creator.USER_CONTEXT.userId });
+        var currentSpaceUser = db.space_users.findOne({ user: Builder.settings.context.userId });
         if (!isAdmin || (currentSpaceUser._id == this.record._id)) {
             var isPasswordEmpty = false;
             var result = Steedos.authRequest("/service/api/space_users/is_password_empty", {
@@ -133,7 +133,7 @@ module.exports = {
     },
     setPasswordVisible: function (object_name, record_id, record_permissions) {
         var organization = Session.get("organization");
-        var allowEdit = Creator.baseObject.actions.standard_edit.visible.apply(this, arguments);
+        var allowEdit = Steedos.Object.base.actions.standard_edit.visible.apply(this, arguments);
         if (!allowEdit) {
             // permissions配置没有权限则不给权限
             return false

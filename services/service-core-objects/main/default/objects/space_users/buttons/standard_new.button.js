@@ -1,14 +1,14 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-12 13:42:25
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-13 10:22:30
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2025-02-17 13:48:59
  * @Description: 
  */
 module.exports = {
     standard_newVisible: function (object_name, record_id, record_permissions, data) {
         var organization = Session.get("organization");
-        var allowCreate = Creator.baseObject.actions.standard_new.visible.apply(this, arguments);
+        var allowCreate = Steedos.Object.base.actions.standard_new.visible.apply(this, arguments);
         if (!allowCreate) {
             // permissions配置没有权限则不给权限
             return false

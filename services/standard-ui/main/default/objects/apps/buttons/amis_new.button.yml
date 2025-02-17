@@ -38,6 +38,6 @@ label: 新建
 type: amis_button
 visible: !!js/function |
     function (object_name) {
-        return Creator.baseObject.actions.standard_new.visible();
+        return Steedos.Object.base.actions.standard_new.visible();
     }
 

@@ -23,7 +23,7 @@ module.exports = {
     customizeVisible: function(object_name, record_id, record_permissions, data){
         var record = data && data.record;
         if(record._id === 'admin'){return false;}
-        return Creator.baseObject.actions.standard_new.visible() && record.is_system && !record.from_code_id;
+        return Steedos.Object.base.actions.standard_new.visible() && record.is_system && !record.from_code_id;
     },
     reset: function(object_name, record_id, fields){
         var record = Creator.odata.get(object_name, record_id);
@@ -38,7 +38,7 @@ module.exports = {
     },
     resetVisible: function(object_name, record_id, record_permissions, data){
         const record = data && data.record;
-        if(Creator.baseObject.actions.standard_edit.visible(object_name, record_id, record_permissions)){
+        if(Steedos.Object.base.actions.standard_edit.visible(object_name, record_id, record_permissions)){
             return record.from_code_id;
         }
     },
@@ -76,7 +76,7 @@ module.exports = {
         // }, null, { iconPath: '/assets/icons' })
     },
     createOAuth2AppVisible: function () {
-        return false && Creator.baseObject.actions.standard_new.visible();
+        return false && Steedos.Object.base.actions.standard_new.visible();
     },
     standard_editVisible: function(object_name, record_id, record_permissions, record){
         return false

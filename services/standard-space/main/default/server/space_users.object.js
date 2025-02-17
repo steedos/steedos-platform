@@ -204,7 +204,7 @@ Meteor.startup(function () {
         //     db.space_users.insertVaildate(userId, doc);
 
         //     if(doc.profile){
-        //         if(doc.profile === 'admin' && !Creator.isSpaceAdmin(doc.space, userId)){
+        //         if(doc.profile === 'admin' && !Steedos.isSpaceAdmin(doc.space, userId)){
         //             throw new Meteor.Error(400, "Only the administrator can set the profile to admin");
         //         }
         //     }else{
@@ -410,7 +410,7 @@ Meteor.startup(function () {
         //     }
 
         //     if(_.has(modifier.$set, 'profile') && doc.profile != modifier.$set.profile){
-        //         if(!Creator.isSpaceAdmin(doc.space, userId)){
+        //         if(!Steedos.isSpaceAdmin(doc.space, userId)){
         //             throw new Meteor.Error(400, "can not change profile");
         //         }
 
@@ -815,7 +815,7 @@ let actions = {
         //     // if (!Steedos.isPaidSpace()) {
         //     //     return false;
         //     // }
-        //     return Creator.isSpaceAdmin();
+        //     return Steedos.isSpaceAdmin();
         // },
         todo: function () {
             return Modal.show('import_users_modal');
@@ -832,7 +832,7 @@ let actions = {
     //         if (!Steedos.isPaidSpace()) {
     //             return false;
     //         }
-    //         return Creator.isSpaceAdmin();
+    //         return Steedos.isSpaceAdmin();
     //     },
     //     todo: function () {
     //         var orgId, spaceId, uobj, url;
@@ -864,7 +864,7 @@ let actions = {
         on: "record",
         visible: function (object_name, record_id, record_permissions) {
             var organization = Session.get("organization");
-            var allowEdit = Creator.baseObject.actions.standard_edit.visible.apply(this, arguments);
+            var allowEdit = Steedos.Object.base.actions.standard_edit.visible.apply(this, arguments);
             if(!allowEdit){
                 // permissions配置没有权限则不给权限
                 return false
@@ -886,7 +886,7 @@ let actions = {
         },
         todo: function (object_name, record_id, fields) {
             var organization = Session.get("organization");
-            var isAdmin = Creator.isSpaceAdmin();
+            var isAdmin = Steedos.isSpaceAdmin();
             if(!isAdmin){
                 isAdmin = SpaceUsersCore.isCompanyAdmin(record_id, organization);
             }
@@ -951,7 +951,7 @@ let actions = {
     standard_new: {
         visible: function (object_name, record_id, record_permissions) {
             var organization = Session.get("organization");
-            var allowCreate = Creator.baseObject.actions.standard_new.visible.apply(this, arguments);
+            var allowCreate = Steedos.Object.base.actions.standard_new.visible.apply(this, arguments);
             if(!allowCreate){
                 // permissions配置没有权限则不给权限
                 return false
@@ -972,7 +972,7 @@ let actions = {
     standard_edit: {
         visible: function (object_name, record_id, record_permissions) {
             var organization = Session.get("organization");
-            var allowEdit = Creator.baseObject.actions.standard_edit.visible.apply(this, arguments);
+            var allowEdit = Steedos.Object.base.actions.standard_edit.visible.apply(this, arguments);
             if(!allowEdit){
                 // permissions配置没有权限则不给权限
                 return false
@@ -997,7 +997,7 @@ let actions = {
         visible: function (object_name, record_id, record_permissions) {
             return false
             // var organization = Session.get("organization");
-            // var allowDelete = Creator.baseObject.actions.standard_delete.visible.apply(this, arguments);
+            // var allowDelete = Steedos.Object.base.actions.standard_delete.visible.apply(this, arguments);
             // if(!allowDelete){
             //     // permissions配置没有权限则不给权限
             //     return false
@@ -1030,7 +1030,7 @@ let actions = {
         label: "Invite Users",
         on: "list",
         visible: function(){
-            if (Creator.isSpaceAdmin()){
+            if (Steedos.isSpaceAdmin()){
                 let space = Creator.odata.get("spaces", Session.get("spaceId"), "enable_register");
                 if(space && space.enable_register){
                     return true;

@@ -72,7 +72,7 @@ module.exports = {
         }
         //以下为权限判断
         var organization = Session.get("organization");
-        var allowEdit = Creator.baseObject.actions.standard_edit.visible.apply(this, arguments);
+        var allowEdit = Steedos.Object.base.actions.standard_edit.visible.apply(this, arguments);
         if (!allowEdit) {
             // permissions配置没有权限则不给权限
             return false

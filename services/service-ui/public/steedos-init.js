@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-02-26 15:22:12
- * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2024-01-04 16:44:08
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2025-02-17 10:08:43
  * @Description:
  */
 try {
@@ -171,7 +171,7 @@ try {
   }
 
   window.Creator.isSpaceAdmin = ()=>{
-    return Creator.USER_CONTEXT.user.is_space_admin;
+    return Builder.settings.context.user.is_space_admin;
   }
 
 

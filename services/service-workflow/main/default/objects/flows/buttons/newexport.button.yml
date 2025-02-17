@@ -12,7 +12,7 @@ amis_schema: |-
                       "weight": 0,
                       "actions": [
                           {
-                              "script": "// SteedosUI.refs(\"flows-listview-undefined\")\n// debugger;\nconst ids = SteedosUI.getRef(event.data.$scopeId).parent.getComponentById(\"listview_flows\").props.store.selectedItems.toJSON();\n\nif (ids && ids.length > 0) {\n    \n  window.open(Steedos.absoluteUrl(\"/api/workflow/export/form?flows=\" + _.map(ids,\"_id\").join(',')), '_blank');\n    \n} else {\n    \n  alert(t('flows.newexport.alert'))\n    \n  }\n\n\n",
+                              "script": "// SteedosUI.refs(\"flows-listview-undefined\")\n// \nconst ids = SteedosUI.getRef(event.data.$scopeId).parent.getComponentById(\"listview_flows\").props.store.selectedItems.toJSON();\n\nif (ids && ids.length > 0) {\n    \n  window.open(Steedos.absoluteUrl(\"/api/workflow/export/form?flows=\" + _.map(ids,\"_id\").join(',')), '_blank');\n    \n} else {\n    \n  alert(t('flows.newexport.alert'))\n    \n  }\n\n\n",
                               "actionType": "custom"
                           }
                       ]

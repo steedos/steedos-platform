@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-12 11:32:06
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-01-06 16:23:46
+ * @LastEditTime: 2025-02-17 11:16:39
  * @Description: 
  */
 module.exports = {
@@ -34,8 +34,8 @@ module.exports = {
         });
     },
     invite_space_usersVisible: function () {
-        if (Creator.isSpaceAdmin() && Meteor.settings.public.accounts.disabled_account_register != true) {
-            let space = Creator.odata.get("spaces", Session.get("spaceId"), "enable_register");
+        if (Steedos.isSpaceAdmin() && Steedos.Account.disabledAccountRegister() != true) {
+            let space = Steedos.Space.get();
             if (space && space.enable_register) {
                 return true;
             }

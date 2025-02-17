@@ -269,14 +269,14 @@
                     context: {
                         rootUrl: Meteor.isCordova ? (rootUrl.endsWith("/") ? rootUrl.substr(0, rootUrl.length-1) : rootUrl) : '',
                         tenantId: Creator.USER_CONTEXT.spaceId,
-                        userId: Creator.USER_CONTEXT.userId,
-                        authToken: Creator.USER_CONTEXT.user.authToken,
-                        user: Creator.USER_CONTEXT.user
+                        userId: Builder.settings.context.userId,
+                        authToken: Builder.settings.context.user.authToken,
+                        user: Builder.settings.context.user
                     },
                     global: {
-                        userId: Creator.USER_CONTEXT.userId,
+                        userId: Builder.settings.context.userId,
                         spaceId: Creator.USER_CONTEXT.spaceId,
-                        user: Creator.USER_CONTEXT.user, 
+                        user: Builder.settings.context.user, 
                         now: new Date(),
                         // mode: mode //由表单提供
                     },

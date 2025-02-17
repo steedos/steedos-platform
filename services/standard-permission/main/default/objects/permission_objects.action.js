@@ -37,7 +37,7 @@ module.exports = {
         if(!record){
             record = {}
         }
-        return Creator.baseObject.actions.standard_new.visible() && record.is_system;
+        return Steedos.Object.base.actions.standard_new.visible() && record.is_system;
     },
     resetFieldPermissions: function (object_name, record_id) {
         var doc = Creator.odata.get(object_name, record_id);
@@ -54,7 +54,7 @@ module.exports = {
         if (!record) {
             record = {}
         }
-        return Creator.baseObject.actions.standard_new.visible() && !record.is_system;
-        // return !(Creator.baseObject.actions.standard_new.visible() && record.is_system);
+        return Steedos.Object.base.actions.standard_new.visible() && !record.is_system;
+        // return !(Steedos.Object.base.actions.standard_new.visible() && record.is_system);
     }
 }

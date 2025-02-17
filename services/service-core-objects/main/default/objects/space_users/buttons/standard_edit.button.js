@@ -8,7 +8,7 @@
 module.exports = {
     standard_editVisible: function (object_name, record_id, record_permissions, data) {
         var organization = Session.get("organization");
-        var allowEdit = Creator.baseObject.actions.standard_edit.visible.apply(this, arguments);
+        var allowEdit = Steedos.Object.base.actions.standard_edit.visible.apply(this, arguments);
         if (!allowEdit) {
             // permissions配置没有权限则不给权限
             return false

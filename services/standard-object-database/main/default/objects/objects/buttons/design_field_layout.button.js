@@ -13,7 +13,7 @@ module.exports = {
     },
     design_field_layoutVisible: function(object_name, record_id, record_permissions, data) {
         var record = data && data.record;
-        if (!Creator.isSpaceAdmin()) {
+        if (!Steedos.isSpaceAdmin()) {
             return false
         }
         if (!record) {

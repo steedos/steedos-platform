@@ -39,7 +39,7 @@
     };
 
     const getAmisLng = ()=>{
-        var locale = Creator.USER_CONTEXT ? Creator.USER_CONTEXT.user.language : null;
+        var locale = Creator.USER_CONTEXT ? Builder.settings.context.user.language : null;
         if(locale){
             locale = locale.replace('_', '-');
             locale = locale === 'en' ? 'en-US' : locale;

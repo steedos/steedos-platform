@@ -9,7 +9,7 @@ reference_to_field: name
 visible_on: '{{global.user.is_space_admin}}'
 filtersFunction: !<tag:yaml.org,2002:js/function> |-
   function (filters, values) {
-    var is_space_admin = Creator.USER_CONTEXT.user.is_space_admin;
+    var is_space_admin = Builder.settings.context.user.is_space_admin;
     if(is_space_admin){
       return ["type","=","profile"]
     }else{

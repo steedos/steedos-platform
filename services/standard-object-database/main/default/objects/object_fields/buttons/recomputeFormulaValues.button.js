@@ -51,7 +51,7 @@ module.exports = {
         });
     },
     recomputeFormulaValuesVisible: function(object_name, record_id, record_permissions) {
-        if (!Creator.isSpaceAdmin()) {
+        if (!Steedos.isSpaceAdmin()) {
             return false
         }
         var record = Creator.odata.get(object_name, record_id, "type");
