@@ -23,7 +23,6 @@
     },
     "dependencies": {
         "@steedos/auth": "3.0.0-beta.2",
-        "@steedos/core": "3.0.0-beta.2",
         "@steedos/metadata-core": "3.0.0-beta.2",
         "@steedos/objectql": "3.0.0-beta.2",
         "chalk": "^4.1.0",

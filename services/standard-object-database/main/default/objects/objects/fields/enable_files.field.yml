@@ -1,6 +1,0 @@
-name: enable_files
-group: switch
-hidden: false
-label: Enable Files
-sort_no: 130
-type: boolean

@@ -2,13 +2,11 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-11-17 16:29:16
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-11-29 11:55:29
+ * @LastEditTime: 2025-02-17 18:02:14
  * @Description: 
  */
 const express = require("express");
 const router = express.Router();
-// const Fiber = require('fibers');
-declare var Fiber;
 
 import { requireAuthentication } from '@steedos/auth';
 import { DbManager } from '../util/dbManager'
@@ -16,12 +14,7 @@ import { insertObjectsToDB } from './index'
 
 declare var Steedos: any;
 
-router.post('/api/composite/sobjects', requireAuthentication, async function (req, res) {
-
-    return Fiber(function(){
-        return doPost(req, res);
-    }).run();;
-});
+router.post('/api/composite/sobjects', requireAuthentication, doPost);
 exports.default = router;
 
 async function doPost(req, res){  

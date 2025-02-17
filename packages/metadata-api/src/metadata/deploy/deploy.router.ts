@@ -4,8 +4,6 @@ const fs = require('fs');
 const os = require('os');
 const path = require("path");
 const chalk = require("chalk");
-// const Fiber = require('fibers');
-declare var Fiber;
 
 import { DbManager } from '../../util/dbManager'
 import { requireAuthentication } from '@steedos/auth';
@@ -110,9 +108,5 @@ const uploadMetadata = async function (req, res) {
     return res.status(resMsg.status).send(resMsg.msg);
 };
 
-router.post('/api/metadata/deploy', requireAuthentication, function (req, res) {
-    return Fiber(function(){
-        return uploadMetadata(req, res);
-    }).run();;
-});
+router.post('/api/metadata/deploy', requireAuthentication, uploadMetadata);
 exports.default = router;

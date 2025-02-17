@@ -1,5 +1,0 @@
-name: field_groups.$.group_name
-hidden: false
-label: 名称
-sort_no: 70
-type: text

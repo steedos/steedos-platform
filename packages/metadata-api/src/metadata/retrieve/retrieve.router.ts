@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-03-07 15:58:28
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-07-28 17:19:19
+ * @LastEditTime: 2025-02-17 18:02:46
  * @Description: 
  */
 const express = require("express");
@@ -12,8 +12,6 @@ const path = require('path');
 const yaml = require('js-yaml');
 
 const chalk = require("chalk");
-// const Fiber = require('fibers');
-declare var Fiber;
 
 import { requireAuthentication } from '@steedos/auth';
 
@@ -78,11 +76,7 @@ const downloadMetadata = async function (req, res) {
     }
 }
 
-router.get('/api/metadata/retrieve', requireAuthentication, function (req, res) {
-    return Fiber(function(){
-        return downloadMetadata(req, res);
-    }).run();;
-});
+router.get('/api/metadata/retrieve', requireAuthentication, downloadMetadata);
 
 
 

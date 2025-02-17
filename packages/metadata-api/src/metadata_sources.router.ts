@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-11-17 16:29:16
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-01-21 17:25:12
+ * @LastEditTime: 2025-02-17 18:02:29
  * @Description: 
  */
 const express = require("express");
@@ -12,8 +12,6 @@ const path = require('path');
 const yaml = require('js-yaml');
 
 const chalk = require("chalk");
-// const Fiber = require('fibers');
-declare var Fiber;
 const _ = require('underscore');
 
 import { requireAuthentication } from '@steedos/auth';
@@ -51,11 +49,7 @@ const getSources = async function (req, res) {
 
 
 
-router.get('/api/metadata/sources/:metadataName', requireAuthentication, function (req, res) {
-    return Fiber(function(){
-        return getSources(req, res);
-    }).run();;
-});
+router.get('/api/metadata/sources/:metadataName', requireAuthentication, getSources);
 
 
 

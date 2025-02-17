@@ -1,6 +1,0 @@
-name: enable_search
-hidden: true
-label: Enable Search
-sort_no: 460
-type: boolean
-visible_on: '{{false}}'

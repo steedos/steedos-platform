@@ -1,8 +1,0 @@
-name: actions
-blackbox: true
-hidden: true
-label: Actions
-omit: true
-sort_no: 360
-type: object
-visible_on: '{{false}}'

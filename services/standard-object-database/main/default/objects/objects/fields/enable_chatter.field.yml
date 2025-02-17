@@ -1,6 +1,0 @@
-name: enable_chatter
-hidden: true
-label: Enable Chatter
-sort_no: 300
-type: boolean
-visible_on: '{{false}}'

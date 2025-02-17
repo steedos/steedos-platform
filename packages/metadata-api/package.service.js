@@ -1,14 +1,14 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2024-10-11 16:39:42
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2025-02-17 18:20:11
  * @Description: 
  */
 "use strict";
 const project = require('./package.json');
 const packageName = project.name;
-const packageLoader = require('@steedos/service-meteor-package-loader');
+const packageLoader = require('@steedos/service-package-loader');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');

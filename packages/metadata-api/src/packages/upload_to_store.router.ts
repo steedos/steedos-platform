@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-11-17 16:29:16
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-11-29 11:56:12
+ * @LastEditTime: 2025-02-17 18:02:55
  * @Description: 
  */
 import { requireAuthentication } from '@steedos/auth';
@@ -17,8 +17,6 @@ const router = express.Router();
 const fs = require('fs');
 const path = require('path');
 
-// const Fiber = require('fibers');
-declare var Fiber;
 const _ = require('underscore');
 const clone = require('clone');
 
@@ -95,11 +93,7 @@ const uploadToStore = async function (req, res) {
     }
 }
 
-router.post('/api/package/upload_to_store/:packageId', requireAuthentication, function (req, res) {
-    return Fiber(function(){
-        return uploadToStore(req, res);
-    }).run();;
-});
+router.post('/api/package/upload_to_store/:packageId', requireAuthentication, uploadToStore);
 
 
 

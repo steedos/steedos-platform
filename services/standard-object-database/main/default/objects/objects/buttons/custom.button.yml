@@ -1,5 +1,0 @@
-name: custom
-is_enable: true
-label: 自定义
-'on': record_only
-sort: 200

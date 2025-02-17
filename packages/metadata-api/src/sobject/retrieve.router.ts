@@ -1,8 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const _ = require("underscore");
-// const Fiber = require('fibers');
-declare var Fiber;
 
 import { requireAuthentication } from '@steedos/auth';
 import { DbManager } from '../util/dbManager'
@@ -11,19 +9,9 @@ import { getObjectsByIdsAndFields } from './index'
 
 declare var Steedos: any;
 
-router.post('/api/composite/sobjects/:SObjectName', requireAuthentication, async function (req, res) {
-    
-    return Fiber(function(){
-        return doPost(req, res);
-    }).run();;
-});
+router.post('/api/composite/sobjects/:SObjectName', requireAuthentication, doPost);
 
-router.get('/api/composite/sobjects/:SObjectName', requireAuthentication, async function (req, res) {
-    
-    return Fiber(function(){
-        return doGet(req, res);
-    }).run();;
-});
+router.get('/api/composite/sobjects/:SObjectName', requireAuthentication, doGet);
 
 exports.default = router;
 

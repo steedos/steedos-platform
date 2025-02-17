@@ -1,9 +1,0 @@
-name: fields_serial_number
-disabled: true
-hidden: true
-label: Serial Number
-omit: true
-scale: 0
-sort_no: 440
-type: number
-visible_on: '{{false}}'
