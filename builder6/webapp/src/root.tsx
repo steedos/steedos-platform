@@ -12,12 +12,32 @@ import { loadMe } from './actions/users';
 import { Session } from './utils/Session';
 import { Creator } from './utils/Creator';
 import { Steedos } from './utils/steedos';
+import { t } from 'i18next';
 
 const _window: any = window;
 _window['Builder'] = Builder;
 _window['builder'] = builder;
 _window['Session'] = Session;
 _window['Creator'] = Creator;
+_window['t'] = function(key: any, parameters: any, locale: string){
+  if(!key){
+      return key;
+  }
+  if (locale === "zh-cn") {
+      locale = "zh-CN";
+  }
+  let keys;
+  if(lodash.isArray(key)){
+      keys = key;
+  }else{
+      keys = [`CustomLabels.${key}`, key];
+  }
+  if ((parameters != null) && !(lodash.isObject(parameters))) {
+      return t(keys, { lng: locale, postProcess: 'sprintf', sprintf: [parameters], keySeparator: false});
+  } else {
+      return t(keys, Object.assign({lng: locale}, {keySeparator: false}, parameters));
+  }
+};
 
 if(_window['Steedos']){
   console.log('has Steedos')

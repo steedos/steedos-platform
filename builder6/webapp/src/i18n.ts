@@ -17,6 +17,9 @@ i18n
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
     },
+    backend: {
+      loadPath: `${import.meta.env.VITE_B6_ROOT_URL}/locales/{{lng}}/{{ns}}`
+    }
   });
   
 export default i18n;

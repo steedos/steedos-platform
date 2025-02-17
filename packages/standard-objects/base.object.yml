@@ -128,7 +128,7 @@ fields:
     index: true
     defaultValue: !!js/function |
       function(){
-        return Steedos.StandardObjects.Base.Fields.companyId.defaultValue.apply(this, arguments)
+        return Steedos.User.get().company_id;
       }
     filtersFunction: !<tag:yaml.org,2002:js/function> |-
       function(filters, values){
@@ -173,7 +173,7 @@ fields:
     hidden: false
     defaultValue: !!js/function |
       function(){
-        return Steedos.StandardObjects.Base.Fields.companyIds.defaultValue.apply(this, arguments)
+        return Steedos.User.get().company_ids;
       }
     filtersFunction: !<tag:yaml.org,2002:js/function> |-
       function(filters, values){
