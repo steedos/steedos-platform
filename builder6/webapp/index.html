@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Steedos</title>
 
-
     <script src="https://unpkg.steedos.cn/@steedos-widgets/amis@6.3.0-patch.3/sdk/sdk.js"></script>
 
     <link rel="stylesheet" href="https://unpkg.steedos.cn/@fortawesome/fontawesome-free@6.2.0/css/all.min.css" />
@@ -26,6 +25,10 @@
       window['Amis'] = amisRequire('amis');
       window['AmisCore'] = amisRequire('amis-core');
       window['AmisUI'] = amisRequire('amis-ui');
+
+      window['Amis'].registerFilter('t', function (key,param) {
+          return typeof key === 'string' ? window.t(key,param) : key;
+        })
 
       // 监听窗口的 load 事件，确保所有脚本都加载完成
       window.addEventListener('load', function() {
