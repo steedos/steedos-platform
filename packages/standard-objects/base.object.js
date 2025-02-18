@@ -452,14 +452,5 @@ module.exports = {
                 "bodyClassName": "p-0"
             }
         },
-    },
-    triggers: {
-        "before.insert.client.default": {
-            on: "client",
-            when: "before.insert",
-            todo: function (userId, doc) {
-                return doc.space = Session.get("spaceId");
-            }
-        }
     }
 };
