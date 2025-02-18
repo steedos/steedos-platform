@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2025-02-17 09:16:48
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-02-18 11:10:30
+ * @LastEditTime: 2025-02-18 14:45:37
  * @Description: 
  */
 
@@ -11,6 +11,7 @@ import { Space } from './space';
 import { Object } from './object';
 import { User } from './user';
 import { Workflow } from './workflow';
+import { ProcessManager } from './process';
 
 export const Steedos = {
     isSpaceAdmin: ()=>{
@@ -20,5 +21,6 @@ export const Steedos = {
     Space,
     Object,
     User,
-    Workflow
+    Workflow,
+    ProcessManager
 }
