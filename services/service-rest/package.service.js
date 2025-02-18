@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-01-21 19:25:39
+ * @LastEditTime: 2025-02-18 11:22:03
  * @Description: 
  */
 "use strict";
@@ -848,7 +848,6 @@ module.exports = {
      * Service created lifecycle event handler
      */
     created() {
-        console.log('created===rest>')
     },
 
     merged(schema) {
@@ -858,7 +857,6 @@ module.exports = {
      * Service started lifecycle event handler
      */
     async started() {
-        console.log('started===rest>')
     },
 
     /**

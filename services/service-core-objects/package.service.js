@@ -2,14 +2,13 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 13:17:06
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-01-15 18:34:50
+ * @LastEditTime: 2025-02-18 11:23:12
  * @Description: 
  */
 "use strict";
 const project = require('./package.json');
 const packageName = project.name;
 const packageLoader = require('@steedos/service-package-loader');
-const objectMixin = require('@steedos/service-object-mixin')
 const objectql = require('@steedos/objectql');
 const { MongoClient } = require('mongodb');
 const _ = require('lodash')
@@ -170,14 +169,12 @@ module.exports = {
      * Service created lifecycle event handler
      */
     created() {
-        console.log(`created`, packageName)
     },
 
     /**
      * Service started lifecycle event handler
      */
     async started() {
-        console.log(`started`, packageName)
     },
 
     /**

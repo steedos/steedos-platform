@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:35
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-02-15 17:20:59
+ * @LastEditTime: 2025-02-18 11:25:15
  * @Description: 维护内存缓存
  */
 "use strict";
@@ -267,11 +267,9 @@ module.exports = {
 		console.log('created', serviceName);
 	},
 	async started() {
-		console.log('started', serviceName);
 		core.InitTranslations()
 		core.loadTranslations();
 		core.loadObjectTranslations();
-		console.log(`core.loadObjectTranslations===>1`)
 		this.loadActionTriggers(this.broker);
 		this.loadTriggers(this.broker);
 

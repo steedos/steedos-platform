@@ -42,7 +42,7 @@ export async function createDataSourceService(broker, dataSource) {
                 async handler(ctx) {
                     let objectConfig = ctx.params.data;
                     jsonToObject(objectConfig)
-                    console.log(`${serviceName} inserted`, objectConfig.name)
+                    // console.log(`${serviceName} inserted`, objectConfig.name)
                     if(!getOriginalObjectConfig(objectConfig.name)){
                         // 此处的objectConfig是已继承了base之后的结果. 已无法识别出原始定义.
                         addOriginalObjectConfigs(objectConfig.name, dataSourceName, clone(objectConfig));

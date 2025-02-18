@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-04-11 11:50:53
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-01-17 14:19:27
+ * @LastEditTime: 2025-02-18 11:48:10
  * @Description: 
  */
 "use strict";
@@ -110,14 +110,12 @@ module.exports = {
      * Service created lifecycle event handler
      */
     async created() {
-        console.log('triggers created....')
     },
 
     /**
      * Service started lifecycle event handler
      */
     async started() {
-        console.log('triggers started....')
     },
 
     /**

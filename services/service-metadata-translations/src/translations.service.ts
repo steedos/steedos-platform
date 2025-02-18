@@ -111,14 +111,12 @@ module.exports = {
      * Service created lifecycle event handler
      */
     created() {
-        console.log('=================>mTTT<==================')
     },
 
     /**
      * Service started lifecycle event handler
      */
     async started() {
-        console.log('=================> mTTT started <==================')
     },
 
     /**

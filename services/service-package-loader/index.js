@@ -124,14 +124,14 @@ module.exports = {
             }
 
             // 扫描软件包中的元数据, 如果有 .router.js 文件, 则输出警告信息
-            const filePatten3 = [
-                path.join(packagePath, "**", "*.router.js"),
-                "!" + path.join(packagePath, "node_modules"),
-            ]
-            const matchedPaths3 = metaDataCore.syncMatchFiles(filePatten3);
-            for await (const filePath of matchedPaths3) {
-                this.broker.logger.warn(`The router.js file has been deprecated. ${filePath}`); 
-            }
+            // const filePatten3 = [
+            //     path.join(packagePath, "**", "*.router.js"),
+            //     "!" + path.join(packagePath, "node_modules"),
+            // ]
+            // const matchedPaths3 = metaDataCore.syncMatchFiles(filePatten3);
+            // for await (const filePath of matchedPaths3) {
+            //     this.broker.logger.warn(`The router.js file has been deprecated. ${filePath}`); 
+            // }
         },
         sendPackageFlowToDb: async function(packagePath, name, spaceId) {
             const flows = loadFlowFile.load(path.join(packagePath, '**'));
@@ -306,7 +306,7 @@ module.exports = {
             await this.loadPackagePublicFiles(_path);
             this.started = true;
             const endTime = moment();
-            console.log(`service ${this.name} started:`, `${endTime.diff(startTime, 'seconds', true)}s`);
+            logger.log(`service ${this.name} started: ${endTime.diff(startTime, 'seconds', true)}s`);
             if(this.afterStart){
                 try {
                     await this.afterStart();
@@ -316,7 +316,6 @@ module.exports = {
             }
         },
         async loadPackageRouters(packagePath, name){
-            console.log(`loadPackageRouters====>`, packagePath, name)
             let routersData = loadRouters(packagePath);
             let oldRoutersInfo = await this.broker.call(`@steedos/service-packages.getPackageRoutersInfo`, {packageName: name})
             let routersInfo = _.flattenDeep(_.map(routersData, 'infoList'));
@@ -380,7 +379,6 @@ module.exports = {
             global.broker = this.broker;
         }
         this.packageServices = [];  //此属性不能放到settings下，否则会导致mo clone settings 时 内存溢出。
-        this.logger.debug('service package loader created!!!');
         
         try {
             this.objectql = require('@steedos/objectql');
@@ -450,6 +448,6 @@ module.exports = {
         this.broker.broadcast('metadata.object_triggers.change', {})
         this.broker.broadcastLocal("@steedos/service-packages.offline", {serviceInfo: {name: this.name, nodeID: this.broker.nodeID, instanceID: this.broker.instanceID}})
 
-        console.log(`service ${this.name} stopped`);
+        logger.log(`service ${this.name} stopped`);
     }
 };

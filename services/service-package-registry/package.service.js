@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-07-16 15:58:42
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-01-15 19:42:35
+ * @LastEditTime: 2025-02-18 11:23:24
  * @Description: 
  */
 "use strict";
@@ -40,7 +40,6 @@ module.exports = {
 	 * Service created lifecycle event handler
 	 */
 	async created() {
-		console.log(`created`, packageName)
 		this.broker.createService(require('./project.package.service'));
 	},
 

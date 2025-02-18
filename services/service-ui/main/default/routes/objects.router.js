@@ -5,7 +5,6 @@ const objectql_1 = require("@steedos/objectql");
 const express = require('express');
 const router = express.Router();
 const auth = require('@steedos/auth');
-console.log('===uiSchema===api');
 const callObjectServiceAction = function (actionName, userSession, data) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const broker = (0, objectql_1.getSteedosSchema)().broker;

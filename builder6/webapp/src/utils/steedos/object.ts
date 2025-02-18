@@ -104,7 +104,7 @@ export const Object = {
                 type: "amis_button",
                 visible: function(object_name, record_id, record_permissions, data){
                     if (data._isRelated) return false;
-                    return lodash.filter(Creator.object_workflows, (item)=>{return item.object_name == object_name && (!item.sync_direction || item.sync_direction == 'both' || item.sync_direction == 'ins_to_obj') && true !== item.forbid_initiate_instance}).length > 0
+                    return lodash.filter(Steedos.Workflow?.getObjectWorkflows(), (item)=>{return item.object_name == object_name && (!item.sync_direction || item.sync_direction == 'both' || item.sync_direction == 'ins_to_obj') && true !== item.forbid_initiate_instance}).length > 0
                 },
                 amis_schema: {
                     "type": "service",

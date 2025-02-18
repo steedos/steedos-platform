@@ -175,13 +175,10 @@ module.exports = {
 				if(this.countTimeoutId){
 					clearTimeout(this.countTimeoutId);
 				}
-				// console.log(`statisticsActivatedPackages`);
 				this.countTimeoutId = setTimeout(async()=>{
 					const startingPackages = await Register.filterList(this.broker, {key: getStartingCacherKey()});
 					const startedPackages = await Register.filterList(this.broker, {key: getStartedCacherKey()});
-					console.log(`startingPackages`, startingPackages.length, startedPackages.length);
 					if(startingPackages.length <= startedPackages.length){
-						console.log(`broadcast $packages.changed========`)
 						this.broker.broadcast("$packages.changed", {});
 					}
 				}, 1000 * 3)
