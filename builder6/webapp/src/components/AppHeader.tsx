@@ -14,7 +14,6 @@ export const AppHeader = () => {
         body: [
             {
                 "type": "steedos-global-header",
-                "visibleOn": "!!app",
                 "logoSrc": logoSrc,
                 "customButtons": [
                     {
@@ -55,6 +54,7 @@ export const AppHeader = () => {
             "method": "get",
             "cache": "10000",
             "url": "/service/api/apps/${appId}/menus?mobile=" + isMobile,
+            "sendOn": "!!appId",
             "headers": {
                 "Authorization": "Bearer ${context.tenantId},${context.authToken}"
             },

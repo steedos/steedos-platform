@@ -108,10 +108,10 @@ module.exports = {
         ...methods,
 
         checkPackageMetadataFiles: async function (packagePath) {
-            let publicPath = path.join(packagePath, 'public');
-            if (this.settings.packageInfo.loadPublicFolder && fs.existsSync(publicPath)) {
-                this.broker.logger.warn(`The public folder has been deprecated. ${publicPath}`); 
-            }
+            // let publicPath = path.join(packagePath, 'public');
+            // if (this.settings.packageInfo.loadPublicFolder && fs.existsSync(publicPath)) {
+            //     this.broker.logger.warn(`The public folder has been deprecated. ${publicPath}`); 
+            // }
 
             // 扫描软件包中的元数据, 如果有 .object.js 文件, 则输出警告信息
             const filePatten2 = [
