@@ -1,0 +1,175 @@
+<!--
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-06-02 17:45:15
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-04-09 12:15:18
+ * @Description: 
+-->
+<html>
+  <head>
+    <script src="/unpkg.com/@steedos-builder/fiddle@0.0.5/dist/builder-fiddle.umd.js"></script>
+    <script src="/unpkg.com/axios@0.26.1/dist/axios.min.js"></script>
+  </head>
+
+  <body>
+    <builder-fiddle host="<%=builderHost%>"></builder-fiddle>
+    <script>
+      const settings = {
+        assetUrls: "<%=assetUrls%>",
+        rootUrl: "<%=rootUrl%>",
+        userId: "<%=userId%>",
+        tenantId: "<%=tenantId%>",
+        authToken: "<%=authToken%>",
+        id: "<%=id%>",
+        pageId: "<%=id%>",
+        messageOnly: true,
+        hiddenDeploy: true
+      };
+
+      let comp = document.querySelector("builder-fiddle");
+
+      const loadPage = async () => {
+        const { assetUrls, rootUrl, userId, tenantId, authToken, id } = settings;
+
+        // 如果传入 steedos rooturl
+        if (rootUrl && !authToken) return;
+
+        const initialContent = {
+          type: "service",
+          bodyClassName: 'p-0',
+        };
+
+        if (id) {
+          const result = await axios.post(
+            `${rootUrl}/graphql`,
+            {
+              query: `
+                  {
+                    record:object_listviews__findOne(id: "${id}"){
+                      _id,
+                      label,
+                      type,
+                      name,
+                      amis_schema,
+                      object: object_name
+                    }
+                  }
+                `
+            },
+            {
+              withCredentials: true,
+              headers: { Authorization: `Bearer ${tenantId},${authToken}` },
+            }
+          );
+          if (result?.data?.data) {
+            const button = result.data.data.record;
+            let schema = button?.amis_schema ;
+            if(!schema){
+              schema = Object.assign({}, initialContent, {body: [
+                {
+                  "type": "steedos-object-table",
+                  "objectApiName": "${objectName}"
+              }
+              ]});
+            }
+
+            let objectName = result.data.object;
+            if (typeof schema === "string") {
+              schema = JSON.parse(schema);
+            }
+
+            if (!schema.data) {
+              schema.data = {};
+            }
+
+            if (!schema.data.context) {
+              schema.data.context = {};
+            }
+
+            schema.data.app_id = '';
+            schema.data.tab_id = '';
+            schema.data.objectName = '<%=object_name%>';
+            schema.data.dataComponentId = '';
+            schema.data.record_id = '';
+            schema.data.record = {};
+            schema.data.permissions = {};
+
+            schema.data.context.rootUrl = rootUrl;
+            schema.data.context.tenantId = tenantId;
+            schema.data.context.userId = userId;
+            schema.data.context.authToken = authToken;
+
+            return schema || initialContent
+          }
+        } else {
+          return initialContent
+        }
+      };
+
+      const savePage = async (data) => {
+        const { rootUrl, userId, tenantId, authToken, id } = settings;
+
+        if (!id) {
+          return;
+        }
+
+        // 保存schema时,清理context下的认证信息
+        const schema = JSON.parse(
+          JSON.stringify(data.data.AmisSchema, null, 4)
+        );
+        if (schema.data && typeof schema.data.context === 'object' ) {
+          delete schema.data.context.userId;
+          delete schema.data.context.tenantId;
+          delete schema.data.context.authToken;
+          delete schema.data.context.user;
+          delete schema.data.context.rootUrl;
+        }
+        return await axios.post(
+          `${rootUrl}/graphql`,
+            {
+              query: `
+                mutation{
+                    object_listviews__update(id: "${id}", doc: {amis_schema: ${JSON.stringify(JSON.stringify(schema, null, 4))}}){_id}
+                }
+              `,
+            },
+            {
+              withCredentials: true,
+              headers: { Authorization: `Bearer ${tenantId},${authToken}` },
+            }
+          )
+          .catch(function (error) {
+            // handle error
+            console.log(error);
+          });
+      };
+
+      const deployPageVersion = async () => {
+        
+      };
+      window.addEventListener('message', function (event) {
+        const { data } = event;
+        if (data) {
+          if (data.type === 'builder.loadContent') {
+            loadPage().then((content)=>{
+              console.log("loadPage====", content)
+              comp.messageFrame('builder.contentChanged', { AmisSchema : content } )
+            })
+          }
+          if (data.type === 'builder.saveContent') {
+            savePage(data.data).then(()=>{
+              comp.messageFrame('builder.contentSaved')
+            })
+          }
+          if(data.type === "builder.deployContent"){
+            deployPageVersion().then(()=>{
+              comp.messageFrame('builder.contentDeployed')
+            })
+          }
+        }
+      })
+    
+      comp.settings = settings;
+    </script>
+  </body>
+</html>
