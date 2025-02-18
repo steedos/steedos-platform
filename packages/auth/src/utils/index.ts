@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2024-06-16 17:46:33
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-08-02 10:55:54
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2025-02-18 10:30:13
  * @Description: 
  */
 import crypto = require('crypto');
@@ -87,3 +87,5 @@ export const clearAuthCookies = function (req, res) {
 export function isExpried(expiredAt: number) {
   return expiredAt <= new Date().getTime();
 }
+
+export { default as Random } from './random';
