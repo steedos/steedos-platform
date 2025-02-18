@@ -1,14 +1,15 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 16:53:23
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-09-20 10:51:35
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2025-02-18 10:27:48
  * @Description: 
  */
 "use strict";
 const _ = require("lodash");
 const { getObject, getSteedosConfig } = require("@steedos/objectql")
 const metadataCore = require('@steedos/metadata-core');
+const { Random } = require('@steedos/auth');
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
