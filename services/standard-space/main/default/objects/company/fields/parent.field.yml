@@ -1,6 +1,0 @@
-name: parent
-label: Parent
-type: lookup
-reference_to: company
-hidden: true
-sort_no: 120

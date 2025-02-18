@@ -1,8 +1,0 @@
-name: all
-label: All Divisions
-columns:
-  - name
-  - code
-  - organization
-  - modified
-filter_scope: space

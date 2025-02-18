@@ -1,3 +1,57 @@
 name: updateOrgs
+amis_schema: |-
+  {
+      "type": "service",
+      "body": [
+          {
+              "type": "button",
+              "label": "更新组织",
+              "id": "u:updateOrgs",
+              "editorState": "default",
+              "confirmText": "更新「${record.name}」组织信息?",
+              "onEvent": {
+                  "click": {
+                      "weight": 0,
+                      "actions": [
+                          {
+                              "ignoreError": false,
+                              "actionType": "ajax",
+                              "outputVar": "responseResult",
+                              "options": {},
+                              "api": {
+                                  "url": "/service/api/company/updateOrgs",
+                                  "method": "post",
+                                  "requestAdaptor": "api.data = {\n    companyId: context.recordId\n}\nreturn api;",
+                                  "adaptor": "",
+                                  "messages": {
+                                      "success": "更新组织信息成功",
+                                      "failed": "更新组织信息失败"
+                                  },
+                                  "dataType": "json"
+                              }
+                          }
+                      ]
+                  }
+              }
+          }
+      ],
+      "regions": [
+          "body"
+      ],
+      "data": {
+          "context": {},
+          "dataComponentId": "",
+          "record_id": "",
+          "record": {},
+          "permissions": {}
+      },
+      "bodyClassName": "p-0",
+      "id": "u:c0483a5383ca",
+      "dsType": "api"
+  }
+is_enable: true
 label: Update The Whole Company
-'on': record
+locked: false
+'on': record_only
+type: amis_button
+visible: true

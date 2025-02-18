@@ -1,12 +1,13 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-08 15:38:09
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-08 16:22:48
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2025-02-18 10:42:04
  * @Description: 
  */
 "use strict";
-const { getObject, getSteedosConfig } = require("@steedos/objectql")
+const { getObject } = require("@steedos/objectql")
+const _ = require('lodash')
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
@@ -43,7 +44,7 @@ module.exports = {
                 companyId: { type: "string" },
             },
             async handler(ctx) {
-                this.broker.logger.info('[service][company]===>', '/service/api/company/updateOrgs', ctx.params)
+                console.log('[service][company]===>', '/service/api/company/updateOrgs', ctx.params)
                 return await this.updateOrgs(ctx.params.companyId, ctx.meta.user)
             }
         },

@@ -1,6 +1,0 @@
-name: sort_no
-label: Sort Number
-type: number
-defaultValue: 100
-sortable: true
-sort_no: 155
