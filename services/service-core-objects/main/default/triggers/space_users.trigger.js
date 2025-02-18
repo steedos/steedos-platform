@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-07 14:19:57
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-09-20 10:43:52
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2025-02-18 16:58:48
  * @Description: 
  */
 "use strict";
@@ -58,7 +58,7 @@ async function insertVaildate(doc) {
     const spaceObj = getObject('spaces')
     const userObj = getObject('users')
     const suObj = getObject('space_users')
-    var selector, space, spaceUserCount, user, userCount;
+    var selector, space, spaceUserCount = 0, user, userCount;
     if (!doc.space) {
         throw new Error("space_users_error_space_required");
     }
@@ -139,57 +139,40 @@ async function insertVaildate(doc) {
         // 检验手机号和邮箱是不是指向同一个用户(只有手机和邮箱都填写的时候才需要校验)
         selector = [];
         if (email) {
-            selector.push({
-                "email": email
-            });
+            selector.push(['email', '=', email]);
         }
         if (mobile) {
-            let selectorMobile = {
-                "mobile": mobile
-            }
+            let tmpMobile = mobile;
             const objFields = await getObject('space_users').getFields();
             if (objFields.mobile && objFields.mobile.enable_encryption) {
-                selectorMobile.mobile = await encrypValue(mobile);
+                tmpMobile = await encrypValue(mobile);
             }
-            selector.push(selectorMobile);
+            if (selector.length > 0) {
+                selector.push('or');
+            }
+            selector.push(['mobile', '=', tmpMobile]);
         }
         if (doc.username) {
-            selector.push({
-                "username": doc.username
-            });
+            if (selector.length > 0) {
+                selector.push('or');
+            }
+            selector.push(['username', '=', doc.username]);
         }
         if (selector.length > 0) {
-            spaceUserCount = await new Promise((resolve, reject) => {
-                Fiber(function () {
-                    try {
-                        resolve(db.space_users.find({
-                            space: doc.space,
-                            $or: selector
-                        }, {
-                            fields: {
-                                _id: 1
-                            }
-                        }).count())
-                    } catch (error) {
-                        reject(error)
-                    }
-                }).run()
+            spaceUserCount = await suObj.count({
+                filters: [
+                    ['space', '=', doc.space],
+                    selector
+                ],
+                fields: ['_id']
             });
 
             if (spaceUserCount > 0) {
                 throw new Error("space_users_error_space_user_exists");
             }
 
-            const users = await new Promise((resolve, reject) => {
-                Fiber(function () {
-                    try {
-                        resolve(db.users.find({
-                            $or: selector
-                        }).fetch())
-                    } catch (error) {
-                        reject(error)
-                    }
-                }).run()
+            const users = await userObj.find({
+                filters: selector
             })
 
             if (users.length == 1) {
@@ -266,22 +249,17 @@ async function updatevaildate(suDoc, doc) {
         }
     }
     if (((ref8 = doc) != null ? ref8.mobile : void 0) && mobile !== suDoc.mobile) {
-        let selectorMobile = {
-            mobile: mobile
-        }
+        let tmpMobile = mobile;
         const objFields = await getObject('space_users').getFields();
         if (objFields.mobile && objFields.mobile.enable_encryption) {
-            selectorMobile.mobile = await encrypValue(mobile);
+            tmpMobile = await encrypValue(mobile);
         }
-        const mobileUser = await new Promise((resolve, reject) => {
-            Fiber(function () {
-                try {
-                    resolve(db.users.findOne(selectorMobile))
-                } catch (error) {
-                    reject(error)
-                }
-            }).run()
-        })
+        const mobileUser = (await userObj.findOne({
+            filters: [
+                ['mobile', '=', tmpMobile]
+            ]
+        }))[0]
+
         if (mobileUser && mobileUser._id !== suDoc.user) {
             throw new Error("space_users_error_phone_already_existed");
         }
