@@ -26,6 +26,6 @@ root.render(
         <IntlProvider>
           <Router />
         </IntlProvider>
-    </Provider>,
+    </Provider>
   </>
 );
