@@ -2,14 +2,14 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-12 11:32:06
  * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2025-02-19 14:42:30
+ * @LastEditTime: 2025-02-19 15:47:40
  * @Description: 
  */
 module.exports = {
     disable: function (object_name, record_id) {
         $("body").addClass("loading");
-        var userSession = Creator.USER_CONTEXT;
-        var authorization = "Bearer " + userSession.spaceId + "," + userSession.user.authToken;
+        var userSession = Steedos.User.get();
+        var authorization = "Bearer " + userSession.spaceId + "," + userSession.authToken;
         $.ajax({
             type: "POST",
             url: Steedos.absoluteUrl("/service/api/space_users/disable"),

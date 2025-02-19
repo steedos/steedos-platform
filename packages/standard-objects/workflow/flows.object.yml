@@ -799,8 +799,8 @@ actions:
       function (object_name, record_id, fields) {
         window.$("body").addClass("loading");
         var record = Creator.getObjectRecord(object_name, record_id, 'space,form,state');
-        var userSession = Creator.USER_CONTEXT;
-        var authorization = "Bearer " + userSession.spaceId + "," + userSession.user.authToken;
+        var userSession = Steedos.User.get();
+        var authorization = "Bearer " + userSession.spaceId + "," + userSession.authToken;
         var formId = _.isObject(record.form) ? record.form._id : record.form;
         window.$.ajax({
           type: "POST",
@@ -839,8 +839,8 @@ actions:
       function (object_name, record_id, fields) {
         window.$("body").addClass("loading");
         var record = Creator.getObjectRecord(object_name, record_id, 'space,form,state');
-        var userSession = Creator.USER_CONTEXT;
-        var authorization = "Bearer " + userSession.spaceId + "," + userSession.user.authToken;
+        var userSession = Steedos.User.get();
+        var authorization = "Bearer " + userSession.spaceId + "," + userSession.authToken;
         var formId = _.isObject(record.form) ? record.form._id : record.form;
         window.$.ajax({
           type: "POST",
@@ -1003,8 +1003,8 @@ actions:
             return false;
           }
           window.$("body").addClass("loading");
-          var userSession = Creator.USER_CONTEXT;
-          var authorization = "Bearer " + userSession.spaceId + "," + userSession.user.authToken;
+          var userSession = Steedos.User.get();
+          var authorization = "Bearer " + userSession.spaceId + "," + userSession.authToken;
           window.$.ajax({
             type: "POST",
             url: Steedos.absoluteUrl("/am/forms?methodOverride=DELETE"),

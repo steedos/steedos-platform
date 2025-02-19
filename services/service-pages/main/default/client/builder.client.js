@@ -48,7 +48,7 @@
         Builder.set({
             context: {
                 rootUrl: Builder.settings.rootUrl,
-                tenantId: Creator.USER_CONTEXT.spaceId,
+                tenantId: Steedos.User.get().spaceId,
                 userId: Builder.settings.context.userId,
                 authToken: Builder.settings.context.user.authToken
             },

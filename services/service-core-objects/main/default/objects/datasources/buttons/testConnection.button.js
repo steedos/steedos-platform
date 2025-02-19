@@ -1,7 +1,15 @@
+/*
+ * @Author: 孙浩林 sunhaolin@steedos.com
+ * @Date: 2025-02-18 09:32:23
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2025-02-19 15:35:19
+ * @FilePath: /steedos-platform-3.0/services/service-core-objects/main/default/objects/datasources/buttons/testConnection.button.js
+ * @Description: 
+ */
 module.exports = { 
 testConnection:function(object_name, record_id, fields){
         window.$("body").addClass("loading");
-        var userSession = Creator.USER_CONTEXT;
+        var userSession = Steedos.User.get();
         var spaceId = userSession.spaceId;
         var authToken = userSession.authToken ? userSession.authToken : userSession.user.authToken;
         var url = "/api/v4/datasources/" + record_id + "/testConnection";

@@ -1,5 +1,5 @@
 Steedos.getInviteToken = function(){
-    var userSession = Creator.USER_CONTEXT;
+    var userSession = Steedos.User.get();
     var spaceId = userSession.spaceId;
     var authToken = userSession.authToken ? userSession.authToken : userSession.user.authToken;
     var authorization = "Bearer " + spaceId + "," + authToken;

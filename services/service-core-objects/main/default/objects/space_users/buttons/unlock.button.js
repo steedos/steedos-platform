@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-12 11:32:06
  * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2025-02-19 14:59:42
+ * @LastEditTime: 2025-02-19 15:35:57
  * @Description: 
  */
 module.exports = {
@@ -17,7 +17,7 @@ module.exports = {
             cancelButtonText: t('NO')
         }, function (confirm) {
             if (confirm) {
-                var userSession = Creator.USER_CONTEXT;
+                var userSession = Steedos.User.get();
                 var result = Steedos.authRequest("/service/api/space_users/unlock", {
                     type: 'post', async: false, data: JSON.stringify({
                         suId: record_id
@@ -56,7 +56,7 @@ module.exports = {
         //以上为权限判断
 
         if (record) {
-            var userSession = Creator.USER_CONTEXT;
+            var userSession = Steedos.User.get();
             var result = Steedos.authRequest("/service/api/space_users/is_lockout", {
                 type: 'post', async: false, data: JSON.stringify({
                     suId: record_id

@@ -268,14 +268,14 @@
                     formFactor: Steedos.isMobile() ? "SMALL" : "LARGE",
                     context: {
                         rootUrl: Meteor.isCordova ? (rootUrl.endsWith("/") ? rootUrl.substr(0, rootUrl.length-1) : rootUrl) : '',
-                        tenantId: Creator.USER_CONTEXT.spaceId,
+                        tenantId: Builder.settings.context.user.spaceId,
                         userId: Builder.settings.context.userId,
                         authToken: Builder.settings.context.user.authToken,
                         user: Builder.settings.context.user
                     },
                     global: {
                         userId: Builder.settings.context.userId,
-                        spaceId: Creator.USER_CONTEXT.spaceId,
+                        spaceId: Builder.settings.context.user.spaceId,
                         user: Builder.settings.context.user, 
                         now: new Date(),
                         // mode: mode //由表单提供

@@ -1,13 +1,13 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-02-26 15:22:12
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-02-17 10:08:43
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2025-02-19 15:37:40
  * @Description:
  */
 try {
   Steedos.authRequest = function (url, options) {
-    var userSession = Creator.USER_CONTEXT;
+    var userSession = Steedos.User.get();
     var spaceId = userSession.spaceId;
     var authToken = userSession.authToken
       ? userSession.authToken

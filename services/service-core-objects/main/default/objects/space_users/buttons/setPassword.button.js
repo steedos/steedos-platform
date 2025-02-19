@@ -6,7 +6,7 @@ module.exports = {
             isAdmin = SpaceUsersCore.isCompanyAdmin(record_id, organization);
         }
         const username = this.record.username;
-        var userSession = Creator.USER_CONTEXT;
+        var userSession = Steedos.User.get();
         var currentSpaceUser = db.space_users.findOne({ user: Builder.settings.context.userId });
         if (!isAdmin || (currentSpaceUser._id == this.record._id)) {
             var isPasswordEmpty = false;

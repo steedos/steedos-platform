@@ -2,8 +2,8 @@ module.exports = {
 
     recomputeFormulaValues: function(object_name, record_id, item_element) {
         $("body").addClass("loading");
-        var userSession = Creator.USER_CONTEXT;
-        var authorization = "Bearer " + userSession.spaceId + "," + userSession.user.authToken;
+        var userSession = Steedos.User.get();
+        var authorization = "Bearer " + userSession.spaceId + "," + userSession.authToken;
         $.ajax({
             type: "POST",
             url: Steedos.absoluteUrl("/api/v4/" + object_name + "/" + record_id + "/recomputeFormulaValues"),
