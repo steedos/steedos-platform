@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-12 11:32:06
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-13 10:14:52
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2025-02-19 14:59:42
  * @Description: 
  */
 module.exports = {
@@ -36,7 +36,7 @@ module.exports = {
     },
     unlockVisible: function (object_name, record_id, record_permissions, data) {
         var record = data && data.record;
-        if ((record.user && record.user._id) === Steedos.userId()) {
+        if ((record.user && record.user._id) === Steedos.User.get().userId) {
             return;
         }
         var organization = Session.get("organization");

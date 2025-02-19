@@ -1,13 +1,13 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-08-22 10:36:38
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-08-22 22:19:01
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2025-02-19 14:44:52
  * @Description: 
  */
 Tracker.autorun(function(e) {
     let zoom = "normal";
-    let space = db.space_users.findOne({ user: Steedos.userId(), space: Steedos.spaceId() });
+    let space = db.space_users.findOne({ user: Steedos.User.get().userId, space: Steedos.spaceId() });
     if(space && space.zoom){
         zoom = space.zoom;
     }

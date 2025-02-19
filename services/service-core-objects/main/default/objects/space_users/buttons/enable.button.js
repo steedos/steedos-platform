@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-12 11:32:06
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-11-25 10:32:40
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2025-02-19 14:42:37
  * @Description: 
  */
 module.exports = {
@@ -66,7 +66,7 @@ module.exports = {
 
     enableVisible: function (object_name, record_id, record_permissions, data) {
         var record = data && data.record;
-        var canEnable = record && !record.user_accepted && (record.user && record.user._id) != Steedos.userId()
+        var canEnable = record && !record.user_accepted && (record.user && record.user._id) != Steedos.User.get().userId
         if (!canEnable) {
             return;
         }

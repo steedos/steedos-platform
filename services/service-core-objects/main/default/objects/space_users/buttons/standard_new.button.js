@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-12 13:42:25
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-02-17 13:48:59
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2025-02-19 14:43:02
  * @Description: 
  */
 module.exports = {
@@ -18,7 +18,7 @@ module.exports = {
             return true;
         }
         else {
-            var userId = Steedos.userId();
+            var userId = Steedos.User.get().userId;
             //当前选中组织所属分部的管理员才有权限
             if (organization && organization.company_id && organization.company_id.admins) {
                 return organization.company_id.admins.indexOf(userId) > -1;

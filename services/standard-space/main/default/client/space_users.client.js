@@ -1,13 +1,13 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-06 15:38:22
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-04-13 16:44:17
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2025-02-19 14:44:42
  * @Description: 
  */
 SpaceUsersCore = {
     isCompanyAdmin: function(spaceUserId, organization){
-        var userId = Steedos.userId();
+        var userId = Steedos.User.get().userId;
         if(organization){
             //当前选中组织所属分部的管理员才有权限
             if(organization.company_id && organization.company_id.admins){

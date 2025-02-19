@@ -139,7 +139,7 @@ module.exports = {
             return false
         }
         if (Session.get("app_id") === 'admin') {
-            var space_userId = db.space_users.findOne({ user: Steedos.userId(), space: Steedos.spaceId() })._id
+            var space_userId = db.space_users.findOne({ user: Steedos.User.get().userId, space: Steedos.spaceId() })._id
             if (space_userId === record_id) {
                 return true
             }
