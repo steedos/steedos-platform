@@ -1918,10 +1918,10 @@
   dependencies:
     yup "^1.1.0"
 
-"@builder6/react@8.0.30":
-  version "8.0.30"
-  resolved "https://registry.npmjs.org/@builder6/react/-/react-8.0.30.tgz#8208e87681d705ee9ca3b99faf5a4deeebf2059e"
-  integrity sha512-RAks+ECgStQv12ANEAnN2bU1pM9zLnRrJ1tlDK2g/gwJzLJSuluu+8W+ilP+wSTA40NwmCSwVBG3YI0967rmFg==
+"@builder6/react@8.0.31":
+  version "8.0.31"
+  resolved "https://registry.npmjs.org/@builder6/react/-/react-8.0.31.tgz#646c110cad670cef2b33e3648490686dac647098"
+  integrity sha512-gcCHU+4AiRCUJI7SYnC8QulbPvLw4Iv8djRPaQBzSNZvhNoNSkzFSw77CL1J3ewer2E/WGgUfPeoQnGIGsNA/A==
   dependencies:
     "@builder6/sdk" "^6.0.0"
     "@emotion/core" "^10.0.17"
