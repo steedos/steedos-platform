@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2025-01-22 12:51:08
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-02-17 09:14:01
+ * @LastEditTime: 2025-02-20 16:19:15
  * @Description: 
  */
 import { Builder, builder, BuilderComponent } from '@builder6/react';
@@ -61,8 +61,7 @@ export const AmisRender = function ({schema = {}, data = {}, env = {}}) {
   }
   const mergedEnv = {
     ...env,
-    // TODO: 已知问题, 切换对象, 列表视图不重新渲染.
-    jumpToTODO: (to: string, action: any, ctx)=>{
+    jumpTo: (to: string, action: any, ctx)=>{
       if (to === "goBack") {
         return window.history.back();
       }
