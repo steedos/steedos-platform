@@ -346,6 +346,9 @@ export const loadStandardBaseObjects = async (serviceName: string) => {
     let baseObject: any = loadFile(path.join(standardObjectsDir, "base.object.yml"))
     baseObject.name = MONGO_BASE_OBJECT;
     await addObjectConfig(baseObject, SYSTEM_DATASOURCE, serviceName);
+    let baseObjectJs: any = loadFile(path.join(standardObjectsDir, "base.object.js"))
+    baseObjectJs.extend = MONGO_BASE_OBJECT;
+    await addObjectConfig(baseObjectJs, SYSTEM_DATASOURCE, serviceName);
     const baseTriggers = ['base.trigger.js', 'base.autonumber.trigger.js','base.masterDetail.trigger.js','base.recordFieldAudit.trigger.js','base.recordRecentView.trigger.js','base.tree.trigger.js','base.calendar.trigger.js','base.lookup.trigger.js', 'base.lockDetail.trigger.js'];
     _.forEach(baseTriggers, function(triggerFileName){
         let baseObjectTrigger: any = loadFile(path.join(standardObjectsDir, triggerFileName))
