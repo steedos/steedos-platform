@@ -4,6 +4,7 @@ const steedosI18n = require("@steedos/i18n");
 const odataMongodb = require("@steedos/odata-v4-mongodb");
 const clone = require("clone");
 const auth = require("@steedos/auth");
+const _ = require('lodash')
 const objectsCache = {
 }
 
