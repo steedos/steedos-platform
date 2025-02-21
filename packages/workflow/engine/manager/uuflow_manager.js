@@ -2850,7 +2850,7 @@ uuflowManager.sendRemindSMS = function (ins_name, deadline, users_id, space_id, 
     check(users_id, Array);
     check(space_id, String);
     check(ins_id, String);
-    skip_users = ((ref = Meteor.settings.remind) != null ? ref.skip_users : void 0) || [];
+    skip_users = ((ref = Steedos.settings.remind) != null ? ref.skip_users : void 0) || [];
     send_users = [];
     _.each(users_id, function (uid) {
         if (!skip_users.includes(uid)) {

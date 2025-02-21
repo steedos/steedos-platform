@@ -3,10 +3,10 @@ var ref, ref1, ref2, ref3;
 // 定义全局变量
 global.pushManager = {
     // bqq_app_id: "200626779",
-    // imo_app_cid: (ref = Meteor.settings.imo) != null ? ref.appcid : void 0,
-    // imo_app_uid: (ref1 = Meteor.settings.imo) != null ? ref1.appuid : void 0,
-    // imo_sync_app_key: (ref2 = Meteor.settings.imo) != null ? ref2.sync_app_key : void 0,
-    // imo_push_app_key: (ref3 = Meteor.settings.imo) != null ? ref3.push_app_key : void 0
+    // imo_app_cid: (ref = Steedos.settings.imo) != null ? ref.appcid : void 0,
+    // imo_app_uid: (ref1 = Steedos.settings.imo) != null ? ref1.appuid : void 0,
+    // imo_sync_app_key: (ref2 = Steedos.settings.imo) != null ? ref2.sync_app_key : void 0,
+    // imo_push_app_key: (ref3 = Steedos.settings.imo) != null ? ref3.push_app_key : void 0
 };
 
 pushManager.get_to_users = function (send_from, instance, cc_user_ids, current_user_info) {
@@ -1037,7 +1037,7 @@ pushManager.send_email_to_SMTP = function (subject, content, to_user, reply_user
         try {
             return MailQueue.send({
                 to: to_user.email,
-                from: pushManager.checkMailFromNameLength(reply_user.name) + ' on ' + Meteor.settings.email.from,
+                from: pushManager.checkMailFromNameLength(reply_user.name) + ' on ' + Steedos.settings.email.from,
                 subject: subject,
                 html: content
             });
@@ -1127,7 +1127,7 @@ pushManager.send_to_sms = function (to_user, message, current_user_info, spaceId
         return
     }
     var ref4, ref5, spaceUser;
-    if (((ref4 = Meteor.settings) != null ? (ref5 = ref4.workflow) != null ? ref5.sms_notification : void 0 : void 0) && (to_user != null ? to_user.mobile : void 0) && (to_user != null ? to_user.mobile_verified : void 0)) {
+    if (((ref4 = Steedos.settings) != null ? (ref5 = ref4.workflow) != null ? ref5.sms_notification : void 0 : void 0) && (to_user != null ? to_user.mobile : void 0) && (to_user != null ? to_user.mobile_verified : void 0)) {
         spaceUser = db.space_users.findOne({
             user: to_user._id,
             space: spaceId

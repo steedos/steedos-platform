@@ -22,7 +22,7 @@ export const InitTranslationRouter = function(){
     const app = SteedosRouter.staticRouter();
     const pluginContext = {
         app,
-        settings: Meteor.settings
+        settings: Steedos.settings
     };
     initExportObjectI18nTemplateRouter(pluginContext);
     initLocalesRouter(pluginContext);

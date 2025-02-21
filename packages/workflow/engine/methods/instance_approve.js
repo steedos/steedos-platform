@@ -116,10 +116,10 @@ module.exports = {
             return;
         }
         trimDescription = description.trim();
-        showBlankApproveDescription = (ref = Meteor.settings.public.workflow) != null ? ref.showBlankApproveDescription : void 0;
+        showBlankApproveDescription = (ref = Steedos.settings.public.workflow) != null ? ref.showBlankApproveDescription : void 0;
         session_userId = this.userId;
         if (lastSignApprove) {
-            if (((ref1 = Meteor.settings.public.workflow) != null ? ref1.keepLastSignApproveDescription : void 0) !== false) {
+            if (((ref1 = Steedos.settings.public.workflow) != null ? ref1.keepLastSignApproveDescription : void 0) !== false) {
                 if (lastSignApprove.custom_sign_show) {
                     return;
                 }
@@ -169,7 +169,7 @@ module.exports = {
             }
 
             const needUpdateApproveIds = []
-            if (((ref3 = Meteor.settings.public.workflow) != null ? ref3.keepLastSignApproveDescription : void 0) === false && (!!currentApproveDescription !== !!trimDescription || showBlankApproveDescription)) {
+            if (((ref3 = Steedos.settings.public.workflow) != null ? ref3.keepLastSignApproveDescription : void 0) === false && (!!currentApproveDescription !== !!trimDescription || showBlankApproveDescription)) {
                 ins = db.instances.findOne({
                     _id: instanceId
                 }, {

@@ -231,7 +231,7 @@ Meteor.startup(function () {
         //                     doc.user_accepted = true;
         //                 }
         //             } else {
-        //                 if(Meteor.settings.tenant && Meteor.settings.tenant.saas){
+        //                 if(Steedos.settings.tenant && Steedos.settings.tenant.saas){
         //                     // 云版要求用户接受邀请才让用户在新加入的工作区生效
         //                     doc.invite_state = "pending";
         //                     // 云版强制设置user_accepted为false
@@ -627,7 +627,7 @@ Meteor.startup(function () {
         //             }, locale);
         //             return MailQueue.send({
         //                 to: user.email,
-        //                 from: user.name + ' on ' + Meteor.settings.email.from,
+        //                 from: user.name + ' on ' + Steedos.settings.email.from,
         //                 subject: subject,
         //                 html: content
         //             });

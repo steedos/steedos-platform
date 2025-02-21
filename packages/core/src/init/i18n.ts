@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-11-16 14:03:53
+ * @LastEditTime: 2025-02-21 14:33:19
  * @Description: 
  */
 import * as I18n from '@steedos/i18n';
@@ -20,7 +20,7 @@ export const InitI18n = function(){
 export const InitI18nRouter = function(){
     const pluginContext = {
         app,
-        settings: Meteor.settings
+        settings: Steedos.settings
     };
     initExportObjectI18nTemplateRouter(pluginContext);
     initLocalesRouter(pluginContext);

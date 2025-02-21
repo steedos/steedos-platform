@@ -26,7 +26,7 @@ export const MongoConnection = function (url, options) {
 
   const userOptions = {
     ...(Mongo._connectionOptions || {}),
-    ...(Meteor.settings?.packages?.mongo?.options || {})
+    ...(Steedos.settings?.packages?.mongo?.options || {})
   };
 
   var mongoOptions = Object.assign({
@@ -863,14 +863,14 @@ Object.assign(MongoConnection.prototype, {
           // if not, we have to fallback to long polling
           if (excludeCollections?.length && excludeCollections.includes(collectionName)) {
             if (!oplogCollectionWarnings.includes(collectionName)) {
-              console.warn(`Meteor.settings.packages.mongo.oplogExcludeCollections includes the collection ${collectionName} - your subscriptions will only use long polling!`);
+              console.warn(`Steedos.settings.packages.mongo.oplogExcludeCollections includes the collection ${collectionName} - your subscriptions will only use long polling!`);
               oplogCollectionWarnings.push(collectionName); // we only want to show the warnings once per collection!
             }
             return false;
           }
           if (includeCollections?.length && !includeCollections.includes(collectionName)) {
             if (!oplogCollectionWarnings.includes(collectionName)) {
-              console.warn(`Meteor.settings.packages.mongo.oplogIncludeCollections does not include the collection ${collectionName} - your subscriptions will only use long polling!`);
+              console.warn(`Steedos.settings.packages.mongo.oplogIncludeCollections does not include the collection ${collectionName} - your subscriptions will only use long polling!`);
               oplogCollectionWarnings.push(collectionName); // we only want to show the warnings once per collection!
             }
             return false;

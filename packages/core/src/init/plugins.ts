@@ -17,7 +17,7 @@ export class Plugins {
 
         const pluginContext = {
             app,
-            settings: Meteor.settings
+            settings: Steedos.settings
         };
         let steedosSchema = getSteedosSchema();
         let broker = steedosSchema.broker;
@@ -47,7 +47,7 @@ export class Plugins {
 
         // const pluginContext = {
         //     app,
-        //     settings: Meteor.settings
+        //     settings: Steedos.settings
         // };
         // let plugins = this.getPluginNames();
         // if (_.isArray(plugins)) {
@@ -80,7 +80,7 @@ export class Plugins {
     static getPluginNames() {
         const builtInPlugins = initConfig.built_in_plugins || [];
         const initPlugins = initConfig.plugins || [];
-        const settingsPlugins = Meteor.settings.plugins || [];
+        const settingsPlugins = Steedos.settings.plugins || [];
         let plugins = _.union(builtInPlugins, initPlugins, settingsPlugins);
         return plugins || [];
     }

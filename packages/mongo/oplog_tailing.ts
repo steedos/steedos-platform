@@ -244,8 +244,8 @@ export class OplogHandle {
         this._lastProcessedTS = lastOplogEntry.ts;
       }
 
-      const includeCollections = Meteor.settings?.packages?.mongo?.oplogIncludeCollections;
-      const excludeCollections = Meteor.settings?.packages?.mongo?.oplogExcludeCollections;
+      const includeCollections = Steedos.settings?.packages?.mongo?.oplogIncludeCollections;
+      const excludeCollections = Steedos.settings?.packages?.mongo?.oplogExcludeCollections;
 
       if (includeCollections?.length && excludeCollections?.length) {
         throw new Error("Can't use both mongo oplog settings oplogIncludeCollections and oplogExcludeCollections at the same time.");

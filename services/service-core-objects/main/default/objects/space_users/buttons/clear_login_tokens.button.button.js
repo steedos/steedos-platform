@@ -7,6 +7,6 @@
  */
 module.exports = {
     clear_login_tokensVisible: function (object_name, record_id, record_permissions, data) {
-        return Meteor.settings.public.enable_saas != true;
+        return Steedos.settings.public.enable_saas != true;
     },
 }

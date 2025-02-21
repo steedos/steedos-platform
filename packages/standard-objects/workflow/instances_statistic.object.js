@@ -19,7 +19,7 @@ InstancesStat = {};
 //	│    │    └─────────────── hour (0 - 23)
 //	│    └──────────────────── minute (0 - 59)
 //	└───────────────────────── second (0 - 59, OPTIONAL)
-InstancesStat.rule = (ref = Meteor.settings) != null ? ref.instances_stat : void 0;
+InstancesStat.rule = (ref = Steedos.settings) != null ? ref.instances_stat : void 0;
 
 InstancesStat.costTime = function (space) {
   var userCostTime;

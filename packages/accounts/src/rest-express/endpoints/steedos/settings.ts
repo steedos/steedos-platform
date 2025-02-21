@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-04-15 15:13:49
+ * @LastEditTime: 2025-02-21 14:33:10
  * @Description: 
  */
 import * as express from 'express';
@@ -47,7 +47,7 @@ export const getSettings = (accountsServer: AccountsServer) => async (
     tenant._id = process.env.STEEDOS_TENANT_ID
   }
 
-  const platform = (global as any).Meteor.settings.public?.platform || {}
+  const platform = (global as any).Steedos.settings.public?.platform || {}
   
 
   if (tenant._id) {
@@ -106,7 +106,7 @@ export const getSettings = (accountsServer: AccountsServer) => async (
     serverInitInfo: serverInitInfo,
     redirect_url_whitelist: process.env.REDIRECT_URL_WHITELIST,
     platform: platform,
-    public: (global as any).Meteor.settings.public || {},
+    public: (global as any).Steedos.settings.public || {},
     settings: settings
   })
 }

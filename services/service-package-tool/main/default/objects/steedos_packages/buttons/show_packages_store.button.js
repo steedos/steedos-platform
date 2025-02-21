@@ -9,8 +9,8 @@ module.exports = {
     show_packages_store: function () {
         let packageService = "https://www.steedos.cn";
 
-        if(Meteor.settings.public.webservices.app_exchange && Meteor.settings.public.webservices.app_exchange.url){
-            packageService = Meteor.settings.public.webservices.app_exchange.url;
+        if(Steedos.settings.public.webservices.app_exchange && Steedos.settings.public.webservices.app_exchange.url){
+            packageService = Steedos.settings.public.webservices.app_exchange.url;
         }
 
         return window.open(`${packageService}?client=${window.btoa(Meteor.absoluteUrl('', window.location.origin))}&install_nodes=${window.btoa(Steedos.PackageRegistry.getNodes().join(','))}`);

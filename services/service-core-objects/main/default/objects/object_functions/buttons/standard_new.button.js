@@ -8,7 +8,7 @@
  */
 module.exports = {
     standard_newVisible: function (object_name, record_id, record_permissions, data) {
-        if(Meteor.settings.public.enable_saas){
+        if(Steedos.settings.public.enable_saas){
             return false;
         }
         return Steedos.Object.base.actions.standard_new.visible.apply(this, arguments);

@@ -90,14 +90,14 @@ if (Meteor.isServer) {
     //     if (user) {
     //         throw new Meteor.Error('username-unavailable', 'username-unavailable');
     //     }
-    //     if (!((ref = Meteor.settings.public) != null ? (ref1 = ref.accounts) != null ? ref1.is_username_skip_minrequiredlength : void 0 : void 0)) {
+    //     if (!((ref = Steedos.settings.public) != null ? (ref1 = ref.accounts) != null ? ref1.is_username_skip_minrequiredlength : void 0 : void 0)) {
     //         if (username.length < 6) {
     //             throw new Meteor.Error('username-minrequiredlength', "username-minrequiredlength");
     //         }
     //     }
     //     try {
-    //         if ((ref2 = Meteor.settings.public) != null ? (ref3 = ref2.accounts) != null ? ref3.UTF8_Names_Validation : void 0 : void 0) {
-    //             nameValidation = new RegExp('^' + Meteor.settings.public.accounts.UTF8_Names_Validation + '$');
+    //         if ((ref2 = Steedos.settings.public) != null ? (ref3 = ref2.accounts) != null ? ref3.UTF8_Names_Validation : void 0 : void 0) {
+    //             nameValidation = new RegExp('^' + Steedos.settings.public.accounts.UTF8_Names_Validation + '$');
     //         } else {
     //             nameValidation = new RegExp('^[A-Za-z0-9-_.\u00C0-\u017F\u4e00-\u9fa5]+$');
     //         }
@@ -260,7 +260,7 @@ if (Meteor.isServer) {
     //     //             content = greeting + "</br>" + TAPi18n.__('users_email_start_service', {}, locale) + "</br>" + url + "</br>" + TAPi18n.__("users_email_thanks", {}, locale) + "</br>";
     //     //             return MailQueue.send({
     //     //                 to: email,
-    //     //                 from: Meteor.settings.email.from,
+    //     //                 from: Steedos.settings.email.from,
     //     //                 subject: subject,
     //     //                 html: content
     //     //             });

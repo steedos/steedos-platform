@@ -181,9 +181,9 @@ async function oplogOptionsTest({
   mongoPackageSettings = {}
 }) {
   try {
-    previousMongoPackageSettings = { ...(Meteor.settings?.packages?.mongo || {}) };
-    if (!Meteor.settings.packages) Meteor.settings.packages = {};
-    Meteor.settings.packages.mongo = mongoPackageSettings;
+    previousMongoPackageSettings = { ...(Steedos.settings?.packages?.mongo || {}) };
+    if (!Steedos.settings.packages) Steedos.settings.packages = {};
+    Steedos.settings.packages.mongo = mongoPackageSettings;
 
     const myOplogHandle = new MongoInternals.OplogHandle(process.env.MONGO_OPLOG_URL, 'meteor');
     await myOplogHandle._startTrailingPromise;
@@ -218,7 +218,7 @@ async function oplogOptionsTest({
     test.equal(await shouldBeIgnored, true);
   } finally {
     // Reset:
-    Meteor.settings.packages.mongo = { ...previousMongoPackageSettings };
+    Steedos.settings.packages.mongo = { ...previousMongoPackageSettings };
     MongoInternals.defaultRemoteCollectionDriver().mongo._setOplogHandle(defaultOplogHandle);
   }
 }

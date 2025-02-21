@@ -52,7 +52,7 @@ export const IndexMethods = {
         e.message.includes(
           'An equivalent index already exists with the same name but different options.'
         ) &&
-        Meteor.settings?.packages?.mongo?.reCreateIndexOnOptionMismatch
+        Steedos.settings?.packages?.mongo?.reCreateIndexOnOptionMismatch
       ) {
         import { Log } from 'meteor/logging';
 

@@ -54,7 +54,7 @@ module.exports = {
 	 * Actions
 	 */
 	actions: {
-		// 动态修改浏览器端 Meteor.settings 变量，包括其中的 PUBLIC_SETTINGS
+		// 动态修改浏览器端 Steedos.settings 变量，包括其中的 PUBLIC_SETTINGS
 		setSettings(ctx) {
 			this.setSettings(ctx.params)
 		},
@@ -167,7 +167,7 @@ module.exports = {
 	 * Methods
 	 */
 	methods: {
-		// 动态修改浏览器端 Meteor.settings 变量，包括其中的 PUBLIC_SETTINGS
+		// 动态修改浏览器端 Steedos.settings 变量，包括其中的 PUBLIC_SETTINGS
 		setSettings(params) {
 			_.defaultsDeep(__meteor_runtime_config__, params);
 			Object.keys(WebApp.clientPrograms).forEach((arch) => {
