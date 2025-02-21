@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-02-26 15:22:12
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-02-21 16:40:50
+ * @LastEditTime: 2025-02-21 17:43:07
  * @Description:
  */
 try {
@@ -58,9 +58,9 @@ try {
             } else {
               errorMsg = errorInfo;
             }
-            toastr.error(t(errorMsg.replace(/:/g, "：")));
+            console.error(t(errorMsg.replace(/:/g, "：")));
           } else {
-            toastr.error(XMLHttpRequest.responseJSON);
+            console.error(XMLHttpRequest.responseJSON);
           }
         },
       };
@@ -68,7 +68,6 @@ try {
       return result;
     } catch (err) {
       console.error(err);
-      toastr.error(err);
     }
   };
 
