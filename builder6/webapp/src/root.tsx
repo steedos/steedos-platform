@@ -56,8 +56,8 @@ Builder.settings.context = {
   user: {},
 };
 Builder.settings.unpkgUrl = 'https://unpkg.steedos.cn';
+// Builder.settings.assetUrls = ['https://unpkg.steedos.cn/@steedos-widgets/amis-object@v6.3.12-beta.6/dist/assets.json'];
 Builder.settings.assetUrls = ['http://127.0.0.1:8080/@steedos-widgets/amis-object/dist/assets-dev.json'];
-
 
 
 Builder.settings.env = {
