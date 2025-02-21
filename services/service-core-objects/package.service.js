@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 13:17:06
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-02-18 11:23:12
+ * @LastEditTime: 2025-02-21 16:47:50
  * @Description: 
  */
 "use strict";
@@ -11,6 +11,8 @@ const packageName = project.name;
 const packageLoader = require('@steedos/service-package-loader');
 const objectql = require('@steedos/objectql');
 const { MongoClient } = require('mongodb');
+const { expressApp } = require('@steedos/router');
+const { getClientScriptsFiles, getClientScripts } =require('@steedos/metadata-registrar');
 const _ = require('lodash')
 
 const triggers = require('./src/triggers')
@@ -158,12 +160,41 @@ module.exports = {
                 }
             }
         },
+        'clientJS.changed': async function (ctx){
+			this.clientScriptsChange()
+		},
+        '$packages.changed': async function (ctx) {
+            this.clientScriptsChange()
+        }
     },
 
     /**
      * Methods
      */
-    methods: methods,
+    methods: {
+        clientScriptsChange: function(){
+            if (this.clientJSChangeTimeoutId) {
+				clearTimeout(this.clientJSChangeTimeoutId)
+			}
+			this.clientJSChangeTimeoutId = setTimeout(()=>{
+                let clientCodes = '';
+				let clientScripts = getClientScriptsFiles();
+                _.each(clientScripts, function (scriptFile) {
+                    let code = fs.readFileSync(scriptFile, 'utf8');
+                    clientCodes = clientCodes + '\r\n;' + `try{${code}}catch(error){console.error('client.js [${scriptFile}] error', error)}` + '\r\n;'
+                });
+
+                getClientScripts().then((packageClientScripts)=>{
+                    clientCodes = clientCodes + packageClientScripts;
+                    expressApp.setClientScripts(clientCodes);
+                    this.clientJSChangeTimeoutId = null;
+                })
+                
+			}, 1000)
+        }
+        ,
+        ...methods
+    },
 
     /**
      * Service created lifecycle event handler

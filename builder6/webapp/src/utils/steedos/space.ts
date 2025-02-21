@@ -1,8 +1,10 @@
+import { getMySpaces } from "@/actions/spaces"
+
 export const Space = {
     get: ()=>{
-        //TODO 获取完整的space信息
-        // return (window as any).Builder.settings.context?.user?.space 
-
-        return {enable_register: true}
+        return _.find(Steedos.__hotRecords.spaces, {_id: (window as any).Builder.settings.context?.tenantId})
+    },
+    getMySpaces: ()=>{
+        return Steedos.__hotRecords.spaces;
     }
 }

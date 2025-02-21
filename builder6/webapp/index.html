@@ -34,6 +34,31 @@
       window.addEventListener('load', function() {
           window.lodash = window._; // 将 window.lodash 设置为 window._
       });
+
+      const loadJs = (url, callback)=>{
+        let scriptTag = document.createElement("script");
+        scriptTag.type = "text/javascript";
+        scriptTag.src = url;
+        scriptTag.async = false;
+        document.getElementsByTagName("head")[0].appendChild(scriptTag);
+        scriptTag.onload = function(script){
+            if(callback){
+                callback(script)
+            }
+        }
+    }
+
+    const loadCss = (url)=>{
+        let styleTag = document.createElement("link");
+        styleTag.setAttribute("rel", "stylesheet");
+        styleTag.setAttribute("type", "text/css");
+        styleTag.setAttribute("href", url);
+        document.getElementsByTagName("head")[0].appendChild(styleTag);
+    }
+
+    window.loadJs = loadJs;
+    window.loadCss = loadCss;
+
     </script>
   </head>
   <body class="skin-blue-light fixed steedos sidebar-mini three-columns" >

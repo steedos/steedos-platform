@@ -40,10 +40,8 @@ _window['t'] = function(key: any, parameters: any, locale: string){
 };
 
 if(_window['Steedos']){
-  console.log('has Steedos')
   _window['Steedos'] = Object.assign(_window['Steedos'], Steedos);
 }else{
-  console.log('no has Steedos')
   _window['Steedos'] = Steedos;
 }
 
@@ -73,6 +71,11 @@ Builder.settings.env = {
     return config;
   }
 }
+
+window.addEventListener('load', function() {
+  _window.loadJs('/steedos-init.js');
+  _window.loadJs(`${Builder.settings.context.rootUrl}/client_scripts.js`);
+});
 
 
 const Root: React.FC<any> = (props) => {

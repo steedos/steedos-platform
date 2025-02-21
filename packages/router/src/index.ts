@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-11-15 14:48:43
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-01-21 18:55:45
+ * @LastEditTime: 2025-02-21 15:58:29
  * @Description: 
  */
 const express = require("express");
@@ -15,9 +15,11 @@ class ExpressAppStatic{
     app = null;
     beforeRouter = null;
     router = null;
+    scripts = '';
     constructor(){
         this.beforeRouter = express.Router();
         this.router = express.Router();
+        this.initClientJsRouter();
         // 读取环境变量、配置文件, 启动端口, 控制中间件
         const app = express();
 		app.use(cors({origin: true, credentials: true}))
@@ -41,6 +43,13 @@ class ExpressAppStatic{
         this.app = app;
     }
 
+    private initClientJsRouter = ()=>{
+        this.router.get('/client_scripts.js', (req, res)=>{
+            res.header('Content-Type', 'application/javascript');
+            res.send(this.scripts);
+        });
+    }
+
     public staticRouter = ()=>{
         return this.router;
     }
@@ -51,6 +60,10 @@ class ExpressAppStatic{
 
     public staticBeforeRouter = ()=>{
         return this.beforeRouter;
+    }
+
+    public setClientScripts = (scripts: string)=>{
+        this.scripts = scripts;
     }
 }
 

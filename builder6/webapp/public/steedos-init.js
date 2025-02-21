@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-02-26 15:22:12
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2025-02-19 15:37:40
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2025-02-21 16:40:50
  * @Description:
  */
 try {
@@ -161,21 +161,6 @@ try {
     return apps;
   };
 
-  window.Steedos.getFirstApp = ()=>{
-    const apps = window.getAppsSync();
-    return _.first(apps);
-  }
-
-  window.Creator.getObjectRecord = (objectName, recordId, select_fields, expand)=>{
-    return Creator.odata.get(objectName, recordId, select_fields, expand)
-  }
-
-  window.Creator.isSpaceAdmin = ()=>{
-    return Builder.settings.context.user.is_space_admin;
-  }
-
-
-  Creator.steedosInit.set(true);
 } catch (error) {
   console.error(error);
 }

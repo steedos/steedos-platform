@@ -1,7 +1,7 @@
 declare const Steedos;
 declare const lodash; 
 
-export const Object = {
+export const BaseObject = {
     base: {
         actions: {
             standard_query: {

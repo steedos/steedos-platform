@@ -980,7 +980,7 @@ export class Mongo implements DatabaseInterface {
     const spaces = await this.db
       .collection("spaces")
       .find({ _id: { $in: spaceIds } })
-      .project({ name: 1 })
+      .project({ name: 1, favicon: 1, account_logo: 1,  avatar_square: 1, avatar: 1, background: 1, enable_register: 1 })
       .toArray();
 
     return map(spaces, function(space) {

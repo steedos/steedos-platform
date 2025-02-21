@@ -72,6 +72,9 @@ export function getMySpaces(): ActionFunc {
       onRequest: SpaceTypes.MY_SPACES_REQUEST,
       onSuccess: [SpaceTypes.RECEIVED_SPACES_LIST, SpaceTypes.MY_SPACES_SUCCESS],
       onFailure: SpaceTypes.MY_SPACES_FAILURE,
+      onSuccessFunction: (data)=>{
+        Steedos.__hotRecords.spaces = data;
+      }
   });
 }
 
