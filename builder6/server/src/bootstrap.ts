@@ -26,8 +26,9 @@ export async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     bufferLogs: true,
   });
-
-  app.useLogger(app.get(Logger));
+  const logger = app.get(Logger);
+  global.logger = logger;
+  app.useLogger(logger);
   app.useGlobalFilters(new AllExceptionsFilter());
   app.useWebSocketAdapter(new WsAdapter(app));
   app.enableCors({
@@ -124,4 +125,6 @@ export async function bootstrap() {
   }
 
   await app.listen(process.env.B6_PORT ?? 5100);
+
+  logger.log(`🚀 Application is running on: ${process.env.ROOT_URL}`);
 }

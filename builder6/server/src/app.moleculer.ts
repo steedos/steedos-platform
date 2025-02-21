@@ -22,7 +22,7 @@ export class AppMoleculer extends Service {
   }
 
   serviceCreated() {
-    global.logger = new Logger(AppMoleculer.name); 
+
   }
 
   async serviceStarted() {
