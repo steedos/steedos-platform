@@ -1,5 +1,4 @@
 
-
 import { Client4 } from "../client";
 import { GeneralTypes } from "../action_types";
 import {bindClientFunc, forceLogoutIfNecessary, FormattedError} from './helpers';
@@ -18,6 +17,10 @@ export function loadSettings(): ActionFunc {
         Client4.setEnableLogging(data.EnableDeveloper === 'true');
         Client4.setDiagnosticId(data.DiagnosticId);
 
+        Steedos.settings = {
+            public: data.public
+        };
+        
         dispatch({
             type: GeneralTypes.RECEIVED_SETTINGS,
             data: data,
