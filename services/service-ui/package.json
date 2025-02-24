@@ -1,6 +1,6 @@
 {
     "name": "@steedos/service-ui",
-    "version": "2.7.17-beta.3",
+    "version": "2.7.17-beta.4",
     "main": "package.service.js",
     "keywords": [
         "steedos"
@@ -11,9 +11,9 @@
     "description": "steedos package",
     "repository": {},
     "dependencies": {
-        "@steedos/core": "2.7.17-beta.3",
-        "@steedos/i18n": "2.7.17-beta.3",
-        "@steedos/objectql": "2.7.17-beta.3",
+        "@steedos/core": "2.7.17-beta.4",
+        "@steedos/i18n": "2.7.17-beta.4",
+        "@steedos/objectql": "2.7.17-beta.4",
         "express": "4.18.1"
     },
     "license": "MIT",
@@ -21,5 +21,5 @@
     "publishConfig": {
         "access": "public"
     },
-    "gitHead": "be550ca88059c98832a6be241e0573582d8ce587"
+    "gitHead": "b1e69432d46c3305ea0ae713c3fe12e13c74a6cf"
 }
