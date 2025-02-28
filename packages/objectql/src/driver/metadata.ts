@@ -228,9 +228,7 @@ export class MetadataDriver implements SteedosDriver {
     createTables?(objects: Dictionary<SteedosObjectType>) {
         throw new Error("Method not implemented.");
     }
-    init(objects: Dictionary<SteedosObjectType>) {
-        throw new Error("Method not implemented.");
-    }
+    
     _makeNewID?(tableName?: string) {
         throw new Error("Method not implemented.");
     }
