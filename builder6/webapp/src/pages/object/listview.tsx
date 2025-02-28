@@ -10,7 +10,7 @@ import { Builder } from "@builder6/react";
 import { useParams } from 'react-router-dom';
 
 export const ObjectListView = () => {
-  const { appId, objectName } = useParams();
+  const { appId, objectName, listviewId: listName } = useParams();
   console.log(`ObjectListView`, appId, objectName)
   return (
     <AmisRender schema = {{
@@ -33,11 +33,13 @@ export const ObjectListView = () => {
           app: appId,
           appId: appId,
           app_id: appId,
+          listName: listName,
           ...Builder.settings.context,
         },
         app: appId,
         appId: appId,
         app_id: appId,
+        listName: listName,
         objectName: objectName,
     }} env = {{}} />
   );
