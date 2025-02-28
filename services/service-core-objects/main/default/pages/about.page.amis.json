@@ -14,7 +14,7 @@
                     "type": "input-text",
                     "label": {
                         "type": "tpl",
-                        "tpl": "<%= ['版本','Version','バージョン'][['zh-cn','en-us','ja'].indexOf(data.context.user.locale  || 'zh-cn')] %>"
+                        "tpl": "<%= ['版本','Version','バージョン'][['zh-cn','en-us','ja'].indexOf(data.global.user.locale  || 'zh-cn')] %>"
                     },
                     "name": "banben",
                     "id": "u:c7ec8dbb7f07",
@@ -25,7 +25,7 @@
                 {
                     "label": {
                         "type": "tpl",
-                        "tpl": "<%= ['资产包','Asset package','資産パッケージ'][['zh-cn','en-us','ja'].indexOf(data.context.user.locale  || 'zh-cn')] %>"
+                        "tpl": "<%= ['资产包','Asset package','資産パッケージ'][['zh-cn','en-us','ja'].indexOf(data.global.user.locale  || 'zh-cn')] %>"
                     },
                     "type": "input-text",
                     "name": "zichan",
@@ -38,7 +38,7 @@
                     "type": "input-text",
                     "label": {
                         "type": "tpl",
-                        "tpl": "<%= ['Amis版本','Amis Version','Amis バージョン'][['zh-cn','en-us','ja'].indexOf(data.context.user.locale  || 'zh-cn')] %>"
+                        "tpl": "<%= ['Amis版本','Amis Version','Amis バージョン'][['zh-cn','en-us','ja'].indexOf(data.global.user.locale  || 'zh-cn')] %>"
                     },
                     "name": "Amis",
                     "id": "u:8a4d0a674931",
@@ -49,7 +49,7 @@
                 {
                     "label": {
                         "type": "tpl",
-                        "tpl": "<%= ['CDN服务器','CDN Server','CDN サーバー'][['zh-cn','en-us','ja'].indexOf(data.context.user.locale  || 'zh-cn')] %>"
+                        "tpl": "<%= ['CDN服务器','CDN Server','CDN サーバー'][['zh-cn','en-us','ja'].indexOf(data.global.user.locale  || 'zh-cn')] %>"
                     },
                     "name": "CDN",
                     "type": "input-text",
@@ -71,7 +71,7 @@
                     "type": "button-toolbar",
                     "label": {
                         "type": "tpl",
-                        "tpl": "<%= ['技术支持','Technical Support','テクニカルサポート'][['zh-cn','en-us','ja'].indexOf(data.context.user.locale  || 'zh-cn')] %>"
+                        "tpl": "<%= ['技术支持','Technical Support','テクニカルサポート'][['zh-cn','en-us','ja'].indexOf(data.global.user.locale  || 'zh-cn')] %>"
                     },
                     "className": "mb-0 border-b py-1 ml-2",
                     "buttons": [
@@ -93,7 +93,7 @@
                 {
                     "label": {
                         "type": "tpl",
-                        "tpl": "<%= ['客服热线','Customer Service Hotline','カスタマーサービスホットライン'][['zh-cn','en-us','ja'].indexOf(data.context.user.locale  || 'zh-cn')] %>"
+                        "tpl": "<%= ['客服热线','Customer Service Hotline','カスタマーサービスホットライン'][['zh-cn','en-us','ja'].indexOf(data.global.user.locale  || 'zh-cn')] %>"
                     },
                     "name": "rexian",
                     "type": "input-text",
@@ -106,7 +106,7 @@
                     "type": "button-toolbar",
                     "label": {
                         "type": "tpl",
-                        "tpl": "<%= ['客服邮箱','Customer Service Email','カスタマーサービスのメールアドレス'][['zh-cn','en-us','ja'].indexOf(data.context.user.locale  || 'zh-cn')] %>"
+                        "tpl": "<%= ['客服邮箱','Customer Service Email','カスタマーサービスのメールアドレス'][['zh-cn','en-us','ja'].indexOf(data.global.user.locale  || 'zh-cn')] %>"
                     },
                     "name": "youxiang",
                     "id": "u:a847a1dbb74e",
@@ -125,7 +125,7 @@
                     "type": "button-toolbar",
                     "label": {
                         "type": "tpl",
-                        "tpl": "<%= ['隐私政策','Privacy Policy','プライバシーポリシー'][['zh-cn','en-us','ja'].indexOf(data.context.user.locale  || 'zh-cn')] %>"
+                        "tpl": "<%= ['隐私政策','Privacy Policy','プライバシーポリシー'][['zh-cn','en-us','ja'].indexOf(data.global.user.locale  || 'zh-cn')] %>"
                     },
                     "className": "mb-0 border-b py-1 ml-2",
                     "buttons": [
