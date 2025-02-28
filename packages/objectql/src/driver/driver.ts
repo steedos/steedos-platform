@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2021-06-03 15:11:52
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-02-27 14:47:31
+ * @LastEditTime: 2025-02-28 11:59:19
  * @Description: 
  */
 import { Dictionary } from '@salesforce/ts-types';
@@ -97,7 +97,7 @@ export interface SteedosDriver {
     registerEntities?(objects: Dictionary<SteedosObjectType>): any;
     dropTables?(): any;
     createTables?(objects: Dictionary<SteedosObjectType>): any;
-    init(objects: Dictionary<SteedosObjectType>): any;
+    init?(objects: Dictionary<SteedosObjectType>): any;
     _makeNewID?(tableName?: string): any;
     encryptValue?(value: any): any;
     decryptValue?(value: any): any;

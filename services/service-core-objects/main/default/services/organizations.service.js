@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 16:53:23
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-01-17 16:34:36
+ * @LastEditTime: 2025-02-28 11:51:23
  * @Description: 
  */
 "use strict";
@@ -297,7 +297,6 @@ module.exports = {
          * @returns 
          */
         async getOrganizationsRootNode(ctx) {
-            console.log('getOrganizationsRootNode 1')
             const orgObj = getObject('organizations');
 
             let userFilters = null;
@@ -305,10 +304,8 @@ module.exports = {
             if(ctx.params?.filters && lodash.isString(ctx.params.filters)){
                 userFilters = JSON.parse(ctx.params.filters)
             }
-            console.log('getOrganizationsRootNode 2')
             const orgs = await orgObj.find({filters: userFilters, fields: ['_id','parent', 'children']})
             const rootIds = getTreeRootIds(orgs)
-            console.log('getOrganizationsRootNode 3')
             let queryFields = ctx.params?.fields || `
                 _id,
                 name,
@@ -320,7 +317,6 @@ module.exports = {
                 children
             `;
             const filters = ["_id", "in", rootIds];
-            console.log('api.graphql 1', queryFields)
             let graphqlResult = await this.broker.call('api.graphql', {
               query: `
                 query {
@@ -335,7 +331,6 @@ module.exports = {
                 }
               }
             )
-            console.log('api.graphql 2', queryFields)
             let rootOrgs = graphqlResult.data.rows;
             return {
                 data: {

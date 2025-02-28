@@ -89,6 +89,11 @@ export class SteedosDataSourceType implements Dictionary {
     private _schema: SteedosSchema;
     private _objects: Dictionary<SteedosObjectType> = {};
     private _cacheObjects?: Array<SteedosObjectType> = [];
+
+
+    private initializing = false;
+    private initPromise = null;
+
     public get cacheObjects(): any {
         return this._cacheObjects;
     }
@@ -512,13 +517,27 @@ export class SteedosDataSourceType implements Dictionary {
     }
 
     async init() {
-        // await this.flushCacheObjects();
-        // await this.initObjects();
-        this.initObjectPermissions();
-        if (!this.service) {
-            const broker = this._schema.metadataBroker
-            this.service = await createDataSourceService(broker, this)
+        if(this.initializing){
+            return this.initPromise;
         }
+        this.initializing = true;
+        this.initPromise = (async () => {
+            try {
+                logger.log(`datasource.init started: ${this.name}`);
+                this.initObjectPermissions();
+                if (!this.service) {
+                    const broker = this._schema.metadataBroker;
+                    this.service = await createDataSourceService(broker, this);
+                }
+                logger.log(`datasource.init completed: ${this.name}`);
+            } catch (error) {
+                console.error('Initialization failed for datasource:', this.name, error);
+                this.initializing = false;
+                this.initPromise = null;
+                throw error;
+            }
+        })();
+        return this.initPromise;
     }
 
     /**

@@ -40,10 +40,6 @@ export class SteedosMongoDriver implements SteedosDriver {
         return `mongodb://${credentialsUrlPart}${this._config.host || "127.0.0.1"}:${this._config.port || "27017"}/${this._config.database}`;
     }
 
-    async init() {
-
-    }
-
     getSupportedColumnTypes() {
         return [
             SteedosFieldDBType.varchar,

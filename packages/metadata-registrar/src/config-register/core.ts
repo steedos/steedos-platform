@@ -318,9 +318,6 @@ function getDataSource(datasourceApiName){
 export const loadDbMetadatas = async (datasourceApiName: string) => {
     if(datasourceApiName === 'default' || datasourceApiName === 'meteor'){
         const datasource = getDataSource(datasourceApiName)
-        if(datasource && datasourceApiName === 'default'){
-            await datasource.initTypeORM();
-        }
         if(datasource){
             await preloadDBApps(datasource);
             await preloadDBTabs(datasource);
