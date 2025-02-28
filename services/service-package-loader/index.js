@@ -306,7 +306,8 @@ module.exports = {
             await this.loadPackagePublicFiles(_path);
             this.started = true;
             const endTime = moment();
-            logger.log(`service ${this.name} started: ${endTime.diff(startTime, 'seconds', true)}s`);
+            const serviceName = this.name.length < 50 ? `${_.padEnd(this.name, 50, ' ')}` : this.name
+            logger.log(`service ${serviceName} started: ${endTime.diff(startTime, 'seconds', true)}s`);
             if(this.afterStart){
                 try {
                     await this.afterStart();
