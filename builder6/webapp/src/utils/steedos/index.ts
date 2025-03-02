@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2025-02-17 09:16:48
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-02-21 17:48:58
+ * @LastEditTime: 2025-03-02 16:07:30
  * @Description: 
  */
 
@@ -16,10 +16,25 @@ import { ProcessManager } from './process';
 export const Steedos = {
     __hotRecords: {},
     absoluteUrl: (url: string)=>{
-        return (window as any).Builder.settings.context.rootUrl + url
+        return ((window as any).Builder?.settings?.context?.rootUrl || '') + url
     },
     isSpaceAdmin: ()=>{
-        return (window as any).Builder.settings.context?.user?.is_space_admin
+        return (window as any).Builder?.settings?.context?.user?.is_space_admin
+    },
+    logout: (redirect?)=>{
+        debugger;
+        localStorage.removeItem('steedos:spaceId');
+        localStorage.removeItem('steedos:token');
+        localStorage.removeItem('steedos:userId');
+        localStorage.removeItem('steedos:was_logged_in');
+        localStorage.removeItem('Meteor.loginToken');
+        localStorage.removeItem('Meteor.Meteor.loginTokenExpires');
+        localStorage.removeItem('Meteor.Meteor.userId');
+        sessionStorage.clear();
+        if(redirect)
+            window.location.href = Steedos.absoluteUrl("/logout?redirect_uri="+ redirect);
+        else
+            window.location.href = Steedos.absoluteUrl("/logout");
     },
     Account,
     Space,
@@ -27,4 +42,6 @@ export const Steedos = {
     User,
     Workflow,
     ProcessManager
-}
+};
+
+(window as any).signOut = Steedos.logout
