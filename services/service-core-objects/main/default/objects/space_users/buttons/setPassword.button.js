@@ -1,14 +1,9 @@
 module.exports = {
     setPassword: function (object_name, record_id) {
-        var organization = Session.get("organization");
         var isAdmin = Steedos.isSpaceAdmin();
-        if (!isAdmin) {
-            isAdmin = SpaceUsersCore.isCompanyAdmin(record_id, organization);
-        }
         const username = this.record.username;
         var userSession = Steedos.User.get();
-        var currentSpaceUser = db.space_users.findOne({ user: Builder.settings.context.userId });
-        if (!isAdmin || (currentSpaceUser._id == this.record._id)) {
+        if (!isAdmin || (userSession.spaceUserId == this.record._id)) {
             var isPasswordEmpty = false;
             var result = Steedos.authRequest("/service/api/space_users/is_password_empty", {
                 type: 'post', async: false, data: JSON.stringify({

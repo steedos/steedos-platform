@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-12 11:32:06
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2025-02-19 15:35:47
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2025-03-02 17:30:51
  * @Description: 
  */
 module.exports = {
@@ -59,7 +59,6 @@ module.exports = {
         //以上为权限判断
 
         if (record) {
-            var userSession = Steedos.User.get();
             var result = Steedos.authRequest("/service/api/space_users/is_lockout", {
                 type: 'post', async: false, data: JSON.stringify({
                     suId: record_id
