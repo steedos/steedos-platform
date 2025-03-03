@@ -5,7 +5,7 @@ amis_schema: |-
       "body": [
           {
               "type": "button",
-              "label": "${'apps.amis_new.new' | t}22222",
+              "label": "${'apps.amis_new.new' | t}",
               "id": "u:standard_new",
               "onEvent": {
                   "click": {
