@@ -1,12 +1,11 @@
-import has from 'lodash.has';
-import isEmpty from 'lodash.isempty';
-import { oplogV2V1Converter } from "./oplog_v2_converter";
-import { check, Match } from 'meteor/check';
-import { CursorDescription } from './cursor_description';
-import { forEachTrigger, listenAll } from './mongo_driver';
-import { Cursor } from './cursor';
-import LocalCollection from 'meteor/minimongo/local_collection';
-import { idForOp } from './oplog_tailing';
+import {has,isEmpty} from 'lodash-es';
+import { oplogV2V1Converter } from "./oplog_v2_converter.js";
+// import { check, Match } from 'meteor/check';
+import { CursorDescription } from './cursor_description.js';
+import { forEachTrigger, listenAll } from './mongo_driver.js';
+import { Cursor } from './cursor.js';
+import LocalCollection from './minimongo/local_collection.js';
+import { idForOp } from './oplog_tailing.js';
 
 var PHASE = {
   QUERYING: "QUERYING",
@@ -99,9 +98,9 @@ export const OplogObserveDriver = function (options) {
   self._stopped = false;
   self._stopHandles = [];
   self._addStopHandles = function (newStopHandles) {
-    const expectedPattern = Match.ObjectIncluding({ stop: Function });
+    // const expectedPattern = Match.ObjectIncluding({ stop: Function });
     // Single item or array
-    check(newStopHandles, Match.OneOf([expectedPattern], expectedPattern));
+    // check(newStopHandles, Match.OneOf([expectedPattern], expectedPattern));
     self._stopHandles.push(newStopHandles);
   }
 

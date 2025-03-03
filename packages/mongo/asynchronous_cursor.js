@@ -1,5 +1,5 @@
-import LocalCollection from 'meteor/minimongo/local_collection';
-import { replaceMongoAtomWithMeteor, replaceTypes } from './mongo_common';
+import LocalCollection from './minimongo/local_collection.js';
+import { replaceMongoAtomWithMeteor, replaceTypes } from './mongo_common.js';
 
 /**
  * This is just a light wrapper for the cursor. The goal here is to ensure compatibility even if

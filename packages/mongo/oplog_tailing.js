@@ -1,9 +1,14 @@
-import isEmpty from 'lodash.isempty';
-import { Meteor } from 'meteor/meteor';
-import { CursorDescription } from './cursor_description';
-import { MongoConnection } from './mongo_connection';
+import { isEmpty } from 'lodash-es';
+import { CursorDescription } from './cursor_description.js';
+import { MongoConnection } from './mongo_connection.js';
 
-import { NpmModuleMongodb } from "meteor/npm-mongo";
+// import { NpmModuleMongodb } from "meteor/npm-mongo";
+
+import NpmModuleMongodb from "mongodb";
+import mongodbUri from 'mongodb-uri';
+
+// const denque = require('denque');
+
 const { Long } = NpmModuleMongodb;
 
 export const OPLOG_COLLECTION = 'oplog.rs';
@@ -11,50 +16,34 @@ export const OPLOG_COLLECTION = 'oplog.rs';
 let TOO_FAR_BEHIND = +(process.env.METEOR_OPLOG_TOO_FAR_BEHIND || 2000);
 const TAIL_TIMEOUT = +(process.env.METEOR_OPLOG_TAIL_TIMEOUT || 30000);
 
-export interface OplogEntry {
-  op: string;
-  o: any;
-  o2?: any;
-  ts: any;
-  ns: string;
-}
+// export interface OplogEntry {
+//   op: string;
+//   o: any;
+//   o2?: any;
+//   ts: any;
+//   ns: string;
+// }
 
-export interface CatchingUpResolver {
-  ts: any;
-  resolver: () => void;
-}
+// export interface CatchingUpResolver {
+//   ts: any;
+//   resolver: () => void;
+// }
 
-export interface OplogTrigger {
-  dropCollection: boolean;
-  dropDatabase: boolean;
-  op: OplogEntry;
-  collection?: string;
-  id?: string | null;
-}
+// export interface OplogTrigger {
+//   dropCollection: boolean;
+//   dropDatabase: boolean;
+//   op: OplogEntry;
+//   collection?: string;
+//   id?: string | null;
+// }
+
+const _escapeRegExp = function (string) {
+  return String(string).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+};
 
 export class OplogHandle {
-  private _oplogUrl: string;
-  public _dbName: string;
-  private _oplogLastEntryConnection: MongoConnection | null;
-  private _oplogTailConnection: MongoConnection | null;
-  private _oplogOptions: { excludeCollections?: string[]; includeCollections?: string[] } | null;
-  private _stopped: boolean;
-  private _tailHandle: any;
-  private _readyPromiseResolver: (() => void) | null;
-  private _readyPromise: Promise<void>;
-  public _crossbar: any;
-  private _baseOplogSelector: any;
-  private _catchingUpResolvers: CatchingUpResolver[];
-  private _lastProcessedTS: any;
-  private _onSkippedEntriesHook: any;
-  private _startTrailingPromise: Promise<void>;
-  private _resolveTimeout: any;
 
-  private _entryQueue = new Meteor._DoubleEndedQueue();
-  private _workerActive = false;
-  private _workerPromise: Promise<void> | null = null;
-
-  constructor(oplogUrl: string, dbName: string) {
+  constructor(oplogUrl, dbName) {
     this._oplogUrl = oplogUrl;
     this._dbName = dbName;
 
@@ -66,15 +55,16 @@ export class OplogHandle {
     this._tailHandle = null;
     this._readyPromiseResolver = null;
     this._readyPromise = new Promise(r => this._readyPromiseResolver = r);
-    this._crossbar = new DDPServer._Crossbar({
-      factPackage: "mongo-livedata", factName: "oplog-watchers"
-    });
+    // this._crossbar = new DDPServer._Crossbar({
+    //   factPackage: "mongo-livedata", factName: "oplog-watchers"
+    // });
+    
     this._baseOplogSelector = {
       ns: new RegExp("^(?:" + [
         // @ts-ignore
-        Meteor._escapeRegExp(this._dbName + "."),
+        _escapeRegExp(this._dbName + "."),
         // @ts-ignore
-        Meteor._escapeRegExp("admin.$cmd"),
+        _escapeRegExp("admin.$cmd"),
       ].join("|") + ")"),
 
       $or: [
@@ -88,14 +78,14 @@ export class OplogHandle {
     this._catchingUpResolvers = [];
     this._lastProcessedTS = null;
 
-    this._onSkippedEntriesHook = new Hook({
-      debugPrintExceptions: "onSkippedEntries callback"
-    });
+    // this._onSkippedEntriesHook = new Hook({
+    //   debugPrintExceptions: "onSkippedEntries callback"
+    // });
 
     this._startTrailingPromise = this._startTailing();
   }
 
-  async stop(): Promise<void> {
+  async stop() {
     if (this._stopped) return;
     this._stopped = true;
     if (this._tailHandle) {
@@ -103,7 +93,7 @@ export class OplogHandle {
     }
   }
 
-  async _onOplogEntry(trigger: OplogTrigger, callback: Function): Promise<{ stop: () => Promise<void> }> {
+  async _onOplogEntry(trigger, callback) {
     if (this._stopped) {
       throw new Error("Called onOplogEntry on stopped handle!");
     }
@@ -117,15 +107,9 @@ export class OplogHandle {
      *
      * @todo Check after we simplify the `bindEnvironment` implementation if we can remove the second wrap.
      */
-    callback = Meteor.bindEnvironment(
-      function (notification: any) {
-        originalCallback(notification);
-      },
-      // @ts-ignore
-      function (err) {
-        Meteor._debug("Error in oplog callback", err);
-      }
-    );
+    callback = function (notification) {
+      originalCallback(notification);
+    };
 
     const listenHandle = this._crossbar.listen(trigger, callback);
     return {
@@ -135,25 +119,25 @@ export class OplogHandle {
     };
   }
 
-  onOplogEntry(trigger: OplogTrigger, callback: Function): Promise<{ stop: () => Promise<void> }> {
+  onOplogEntry(trigger, callback) {
     return this._onOplogEntry(trigger, callback);
   }
 
-  onSkippedEntries(callback: Function): { stop: () => void } {
+  onSkippedEntries(callback) {
     if (this._stopped) {
       throw new Error("Called onSkippedEntries on stopped handle!");
     }
     return this._onSkippedEntriesHook.register(callback);
   }
 
-  async _waitUntilCaughtUp(): Promise<void> {
+  async _waitUntilCaughtUp() {
     if (this._stopped) {
       throw new Error("Called waitUntilCaughtUp on stopped handle!");
     }
 
     await this._readyPromise;
 
-    let lastEntry: OplogEntry | null = null;
+    let lastEntry = null;
 
     while (!this._stopped) {
       try {
@@ -164,9 +148,9 @@ export class OplogHandle {
         );
         break;
       } catch (e) {
-        Meteor._debug("Got exception while reading last entry", e);
-        // @ts-ignore
-        await Meteor.sleep(100);
+        // Meteor._debug("Got exception while reading last entry", e);
+        // // @ts-ignore
+        // await Meteor.sleep(100);
       }
     }
 
@@ -199,19 +183,19 @@ export class OplogHandle {
       console.error("Meteor: oplog catching up took too long", { ts });
     }, 10000);
 
-    this._catchingUpResolvers.splice(insertAfter, 0, { ts, resolver: promiseResolver! });
+    this._catchingUpResolvers.splice(insertAfter, 0, { ts, resolver: promiseResolver });
 
     await promiseToAwait;
 
     clearTimeout(this._resolveTimeout);
   }
 
-  async waitUntilCaughtUp(): Promise<void> {
+  async waitUntilCaughtUp() {
     return this._waitUntilCaughtUp();
   }
 
-  async _startTailing(): Promise<void> {
-    const mongodbUri = require('mongodb-uri');
+  async _startTailing() {
+    // const mongodbUri = require('mongodb-uri');
     if (mongodbUri.parse(this._oplogUrl).database !== 'local') {
       throw new Error("$MONGO_OPLOG_URL must be set to the 'local' database of a Mongo replica set");
     }
@@ -224,7 +208,7 @@ export class OplogHandle {
     );
 
     try {
-      const isMasterDoc = await this._oplogLastEntryConnection!.db
+      const isMasterDoc = await this._oplogLastEntryConnection.db
         .admin()
         .command({ ismaster: 1 });
 
@@ -238,14 +222,14 @@ export class OplogHandle {
         { sort: { $natural: -1 }, projection: { ts: 1 } }
       );
 
-      let oplogSelector: any = { ...this._baseOplogSelector };
+      let oplogSelector = { ...this._baseOplogSelector };
       if (lastOplogEntry) {
         oplogSelector.ts = { $gt: lastOplogEntry.ts };
         this._lastProcessedTS = lastOplogEntry.ts;
       }
 
-      const includeCollections = Steedos.settings?.packages?.mongo?.oplogIncludeCollections;
-      const excludeCollections = Steedos.settings?.packages?.mongo?.oplogExcludeCollections;
+      const includeCollections = [];
+      const excludeCollections = [];
 
       if (includeCollections?.length && excludeCollections?.length) {
         throw new Error("Can't use both mongo oplog settings oplogIncludeCollections and oplogExcludeCollections at the same time.");
@@ -254,7 +238,7 @@ export class OplogHandle {
       if (excludeCollections?.length) {
         oplogSelector.ns = {
           $regex: oplogSelector.ns,
-          $nin: excludeCollections.map((collName: string) => `${this._dbName}.${collName}`)
+          $nin: excludeCollections.map((collName) => `${this._dbName}.${collName}`)
         };
         this._oplogOptions = { excludeCollections };
       } else if (includeCollections?.length) {
@@ -263,7 +247,7 @@ export class OplogHandle {
             {
               $or: [
                 { ns: /^admin\.\$cmd/ },
-                { ns: { $in: includeCollections.map((collName: string) => `${this._dbName}.${collName}`) } }
+                { ns: { $in: includeCollections.map((collName) => `${this._dbName}.${collName}`) } }
               ]
             },
             { $or: oplogSelector.$or },
@@ -281,21 +265,21 @@ export class OplogHandle {
 
       this._tailHandle = this._oplogTailConnection.tail(
         cursorDescription,
-        (doc: any) => {
+        (doc) => {
           this._entryQueue.push(doc);
           this._maybeStartWorker();
         },
         TAIL_TIMEOUT
       );
 
-      this._readyPromiseResolver!();
+      this._readyPromiseResolver();
     } catch (error) {
       console.error('Error in _startTailing:', error);
       throw error;
     }
   }
 
-  private _maybeStartWorker(): void {
+  _maybeStartWorker() {
     if (this._workerPromise) return;
     this._workerActive = true;
 
@@ -309,7 +293,7 @@ export class OplogHandle {
             const lastEntry = this._entryQueue.pop();
             this._entryQueue.clear();
 
-            this._onSkippedEntriesHook.each((callback: Function) => {
+            this._onSkippedEntriesHook.each((callback) => {
               callback();
               return true;
             });
@@ -341,24 +325,24 @@ export class OplogHandle {
     })();
   }
 
-  _setLastProcessedTS(ts: any): void {
+  _setLastProcessedTS(ts) {
     this._lastProcessedTS = ts;
     while (!isEmpty(this._catchingUpResolvers) && this._catchingUpResolvers[0].ts.lessThanOrEqual(this._lastProcessedTS)) {
-      const sequencer = this._catchingUpResolvers.shift()!;
+      const sequencer = this._catchingUpResolvers.shift();
       sequencer.resolver();
     }
   }
 
-  _defineTooFarBehind(value: number): void {
+  _defineTooFarBehind(value) {
     TOO_FAR_BEHIND = value;
   }
 
-  _resetTooFarBehind(): void {
+  _resetTooFarBehind() {
     TOO_FAR_BEHIND = +(process.env.METEOR_OPLOG_TOO_FAR_BEHIND || 2000);
   }
 }
 
-export function idForOp(op: OplogEntry): string {
+export function idForOp(op) {
   if (op.op === 'd' || op.op === 'i') {
     return op.o._id;
   } else if (op.op === 'u') {
@@ -370,7 +354,7 @@ export function idForOp(op: OplogEntry): string {
   }
 }
 
-async function handleDoc(handle: OplogHandle, doc: OplogEntry): Promise<void> {
+async function handleDoc(handle, doc) {
   if (doc.ns === "admin.$cmd") {
     if (doc.o.applyOps) {
       // This was a successful transaction, so we need to apply the
@@ -389,7 +373,7 @@ async function handleDoc(handle: OplogHandle, doc: OplogEntry): Promise<void> {
     throw new Error("Unknown command " + JSON.stringify(doc));
   }
 
-  const trigger: OplogTrigger = {
+  const trigger = {
     dropCollection: false,
     dropDatabase: false,
     op: doc,

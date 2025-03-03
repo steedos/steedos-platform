@@ -21,9 +21,9 @@ export const IndexMethods = {
     if (self._collection.createIndexAsync) {
       await self._collection.createIndexAsync(index, options);
     } else {
-      import { Log } from 'meteor/logging';
+      // import { Log } from 'meteor/logging';
 
-      Log.debug(`ensureIndexAsync has been deprecated, please use the new 'createIndexAsync' instead${ options?.name ? `, index name: ${ options.name }` : `, index: ${ JSON.stringify(index) }` }`)
+      // Log.debug(`ensureIndexAsync has been deprecated, please use the new 'createIndexAsync' instead${ options?.name ? `, index name: ${ options.name }` : `, index: ${ JSON.stringify(index) }` }`)
       await self._collection.ensureIndexAsync(index, options);
     }
   },
@@ -54,9 +54,9 @@ export const IndexMethods = {
         ) &&
         Steedos.settings?.packages?.mongo?.reCreateIndexOnOptionMismatch
       ) {
-        import { Log } from 'meteor/logging';
+        // import { Log } from 'meteor/logging';
 
-        Log.info(`Re-creating index ${ index } for ${ self._name } due to options mismatch.`);
+        // Log.info(`Re-creating index ${ index } for ${ self._name } due to options mismatch.`);
         await self._collection.dropIndexAsync(index);
         await self._collection.createIndexAsync(index, options);
       } else {

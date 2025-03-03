@@ -1,16 +1,19 @@
-import { Meteor } from 'meteor/meteor';
-import { CLIENT_ONLY_METHODS, getAsyncMethodName } from 'meteor/minimongo/constants';
+// import { Meteor } from 'meteor/meteor';
+import { CLIENT_ONLY_METHODS, getAsyncMethodName } from './minimongo/constants.js';
 import path from 'path';
-import { AsynchronousCursor } from './asynchronous_cursor';
-import { Cursor } from './cursor';
-import { CursorDescription } from './cursor_description';
-import { DocFetcher } from './doc_fetcher';
-import { MongoDB, replaceMeteorAtomWithMongo, replaceTypes, transformResult } from './mongo_common';
-import { ObserveHandle } from './observe_handle';
-import { ObserveMultiplexer } from './observe_multiplex';
-import { OplogObserveDriver } from './oplog_observe_driver';
-import { OPLOG_COLLECTION, OplogHandle } from './oplog_tailing';
-import { PollingObserveDriver } from './polling_observe_driver';
+import { AsynchronousCursor } from './asynchronous_cursor.js';
+import { Cursor } from './cursor.js';
+import { CursorDescription } from './cursor_description.js';
+import { DocFetcher } from './doc_fetcher.js';
+import { MongoDB, replaceMeteorAtomWithMongo, replaceTypes, transformResult } from './mongo_common.js';
+import { ObserveHandle } from './observe_handle.js';
+import { ObserveMultiplexer } from './observe_multiplex.js';
+import { OplogObserveDriver } from './oplog_observe_driver.js';
+import { OPLOG_COLLECTION, OplogHandle } from './oplog_tailing.js';
+import { PollingObserveDriver } from './polling_observe_driver.js';
+import { Hook } from './callback-hook/hook.js';
+import Mongo from './collection/collection.js';
+import  EJSON  from 'ejson';
 
 const FILE_ASSET_SUFFIX = 'Asset';
 const ASSETS_FOLDER = 'assets';
@@ -62,14 +65,14 @@ export const MongoConnection = function (url, options) {
   self._docFetcher = null;
 
   mongoOptions.driverInfo = {
-    name: 'Meteor',
-    version: Meteor.release
+    // name: 'Meteor',
+    // version: Meteor.release
   }
 
   self.client = new MongoDB.MongoClient(url, mongoOptions);
   self.db = self.client.db();
 
-  self.client.on('serverDescriptionChanged', Meteor.bindEnvironment(event => {
+  self.client.on('serverDescriptionChanged', event => {
     // When the connection is no longer against the primary node, execute all
     // failover hooks. This is important for the driver as it has to re-pool the
     // query when it happens.
@@ -82,9 +85,9 @@ export const MongoConnection = function (url, options) {
         return true;
       });
     }
-  }));
+  });
 
-  if (options.oplogUrl && ! Package['disable-oplog']) {
+  if (options.oplogUrl) {
     self._oplogHandle = new OplogHandle(options.oplogUrl, self.db.databaseName);
     self._docFetcher = new DocFetcher(self);
   }

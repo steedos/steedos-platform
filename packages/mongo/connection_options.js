@@ -4,7 +4,8 @@
  * @locus Server
  * @param {Object} options User specified Mongo connection options
  */
+const Mongo = require('./collection/collection.js');
 Mongo.setConnectionOptions = function setConnectionOptions (options) {
-  check(options, Object);
+  // check(options, Object);
   Mongo._connectionOptions = options;
 };

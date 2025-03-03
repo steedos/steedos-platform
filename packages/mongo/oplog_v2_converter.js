@@ -37,33 +37,34 @@
  * (all fields are optional)
  */
 
-import { EJSON } from 'meteor/ejson';
+import  EJSON  from 'ejson';
+import Mongo from './collection/collection.js';
 
-interface OplogEntry {
-  $v: number;
-  diff?: OplogDiff;
-  $set?: Record<string, any>;
-  $unset?: Record<string, true>;
-}
+// interface OplogEntry {
+//   $v: number;
+//   diff?: OplogDiff;
+//   $set?: Record<string, any>;
+//   $unset?: Record<string, true>;
+// }
 
-interface OplogDiff {
-  i?: Record<string, any>;
-  u?: Record<string, any>;
-  d?: Record<string, boolean>;
-  [key: `s${string}`]: ArrayOperator | Record<string, any>;
-}
+// interface OplogDiff {
+//   i?: Record<string, any>;
+//   u?: Record<string, any>;
+//   d?: Record<string, boolean>;
+//   [key: `s${string}`]: ArrayOperator | Record<string, any>;
+// }
 
-interface ArrayOperator {
-  a: true;
-  [key: `u${number}`]: any;
-}
+// interface ArrayOperator {
+//   a: true;
+//   [key: `u${number}`]: any;
+// }
 
 const arrayOperatorKeyRegex = /^(a|[su]\d+)$/;
 
 /**
  * Checks if a field is an array operator key of form 'a' or 's1' or 'u1' etc
  */
-function isArrayOperatorKey(field: string): boolean {
+function isArrayOperatorKey(field) {
   return arrayOperatorKeyRegex.test(field);
 }
 
@@ -71,12 +72,12 @@ function isArrayOperatorKey(field: string): boolean {
  * Type guard to check if an operator is a valid array operator.
  * Array operators have 'a: true' and keys that match the arrayOperatorKeyRegex
  */
-function isArrayOperator(operator: unknown): operator is ArrayOperator {
+function isArrayOperator(operator) {
   return (
     operator !== null &&
     typeof operator === 'object' &&
     'a' in operator &&
-    (operator as ArrayOperator).a === true &&
+    (operator).a === true &&
     Object.keys(operator).every(isArrayOperatorKey)
   );
 }
@@ -85,7 +86,7 @@ function isArrayOperator(operator: unknown): operator is ArrayOperator {
  * Joins two parts of a field path with a dot.
  * Returns the key itself if prefix is empty.
  */
-function join(prefix: string, key: string): string {
+function join(prefix, key) {
   return prefix ? `${prefix}.${key}` : key;
 }
 
@@ -99,10 +100,10 @@ function join(prefix: string, key: string): string {
  * - Empty objects are assigned directly
  */
 function flattenObjectInto(
-  target: Record<string, any>,
-  source: any,
-  prefix: string
-): void {
+  target,
+  source,
+  prefix
+) {
   if (
     Array.isArray(source) ||
     typeof source !== 'object' ||
@@ -136,16 +137,16 @@ function flattenObjectInto(
  * flattening paths into dot notation for MongoDB updates.
  */
 function convertOplogDiff(
-  oplogEntry: OplogEntry,
-  diff: OplogDiff,
+  oplogEntry,
+  diff,
   prefix = ''
-): void {
+) {
   Object.entries(diff).forEach(([diffKey, value]) => {
     if (diffKey === 'd') {
       // Handle `$unset`s
       oplogEntry.$unset ??= {};
       Object.keys(value).forEach(key => {
-        oplogEntry.$unset![join(prefix, key)] = true;
+        oplogEntry.$unset[join(prefix, key)] = true;
       });
     } else if (diffKey === 'i') {
       // Handle (potentially) nested `$set`s
@@ -155,7 +156,7 @@ function convertOplogDiff(
       // Handle flat `$set`s
       oplogEntry.$set ??= {};
       Object.entries(value).forEach(([key, fieldValue]) => {
-        oplogEntry.$set![join(prefix, key)] = fieldValue;
+        oplogEntry.$set[join(prefix, key)] = fieldValue;
       });
     } else if (diffKey.startsWith('s')) {
       // Handle s-fields (array operations and nested objects)
@@ -193,12 +194,12 @@ function convertOplogDiff(
  * equivalent to the v2 diff format, with paths flattened to dot notation
  * and special handling for EJSON custom types and ObjectIDs.
  */
-export function oplogV2V1Converter(oplogEntry: OplogEntry): OplogEntry {
+export function oplogV2V1Converter(oplogEntry) {
   if (oplogEntry.$v !== 2 || !oplogEntry.diff) {
     return oplogEntry;
   }
 
-  const convertedOplogEntry: OplogEntry = { $v: 2 };
+  const convertedOplogEntry = { $v: 2 };
   convertOplogDiff(convertedOplogEntry, oplogEntry.diff);
   return convertedOplogEntry;
 }

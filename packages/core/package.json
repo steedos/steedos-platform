@@ -35,7 +35,7 @@
     "json2xls": "^0.1.2",
     "lodash": "^4.17.21",
     "mkdirp": "^1.0.4",
-    "mongodb": "^3.7.3",
+    "mongodb": "6.9.0",
     "reflect-metadata": "^0.1.10",
     "routing-controllers": "^0.7.7",
     "simpl-schema": "^1.5.5",

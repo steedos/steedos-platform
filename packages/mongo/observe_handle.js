@@ -1,38 +1,38 @@
-import { ObserveHandleCallback, ObserveMultiplexer } from './observe_multiplex';
+// import { ObserveHandleCallback, ObserveMultiplexer } from './observe_multiplex.js';
 
 let nextObserveHandleId = 1;
 
-export type ObserveHandleCallbackInternal = '_added' | '_addedBefore' | '_changed' | '_movedBefore' | '_removed';
+// export type ObserveHandleCallbackInternal = '_added' | '_addedBefore' | '_changed' | '_movedBefore' | '_removed';
 
 
-export type Callback<T = any> = (...args: T[]) => Promise<void> | void;
+// export type Callback<T = any> = (...args: T[]) => Promise<void> | void;
 
 /**
  * The "observe handle" returned from observeChanges.
  * Contains a reference to an ObserveMultiplexer.
  * Used to stop observation and clean up resources.
  */
-export class ObserveHandle<T = any> {
-  _id: number;
-  _multiplexer: ObserveMultiplexer;
-  nonMutatingCallbacks: boolean;
-  _stopped: boolean;
+export class ObserveHandle {
+  // _id: number;
+  // _multiplexer: ObserveMultiplexer;
+  // nonMutatingCallbacks: boolean;
+  // _stopped: boolean;
 
-  public initialAddsSentResolver: (value: void) => void = () => {};
-  public initialAddsSent: Promise<void>
+  // public initialAddsSentResolver: (value: void) => void = () => {};
+  // public initialAddsSent: Promise<void>
 
-  _added?: Callback<T>;
-  _addedBefore?: Callback<T>;
-  _changed?: Callback<T>;
-  _movedBefore?: Callback<T>;
-  _removed?: Callback<T>;
+  // _added?: Callback<T>;
+  // _addedBefore?: Callback<T>;
+  // _changed?: Callback<T>;
+  // _movedBefore?: Callback<T>;
+  // _removed?: Callback<T>;
 
-  constructor(multiplexer: ObserveMultiplexer, callbacks: Record<ObserveHandleCallback, Callback<T>>, nonMutatingCallbacks: boolean) {
+  constructor(multiplexer, callbacks, nonMutatingCallbacks) {
     this._multiplexer = multiplexer;
 
-    multiplexer.callbackNames().forEach((name: ObserveHandleCallback) => {
+    multiplexer.callbackNames().forEach((name) => {
       if (callbacks[name]) {
-        this[`_${name}` as ObserveHandleCallbackInternal] = callbacks[name];
+        this[`_${name}`] = callbacks[name];
         return;
       }
 

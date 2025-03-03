@@ -1,0 +1,18 @@
+{
+  "name": "@steedos/meteor-mongo",
+  "private": false,
+  "version": "3.0.0-beta.2",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Adaptor for using MongoDB and Minimongo over DDP",
+  "main": "index.js",
+  "scripts": {
+    "build": "rm -rf lib && tsc"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "ejson": "2.2.3",
+    "lodash-es": "4.17.21"
+  }
+}

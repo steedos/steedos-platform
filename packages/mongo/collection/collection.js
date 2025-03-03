@@ -1,7 +1,7 @@
-import { normalizeProjection } from "../mongo_utils";
-import { AsyncMethods } from './methods_async';
-import { SyncMethods } from './methods_sync';
-import { IndexMethods } from './methods_index';
+import { normalizeProjection } from "../mongo_utils.js";
+import { AsyncMethods } from './methods_async.js';
+import { SyncMethods } from './methods_sync.js';
+import { IndexMethods } from './methods_index.js';
 import {
   ID_GENERATORS, normalizeOptions,
   setupAutopublish,
@@ -9,14 +9,15 @@ import {
   setupDriver,
   setupMutationMethods,
   validateCollectionName
-} from './collection_utils';
-import { ReplicationMethods } from './methods_replication';
+} from './collection_utils.js';
+import { ReplicationMethods } from './methods_replication.js';
+import LocalCollection  from '../minimongo/local_collection.js';
 
 /**
  * @summary Namespace for MongoDB-related items
  * @namespace
  */
-Mongo = {};
+const Mongo = {};
 
 /**
  * @summary Constructor for a Collection
@@ -46,7 +47,7 @@ Mongo.Collection = function Collection(name, options) {
   this._transform = LocalCollection.wrapTransform(options.transform);
   this.resolverType = options.resolverType;
 
-  this._connection = setupConnection(name, options);
+  // this._connection = setupConnection(name, options);
 
   const driver = setupDriver(name, this._connection, options);
   this._driver = driver;
@@ -56,7 +57,7 @@ Mongo.Collection = function Collection(name, options) {
 
   this._settingUpReplicationPromise = this._maybeSetUpReplication(name, options);
 
-  setupMutationMethods(this, name, options);
+  // setupMutationMethods(this, name, options);
 
   setupAutopublish(this, name, options);
 
@@ -239,14 +240,14 @@ Object.assign(Mongo, {
  * @class
  * @param {String} [hexString] Optional.  The 24-character hexadecimal contents of the ObjectID to create
  */
-Mongo.ObjectID = MongoID.ObjectID;
+// Mongo.ObjectID = MongoID.ObjectID;
 
 /**
  * @summary To create a cursor, use find. To access the documents in a cursor, use forEach, map, or fetch.
  * @class
  * @instanceName cursor
  */
-Mongo.Cursor = LocalCollection.Cursor;
+// Mongo.Cursor = LocalCollection.Cursor;
 
 /**
  * @deprecated in 0.9.1
@@ -256,13 +257,14 @@ Mongo.Collection.Cursor = Mongo.Cursor;
 /**
  * @deprecated in 0.9.1
  */
-Mongo.Collection.ObjectID = Mongo.ObjectID;
+// Mongo.Collection.ObjectID = Mongo.ObjectID;
 
 /**
  * @deprecated in 0.9.1
  */
-Meteor.Collection = Mongo.Collection;
+// Meteor.Collection = Mongo.Collection;
 
 // Allow deny stuff is now in the allow-deny package
-Object.assign(Mongo.Collection.prototype, AllowDeny.CollectionPrototype);
+// Object.assign(Mongo.Collection.prototype, AllowDeny.CollectionPrototype);
 
+export default Mongo;

@@ -1,3 +1,4 @@
+import MongoInternals from '../mongo_driver.js';
 export const ID_GENERATORS = {
   MONGO(name) {
     return function() {
@@ -23,18 +24,19 @@ export function setupDriver(name, connection, options) {
   if (options._driver) return options._driver;
 
   if (name &&
-    connection === Meteor.server &&
+    // connection === Meteor.server &&
     typeof MongoInternals !== 'undefined' &&
     MongoInternals.defaultRemoteCollectionDriver) {
     return MongoInternals.defaultRemoteCollectionDriver();
   }
 
-  const { LocalCollectionDriver } = require('../local_collection_driver.js');
-  return LocalCollectionDriver;
+  // const { LocalCollectionDriver } = require('../local_collection_driver.js');
+  // return LocalCollectionDriver;
 }
 
 export function setupAutopublish(collection, name, options) {
-  if (Package.autopublish &&
+  if (
+    // Package.autopublish &&
     !options._preventAutopublish &&
     collection._connection &&
     collection._connection.publish) {

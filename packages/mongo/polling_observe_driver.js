@@ -1,14 +1,15 @@
-import throttle from 'lodash.throttle';
-import { listenAll } from './mongo_driver';
-import { ObserveMultiplexer } from './observe_multiplex';
+import { throttle } from 'lodash-es';
+import { listenAll } from './mongo_driver.js';
+// import { ObserveMultiplexer } from './observe_multiplex.js';
+import { AsynchronousQueue } from './meteor/asynchronous_queue.js';
 
-interface PollingObserveDriverOptions {
-  cursorDescription: any;
-  mongoHandle: any;
-  ordered: boolean;
-  multiplexer: ObserveMultiplexer;
-  _testOnlyPollCallback?: () => void;
-}
+// interface PollingObserveDriverOptions {
+//   cursorDescription: any;
+//   mongoHandle: any;
+//   ordered: boolean;
+//   multiplexer: ObserveMultiplexer;
+//   _testOnlyPollCallback?: () => void;
+// }
 
 const POLLING_THROTTLE_MS = +(process.env.METEOR_POLLING_THROTTLE_MS || '') || 50;
 const POLLING_INTERVAL_MS = +(process.env.METEOR_POLLING_INTERVAL_MS || '') || 10 * 1000;
@@ -24,22 +25,8 @@ const POLLING_INTERVAL_MS = +(process.env.METEOR_POLLING_INTERVAL_MS || '') || 1
  * - Suitable for cases where oplog tailing is not available or practical
  */
 export class PollingObserveDriver {
-  private _options: PollingObserveDriverOptions;
-  private _cursorDescription: any;
-  private _mongoHandle: any;
-  private _ordered: boolean;
-  private _multiplexer: any;
-  private _stopCallbacks: Array<() => Promise<void>>;
-  private _stopped: boolean;
-  private _cursor: any;
-  private _results: any;
-  private _pollsScheduledButNotStarted: number;
-  private _pendingWrites: any[];
-  private _ensurePollIsScheduled: Function;
-  private _taskQueue: any;
-  private _testOnlyPollCallback?: () => void;
 
-  constructor(options: PollingObserveDriverOptions) {
+  constructor(options) {
     this._options = options;
     this._cursorDescription = options.cursorDescription;
     this._mongoHandle = options.mongoHandle;
@@ -60,15 +47,16 @@ export class PollingObserveDriver {
       this._cursorDescription.options.pollingThrottleMs || POLLING_THROTTLE_MS
     );
 
-    this._taskQueue = new (Meteor as any)._AsynchronousQueue();
+    this._taskQueue = new AsynchronousQueue();
   }
 
-  async _init(): Promise<void> {
+  async _init() {
     const options = this._options;
     const listenersHandle = await listenAll(
       this._cursorDescription,
-      (notification: any) => {
-        const fence = (DDPServer as any)._getCurrentFence();
+      (notification) => {
+        // const fence = (DDPServer as any)._getCurrentFence();
+        const fence = null;
         if (fence) {
           this._pendingWrites.push(fence.beginWrite());
         }
@@ -88,23 +76,23 @@ export class PollingObserveDriver {
         this._cursorDescription.options._pollingInterval ||
         POLLING_INTERVAL_MS;
 
-      const intervalHandle = Meteor.setInterval(
+      const intervalHandle = setInterval(
         this._ensurePollIsScheduled.bind(this),
         pollingInterval
       );
 
-      this._stopCallbacks.push(() => {
-        Meteor.clearInterval(intervalHandle);
+      this._stopCallbacks.push(async () => {
+        clearInterval(intervalHandle);
       });
     }
 
     await this._unthrottledEnsurePollIsScheduled();
 
-    (Package['facts-base'] as any)?.Facts.incrementServerFact(
-      "mongo-livedata", "observe-drivers-polling", 1);
+    // (Package['facts-base'] as any)?.Facts.incrementServerFact(
+    //   "mongo-livedata", "observe-drivers-polling", 1);
   }
 
-  async _unthrottledEnsurePollIsScheduled(): Promise<void> {
+  async _unthrottledEnsurePollIsScheduled() {
     if (this._pollsScheduledButNotStarted > 0) return;
     ++this._pollsScheduledButNotStarted;
     await this._taskQueue.runTask(async () => {
@@ -112,7 +100,7 @@ export class PollingObserveDriver {
     });
   }
 
-  _suspendPolling(): void {
+  _suspendPolling() {
     ++this._pollsScheduledButNotStarted;
     this._taskQueue.runTask(() => {});
 
@@ -121,7 +109,7 @@ export class PollingObserveDriver {
     }
   }
 
-  async _resumePolling(): Promise<void> {
+  async _resumePolling() {
     if (this._pollsScheduledButNotStarted !== 1) {
       throw new Error(`_pollsScheduledButNotStarted is ${this._pollsScheduledButNotStarted}`);
     }
@@ -130,7 +118,7 @@ export class PollingObserveDriver {
     });
   }
 
-  async _pollMongo(): Promise<void> {
+  async _pollMongo() {
     --this._pollsScheduledButNotStarted;
 
     if (this._stopped) return;
@@ -141,7 +129,7 @@ export class PollingObserveDriver {
 
     if (!oldResults) {
       first = true;
-      oldResults = this._ordered ? [] : new (LocalCollection as any)._IdMap;
+      oldResults = this._ordered ? [] : null;
     }
 
     this._testOnlyPollCallback?.();
@@ -151,7 +139,7 @@ export class PollingObserveDriver {
 
     try {
       newResults = await this._cursor.getRawObjects(this._ordered);
-    } catch (e: any) {
+    } catch (e) {
       if (first && typeof(e.code) === 'number') {
         await this._multiplexer.queryError(
           new Error(
@@ -163,14 +151,14 @@ export class PollingObserveDriver {
       }
 
       Array.prototype.push.apply(this._pendingWrites, writesForCycle);
-      Meteor._debug(`Exception while polling query ${
-        JSON.stringify(this._cursorDescription)}`, e);
+      // Meteor._debug(`Exception while polling query ${
+      //   JSON.stringify(this._cursorDescription)}`, e);
       return;
     }
 
     if (!this._stopped) {
-      (LocalCollection as any)._diffQueryChanges(
-        this._ordered, oldResults, newResults, this._multiplexer);
+      // (LocalCollection as any)._diffQueryChanges(
+      //   this._ordered, oldResults, newResults, this._multiplexer);
     }
 
     if (first) this._multiplexer.ready();
@@ -184,7 +172,7 @@ export class PollingObserveDriver {
     });
   }
 
-  async stop(): Promise<void> {
+  async stop() {
     this._stopped = true;
 
     for (const callback of this._stopCallbacks) {
@@ -195,7 +183,7 @@ export class PollingObserveDriver {
       await w.committed();
     }
 
-    (Package['facts-base'] as any)?.Facts.incrementServerFact(
-      "mongo-livedata", "observe-drivers-polling", -1);
+    // (Package['facts-base'] as any)?.Facts.incrementServerFact(
+    //   "mongo-livedata", "observe-drivers-polling", -1);
   }
 }

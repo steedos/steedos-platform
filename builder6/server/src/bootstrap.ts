@@ -108,7 +108,7 @@ export async function bootstrap() {
 
   // 获取 Express App
   const expressApp = app.getHttpAdapter().getInstance();
-  
+
   expressApp.use(require('@steedos/router').staticRouter());
 
   // 加载 webapp
@@ -123,6 +123,22 @@ export async function bootstrap() {
       res.sendFile(path.join(webappDistPath, 'index.html'));
     });
   }
+
+  // 初始化meteor-mongo
+  const meteorMongo = require('@steedos/meteor-mongo').Mongo;
+  const testCollection = new meteorMongo.Collection('test');
+  testCollection.find({}).observe({
+    added: function (newDocument) {
+      console.log(newDocument);
+    },
+    changed: function (newDocument, oldDocument) {
+      console.log(newDocument);
+      console.log(oldDocument);
+    },
+    removed: function (oldDocument) {
+      console.log(oldDocument);
+    }
+  });
 
   await app.listen(process.env.B6_PORT ?? 5100);
 

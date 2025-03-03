@@ -1,15 +1,28 @@
-import { OplogHandle } from './oplog_tailing';
-import { MongoConnection } from './mongo_connection';
-import { OplogObserveDriver } from './oplog_observe_driver';
-import { MongoDB } from './mongo_common';
+/*
+ * @Author: 孙浩林 sunhaolin@steedos.com
+ * @Date: 2025-02-20 13:18:20
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2025-02-28 16:06:27
+ * @FilePath: /steedos-platform-3.0/packages/mongo/mongo_driver.js
+ * @Description: 
+ */
+import { OplogHandle } from './oplog_tailing.js';
+import { MongoConnection } from './mongo_connection.js';
+import { OplogObserveDriver } from './oplog_observe_driver.js';
+import { MongoDB } from './mongo_common.js';
+import { RemoteCollectionDriver } from './remote_collection_driver.js'
+import once from 'lodash.once';
+import LocalCollection from './minimongo/local_collection.js';
+import DDPServer from './ddp-server/livedata_server.js';
 
-MongoInternals = global.MongoInternals = {};
+// const MongoInternals = global.MongoInternals = {};
+const MongoInternals = {};
 
 MongoInternals.__packageName = 'mongo';
 
 MongoInternals.NpmModules = {
   mongodb: {
-    version: NpmModuleMongodbVersion,
+    version: "3.7.4",
     module: MongoDB
   }
 };
@@ -92,3 +105,32 @@ export const forEachTrigger = async function (cursorDescription, triggerCallback
 // it's only used by tests, but in fact you need it in normal
 // operation to interact with capped collections.
 MongoInternals.MongoTimestamp = MongoDB.Timestamp;
+
+
+// Assign the class to MongoInternals
+MongoInternals.RemoteCollectionDriver = RemoteCollectionDriver;
+
+// Create the singleton RemoteCollectionDriver only on demand
+MongoInternals.defaultRemoteCollectionDriver = once(() => {
+  const connectionOptions = {};
+  const mongoUrl = process.env.MONGO_URL;
+
+  if (!mongoUrl) {
+    throw new Error("MONGO_URL must be set in environment");
+  }
+  console.log('oplogUrl:', process.env.MONGO_OPLOG_URL);
+  if (process.env.MONGO_OPLOG_URL) {
+    connectionOptions.oplogUrl = process.env.MONGO_OPLOG_URL;
+  }
+
+  const driver = new RemoteCollectionDriver(mongoUrl, connectionOptions);
+
+  // Initialize database connection on startup
+  // Meteor.startup(async (): Promise<void> => {
+  //   await driver.mongo.client.connect();
+  // });
+
+  return driver;
+});
+
+export default MongoInternals;

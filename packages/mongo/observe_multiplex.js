@@ -1,12 +1,15 @@
-import isEmpty from 'lodash.isempty';
-import { ObserveHandle } from './observe_handle';
+import { isEmpty } from 'lodash-es';
+// import { ObserveHandle } from './observe_handle.js';
+import  EJSON  from 'ejson';
+import LocalCollection from './minimongo/local_collection.js';
+import { AsynchronousQueue } from './meteor/asynchronous_queue.js';
 
-interface ObserveMultiplexerOptions {
-  ordered: boolean;
-  onStop?: () => void;
-}
+// interface ObserveMultiplexerOptions {
+//   ordered: boolean;
+//   onStop?: () => void;
+// }
 
-export type ObserveHandleCallback = 'added' | 'addedBefore' | 'changed' | 'movedBefore' | 'removed';
+// export type ObserveHandleCallback = 'added' | 'addedBefore' | 'changed' | 'movedBefore' | 'removed';
 
 /**
  * Allows multiple identical ObserveHandles to be driven by a single observe driver.
@@ -15,26 +18,26 @@ export type ObserveHandleCallback = 'added' | 'addedBefore' | 'changed' | 'moved
  * don't result in duplicate database queries.
  */
 export class ObserveMultiplexer {
-  private readonly _ordered: boolean;
-  private readonly _onStop: () => void;
-  private _queue: any;
-  private _handles: { [key: string]: ObserveHandle } | null;
-  private _resolver: ((value?: unknown) => void) | null;
-  private readonly _readyPromise: Promise<boolean | void>;
-  private _isReady: boolean;
-  private _cache: any;
-  private _addHandleTasksScheduledButNotPerformed: number;
+  // private readonly _ordered: boolean;
+  // private readonly _onStop: () => void;
+  // private _queue: any;
+  // private _handles: { [key: string]: ObserveHandle } | null;
+  // private _resolver: ((value?: unknown) => void) | null;
+  // private readonly _readyPromise: Promise<boolean | void>;
+  // private _isReady: boolean;
+  // private _cache: any;
+  // private _addHandleTasksScheduledButNotPerformed: number;
 
-  constructor({ ordered, onStop = () => {} }: ObserveMultiplexerOptions) {
+  constructor({ ordered, onStop = () => {} }) {
     if (ordered === undefined) throw Error("must specify ordered");
 
     // @ts-ignore
-    Package['facts-base'] && Package['facts-base']
-        .Facts.incrementServerFact("mongo-livedata", "observe-multiplexers", 1);
+    // Package['facts-base'] && Package['facts-base']
+    //     .Facts.incrementServerFact("mongo-livedata", "observe-multiplexers", 1);
 
     this._ordered = ordered;
     this._onStop = onStop;
-    this._queue = new Meteor._AsynchronousQueue();
+    this._queue = new AsynchronousQueue();
     this._handles = {};
     this._resolver = null;
     this._isReady = false;
@@ -44,17 +47,17 @@ export class ObserveMultiplexer {
     this._addHandleTasksScheduledButNotPerformed = 0;
 
     this.callbackNames().forEach(callbackName => {
-      (this as any)[callbackName] = (...args: any[]) => {
+      (this)[callbackName] = (...args) => {
         this._applyCallback(callbackName, args);
       };
     });
   }
 
-  addHandleAndSendInitialAdds(handle: ObserveHandle): Promise<void> {
+  addHandleAndSendInitialAdds(handle) {
     return this._addHandleAndSendInitialAdds(handle);
   }
 
-  async _addHandleAndSendInitialAdds(handle: ObserveHandle): Promise<void> {
+  async _addHandleAndSendInitialAdds(handle){
     ++this._addHandleTasksScheduledButNotPerformed;
 
     // @ts-ignore
@@ -62,18 +65,18 @@ export class ObserveMultiplexer {
       "mongo-livedata", "observe-handles", 1);
 
     await this._queue.runTask(async () => {
-      this._handles![handle._id] = handle;
+      this._handles[handle._id] = handle;
       await this._sendAdds(handle);
       --this._addHandleTasksScheduledButNotPerformed;
     });
     await this._readyPromise;
   }
 
-  async removeHandle(id: number): Promise<void> {
+  async removeHandle(id){
     if (!this._ready())
       throw new Error("Can't remove handles until the multiplex is ready");
 
-    delete this._handles![id];
+    delete this._handles[id];
 
     // @ts-ignore
     Package['facts-base'] && Package['facts-base'].Facts.incrementServerFact(
@@ -85,7 +88,7 @@ export class ObserveMultiplexer {
     }
   }
 
-  async _stop(options: { fromQueryError?: boolean } = {}): Promise<void> {
+  async _stop(options){
     if (!this._ready() && !options.fromQueryError)
       throw Error("surprising _stop: not ready");
 
@@ -98,7 +101,7 @@ export class ObserveMultiplexer {
     this._handles = null;
   }
 
-  async ready(): Promise<void> {
+  async ready(){
     await this._queue.queueTask(() => {
       if (this._ready())
         throw Error("can't make ObserveMultiplex ready twice!");
@@ -112,7 +115,7 @@ export class ObserveMultiplexer {
     });
   }
 
-  async queryError(err: Error): Promise<void> {
+  async queryError(err){
     await this._queue.runTask(() => {
       if (this._ready())
         throw Error("can't claim query has an error after it worked!");
@@ -121,7 +124,7 @@ export class ObserveMultiplexer {
     });
   }
 
-  async onFlush(cb: () => void): Promise<void> {
+  async onFlush(cb){
     await this._queue.queueTask(async () => {
       if (!this._ready())
         throw Error("only call onFlush on a multiplexer that will be ready");
@@ -129,17 +132,17 @@ export class ObserveMultiplexer {
     });
   }
 
-  callbackNames(): ObserveHandleCallback[] {
+  callbackNames() {
     return this._ordered
       ? ["addedBefore", "changed", "movedBefore", "removed"]
       : ["added", "changed", "removed"];
   }
 
-  _ready(): boolean {
+  _ready() {
     return !!this._isReady;
   }
 
-  _applyCallback(callbackName: string, args: any[]) {
+  _applyCallback(callbackName, args) {
     this._queue.queueTask(async () => {
       if (!this._handles) return;
 
@@ -154,7 +157,7 @@ export class ObserveMultiplexer {
 
         if (!handle) return;
 
-        const callback = (handle as any)[`_${callbackName}`];
+        const callback = (handle)[`_${callbackName}`];
 
         if (!callback) continue;
 
@@ -166,22 +169,22 @@ export class ObserveMultiplexer {
     });
   }
 
-  async _sendAdds(handle: ObserveHandle): Promise<void> {
+  async _sendAdds(handle){
     const add = this._ordered ? handle._addedBefore : handle._added;
     if (!add) return;
 
-    const addPromises: Promise<void>[] = [];
+    const addPromises = [];
 
-    this._cache.docs.forEach((doc: any, id: string) => {
-      if (!(handle._id in this._handles!)) {
+    this._cache.docs.forEach((doc, id) => {
+      if (!(handle._id in this._handles)) {
         throw Error("handle got removed before sending initial adds!");
       }
 
       const { _id, ...fields } = handle.nonMutatingCallbacks ? doc : EJSON.clone(doc);
 
       const promise = this._ordered ?
-        add(id, fields, null) :
-        add(id, fields);
+        (add(id, fields, null)) :
+        (add(id, fields));
 
       addPromises.push(promise);
     });

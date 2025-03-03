@@ -43,7 +43,7 @@
     "lodash": "^4.17.21",
     "mingo": "^6.0.5",
     "moment": "^2.29.1",
-    "mongodb": "^3.7.3",
+    "mongodb": "6.9.0",
     "mongodb-uri": "^0.9.7",
     "node-fetch": "2",
     "reflect-metadata": "^0.1.10",

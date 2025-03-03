@@ -1,4 +1,6 @@
-import clone from 'lodash.clone'
+import { clone } from 'lodash-es';
+import NpmModuleMongodb from 'mongodb';
+import  EJSON  from 'ejson';
 
 /** @type {import('mongodb')} */
 export const MongoDB = Object.assign(NpmModuleMongodb, {
@@ -79,9 +81,9 @@ export const replaceMeteorAtomWithMongo = function (document) {
   if (document instanceof MongoDB.Binary) {
     return document;
   }
-  if (document instanceof Mongo.ObjectID) {
-    return new MongoDB.ObjectId(document.toHexString());
-  }
+  // if (document instanceof Mongo.ObjectID) {
+  //   return new MongoDB.ObjectId(document.toHexString());
+  // }
   if (document instanceof MongoDB.ObjectId) {
     return new MongoDB.ObjectId(document.toHexString());
   }
@@ -92,9 +94,9 @@ export const replaceMeteorAtomWithMongo = function (document) {
     // structural clone and lose the prototype.
     return document;
   }
-  if (document instanceof Decimal) {
-    return MongoDB.Decimal128.fromString(document.toString());
-  }
+  // if (document instanceof Decimal) {
+  //   return MongoDB.Decimal128.fromString(document.toString());
+  // }
   if (EJSON._isCustomType(document)) {
     return replaceNames(makeMongoLegal, EJSON.toJSONValue(document));
   }
