@@ -63,14 +63,6 @@
     }
 
     Steedos.Page.getPage = function (type, appId, objectApiName, recordId, pageId) {
-        let objectInfo = null;
-        let searchParams = FlowRouter.current().queryParams;
-
-        const display = searchParams['display']
-        const listViewId = searchParams['listview_id']
-        const sideObject = searchParams['side_object']
-        const sideListviewId = searchParams['side_listview_id']
-        
         if(!objectApiName){
             objectApiName = ''
         }
@@ -97,17 +89,6 @@
                     "type": "steedos-page-object-control",
                     "name": "steedosPageObjectControl"
                 }
-                // name: 'steedosListviewPage',
-                // schema:{
-                //     "name": `${objectApiName}-listview-${listViewId}`,
-                //     "type": "steedos-page-listview",
-                //     "showHeader": true,
-                //     "objectApiName": objectApiName,
-                //     "appId": appId,
-                //     "display": display,
-                //     "columnsTogglable": false,
-                //     // "listName": "all",
-                // }
             }
         }else if(type === 'record'){
             return {
@@ -117,17 +98,6 @@
                         "type": "steedos-page-object-control",
                         "name": "steedosPageObjectControl"
                     }
-                    // name: 'steedosRecordPage',
-                    // schema: {
-                    //     "name": `${objectApiName}-recordDetail-${recordId}`,
-                    //     "type": "steedos-page-record-detail",
-                    //     "objectApiName": objectApiName,
-                    //     "sideObject": sideObject,
-                    //     "sideListviewId": sideListviewId,
-                    //     // "recordId": recordId,
-                    //     "display": display,
-                    //     "appId": appId,
-                    // }
                 }
             
         }else if(type === 'related_list'){
@@ -235,19 +205,7 @@
                             relatedKey: relatedKey,
                             hiddenOn: "!!!this.$loaded",
                             "className": "mx-4",
-                            // top: 5
                         }
-                        ,
-                        // {
-                        //     type: 'steedos-object-related-listview',
-                        //     objectApiName: masterObject.name,
-                        //     recordId: FlowRouter.getParam("record_id"),
-                        //     relatedObjectApiName: objectApiName,
-                        //     foreign_key: relatedKey,
-                        //     relatedKey: relatedKey,
-                        //     hiddenOn: "!!!this.$loaded"
-                        //     // top: 5
-                        // }
                     ]
                 }
               }
@@ -731,22 +689,10 @@
                 $("button", scope).trigger("click")
             }, 300)
             return scope ;
-            // return Steedos.Page.render(SteedosUI.Modal, page, Object.assign({}, options, {
-            //     appId: appId,
-            //     objectName: objectApiName,
-            //     title: title,
-            //     recordId: recordId
-            // }));
         }
     };
-
-    // Steedos.Page.Form.StandardDelete.render = function(){
-
-    // };
-
-
+    
     // creator odata 转 graphql 防腐层
-
     function getGraphqlFieldsQuery(objectApiName, selectFields, expandFields){
         const objectConfig = Creator.getObject(objectApiName)
         const objectFields = objectConfig.fields
