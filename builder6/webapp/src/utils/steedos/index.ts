@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2025-02-17 09:16:48
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-03-03 13:59:52
+ * @LastEditTime: 2025-03-03 14:42:34
  * @Description: 
  */
 
@@ -108,6 +108,9 @@ export const Steedos = {
     },
     openWindow: (url, target, options)=>{
         return window.open(url, target, options);
+    },
+    isMobile: ()=>{
+        return $(window).width() < 767
     },
     Account,
     Space,

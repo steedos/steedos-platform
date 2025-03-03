@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2025-01-22 12:51:08
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-02-28 16:55:32
+ * @LastEditTime: 2025-03-03 14:47:27
  * @Description: 
  */
 import { Builder, builder, BuilderComponent } from '@builder6/react';
@@ -49,6 +49,12 @@ const normalizeLink = (to, location = window.location) => {
 export const AmisRender = function ({schema = {}, data = {}, env = {}}) {
   // console.log(`AmisRender`, schema, data, env)
   const navigate = useNavigate(); 
+
+  if(!(window as any).goBack){
+    (window as any).goBack = ()=>{
+      navigate(-1);
+    }
+  }
   const mergedData = {
     app_id: Builder.settings.appId,
     context: Builder.settings.context,
