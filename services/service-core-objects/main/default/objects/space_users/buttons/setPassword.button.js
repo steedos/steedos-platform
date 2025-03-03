@@ -22,20 +22,20 @@ module.exports = {
 
         var doUpdate = function (inputValue) {
             try {
-                var result = Steedos.authRequest("/api/user/setSpaceUserPassword", {
+                var result = Steedos.authRequest("/accounts/password/setSpaceUserPassword", {
                     type: 'post', async: false, data: JSON.stringify({
-                        space_user_id: record_id, 
-                        space_id: userSession.spaceId, 
+                        space_user_id: record_id,
+                        space_id: userSession.spaceId,
                         password: CryptoJS.SHA256(inputValue).toString()
                     })
                 });
-                if(!result){
-                    return SteedosUI.notification.error({message: '修改密码失败,请稍后再试'});
+                if (!result) {
+                    return SteedosUI.notification.error({ message: '修改密码失败,请稍后再试' });
                 }
-                if (result.error) {
-                    SteedosUI.notification.error({message: result.error});
-                }else{
-                    return SteedosUI.notification.success({message: t("Change password successfully")});
+                if (0 != result.status) {
+                    SteedosUI.notification.error({ message: result.msg });
+                } else {
+                    return SteedosUI.notification.success({ message: t("Change password successfully") });
                 }
                 if (!isPasswordEmpty) {
                     Steedos.openWindow(Steedos.absoluteUrl("/update-password"))
@@ -43,7 +43,7 @@ module.exports = {
                 }
             } catch (err) {
                 console.error(err);
-                SteedosUI.notification.error({message: err.message});
+                SteedosUI.notification.error({ message: err.message });
             }
         }
 
@@ -124,26 +124,32 @@ module.exports = {
         });
         modal && modal.show();
     },
-    setPasswordVisible: function (object_name, record_id, record_permissions) {
-        var organization = Session.get("organization");
+    setPasswordVisible: function (object_name, record_id, record_permissions, data) {
+        const record = data && data.record;
+        const appId = data && data.appId;
         var allowEdit = Steedos.Object.base.actions.standard_edit.visible.apply(this, arguments);
         if (!allowEdit) {
             // permissions配置没有权限则不给权限
             return false
         }
-        if (Session.get("app_id") === 'admin') {
-            var space_userId = db.space_users.findOne({ user: Steedos.User.get().userId, space: Steedos.spaceId() })._id
+        if (appId === 'admin') {
+            var space_userId = Steedos.User.get().spaceUserId
             if (space_userId === record_id) {
                 return true
             }
         }
-
-        // 组织管理员要单独判断，只给到有对应分部的组织管理员权限
-        if (Steedos.isSpaceAdmin()) {
-            return true;
-        }
-        else {
-            return SpaceUsersCore.isCompanyAdmin(record_id, organization);
+        const invite_state = record.invite_state;
+        const company_ids = record.company_ids;
+        if (invite_state != 'refused' && invite_state != 'pending') {
+            // 组织管理员要单独判断，只给到有对应分部的组织管理员权限
+            if (Steedos.isSpaceAdmin()) {
+                return true;
+            }
+            else {
+                return Steedos.isCompanyAdmin(company_ids);
+            }
+        } {
+            return false;
         }
     },
 }

@@ -15,6 +15,7 @@ import { updateSession } from './endpoints/update-session';
 import { registerPassword } from './endpoints/password/register';
 import { twoFactorSecret, twoFactorSet, twoFactorUnset } from './endpoints/password/two-factor';
 import { changePassword } from './endpoints/password/change-password';
+import { setSpaceUserPassword } from './endpoints/password/setSpaceUserPassword';
 import { userLoader } from './user-loader';
 import { AccountsExpressOptions } from './types';
 import { getTenant } from './endpoints/steedos/get-tenant';
@@ -97,6 +98,12 @@ const accountsExpress = (
       `${path}/password/changePassword`,
       userLoader(accountsServer),
       changePassword(accountsServer)
+    );
+
+    router.post(
+      `${path}/password/setSpaceUserPassword`,
+      userLoader(accountsServer),
+      setSpaceUserPassword(accountsServer)
     );
 
   }
