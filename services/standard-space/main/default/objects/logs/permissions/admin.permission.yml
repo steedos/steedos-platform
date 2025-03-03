@@ -1,7 +1,0 @@
-permission_set_id: admin
-allowCreate: false
-allowDelete: false
-allowEdit: false
-allowRead: true
-modifyAllRecords: false
-viewAllRecords: true

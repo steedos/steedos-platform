@@ -1,6 +1,0 @@
-name: sent
-type: boolean
-label: 是否发送
-defaultValue: false
-index: true
-sort_no: 190

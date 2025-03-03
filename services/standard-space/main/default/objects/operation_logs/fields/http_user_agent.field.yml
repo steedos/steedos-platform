@@ -1,5 +1,0 @@
-name: http_user_agent
-type: text
-label: User Agent
-sort_no: 50
-is_wide: true

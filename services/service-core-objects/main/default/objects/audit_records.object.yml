@@ -1,0 +1,72 @@
+name: audit_records
+label: Audit Record
+icon: medication
+hidden: false
+version: 2
+fields:
+  related_to:
+    label: "Related Object Record"
+    type: "lookup"
+    index: true
+    reference_to: !<tag:yaml.org,2002:js/function> |- 
+      function () {
+            try{
+              let objects = [];
+              var queryResult = Steedos.authRequest(`/graphql`, {
+                  type: 'POST', async: false, 
+                  data: JSON.stringify({
+                    query: `{ objects(filters: ["enable_audit","=",true]){ name } }`
+                  })
+              });
+              objects = queryResult && queryResult.data && queryResult.data.objects;
+              return _.map(objects, 'name') ;
+            }catch(e){
+              return []
+            }
+      }
+    filterable: true
+    is_name: true
+  created:
+    label: "时间"
+    filterable: true
+  field_name:
+    label: "Field Name"
+    type: "text"
+    required: true
+    is_wide: true
+    is_name: true
+  created_by:
+    label: "Created by"
+  previous_value:
+    label: "Previous Value"
+    type: "text"
+  new_value:
+    label: "New Value"
+    type: "text"
+list_views:
+  all:
+    label: "All Audit Records"
+    filter_scope: "space"
+    columns: ["related_to", "field_name", "created", "created_by", "previous_value", "new_value"]
+    filter_fields: ["related_to"]
+    sort:
+      - - created
+        - desc
+  recent:
+    label: "Recently Viewed Audit Records"
+    filter_scope: "space"
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true

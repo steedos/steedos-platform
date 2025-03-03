@@ -1,6 +1,0 @@
-name: sms.Format
-type: select
-options: JSON
-hidden: true
-omit: true
-sort_no: 110

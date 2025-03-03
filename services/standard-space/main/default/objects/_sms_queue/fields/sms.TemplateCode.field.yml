@@ -1,6 +1,0 @@
-name: sms.TemplateCode
-type: text
-label: 模板编号
-hidden: true
-omit: true
-sort_no: 150

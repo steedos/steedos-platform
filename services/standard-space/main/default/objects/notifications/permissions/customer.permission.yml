@@ -1,7 +1,0 @@
-permission_set_id: customer
-allowCreate: false
-allowDelete: false
-allowEdit: false
-allowRead: true
-modifyAllRecords: false
-viewAllRecords: false

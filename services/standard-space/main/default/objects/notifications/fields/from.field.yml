@@ -1,8 +1,0 @@
-name: from
-label: From
-type: lookup
-reference_to: users
-sortable: true
-index: true
-omit: true
-sort_no: 150

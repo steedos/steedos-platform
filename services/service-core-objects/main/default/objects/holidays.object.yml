@@ -1,0 +1,78 @@
+name: holidays
+label: Holidays
+icon: event
+hidden: true
+version: 2
+fields:
+  name:
+    label: Name
+    type: text
+    defaultValue: ''
+    description: ''
+    inlineHelpText: ''
+    required: true
+    searchable: true
+    index: true
+    filterable: true
+  type:
+    label: Type
+    type: select
+    index: true
+    required: true
+    options:
+      - label: Public
+        value: public
+      - label: Adjusted Holiday
+        value: adjusted_holiday
+      - label: Adjusted Working Day
+        value: adjusted_working_day
+    filterable: true
+  date:
+    label: Date
+    type: date
+    index: true
+    required: true
+    filterable: true
+  adjusted_to:
+    label: Corresponding working day
+    type: select
+    inlineHelpText: 'When the "Adjusted Working Day" type is selected, you need to select the day of the week.'
+    options:
+      - Sunday:0
+      - Monday:1
+      - Tuesday:2
+      - Wednesday:3
+      - Thursday:4
+      - Friday:5
+      - Saturday:6
+list_views:
+  all:
+    label: All
+    columns:
+      - name
+      - date
+      - type
+      - adjusted_to
+    filter_scope: all
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true
+  guest:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true

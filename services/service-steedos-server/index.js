@@ -468,7 +468,6 @@ module.exports = {
 
 function getBuiltinPlugins () {
 	const plugins = [
-		"@steedos/standard-space",
 		"@steedos/standard-object-database",
 		"@steedos/standard-process-approval",
 		"@steedos/standard-collaboration",

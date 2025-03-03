@@ -1,6 +1,0 @@
-name: sms.Action
-type: select
-options: SingleSendSms
-hidden: true
-omit: true
-sort_no: 120

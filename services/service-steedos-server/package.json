@@ -25,7 +25,6 @@
     "@steedos/standard-permission": "3.0.0-beta.2",
     "@steedos/standard-process": "3.0.0-beta.2",
     "@steedos/standard-process-approval": "3.0.0-beta.2",
-    "@steedos/standard-space": "3.0.0-beta.2",
     "@steedos/standard-ui": "3.0.0-beta.2",
     "@steedos/unpkg": "3.0.0-beta.2",
     "@steedos/workflow": "3.0.0-beta.2",

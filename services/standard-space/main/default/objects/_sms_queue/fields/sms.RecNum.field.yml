@@ -1,5 +1,0 @@
-name: sms.RecNum
-type: text
-label: 收件人手机号
-searchable: true
-sort_no: 160
