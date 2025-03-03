@@ -3,3 +3,16 @@ is_enable: false
 label: 复制API Key
 'on': record_only
 visible: true
+type: amis_button
+amis_schema: |-
+  {
+    "type": "service",
+    "body": [
+      {
+        "label": "复制API Key",
+        "type": "button",
+        "actionType": "copy",
+        "content": "${api_key}"
+      }
+    ]
+  }
