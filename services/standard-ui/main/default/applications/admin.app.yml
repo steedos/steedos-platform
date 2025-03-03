@@ -142,12 +142,12 @@ tab_items:
   # admin_web_forms:
   #   group: 高级设置
   #   index: 38
-  admin_holidays:
-    group: advanced_settings
-    index: 39
-  admin_business_hours:
-    group: advanced_settings
-    index: 40
+  # admin_holidays:
+  #   group: advanced_settings
+  #   index: 39
+  # admin_business_hours:
+  #   group: advanced_settings
+  #   index: 40
   # admin_object_webhooks:
   #   group: 高级设置
   #   index: 41
