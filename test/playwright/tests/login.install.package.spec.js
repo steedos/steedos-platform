@@ -7,7 +7,7 @@ require('dotenv-flow').config({path: path.join(__dirname, '..')});
 
 test('登录-安装软件包', async ({ page }) => {
   await page.goto(process.env.ROOT_URL);
-  await page.goto(`${process.env.ROOT_URL}/accounts/a/#/login?redirect_uri=/`);
+  await page.goto(`${process.env.ROOT_URL}/login?redirect_uri=/`);
   await page.getByPlaceholder('手机或邮箱').click();
   await page.getByPlaceholder('手机或邮箱').fill(process.env.LOGIN_NAME);
   await page.getByPlaceholder('手机或邮箱').press('Tab');

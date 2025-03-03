@@ -24,7 +24,7 @@ export const authorize = async (req: Request, res: Response) => {
         res.end();
     } else {
         clearAuthCookies(req, res);
-        res.redirect(__meteor_runtime_config__.ROOT_URL_PATH_PREFIX + "/accounts/a/#/login?" + query);
+        res.redirect(__meteor_runtime_config__.ROOT_URL_PATH_PREFIX + "/login?" + query);
         res.end();
     }
 }

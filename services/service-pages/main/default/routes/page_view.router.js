@@ -28,7 +28,7 @@ router.get('/api/page/view/:pageId', auth.authentication, async function (req, r
 
         // 如果当前用户未登录,且页面不允许匿名访问,则跳转到登录页面
         if(!userSession && !page.allow_anonymous){
-            return res.redirect(`/accounts/a/#/login?redirect_uri=${encodeURIComponent(`/api/page/view/${pageId}`)}`);
+            return res.redirect(`/login?redirect_uri=${encodeURIComponent(`/api/page/view/${pageId}`)}`);
         }
         
         let assetUrls = req.query.assetUrls;

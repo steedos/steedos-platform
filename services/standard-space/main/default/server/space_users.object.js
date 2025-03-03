@@ -901,7 +901,7 @@ let actions = {
                 }
                 if(!isPasswordEmpty){
                     // Modal.show("reset_password_modal");
-                    Steedos.openWindow(Steedos.absoluteUrl("/accounts/a/#/update-password"))
+                    Steedos.openWindow(Steedos.absoluteUrl("/update-password"))
                     return;
                 }
             }
@@ -1038,9 +1038,9 @@ let actions = {
             }
         },
         todo: function(){
-            // var address = window.location.origin + "/accounts/a/#/signup?redirect_uri=" + encodeURIComponent(window.location.origin + __meteor_runtime_config__.ROOT_URL_PATH_PREFIX) + "&X-Space-Id=" + Steedos.getSpaceId();
+            // var address = window.location.origin + "/signup?redirect_uri=" + encodeURIComponent(window.location.origin + __meteor_runtime_config__.ROOT_URL_PATH_PREFIX) + "&X-Space-Id=" + Steedos.getSpaceId();
             var inviteToken = Steedos.getInviteToken();
-            let address = window.location.origin + "/accounts/a/#/signup?invite_token=" + inviteToken;
+            let address = window.location.origin + "/signup?invite_token=" + inviteToken;
             if(_.isFunction(Steedos.isCordova) && Steedos.isCordova()){
                 address = Meteor.absoluteUrl("accounts/a/#/signup?invite_token=" + inviteToken)
             }

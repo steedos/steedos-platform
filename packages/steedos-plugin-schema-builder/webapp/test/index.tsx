@@ -29,7 +29,7 @@ const ErdPdmPage =  (props) => {
    if(error?.message === 'Unauthorized') {
     //  alert(window.location.href)
      message.error('请登录');
-     window.location.href = ROOT_URL_PATH_PREFIX+'/accounts/a/#/login?redirect_uri='+ encodeURI(window.location.href)
+     window.location.href = ROOT_URL_PATH_PREFIX+'/login?redirect_uri='+ encodeURI(window.location.href)
    } else {
      if(error)  message.error(error.message);
    }

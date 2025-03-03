@@ -7,9 +7,9 @@
  */
 module.exports = {
     invite_space_users: function (object_name, record_id) {
-        // var address = window.location.origin + "/accounts/a/#/signup?redirect_uri=" + encodeURIComponent(window.location.origin + __meteor_runtime_config__.ROOT_URL_PATH_PREFIX) + "&X-Space-Id=" + Steedos.getSpaceId();
+        // var address = window.location.origin + "/signup?redirect_uri=" + encodeURIComponent(window.location.origin + __meteor_runtime_config__.ROOT_URL_PATH_PREFIX) + "&X-Space-Id=" + Steedos.getSpaceId();
         var inviteToken = Steedos.getInviteToken();
-        let address = window.location.origin + "/accounts/a/#/signup?invite_token=" + inviteToken;
+        let address = window.location.origin + "/signup?invite_token=" + inviteToken;
         if (_.isFunction(Steedos.isCordova) && Steedos.isCordova()) {
             address = Meteor.absoluteUrl("accounts/a/#/signup?invite_token=" + inviteToken)
         }

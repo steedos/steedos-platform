@@ -13,7 +13,7 @@ require('dotenv-flow').config({path: path.join(__dirname, '..')});
 test('注册账户', async ({ page }) => {
   const name = `test_${Date.now()}`;
   await page.goto(process.env.ROOT_URL);
-  await page.goto(`${process.env.ROOT_URL}/accounts/a/#/login?redirect_uri=/`);
+  await page.goto(`${process.env.ROOT_URL}/login?redirect_uri=/`);
   await page.getByRole('button', { name: '注册新账户' }).click();
   await page.getByPlaceholder('您的邮箱').click();
   await page.getByPlaceholder('您的邮箱').fill(`${name}@steedos.com`);

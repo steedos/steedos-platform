@@ -15,7 +15,7 @@ module.exports = {
             }
             if (!isPasswordEmpty) {
                 // Modal.show("reset_password_modal");
-                Steedos.openWindow(Steedos.absoluteUrl("/accounts/a/#/update-password"))
+                Steedos.openWindow(Steedos.absoluteUrl("/update-password"))
                 return;
             }
         }
@@ -29,20 +29,21 @@ module.exports = {
                         password: CryptoJS.SHA256(inputValue).toString()
                     })
                 });
+                if(!result){
+                    return SteedosUI.notification.error({message: '修改密码失败,请稍后再试'});
+                }
                 if (result.error) {
-                    toastr.error(result.error);;
+                    SteedosUI.notification.error({message: result.error});
                 }else{
-                    return toastr.success(t("Change password successfully"));
+                    return SteedosUI.notification.success({message: t("Change password successfully")});
                 }
                 if (!isPasswordEmpty) {
-                    // Modal.show("reset_password_modal");
-                    Steedos.openWindow(Steedos.absoluteUrl("/accounts/a/#/update-password"))
+                    Steedos.openWindow(Steedos.absoluteUrl("/update-password"))
                     return;
                 }
             } catch (err) {
                 console.error(err);
-                toastr.error(err);
-                window.$("body").removeClass("loading");
+                SteedosUI.notification.error({message: err.message});
             }
         }
 
