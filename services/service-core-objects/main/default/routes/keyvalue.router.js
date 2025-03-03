@@ -2,10 +2,10 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2024-04-17 16:17:02
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-04-18 11:49:39
+ * @LastEditTime: 2025-03-03 16:28:42
  * @Description:
  */
-const { requireAuthentication } = require("@steedos/core");
+const { requireAuthentication } = require("@steedos/auth");
 const { getObject } = require("@steedos/objectql");
 const express = require("express");
 const router = express.Router();
