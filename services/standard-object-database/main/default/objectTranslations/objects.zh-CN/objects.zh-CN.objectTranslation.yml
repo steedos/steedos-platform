@@ -76,7 +76,7 @@ fields:
     help: 
     description: 
   enable_chatter:
-    label: 允许添加留言
+    label: 允许添加评论
     help: 
     description: 
   enable_inline_edit:

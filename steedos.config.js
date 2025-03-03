@@ -1,4 +1,6 @@
 
+require('dotenv-flow').config({path: process.cwd()});
+
 // Moleculer Configuration
 // https://moleculer.services/docs/0.14/configuration.html
 module.exports = {

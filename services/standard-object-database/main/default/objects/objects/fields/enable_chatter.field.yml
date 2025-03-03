@@ -1,6 +1,6 @@
 name: enable_chatter
-hidden: true
-label: Enable Chatter
+group: switch
+hidden: false
+label: Enable Comments
 sort_no: 300
 type: boolean
-visible_on: '{{false}}'
