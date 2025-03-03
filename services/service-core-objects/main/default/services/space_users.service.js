@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-06 18:08:21
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-04-24 18:55:10
+ * @LastEditTime: 2025-03-03 11:46:10
  * @Description: 
  */
 
@@ -313,7 +313,7 @@ module.exports = {
             let spaceUser = await getObject('space_users').findOne(suId, { fields: ["user"] });
             let result = await getObject('users').findOne(spaceUser.user)
             if (result) {
-                return { lockout: result.lockout }
+                return { lockout: result.lockout || false }
             }
             else {
                 throw new Error("user not find.")

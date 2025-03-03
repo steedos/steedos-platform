@@ -20,7 +20,7 @@ amis_schema: |-
                 "api": {
                   "url": "/service/api/space_users/disable",
                   "method": "post",
-                  "requestAdaptor": "debugger;api.data={suId: context.recordId}\n\n\nreturn api;",
+                  "requestAdaptor": "api.data={suId: context.recordId}\n\n\nreturn api;",
                   "adaptor": "",
                   "messages": {
                     "success": "用户已禁用",
