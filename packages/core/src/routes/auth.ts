@@ -1,1 +1,0 @@
-export { requireAuthentication } from "@steedos/auth";

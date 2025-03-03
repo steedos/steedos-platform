@@ -10,7 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "@steedos/auth": "3.0.0-beta.2",
-    "@steedos/core": "3.0.0-beta.2",
     "@steedos/metadata-core": "3.0.0-beta.2",
     "@steedos/objectql": "3.0.0-beta.2",
     "@steedos/service-package-loader": "3.0.0-beta.2",

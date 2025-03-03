@@ -11,7 +11,7 @@
     "description": "steedos package",
     "repository": {},
     "dependencies": {
-        "@steedos/core": "3.0.0-beta.2",
+        "@steedos/auth": "3.0.0-beta.2",
         "@steedos/i18n": "3.0.0-beta.2",
         "@steedos/objectql": "3.0.0-beta.2",
         "express": "4.18.1"

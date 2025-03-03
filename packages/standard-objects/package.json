@@ -12,7 +12,6 @@
   "gitHead": "72fa51bda8ff714d5fdb933bf0a45ea4cb82df74",
   "dependencies": {
     "@steedos/auth": "3.0.0-beta.2",
-    "@steedos/core": "3.0.0-beta.2",
     "@steedos/filters": "3.0.0-beta.2",
     "@steedos/i18n": "3.0.0-beta.2",
     "@steedos/metadata-core": "3.0.0-beta.2",
