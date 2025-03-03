@@ -1,8 +1,0 @@
-name: object_listviews
-label: List View
-icon: forecasts
-version: 2
-enable_dataloader: false
-hidden: true
-paging:
-  enabled: false

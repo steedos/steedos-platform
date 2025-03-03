@@ -1,8 +1,0 @@
-name: mobile_columns
-label: Mobile Columns
-type: table
-is_wide: true
-depend_on:
-  - object_name
-group: show_columns
-sort_no: 350

@@ -1,5 +1,0 @@
-name: sort.$
-label: Order
-blackbox: true
-type: object
-sort_no: 300

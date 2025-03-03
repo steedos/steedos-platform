@@ -1,6 +1,0 @@
-name: enable_amis_schema
-label: Enable amis_schema
-type: boolean
-group: advanced
-required: false
-sort_no: 420

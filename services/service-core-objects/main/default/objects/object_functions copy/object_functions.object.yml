@@ -1,8 +1,0 @@
-name: object_functions
-icon: code_playground
-label: Object Functions
-version: 2
-hidden: true
-enable_dataloader: false
-paging:
-  enabled: false

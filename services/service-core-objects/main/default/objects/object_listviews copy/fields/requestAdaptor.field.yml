@@ -1,8 +1,0 @@
-name: requestAdaptor
-label: Request Adaptor
-type: code
-language: javascript
-is_wide: true
-inlineHelpText: 函数签名：(api) => api， 数据在 api.data 中，修改后返回 api 对象。
-group: data_interface
-sort_no: 440
