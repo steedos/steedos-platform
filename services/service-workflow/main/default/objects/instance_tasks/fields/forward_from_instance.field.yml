@@ -1,5 +1,0 @@
-name: forward_from_instance
-label: 转发来源申请单
-type: lookup
-reference_to: instances
-sort_no: 410

@@ -1,5 +1,0 @@
-name: category
-label: 分类
-type: lookup
-reference_to: categories
-sort_no: 440

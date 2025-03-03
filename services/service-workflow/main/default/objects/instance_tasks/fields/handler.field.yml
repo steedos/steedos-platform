@@ -1,5 +1,0 @@
-name: handler
-label: 实际处理人
-type: lookup
-reference_to: users
-sort_no: 70

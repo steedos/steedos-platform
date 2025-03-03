@@ -1,5 +1,0 @@
-name: submitter
-label: 申请单提交人
-type: lookup
-reference_to: users
-sort_no: 270

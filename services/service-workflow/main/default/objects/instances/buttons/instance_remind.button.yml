@@ -1,6 +1,0 @@
-name: instance_remind
-is_enable: false
-label: 催办
-'on': record_only
-type: amis_button
-visible: true

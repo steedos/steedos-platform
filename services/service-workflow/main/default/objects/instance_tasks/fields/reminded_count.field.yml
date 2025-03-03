@@ -1,6 +1,0 @@
-name: reminded_count
-label: 催办提醒次数
-type: number
-hidden: true
-omit: true
-sort_no: 190

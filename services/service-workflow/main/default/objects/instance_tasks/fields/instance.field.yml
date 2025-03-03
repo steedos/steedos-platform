@@ -1,6 +1,0 @@
-name: instance
-label: 申请单
-type: lookup
-reference_to: instances
-sort_no: 20
-index: true

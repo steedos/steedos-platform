@@ -1,6 +1,0 @@
-name: is_latest_approve
-label: 是否是同一个用户在同一个申请单中最新的审批记录
-type: boolean
-omit: true
-hidden: true
-sort_no: 450

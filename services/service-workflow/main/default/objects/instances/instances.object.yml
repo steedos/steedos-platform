@@ -1,3 +1,0 @@
-extend: instances
-enable_enhanced_lookup: true
-enable_dataloader: false

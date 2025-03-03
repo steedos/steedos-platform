@@ -1,5 +1,0 @@
-name: form
-label: 表单
-type: lookup
-reference_to: forms
-sort_no: 350

@@ -1,8 +1,0 @@
-name: flow
-label: 流程
-type: lookup
-reference_to: flows
-sort_no: 330
-amis:
-  type: 'steedos-select-flow'
-  mode: "tree-select"

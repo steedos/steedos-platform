@@ -1,5 +1,0 @@
-name: start_date
-label: 开始时间
-type: datetime
-sort_no: 120
-sortable: true

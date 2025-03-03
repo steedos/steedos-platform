@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 1985-10-26 16:15:00
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-11-18 18:04:46
+ * @LastEditTime: 2025-03-03 15:20:32
  * @Description: 
  */
 "use strict";
@@ -25,12 +25,6 @@ module.exports = {
 			path: __dirname,
 			name: packageName,
 			isPackage: false,
-		},
-		jwt: {
-			enable: validator.toBoolean(process.env.STEEDOS_IDENTITY_JWT_ENABLED || 'false', true),
-		},
-		unpkg:{
-			enable: validator.toBoolean(process.env.STEEDOS_UNPKG_ENABLE_LOCAL || 'false', true)
 		}
 	},
 

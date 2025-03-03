@@ -1,5 +1,0 @@
-name: distribute_from_instance
-label: 分发来源申请单
-type: lookup
-reference_to: instances
-sort_no: 400

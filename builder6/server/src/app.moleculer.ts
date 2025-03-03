@@ -61,7 +61,6 @@ export class AppMoleculer extends Service {
 
     this.broker.createService(require("@steedos/service-accounts"));
     this.broker.createService(require("@steedos/service-pages"));
-    // this.broker.createService(require("@steedos/service-workflow"));
 
     this.broker.createService(require("@steedos/service-plugin-amis"));
     // this.broker.createService(require("@steedos/service-files"));

@@ -1,7 +1,0 @@
-name: object_instances
-desktop: true
-label: 审批单
-mobile: true
-object: instances
-permissions: []
-type: object

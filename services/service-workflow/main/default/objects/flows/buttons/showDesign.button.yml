@@ -1,6 +1,0 @@
-name: showDesign
-is_enable: true
-label: 表单设计器
-'on': record_only
-visible: true
-sort: 300

@@ -1,6 +1,0 @@
-name: instance_reopen
-is_enable: false
-label: 取消隐藏
-'on': record_only
-type: amis_button
-visible: true

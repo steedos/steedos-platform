@@ -1,6 +1,0 @@
-name: deadline
-label: 催办截止时间
-type: datetime
-hidden: true
-omit: true
-sort_no: 170

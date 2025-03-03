@@ -1,7 +1,0 @@
-name: object_instance_tasks
-desktop: true
-label: 审批
-mobile: true
-object: instance_tasks
-permissions: []
-type: object

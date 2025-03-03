@@ -1,5 +1,0 @@
-name: values
-label: 表单内容
-type: object
-blackbox: true
-sort_no: 160

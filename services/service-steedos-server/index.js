@@ -81,74 +81,10 @@ module.exports = {
 			} else {
 				steedosConfig.setTenant({ enable_create_tenant: true, enable_register: true });
 			}
-			// 工作区未初始化时，才初始化软件包
-			// const allowInit = await this.allowInit(records);
-			// if (!allowInit) {
-			// 	return
-			// }
 			try {
 				await ctx.broker.call('@steedos/service-project.initialPackages', {}, {});
 			} catch (error) {
 				console.error(`initialPackages error`, error)
-			}
-		},
-		'trigger.loaded': async function (ctx) {
-			const { objectName } = ctx.params;
-			// 判断能否获取到对象
-			if (Creator.getObject(objectName)){
-				const localObjectConfig = objectql.getObjectConfig(objectName);
-				if (localObjectConfig) {
-					let creatorTriggers = {};
-					if(Creator.Objects[localObjectConfig.name]?.triggers){
-						creatorTriggers = Creator.Objects[localObjectConfig.name].triggers
-					}
-					objectql.extend(localObjectConfig, { triggers:  creatorTriggers || {}}, { triggers: localObjectConfig._baseTriggers })
-					Creator.loadObjects(localObjectConfig, localObjectConfig.name);
-				}
-
-				
-			}
-		},
-		'clientJS.changed': async function (ctx){
-			if (this.clientJSChangeTimeoutId) {
-				clearTimeout(this.clientJSChangeTimeoutId)
-			}
-			this.clientJSChangeTimeoutId = setTimeout(() => {
-				const steedos = require('@steedos/core')
-				steedos.loadClientScripts();
-				this.clientJSChangeTimeoutId = null;
-			}, 1000)
-		},
-
-		"*.*.metadata.objects.inserted": async function (ctx) {
-			let objectConfig = ctx.params.data;
-			// console.log(`${objectConfig.datasource}.${getObjectServiceName(objectConfig.name)}.metadata.objects.inserted`);
-			// 对象发生变化时，重新创建Steedos Object 对象
-			const datasource = objectql.getDataSource(objectConfig.datasource);
-			if (datasource) {
-				const localObjectConfig = objectql.getObjectConfig(objectConfig.name);
-				if (localObjectConfig) {
-					objectConfig.listeners = localObjectConfig.listeners;
-					objectConfig.methods = localObjectConfig.methods;
-				}
-
-				if (datasource.name === 'meteor' && Creator.Objects[objectConfig.name]) {
-					objectql.jsonToObject(objectConfig);
-					const localTriggers = (localObjectConfig).triggers;
-					if (localTriggers) {
-						objectConfig.triggers = localTriggers;
-					}
-					objectql.extend(objectConfig, { triggers: Creator.Objects[objectConfig.name].triggers }, { triggers: (localObjectConfig)._baseTriggers })
-					Creator.Objects[objectConfig.name] = objectConfig;
-
-					await Future.task(() => {
-						try {
-							Creator.loadObjects(objectConfig, objectConfig.name);
-						} catch (error) {
-							this.logger.error('metadata.objects.inserted error', objectConfig.name, error)
-						}
-					}).promise();
-				}
 			}
 		},
 
@@ -318,12 +254,6 @@ module.exports = {
 
 		// 设置魔方Id
 		async setMasterSpaceId() {
-
-			// if (validator.trim(process.env.STEEDOS_TENANT_MASTER_ID || '').length == 0) {
-			// 	process.env.STEEDOS_TENANT_MASTER_ID = (await objectql.getObject('spaces').directFind({ fields: ['_id', 'name', 'admins'] }))[0]['_id']
-			// 	this.logger.info(`Set master space id to first space: ${process.env.STEEDOS_TENANT_MASTER_ID} `)
-			// }		
-			
 			this.masterSpaceId = process.env.STEEDOS_TENANT_MASTER_ID
 			this.setSettings({
 				PUBLIC_SETTINGS: {
@@ -331,94 +261,7 @@ module.exports = {
 				}
 			})
 		},
-		/**
-		 * 导入流程
-		 * @param {object} flow 
-		 * @param {string} name 
-		 * @param {string} spaceId 非必传
-		 */
-		importFlow: async function(flow, name, spaceId) {
-            await Future.task(() => {
-                try {
-                    try {
-                        if(!db){
-                            return
-                        }
-                        if(!steedosImport){
-                            return
-                        }
-                    } catch (error) {
-                        return ;
-                    }
-                    
-                    if(db && db.flows && steedosImport){
-                        const steedosConfig = objectql.getSteedosConfig();
-                        let space;
-                        if (spaceId) {
-                            space = db.spaces.findOne(spaceId)
-                        }
-                        if(!space && steedosConfig && steedosConfig.tenant && steedosConfig.tenant._id){
-                            space = db.spaces.findOne(steedosConfig.tenant._id)
-                        }
-                        if(!space){
-                            space = db.spaces.findOne()
-                        }
-                        if(!space){
-                            this.logger.debug(`import flow ${flow.name} fail. not find space in db`);
-                            return ;
-                        }
-                        if(!flow.api_name){
-                            this.logger.warn(`not find api_name in file`);
-                            return ;
-                        }
-                        const dbFlow = db.flows.findOne({api_name: flow.api_name, space: space._id});
-                        if(!dbFlow){
-                            if(flow && flow.current){
-                                if(!_.has(flow.current,'fields')){
-                                    flow.current.fields = [];
-                                }
-                            }
-                            this.logger.info(`insert flow ${flow.api_name} from ${name}`);
 
-                            let company_id = null;
-                            if(flow.company_id){
-                                let count = Creator.getCollection("company").find({ _id: flow.company_id, space: space._id }).count();
-                                if(count > 0){
-                                    company_id = flow.company_id
-                                }
-                            }
-                            // 默认分部
-                            if (!company_id) {
-                                const rootOrg = db.organizations.findOne({ space: space._id, is_company: true, parent: null });
-                                if (rootOrg && rootOrg.company_id) {
-                                    company_id = rootOrg.company_id;
-                                }
-                            }
-
-                            return steedosImport.workflow(space.owner, space._id, flow, flow.state == 'enabled' ? true : false, company_id);
-                        }
-                        this.logger.debug(`not import flow. find flow `, dbFlow._id)
-                    }
-
-                } catch (error) {
-                    this.logger.error(error)
-                }
-            }).promise();
-            
-        },
-
-		allowInit: async function (spaces) {
-			if (spaces && spaces.length > 0) {
-				return false;
-			}
-			// 查询库中工作区记录，如果有工作区记录则不初始化
-			const spaceObj = objectql.getObject('spaces');
-			let spacesCount = await spaceObj.count({});
-			if (spacesCount > 0) {
-				return false;
-			}
-			return true;
-		}
 	},
 
 	/**
@@ -476,7 +319,6 @@ function getBuiltinPlugins () {
 		// "@steedos/webapp-public",
 		// "@steedos/service-ui",
 		"@steedos/service-cachers-manager", // 依赖了 steedos/core
-		"@steedos/workflow",
 		"@steedos/accounts",
 		// "@steedos/word-template",
 		"@steedos/metadata-api", // ? TODO: 为啥使用meteor package load
@@ -485,7 +327,6 @@ function getBuiltinPlugins () {
 		// "@steedos/service-accounts",
 		// "@steedos/service-charts",
 		// "@steedos/service-pages",
-		// "@steedos/service-workflow",
 		// "@steedos/service-plugin-amis",
 		// "@steedos/standard-process"
 		// "@steedos/service-files",

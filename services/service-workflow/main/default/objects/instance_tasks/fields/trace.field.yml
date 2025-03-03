@@ -1,6 +1,0 @@
-name: trace
-label: Trace
-type: text
-omit: true
-hidden: true
-sort_no: 30
