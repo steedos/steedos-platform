@@ -15,16 +15,29 @@
     "docker": "docker-compose up",
     "i18n": "lerna run i18n",    
     "repl": "moleculer-runner  --config steedos.config.js --repl",
-    "sync": "lerna exec --no-private  -- cnpm sync \\$LERNA_PACKAGE_NAME"
+    "sync": "lerna exec --no-private  -- cnpm sync \\$LERNA_PACKAGE_NAME",
+    "prepare": "husky install"
   },
   "resolutions": {},
+  "lint-staged": {
+    "**/*.ts": [
+      "prettier --ignore-path ./.prettierignore --write"
+    ],
+    "packages/**/*.json": [
+      "prettier --ignore-path ./.prettierignore --write"
+    ]
+  },
   "devDependencies": {
+    "@commitlint/cli": "19.7.1",
+    "@commitlint/config-angular": "19.7.1",
     "@babel/core": "^7.8.4",
     "@types/node": "18.0.3",
     "cnpm": "9.0.1",
     "concurrently": "8.2.1",
     "lerna": "^4.0.0",
+    "lint-staged": "15.4.3",
     "nodemon": "^2.0.19",
+    "husky": "9.1.7",
     "tslib": "^2.4.0",
     "typescript": "5.7.3",
     "vite": "^6.1.0",
