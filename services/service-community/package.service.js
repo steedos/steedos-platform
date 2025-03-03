@@ -2,7 +2,7 @@
  * @Author: yinlianghui@steedos.com
  * @Date: 2022-07-20 21:31:37
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-01-15 17:43:55
+ * @LastEditTime: 2025-03-02 19:57:25
  * @Description: 
  */
 "use strict";
@@ -136,8 +136,6 @@ module.exports = {
         // 国际化
         this.broker.createService(require("@steedos/service-i18n"));
 
-		// 启动 steedos-server 服务
-        this.broker.createService(require("@steedos/service-steedos-server"));
 		
 		// 启动 本地 CDN
         this.broker.createService(require("@steedos/unpkg"));

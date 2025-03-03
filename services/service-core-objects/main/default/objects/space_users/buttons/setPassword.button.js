@@ -21,7 +21,6 @@ module.exports = {
         }
 
         var doUpdate = function (inputValue) {
-            window.$("body").addClass("loading");
             try {
                 var result = Steedos.authRequest("/api/user/setSpaceUserPassword", {
                     type: 'post', async: false, data: JSON.stringify({
@@ -30,11 +29,9 @@ module.exports = {
                         password: CryptoJS.SHA256(inputValue).toString()
                     })
                 });
-                window.$("body").removeClass("loading");
                 if (result.error) {
                     toastr.error(result.error);;
                 }else{
-                    swal.close();
                     return toastr.success(t("Change password successfully"));
                 }
                 if (!isPasswordEmpty) {
