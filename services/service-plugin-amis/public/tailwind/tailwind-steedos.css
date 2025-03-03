@@ -56,31 +56,12 @@
   position: static !important
 }
 
-.fixed {
-  position: fixed
-}
-
 .absolute {
   position: absolute
 }
 
-.relative {
-  position: relative
-}
-
 .sticky {
   position: sticky
-}
-
-.inset-0 {
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px
-}
-
-.z-20 {
-  z-index: 20
 }
 
 .col-span-2 {
@@ -103,10 +84,6 @@
   margin: 0.25rem
 }
 
-.-m-8 {
-  margin: -2rem
-}
-
 .my-2 {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem
@@ -115,11 +92,6 @@
 .mx-4 {
   margin-left: 1rem;
   margin-right: 1rem
-}
-
-.-mx-11 {
-  margin-left: -2.75rem;
-  margin-right: -2.75rem
 }
 
 .mb-0 {
@@ -202,10 +174,6 @@
   height: 2.25rem
 }
 
-.h-0 {
-  height: 0px
-}
-
 .w-full {
   width: 100%
 }
@@ -222,16 +190,8 @@
   width: 2.25rem
 }
 
-.w-6\/12 {
-  width: 50%
-}
-
 .min-w-\[200px\] {
   min-width: 200px
-}
-
-.min-w-\[240px\] {
-  min-width: 240px
 }
 
 .max-w-4xl {
@@ -250,21 +210,8 @@
   flex-grow: 1
 }
 
-.-translate-x-0 {
-  --tw-translate-x: -0px;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
-}
-
 .transform {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
-}
-
-.flex-row {
-  flex-direction: row
-}
-
-.flex-col {
-  flex-direction: column
 }
 
 .items-center {
@@ -287,10 +234,6 @@
   overflow: hidden
 }
 
-.overflow-x-auto {
-  overflow-x: auto
-}
-
 .overflow-y-auto {
   overflow-y: auto
 }
@@ -298,10 +241,6 @@
 .truncate {
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap
-}
-
-.whitespace-nowrap {
   white-space: nowrap
 }
 
@@ -467,10 +406,6 @@
   color: rgb(75 85 99 / var(--tw-text-opacity))
 }
 
-.underline {
-  text-decoration-line: underline
-}
-
 .shadow {
   --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
@@ -485,38 +420,6 @@
 
 .filter {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)
-}
-
-.transition {
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms
-}
-
-.duration-300 {
-  transition-duration: 300ms
-}
-
-.ease-in-out {
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1)
-}
-
-.hover\:ml-2\.5:hover {
-  margin-left: 0.625rem
-}
-
-.hover\:ml-2:hover {
-  margin-left: 0.5rem
-}
-
-.hover\:inline-block:hover {
-  display: inline-block
-}
-
-.hover\:cursor-pointer:hover {
-  cursor: pointer
 }
 
 .focus\:outline-none:focus {
@@ -544,15 +447,6 @@
   .sm\:border-gray-300 {
     --tw-border-opacity: 1;
     border-color: rgb(209 213 219 / var(--tw-border-opacity))
-  }
-
-  .sm\:px-3 {
-    padding-left: 0.75rem;
-    padding-right: 0.75rem
-  }
-
-  .sm\:pt-3 {
-    padding-top: 0.75rem
   }
 
   .sm\:shadow {
