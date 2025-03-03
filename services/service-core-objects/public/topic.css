@@ -1,0 +1,129 @@
+:root {
+    --private: #1e3a8a;
+    --private-bg: #1e3a8a38;
+    --private-onHover-bg: #1e3a8a60;
+    --Tabs--line-onHover-borderColor: var(--private);
+    --Tabs--line-active-color: var(--private);
+    --SearchBox-hover-color: var(--private);
+    --Menu-light-selectedIndicator-color: var(--private);
+    --fieldSet-legend-border-color: var(--private);
+    --button-default-default-font-color: var(--private);
+    --colors-brand-5: var(--private);
+    --colors-other-7: var(--private);
+    --colors-other-5: var(--private);
+    --colors-brand-6: var(--private);
+    --colors-brand-7: var(--private);
+    --button-primary-hover-bg-color: var(--private);
+    --Spinner-color: var(--private);
+    --Table-onChecked-bg: var(--private-bg);
+    --Pick-base-value-bgColor: var(--private-bg);
+    --Form-selectValue-onHover-bg: var(--private-onHover-bg);
+    --button-link-default-font-color: var(--private);
+    --Toast-paddingY: 10px;
+    --Toast-paddingX: 16px;
+}
+.antd-Table-table td.is-sticky{
+    background: unset !important;
+}
+
+.antd-Button--link{
+    --button-default-default-font-color: var(--private);
+    --button-link-default-font-color: var(--private);
+}
+
+.antd-Button{
+    --button-default-default-font-color: var(--private);
+    --button-link-default-font-color: var(--private);
+}
+
+.antd-Checkbox{
+    --button-primary-hover-bg-color: var(--private);
+}
+
+.bg-private{
+    background-color: var(--private) !important;
+}
+
+.steedos-header-container{
+    border-color: var(--private) !important;
+}
+
+.antd-Nav-Menu-inline .antd-Nav-Menu-item-selected{
+    color: var(--private) !important;
+}
+
+.slds-page-header__icon{
+    background-color: var(--private) !important;
+}
+
+.steedos-apps-service .slds-icon_container{
+    background-color: var(--private) !important;
+}
+
+.steedos-object-listview-content .slds-icon_container{
+    background-color: var(--private) !important;
+}
+
+.steedos-object-listview-content .steedos-table-boolean-field .slds-icon_container{
+    background-color: initial !important;
+}
+
+.antd-Nav-Menu-inline .antd-Nav-Menu-item-selected::before{
+    border-right-color: var(--private) !important;
+}
+
+
+.antd-Nav-Menu-light .antd-Nav-Menu-item.antd-Nav-Menu-item-selected {
+    background: #1e3a8a30 !important; 
+}
+
+.antd-Nav-Menu-light .antd-Nav-Menu-item.antd-Nav-Menu-item-active {
+    background: #1e3a8a30 !important; 
+}
+
+.steedos-record-related-header .slds-icon {
+    background-color: var(--private) !important;
+}
+
+body a {
+    color: var(--private);
+}
+
+body a:hover {
+    color: var(--private);
+}
+
+
+.antd-Avatar{
+    background: var(--private) !important;
+}
+
+.slds-icon-utility-check > span{
+    color: #fff;
+}
+
+.steedos-table-boolean-field .antd-Form-static .slds-icon-utility-check > span{
+    color: var(--private) !important;
+}
+
+
+.antd-Nav-Menu-horizontal .antd-Nav-Menu-item.antd-Nav-Menu-item-selected:after{
+    background: var(--private) !important;
+}
+
+.text-primary {
+    color: var(--private) !important;
+}
+
+.slds-text-link {
+    color: var(--private) !important;
+}
+
+.steedos-header-container-line-two .ant-dropdown-trigger .antd-TplField {
+    color: var(--private) !important;
+    font-weight: 600;
+}
+
+.steedos-amis-form .slds-icon-utility-check > span {
+    color: var(--private);
+}
