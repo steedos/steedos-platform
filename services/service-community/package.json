@@ -14,7 +14,6 @@
     "@steedos-builder/amis-editor": "6.3.0-beta.13",
     "@steedos/ee_sso-oidc": "3.0.0-beta.2",
     "@steedos/service-ancillary": "3.0.0-beta.2",
-    "@steedos/service-charts": "3.0.0-beta.2",
     "@steedos/service-i18n": "3.0.0-beta.2",
     "@steedos/service-identity-jwt": "3.0.0-beta.2",
     "@steedos/service-metadata-server": "3.0.0-beta.2",

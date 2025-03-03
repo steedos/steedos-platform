@@ -1,9 +1,0 @@
-name: datasource
-type: master_detail
-label: 数据源
-reference_to: datasources
-reference_to_field: name
-showIcon: false
-required: true
-sort_no: 300
-defaultValue: 'default'

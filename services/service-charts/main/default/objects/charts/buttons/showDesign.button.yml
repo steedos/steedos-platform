@@ -1,5 +1,0 @@
-name: showDesign
-is_enable: true
-label: 图表设计器
-'on': record_only
-visible: true

@@ -1,5 +1,0 @@
-name: options
-type: object
-hidden: true
-omit: true
-blackbox: true

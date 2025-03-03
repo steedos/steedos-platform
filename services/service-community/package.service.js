@@ -2,7 +2,7 @@
  * @Author: yinlianghui@steedos.com
  * @Date: 2022-07-20 21:31:37
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-03-03 15:30:41
+ * @LastEditTime: 2025-03-03 15:44:37
  * @Description: 
  */
 "use strict";
@@ -154,10 +154,6 @@ module.exports = {
 		// console.log(require('chalk').blue('pm-'.repeat(10)));
 		await this.broker.call('@steedos/service-project.addPackages', {
 			packages: [
-				{
-					name: '@steedos/service-charts',
-					enable: true
-				},
 				{
 					name: '@steedos/steedos-plugin-schema-builder',
 					enable: false
