@@ -146,16 +146,7 @@ module.exports = {
 	 * Events
 	 */
 	events: {
-		"steedos-server.started": {
-            async handler() {
-                await this.publicClientJS();
-            }
-        },
-        "space.initialized": {
-            async handler() {
-                await this.publicClientJS();
-            }
-        }
+		
 	},
 
 	/**
@@ -189,7 +180,6 @@ module.exports = {
                         }
                         const cacheTime = 86400000 * 1; // one day
                         router.use(`${routerPath}/pages/js`, express.static(publicPath, { maxAge: cacheTime }));
-                        // WebApp.connectHandlers.use(router);
                     } catch (error) {
                         console.error(error)
                         this.settings.loadedPublicClientJS = false;
@@ -212,9 +202,7 @@ module.exports = {
 	 * Service started lifecycle event handler
 	 */
 	async started() {
-		this.broker.waitForServices("steedos-server").then(async () => {
-			await this.publicClientJS()
-		});
+		await this.publicClientJS()
 	},
 
 	/**

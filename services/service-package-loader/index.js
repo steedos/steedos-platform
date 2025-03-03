@@ -75,19 +75,12 @@ module.exports = {
      * Events
      */
     events: {
-        "steedos-server.started": {
-            async handler() {
-                await this.loadDataOnServiceStarted();
-            }
-        },
         "space.initialized": {
             async handler(ctx) {
                 const spaceDoc = ctx.params
                 const spaceId = spaceDoc._id
                 // 扫描main/default/data文件夹
                 await this.importData(path.join(this.settings.packageInfo.path, 'main', 'default', 'data'), false, spaceId);
-                await this.loadDataOnServiceStarted(spaceId);
-
                 let packageInfo = this.settings.packageInfo;
                 if (!packageInfo) {
                     return;
@@ -106,7 +99,6 @@ module.exports = {
      */
     methods: {
         ...methods,
-
         checkPackageMetadataFiles: async function (packagePath) {
             // let publicPath = path.join(packagePath, 'public');
             // if (this.settings.packageInfo.loadPublicFolder && fs.existsSync(publicPath)) {
@@ -133,40 +125,6 @@ module.exports = {
             //     this.broker.logger.warn(`The router.js file has been deprecated. ${filePath}`); 
             // }
         },
-        sendPackageFlowToDb: async function(packagePath, name, spaceId) {
-            const flows = loadFlowFile.load(path.join(packagePath, '**'));
-            for (const apiName in flows) {
-                const flow = flows[apiName];
-                const flowFilePath = flow.__filename;
-                delete flow.__filename;
-                try {
-                    await this.importFlow(flow, name, spaceId);
-                } catch (error) {
-                    console.error(`importFlow error`, flowFilePath, error)
-                }
-            }
-        },
-
-        importFlow: async function(flow, name, spaceId) {
-            return await this.broker.call('steedos-server.importFlow', {flow, name, spaceId});
-        }, 
-        /**
-         * @param {string} spaceId 非必传
-         * @returns 
-         */
-        loadDataOnServiceStarted: async function(spaceId){
-            let packageInfo = this.settings.packageInfo;
-            if (!packageInfo) {
-                return;
-            }
-            const { path : _path } = packageInfo;
-
-            this.loadPackagePublicFiles(_path);
-            if(_path){
-                this.sendPackageFlowToDb(_path, null, spaceId)
-                processLoader.sendPackageProcessToDb(_path);
-            }
-        },
         loadPackageMetadataFiles: async function (packagePath, name, datasourceName) {
             this.broker.logger.debug(`Loading package from ${packagePath}`)
             packagePath = path.join(packagePath, '**');
@@ -185,7 +143,6 @@ module.exports = {
             await functionYmlLoader.load(this.broker, packagePath, name);
             await importLoader.load(this.broker, packagePath, name);
             await printLoader.load(this.broker, packagePath, name);
-            // this.core.loadClientScripts();
             const routersInfo = await this.loadPackageRouters(packagePath, name);
             await this.broker.call(`@steedos/service-packages.setPackageRoutersInfo`, {packageName: name, data: routersInfo});
             await this.broker.emit(`translations.object.change`, {});
@@ -232,7 +189,6 @@ module.exports = {
                         let routerPath = "";
                         const cacheTime = 86400000 * 1; // one day
                         router.use(routerPath, express.static(publicPath, { maxAge: cacheTime }));
-                        // WebApp.connectHandlers.use(router);
                     } catch (error) {
                         console.error(error)
                         this.settings.loadedPackagePublicFiles = false;
@@ -250,8 +206,6 @@ module.exports = {
             return await this.broker.destroyService(this);
         },
         async onStarted(){
-
-            // 扫描main/default/data文件夹，在加载.flow.json前执行
             const primarySpaceId = await this.broker.call("objectql.getPrimarySpaceId");
             if (primarySpaceId) {
                 await this.importData(path.join(this.settings.packageInfo.path, 'main', 'default', 'data'), true, primarySpaceId);
@@ -278,9 +232,6 @@ module.exports = {
                 console.log(`service ${this.name} started`);
                 return;
             }
-            // this.broker.waitForServices("steedos-server").then(async () => {
-            //     await this.loadDataOnServiceStarted()
-            // });
             
             if (true != isUnmanaged) {
                 // 受管软件包加载元数据文件，非受管软件包不加载

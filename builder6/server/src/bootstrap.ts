@@ -125,6 +125,4 @@ export async function bootstrap() {
   }
 
   await app.listen(process.env.B6_PORT ?? 5100);
-
-  logger.log(`🚀 Application is running on: ${process.env.ROOT_URL}`);
 }

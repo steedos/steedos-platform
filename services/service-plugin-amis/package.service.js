@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-05-19 11:38:30
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-08-02 15:05:31
+ * @LastEditTime: 2025-03-03 15:56:04
  * @Description: 
  */
 "use strict";
@@ -49,16 +49,7 @@ module.exports = {
 	 * Events
 	 */
 	events: {
-		"steedos-server.started": {
-            async handler() {
-                await this.publicClientJS();
-            }
-        },
-        "space.initialized": {
-            async handler() {
-                await this.publicClientJS();
-            }
-        }
+		
 	},
 
 	/**
@@ -115,9 +106,7 @@ module.exports = {
 	 * Service started lifecycle event handler
 	 */
 	async started() {
-		this.broker.waitForServices("steedos-server").then(async () => {
-			await this.publicClientJS()
-		});
+		await this.publicClientJS()
 	},
 
 	/**

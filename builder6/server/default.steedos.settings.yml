@@ -6,6 +6,7 @@ datasources:
       - "./steedos-app/**"
 public:
   NODE_ENV: ${NODE_ENV}
+  masterSpaceId: ${STEEDOS_TENANT_MASTER_ID}
   amis:
     map_ak: ${STEEDOS_AMIS_MAP_KEY}
     map_vendor: ${STEEDOS_AMIS_MAP_VENDER}

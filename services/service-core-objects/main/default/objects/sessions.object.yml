@@ -15,7 +15,7 @@ fields:
     filterable: true
     is_name: true
   token: 
-    label: Token
+    label: Tokensessions
     type: text
     required: true
   userAgent: 

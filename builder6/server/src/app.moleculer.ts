@@ -1,11 +1,16 @@
 import { Service, Context, ServiceBroker } from 'moleculer';
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectBroker } from '@builder6/moleculer';
+import { getSteedosConfigs } from './config';
+
+
 
 @Injectable()
 export class AppMoleculer extends Service {
+  private readonly _logger = new Logger(AppMoleculer.name);
+  started: Boolean = false;
   constructor(
-    @InjectBroker() broker: ServiceBroker,
+    @InjectBroker() broker: ServiceBroker
   ) {
     super(broker);
 
@@ -14,6 +19,44 @@ export class AppMoleculer extends Service {
       name: '@steedos/server',
       settings: {},
       actions: {
+      },
+      events: {
+        '$packages.changed': async (ctx) => {
+
+          if(this.started === true){
+            return ;
+          }
+
+          this.started = true;
+
+          ctx.broker.broadcast('@steedos/server.started')
+
+          const records: [any] = await broker.call("objectql.directFind", {
+              objectName: 'spaces',
+              query: { top: 1, fields: ['_id'], sort: { created: -1 } }
+          }, {});
+          const steedosConfig = getSteedosConfigs();
+          if (records.length > 0) {
+            process.env.STEEDOS_TENANT_ID = records[0]._id;
+            steedosConfig.setTenant({ _id: records[0]._id });
+          } else {
+            steedosConfig.setTenant({ enable_create_tenant: true, enable_register: true });
+          }
+          try {
+            await ctx.broker.call('@steedos/service-project.initialPackages', {}, {});
+          } catch (error) {
+            console.error(`initialPackages error`, error)
+          }
+        },
+        "$services.changed": async function (ctx) {
+          const { broker } = ctx
+          const hasLicense = broker.registry.hasService('@steedos/service-license')
+          if (hasLicense){
+            global.HAS_LICENSE_SERVICE = true
+          } else {
+            global.HAS_LICENSE_SERVICE = false
+          }
+        }
       },
       created: this.serviceCreated,
       started: this.serviceStarted,
@@ -47,7 +90,13 @@ export class AppMoleculer extends Service {
     this.broker.createService(require("@steedos/service-cachers-manager"));
 
     this.broker.createService(require("@steedos/data-import"));
+
     this.broker.createService(require("@steedos/service-core-objects"));
+
+    if ("true" == process.env.STEEDOS_ENABLE_STANDARD_ACCOUNTS) {
+      this.broker.createService(require("@steedos/standard-accounts"));
+    }
+
     this.broker.createService(require("@steedos/service-objectql"));
     // rest api
     this.broker.createService(require("@steedos/service-rest"));
@@ -105,15 +154,12 @@ export class AppMoleculer extends Service {
     // await this.broker.call('@steedos/service-project.addPackages', {
     // 	packages: [
     // 		{
-    // 			name: '@steedos/service-charts',
-    // 			enable: true
-    // 		},
-    // 		{
     // 			name: '@steedos/steedos-plugin-schema-bui lder',
     // 			enable: false
     // 		},
     // 	]
     // });
+    this._logger.log(`🚀 Application is running on: ${process.env.ROOT_URL}`);
  }
 
   async serviceStopped() {}

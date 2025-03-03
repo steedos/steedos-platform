@@ -2,7 +2,7 @@
  * @Author: yinlianghui@steedos.com
  * @Date: 2022-07-20 21:31:37
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-03-03 15:44:37
+ * @LastEditTime: 2025-03-03 16:48:28
  * @Description: 
  */
 "use strict";
@@ -53,8 +53,7 @@ module.exports = {
 	 * Events
 	 */
 	events: {
-
-        "steedos-server.started": {
+        "@steedos/server.started": {
             async handler() {
                 if (process.env.B6_OIDC_ENABLED) {
                     objectql.getSteedosConfig().setTenant({
