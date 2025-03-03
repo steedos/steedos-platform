@@ -2,7 +2,7 @@
  * @Author: yinlianghui@steedos.com
  * @Date: 2022-07-20 21:31:37
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-03-02 19:57:25
+ * @LastEditTime: 2025-03-03 15:30:41
  * @Description: 
  */
 "use strict";
@@ -111,9 +111,6 @@ module.exports = {
 		this.broker.createService(require("@steedos/service-files"));
 
 		this.broker.createService(require("@steedos/service-ancillary"));
-
-        // 故障报告服务
-		this.broker.createService(require("@steedos/service-sentry"));
 
 		// 启动 元数据服务
 		this.broker.createService(require("@steedos/service-metadata-server"));

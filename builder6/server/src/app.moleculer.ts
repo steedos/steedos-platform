@@ -67,11 +67,6 @@ export class AppMoleculer extends Service {
 
     // this.broker.createService(require("@steedos/service-ancillary"));
 
-    // 故障报告服务
-    // this.broker.createService(require("@steedos/service-sentry"));
-
-    
-
     // 启动 加载软件包服务
     this.broker.createService(require("@steedos/service-package-registry"));
     // 启动 软件包安装、卸载、重载等操作

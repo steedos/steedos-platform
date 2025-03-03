@@ -25,7 +25,6 @@
     "@steedos/service-pages": "3.0.0-beta.2",
     "@steedos/service-rest": "3.0.0-beta.2",
     "@steedos/service-saas": "3.0.0-beta.2",
-    "@steedos/service-sentry": "3.0.0-beta.2",
     "@steedos/steedos-plugin-schema-builder": "3.0.0-beta.2",
     "@steedos/unpkg": "3.0.0-beta.2",
     "@steedos/workflow_time_trigger": "3.0.0-beta.2",
