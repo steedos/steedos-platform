@@ -1,4 +1,0 @@
-name: record_permissions
-type: object
-visible_on: '{{global.mode ===''read'' ? true : false}}'
-sort_no: 160

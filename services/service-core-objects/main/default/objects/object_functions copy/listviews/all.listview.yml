@@ -1,9 +1,0 @@
-name: all
-columns:
-  - name
-  - objectApiName
-  - isEnabled
-  - is_rest
-  - is_system
-label: All
-filter_scope: space

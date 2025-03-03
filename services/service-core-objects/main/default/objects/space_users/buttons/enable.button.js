@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-12 11:32:06
  * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2025-02-19 15:47:52
+ * @LastEditTime: 2025-03-03 10:19:30
  * @Description: 
  */
 module.exports = {
@@ -65,6 +65,7 @@ module.exports = {
     },
 
     enableVisible: function (object_name, record_id, record_permissions, data) {
+        console.log("=>>>>>>>>>>>", "space_users.enableVisible");
         var record = data && data.record;
         var canEnable = record && !record.user_accepted && (record.user && record.user._id) != Steedos.User.get().userId
         if (!canEnable) {

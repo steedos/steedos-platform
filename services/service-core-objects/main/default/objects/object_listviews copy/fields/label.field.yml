@@ -1,6 +1,0 @@
-name: label
-label: Label
-type: text
-is_name: true
-required: true
-sort_no: 100
