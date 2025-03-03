@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2025-02-17 09:16:48
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-03-02 17:34:02
+ * @LastEditTime: 2025-03-03 09:28:53
  * @Description: 
  */
 
@@ -112,5 +112,42 @@ export const Steedos = {
     Workflow,
     ProcessManager
 };
+
+
+
+function _innerWaitForThing(obj, path, func){
+    const timeGap = 100;
+    return new Promise((resolve, reject) => {
+    setTimeout(() => {
+        let thing = null;
+        if(lodash.isFunction(func)){
+            thing = func(obj, path);
+        }else{
+            thing = lodash.get(obj, path);
+        }
+        if (thing) {
+            return resolve(thing);
+        }
+        reject();
+    }, timeGap);
+    }).catch(() => {
+        return _innerWaitForThing(obj, path, func);
+    });
+}
+
+
+(window as any).waitForThing=(obj, path, func)=>{
+    let thing = null;
+    if(lodash.isFunction(func)){
+        thing = func(obj, path);
+    }else{
+        thing = lodash.get(obj, path);
+    }
+    if (thing) {
+        return Promise.resolve(thing);
+    }
+    return _innerWaitForThing(obj, path, func);
+};
+
 
 (window as any).signOut = Steedos.logout
