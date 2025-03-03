@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-10-29 16:49:49
  * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-07-13 12:03:01
+ * @LastEditTime: 2025-03-03 14:36:11
  * @Description: 权限集详情页中的设置选项卡权限按钮保存接口，批量保存选项卡权限
  */
 'use strict';
@@ -12,6 +12,7 @@ const express = require("express");
 const router = express.Router();
 const auth = require('@steedos/auth');
 const objectql = require('@steedos/objectql');
+const _ = require('lodash');
 
 /**
  * body {
