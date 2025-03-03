@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-05-19 11:38:30
  * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2025-03-03 13:21:35
+ * @LastEditTime: 2025-03-03 14:18:44
  * @Description: 
  */
 import { getObject } from '@steedos/objectql';
@@ -69,7 +69,7 @@ export const setSpaceUserPassword = (accountsServer: AccountsServer) => async (
     }
     const bcryptedPassword = await bcryptPassword(password);
     const servicePassword: any = accountsServer.getServices().password;
-    await servicePassword.db.setPassword(userId, bcryptedPassword);
+    await servicePassword.db.setPassword(user_id, bcryptedPassword);
     const changedUserInfo = await getObject("users").findOne(user_id);
     if (changedUserInfo?.services?.password?.bcrypt) {
       await getObject("users").update(
