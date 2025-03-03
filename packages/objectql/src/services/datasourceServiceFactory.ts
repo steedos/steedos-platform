@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-11-09 16:16:57
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-01-21 17:53:30
+ * @LastEditTime: 2025-03-03 16:58:13
  * @Description: 
  */
 import * as _ from 'underscore';
@@ -81,13 +81,7 @@ export async function createDataSourceService(broker, dataSource) {
                 }
             },
         },
-        actions: actions,
-        created: ()=>{
-            console.log(`created ${serviceName}...`)
-        },
-        started: ()=>{
-            console.log(`started ${serviceName}...`)
-        }
+        actions: actions
     })
     if (!broker.started) { //如果broker未启动则手动启动service
         await broker._restartService(service)
