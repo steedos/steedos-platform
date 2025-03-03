@@ -9,7 +9,7 @@ amis_schema: |-
       {
         "type": "button",
         "label": "启用",
-        "id": "u:disable",
+        "id": "u:enable",
         "confirmText": "确定要启用此用户吗?",
         "onEvent": {
           "click": {
