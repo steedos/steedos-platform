@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2025-02-17 09:16:48
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-03-03 11:20:46
+ * @LastEditTime: 2025-03-03 13:59:52
  * @Description: 
  */
 
@@ -23,7 +23,8 @@ export const Steedos = {
     isSpaceAdmin: ()=>{
         return (window as any).Builder?.settings?.context?.user?.is_space_admin
     },
-    isCompanyAdmin: ()=>{
+    // 当前用户是否是传入的分部的任意一个管理员, 是则返回true
+    isCompanyAdmin: (companyIds)=>{
         const user = (window as any).Builder?.settings?.context?.user;
 
         if(user){

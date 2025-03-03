@@ -5,6 +5,9 @@ type: amis_button
 amis_schema: |-
   {
       "type": "service",
+      "data": {
+      "lockout": ""
+    },
       "body": [
         {
       "type": "service",

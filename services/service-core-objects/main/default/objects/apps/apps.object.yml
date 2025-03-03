@@ -369,28 +369,3 @@ permission_set:
     allowRead: true
     modifyAllRecords: true
     viewAllRecords: true
-# triggers:
-#   before.insert.server.apps:
-#     'on': server
-#     when: before.insert
-#     todo: !!js/function |
-#       function (userId, doc) {
-#               return doc.icon = doc.icon_slds;
-#             }
-#   after.update.server.apps:
-#     'on': server
-#     when: after.update
-#     todo: !!js/function |
-#       function (userId, doc, fieldNames, modifier, options) {
-#               var ref;
-
-#               if (modifier != null ? (ref = modifier.$set) != null ? ref.icon_slds : void 0 : void 0) {
-#                 return Creator.getCollection("apps").direct.update({
-#                   _id: doc._id
-#                 }, {
-#                   $set: {
-#                     icon: modifier.$set.icon_slds
-#                   }
-#                 });
-#               }
-#             }

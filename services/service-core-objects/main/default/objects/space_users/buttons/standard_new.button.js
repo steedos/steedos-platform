@@ -1,13 +1,12 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-12 13:42:25
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2025-02-19 14:43:02
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2025-03-03 14:03:34
  * @Description: 
  */
 module.exports = {
     standard_newVisible: function (object_name, record_id, record_permissions, data) {
-        var organization = Session.get("organization");
         var allowCreate = Steedos.Object.base.actions.standard_new.visible.apply(this, arguments);
         if (!allowCreate) {
             // permissions配置没有权限则不给权限
@@ -18,11 +17,8 @@ module.exports = {
             return true;
         }
         else {
-            var userId = Steedos.User.get().userId;
-            //当前选中组织所属分部的管理员才有权限
-            if (organization && organization.company_id && organization.company_id.admins) {
-                return organization.company_id.admins.indexOf(userId) > -1;
-            }
+            var record = Steedos.User.get();
+            return Steedos.isCompanyAdmin(record.company_ids);
         }
     },
 }

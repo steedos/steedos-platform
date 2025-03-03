@@ -2,12 +2,12 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-08 15:38:09
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-02-18 10:42:04
+ * @LastEditTime: 2025-03-03 11:59:13
  * @Description: 
  */
 "use strict";
 const { getObject } = require("@steedos/objectql")
-const _ = require('lodash')
+const _ = require('underscore')
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */

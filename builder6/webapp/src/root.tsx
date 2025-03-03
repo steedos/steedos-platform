@@ -9,16 +9,12 @@ import { SteedosRouter } from './router';
 import { Builder, builder, BuilderComponent, AssetsLoader } from '@builder6/react';
 import { loadSettings } from './actions/settings';
 import { loadMe } from './actions/users';
-import { Session } from './utils/Session';
-import { Creator } from './utils/Creator';
 import { Steedos } from './utils/steedos';
 import { t } from 'i18next';
 
 const _window: any = window;
 _window['Builder'] = Builder;
 _window['builder'] = builder;
-_window['Session'] = Session;
-_window['Creator'] = Creator;
 _window['t'] = function(key: any, parameters: any, locale: string){
   if(!key){
       return key;
