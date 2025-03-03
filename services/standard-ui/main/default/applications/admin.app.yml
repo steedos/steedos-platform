@@ -82,54 +82,54 @@ tab_items:
   admin_developer_graphql:
     group: development
     index: 19.52
-  admin_process_definition:
-    group: process_automation
-    index: 20
-  admin_workflow_rule:
-    group: process_automation
-    index: 21
-  admin_object_validation_rules:
-    group: process_automation
-    index: 22
-  admin_action_field_updates:
-    group: process_automation
-    index: 23
-  admin_workflow_notifications:
-    group: process_automation
-    index: 24
-  admin_workflow_outbound_messages:
-    group: process_automation
-    index: 25
-  admin_flows:
-    group: approval_workflow
-    index: 20
-  admin_roles:
-    group: approval_workflow
-    index: 25
-  admin_flow_roles:
-    group: approval_workflow
-    index: 26
-  admin_flow_positions:
-    group: approval_workflow
-    index: 26.5
-  admin_categories:
-    group: approval_workflow
-    index: 28
-  admin_instance_number_rules:
-    group: approval_workflow
-    index: 29
-  admin_space_user_signs:
-    group: approval_workflow
-    index: 30
-  admin_instances_statistic:
-    group: approval_workflow
-    index: 31
-  admin_webhooks:
-    group: approval_workflow
-    index: 32
-  admin_object_workflows:
-    group: approval_workflow
-    index: 33
+  # admin_process_definition:
+  #   group: process_automation
+  #   index: 20
+  # admin_workflow_rule:
+  #   group: process_automation
+  #   index: 21
+  # admin_object_validation_rules:
+  #   group: process_automation
+  #   index: 22
+  # admin_action_field_updates:
+  #   group: process_automation
+  #   index: 23
+  # admin_workflow_notifications:
+  #   group: process_automation
+  #   index: 24
+  # admin_workflow_outbound_messages:
+  #   group: process_automation
+  #   index: 25
+  # admin_flows:
+  #   group: approval_workflow
+  #   index: 20
+  # admin_roles:
+  #   group: approval_workflow
+  #   index: 25
+  # admin_flow_roles:
+  #   group: approval_workflow
+  #   index: 26
+  # admin_flow_positions:
+  #   group: approval_workflow
+  #   index: 26.5
+  # admin_categories:
+  #   group: approval_workflow
+  #   index: 28
+  # admin_instance_number_rules:
+  #   group: approval_workflow
+  #   index: 29
+  # admin_space_user_signs:
+  #   group: approval_workflow
+  #   index: 30
+  # admin_instances_statistic:
+  #   group: approval_workflow
+  #   index: 31
+  # admin_webhooks:
+  #   group: approval_workflow
+  #   index: 32
+  # admin_object_workflows:
+  #   group: approval_workflow
+  #   index: 33
   admin_sessions:
     group: advanced_settings
     index: 34

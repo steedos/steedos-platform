@@ -7,7 +7,7 @@ import { getSteedosConfigs } from './config';
 
 @Injectable()
 export class AppMoleculer extends Service {
-  private readonly _logger = new Logger(AppMoleculer.name);
+  private readonly _logger = new Logger();
   started: Boolean = false;
   constructor(
     @InjectBroker() broker: ServiceBroker
@@ -35,14 +35,14 @@ export class AppMoleculer extends Service {
 
           const records: [any] = await broker.call("objectql.directFind", {
               objectName: 'spaces',
-              query: { top: 1, fields: ['_id'], sort: { created: -1 } }
+              query: { top: 1, fields: ['_id'], sort: "created desc"}
           }, {});
           const steedosConfig = getSteedosConfigs();
           if (records.length > 0) {
             process.env.STEEDOS_TENANT_ID = records[0]._id;
-            steedosConfig.setTenant({ _id: records[0]._id });
+            steedosConfig.settings.setTenant({ _id: records[0]._id });
           } else {
-            steedosConfig.setTenant({ enable_create_tenant: true, enable_register: true });
+            steedosConfig.settings.setTenant({ enable_create_tenant: true, enable_register: true });
           }
           try {
             await ctx.broker.call('@steedos/service-project.initialPackages', {}, {});

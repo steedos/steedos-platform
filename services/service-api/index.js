@@ -1077,7 +1077,6 @@ module.exports = {
 		// }
 	},
 	async started() {
-		console.log('started', this.name)
 		this.broker.createService(require("@steedos/service-ui"));
 		// if (this.settings.server != true && this.settings.steedos_api_port){
 		// 	/* istanbul ignore next */

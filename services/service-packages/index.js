@@ -185,25 +185,4 @@ module.exports = {
 			}
 		}
 	},
-
-	/**
-	 * Service created lifecycle event handler
-	 */
-	async created() {
-		console.log('created', packageName)
-	},
-
-	/**
-	 * Service started lifecycle event handler
-	 */
-	async started() {
-		console.log('started', packageName)
-	},
-
-	/**
-	 * Service stopped lifecycle event handler
-	 */
-	async stopped() {
-		console.log('stopped', packageName)
-	}
 };
