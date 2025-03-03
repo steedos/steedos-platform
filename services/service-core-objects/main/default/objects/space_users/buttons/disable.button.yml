@@ -1,3 +1,53 @@
 name: disable
 label: Disable
 'on': record_only
+type: amis_button
+amis_schema: |-
+  {
+    "type": "service",
+    "body": [
+      {
+        "type": "button",
+        "label": "禁用",
+        "id": "u:disable",
+        "confirmText": "确定要禁用此用户吗?",
+        "onEvent": {
+          "click": {
+            "weight": 0,
+            "actions": [
+              {
+                "actionType": "ajax",
+                "api": {
+                  "url": "/service/api/space_users/disable",
+                  "method": "post",
+                  "requestAdaptor": "debugger;api.data={suId: context.recordId}\n\n\nreturn api;",
+                  "adaptor": "",
+                  "messages": {
+                    "success": "用户已禁用",
+                    "failed": "用户禁用失败,请稍后再试"
+                  }
+                }
+              },
+              {
+                "actionType": "broadcast",
+                "args": {
+                  "eventName": "@data.changed.space_users"
+                },
+                "data": {
+                  "objectName": "space_users",
+                  "displayAs": "${displayAs}"
+                }
+              }
+            ]
+          }
+        },
+        "visibleOn": "context.user.is_space_admin == true && user_accepted == true && context.user.spaceUserId != context.recordId"
+      }
+    ],
+    "regions": [
+      "body"
+    ],
+    "bodyClassName": "p-0",
+    "id": "u:6d7a34bd662e",
+    "dsType": "api"
+  }
