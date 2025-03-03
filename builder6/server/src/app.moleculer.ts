@@ -29,7 +29,9 @@ export class AppMoleculer extends Service {
 
           this.started = true;
 
-          ctx.broker.broadcast('@steedos/server.started')
+          ctx.broker.broadcast('@steedos/server.started');
+
+          this._logger.log(`🚀 Application is running on: ${process.env.ROOT_URL}`);
 
           const records: [any] = await broker.call("objectql.directFind", {
               objectName: 'spaces',
@@ -159,7 +161,6 @@ export class AppMoleculer extends Service {
     // 		},
     // 	]
     // });
-    this._logger.log(`🚀 Application is running on: ${process.env.ROOT_URL}`);
  }
 
   async serviceStopped() {}
