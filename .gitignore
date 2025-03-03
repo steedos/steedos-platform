@@ -17,7 +17,7 @@
 **/dist
 !**/twbs_bootstrap/dist
 **/logs
-
+!services/service-core-objects/main/default/objects/logs
 /packages/**/lib
 /services/**/lib
 /ee/**/lib
