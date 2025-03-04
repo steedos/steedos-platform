@@ -11,7 +11,7 @@ optionsFunction: !<tag:yaml.org,2002:js/function> |-
           var options;
           options = [];
 
-          _.forEach(Creator.resources.sldsIcons.standard, function (svg) {
+          _.forEach(Steedos.resources.sldsIcons.standard, function (svg) {
             return options.push({
               value: svg,
               label: svg,
