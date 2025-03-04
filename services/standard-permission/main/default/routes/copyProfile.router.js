@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-05-26 16:56:54
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-06-18 12:55:43
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2025-03-04 09:56:07
  * @Description: 复制已有简档来创建新简档
  * 使用mongodb的事务处理，保证数据的一致性
  * 复制对象包括：简档、对象权限、字段权限、选项卡权限
@@ -74,6 +74,21 @@ router.post('/api/permission/permission_set/copy', auth.requireAuthentication, a
         });
         await client.connect();
         const db = client.db();
+
+        // 检查collection是否存在，不存在则创建
+        const objectNames = ['permission_objects', 'permission_fields', 'permission_tabs', 'permission_set'];
+        const collectionInfos = await db.listCollections({}, { nameOnly: true }).toArray()
+        const collectionsMap = _.indexBy(collectionInfos, 'name')
+        for (const objectName of objectNames) {
+            if (!collectionsMap[objectName]) {
+                try {
+                    await db.createCollection(objectName)
+                } catch (error) {
+                    console.error(error)
+                    throw new Error(`create collection ${objectName} failed: ${error.message}`)
+                }
+            }
+        }
 
         // Start a session.
         const session = client.startSession();
@@ -179,19 +194,27 @@ router.post('/api/permission/permission_set/copy', auth.requireAuthentication, a
                 }
 
                 // 批量创建对象权限
-                await permissionObjectsColl.insertMany(newPermissionObjects, { session });
+                if (newPermissionTabs.length > 0) {
+                    await permissionObjectsColl.insertMany(newPermissionObjects, { session });
+                }
 
                 // 批量创建字段权限
-                await permissionFieldsColl.insertMany(newPermissionFields, { session });
+                if (newPermissionFields.length > 0) {
+                    await permissionFieldsColl.insertMany(newPermissionFields, { session });
+                }
 
                 // 批量创建选项卡权限
-                await permissionTabsColl.insertMany(newPermissionTabs, { session });
+                if (newPermissionTabs.length > 0) {
+                    await permissionTabsColl.insertMany(newPermissionTabs, { session });
+                }
 
                 // 批量注册字段权限
-                const schema = objectql.getSteedosSchema();
-                const objectName = "permission_fields";
-                const SERVICE_NAME = `~database-${objectName}`;
-                await objectql.registerPermissionFields.mregister(schema.broker, SERVICE_NAME, newPermissionFields)
+                if (newPermissionFields.length > 0) {
+                    const schema = objectql.getSteedosSchema();
+                    const objectName = "permission_fields";
+                    const SERVICE_NAME = `~database-${objectName}`;
+                    await objectql.registerPermissionFields.mregister(schema.broker, SERVICE_NAME, newPermissionFields)
+                }
             }
 
         } catch (error) {
