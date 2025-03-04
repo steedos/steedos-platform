@@ -9,7 +9,7 @@ function getSvgUrl(source, name) {
       name = foo[1];
     }
     url = "/assets/icons/" + source + "/svg/symbols.svg#" + name;
-    return Creator.getRelativeUrl(url);
+    return Steedos.getRelativeUrl(url);
 }
 
 exports.getSvgUrl = getSvgUrl;

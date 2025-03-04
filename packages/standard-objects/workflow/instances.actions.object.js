@@ -17,7 +17,7 @@ Creator.Objects['instances'].methods = {
             let record = await getSteedosSchema().getObject("instances").findOne(record_id, { fields: fields });
             if (!record) {
                 // 跳转到记录界面会显示为404效果
-                let redirectUrl = Creator.getRelativeUrl(`/workflow/`);
+                let redirectUrl = Steedos.getRelativeUrl(`/workflow/`);
                 if (req_async) { // || req.get("X-Requested-With") === 'XMLHttpRequest'
                     return res.status(200).send({
                         "status": 404,
@@ -67,7 +67,7 @@ Creator.Objects['instances'].methods = {
                 //     "success": false
                 // })
             }
-            let redirectUrl = Creator.getRelativeUrl(`/workflow/space/${record.space}/${box}/${record_id}`);
+            let redirectUrl = Steedos.getRelativeUrl(`/workflow/space/${record.space}/${box}/${record_id}`);
             if (req_async) { // || req.get("X-Requested-With") === 'XMLHttpRequest'
                 return res.status(200).send({
                     "status": 302,

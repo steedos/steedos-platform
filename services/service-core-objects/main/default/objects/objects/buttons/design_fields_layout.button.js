@@ -16,7 +16,7 @@ module.exports = {
             return toastr.error("未找到记录");
         }
 
-        window.open(Creator.getRelativeUrl("/api/amisObjectFieldsDesign?oid=" + record_id+`&assetUrls=${Builder.settings.assetUrls}`));
+        window.open(Steedos.getRelativeUrl("/api/amisObjectFieldsDesign?oid=" + record_id+`&assetUrls=${Builder.settings.assetUrls}`));
     },
     design_fields_layoutVisible: function(object_name, record_id, record_permissions, data) {
         var record = data && data.record;

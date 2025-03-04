@@ -22,10 +22,10 @@ module.exports = {
                 return toastr.warning("请先启动数据源");
             }
         }
-        window.open(Creator.getRelativeUrl("/app/admin/" + (record.name || this.record.name)));
+        window.open(Steedos.getRelativeUrl("/app/admin/" + (record.name || this.record.name)));
         // SteedosUI.Object.getUISchema(record.name).then((res)=>{
         //     if(res.idFieldName){
-        //         window.open(Creator.getRelativeUrl("/app/-/" + record.name));
+        //         window.open(Steedos.getRelativeUrl("/app/-/" + record.name));
         //     }else{
         //         return toastr.error("请配置主键字段");
         //     }
@@ -37,9 +37,9 @@ module.exports = {
 
         // var allViews = Creator.odata.query('object_listviews', { $select: '_id', $filter: `((object_name eq '${record.name}') and (name eq 'all'))` }, true);
         // if(allViews && allViews.length > 0){
-        //     Steedos.openWindow(Creator.getRelativeUrl("/app/-/" + record.name + "/grid/" + allViews[0]._id))
+        //     Steedos.openWindow(Steedos.getRelativeUrl("/app/-/" + record.name + "/grid/" + allViews[0]._id))
         // }else{
-        //     Steedos.openWindow(Creator.getRelativeUrl("/app/-/" + record.name + "/grid/all"))
+        //     Steedos.openWindow(Steedos.getRelativeUrl("/app/-/" + record.name + "/grid/all"))
         // }
     },
     show_objectVisible: function(object_name, record_id, record_permissions, data) {
