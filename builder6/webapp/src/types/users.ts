@@ -1,6 +1,14 @@
-import {$ID, IDMappedObjects, RelationOneToMany, RelationOneToOne, Dictionary} from './utilities';
+import {
+  $ID,
+  IDMappedObjects,
+  RelationOneToMany,
+  RelationOneToOne,
+  Dictionary,
+} from "./utilities";
 
 export type UserProfile = {
+  authToken: any;
+  spaceId: any;
   _id: string;
   create_at: number;
   update_at: number;

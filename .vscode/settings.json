@@ -20,6 +20,7 @@
         "./packages/schemas/dashboard/schema.json": "/*.dashboard.yml"
     },
     "cSpell.words": [
-        "historys"
+        "historys",
+        "sobject"
     ]
 }

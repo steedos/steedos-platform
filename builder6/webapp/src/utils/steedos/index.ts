@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2025-02-17 09:16:48
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-03-04 14:18:20
+ * @LastEditTime: 2025-03-04 15:56:02
  * @Description:
  */
 
@@ -12,11 +12,17 @@ import { BaseObject } from "./object";
 import { User } from "./user";
 import { Workflow } from "./workflow";
 import { ProcessManager } from "./process";
+import SObject from "./sobject";
+import { ServiceRecordsApi } from "./serviceRecordsApi";
 
 declare const fun;
-
+const SObjects = {};
+let client = null;
 export const Steedos = {
   __hotRecords: {},
+  Connection: (baseURL: string, authToken: string) => {
+    client = new ServiceRecordsApi(baseURL, authToken);
+  },
   absoluteUrl: (url: string) => {
     return ((window as any).Builder?.settings?.context?.rootUrl || "") + url;
   },
@@ -121,6 +127,11 @@ export const Steedos = {
   Account,
   Space,
   Object: BaseObject,
+  sobject: (objectName) => {
+    var sObject = (SObjects[objectName] =
+      SObjects[objectName] || new SObject(objectName, client));
+    return sObject;
+  },
   User,
   Workflow,
   ProcessManager,
