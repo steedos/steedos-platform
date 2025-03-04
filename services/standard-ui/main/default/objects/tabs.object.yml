@@ -29,7 +29,7 @@ fields:
               var options;
               options = [];
 
-              _.forEach(Creator.resources.sldsIcons.standard, function (svg) {
+              _.forEach(Steedos.resources.sldsIcons.standard, function (svg) {
                 return options.push({
                   value: svg,
                   label: svg,
