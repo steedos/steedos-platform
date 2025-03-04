@@ -175,8 +175,8 @@ module.exports = {
                     try {
                         const router = require('@steedos/router').staticRouter();
                         let routerPath = "";
-                        if (__meteor_runtime_config__.ROOT_URL_PATH_PREFIX) {
-                            routerPath = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX;
+                        if (process.env.ROOT_URL_PATH_PREFIX) {
+                            routerPath = process.env.ROOT_URL_PATH_PREFIX;
                         }
                         const cacheTime = 86400000 * 1; // one day
                         router.use(`${routerPath}/pages/js`, express.static(publicPath, { maxAge: cacheTime }));

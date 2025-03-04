@@ -2,8 +2,8 @@
  * @Author: 孙浩林 6194896+sunhaolin@users.noreply.github.com
  * @Date: 2023-12-10 11:09:40
  * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2024-04-18 16:09:10
- * @FilePath: /steedos-platform-2.3/services/service-pages/main/default/routes/page_render.router.js
+ * @LastEditTime: 2025-03-04 15:36:50
+ * @FilePath: /steedos-platform-3.0/services/service-pages/main/default/routes/page_render.router.js
  * @Description: 支持使用schemaApi动态渲染页面，支持匿名访问。
  */
 const express = require('express');
@@ -40,7 +40,7 @@ router.get('/api/page/render', async function (req, res) {
             STEEDOS_AMIS_URL: process.env.STEEDOS_AMIS_URL,
             STEEDOS_PUBLIC_PAGE_ASSETURLS: assetUrls || process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS,
             NODE_ENV: process.env.NODE_ENV,
-            ROOT_URL: __meteor_runtime_config__.ROOT_URL,
+            ROOT_URL: process.env.ROOT_URL,
             STEEDOS_VERSION: process.env.STEEDOS_VERSION,
             STEEDOS_AMIS_VERSION: process.env.STEEDOS_AMIS_VERSION,
             STEEDOS_PUBLIC_SCRIPT_VCONSOLE: process.env.STEEDOS_PUBLIC_SCRIPT_VCONSOLE,

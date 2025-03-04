@@ -28,7 +28,7 @@ router.get('/api/amisButtonDesign', auth.requireAuthentication, async function (
         const assetUrl = `assetUrl=${assetUrls.split(',').join("&assetUrl=")}&`;
 
         // const dataContext = {
-        //     rootUrl: __meteor_runtime_config__.ROOT_URL,
+        //     rootUrl: process.env.ROOT_URL,
         //     tenantId: userSession.spaceId,
         //     userId: userSession.userId,
         //     authToken: userSession.authToken
@@ -40,7 +40,7 @@ router.get('/api/amisButtonDesign', auth.requireAuthentication, async function (
         } else if (req.query.locale == "zh-cn") {
             locale = "zh-CN";
         }
-        const retUrl = __meteor_runtime_config__.ROOT_URL + `/app/admin/object_actions/view/${req.query.id}`
+        const retUrl = process.env.ROOT_URL + `/app/admin/object_actions/view/${req.query.id}`
         const steedosBuilderUrl = process.env.STEEDOS_BUILDER_URL || 'https://builder.steedos.cn';
         const builderHost = `${steedosBuilderUrl}/amis?${assetUrl}locale=${locale}&retUrl=${retUrl}`;
 
@@ -51,7 +51,7 @@ router.get('/api/amisButtonDesign', auth.requireAuthentication, async function (
         const data = {
             builderHost,
             assetUrls,
-            rootUrl: __meteor_runtime_config__.ROOT_URL,
+            rootUrl: process.env.ROOT_URL,
             tenantId: userSession.spaceId,
             userId: userSession.userId,
             authToken: userSession.authToken,

@@ -217,7 +217,7 @@
         if (page.render_engine && page.render_engine != 'redash') {
 
             let schema = typeof page.schema === 'string' ? JSON.parse(page.schema) : page.schema;
-            const rootUrl = __meteor_runtime_config__.ROOT_URL;
+            const rootUrl = Builder.settings.ROOT_URL || "";
             const defData = lodash.defaultsDeep({}, {data: data} , {
                 data: {
                     app_id: data.appId,

@@ -31,7 +31,7 @@ router.get('/api/amisObjectFieldsDesign', auth.requireAuthentication, async func
         const assetUrl = `assetUrl=${assetUrls.split(',').join("&assetUrl=")}&`;
 
         // const dataContext = {
-        //     rootUrl: __meteor_runtime_config__.ROOT_URL,
+        //     rootUrl: process.env.ROOT_URL,
         //     tenantId: userSession.spaceId,
         //     userId: userSession.userId,
         //     authToken: userSession.authToken
@@ -42,7 +42,7 @@ router.get('/api/amisObjectFieldsDesign', auth.requireAuthentication, async func
         } else if (req.query.locale == "zh-cn") {
             locale = "zh-CN";
         }
-        const retUrl = req.query.retUrl || __meteor_runtime_config__.ROOT_URL + '/app/admin/objects/view/' + req.query.oid
+        const retUrl = req.query.retUrl || process.env.ROOT_URL + '/app/admin/objects/view/' + req.query.oid
         const steedosBuilderUrl = process.env.STEEDOS_BUILDER_URL || 'https://builder.steedos.cn';
         const builderHost = `${steedosBuilderUrl}/object?${assetUrl}retUrl=${retUrl}&locale=${locale}&isObjectDesign=1&pType=objectDesign`;
 
@@ -50,7 +50,7 @@ router.get('/api/amisObjectFieldsDesign', auth.requireAuthentication, async func
         const data = {
             builderHost,
             assetUrls,
-            rootUrl: __meteor_runtime_config__.ROOT_URL,
+            rootUrl: process.env.ROOT_URL,
             tenantId: userSession.spaceId,
             userId: userSession.userId,
             authToken: userSession.authToken,

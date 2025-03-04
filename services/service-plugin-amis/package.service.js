@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-05-19 11:38:30
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-03-03 15:56:04
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2025-03-04 15:30:56
  * @Description: 
  */
 "use strict";
@@ -78,8 +78,8 @@ module.exports = {
                     try {
                         const router = require('@steedos/router').staticRouter();
                         let routerPath = "";
-                        if (__meteor_runtime_config__.ROOT_URL_PATH_PREFIX) {
-                            routerPath = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX;
+                        if (process.env.ROOT_URL_PATH_PREFIX) {
+                            routerPath = process.env.ROOT_URL_PATH_PREFIX;
                         }
                         const cacheTime = 86400000 * 1; // one day
                         router.use(`${routerPath}/amis-pages/js`, express.static(publicPath, { maxAge: cacheTime }));

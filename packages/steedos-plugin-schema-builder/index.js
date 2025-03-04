@@ -7,8 +7,8 @@ exports.init = function () {
         const router = require('@steedos/router').staticRouter();
         const cacheTime = 1000 * 60 * 60 * 24; 
         let routerPath = "/schema-builder"
-        if (__meteor_runtime_config__ && __meteor_runtime_config__.ROOT_URL_PATH_PREFIX)
-            routerPath = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX + routerPath;
+        if (process.env.ROOT_URL_PATH_PREFIX)
+            routerPath = process.env.ROOT_URL_PATH_PREFIX + routerPath;
         router.use(routerPath, express.static(publicPath, { maxAge: cacheTime }));
     }
 }

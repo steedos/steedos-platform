@@ -44,7 +44,7 @@ router.get('/main_head.js', async function (req, res) {
         res.set('Content-Type', 'application/javascript; charset=UTF-8');
         const filename = path.join(__dirname, 'main_head.ejs');
         const data = {
-            ROOT_URL: platform === 'cordova' ? __meteor_runtime_config__.ROOT_URL : '',
+            ROOT_URL: platform === 'cordova' ? process.env.ROOT_URL : '',
             STEEDOS_SENTRY_ENABLED: process.env.STEEDOS_SENTRY_ENABLED,
             NODE_ENV: process.env.NODE_ENV,
             STEEDOS_SENTRY_DSN: process.env.STEEDOS_SENTRY_DSN,
@@ -85,7 +85,7 @@ router.get('/main_head.css', async function(req, res){
     
     const STEEDOS_UNPKG_URL = getConfig('STEEDOS_UNPKG_URL', platform);
     const STEEDOS_AMIS_URL = getConfig('STEEDOS_AMIS_URL', platform);
-    const ROOT_URL = platform === 'cordova' ? __meteor_runtime_config__.ROOT_URL : '';
+    const ROOT_URL = platform === 'cordova' ? process.env.ROOT_URL : '';
 
     res.send(`
         @import url("${STEEDOS_UNPKG_URL}/@salesforce-ux/design-system@2.22.2/assets/styles/salesforce-lightning-design-system.min.css");

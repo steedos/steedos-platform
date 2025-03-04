@@ -28,7 +28,7 @@ router.get('/api/amisListviewDesign', auth.requireAuthentication, async function
         let assetUrls = getPublicAssetUrls(req.query.assetUrls);
         const assetUrl = `assetUrl=${assetUrls.split(',').join("&assetUrl=")}&`;
         // const dataContext = {
-        //     rootUrl: __meteor_runtime_config__.ROOT_URL,
+        //     rootUrl: process.env.ROOT_URL,
         //     tenantId: userSession.spaceId,
         //     userId: userSession.userId,
         //     authToken: userSession.authToken
@@ -39,7 +39,7 @@ router.get('/api/amisListviewDesign', auth.requireAuthentication, async function
         } else if (req.query.locale == "zh-cn") {
             locale = "zh-CN";
         }
-        const retUrl = __meteor_runtime_config__.ROOT_URL + `/app/admin/object_listviews/view/${req.query.id}`
+        const retUrl = process.env.ROOT_URL + `/app/admin/object_listviews/view/${req.query.id}`
         const steedosBuilderUrl = process.env.STEEDOS_BUILDER_URL || 'https://builder.steedos.cn';
         const builderHost = `${steedosBuilderUrl}/amis?${assetUrl}locale=${locale}&retUrl=${retUrl}`;
         const record = await objectql.getObject('object_listviews').findOne(req.query.id);
@@ -50,7 +50,7 @@ router.get('/api/amisListviewDesign', auth.requireAuthentication, async function
         const data = {
             builderHost,
             assetUrls,
-            rootUrl: __meteor_runtime_config__.ROOT_URL,
+            rootUrl: process.env.ROOT_URL,
             tenantId: userSession.spaceId,
             userId: userSession.userId,
             authToken: userSession.authToken,
