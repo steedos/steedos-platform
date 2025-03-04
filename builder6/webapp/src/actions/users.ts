@@ -126,10 +126,12 @@ export function loadMe(): ActionFunc {
       Client4.setUserId(currentUserId);
     }
     Builder.settings.context.user = user;
-    Steedos.Connection(
-      Builder.settings.context.rootUrl,
-      `${user.spaceId},${user.authToken}`,
-    );
+    if (user) {
+      Steedos.Connection(
+        Builder.settings.context.rootUrl,
+        `${user.spaceId},${user.authToken}`,
+      );
+    }
     return { data: true };
   };
 }
