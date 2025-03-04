@@ -43,7 +43,7 @@ module.exports = {
         var doc = Creator.odata.get(object_name, record_id);
         var result = Steedos.authRequest(`/api/v4/${object_name}/${record_id}/resetFieldPermissions`, { type: 'get', async: false });
         if (result.error) {
-            toastr.error(TAPi18n.__(result.error));
+            toastr.error(t(result.error));
         } else {
             toastr.success('初始化成功', '字段权限');
             FlowRouter.reload();

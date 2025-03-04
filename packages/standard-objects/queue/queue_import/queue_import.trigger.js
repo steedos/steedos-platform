@@ -65,7 +65,7 @@ module.exports = {
             if (this.data.values) {
                 const userSession = await auth.getSessionByUserId(this.userId);
                 const locale = userSession && userSession.locale;
-                const download = TAPi18n.__('queue_import_download', {returnObjects: true}, locale);
+                const download = t('queue_import_download', {returnObjects: true}, locale);
                 Object.assign(this.data.values, { 
                     // template_url: `[${download}](${objectql.absoluteUrl(`/api/data/download/template/${this.data.values._id}`)})` 
                     // template_url: `<a href="${objectql.absoluteUrl(`/api/data/download/template/${this.data.values._id}`)}" target="_self">${download}</a>`
@@ -102,7 +102,7 @@ module.exports = {
         if (this.data.values) {
             const userSession = await auth.getSessionByUserId(this.userId);
             const locale = userSession && userSession.locale;
-            const download = TAPi18n.__('queue_import_download', {returnObjects: true}, locale);
+            const download = t('queue_import_download', {returnObjects: true}, locale);
             for (const value of this.data.values) {
                 if (value) {
                     // value.template_url = `[${download}](${objectql.absoluteUrl(`/api/data/download/template/${value._id}`)})`
@@ -144,7 +144,7 @@ async function _validateData(doc, getObject, userId) {
                 }
                 const userSession = await auth.getSessionByUserId(userId);
                 const locale = userSession && userSession.locale;
-                const field_mapping_alert = TAPi18n.__('queue_import_form_field_mapping_prompt', {returnObjects: true, label: label}, locale);
+                const field_mapping_alert = t('queue_import_form_field_mapping_prompt', {returnObjects: true, label: label}, locale);
                 throw new Error(field_mapping_alert);
                 // throw new Error(`表示数据唯一性字段 ${label} 在字段映射中不存在，请配置。`);
             }

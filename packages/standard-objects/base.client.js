@@ -294,7 +294,7 @@ Steedos.StandardObjects = {
                     //                                 $("body").removeClass("loading");
                     //                                 SteedosUI.reloadRecord(objectName, record_id);
                     //                                 FlowRouter.reload();
-                    //                                 toastr.success(TAPi18n.__("queue_import_action_import_execute_success"));
+                    //                                 toastr.success(t("queue_import_action_import_execute_success"));
                     //                             },
                     //                             error: function(res){
                     //                                 $("body").removeClass("loading");

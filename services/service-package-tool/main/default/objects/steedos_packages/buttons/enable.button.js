@@ -8,7 +8,7 @@ module.exports = {
             html: true,
             showCancelButton: true,
             confirmButtonText: '启用',
-            cancelButtonText: TAPi18n.__('Cancel')
+            cancelButtonText: t('Cancel')
         }, function (option) {
             if (option) {
                 toastr.info('启用中，请稍后...', null, {timeOut: false});

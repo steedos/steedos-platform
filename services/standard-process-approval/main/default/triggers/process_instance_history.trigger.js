@@ -8,7 +8,7 @@ const getLng = async function(userId){
 
 const getEmptyNodeTitle = async function(userId){
   let lng = await getLng(userId);
-  return TAPi18n.__('process_approval_empty_node_title', {}, lng);
+  return t('process_approval_empty_node_title', {}, lng);
 }
 
 module.exports = {

@@ -82,9 +82,9 @@ const transformFieldValue = async function(field, value, options) {
           const userSession = await auth.getSessionByUserId(options.userId);
           const locale = userSession && userSession.locale;
           if (value) {
-            return TAPi18n.__("form_field_checkbox_yes", {}, locale);
+            return t("form_field_checkbox_yes", {}, locale);
           } else {
-            return TAPi18n.__("form_field_checkbox_no", {}, locale);
+            return t("form_field_checkbox_no", {}, locale);
           }
         }
         break;
@@ -168,7 +168,7 @@ const insertRecord = async function(userId, object_name, new_doc) {
     record_id = new_doc._id;
     const userSession = await auth.getSessionByUserId(userId);
     const locale = userSession && userSession.locale;
-    const field_name = TAPi18n.__('audit_records_created', {returnObjects: true}, locale);
+    const field_name = t('audit_records_created', {returnObjects: true}, locale);
     doc = {
       _id: await auditRecordsObject._makeNewID(),
       space: space_id,

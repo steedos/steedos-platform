@@ -94,7 +94,7 @@ fields:
         var options = [];
         //TODO 支持value = 0
         for(var i= 1; i < 25; i++){
-          options.push({label: TAPi18n.__('permission_set_field_password_history_options', i), value: `${i}`})
+          options.push({label: t('permission_set_field_password_history_options', i), value: `${i}`})
         }
         return options;
       }

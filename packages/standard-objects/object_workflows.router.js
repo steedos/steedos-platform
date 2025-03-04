@@ -20,46 +20,46 @@ router.get('/api/object_workflows/workflow_field/options', auth.requireAuthentic
         if(values.instance_fields){
           instance_fields = [{
             value: "instance.name",
-            label: TAPi18n.__("object_workflows_field_field_map_$_workflow_field_instance_name",{},lng)
+            label: t("object_workflows_field_field_map_$_workflow_field_instance_name",{},lng)
           }, {
             value: "instance.submitter_name",
-            label: TAPi18n.__("object_workflows_field_field_map_$_workflow_field_submitter_name",{},lng)
+            label: t("object_workflows_field_field_map_$_workflow_field_submitter_name",{},lng)
           }, {
             value: "instance.applicant_name",
-            label: TAPi18n.__("object_workflows_field_field_map_$_workflow_field_applicant_name",{},lng)
+            label: t("object_workflows_field_field_map_$_workflow_field_applicant_name",{},lng)
           }, {
             value: "instance.applicant_company",
-            label: TAPi18n.__("object_workflows_field_field_map_$_workflow_field_applicant_company",{},lng)
+            label: t("object_workflows_field_field_map_$_workflow_field_applicant_company",{},lng)
           }, {
             value: "instance.applicant_organization",
-            label: TAPi18n.__("object_workflows_field_field_map_$_workflow_field_applicant_organization",{},lng)
+            label: t("object_workflows_field_field_map_$_workflow_field_applicant_organization",{},lng)
           }, {
             value: "instance.applicant_organization_name",
-            label: TAPi18n.__("object_workflows_field_field_map_$_workflow_field_applicant_organization_name",{},lng)
+            label: t("object_workflows_field_field_map_$_workflow_field_applicant_organization_name",{},lng)
           }, {
             value: "instance.applicant_organization_fullname",
-            label: TAPi18n.__("object_workflows_field_field_map_$_workflow_field_applicant_organization_fullname",{},lng)
+            label: t("object_workflows_field_field_map_$_workflow_field_applicant_organization_fullname",{},lng)
           }, {
             value: "instance.state",
-            label: TAPi18n.__("object_workflows_field_field_map_$_workflow_field_state",{},lng)
+            label: t("object_workflows_field_field_map_$_workflow_field_state",{},lng)
           }, {
             value: "instance.current_step_name",
-            label: TAPi18n.__("object_workflows_field_field_map_$_workflow_field_current_step_name",{},lng)
+            label: t("object_workflows_field_field_map_$_workflow_field_current_step_name",{},lng)
           }, {
             value: "instance.flow_name",
-            label: TAPi18n.__("object_workflows_field_field_map_$_workflow_field_flow_name",{},lng)
+            label: t("object_workflows_field_field_map_$_workflow_field_flow_name",{},lng)
           }, {
             value: "instance.category_name",
-            label: TAPi18n.__("object_workflows_field_field_map_$_workflow_field_category_name",{},lng)
+            label: t("object_workflows_field_field_map_$_workflow_field_category_name",{},lng)
           }, {
             value: "instance.submit_date",
-            label: TAPi18n.__("object_workflows_field_field_map_$_workflow_field_submit_date",{},lng)
+            label: t("object_workflows_field_field_map_$_workflow_field_submit_date",{},lng)
           }, {
             value: "instance.finish_date",
-            label: TAPi18n.__("object_workflows_field_field_map_$_workflow_field_finish_date",{},lng)
+            label: t("object_workflows_field_field_map_$_workflow_field_finish_date",{},lng)
           }, {
             value: "instance.final_decision",
-            label: TAPi18n.__("object_workflows_field_field_map_$_workflow_field_final_decision",{},lng)
+            label: t("object_workflows_field_field_map_$_workflow_field_final_decision",{},lng)
           }];
         }
      

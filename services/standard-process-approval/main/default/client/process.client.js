@@ -4,7 +4,7 @@ Steedos.ProcessManager.showProcessApprovalForm = function(action, fields, formId
 
     var approveSchema = Creator.getObjectSchema({fields: fields})
 
-    Modal.show("quickFormModal", {formId: formId, title: title || TAPi18n.__(`process_approval_title_${action}`), confirmBtnText: `process_approval_confirmBtnText_${action}`, schema: approveSchema, doc: doc, onConfirm: onConfirm}, {
+    Modal.show("quickFormModal", {formId: formId, title: title || t(`process_approval_title_${action}`), confirmBtnText: `process_approval_confirmBtnText_${action}`, schema: approveSchema, doc: doc, onConfirm: onConfirm}, {
         backdrop: 'static',
         keyboard: true
     });
@@ -56,7 +56,7 @@ Steedos.ProcessManager.submit = function(object_name, record_id, options){
 
     var schema = {
         comment: {
-            label: TAPi18n.__('process_approval_comment'),
+            label: t('process_approval_comment'),
             type: 'textarea',
             rows: 3,
             is_wide: true
@@ -65,7 +65,7 @@ Steedos.ProcessManager.submit = function(object_name, record_id, options){
 
     if(options && options.showApprover){
         schema.approver = {
-            label: TAPi18n.__('process_approval_approver_label'),
+            label: t('process_approval_approver_label'),
             type: 'lookup',
             reference_to: 'users',
             required: true,
@@ -87,7 +87,7 @@ Steedos.ProcessManager.submit = function(object_name, record_id, options){
                     Steedos.ProcessManager.submit(object_name, record_id, {showApprover: true, value: {comment: formValues.insertDoc.comment}});
                 }, 800)
             }else{
-                toastr.error(TAPi18n.__(result.error));
+                toastr.error(t(result.error));
                 Modal.hide(t);
                 FlowRouter.reload();
             }
@@ -103,7 +103,7 @@ Steedos.ProcessManager.recall = function(object_name, record_id){
     var formId = 'processApprovalForm';
     Steedos.ProcessManager.showProcessApprovalForm('recall', {
         comment: {
-            label: TAPi18n.__('process_approval_comment'),
+            label: t('process_approval_comment'),
             type: 'textarea',
             rows: 3,
             is_wide: true
@@ -111,7 +111,7 @@ Steedos.ProcessManager.recall = function(object_name, record_id){
     }, formId, {}, function(formValues, e, t){
         var result = Steedos.authRequest(`/api/v4/process/recall/${object_name}/${record_id}`, {type: 'post', async: false, data: JSON.stringify(formValues.insertDoc)});
         if(result.state === 'FAILURE'){
-            toastr.error(TAPi18n.__(result.error));
+            toastr.error(t(result.error));
         }
         FlowRouter.reload();
         Modal.hide(t);
@@ -120,10 +120,10 @@ Steedos.ProcessManager.recall = function(object_name, record_id){
 
 Steedos.ProcessManager.approve = function(object_name, record_id, options){
     var formId = 'processApprovalForm';
-    var title = `${TAPi18n.__('process_instance_history_action_approve')}` //TODO approval record name
+    var title = `${t('process_instance_history_action_approve')}` //TODO approval record name
     var schema = {
         comment: {
-            label: TAPi18n.__('process_approval_comment'),
+            label: t('process_approval_comment'),
             type: 'textarea',
             rows: 3,
             is_wide: true
@@ -132,7 +132,7 @@ Steedos.ProcessManager.approve = function(object_name, record_id, options){
 
     if(options && options.showApprover){
         schema.approver = {
-            label: TAPi18n.__('process_approval_approver_label'),
+            label: t('process_approval_approver_label'),
             type: 'lookup',
             reference_to: 'users',
             required: true,
@@ -154,7 +154,7 @@ Steedos.ProcessManager.approve = function(object_name, record_id, options){
                     Steedos.ProcessManager.approve(object_name, record_id, {showApprover: true, value: {comment: formValues.insertDoc.comment}});
                 }, 800)
             }else{
-                toastr.error(TAPi18n.__(result.error));
+                toastr.error(t(result.error));
                 Modal.hide(t);
                 FlowRouter.reload();
             }
@@ -168,10 +168,10 @@ Steedos.ProcessManager.approve = function(object_name, record_id, options){
 
 Steedos.ProcessManager.reject = function(object_name, record_id){
     var formId = 'processApprovalForm';
-    var title = `${TAPi18n.__('process_instance_history_action_reject')}` //TODO approval record name
+    var title = `${t('process_instance_history_action_reject')}` //TODO approval record name
     Steedos.ProcessManager.showProcessApprovalForm('reject', {
         comment: {
-            label: TAPi18n.__('process_approval_comment'),
+            label: t('process_approval_comment'),
             type: 'textarea',
             rows: 3,
             is_wide: true
@@ -179,7 +179,7 @@ Steedos.ProcessManager.reject = function(object_name, record_id){
     }, formId, {}, function(formValues, e, t){
         var result = Steedos.authRequest(`/api/v4/process/reject/${object_name}/${record_id}`, {type: 'post', async: false, data: JSON.stringify(formValues.insertDoc)});
         if(result.state === 'FAILURE'){
-            toastr.error(TAPi18n.__(result.error));
+            toastr.error(t(result.error));
         }
         FlowRouter.reload();
         Modal.hide(t);
@@ -190,14 +190,14 @@ Steedos.ProcessManager.reassign = function(object_name, record_id){
     var formId = 'processApprovalForm';
     Steedos.ProcessManager.showProcessApprovalForm('reassign', {
         approver: {
-            label: TAPi18n.__('process_approval_approver_label_reassign'),
+            label: t('process_approval_approver_label_reassign'),
             type: 'lookup',
             reference_to: 'users',
             required: true,
             is_wide: true
         },
         comment: {
-            label: TAPi18n.__('process_approval_comment'),
+            label: t('process_approval_comment'),
             type: 'textarea',
             rows: 3,
             is_wide: true
@@ -205,7 +205,7 @@ Steedos.ProcessManager.reassign = function(object_name, record_id){
     }, formId, {}, function(formValues, e, t){
         var result = Steedos.authRequest(`/api/v4/process/reassign/${object_name}/${record_id}`, {type: 'post', async: false, data: JSON.stringify(formValues.insertDoc)});
         if(result.state === 'FAILURE'){
-            toastr.error(TAPi18n.__(result.error));
+            toastr.error(t(result.error));
         }
         FlowRouter.reload();
         Modal.hide(t);

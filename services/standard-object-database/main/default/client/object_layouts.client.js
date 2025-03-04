@@ -16,7 +16,7 @@ Creator.objectLayoutMananger.appendField = function(field){
                 is_wide: true,
                 required: false,
                 name: 'fieldLabel',
-                group: TAPi18n.__(`object_layouts_group_field_info`)
+                group: t(`object_layouts_group_field_info`)
             }),
             fieldType: Object.assign({}, Creator.getObject('object_fields').fields.type, {
                 readonly: true,
@@ -24,30 +24,30 @@ Creator.objectLayoutMananger.appendField = function(field){
                 is_wide: true,
                 required: false,
                 name: 'fieldType',
-                group: TAPi18n.__(`object_layouts_group_field_info`)
+                group: t(`object_layouts_group_field_info`)
             }),
             fieldName: Object.assign({}, Creator.getObject('object_fields').fields._name, {
                 readonly: true,
                 is_wide: true,
                 required: false,
                 name: 'fieldName',
-                group: TAPi18n.__(`object_layouts_group_field_info`)
+                group: t(`object_layouts_group_field_info`)
             }),
             fieldDescription: Object.assign({}, Creator.getObject('object_fields').fields.description, {
                 readonly: true,
                 is_wide: true,
                 required: false,
                 name: 'fieldDescription',
-                group: TAPi18n.__(`object_layouts_group_field_info`)
+                group: t(`object_layouts_group_field_info`)
             }),
             appendToLayouts: {
                 type: 'lookup',
-                label: TAPi18n.__("object_layouts__object"),
+                label: t("object_layouts__object"),
                 multiple: true,
                 is_wide: true,
                 reference_to: 'object_layouts',
                 filters: [["object_name", "eq", field.object]],
-                group: TAPi18n.__(`object_layouts_group_appendToLayouts`),
+                group: t(`object_layouts_group_appendToLayouts`),
                 create: false
             }
         }
@@ -79,7 +79,7 @@ Creator.objectLayoutMananger.appendField = function(field){
             Modal.hide(template);
         }
     }
-    Modal.show("quickFormModal", {formId: formId, title: TAPi18n.__(`object_layouts_title_${formId}`), confirmBtnText: `Confirm`, schema: schema, doc: doc, onConfirm: onConfirm, autoExpandGroup: true}, {
+    Modal.show("quickFormModal", {formId: formId, title: t(`object_layouts_title_${formId}`), confirmBtnText: `Confirm`, schema: schema, doc: doc, onConfirm: onConfirm, autoExpandGroup: true}, {
         backdrop: 'static',
         keyboard: true
     });

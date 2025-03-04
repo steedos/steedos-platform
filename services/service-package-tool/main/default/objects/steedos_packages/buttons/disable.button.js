@@ -8,7 +8,7 @@ module.exports = {
             html: true,
             showCancelButton: true,
             confirmButtonText: t('steedos_packages.disable.title'),
-            cancelButtonText: TAPi18n.__('Cancel')
+            cancelButtonText: t('Cancel')
         }, function (option) {
             if (option) {
                 toastr.info(t('steedos_packages.disable.toast_info'), null, {timeOut: false});

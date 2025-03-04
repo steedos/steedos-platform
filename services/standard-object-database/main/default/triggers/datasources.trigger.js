@@ -30,10 +30,10 @@ module.exports = {
     afterFind: async function(){
         const { spaceId } = this;
         let lng = Steedos.locale(this.userId, true);
-        let dataList = [{_id: 'default', name: 'default', label: TAPi18n.__(`objects_field_datasource_defaultValue`, {}, lng), ...BASERECORD}];
+        let dataList = [{_id: 'default', name: 'default', label: t(`objects_field_datasource_defaultValue`, {}, lng), ...BASERECORD}];
         let filters = InternalData.parserFilters(this.query.filters)
         if(filters._id === 'meteor'){
-            dataList.push({_id: 'meteor', name: 'meteor', label: TAPi18n.__(`objects_field_datasource_meteor`, {}, lng), ...BASERECORD})
+            dataList.push({_id: 'meteor', name: 'meteor', label: t(`objects_field_datasource_meteor`, {}, lng), ...BASERECORD})
         }
         if (!_.isEmpty(dataList)) {
             const cloneValues = clone(this.data.values, false);
@@ -63,7 +63,7 @@ module.exports = {
             if(this.id === 'default'){
                 try {
                     let lng = Steedos.locale(this.userId, true)
-                    this.data.values = {_id: 'default', name: 'default', label: TAPi18n.__(`objects_field_datasource_defaultValue`, {}, lng), ...BASERECORD};
+                    this.data.values = {_id: 'default', name: 'default', label: t(`objects_field_datasource_defaultValue`, {}, lng), ...BASERECORD};
                 } catch (error) {
                     
                 }
@@ -71,7 +71,7 @@ module.exports = {
             if(this.id === 'meteor'){
                 try {
                     let lng = Steedos.locale(this.userId, true)
-                    this.data.values = {_id: 'meteor', name: 'meteor', label: TAPi18n.__(`objects_field_datasource_meteor`, {}, lng), ...BASERECORD};
+                    this.data.values = {_id: 'meteor', name: 'meteor', label: t(`objects_field_datasource_meteor`, {}, lng), ...BASERECORD};
                 } catch (error) {
                     
                 }

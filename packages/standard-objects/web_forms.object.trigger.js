@@ -55,7 +55,7 @@ const generatHtml = (doc)=>{
                                     return `<option value="${item.value}">${item.label}</option>`
                                 });
                             }
-                            selectOptions.unshift( `<option value="">${TAPi18n.__("web_forms_select_option_none", {}, lng)}</option>`);
+                            selectOptions.unshift( `<option value="">${t("web_forms_select_option_none", {}, lng)}</option>`);
                             selectInput = `<select id="${tempField.name}" name="${tempField.name}">\r\n${selectOptions.join("\r\n")}\r\n</select>`;
                         }
                         fieldsCode.push(`<label for="${tempField.name}">${tempField.label}</label>${selectInput}<br>\r\n`);
