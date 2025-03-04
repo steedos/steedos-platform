@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-05-26 16:56:54
  * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2025-03-04 09:56:07
+ * @LastEditTime: 2025-03-04 10:59:05
  * @Description: 复制已有简档来创建新简档
  * 使用mongodb的事务处理，保证数据的一致性
  * 复制对象包括：简档、对象权限、字段权限、选项卡权限
@@ -233,13 +233,18 @@ router.post('/api/permission/permission_set/copy', auth.requireAuthentication, a
         }
 
         res.status(200).send({
-            message: 'success',
-            recordId: newPermissionSet._id
+            status: 0,
+            msg: "",
+            data: {
+                recordId: newPermissionSet._id
+            },
         });
-
     } catch (error) {
         console.error(error);
-        res.status(500).send({ error: error.message });
+        res.status(500).send({
+            status: -1,
+            msg: error.message
+        });
     }
 
 });

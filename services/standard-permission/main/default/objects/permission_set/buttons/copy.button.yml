@@ -40,7 +40,9 @@ amis_schema: |-
                                           "api": {
                                               "url": "${context.rootUrl}/api/permission/permission_set/copy",
                                               "method": "post",
-                                              "messages": {},
+                                              "messages": {
+                                                "success": "复制成功"
+                                              },
                                               "requestAdaptor": "delete api.body.label_input;\ndelete api.body.name_input;",
                                               "data": {
                                                   "&": "$$",
