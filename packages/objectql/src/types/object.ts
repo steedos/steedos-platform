@@ -20,7 +20,6 @@ import {
   isCloudAdminSpace,
   generateActionParams,
   absoluteUrl,
-  transformListenersToTriggers,
   getFieldNamesFromDoc,
 } from "../util";
 import { extend } from "../index";
@@ -433,22 +432,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
       _id: config._id,
     });
 
-    if (datasource.name === "meteor" || datasource.name === "default") {
+    if (datasource.name === "default") {
       let baseObjectConfig = getObjectConfig(MONGO_BASE_OBJECT);
       let _baseObjectConfig = clone(baseObjectConfig);
       delete _baseObjectConfig.hidden;
-      if (datasource.name === "meteor") {
-        let _baseTriggers = {};
-        const listeners = _baseObjectConfig.listeners;
-        for (const key in listeners) {
-          if (Object.prototype.hasOwnProperty.call(listeners, key)) {
-            const listener = listeners[key];
-            const triggers = transformListenersToTriggers(config, listener);
-            extend(_baseTriggers, triggers);
-          }
-        }
-        (this as any)._baseTriggers = _baseTriggers;
-      }
       // 将baseObject的listeners转换为triggers
       for (const name in _baseObjectConfig.listeners) {
         if (

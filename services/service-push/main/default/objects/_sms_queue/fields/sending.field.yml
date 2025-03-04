@@ -1,7 +1,0 @@
-name: sending
-index: false
-label: sending
-required: false
-searchable: false
-sort_no: 100
-type: number

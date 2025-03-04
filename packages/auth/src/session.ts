@@ -1,11 +1,11 @@
-import { SteedosUserSession, isTemplateSpace, wrapAsync } from '@steedos/objectql';
+import { SteedosUserSession, isTemplateSpace } from "@steedos/objectql";
 import { Response } from "express";
-import { getUserIdByToken, removeUserTokens } from './tokenMap'
-import { getUserSession } from './userSession'
-import { getSpaceUserSession } from './spaceUserSession'
+import { getUserIdByToken, removeUserTokens } from "./tokenMap";
+import { getUserSession } from "./userSession";
+import { getSpaceUserSession } from "./spaceUserSession";
 
 import * as core from "express-serve-static-core";
-import { isAPIKey, verifyAPIKey } from './apikey';
+import { isAPIKey, verifyAPIKey } from "./apikey";
 
 import isMobile from "ismobilejs";
 interface Request extends core.Request {
@@ -29,7 +29,7 @@ function reviseSession(session) {
 
 export async function getSessionByUserId(
   userId,
-  spaceId?
+  spaceId?,
 ): Promise<SteedosUserSession> {
   if (!userId) {
     return;
@@ -48,17 +48,17 @@ export async function getSessionByUserId(
   return assignSession(spaceId, userSession, spaceUserSession);
 }
 
-export function getSessionByUserIdSync(userId, spaceId?): any {
-  let getSessionFn = function() {
-    return getSessionByUserId(userId, spaceId);
-  };
-  return wrapAsync(getSessionFn, {});
+export async function getSessionByUserIdSync(
+  userId,
+  spaceId?,
+): Promise<SteedosUserSession> {
+  return await getSessionByUserId(userId, spaceId);
 }
 
 export async function getSession(
   token: string,
   spaceId?: string,
-  clientInfos?: any
+  clientInfos?: any,
 ): Promise<SteedosUserSession> {
   if (!token) {
     return;
@@ -113,7 +113,8 @@ export function getLoginDevice(userAgent) {
 export async function auth(request: Request, response: Response): Promise<any> {
   let cookies = new Cookies(request, response);
   let authToken: any =
-    request.headers["x-auth-token"] || (cookies.get("X-Auth-Token") || "").replace(/"/g, "");
+    request.headers["x-auth-token"] ||
+    (cookies.get("X-Auth-Token") || "").replace(/"/g, "");
   let spaceToken = (cookies.get("X-Space-Token") || "").replace(/"/g, "");
   let authorization = request.headers.authorization;
   let spaceId =
@@ -146,12 +147,12 @@ export async function auth(request: Request, response: Response): Promise<any> {
     }
   }
 
-  if(request.query['X-Auth-Token']){
-    authToken = request.query['X-Auth-Token']
+  if (request.query["X-Auth-Token"]) {
+    authToken = request.query["X-Auth-Token"];
   }
 
-  if(request.query['X-Space-Id']){
-    spaceId = request.query['X-Space-Id']
+  if (request.query["X-Space-Id"]) {
+    spaceId = request.query["X-Space-Id"];
   }
 
   let userAgent = getUserAgent(request) || "";
@@ -170,7 +171,7 @@ export async function auth(request: Request, response: Response): Promise<any> {
 export async function setRequestUser(
   request: Request,
   response: Response,
-  next: () => void
+  next: () => void,
 ) {
   let user = await auth(request, response);
   if (user.userId) {
@@ -185,15 +186,19 @@ export function removeUserSessionsCacheByUserId(userId, is_phone) {
 
 /**
  * 判断属性值是否已变更，转字符串比对
- * @param newDoc 
- * @param oldDoc 
+ * @param newDoc
+ * @param oldDoc
  * @returns true/false
  */
-export function isPropValueChanged (newDoc: any, oldDoc: any, props: string[]): boolean {
+export function isPropValueChanged(
+  newDoc: any,
+  oldDoc: any,
+  props: string[],
+): boolean {
   for (const key of props) {
-      if ((newDoc[key] + '') !== (oldDoc[key] + '')) {
-          return true
-      }
+    if (newDoc[key] + "" !== oldDoc[key] + "") {
+      return true;
+    }
   }
-  return false
+  return false;
 }
