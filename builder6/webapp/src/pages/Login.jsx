@@ -374,11 +374,7 @@ class Login extends React.Component {
     if (this.state.mobile && this.state.mobile.trim().length > 0) {
       state = { mobile: this.state.mobile.trim() }
     }
-    this.props.history.push({
-      pathname: `/signup`,
-      search: this.props.location.search,
-      state: state
-    })
+    this.props.navigate(`/signup?${this.props.location.search || ''}`)
   }
   handlerGeetest = (captchaObj) => {
     var div = document.getElementById("captcha");

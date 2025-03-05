@@ -203,11 +203,8 @@ class Signup extends React.Component {
       email: this.state.email,
       mobile: this.state.mobile,
     };
-    this.props.history.push({
-      pathname: `/login`,
-      search: this.props.location.search,
-      state: state
-    })
+
+    this.props.navigate(`/login?${this.props.location.search || ''}`)
   }
 
   sendVerificationToken = (e) => {
@@ -379,7 +376,7 @@ class Signup extends React.Component {
     // via session expiration, this bit won't get reset and we can notify the user as such.
 
     if (redirectTo && redirectTo.match(/^\/([^/]|$)/)) {
-      this.props.history.push(redirectTo);
+      this.props.navigate(redirectTo)
     } else {
       this.state.loginSuccess = true;
       this.props.navigate('/');
@@ -391,11 +388,7 @@ class Signup extends React.Component {
     if (this.state.email.trim().length > 0) {
       state = { email: this.state.email.trim() }
     }
-    this.props.history.push({
-      pathname: `/signup`,
-      search: this.props.location.search,
-      state: state
-    })
+    this.props.navigate(`/signup?${this.props.location.search || ''}`)
   }
   handlerGeetest = (captchaObj) => {
     var div = document.getElementById("captcha");
