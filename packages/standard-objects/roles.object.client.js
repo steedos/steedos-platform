@@ -1,1 +1,0 @@
-db.roles = new Meteor.Collection('roles');

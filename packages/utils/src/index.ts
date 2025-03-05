@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-08-06 14:44:51
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-03-04 16:54:26
+ * @LastEditTime: 2025-03-05 16:08:03
  * @Description:
  */
 
@@ -11,6 +11,8 @@ export * from "./defaultsDeep";
 export * from "./settings";
 
 export * from "./cookies";
+
+export const hiddenObjects = ["core", "base", "cfs_instances_filerecord"];
 
 export async function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));

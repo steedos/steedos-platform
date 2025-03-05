@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-05-26 16:56:54
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2025-03-04 10:59:05
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2025-03-05 16:14:24
  * @Description: 复制已有简档来创建新简档
  * 使用mongodb的事务处理，保证数据的一致性
  * 复制对象包括：简档、对象权限、字段权限、选项卡权限
@@ -14,7 +14,7 @@ const express = require("express");
 const router = express.Router();
 const auth = require('@steedos/auth');
 const objectql = require('@steedos/objectql');
-const InternalData = require('@steedos/standard-objects').internalData;
+const { hiddenObjects } = require('@steedos/utils');
 const _ = require('underscore');
 const { MongoClient } = require('mongodb');
 
@@ -269,7 +269,7 @@ async function getInternalPermissionObjects(permissionSetId) {
         _.each(datasourceObjects, function (object) {
             const objectJSON = object.metadata;
             const objectName = objectJSON.name;
-            if (!objectJSON._id && !_.include(InternalData.hiddenObjects, objectName)) {
+            if (!objectJSON._id && !_.include(hiddenObjects, objectName)) {
                 let permission_set = objectJSON.permission_set
                 _.each(permission_set, function (v, code) {
                     if (code === permissionSetName) {

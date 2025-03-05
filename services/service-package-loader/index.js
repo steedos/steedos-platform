@@ -126,7 +126,7 @@ module.exports = {
             // }
         },
         loadPackageMetadataFiles: async function (packagePath, name, datasourceName) {
-            this.broker.logger.debug(`Loading package from ${packagePath}`)
+            // console.info(`Loading package from ${packagePath}`)
             packagePath = path.join(packagePath, '**');
             if (!datasourceName) {
                 datasourceName = 'default';
@@ -232,7 +232,6 @@ module.exports = {
                 console.log(`service ${this.name} started`);
                 return;
             }
-            
             if (true != isUnmanaged) {
                 // 受管软件包加载元数据文件，非受管软件包不加载
                 await this.loadPackageMetadataFiles(_path, this.name, datasource);

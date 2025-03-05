@@ -311,22 +311,6 @@ export const BaseObject = {
           );
         },
       },
-      standard_follow: {
-        label: "Follow",
-        visible: function (object_name, record_id, record_permissions) {
-          return Steedos.StandardObjects.Base.Actions.standard_follow.visible.apply(
-            this,
-            arguments,
-          );
-        },
-        on: "list",
-        todo: function () {
-          return Steedos.StandardObjects.Base.Actions.standard_follow.todo.apply(
-            this,
-            arguments,
-          );
-        },
-      },
       standard_submit_for_approval: {
         visible: function (object_name, record_id) {
           return Steedos.StandardObjects.Base.Actions.standard_submit_for_approval.visible.apply(

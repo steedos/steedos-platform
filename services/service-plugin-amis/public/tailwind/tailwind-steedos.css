@@ -162,12 +162,12 @@
   display: none
 }
 
-.h-7 {
-  height: 1.75rem
-}
-
 .h-full {
   height: 100%
+}
+
+.h-7 {
+  height: 1.75rem
 }
 
 .h-9 {
@@ -283,11 +283,6 @@
   border-color: rgb(209 213 219 / var(--tw-border-opacity))
 }
 
-.bg-gray-50 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(249 250 251 / var(--tw-bg-opacity))
-}
-
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity))
@@ -298,8 +293,21 @@
   background-color: rgb(243 244 246 / var(--tw-bg-opacity))
 }
 
+.bg-gray-50 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity))
+}
+
 .bg-none {
   background-image: none
+}
+
+.p-4 {
+  padding: 1rem
+}
+
+.p-0 {
+  padding: 0px
 }
 
 .p-2 {
@@ -310,17 +318,19 @@
   padding: 0.25rem
 }
 
-.p-0 {
-  padding: 0px
-}
-
-.p-4 {
-  padding: 1rem
-}
-
 .py-1 {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem
+}
+
+.px-0 {
+  padding-left: 0px;
+  padding-right: 0px
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem
 }
 
 .px-2 {
@@ -348,22 +358,12 @@
   padding-bottom: 0.5rem
 }
 
-.px-0 {
-  padding-left: 0px;
-  padding-right: 0px
-}
-
-.py-4 {
-  padding-top: 1rem;
-  padding-bottom: 1rem
+.pt-4 {
+  padding-top: 1rem
 }
 
 .pl-10 {
   padding-left: 2.5rem
-}
-
-.pt-4 {
-  padding-top: 1rem
 }
 
 .text-left {
@@ -432,12 +432,12 @@
     margin: 0.5rem
   }
 
-  .sm\:rounded-lg {
-    border-radius: 0.5rem
-  }
-
   .sm\:rounded {
     border-radius: 0.25rem
+  }
+
+  .sm\:rounded-lg {
+    border-radius: 0.5rem
   }
 
   .sm\:border {

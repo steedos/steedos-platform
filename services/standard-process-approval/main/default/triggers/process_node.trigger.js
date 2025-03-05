@@ -1,7 +1,5 @@
 const _ = require("underscore");
 const objectql = require('@steedos/objectql');
-const util = require('@steedos/standard-objects').util;
-const InternalData = require('@steedos/standard-objects').internalData;
 
 function setSpaceAndOwner(record, that){
     record['space'] = that.spaceId
@@ -131,7 +129,7 @@ module.exports = {
         if (this.doc.order === 1) {
             this.doc.reject_behavior = 'reject_request';
         }
-        await util.checkAPIName(this.object_name, 'name', this.doc.name, null, [['process_definition', '=', this.doc.process_definition]]);
+        await objectql.checkAPIName(this.object_name, 'name', this.doc.name, null, [['process_definition', '=', this.doc.process_definition]]);
         if(!this.doc.filtrad){
             const objectName = await getProcessNodeObjectName(this.doc.process_definition);
             if(objectName){
@@ -157,7 +155,7 @@ module.exports = {
             }
         }
         if (_.has(this.doc, 'name')) {
-            await util.checkAPIName(this.object_name, 'name', this.doc.name, this.id, [['process_definition', '=', this.doc.process_definition]]);
+            await objectql.checkAPIName(this.object_name, 'name', this.doc.name, this.id, [['process_definition', '=', this.doc.process_definition]]);
         }
 
         if(!this.doc.filtrad && this.doc.process_definition){

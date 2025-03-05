@@ -1,38 +1,9 @@
-const InternalData = require('@steedos/standard-objects').internalData;
 var _ = require("underscore");
-const odataMongodb = require("@steedos/odata-v4-mongodb");
 const clone = require('clone');
-var objectCore = require('../server/objects.core.js');
 const objectql = require('@steedos/objectql');
 const register = require('@steedos/metadata-registrar');
 const auth = require('@steedos/auth');
 const MAX_MASTER_DETAIL_LEAVE = objectql.MAX_MASTER_DETAIL_LEAVE;
-const validateOptionValue = (value)=>{
-    let color = value && value.split(":")[2];
-    if(color){
-        const reg = /^(#)?[\da-f]{3}([\da-f]{3})?$/i;
-        if(!reg.test(color)){
-            throw new Error("object_fields_error_option_color_not_valid");
-        }
-    }
-}
-
-const validateOptionsValue = (value)=>{
-    if(value){
-        value.split("\n").forEach(function(option) {
-            let options;
-            if (option.indexOf(",")) {
-                options = option.split(",");
-                return options.forEach(function(_option) {
-                    validateOptionValue(_option);
-                });
-            } else {
-                validateOptionValue(option);
-            }
-        });
-    }
-}
-
 const validateOptionColorValue = (value)=>{
     if(value){
         const reg = /^(#)?[\da-f]{6}$/i;
@@ -58,12 +29,6 @@ const validateOptionsGridValue = (value)=>{
 
 const validateDoc = (doc)=>{
     validateOptionsGridValue(doc.options);
-    // if(doc.type === "autonumber"){
-    //     let formula = doc.formula && doc.formula.trim();
-    //     if(!formula){
-    //         throw new Error("object_fields_error_formula_required");
-    //     }
-    // }
 }
 
 
@@ -216,53 +181,6 @@ const initSummaryDoc = async (doc) => {
 }
 
 module.exports = {
-    afterFind: async function(){
-
-
-        _.each(this.data.values, (item)=>{
-            item.is_customize = true
-        })
-
-        let filters = InternalData.parserFilters(this.query.filters);
-        let objectName = filters.object;
-        if(!objectName && filters._id && filters._id.indexOf(".") > -1){
-            objectName = filters._id.split('.')[0];
-        }
-        if(objectName){ 
-            let fields = await InternalData.getObjectFields(objectName, this.userId, filters.name ? true : false);
-            if(fields){
-                const cloneValues = clone(this.data.values, false);
-                _.each(fields, (field)=>{
-                    if(!_.find(this.data.values, (item)=>{
-                        return item.object == field.object && item.name == field.name
-                    })){
-                        cloneValues.push(Object.assign({_id: `${objectName}.${field.name}`}, field))
-                    }
-                })
-                // this.data.values = this.data.values.concat(fields)
-                this.data.values = objectql.getSteedosSchema().metadataDriver.find(cloneValues, this.query, this.spaceId);
-            }
-        }
-
-        const dbSystemField = _.find(this.data.values, (field)=>{return field.is_system && field._id && field._id.indexOf('.') == -1})
-        if(dbSystemField){
-            const obj = await InternalData.getObject(dbSystemField.object, this.userId)
-            if(obj){
-                this.data.values = _.map(this.data.values, (item)=>{
-                    if(item.is_system){
-                        const mField = _.find(obj.fields, (field)=>{return field.name === item.name})
-                        if(mField){
-                            return Object.assign(item, mField, mField?.override || {})
-                        }else{
-                            return item;
-                        }
-                    }else{
-                        return item;
-                    }
-                })
-            }
-        }
-    },
     beforeFind: async function(){
         const { query } = this;
         if(query.fields && _.isArray(query.fields) && !_.include(query.fields, 'object')){
@@ -273,33 +191,6 @@ module.exports = {
         }
         if(query.fields && _.isArray(query.fields) && !_.include(query.fields, 'type')){
             query.fields.push('type')
-        }
-
-
-        let filters = InternalData.parserFilters(this.query.filters);
-        if(filters._id && _.isString(filters._id) && filters._id.indexOf(".") > -1){
-            const [objectName, fieldName] = filters._id.split('.');
-            query.filters = [['object', '=', objectName], ['name', '=', fieldName]]
-        }
-
-       
-    },
-    afterCount: async function(){
-        let result = await objectql.getObject('object_fields').find(this.query, await auth.getSessionByUserId(this.userId, this.spaceId))
-        this.data.values = result.length;
-    },
-    afterFindOne: async function(){
-        if(_.isEmpty(this.data.values)){
-            let id = this.id
-            let objectName = id.substr(0, id.indexOf("."));
-            if(objectName){
-                let field = await InternalData.getObjectField(objectName, this.userId, id);
-                if(field){
-                    this.data.values = field;
-                }
-            }
-        }else{
-            this.data.values.is_customize = true
         }
     },
     beforeInsert: async function () {

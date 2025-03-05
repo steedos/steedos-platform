@@ -13,7 +13,6 @@
     "dependencies": {
         "@steedos/metadata-core": "3.0.0-beta.2",
         "@steedos/service-object-mixin": "3.0.0-beta.2",
-        "@steedos/standard-objects": "3.0.0-beta.2",
         "amis-formula": "~6.3.0",
         "clone": "^2.1.2",
         "moleculer-bullmq": "3.0.0"

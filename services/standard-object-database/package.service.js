@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 1985-10-26 16:15:00
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-01-16 21:21:25
+ * @LastEditTime: 2025-03-05 16:33:10
  * @Description: 
  */
 "use strict";
@@ -12,7 +12,7 @@ const packageLoader = require('@steedos/service-meteor-package-loader');
 const serviceObjectMixin = require('@steedos/service-object-mixin');
 const validator = require('validator');
 const triggers = require('./src/triggers');
-const { checkAPIName } = require('@steedos/standard-objects').util
+const { checkAPIName } = require('@steedos/objectql')
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context

@@ -50,6 +50,10 @@ const delayLoadExtendObjectConfigQueue: any = {};
 let standardObjectsLoaded: boolean = false;
 let dbMetadataLoaing: boolean = false;
 
+let standardObjectsDir = path.dirname(
+  require.resolve("@steedos/service-core-objects"),
+);
+
 const addDelayLoadExtendObjectConfig = function (extend: string, config: any) {
   if (!delayLoadExtendObjectConfigQueue[extend]) {
     delayLoadExtendObjectConfigQueue[extend] = [];
@@ -375,16 +379,27 @@ export const loadStandardBaseObjects = async (serviceName: string) => {
 
   standardObjectsLoaded = true;
 
-  let standardObjectsDir = path.dirname(
-    require.resolve("@steedos/standard-objects"),
-  );
   let baseObject: any = loadFile(
-    path.join(standardObjectsDir, "base.object.yml"),
+    path.join(
+      standardObjectsDir,
+      "main",
+      "default",
+      "objects",
+      "_base",
+      "base.object.yml",
+    ),
   );
   baseObject.name = MONGO_BASE_OBJECT;
   await addObjectConfig(baseObject, SYSTEM_DATASOURCE, serviceName);
   let baseObjectJs: any = loadFile(
-    path.join(standardObjectsDir, "base.object.js"),
+    path.join(
+      standardObjectsDir,
+      "main",
+      "default",
+      "objects",
+      "_base",
+      "base.object.js",
+    ),
   );
   baseObjectJs.extend = MONGO_BASE_OBJECT;
   await addObjectConfig(baseObjectJs, SYSTEM_DATASOURCE, serviceName);
@@ -401,14 +416,28 @@ export const loadStandardBaseObjects = async (serviceName: string) => {
   ];
   _.forEach(baseTriggers, function (triggerFileName) {
     let baseObjectTrigger: any = loadFile(
-      path.join(standardObjectsDir, triggerFileName),
+      path.join(
+        standardObjectsDir,
+        "main",
+        "default",
+        "objects",
+        "_base",
+        triggerFileName,
+      ),
     );
     baseObjectTrigger.listenTo = MONGO_BASE_OBJECT;
     addObjectListenerConfig(baseObjectTrigger);
   });
 
   let coreObject: any = loadFile(
-    path.join(standardObjectsDir, "core.object.yml"),
+    path.join(
+      standardObjectsDir,
+      "main",
+      "default",
+      "objects",
+      "_core",
+      "core.object.yml",
+    ),
   );
   coreObject.name = SQL_BASE_OBJECT;
   await addObjectConfig(coreObject, SYSTEM_DATASOURCE, serviceName);
@@ -416,7 +445,14 @@ export const loadStandardBaseObjects = async (serviceName: string) => {
   const coreTriggers = ["core.autonumber.trigger.js"];
   _.forEach(coreTriggers, function (triggerFileName) {
     let coreObjectTrigger: any = loadFile(
-      path.join(standardObjectsDir, triggerFileName),
+      path.join(
+        standardObjectsDir,
+        "main",
+        "default",
+        "objects",
+        "_core",
+        triggerFileName,
+      ),
     );
     coreObjectTrigger.listenTo = SQL_BASE_OBJECT;
     addObjectListenerConfig(coreObjectTrigger);

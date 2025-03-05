@@ -4,7 +4,6 @@
  * @Description: 
  */
 const _ = require("underscore");
-const util = require('@steedos/standard-objects').util;
 const objectql = require("@steedos/objectql");
 const register = require('@steedos/metadata-registrar')
 const auth = require('@steedos/auth');
@@ -50,12 +49,12 @@ module.exports = {
         }
     },
     beforeInsert: async function () {
-        await util.checkAPIName(this.object_name, 'name', this.doc.name, undefined, [['is_system','!=', true]]);
+        await objectql.checkAPIName(this.object_name, 'name', this.doc.name, undefined, [['is_system','!=', true]]);
 
     },
     beforeUpdate: async function () {
         if (_.has(this.doc, 'name')) {
-            await util.checkAPIName(this.object_name, 'name', this.doc.name, this.id, [['is_system','!=', true]]);
+            await objectql.checkAPIName(this.object_name, 'name', this.doc.name, this.id, [['is_system','!=', true]]);
         }
     }
 }

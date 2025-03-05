@@ -1,8 +1,6 @@
-const InternalData = require('@steedos/standard-objects').internalData;
 const _ = require('underscore');
 const objectql = require('@steedos/objectql');
 const objectTree = require('../server/objects.tree.js');
-const clone = require('clone');
 const sleep = async (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 module.exports = {
@@ -13,57 +11,7 @@ module.exports = {
     beforeAggregate: async function () {
         delete this.query.fields;
     },
-
-    afterFind: async function(){
-        let userId = this.userId
-        let spaceId = this.spaceId;
-
-        let filters = InternalData.parserFilters(this.query.filters);
-
-        _.each(this.data.values, (item)=>{
-            item.is_customize = true
-        })
-
-        let cloneValues = clone(this.data.values, false);
-
-        if(filters.is_customize){
-            const dbObjects = await objectql.getObject('objects').directFind({space: spaceId});
-            _.each(dbObjects, (item)=>{
-                item.is_customize = true
-            })
-            cloneValues = cloneValues.concat(dbObjects);
-        }
-
-        cloneValues = cloneValues.concat(await InternalData.getObjects(userId));
-
-        this.data.values = objectql.getSteedosSchema().metadataDriver.find(cloneValues, this.query, spaceId);
-
-        _.each(this.data.values, function(value){
-            if(value){
-                delete value.actions;
-                delete value.fields;
-                delete value.list_views;
-                delete value.permission_set;
-                delete value.triggers;
-            }
-        })
-    },
-    afterCount: async function(){
-        let userId = this.userId
-        let spaceId = this.spaceId;
-        let filters = InternalData.parserFilters(this.query.filters);
-        if(filters.is_customize){
-            const dbObjects = await objectql.getObject('objects').directFind({space: spaceId});
-            return this.data.values = dbObjects.length;
-        }
-        this.data.values = this.data.values + objectql.getSteedosSchema().metadataDriver.count(await InternalData.getObjects(userId), this.query, spaceId);
-    },
     afterFindOne: async function(){
-        if(_.isEmpty(this.data.values)){
-            this.data.values = await InternalData.getObject(this.id, this.userId);
-        }else{
-            this.data.values.is_customize = true
-        }
         if(this.data.values){
             delete this.data.values.actions;
             delete this.data.values.fields;
@@ -130,26 +78,6 @@ module.exports = {
     beforeUpdate: async function () {
         const { doc, id, object_name } = this;
         delete doc.is_customize
-        // 如果用户修改了apiname，则校验 数据源必须一致为default数据源；且数据库中不能有新的apiname对应的表
-        if (_.has(doc, 'name')) {
-            const obj = this.getObject(object_name);
-            const latestDoc = await obj.findOne(id);
-            const newObjName = doc.name;
-            // !!!暂不允许修改name
-            // if (newObjName &&  (latestDoc.name != newObjName)) {
-            //     throw new Error('禁止修改API 名称。');
-            // }
-            /*
-            if (newObjName &&  (latestDoc.name != newObjName) && latestDoc.datasource === 'default') {
-                const datasource = objectql.getDataSource(latestDoc.datasource);
-                const isExitsRecords = await datasource.isCollectionExitsRecords(newObjName);
-                // 如果新表中存在记录则抛错，提示用户
-                if (isExitsRecords) {
-                    throw new Error(`${newObjName} 在库中已存在记录，不予进行。`);
-                }
-            }
-            */
-        }
     },
     afterUpdate: async function () {
         const { doc, previousDoc } = this;
@@ -158,20 +86,6 @@ module.exports = {
             // doc中缺少owner,space等字段值，需要从previousDoc中取到一起带过去
             await objectTree.insertParentAndChildrenFieldForTreeObject(Object.assign({}, previousDoc, doc), true)
         }
-        /*
-        const { doc, previousDoc, id, object_name } = this;
-        const obj = this.getObject(object_name);
-        const latestDoc = await obj.findOne(id);
-        // 对象的apiname修改后调整库中的表名
-        if (latestDoc.name && (latestDoc.name != previousDoc.name) && previousDoc.datasource === latestDoc.datasource && latestDoc.datasource === 'default'){
-            const newObjName = latestDoc.name;
-            const oldObjName = previousDoc.name;
-            const datasource = objectql.getDataSource(latestDoc.datasource);
-            await datasource.renameCollection(newObjName, oldObjName)
-        }
-        */
-
-        // await sleep(1000 * 2)
     },
     afterDelete: async function(){
         const { previousDoc: object, spaceId } = this;

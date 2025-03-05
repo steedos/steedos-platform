@@ -1,6 +1,6 @@
 const _ = require('underscore');
 const objectql = require("@steedos/objectql");
-const InternalData = require('@steedos/standard-objects').internalData;
+const { hiddenObjects } = require('@steedos/utils');
 const auth = require("@steedos/auth");
 const clone = require('clone');
 
@@ -25,7 +25,7 @@ const getInternalPermissionObjects = async function(){
         _.each(datasourceObjects, function(object) {
           const objectJSON  = object.metadata;
           const objectName = objectJSON.name;
-          if((!objectJSON._id || (objectJSON._id && !!objectJSON.extend)) && !objectJSON.hidden && !_.include(InternalData.hiddenObjects, objectName)){
+          if((!objectJSON._id || (objectJSON._id && !!objectJSON.extend)) && !objectJSON.hidden && !_.include(hiddenObjects, objectName)){
             let permission_set = objectJSON.permission_set
             _.each(permission_set, function(v, code){
                 objectsPermissions.push(Object.assign({}, v, {

@@ -5,7 +5,6 @@
  * @LastEditTime: 2022-07-30 13:22:03
  * @Description: 
  */
-const util = require('@steedos/standard-objects').util;
 const _ = require('lodash');
 const objectql = require('@steedos/objectql');
 module.exports = {
@@ -13,7 +12,7 @@ module.exports = {
 
     beforeInsert: async function () {
         const { object_name, doc } = this;
-        await util.checkAPIName(object_name, 'name', doc.name, undefined, [['is_system', '!=', true], ['object_name', '=', doc.object_name]]);
+        await objectql.checkAPIName(object_name, 'name', doc.name, undefined, [['is_system', '!=', true], ['object_name', '=', doc.object_name]]);
     },
 
     beforeUpdate: async function () {
@@ -25,6 +24,6 @@ module.exports = {
         if (_.has(this.doc, 'object_name')) {
             object_name = this.doc.object_name
         }
-        await util.checkAPIName(this.object_name, 'name', name, this.id, [['is_system', '!=', true], ['object_name', '=', object_name]]);
+        await objectql.checkAPIName(this.object_name, 'name', name, this.id, [['is_system', '!=', true], ['object_name', '=', object_name]]);
     }
 }

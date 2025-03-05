@@ -3,7 +3,6 @@
  * @Date: 2022-05-16 11:55:06
  * @Description: 
  */
-const InternalData = require('@steedos/standard-objects').internalData;
 const objectql = require('@steedos/objectql');
 const auth = require('@steedos/auth');
 const _ = require('underscore');
