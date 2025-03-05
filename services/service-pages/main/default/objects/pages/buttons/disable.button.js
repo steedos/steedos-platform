@@ -12,13 +12,18 @@ module.exports = {
             async: true,
             data: JSON.stringify({ pageId: record_id }),
             success: function (data) {
-                toastr.success('页面已禁用。');
+                SteedosUI.notification.success({
+                    message: '页面已禁用。'
+                });
                 SteedosUI.reloadRecord(object_name, record_id);
                 FlowRouter.reload();
                 $(document.body).removeClass('loading');
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                toastr.error(t(XMLHttpRequest.responseJSON.error))
+                SteedosUI.notification.error({
+                    message: '操作失败',
+                    description: t(XMLHttpRequest.responseJSON.error),
+                });
                 $(document.body).removeClass('loading');
             }
         };
