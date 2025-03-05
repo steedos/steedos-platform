@@ -1848,17 +1848,28 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@builder6/cli@^0.14.6":
-  version "0.14.6"
-  resolved "https://registry.yarnpkg.com/@builder6/cli/-/cli-0.14.6.tgz#49299f04a405e12f14cf4cfe58939e6b5930724e"
-  integrity sha512-pb1qDCgm9XjHcr8Y8I2PjaJFLZpe8ItFX9mwKjG6K3cIfyX6i4x07y9OYs+SyM9ti5I7+9zn2X0MFPvnNBJ+vw==
+"@builder6/cli@0.14.2":
+  version "0.14.2"
+  resolved "https://registry.npmmirror.com/@builder6/cli/-/cli-0.14.2.tgz#cc04cd9e2e8dd3111808669493d7c55c05a5b732"
+  integrity sha512-1S9RkmZDCVEBwRa0M9Zs4uPT7lmKtsw7mxYqGFXeGxQuI+d7BZ/dJ39cY4Ed5D+cHGO7cFUboRs1HRDglSHiKw==
   dependencies:
     "@oclif/core" "^4"
     "@oclif/plugin-help" "^6"
     "@oclif/plugin-plugins" "^5"
     fs-extra "^11.2.0"
 
-"@builder6/core@0.14.6", "@builder6/core@^0.14.6":
+"@builder6/core@0.14.2":
+  version "0.14.2"
+  resolved "https://registry.npmmirror.com/@builder6/core/-/core-0.14.2.tgz#2b5fc72578662bf4b912a114714bc572aecf66d8"
+  integrity sha512-5geLHFxN5hAOiXzkaw4dbW3KtL3ihVgBikywiSHkeLxaKK75zmmAfiNnLKc0M8KbR0cC4TjMDurxHU/OLRWIRQ==
+  dependencies:
+    "@aws-sdk/client-cloudwatch-logs" "^3.721.0"
+    "@builder6/query-mongodb" "0.14.2"
+    moleculer "^0.14.35"
+    pino-http "^10.3.0"
+    pino-pretty "^13.0.0"
+
+"@builder6/core@0.14.6":
   version "0.14.6"
   resolved "https://registry.yarnpkg.com/@builder6/core/-/core-0.14.6.tgz#793c26e3110c27c5b0fe546231bbffc52f0d2ce6"
   integrity sha512-cfrY1Q9czolvVl6auktd22F5pq91OFh1YmNi+8k3L+PdB4SFjlyCugMW7G5PDBGqID0mHXIcG+2cSM5FT13QLg==
@@ -1869,49 +1880,56 @@
     pino-http "^10.3.0"
     pino-pretty "^13.0.0"
 
-"@builder6/email@0.14.6", "@builder6/email@^0.14.6":
-  version "0.14.6"
-  resolved "https://registry.yarnpkg.com/@builder6/email/-/email-0.14.6.tgz#d06122e066cd419b65865f34a698d77b1454073f"
-  integrity sha512-TW7M817BumrtO/0sQnb/IWkgvXnxVIhRvDGY3ehgeOlSwrL+sEARkG6Y/nx054gS7MhQTkfiJLi9zWSV6ZqhJQ==
+"@builder6/email@0.14.2":
+  version "0.14.2"
+  resolved "https://registry.npmmirror.com/@builder6/email/-/email-0.14.2.tgz#afbd7c8616e62b39fb47d1b1f4bd83e6d538c8d7"
+  integrity sha512-zVUC8BW6UklFGRmWj55WsxwILvS169zn39wsq1DnA7FaDako1w0EMMxll72J2Op0uExlgg0EeWnxjf8gv2bgkA==
   dependencies:
-    "@builder6/core" "0.14.6"
+    "@builder6/core" "0.14.2"
     bluebird "^3.7.2"
     lodash "^4.17.5"
     nodemailer "^6.9.16"
 
-"@builder6/files@0.14.6", "@builder6/files@^0.14.6":
-  version "0.14.6"
-  resolved "https://registry.yarnpkg.com/@builder6/files/-/files-0.14.6.tgz#d0e375c7f58540cb02655479b66cfdd6026eefb4"
-  integrity sha512-oBkAAJFd1/79XOJqkFo/fRhYNNwtCi3IKtvrRndEH4mB3IwJTuQTzn+OIfjw9czCaeLMUtI+E7E8UjhcXHbzeA==
+"@builder6/files@0.14.2":
+  version "0.14.2"
+  resolved "https://registry.npmmirror.com/@builder6/files/-/files-0.14.2.tgz#a542eae188d274303246537e8e9b842d7401e87c"
+  integrity sha512-7o1I+2XFMBw5Jjc7Hhko8xZUu2aN1rsxw8XAeVpSZcG6WLk5GE1C+kVML1B4VY8543S1IcSBcZLvsWUz9ty+dA==
   dependencies:
-    "@builder6/core" "0.14.6"
+    "@builder6/core" "0.14.2"
     nodemailer "^6.9.16"
 
-"@builder6/moleculer@0.14.6", "@builder6/moleculer@^0.14.6":
-  version "0.14.6"
-  resolved "https://registry.yarnpkg.com/@builder6/moleculer/-/moleculer-0.14.6.tgz#0c387ba1c0fd8292558cbe43af2af406f991d03b"
-  integrity sha512-A3CiOxfUIiMa5mDHP76OwytKy9uhKeV8tqYf0BkAVaep5INAN+wtO9TWd62a8Mqcg2hiHGlG5T1F+Z6PROy6hg==
+"@builder6/moleculer@0.14.2":
+  version "0.14.2"
+  resolved "https://registry.npmmirror.com/@builder6/moleculer/-/moleculer-0.14.2.tgz#6b8cac42ee132de69746bfaa87551ae8d5010790"
+  integrity sha512-DHD94dzyKwQQllsk+9qVF9utoTz56MgUAw/Vfih5J2hSFEkaHVck4psaWeXYUUqGnGBuw8cES1Hag6m0oZStdw==
 
-"@builder6/oidc@^0.14.6":
-  version "0.14.6"
-  resolved "https://registry.yarnpkg.com/@builder6/oidc/-/oidc-0.14.6.tgz#42d3159635ebadbde0c9387156a504e0fa90aa40"
-  integrity sha512-uorA3+5gE1JfXvp2Pafbw30/GeqMDZue3Un16nEf0PANllLicHPZZ7ggIm0RkziUIEUChDmg3Cy8QtwobYvBXg==
+"@builder6/oidc@0.14.2":
+  version "0.14.2"
+  resolved "https://registry.npmmirror.com/@builder6/oidc/-/oidc-0.14.2.tgz#3e5f73ba48839844e861d1d525e9e172d3c1162f"
+  integrity sha512-K593djP0SSPKJWpQlEHWBczHLJcHk38Zh4CObgCR/rjYY2TluxYa5zgmrdy6UdwQeY+6aA0At3PdE4mZFoKeAg==
   dependencies:
-    "@builder6/core" "0.14.6"
+    "@builder6/core" "0.14.2"
     bluebird "^3.7.2"
     lodash "^4.17.5"
     nodemailer "^6.9.16"
 
-"@builder6/pages@0.14.6", "@builder6/pages@^0.14.6":
-  version "0.14.6"
-  resolved "https://registry.yarnpkg.com/@builder6/pages/-/pages-0.14.6.tgz#cd66a4fc195a01c64f201b6cbb0840ca46582062"
-  integrity sha512-ZTrz9n24nVD+XvFrA0r02uKt9kh17E+iVjDB2J50kFjGFau3RSOKHzVP912ZRdQ6p/VJjVNkZqMWGRBh/GTFFg==
+"@builder6/pages@0.14.2":
+  version "0.14.2"
+  resolved "https://registry.npmmirror.com/@builder6/pages/-/pages-0.14.2.tgz#dfd1b0dd2cccbf9d37c2a8b83a90de5e91c00c72"
+  integrity sha512-bEq+vutfLN8C1iZUu/b8u3KVByEsUYm0Tr5wyzuuKe2VNKYMy6yuoSMXxT5SHRsQVzWwD4m3QV8Cn9fpWerAig==
   dependencies:
-    "@builder6/core" "0.14.6"
+    "@builder6/core" "0.14.2"
     dataloader "^2.2.3"
     liquidjs "^10.19.0"
 
-"@builder6/query-mongodb@0.14.6", "@builder6/query-mongodb@^0.14.6":
+"@builder6/query-mongodb@0.14.2":
+  version "0.14.2"
+  resolved "https://registry.npmmirror.com/@builder6/query-mongodb/-/query-mongodb-0.14.2.tgz#0c6af853a2967798c75f8927a6cb9eff27f8883b"
+  integrity sha512-urEba0fpHpD9ukwLEpkFN2MyJigoIDpl8nYMz7HhbZgBKAf41E7dQ0PDcnqsR2wTC1V2RxvJTPHPENbhsb7USA==
+  dependencies:
+    yup "^1.1.0"
+
+"@builder6/query-mongodb@0.14.6":
   version "0.14.6"
   resolved "https://registry.yarnpkg.com/@builder6/query-mongodb/-/query-mongodb-0.14.6.tgz#8208d3afc2016689c4071583008e8407753cfbc0"
   integrity sha512-kmZ7w0CRFxCOmLjzGv2ihAp5TqtlPSZqPxxZjARe9Bnkab1sxxwmV8LCh6Rwjt1BBQe1vDyn2udZShApqO42YA==
@@ -1932,16 +1950,16 @@
     node-fetch "^2.6.1"
     prop-types "^15.7.2"
 
-"@builder6/rooms@^0.14.6":
-  version "0.14.6"
-  resolved "https://registry.yarnpkg.com/@builder6/rooms/-/rooms-0.14.6.tgz#db6e013a1555517cc4fe98d8726a4823c500ed47"
-  integrity sha512-31vkwOZx2ys1erAfSPzaFAv54xuql95WHOM3XzzsrksDjmFzVi8ZGK+k7HNQxkNCJFqXA8ADaivsABEm4xyGOw==
+"@builder6/rooms@0.14.2":
+  version "0.14.2"
+  resolved "https://registry.npmmirror.com/@builder6/rooms/-/rooms-0.14.2.tgz#0fa7c91ce6850f489090395a1addc15d773c3ca5"
+  integrity sha512-ktLAJ7IJl47jmukwzjP1ohgfXd4oDU6iA+C9hGuYNT2KHLuMi3yPedJCflbEgX8Sdw73eXEC88HQj9eNIvw40g==
   dependencies:
-    "@builder6/core" "0.14.6"
-    "@builder6/email" "0.14.6"
-    "@builder6/files" "0.14.6"
-    "@builder6/moleculer" "0.14.6"
-    "@builder6/pages" "0.14.6"
+    "@builder6/core" "0.14.2"
+    "@builder6/email" "0.14.2"
+    "@builder6/files" "0.14.2"
+    "@builder6/moleculer" "0.14.2"
+    "@builder6/pages" "0.14.2"
     "@liveblocks/emails" "2.12.0"
     "@liveblocks/node" "2.12.0"
     "@react-email/components" "^0.0.31"
@@ -1970,33 +1988,33 @@
   dependencies:
     "@builder6/core" "0.14.6"
 
-"@builder6/sharepoint@^0.14.6":
-  version "0.14.6"
-  resolved "https://registry.yarnpkg.com/@builder6/sharepoint/-/sharepoint-0.14.6.tgz#9e6336d3797b952b03352443801574719482809e"
-  integrity sha512-H5XxlRFrRWL4ioM1nfJuo0gTLGH49D9OJSAhGT31K54ECxMCMFDZ7nn461kgJlzCdPwj3cVBSxNoEXDIwwJSwA==
+"@builder6/sharepoint@0.14.2":
+  version "0.14.2"
+  resolved "https://registry.npmmirror.com/@builder6/sharepoint/-/sharepoint-0.14.2.tgz#4e89f029e9d14e9df5a99c4bbb850661a6950612"
+  integrity sha512-7oW9fgJqYrcyOlZkTKMA9/vVAcqof+jG40D1b/JqTyqKCcR7jaKtH8oSaUq6BKkspR1EwHRwaDDu0qOmOwtfPQ==
   dependencies:
-    "@builder6/core" "0.14.6"
-    "@builder6/files" "0.14.6"
+    "@builder6/core" "0.14.2"
+    "@builder6/files" "0.14.2"
     form-data "^4.0.1"
     line-reader "^0.4.0"
     nodemailer "^6.9.16"
 
-"@builder6/steedos@^0.14.6":
-  version "0.14.6"
-  resolved "https://registry.yarnpkg.com/@builder6/steedos/-/steedos-0.14.6.tgz#9b64dc3b7c92bef9a5c83477e5e8bfac5a38b82c"
-  integrity sha512-PgtPugsG4t/iUO0WHvI2zaNGA+TfT+asp5Nokabh2jIpf2g8Y4PrhAG0fH8DR298XgBoZUXlWgFx5l44WESekw==
+"@builder6/steedos@0.14.2":
+  version "0.14.2"
+  resolved "https://registry.npmmirror.com/@builder6/steedos/-/steedos-0.14.2.tgz#34e596a22817370d05f73d1f57568dd7c5ce7b4c"
+  integrity sha512-PYhxJ+DejQiniCzKhiZLYIn3Lfa9kW6WVs7KfTfBrpmp6/7NNqanru9Dc6RyfNqO513v2m5GAhr6w6BjoG2p9A==
   dependencies:
-    "@builder6/core" "0.14.6"
-    "@builder6/moleculer" "0.14.6"
+    "@builder6/core" "0.14.2"
+    "@builder6/moleculer" "0.14.2"
     nodemailer "^6.9.16"
 
-"@builder6/tables@^0.14.6":
-  version "0.14.6"
-  resolved "https://registry.yarnpkg.com/@builder6/tables/-/tables-0.14.6.tgz#d08bbaf35ddd405fba8f1bdf320ea6aba30f011d"
-  integrity sha512-Fo3jJgxevNFdSb0tlATenYBhQVOZzxDGdgLi/ZCXXZbhKj745B9GHhmFENMKV9wTO1es6+qclu8B0Yd4t42UdQ==
+"@builder6/tables@0.14.2":
+  version "0.14.2"
+  resolved "https://registry.npmmirror.com/@builder6/tables/-/tables-0.14.2.tgz#a7f5f718611b334498ef6b82b9ec9469aeae34e2"
+  integrity sha512-7HtEABcFNhFhE6PGvZnyDfUnpvAQ4dQ9ZShbgLClWZDNGVxvMT107sQ5/jIjj5X3JFDqGcbb3oLzopj6JSD3Ew==
   dependencies:
-    "@builder6/core" "0.14.6"
-    "@builder6/pages" "0.14.6"
+    "@builder6/core" "0.14.2"
+    "@builder6/pages" "0.14.2"
     dataloader "^2.2.3"
 
 "@bull-board/api@4.12.2":
@@ -26898,7 +26916,7 @@ string-random@^0.1.3:
   resolved "https://registry.npmjs.org/string-random/-/string-random-0.1.3.tgz#083f39835c2430fe0be76b9e72f0736e2e0f7b74"
   integrity sha512-g+UsIwzKhNi+9/+Q3Q7hP8R4HkQxiIkQlttnxw6GRdk9pnnkGIv53C6H8dvh8wxAVDhkqpnWeauaPXS1b2sBJg==
 
-"string-width-cjs@npm:string-width@^4.2.0", "string-width@^1.0.2 || 2 || 3 || 4", string-width@^4.0.0, string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.2, string-width@^4.2.3:
+"string-width-cjs@npm:string-width@^4.2.0":
   version "4.2.3"
   resolved "https://registry.npmjs.org/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
@@ -26915,6 +26933,15 @@ string-width@^1.0.1:
     code-point-at "^1.0.0"
     is-fullwidth-code-point "^1.0.0"
     strip-ansi "^3.0.0"
+
+"string-width@^1.0.2 || 2 || 3 || 4", string-width@^4.0.0, string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.2, string-width@^4.2.3:
+  version "4.2.3"
+  resolved "https://registry.npmjs.org/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
+  integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
+  dependencies:
+    emoji-regex "^8.0.0"
+    is-fullwidth-code-point "^3.0.0"
+    strip-ansi "^6.0.1"
 
 string-width@^2.0.0, string-width@^2.1.0:
   version "2.1.1"
@@ -27047,7 +27074,7 @@ stringify-package@^1.0.1:
   resolved "https://registry.npmjs.org/stringify-package/-/stringify-package-1.0.1.tgz#e5aa3643e7f74d0f28628b72f3dad5cecfc3ba85"
   integrity sha512-sa4DUQsYciMP1xhKWGuFM04fB0LG/9DlluZoSVywUMRNvzid6XucHK0/90xGxRoHrAaROrcHK1aPKaijCtSrhg==
 
-"strip-ansi-cjs@npm:strip-ansi@^6.0.1", strip-ansi@^6.0.0, strip-ansi@^6.0.1:
+"strip-ansi-cjs@npm:strip-ansi@^6.0.1":
   version "6.0.1"
   resolved "https://registry.npmjs.org/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
@@ -27074,6 +27101,13 @@ strip-ansi@^5.0.0, strip-ansi@^5.1.0, strip-ansi@^5.2.0:
   integrity sha512-DuRs1gKbBqsMKIZlrffwlug8MHkcnpjs5VPmL1PAh+mA30U0DTotfDZ0d2UUsXpPmPmMMJ6W773MaA3J+lbiWA==
   dependencies:
     ansi-regex "^4.1.0"
+
+strip-ansi@^6.0.0, strip-ansi@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.npmjs.org/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
+  integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
+  dependencies:
+    ansi-regex "^5.0.1"
 
 strip-ansi@^7.0.1, strip-ansi@^7.1.0:
   version "7.1.0"
@@ -29564,7 +29598,7 @@ workbox-window@6.6.1:
     "@types/trusted-types" "^2.0.2"
     workbox-core "6.6.1"
 
-"wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
+"wrap-ansi-cjs@npm:wrap-ansi@^7.0.0":
   version "7.0.0"
   resolved "https://registry.npmjs.org/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
@@ -29586,6 +29620,15 @@ wrap-ansi@^6.2.0:
   version "6.2.0"
   resolved "https://registry.npmjs.org/wrap-ansi/-/wrap-ansi-6.2.0.tgz#e9393ba07102e6c91a3b221478f0257cd2856e53"
   integrity sha512-r6lPcBGxZXlIcymEu7InxDMhdW0KDxpLgoFLcguasxCaJ/SOIZwINatK9KY/tf+ZrlywOKU0UDj3ATXUBfxJXA==
+  dependencies:
+    ansi-styles "^4.0.0"
+    string-width "^4.1.0"
+    strip-ansi "^6.0.0"
+
+wrap-ansi@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.npmjs.org/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
+  integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
   dependencies:
     ansi-styles "^4.0.0"
     string-width "^4.1.0"
