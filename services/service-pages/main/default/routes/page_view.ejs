@@ -1,8 +1,8 @@
 <!--
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-08-01 17:47:18
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-09-04 13:55:15
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2025-03-05 11:31:58
  * @Description: 
 -->
 <!DOCTYPE html>
@@ -30,16 +30,11 @@
       <link rel="stylesheet" href="/tailwind/tailwind-base.css" />
     
       <script>
-        window.Creator = {};
         window.Steedos = {
             isMobile: ()=>{
                 return window.innerWidth <= 768;
             }
         };
-        window.__meteor_runtime_config__ = <%- JSON.stringify(__meteor_runtime_config__) %>
-        window.Meteor = {
-            isCordova: false
-        }
       </script>
 
 
@@ -102,7 +97,6 @@
   
 
   <script >
-    window.Creator.USER_CONTEXT = <%- JSON.stringify(USER_CONTEXT) %>
     window.Builder = BuilderSDK.Builder;
     window.builder = BuilderSDK.builder;
     window.builder.init('steedos');

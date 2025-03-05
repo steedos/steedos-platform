@@ -2,7 +2,7 @@
  * @Author: 孙浩林 6194896+sunhaolin@users.noreply.github.com
  * @Date: 2023-12-10 11:09:40
  * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2025-03-04 15:36:50
+ * @LastEditTime: 2025-03-05 10:04:42
  * @FilePath: /steedos-platform-3.0/services/service-pages/main/default/routes/page_render.router.js
  * @Description: 支持使用schemaApi动态渲染页面，支持匿名访问。
  */
@@ -53,7 +53,7 @@ router.get('/api/page/render', async function (req, res) {
                 spaceId: ""
             },
             pageSchema: pageSchema,
-            __meteor_runtime_config__: __meteor_runtime_config__,
+            // __meteor_runtime_config__: __meteor_runtime_config__,
             queryData,
             STEEDOS_PUBLIC_USE_OPEN_API: process.env.STEEDOS_PUBLIC_USE_OPEN_API
         }

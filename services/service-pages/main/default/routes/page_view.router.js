@@ -61,7 +61,7 @@ router.get('/api/page/view/:pageId', auth.authentication, async function (req, r
                 spaceId: userSession.spaceId
             },
             pageSchema: _.isString(pageVersion.schema) ? JSON.parse(pageVersion.schema) : pageVersion.schema,
-            __meteor_runtime_config__: __meteor_runtime_config__,
+            // __meteor_runtime_config__: __meteor_runtime_config__,
             STEEDOS_PUBLIC_USE_OPEN_API: process.env.STEEDOS_PUBLIC_USE_OPEN_API
         }
         const options = {}
@@ -122,7 +122,7 @@ router.get('/api/page/public/:pageId', async function (req, res) {
                 spaceId: ""
             },
             pageSchema: _.isString(pageVersion.schema) ? JSON.parse(pageVersion.schema) : pageVersion.schema,
-            __meteor_runtime_config__: __meteor_runtime_config__,
+            // __meteor_runtime_config__: __meteor_runtime_config__,
             STEEDOS_PUBLIC_USE_OPEN_API: process.env.STEEDOS_PUBLIC_USE_OPEN_API
         }
         const options = {}
