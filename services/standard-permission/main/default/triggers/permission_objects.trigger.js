@@ -1,6 +1,6 @@
 const _ = require('underscore');
 const objectql = require("@steedos/objectql");
-const { hiddenObjects } = require('@steedos/utils');
+const { hiddenObjects, processPermissions } = require('@steedos/utils');
 const auth = require("@steedos/auth");
 const clone = require('clone');
 
@@ -182,6 +182,8 @@ module.exports = {
         if(_.isEmpty(doc.name)){
             doc.name = `${doc.object_name}.${permissionSet.name}`
         }
+
+        return processPermissions(doc)
     },
     beforeUpdate: async function () {
         let oldDoc = Creator.getCollection("permission_objects").direct.findOne({_id: this.id})
@@ -195,5 +197,7 @@ module.exports = {
         }
 
         await initPermissionSet(Object.assign({permission_set_id: permission_set_id}, doc), this.userId, this.spaceId);
+
+        return processPermissions(doc)
     }
 }

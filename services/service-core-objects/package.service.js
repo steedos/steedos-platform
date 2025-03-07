@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 13:17:06
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-02-21 16:47:50
+ * @LastEditTime: 2025-03-07 09:25:22
  * @Description: 
  */
 "use strict";
@@ -206,6 +206,16 @@ module.exports = {
      * Service started lifecycle event handler
      */
     async started() {
+        // 创建一个假空的steedos-server服务,用于兼容其他软件包的dependencies
+        this.broker.createService({
+            name: 'steedos-server',
+            mixins: [],
+            started: function() {
+            },
+            created: function(){
+            }
+        });
+
     },
 
     /**

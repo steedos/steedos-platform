@@ -2,13 +2,13 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 1985-10-26 16:15:00
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-03-05 16:33:10
+ * @LastEditTime: 2025-03-06 10:44:43
  * @Description: 
  */
 "use strict";
 const project = require('./package.json');
 const packageName = project.name;
-const packageLoader = require('@steedos/service-meteor-package-loader');
+const packageLoader = require('@steedos/service-package-loader');
 const serviceObjectMixin = require('@steedos/service-object-mixin');
 const validator = require('validator');
 const triggers = require('./src/triggers');

@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-08-06 14:44:51
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-03-05 16:08:03
+ * @LastEditTime: 2025-03-07 11:41:20
  * @Description:
  */
 
@@ -74,4 +74,72 @@ export function JSONStringify(data) {
     }
     return val;
   });
+}
+
+export function processPermissions(po) {
+  if (po.allowCreate) {
+    po.allowRead = true;
+  }
+  if (po.allowEdit) {
+    po.allowRead = true;
+  }
+  if (po.allowDelete) {
+    po.allowEdit = true;
+    po.allowRead = true;
+  }
+  if (po.viewAllRecords) {
+    po.allowRead = true;
+  }
+  if (po.modifyAllRecords) {
+    po.allowRead = true;
+    po.allowEdit = true;
+    po.allowDelete = true;
+    po.viewAllRecords = true;
+  }
+  if (po.viewCompanyRecords) {
+    po.allowRead = true;
+  }
+  if (po.modifyCompanyRecords) {
+    po.allowRead = true;
+    po.allowEdit = true;
+    po.allowDelete = true;
+    po.viewCompanyRecords = true;
+  }
+
+  // If attachment-related permission configuration is empty,
+  // it is compatible with the previous rules when there was no attachment permission configuration
+  if (po.allowRead) {
+    if (typeof po.allowReadFiles !== "boolean") po.allowReadFiles = true;
+    if (typeof po.viewAllFiles !== "boolean") po.viewAllFiles = true;
+  }
+  if (po.allowEdit) {
+    if (typeof po.allowCreateFiles !== "boolean") po.allowCreateFiles = true;
+    if (typeof po.allowEditFiles !== "boolean") po.allowEditFiles = true;
+    if (typeof po.allowDeleteFiles !== "boolean") po.allowDeleteFiles = true;
+  }
+  if (po.modifyAllRecords) {
+    if (typeof po.modifyAllFiles !== "boolean") po.modifyAllFiles = true;
+  }
+
+  if (po.allowCreateFiles) {
+    po.allowReadFiles = true;
+  }
+  if (po.allowEditFiles) {
+    po.allowReadFiles = true;
+  }
+  if (po.allowDeleteFiles) {
+    po.allowEditFiles = true;
+    po.allowReadFiles = true;
+  }
+  if (po.viewAllFiles) {
+    po.allowReadFiles = true;
+  }
+  if (po.modifyAllFiles) {
+    po.allowReadFiles = true;
+    po.allowEditFiles = true;
+    po.allowDeleteFiles = true;
+    po.viewAllFiles = true;
+  }
+
+  return po;
 }

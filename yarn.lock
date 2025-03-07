@@ -6667,6 +6667,16 @@
     lodash "4.17.21"
     moment "^2.24.0"
 
+"@steedos/license@2.5.49":
+  version "2.5.49"
+  resolved "https://registry.npmmirror.com/@steedos/license/-/license-2.5.49.tgz#cbda7e3bc5d3c4d4a5689656e879e25066ee6687"
+  integrity sha512-Fg7PdiEtLNWmq8+pdJNLWWJVSHN/UOTd0oGkIE6CCghiLUJ/ZzqJLqBgS86+JCP7uczlqy1/vmtaKm729hrOlg==
+  dependencies:
+    abort-controller "^3.0.0"
+    crypto "^1.0.1"
+    node-fetch "^2.6.0"
+    systeminformation "5.9.17"
+
 "@steedos/odata-v4-mongodb@2.5.11-beta.10":
   version "2.5.11-beta.10"
   resolved "https://registry.npmjs.org/@steedos/odata-v4-mongodb/-/odata-v4-mongodb-2.5.11-beta.10.tgz#585b5202e855710dd7718f4ccb9b244991cfdeeb"
@@ -6679,6 +6689,14 @@
   version "2.5.11-beta.10"
   resolved "https://registry.npmjs.org/@steedos/odata-v4-parser/-/odata-v4-parser-2.5.11-beta.10.tgz#393281641f59538e3361dfc864628e79034215c9"
   integrity sha512-DBEa7uSwfcf9G1C9myZOyJSxClu0FODmGLDVORoWDCIwBSS8UZp/fa87Q0TyRBS8MW3KBAdbINsIUS8GRow71w==
+
+"@steedos/service-license@2.5.49":
+  version "2.5.49"
+  resolved "https://registry.npmmirror.com/@steedos/service-license/-/service-license-2.5.49.tgz#1d593e903350211a1a55ddf597f4a229235dca9a"
+  integrity sha512-foRs1GUQNftgbaBDuyXAeyWHLWxRd9LvMAiFth0UAOh+GdeXytVVgilU8MU+aT6xe4fwNR8slXDhmDSr9D8KpQ==
+  dependencies:
+    "@steedos/license" "2.5.49"
+    axios "^0.21.4"
 
 "@surma/rollup-plugin-off-main-thread@^2.2.3":
   version "2.2.3"
@@ -8163,6 +8181,13 @@ abbrev@^3.0.0:
   resolved "https://registry.npmjs.org/abbrev/-/abbrev-3.0.0.tgz#c29a6337e167ac61a84b41b80461b29c5c271a27"
   integrity sha512-+/kfrslGQ7TNV2ecmQwMJj/B65g5KVq1/L3SGVZ3tCYGqlzFuFCGBZJtMP99wH3NpEUyAjn0zPdPUg0D+DwrOA==
 
+abort-controller@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npmmirror.com/abort-controller/-/abort-controller-3.0.0.tgz#eaf54d53b62bae4138e809ca225c8439a6efb392"
+  integrity sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==
+  dependencies:
+    event-target-shim "^5.0.0"
+
 accepts@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/accepts/-/accepts-2.0.0.tgz#bbcf4ba5075467f3f2131eab3cffc73c2f5d7895"
@@ -9090,7 +9115,7 @@ axe-core@^4.10.0:
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.10.2.tgz#85228e3e1d8b8532a27659b332e39b7fa0e022df"
   integrity sha512-RE3mdQ7P3FRSe7eqCWoeQ/Z9QXrtniSjp1wUjt5nRC3WIpz5rSCve6o3fsZ2aCpJtrZjSZgjwXAoTO5k4tEI0w==
 
-axios@^0.21.1:
+axios@^0.21.1, axios@^0.21.4:
   version "0.21.4"
   resolved "https://registry.npmjs.org/axios/-/axios-0.21.4.tgz#c67b90dc0568e5c1cf2b0b858c43ba28e2eda575"
   integrity sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==
@@ -13565,6 +13590,11 @@ event-emitter@^0.3.5, event-emitter@~0.3.4:
   dependencies:
     d "1"
     es5-ext "~0.10.14"
+
+event-target-shim@^5.0.0:
+  version "5.0.1"
+  resolved "https://registry.npmmirror.com/event-target-shim/-/event-target-shim-5.0.1.tgz#5d4d3ebdf9583d63a5333ce2deb7480ab2b05789"
+  integrity sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==
 
 eventemitter2@^6.4.9:
   version "6.4.9"
@@ -20733,7 +20763,7 @@ node-emoji@1.11.0, node-emoji@^1.10.0:
   dependencies:
     lodash "^4.17.21"
 
-node-fetch@2, node-fetch@^2.3.0, node-fetch@^2.6.1, node-fetch@^2.6.12, node-fetch@^2.6.7:
+node-fetch@2, node-fetch@^2.3.0, node-fetch@^2.6.0, node-fetch@^2.6.1, node-fetch@^2.6.12, node-fetch@^2.6.7:
   version "2.7.0"
   resolved "https://registry.npmjs.org/node-fetch/-/node-fetch-2.7.0.tgz#d0f0fa6e3e2dc1d27efcd8ad99d550bda94d187d"
   integrity sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==
@@ -27394,6 +27424,11 @@ synckit@^0.9.1:
   dependencies:
     "@pkgr/core" "^0.1.0"
     tslib "^2.6.2"
+
+systeminformation@5.9.17:
+  version "5.9.17"
+  resolved "https://registry.npmmirror.com/systeminformation/-/systeminformation-5.9.17.tgz#9b0c405346fcd9ad37a95df4990eefa3d164d7a3"
+  integrity sha512-hbJtPsG63PCst4PLXFq8hycbkeR5oGDquRowfLK0gNX7nJ1qx3tCbsWu83OL4GP1dkcLMKsVooLUn5x2K1Epgg==
 
 table@^6.8.0:
   version "6.9.0"

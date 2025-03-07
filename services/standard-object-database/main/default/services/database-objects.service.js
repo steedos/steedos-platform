@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-04-21 16:25:07
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-03-21 11:58:43
+ * @LastEditTime: 2025-03-06 13:43:12
  * @Description: 
  */
 var packageServiceName = '~database-objects'
@@ -100,31 +100,31 @@ module.exports = {
                 this.broker.broadcast('metadata.object_triggers.change', {apiName: `${trigger.listenTo}.${trigger.name}`, listenTo: trigger.listenTo})
             }
         },
-        subTriggers: {
-            async handler(){
-                return Creator.getCollection("object_triggers").find({}, {
-                    fields: {
-                        created: 0,
-                        created_by: 0,
-                        modified: 0,
-                        modified_by: 0
-                    }
-                }).observe({
-                    added: (newDocument)=>{
-                        return this.changeTriggerMetadata(newDocument);
-                    },
-                    changed: (newDocument, oldDocument) => {
-                        if(newDocument.name != oldDocument.name){
-                            this.removeTriggerMetadata(oldDocument);
-                        }
-                        return this.changeTriggerMetadata(newDocument);
-                    },
-                    removed: (oldDocument) => {
-                        return this.removeTriggerMetadata(oldDocument);
-                    }
-                });
-            }
-        }
+        // subTriggers: {
+        //     async handler(){
+        //         return Creator.getCollection("object_triggers").find({}, {
+        //             fields: {
+        //                 created: 0,
+        //                 created_by: 0,
+        //                 modified: 0,
+        //                 modified_by: 0
+        //             }
+        //         }).observe({
+        //             added: (newDocument)=>{
+        //                 return this.changeTriggerMetadata(newDocument);
+        //             },
+        //             changed: (newDocument, oldDocument) => {
+        //                 if(newDocument.name != oldDocument.name){
+        //                     this.removeTriggerMetadata(oldDocument);
+        //                 }
+        //                 return this.changeTriggerMetadata(newDocument);
+        //             },
+        //             removed: (oldDocument) => {
+        //                 return this.removeTriggerMetadata(oldDocument);
+        //             }
+        //         });
+        //     }
+        // }
 	},
 
 	/**
@@ -138,9 +138,9 @@ module.exports = {
 	 * Service started lifecycle event handler
 	 */
 	async started() {
-        Meteor.startup(async ()=>{
-            this.subTriggers = await this.subTriggers();
-        })
+        // Meteor.startup(async ()=>{
+        //     this.subTriggers = await this.subTriggers();
+        // })
 	},
 
 	/**

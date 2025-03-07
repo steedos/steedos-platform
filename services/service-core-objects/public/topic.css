@@ -127,3 +127,7 @@ body a:hover {
 .steedos-amis-form .slds-icon-utility-check > span {
     color: var(--private);
 }
+
+.ant-btn-primary{
+    color: var(--private);
+}
