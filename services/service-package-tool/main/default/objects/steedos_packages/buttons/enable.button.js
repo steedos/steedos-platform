@@ -5,11 +5,10 @@ module.exports = {
                 return SteedosUI.notification.error({message: '未找到软件包'})
             }
             console.log('record.....',record)
-            const nodesSelect = Steedos.PackageRegistry.getNodesSelect();
 
             SteedosUI.Modal.confirm({
                 title: '启用',
-                content: `确定要启用${record.name}?${nodesSelect}`,
+                content: `确定要启用${record.name}?`,
                 okText: '启用',
                 cancelText: '取消',
                 onOk: function(){

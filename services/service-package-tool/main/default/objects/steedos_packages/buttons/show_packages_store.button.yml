@@ -1,5 +1,0 @@
-name: show_packages_store
-is_enable: true
-label: 应用商城
-'on': list
-visible: true

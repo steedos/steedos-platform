@@ -1,5 +1,0 @@
-name: install_purchased_packages
-is_enable: true
-label: 安装已购买应用
-'on': list
-visible: true

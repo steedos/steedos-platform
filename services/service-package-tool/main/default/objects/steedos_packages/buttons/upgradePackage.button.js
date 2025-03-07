@@ -2,15 +2,15 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-12-09 18:23:36
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-11-02 09:25:00
+ * @LastEditTime: 2025-03-07 11:59:52
  * @Description: 
  */
 module.exports = {
-    upgradePackageVisible: function (object_name, record_id) {
+    upgradePackageVisible: function (object_name, record_id, permission, data) {
         if(Steedos.settings.public.enable_saas){
             return false;
         }
-        const record = Creator.odata.get(object_name, record_id);
+        const record = data?.record;
         if (record.status === 'enable' && !record.local && !record.static) {
             return true;
         }
