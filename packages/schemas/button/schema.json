@@ -1,104 +1,89 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "name": "steedos-schema_object_button",
-    "type": "object",
-    "additionalProperties": false,
-    "oneOf": [
-        {
-            "properties": {
-                "type": {
-                    "enum": [
-                        "library"
-                    ]
-                }
-            },
-            "required": [
-                "type",
-                "name"
-            ]
-        },
-        {
-            "properties": {
-                "type": {
-                    "not": {
-                        "enum": [
-                            "library"
-                        ]
-                    }
-                }
-            }
-        }
-    ],
-    "properties": {
-        "name": {
-            "type": "string",
-            "description": "API 名称"
-        },
-        "label": {
-            "type": "string",
-            "description": "按钮显示名称"
-        },
-        "is_enable": {
-            "type": "boolean",
-            "description": "是否启用"
-        },
-        "visible": {
-            "type": [
-                "string",
-                "boolean"
-            ],
-            "description": "是否有效"
-        },
-        "on": {
-            "type": "string",
-            "description": "显示位置, list: 只显示在列表右上角; record: 显示在记录查看页右上角，以及列表视图中每项的下拉菜单中; record_more: 显示在记录查看页右上角的“更多”下拉菜单中，以及列表视图中每项的下拉菜单中; list_item: 只显示在列表视图中每项的下拉菜单中; record_only: 只显示在记录查看页右上角;record_only_more: 只显示在记录查看页右上角的“更多”下拉菜单中",
-            "enum": [
-                "list",
-                "record",
-                "record_more",
-                "list_item",
-                "record_only",
-                "record_only_more"
-            ]
-        },
-        "todo": {
-            "type": "string",
-            "description": "执行的脚本"
-        },
-        "sort": {
-            "type": "number",
-            "description": "显示顺序"
-        },
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "name": "steedos-schema_object_button",
+  "type": "object",
+  "additionalProperties": false,
+  "oneOf": [
+    {
+      "properties": {
         "type": {
-            "type": "string",
-            "description": "按钮类型",
-            "anyOf": [
-                {
-                    "enum": [
-                        "script",
-                        "amis_button"
-                    ]
-                }
-            ]
-        },
-        "amis_schema": {
-            "type": [
-                "string",
-                "object"
-            ],
-            "description": ""
-        },
-        "license": {
-            "type": "array",
-            "description": "许可证",
-            "items": {
-                "type": "string",
-                "description": "许可证",
-                "enum": [
-                    "platform-enterprise",
-                    "platform-professional"
-                ]
-            }
+          "enum": ["library"]
         }
+      },
+      "required": ["type", "name"]
+    },
+    {
+      "properties": {
+        "type": {
+          "not": {
+            "enum": ["library"]
+          }
+        }
+      }
     }
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "API 名称"
+    },
+    "label": {
+      "type": "string",
+      "description": "按钮显示名称"
+    },
+    "locked": {
+      "type": "boolean",
+      "description": "是否锁定"
+    },
+    "is_enable": {
+      "type": "boolean",
+      "description": "是否启用"
+    },
+    "visible": {
+      "type": ["string", "boolean"],
+      "description": "是否有效"
+    },
+    "on": {
+      "type": "string",
+      "description": "显示位置, list: 只显示在列表右上角; record: 显示在记录查看页右上角，以及列表视图中每项的下拉菜单中; record_more: 显示在记录查看页右上角的“更多”下拉菜单中，以及列表视图中每项的下拉菜单中; list_item: 只显示在列表视图中每项的下拉菜单中; record_only: 只显示在记录查看页右上角;record_only_more: 只显示在记录查看页右上角的“更多”下拉菜单中",
+      "enum": [
+        "list",
+        "record",
+        "record_more",
+        "list_item",
+        "record_only",
+        "record_only_more"
+      ]
+    },
+    "todo": {
+      "type": "string",
+      "description": "执行的脚本"
+    },
+    "sort": {
+      "type": "number",
+      "description": "显示顺序"
+    },
+    "type": {
+      "type": "string",
+      "description": "按钮类型",
+      "anyOf": [
+        {
+          "enum": ["script", "amis_button"]
+        }
+      ]
+    },
+    "amis_schema": {
+      "type": ["string", "object"],
+      "description": ""
+    },
+    "license": {
+      "type": "array",
+      "description": "许可证",
+      "items": {
+        "type": "string",
+        "description": "许可证",
+        "enum": ["platform-enterprise", "platform-professional"]
+      }
+    }
+  }
 }
