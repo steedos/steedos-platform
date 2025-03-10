@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-05-19 11:38:30
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2025-03-04 15:30:56
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2025-03-10 11:59:01
  * @Description: 
  */
 "use strict";
@@ -65,10 +65,11 @@ module.exports = {
 				const { path : packagePath } = packageInfo;
                 let publicPath = path.join(packagePath, 'main', 'default', 'client');
                 try {
-                    if (!fs.existsSync(publicPath) || this.settings.loadedPublicClientJS || typeof WebApp == 'undefined') {
+                    if (!fs.existsSync(publicPath) || this.settings.loadedPublicClientJS) {
                         return;
                     }
                 } catch (error) {
+					console.log('error', error)
                     return
                 }
 
@@ -83,7 +84,6 @@ module.exports = {
                         }
                         const cacheTime = 86400000 * 1; // one day
                         router.use(`${routerPath}/amis-pages/js`, express.static(publicPath, { maxAge: cacheTime }));
-                        // WebApp.connectHandlers.use(router);
                     } catch (error) {
                         console.error(error)
                         this.settings.loadedPublicClientJS = false;

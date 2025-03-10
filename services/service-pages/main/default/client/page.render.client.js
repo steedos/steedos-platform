@@ -225,7 +225,7 @@
                     record_id: data.recordId,
                     formFactor: Steedos.isMobile() ? "SMALL" : "LARGE",
                     context: {
-                        rootUrl: Meteor.isCordova ? (rootUrl.endsWith("/") ? rootUrl.substr(0, rootUrl.length-1) : rootUrl) : '',
+                        rootUrl: rootUrl,
                         tenantId: Builder.settings.context.user.spaceId,
                         userId: Builder.settings.context.userId,
                         authToken: Builder.settings.context.user.authToken,

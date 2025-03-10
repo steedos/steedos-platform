@@ -43,18 +43,8 @@
     };
     
     Promise.all([
-        waitForThing(Creator, 'USER_CONTEXT'),
+        waitForThing(window, 'Builder'),
     ]).then(()=>{
-        Builder.set({
-            context: {
-                rootUrl: Builder.settings.rootUrl,
-                tenantId: Creator.USER_CONTEXT.spaceId,
-                userId: Creator.USER_CONTEXT.userId,
-                authToken: Creator.USER_CONTEXT.user.authToken
-            },
-            locale: Creator.USER_CONTEXT.user.locale
-        })
-    
         window.postMessage({ type: "Builder.loaded" }, "*")
     })
 })();

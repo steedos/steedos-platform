@@ -162,10 +162,11 @@ module.exports = {
 				const { path : packagePath } = packageInfo;
                 let publicPath = path.join(packagePath, 'main', 'default', 'client');
                 try {
-                    if (!fs.existsSync(publicPath) || this.settings.loadedPublicClientJS || typeof WebApp == 'undefined') {
+                    if (!fs.existsSync(publicPath) || this.settings.loadedPublicClientJS) {
                         return;
                     }
                 } catch (error) {
+					console.log('error', error)
                     return
                 }
 
@@ -180,7 +181,6 @@ module.exports = {
                         }
                         const cacheTime = 86400000 * 1; // one day
                         router.use(`${routerPath}/pages/js`, express.static(publicPath, { maxAge: cacheTime }));
-						console.log(`${routerPath}/pages/js`, publicPath)
                     } catch (error) {
                         console.error(error)
                         this.settings.loadedPublicClientJS = false;

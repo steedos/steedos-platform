@@ -60,7 +60,7 @@ router.get('/api/page/view/:pageId', auth.authentication, async function (req, r
                 userId: userSession.userId,
                 spaceId: userSession.spaceId
             },
-            pageSchema: _.isString(pageVersion.schema) ? JSON.parse(pageVersion.schema) : pageVersion.schema,
+            pageSchema: _.isString(pageVersion.schema) ? JSON.parse(pageVersion.schema) : (pageVersion.schema || {}),
             // __meteor_runtime_config__: __meteor_runtime_config__,
             STEEDOS_PUBLIC_USE_OPEN_API: process.env.STEEDOS_PUBLIC_USE_OPEN_API
         }
