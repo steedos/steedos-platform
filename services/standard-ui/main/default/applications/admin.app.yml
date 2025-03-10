@@ -64,18 +64,18 @@ tab_items:
   admin_queue_import:
     group: apps
     index: 18
-  admin_datasources:
-    group: apps
-    index: 20
+  # admin_datasources:
+  #   group: apps
+  #   index: 20
   admin_steedos_packages:
     group: development
     index: 18
   admin_developer:
     group: development
     index: 19.50
-  admin_metadata:
-    group: development
-    index: 19.505
+  # admin_metadata:
+  #   group: development
+  #   index: 19.505
   admin_developer_triggers:
     group: development
     index: 19.51
