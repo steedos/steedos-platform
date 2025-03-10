@@ -189,8 +189,31 @@ export const AppDashboard = () => {
           "Authorization": "Bearer ${context.tenantId},${context.authToken}"
         },
         "adaptor": pcInitApiAdaptorScript
+      },
+      data: {
+        objectName: '',
+        pageType: '',
+        listName: '',
+        app: "",
+        appId: "",
+        app_id: "",
       }
-    }}></AmisRender>
+    } }  data ={{
+            context: {
+                objectName: '',
+                pageType: '',
+                listName: '',
+                app: "",
+                appId: "",
+                app_id: ""
+              },
+              objectName: '',
+              pageType: '',
+              listName: '',
+              app: "",
+              appId: "",
+              app_id: "",
+        }}></AmisRender>
     </>
   );
 }

@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:35
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-03-03 16:56:59
+ * @LastEditTime: 2025-03-07 17:35:32
  * @Description: 维护内存缓存
  */
 "use strict";
@@ -90,7 +90,6 @@ module.exports = {
 				}
 				this.objectTranslationsChangeTimeoutId = setTimeout(() => {
 					core.loadObjectTranslations().then(() => {
-						console.log(`core.loadObjectTranslations====>`)
 						cachers.getCacher('lru.translations.objects').clear();
 					})
 					this.objectTranslationsChangeTimeoutId = null;

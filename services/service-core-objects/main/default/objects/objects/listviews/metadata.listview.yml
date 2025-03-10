@@ -1,4 +1,4 @@
-name: all
+name: metadata
 columns:
   - label
   - name
@@ -10,8 +10,6 @@ extra_columns:
   - fields
   - is_deleted
 filter_scope: space
-label: All
+label: Metadata
 shared: true
 shared_to: space
-filters:
-  - ['hidden', '!=', true]

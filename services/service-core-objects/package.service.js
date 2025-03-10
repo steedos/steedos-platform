@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 13:17:06
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-03-07 09:25:22
+ * @LastEditTime: 2025-03-09 17:48:20
  * @Description: 
  */
 "use strict";
@@ -211,6 +211,7 @@ module.exports = {
             name: 'steedos-server',
             mixins: [],
             started: function() {
+                global.SteedosStarted=true
             },
             created: function(){
             }

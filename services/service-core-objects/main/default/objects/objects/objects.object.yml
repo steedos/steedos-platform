@@ -1,5 +1,6 @@
 name: objects
 custom: true
+isMetadata: true
 enable_dataloader: false
 field_groups:
   - group_name: switch

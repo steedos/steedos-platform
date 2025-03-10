@@ -1848,26 +1848,15 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@builder6/cli@0.14.2":
-  version "0.14.2"
-  resolved "https://registry.npmmirror.com/@builder6/cli/-/cli-0.14.2.tgz#cc04cd9e2e8dd3111808669493d7c55c05a5b732"
-  integrity sha512-1S9RkmZDCVEBwRa0M9Zs4uPT7lmKtsw7mxYqGFXeGxQuI+d7BZ/dJ39cY4Ed5D+cHGO7cFUboRs1HRDglSHiKw==
+"@builder6/cli@^0.14.7":
+  version "0.14.7"
+  resolved "https://registry.npmmirror.com/@builder6/cli/-/cli-0.14.7.tgz#f34933c6f6bb1001a10c34ead6903aff23a08254"
+  integrity sha512-U/cXDIbaETNfGj4PDT5ecDqqkl1ISGrXzD6m5D2XzyF6PCw7/CALr8bRqVFokZ/nb/O4AxqG0NIjILokPkxWgQ==
   dependencies:
     "@oclif/core" "^4"
     "@oclif/plugin-help" "^6"
     "@oclif/plugin-plugins" "^5"
     fs-extra "^11.2.0"
-
-"@builder6/core@0.14.2":
-  version "0.14.2"
-  resolved "https://registry.npmmirror.com/@builder6/core/-/core-0.14.2.tgz#2b5fc72578662bf4b912a114714bc572aecf66d8"
-  integrity sha512-5geLHFxN5hAOiXzkaw4dbW3KtL3ihVgBikywiSHkeLxaKK75zmmAfiNnLKc0M8KbR0cC4TjMDurxHU/OLRWIRQ==
-  dependencies:
-    "@aws-sdk/client-cloudwatch-logs" "^3.721.0"
-    "@builder6/query-mongodb" "0.14.2"
-    moleculer "^0.14.35"
-    pino-http "^10.3.0"
-    pino-pretty "^13.0.0"
 
 "@builder6/core@0.14.6":
   version "0.14.6"
@@ -1880,59 +1869,70 @@
     pino-http "^10.3.0"
     pino-pretty "^13.0.0"
 
-"@builder6/email@0.14.2":
-  version "0.14.2"
-  resolved "https://registry.npmmirror.com/@builder6/email/-/email-0.14.2.tgz#afbd7c8616e62b39fb47d1b1f4bd83e6d538c8d7"
-  integrity sha512-zVUC8BW6UklFGRmWj55WsxwILvS169zn39wsq1DnA7FaDako1w0EMMxll72J2Op0uExlgg0EeWnxjf8gv2bgkA==
+"@builder6/core@0.14.7", "@builder6/core@^0.14.7":
+  version "0.14.7"
+  resolved "https://registry.npmmirror.com/@builder6/core/-/core-0.14.7.tgz#90ed8654459a66f83cc789b0cec19bc4856ca682"
+  integrity sha512-UuvHyacRPr2+QT0KkCQ3dPnLj+kNd+JAzp0frzHG8MT9C37al4utPO79XqRWN4sMIFTluFMtTeS4yJcc771O/w==
   dependencies:
-    "@builder6/core" "0.14.2"
+    "@aws-sdk/client-cloudwatch-logs" "^3.721.0"
+    "@builder6/query-mongodb" "0.14.7"
+    moleculer "^0.14.35"
+    pino-http "^10.3.0"
+    pino-pretty "^13.0.0"
+
+"@builder6/email@0.14.7", "@builder6/email@^0.14.7":
+  version "0.14.7"
+  resolved "https://registry.npmmirror.com/@builder6/email/-/email-0.14.7.tgz#cef5c713ea322fbddab31e87c99199c3fce3927b"
+  integrity sha512-UEqtZ/NQhtRHQW8611ugIi2rEl40a3Zyjp53uk/POleuSn9cD006ZM04kKU1xzTldiJquxaOq03GyHCLQ56z6A==
+  dependencies:
+    "@builder6/core" "0.14.7"
     bluebird "^3.7.2"
     lodash "^4.17.5"
     nodemailer "^6.9.16"
 
-"@builder6/files@0.14.2":
-  version "0.14.2"
-  resolved "https://registry.npmmirror.com/@builder6/files/-/files-0.14.2.tgz#a542eae188d274303246537e8e9b842d7401e87c"
-  integrity sha512-7o1I+2XFMBw5Jjc7Hhko8xZUu2aN1rsxw8XAeVpSZcG6WLk5GE1C+kVML1B4VY8543S1IcSBcZLvsWUz9ty+dA==
+"@builder6/files@0.14.7", "@builder6/files@^0.14.7":
+  version "0.14.7"
+  resolved "https://registry.npmmirror.com/@builder6/files/-/files-0.14.7.tgz#b672850781c5232a1d84900abca60c2b25d6ef71"
+  integrity sha512-UVT7fWX+0iFeCyhJkhpt6l4bBmTuL0Qo8bS1Xs/26ZBXY3W/0gMjp7ZeQD+WKaJTbnRAQ+EcKarxyvizO8E0cQ==
   dependencies:
-    "@builder6/core" "0.14.2"
+    "@builder6/core" "0.14.7"
     nodemailer "^6.9.16"
 
-"@builder6/moleculer@0.14.2":
-  version "0.14.2"
-  resolved "https://registry.npmmirror.com/@builder6/moleculer/-/moleculer-0.14.2.tgz#6b8cac42ee132de69746bfaa87551ae8d5010790"
-  integrity sha512-DHD94dzyKwQQllsk+9qVF9utoTz56MgUAw/Vfih5J2hSFEkaHVck4psaWeXYUUqGnGBuw8cES1Hag6m0oZStdw==
+"@builder6/moleculer@0.14.7", "@builder6/moleculer@^0.14.7":
+  version "0.14.7"
+  resolved "https://registry.npmmirror.com/@builder6/moleculer/-/moleculer-0.14.7.tgz#9ea9cbcff95df06e37c60c9c2200582f9439b00a"
+  integrity sha512-ORlL23D2PMqNJs2bcSPnaRIF0yqXeJJaihebjspBKB5lBEcwE5ai2qlUMkso6wMwqizGy3at28ICWdh/j8IBvw==
 
-"@builder6/oidc@0.14.2":
-  version "0.14.2"
-  resolved "https://registry.npmmirror.com/@builder6/oidc/-/oidc-0.14.2.tgz#3e5f73ba48839844e861d1d525e9e172d3c1162f"
-  integrity sha512-K593djP0SSPKJWpQlEHWBczHLJcHk38Zh4CObgCR/rjYY2TluxYa5zgmrdy6UdwQeY+6aA0At3PdE4mZFoKeAg==
+"@builder6/oidc@^0.14.7":
+  version "0.14.7"
+  resolved "https://registry.npmmirror.com/@builder6/oidc/-/oidc-0.14.7.tgz#94bbc71e3277b2bb2c0151bb4b738a40213f9756"
+  integrity sha512-uUr3d0ASCPrKYBA2hfjO9kKetnRlRY7Nedo3hRzgZVEGC5jkONMAPDtTmIgigtxzWey/tS5wgCGzLJEH7fwwlQ==
   dependencies:
-    "@builder6/core" "0.14.2"
+    "@builder6/core" "0.14.7"
     bluebird "^3.7.2"
     lodash "^4.17.5"
     nodemailer "^6.9.16"
 
-"@builder6/pages@0.14.2":
-  version "0.14.2"
-  resolved "https://registry.npmmirror.com/@builder6/pages/-/pages-0.14.2.tgz#dfd1b0dd2cccbf9d37c2a8b83a90de5e91c00c72"
-  integrity sha512-bEq+vutfLN8C1iZUu/b8u3KVByEsUYm0Tr5wyzuuKe2VNKYMy6yuoSMXxT5SHRsQVzWwD4m3QV8Cn9fpWerAig==
+"@builder6/pages@0.14.7", "@builder6/pages@^0.14.7":
+  version "0.14.7"
+  resolved "https://registry.npmmirror.com/@builder6/pages/-/pages-0.14.7.tgz#3edfb096bb271e2d6f343f79de19a49d69c3ace0"
+  integrity sha512-EBKQOBg1klTf4Q4Tl9W+4ZmUL6nu4nomvcKpdbRrLVuk1MlT9rnXfMLIrf46Z5sCCAjVGRqOfLCmrBxuKl3hmA==
   dependencies:
-    "@builder6/core" "0.14.2"
+    "@builder6/core" "0.14.7"
     dataloader "^2.2.3"
     liquidjs "^10.19.0"
-
-"@builder6/query-mongodb@0.14.2":
-  version "0.14.2"
-  resolved "https://registry.npmmirror.com/@builder6/query-mongodb/-/query-mongodb-0.14.2.tgz#0c6af853a2967798c75f8927a6cb9eff27f8883b"
-  integrity sha512-urEba0fpHpD9ukwLEpkFN2MyJigoIDpl8nYMz7HhbZgBKAf41E7dQ0PDcnqsR2wTC1V2RxvJTPHPENbhsb7USA==
-  dependencies:
-    yup "^1.1.0"
 
 "@builder6/query-mongodb@0.14.6":
   version "0.14.6"
   resolved "https://registry.yarnpkg.com/@builder6/query-mongodb/-/query-mongodb-0.14.6.tgz#8208d3afc2016689c4071583008e8407753cfbc0"
   integrity sha512-kmZ7w0CRFxCOmLjzGv2ihAp5TqtlPSZqPxxZjARe9Bnkab1sxxwmV8LCh6Rwjt1BBQe1vDyn2udZShApqO42YA==
+  dependencies:
+    yup "^1.1.0"
+
+"@builder6/query-mongodb@0.14.7", "@builder6/query-mongodb@^0.14.7":
+  version "0.14.7"
+  resolved "https://registry.npmmirror.com/@builder6/query-mongodb/-/query-mongodb-0.14.7.tgz#90204f0e1b287b87bfb83df4ad4e02f645edb872"
+  integrity sha512-Z5HljY+s6OqufWrs/8QGZPadDClgJVHJj9R9jdN0qnXh0JVO2wMX1OobzFMKKi7RbmzAKRkDyDFxBjvNf4QpdQ==
   dependencies:
     yup "^1.1.0"
 
@@ -1950,16 +1950,16 @@
     node-fetch "^2.6.1"
     prop-types "^15.7.2"
 
-"@builder6/rooms@0.14.2":
-  version "0.14.2"
-  resolved "https://registry.npmmirror.com/@builder6/rooms/-/rooms-0.14.2.tgz#0fa7c91ce6850f489090395a1addc15d773c3ca5"
-  integrity sha512-ktLAJ7IJl47jmukwzjP1ohgfXd4oDU6iA+C9hGuYNT2KHLuMi3yPedJCflbEgX8Sdw73eXEC88HQj9eNIvw40g==
+"@builder6/rooms@^0.14.7":
+  version "0.14.7"
+  resolved "https://registry.npmmirror.com/@builder6/rooms/-/rooms-0.14.7.tgz#f5948b7dc2c08f9d26ddeb631504bf677b7a1733"
+  integrity sha512-6G97jMu9iXZV4P2sbJCjZ4t/63XTXXDjn8BAlOX9fR3N6dyaYp6dVSvT8pe6V0vjA2XACyTlagcNUuwh7rf0hg==
   dependencies:
-    "@builder6/core" "0.14.2"
-    "@builder6/email" "0.14.2"
-    "@builder6/files" "0.14.2"
-    "@builder6/moleculer" "0.14.2"
-    "@builder6/pages" "0.14.2"
+    "@builder6/core" "0.14.7"
+    "@builder6/email" "0.14.7"
+    "@builder6/files" "0.14.7"
+    "@builder6/moleculer" "0.14.7"
+    "@builder6/pages" "0.14.7"
     "@liveblocks/emails" "2.12.0"
     "@liveblocks/node" "2.12.0"
     "@react-email/components" "^0.0.31"
@@ -1988,33 +1988,33 @@
   dependencies:
     "@builder6/core" "0.14.6"
 
-"@builder6/sharepoint@0.14.2":
-  version "0.14.2"
-  resolved "https://registry.npmmirror.com/@builder6/sharepoint/-/sharepoint-0.14.2.tgz#4e89f029e9d14e9df5a99c4bbb850661a6950612"
-  integrity sha512-7oW9fgJqYrcyOlZkTKMA9/vVAcqof+jG40D1b/JqTyqKCcR7jaKtH8oSaUq6BKkspR1EwHRwaDDu0qOmOwtfPQ==
+"@builder6/sharepoint@^0.14.7":
+  version "0.14.7"
+  resolved "https://registry.npmmirror.com/@builder6/sharepoint/-/sharepoint-0.14.7.tgz#528e10fa2b369f96f3b7dc5073ebdddfca65417e"
+  integrity sha512-IsCWyk77zIJEYeyjEGEUyAzzuZmkVCsTP24u0bWZ2jR/qcKhae9+rj3JCLOKiQZHA374C33UI7f/TACVP+C5Ww==
   dependencies:
-    "@builder6/core" "0.14.2"
-    "@builder6/files" "0.14.2"
+    "@builder6/core" "0.14.7"
+    "@builder6/files" "0.14.7"
     form-data "^4.0.1"
     line-reader "^0.4.0"
     nodemailer "^6.9.16"
 
-"@builder6/steedos@0.14.2":
-  version "0.14.2"
-  resolved "https://registry.npmmirror.com/@builder6/steedos/-/steedos-0.14.2.tgz#34e596a22817370d05f73d1f57568dd7c5ce7b4c"
-  integrity sha512-PYhxJ+DejQiniCzKhiZLYIn3Lfa9kW6WVs7KfTfBrpmp6/7NNqanru9Dc6RyfNqO513v2m5GAhr6w6BjoG2p9A==
+"@builder6/steedos@^0.14.7":
+  version "0.14.7"
+  resolved "https://registry.npmmirror.com/@builder6/steedos/-/steedos-0.14.7.tgz#8f6d94432ad55fae19ac839ad7ca8aa4811f3f03"
+  integrity sha512-xrKeUsug7NOQuOqg8gPoaeGSKu6zA2zvN4FZ/xh/N401xMsfAoxL8jYS7zAo79Vme6gFcdc0oZU3xPPJ1+84mQ==
   dependencies:
-    "@builder6/core" "0.14.2"
-    "@builder6/moleculer" "0.14.2"
+    "@builder6/core" "0.14.7"
+    "@builder6/moleculer" "0.14.7"
     nodemailer "^6.9.16"
 
-"@builder6/tables@0.14.2":
-  version "0.14.2"
-  resolved "https://registry.npmmirror.com/@builder6/tables/-/tables-0.14.2.tgz#a7f5f718611b334498ef6b82b9ec9469aeae34e2"
-  integrity sha512-7HtEABcFNhFhE6PGvZnyDfUnpvAQ4dQ9ZShbgLClWZDNGVxvMT107sQ5/jIjj5X3JFDqGcbb3oLzopj6JSD3Ew==
+"@builder6/tables@^0.14.7":
+  version "0.14.7"
+  resolved "https://registry.npmmirror.com/@builder6/tables/-/tables-0.14.7.tgz#bfe7fb772552e7ae15132bbc007ad29c535b3492"
+  integrity sha512-/a0m7/DtoYjK9RDBGBrFvrOj69IGeQVqjBiO3sJ+PvvIjFjSG1wny2F6wDqfHKlwQmQBaMTJ54aDA6aHGRjwcA==
   dependencies:
-    "@builder6/core" "0.14.2"
-    "@builder6/pages" "0.14.2"
+    "@builder6/core" "0.14.7"
+    "@builder6/pages" "0.14.7"
     dataloader "^2.2.3"
 
 "@bull-board/api@4.12.2":
@@ -9546,6 +9546,13 @@ binary-mirror-config@^1.19.0:
   resolved "https://registry.npmjs.org/binary-mirror-config/-/binary-mirror-config-1.41.0.tgz#b68032588392bee9262971f977922d075513964b"
   integrity sha512-ZiIhR1s6Sv1Fv6qCQqfPjx0Cj86BgFlhqNxZgHkQOWcxJcMbO3mj1iqsuVjowYqJqeZL8e52+IEv7IRnSX6T6w==
 
+bindings@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.npmmirror.com/bindings/-/bindings-1.5.0.tgz#10353c9e945334bc0511a6d90b38fbc7c9c504df"
+  integrity sha512-p2q/t/mhvuOj/UeLlV6566GD/guowlr0hHxClI0W9m7MWYkL1F0hLo+0Aexs9HSPCtR1SXQ0TD3MMKrXZajbiQ==
+  dependencies:
+    file-uri-to-path "1.0.0"
+
 bl@^1.0.0:
   version "1.2.3"
   resolved "https://registry.npmjs.org/bl/-/bl-1.2.3.tgz#1e8dd80142eac80d7158c9dccc047fb620e035e7"
@@ -12098,6 +12105,14 @@ dateformat@^4.6.3:
   resolved "https://registry.npmjs.org/dateformat/-/dateformat-4.6.3.tgz#556fa6497e5217fedb78821424f8a1c22fa3f4b5"
   integrity sha512-2P0p0pFGzHS5EMnhdxQi7aJN+iMheud0UhG4dlE1DLAlvL8JHjJJTX/CSm4JXwV0Ka5nGk3zC5mcb5bUQUxxMA==
 
+deasync@0.1.30:
+  version "0.1.30"
+  resolved "https://registry.npmmirror.com/deasync/-/deasync-0.1.30.tgz#b0e5445e533fc116b25b21001d2b8e2b6d60b6d3"
+  integrity sha512-OaAjvEQuQ9tJsKG4oHO9nV1UHTwb2Qc2+fadB0VeVtD0Z9wiG1XPGLJ4W3aLhAoQSYTaLROFRbd5X20Dkzf7MQ==
+  dependencies:
+    bindings "^1.5.0"
+    node-addon-api "^1.7.1"
+
 debug@2.6.9, debug@^2.1.0, debug@^2.2.0, debug@^2.3.3, debug@^2.6.0:
   version "2.6.9"
   resolved "https://registry.npmjs.org/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
@@ -14249,6 +14264,11 @@ file-type@^8.1.0:
   version "8.1.0"
   resolved "https://registry.npmjs.org/file-type/-/file-type-8.1.0.tgz#244f3b7ef641bbe0cca196c7276e4b332399f68c"
   integrity sha512-qyQ0pzAy78gVoJsmYeNgl8uH8yKhr1lVhW7JbzJmnlRi0I4R2eEDEJZVKG8agpDnLpacwNbDhLNG/LMdxHD2YQ==
+
+file-uri-to-path@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmmirror.com/file-uri-to-path/-/file-uri-to-path-1.0.0.tgz#553a7b8446ff6f684359c445f1e37a05dacc33dd"
+  integrity sha512-0Zt+s3L7Vf1biwWZ29aARiVYLx7iMGnEUl9x33fbB/j3jR81u/O2LbqK+Bm1CDSNDKVtJ/YjwY7TUd5SkeLQLw==
 
 filelist@^1.0.4:
   version "1.0.4"
@@ -20745,6 +20765,11 @@ node-abort-controller@^3.0.1, node-abort-controller@^3.1.1:
   version "3.1.1"
   resolved "https://registry.npmjs.org/node-abort-controller/-/node-abort-controller-3.1.1.tgz#a94377e964a9a37ac3976d848cb5c765833b8548"
   integrity sha512-AGK2yQKIjRuqnc6VkX2Xj5d+QW8xZ87pa1UK6yA6ouUyuxfHuMP6umE5QK7UmTeOAymo+Zx1Fxiuw9rVx8taHQ==
+
+node-addon-api@^1.7.1:
+  version "1.7.2"
+  resolved "https://registry.npmmirror.com/node-addon-api/-/node-addon-api-1.7.2.tgz#3df30b95720b53c24e59948b49532b662444f54d"
+  integrity sha512-ibPK3iA+vaY1eEjESkQkM0BbCqFOaZMiXRTtdB0u7b4djtY6JnsjvPdUHVMg6xQt3B8fpTTWHI9A+ADjM9frzg==
 
 node-addon-api@^5.0.0:
   version "5.1.0"

@@ -1154,18 +1154,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
    * @returns mongoCollection
    */
   async getCollection() {
-    if (
-      this.datasource.driver === SteedosDatabaseDriverType.Mongo ||
-      this.datasource.driver === SteedosDatabaseDriverType.MeteorMongo
-    ) {
+    if (this.datasource.driver === SteedosDatabaseDriverType.Mongo) {
       const adapter = this.datasource.adapter;
       await adapter.connect();
       let collection = (adapter as any).collection(this.name);
-      if (this.datasource.driver === SteedosDatabaseDriverType.MeteorMongo) {
-        let defaultAdapter = getDataSource("default").adapter;
-        await defaultAdapter.connect();
-        collection = (defaultAdapter as any).collection(this.name);
-      }
       return collection;
     }
   }
@@ -3551,4 +3543,7 @@ export function getObject(objectName: string, schema?: SteedosSchema) {
 }
 export function getLocalObject(objectName: string, schema?: SteedosSchema) {
   return (schema ? schema : getSteedosSchema()).getLocalObject(objectName);
+}
+export function getAllObject(schema?: SteedosSchema) {
+  return (schema ? schema : getSteedosSchema()).getAllObject();
 }

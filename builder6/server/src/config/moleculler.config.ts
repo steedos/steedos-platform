@@ -1,7 +1,7 @@
-'use strict';
-import _ from 'lodash';
+"use strict";
+import _ from "lodash";
 
-import { pinoConfig } from '@builder6/core';
+import { pinoConfig } from "@builder6/core";
 /**
  * Steedos ServiceBroker configuration file
  *
@@ -10,44 +10,43 @@ import { pinoConfig } from '@builder6/core';
  */
 
 export default {
-  namespace: 'steedos',
+  namespace: "steedos",
   nodeID: null,
   metadata: {},
 
-  logger: {
-    type: 'pino',
-    options: {
-      level: process.env.B6_LOG_LEVEL || 'info',
-      pino: {
-        options: pinoConfig.pinoHttp,
-      },
-    },
-  },
-
   // logger: {
-  //   type: 'Console',
+  //   type: 'pino',
   //   options: {
-  //     // Logging level
-  //     level: 'info',
-  //     // Using colors on the output
-  //     colors: true,
-  //     // Print module names with different colors (like docker-compose for containers)
-  //     moduleColors: false,
-  //     // Line formatter. It can be "json", "short", "simple", "full", a `Function` or a template string like "{timestamp} {level} {nodeID}/{mod}: {msg}"
-  //     formatter: '[MO] {timestamp} {level} [{mod}] {msg}',
-  //     // Custom object printer. If not defined, it uses the `util.inspect` method.
-  //     objectPrinter: null,
-  //     // Auto-padding the module name in order to messages begin at the same column.
-  //     autoPadding: false,
+  //     level: process.env.B6_LOG_LEVEL || 'info',
+  //     pino: {
+  //       options: pinoConfig.pinoHttp,
+  //     },
   //   },
   // },
 
+  logger: {
+    type: "Console",
+    options: {
+      // Logging level
+      level: process.env.B6_MO_LOG_LEVEL,
+      // Using colors on the output
+      colors: true,
+      // Print module names with different colors (like docker-compose for containers)
+      moduleColors: false,
+      // Line formatter. It can be "json", "short", "simple", "full", a `Function` or a template string like "{timestamp} {level} {nodeID}/{mod}: {msg}"
+      formatter: "[MO] {timestamp} {level} [{mod}] {msg}",
+      // Custom object printer. If not defined, it uses the `util.inspect` method.
+      objectPrinter: null,
+      // Auto-padding the module name in order to messages begin at the same column.
+      autoPadding: false,
+    },
+  },
 
   transporter: process.env.B6_TRANSPORTER,
 
   cacher: process.env.B6_CACHER,
 
-  serializer: 'JSON',
+  serializer: "JSON",
 
   requestTimeout: 0,
 
@@ -69,7 +68,7 @@ export default {
   disableBalancer: false,
 
   registry: {
-    strategy: 'RoundRobin',
+    strategy: "RoundRobin",
     preferLocal: true,
   },
 
@@ -108,27 +107,29 @@ export default {
 
   created(broker: any) {
     global.broker = broker;
-    	// Clear all cache entries
-		broker.logger.warn('Clear all cache entries on startup.')
-		broker.cacher.clean();
-		console.log(`Clear all cache entries on startup===1>`)
-		const objectql = require('@steedos/objectql');
-		console.log(`Clear all cache entries on startup===2>`)
-		objectql.broker.init(broker);
-		console.log(`Clear all cache entries on startup===init>`)
-		//TODO 此处不考虑多个node服务模式.
-		process.on('SIGTERM', close.bind(broker, 'SIGTERM'));
-		process.on('SIGINT', close.bind(broker, 'SIGINT'));
-		async function close(signal) {
-			try {
-				await this.cacher.clean(); //TODO 此clean 有问题，如果在启动过程中就停止服务，则会清理不干净。尝试试用reids client 原生clean（flushdb）。
-				await this.cacher.close();
-			} catch (error) {
-				// console.log(`error`, error)
-			}
-			console.log(`[${signal}]服务已停止: namespace: ${this.namespace}, nodeID: ${this.nodeID}`);
-			process.exit(0);
-		}
+    // Clear all cache entries
+    broker.logger.warn("Clear all cache entries on startup.");
+    broker.cacher.clean();
+    console.log(`Clear all cache entries on startup===1>`);
+    const objectql = require("@steedos/objectql");
+    console.log(`Clear all cache entries on startup===2>`);
+    objectql.broker.init(broker);
+    console.log(`Clear all cache entries on startup===init>`);
+    //TODO 此处不考虑多个node服务模式.
+    process.on("SIGTERM", close.bind(broker, "SIGTERM"));
+    process.on("SIGINT", close.bind(broker, "SIGINT"));
+    async function close(signal) {
+      try {
+        await this.cacher.clean(); //TODO 此clean 有问题，如果在启动过程中就停止服务，则会清理不干净。尝试试用reids client 原生clean（flushdb）。
+        await this.cacher.close();
+      } catch (error) {
+        // console.log(`error`, error)
+      }
+      console.log(
+        `[${signal}]服务已停止: namespace: ${this.namespace}, nodeID: ${this.nodeID}`,
+      );
+      process.exit(0);
+    }
   },
 
   started(broker: any) {

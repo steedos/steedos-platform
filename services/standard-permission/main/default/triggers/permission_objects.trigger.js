@@ -151,13 +151,13 @@ module.exports = {
 
         let permissionSetId = doc.permission_set_id
         if(_.includes(['admin','user','supplier','customer'], doc.permission_set_id)){
-            let dbPst = Creator.getCollection("permission_set").direct.find({name: doc.permission_set_id});
+            let dbPst = objectql.getObject("permission_set").directFind({name: doc.permission_set_id});
             if(dbPst && dbPst.length > 0){
                 permissionSetId = dbPst[0]._id;
                 const dbDoc = dbPst[0]
                 if(_.includes(['admin','user','supplier','customer'], permissionSetId)){
-                    permissionSetId =  Creator.getCollection("permission_set")._makeNewID()
-                    Creator.getCollection("permission_set").insert({
+                    permissionSetId =  objectql.getObject("permission_set")._makeNewID()
+                    objectql.getObject("permission_set").insert({
                         _id: permissionSetId,
                         name: dbDoc.name, label: dbDoc.label, type: dbDoc.type, 
                         license: dbDoc.license, lockout_interval: dbDoc.lockout_interval, 
@@ -171,7 +171,7 @@ module.exports = {
 
         doc.permission_set_id = permissionSetId;
 
-        let existedCount = Creator.getCollection("permission_objects").direct.find({permission_set_id: doc.permission_set_id, object_name: doc.object_name, space: doc.space}).count()
+        let existedCount = objectql.getObject("permission_set").directFind({permission_set_id: doc.permission_set_id, object_name: doc.object_name, space: doc.space}).length
         if(existedCount > 0){
             throw new Error("此对象已有权限对象记录")
         }
@@ -186,12 +186,12 @@ module.exports = {
         return processPermissions(doc)
     },
     beforeUpdate: async function () {
-        let oldDoc = Creator.getCollection("permission_objects").direct.findOne({_id: this.id})
+        let oldDoc = objectql.getObject("permission_set").directFindOne({_id: this.id})
         let doc = this.doc;
         let permission_set_id = doc.permission_set_id || oldDoc.permission_set_id
         let object_name = doc.object_name || oldDoc.object_name
         let space = oldDoc.space
-        let existedCount = Creator.getCollection("permission_objects").direct.find({permission_set_id: permission_set_id, object_name: object_name, space: space, _id: {$ne: this.id}}).count()
+        let existedCount = objectql.getObject("permission_set").directFind({permission_set_id: permission_set_id, object_name: object_name, space: space, _id: {$ne: this.id}}).length;
         if(existedCount > 0){
             throw new Error("此对象已有权限对象记录")
         }
