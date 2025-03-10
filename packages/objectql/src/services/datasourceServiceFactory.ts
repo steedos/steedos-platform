@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-11-09 16:16:57
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-03-09 18:18:49
+ * @LastEditTime: 2025-03-10 11:07:55
  * @Description:
  */
 import * as _ from "underscore";
@@ -44,7 +44,7 @@ export async function createDataSourceService(broker, dataSource) {
         async handler(ctx) {
           let objectConfig = ctx.params.data;
           jsonToObject(objectConfig);
-          console.log(`${serviceName} inserted`, objectConfig.name);
+          // console.log(`${serviceName} inserted`, objectConfig.name);
           if (!getOriginalObjectConfig(objectConfig.name)) {
             // 此处的objectConfig是已继承了base之后的结果. 已无法识别出原始定义.
             addOriginalObjectConfigs(
@@ -53,7 +53,7 @@ export async function createDataSourceService(broker, dataSource) {
               clone(objectConfig),
             );
           }
-          console.log(`${serviceName} initObject`, objectConfig.name);
+          // console.log(`${serviceName} initObject`, objectConfig.name);
           dataSource.initObject(objectConfig);
           /**
            * 每次都需要初始化，TypeORM不适用于微服务模式
