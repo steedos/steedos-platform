@@ -151,7 +151,7 @@ export class AppMoleculer extends Service {
     // 启动 本地 CDN
     this.broker.createService(require("@steedos/unpkg"));
 
-    this.broker.createService(require("../../../steedos-packages/plugin-ai"));
+    // this.broker.createService(require("../../../steedos-packages/plugin-ai"));
 
     // this.broker.createService(require("@steedos-builder/amis-editor"));
 
