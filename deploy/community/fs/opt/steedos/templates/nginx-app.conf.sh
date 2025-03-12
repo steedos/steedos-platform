@@ -72,7 +72,7 @@ else
 fi
 )
 
-  client_max_body_size 150m;
+  client_max_body_size 1024m;
 
   gzip on;
   gzip_types *;
