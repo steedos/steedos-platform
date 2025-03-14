@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "lerna": "^4.0.0",
-    "@steedos-labs/analytics": "^0.1.32",
+    "@steedos-labs/analytics": "^0.1.35",
     "@steedos/service-community": "~2.7",
     "@steedos/service-enterprise": "^2.5"
   },
