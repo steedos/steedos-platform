@@ -1,0 +1,69 @@
+﻿"document": {
+    "directUrl": "<%- file.directUrl %>",
+    "fileType": "<%- file.ext %>",
+    "info": {
+        "owner": "Me",
+        "uploaded": "<%- file.created %>",
+        "favorite": <%- file.favorite %>
+    },
+    "key": "<%- editor.key %>",
+    "permissions": {
+        "chat": <%- editor.chat %>,
+        "comment": <%- editor.comment %>,
+        "copy": <%- editor.copy %>,
+        "download": <%- editor.download %>,
+        "edit": <%- editor.isEdit %>,
+        "fillForms": <%- editor.fillForms %>,
+        "modifyContentControl": <%- editor.modifyContentControl %>,
+        "modifyFilter": <%- editor.modifyFilter %>,
+        "print": <%- editor.print %>,
+        "review": <%- editor.review %>,
+        "reviewGroups": <%- editor.reviewGroups %>,
+        "commentGroups": <%- editor.commentGroups %>,
+        "userInfoGroups": <%- editor.userInfoGroups %>,
+        "protect": <%- editor.protect %>
+    },
+    "referenceData": {
+        "fileKey": <%- JSON.stringify(editor.fileKey) %>,
+        "instanceId": <%- JSON.stringify(editor.instanceId) %>
+    },
+    "title": "<%- file.name %>",
+    "url": "<%- file.uri %>"
+},
+"documentType": "<%- editor.documentType %>",
+"editorConfig": {
+    "actionLink": <%- editor.actionData %>,
+    "callbackUrl": "<%- editor.callbackUrl %>",
+    "coEditing": <%- JSON.stringify(editor.coEditing) %>,
+    "createUrl": <%- JSON.stringify(editor.createUrl) %>,
+    "customization": {
+        "about": true,
+        "comments": true,
+        "close": <%- JSON.stringify(editor.close) %>,
+        "feedback": true,
+        "forcesave": false,
+        "goback": <%- JSON.stringify(editor.goback) %>,
+        "submitForm": <%- editor.submitForm %>
+    },
+    "embedded": {
+        "embedUrl": "<%- file.uriUser %>",
+        "saveUrl": "<%- file.uriUser %>",
+        "shareUrl": "<%- file.uriUser %>",
+        "toolbarDocked": "top"
+    },
+    "fileChoiceUrl": "<%- editor.fileChoiceUrl %>",
+    "lang": "<%- editor.lang %>",
+    "mode": "<%- editor.mode %>",
+    "plugins": <%- editor.plugins %>,
+    "templates": <%- JSON.stringify(editor.templates) %>,
+    "user": {
+        "group": "<%- editor.userGroup %>",
+        "id": "<%- editor.userid %>",
+        "image": "<%- editor.userImage %>",
+        "name": "<%- editor.name %>"
+    }
+},
+"height": "100%",
+"token": "<%- editor.token %>",
+"type": "<%- editor.type %>",
+"width": "100%"
