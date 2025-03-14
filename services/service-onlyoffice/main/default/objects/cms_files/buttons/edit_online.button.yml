@@ -1,0 +1,50 @@
+name: edit_online
+amis_schema: |-
+  {
+      "type": "service",
+      "body": [
+          {
+              "type": "button",
+              "label": "在线编辑",
+              "id": "u:edit_online",
+              "editorState": "default",
+              "confirmText": "",
+              "visibleOn": "${(extention === 'docx' || extention === 'xlsx' || extention === 'pptx') && recordPermissions['allowEdit']}",
+              "onEvent": {
+                  "click": {
+                      "weight": 0,
+                      "actions": [
+                          {
+                            "ignoreError": true,
+                            "actionType": "custom",
+                            "script": "window.open(`/api/office/editor/cms_file/${event.data.recordId}`);"
+                          }
+                      ]
+                  }
+              }
+          }
+      ],
+      "regions": [
+          "body"
+      ],
+      "data": {
+          "context": {},
+          "dataComponentId": "",
+          "record_id": "",
+          "record": {},
+          "permissions": {}
+      },
+      "id": "u:6390ee8c2e43",
+      "bodyClassName": "p-0",
+      "dsType": "api",
+      "asideResizor": false,
+      "editorState": "default",
+      "pullRefresh": {
+          "disabled": true
+      }
+  }
+is_enable: true
+label: 在线编辑
+'on': record
+type: amis_button
+visible: true

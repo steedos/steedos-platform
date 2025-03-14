@@ -56,14 +56,18 @@ fields:
 list_views:
   all:
     columns:
-      - name
+      - field: name
+        wrap: false
+        amis: {
+          tpl: '<a href="/app/${appId}/cms_files/view/${_id}?side_object=${objectName}&side_listview_id=${listName}"  onclick="return false;">${${_display.name || name} | raw}</a><span class="file-version ml-1.5 italic text-lg text-amber-600 font-medium">V<span class="file-version-number text-sm">${versions.length}</span></span>'
+        }
       - size
       - owner
       - created
       - modified
     extra_columns:
       - versions
-    order:
+    sort:
       - - modified
         - asc
     filter_scope: space

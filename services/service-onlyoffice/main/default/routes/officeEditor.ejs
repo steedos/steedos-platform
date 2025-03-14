@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <!--
+    *
+    * (c) Copyright Ascensio System SIA 2024
+    *
+    * Licensed under the Apache License, Version 2.0 (the "License");
+    * you may not use this file except in compliance with the License.
+    * You may obtain a copy of the License at
+    *
+    *     http://www.apache.org/licenses/LICENSE-2.0
+    *
+    * Unless required by applicable law or agreed to in writing, software
+    * distributed under the License is distributed on an "AS IS" BASIS,
+    * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    * See the License for the specific language governing permissions and
+    * limitations under the License.
+    *
+    -->
+    <title>ONLYOFFICE</title>
+    <link rel="icon"
+        href="images/<%- editor.documentType %>.ico"
+        type="image/x-icon" />
+    <!-- <link rel="stylesheet" type="text/css" href="stylesheets/editor.css" /> -->
+     <style>
+        html {
+            height: 100%;
+            width: 100%;
+        }
+
+        body {
+            background: #fff;
+            color: #333;
+            font-family: Arial, Tahoma,sans-serif;
+            font-size: 12px;
+            font-weight: normal;
+            height: 100%;
+            margin: 0;
+            overflow-y: hidden;
+            padding: 0;
+            text-decoration: none;
+        }
+
+        .form {
+            height: 100%;
+        }
+
+        div {
+            margin: 0;
+            padding: 0;
+        }
+     </style>
+</head>
+<body>
+    <div class="form">
+        <div id="iframeEditor">
+        </div>
+    </div>
+    <script type="text/javascript" src="<%= apiUrl %>"></script>
+    <script type="text/javascript" language="javascript">
+
+        var docEditor;
+        var config;
+        let historyObject;
+
+        var innerAlert = function (message, inEditor) {
+            if (console && console.log)
+                console.log(message);
+            if (inEditor && docEditor)
+                docEditor.showMessage(message);
+        };
+
+        var onAppReady = function () {  // the application is loaded into the browser
+            innerAlert("Document editor ready");
+        };
+
+        var onDocumentStateChange = function (event) {  // the document is modified
+            var title = document.title.replace(/\*$/g, "");
+            document.title = title + (event.data ? "*" : "");
+        };
+
+        var onRequestClose = function () {  // close editor
+            docEditor.destroyEditor();
+            innerAlert("Document editor closed successfully");
+        };
+
+        var onMetaChange = function (event) {  // the meta information of the document is changed via the meta command
+            if (event.data.favorite !== undefined) {
+                var favorite = !!event.data.favorite;
+                var title = document.title.replace(/^\☆/g, "");
+                document.title = (favorite ? "☆" : "") + title;
+                docEditor.setFavorite(favorite);  // change the Favorite icon state
+            }
+
+            innerAlert("onMetaChange: " + JSON.stringify(event.data));
+        };
+
+        var onRequestEditRights = function () {  // the user is trying to switch the document from the viewing into the editing mode
+            location.href = location.href.replace(RegExp("mode=\\w+\&?", "i"), "") + "&mode=edit";
+        };
+
+        var onRequestHistory = function (event) {  // the user is trying to show the document version history
+            const fileName = "<%- file.name %>" || null;
+            const directUrl = "<%- file.directUrl %>" || null;
+            const data = {
+              fileName: fileName,
+              directUrl: directUrl
+            };
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", "/api/v6/onlyoffice/cms_files/<%- file.cmsId%>/historyObj");
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(JSON.stringify(data));
+            xhr.onload = function () {
+              historyObject = JSON.parse(xhr.responseText);
+              docEditor.refreshHistory(  // show the document version history
+                {
+                  currentVersion: historyObject.countVersion,
+                  history: historyObject.history
+                });
+            }
+        };
+
+        var onRequestHistoryData = function (event) {  // the user is trying to click the specific document version in the document version history
+          const version = event.data;
+          docEditor.setHistoryData(historyObject.historyData[version-1]);  // send the link to the document for viewing the version history
+        };
+
+        var onRequestHistoryClose = function (event){  // the user is trying to go back to the document from viewing the document version history
+            document.location.reload();
+        };
+
+        var onRequestRestore = function (event) { // the user is trying to restore file version
+          const version = event.data.version;
+          const historyInfo = historyObject.history[version-1];
+          const fileName = "<%- file.name %>" || null;
+          const directUrl = "<%- file.directUrl %>" || null;
+          const restoreData = {
+            version: version,
+            fileName: fileName,
+          };
+          let xhr = new XMLHttpRequest();
+          xhr.open("PUT", "/api/v6/onlyoffice/cms_files/<%- file.cmsId%>/restore/"+historyInfo.fileId);
+          xhr.setRequestHeader('Content-Type', 'application/json');
+          xhr.send(JSON.stringify(restoreData));
+          xhr.onload = function () {
+            const response = JSON.parse(xhr.responseText);
+            if (response.success && !response.error) {
+              const dataForHistory = {
+                fileName: fileName,
+                directUrl: directUrl
+              };
+              let xhr = new XMLHttpRequest();
+              xhr.open("POST", "/api/v6/onlyoffice/cms_files/<%- file.cmsId%>/historyObj");
+              xhr.setRequestHeader("Content-Type", "application/json");
+              xhr.send(JSON.stringify(dataForHistory));
+              xhr.onload = function () {
+                historyObject = JSON.parse(xhr.responseText);
+                docEditor.refreshHistory(  // show the document version history
+                  {
+                    currentVersion: historyObject.countVersion,
+                    history: historyObject.history
+                  });
+              }
+            } else {
+              innerAlert(response.error);
+            }
+          }
+        }
+
+        var onError = function (event) {  // an error or some other specific event occurs
+            if (event)
+                innerAlert(event.data);
+        };
+
+        var onOutdatedVersion = function (event) {  // the document is opened for editing with the old document.key value
+            location.reload(true);
+        };
+
+        // replace the link to the document which contains a bookmark
+        var replaceActionLink = function(href, linkParam) {
+            var link;
+            var actionIndex = href.indexOf("&action=");
+            if (actionIndex != -1) {
+                var endIndex = href.indexOf("&", actionIndex + "&action=".length);
+                if (endIndex != -1) {
+                    link = href.substring(0, actionIndex) + href.substring(endIndex) + "&action=" + encodeURIComponent(linkParam);
+                } else {
+                    link = href.substring(0, actionIndex) + "&action=" + encodeURIComponent(linkParam);
+                }
+            } else {
+                link = href + "&action=" + encodeURIComponent(linkParam);
+            }
+            return link;
+        }
+
+        var onMakeActionLink = function (event) {  // the user is trying to get link for opening the document which contains a bookmark, scrolling to the bookmark position
+            var actionData = event.data;
+            var linkParam = JSON.stringify(actionData);
+            docEditor.setActionLink(replaceActionLink(location.href, linkParam));  // set the link to the document which contains a bookmark
+        };
+
+        var onRequestInsertImage = function(event) {  // the user is trying to insert an image by clicking the Image from Storage button
+            var data = <%- JSON.stringify(dataInsertImage) %>;
+            data.c = event.data.c;
+            docEditor.insertImage(data);  // insert an image into the file
+        };
+
+        var onRequestSelectDocument = function(event) {  // the user is trying to select document by clicking the Document from Storage button
+            var data = <%- JSON.stringify(dataDocument) %>;
+            data.c = event.data.c;
+            docEditor.setRequestedDocument(data);  // select a document
+        };
+
+        var onRequestSelectSpreadsheet = function (event) {  // the user is trying to select recipients data by clicking the Mail merge button
+            var data = <%- JSON.stringify(dataSpreadsheet) %>;
+            data.c = event.data.c;
+            docEditor.setRequestedSpreadsheet(data);  // insert recipient data for mail merge into the file
+        };
+
+        var onRequestUsers = function (event) {
+            if (event && event.data){
+                var c = event.data.c;
+            }
+
+            switch (c) {
+                case "protect":
+                    var users = <%- JSON.stringify(usersForProtect) %>;
+                    break;
+                case "info":
+                    users = [];
+                    var allUsers = <%- JSON.stringify(usersInfo) %>;
+                    for (var i = 0; i < event.data.id.length; i++) {
+                        for (var j = 0; j < allUsers.length; j++) {
+                            if (allUsers[j].id == event.data.id[i]) {
+                                users.push(allUsers[j]);
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                default:
+                    users = <%- JSON.stringify(usersForMentions) %>;
+            }
+
+            docEditor.setUsers({
+                "c": c,
+                "users": users,
+            });
+        };
+
+        var onRequestSendNotify = function(event) {  // the user is mentioned in a comment
+            event.data.actionLink = replaceActionLink(location.href, JSON.stringify(event.data.actionLink));
+            var data = JSON.stringify(event.data);
+            innerAlert("onRequestSendNotify: " + data);
+        };
+
+        var onRequestOpen = function(event) {  // user open external data source
+            innerAlert("onRequestOpen");
+            var windowName = event.data.windowName;
+
+            requestReference(event.data, function (data) {
+                if (data.error) {
+                    var winEditor = window.open("", windowName);
+                    winEditor.close();
+                    innerAlert(data.error, true);
+                    return;
+                }
+
+                var link = data.link;
+                window.open(link, windowName);
+            });
+        };
+
+        var onRequestReferenceData = function(event) {  // user refresh external data source
+            innerAlert("onRequestReferenceData");
+
+            requestReference(event.data, function (data) {
+                docEditor.setReferenceData(data);
+            });
+        };
+
+        var requestReference = function(data, callback) {
+            innerAlert(data);
+
+            data.directUrl = !!config.document.directUrl;
+
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", "reference");
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(JSON.stringify(data));
+            xhr.onload = function () {
+                innerAlert(xhr.responseText);
+                callback(JSON.parse(xhr.responseText));
+            }
+        };
+
+        var onRequestReferenceSource = function (event) {
+          innerAlert("onRequestReferenceSource");
+          let xhr = new XMLHttpRequest();
+          xhr.open("GET", "files/");
+          xhr.setRequestHeader("Content-Type", "application/json");
+          xhr.send();
+          xhr.onload = function () {
+            if (xhr.status === 200) {
+              innerAlert(JSON.parse(xhr.responseText));
+              let fileList = JSON.parse(xhr.responseText);
+              let firstXlsxName;
+              let file;
+              for (var i = 0; i < fileList.length; i++) {
+                file = fileList[i];
+                if (file["title"]) {
+                  if (getFileExt(file["title"]) === "xlsx")
+                  {
+                    firstXlsxName = file["title"];
+                    break;
+                  }
+                }
+              }
+              if (firstXlsxName) {
+                let data = {
+                  directUrl : "<%- file.directUrl %>" || false,
+                  path : firstXlsxName
+                };
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", "reference");
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.send(JSON.stringify(data));
+                xhr.onload = function () {
+                  if (xhr.status === 200) {
+                    docEditor.setReferenceSource(JSON.parse(xhr.responseText));
+                  } else {
+                    innerAlert("/reference - bad status");
+                  }
+                }
+              } else {
+                innerAlert("No *.xlsx files");
+              }
+            } else {
+              innerAlert("/files - bad status");
+            }
+          }
+        };
+
+        var onRequestSaveAs = function (event) {  //  the user is trying to save file by clicking Save Copy as... button
+            var title = event.data.title;
+            var url = event.data.url;
+            var data = {
+                title: title,
+                url: url
+            }
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", "create");
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify(data));
+            xhr.onload = function () {
+                innerAlert(xhr.responseText);
+                innerAlert(JSON.parse(xhr.responseText).file, true);
+            }
+        }
+
+        var onRequestRename = function(event) { //  the user is trying to rename file by clicking Rename... button
+            innerAlert("onRequestRename: " + JSON.stringify(event.data));
+
+            var newfilename = event.data;
+            var data = {
+                newfilename: newfilename,
+                dockey: config.document.key,
+                ext: config.document.fileType
+            };
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", "rename");
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify(data));
+            xhr.onload = function () {
+                innerAlert(xhr.responseText);
+            }
+        };
+
+        var onRequestRefreshFile = function(event) {
+            let xhr = new XMLHttpRequest();
+            xhr.open("GET", "config?fileName=" + encodeURIComponent(config.document.title) +
+                "&directUrl=" + !!config.document.directUrl +
+                "&permissions=" + encodeURIComponent(JSON.stringify(config.document.permissions)));
+            xhr.send();
+            xhr.onload = function () {
+                innerAlert(xhr.responseText);
+                docEditor.refreshFile(JSON.parse(xhr.responseText));
+            };
+        };
+
+        var onDocumentReady = function(){
+            fixSize();
+        };
+
+        config = {
+            <%- include("config") %>
+        };
+        config.events = {
+            "onAppReady": onAppReady,
+            "onDocumentReady": onDocumentReady,
+            "onDocumentStateChange": onDocumentStateChange,
+            "onError": onError,
+            "onOutdatedVersion": onOutdatedVersion,
+            "onMakeActionLink": onMakeActionLink,
+            "onMetaChange": onMetaChange,
+            "onRequestInsertImage": onRequestInsertImage,
+            "onRequestSelectDocument": onRequestSelectDocument,
+            "onRequestSelectSpreadsheet": onRequestSelectSpreadsheet,
+            "onRequestOpen": onRequestOpen,
+        };
+
+        if (<%- JSON.stringify(editor.userid) %> != null) {
+            config.events.onRequestClose = onRequestClose;
+            config.events.onRequestEditRights = onRequestEditRights;
+            config.events.onRequestHistory = onRequestHistory;
+            config.events.onRequestHistoryData = onRequestHistoryData;
+            config.events.onRequestRename = onRequestRename;
+            config.events.onRequestUsers = onRequestUsers;
+            config.events.onRequestSaveAs = onRequestSaveAs;
+            config.events.onRequestSendNotify = onRequestSendNotify;
+            config.events.onRequestReferenceData = onRequestReferenceData;
+            config.events.onRequestReferenceSource = onRequestReferenceSource;
+            config.events.onRequestRefreshFile = onRequestRefreshFile;
+            if (<%- JSON.stringify(editor.userid) %> != "uid-3") {
+                config.events.onRequestHistoryClose = onRequestHistoryClose;
+                config.events.onRequestRestore = onRequestRestore;
+            }
+        }
+
+        try {
+            var oformParam = new URL(window.location).searchParams.get("oform");
+        } catch (e) {}
+        if (oformParam == "false") {
+            config.document.options = config.document.options || {};
+            config.document.options["oform"] = false;
+        }
+
+        var connectEditor = function () {
+            docEditor = new DocsAPI.DocEditor("iframeEditor", config);
+            fixSize();
+        };
+
+        // get the editor sizes
+        var fixSize = function () {
+            if (config.type !== "mobile") {
+                return;
+            }
+            var wrapEl = document.getElementsByTagName("iframe");
+            if (wrapEl.length) {
+                wrapEl[0].style.height = screen.availHeight + "px";
+                window.scrollTo(0, -1);
+                wrapEl[0].style.height = window.innerHeight + "px";
+            }
+        };
+
+        const getFileExt = function (fileName) {
+          if (fileName.indexOf(".")) {
+            return fileName.split('.').reverse()[0];
+          }
+          return false;
+        };
+
+        if (window.addEventListener) {
+            window.addEventListener("load", connectEditor);
+            window.addEventListener("resize", fixSize);
+            window.addEventListener("orientationchange", fixSize);
+        } else if (window.attachEvent) {
+            window.attachEvent("onload", connectEditor);
+            window.attachEvent("onresize", fixSize);
+            window.attachEvent("orientationchange", fixSize);
+        }
+
+    </script>
+</body>
+</html>

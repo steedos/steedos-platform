@@ -1,0 +1,15 @@
+{
+  "name": "@steedos/service-onlyoffice",
+  "version": "2.7.17-beta.10",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "5dd1dfd107ce014009fe3c6c664ff39a8b3263d0"
+}
