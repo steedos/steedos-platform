@@ -13,7 +13,7 @@
     "webapp": "cd builder6/webapp && yarn dev",
     "build": "lerna run build",
     "docker": "docker-compose up",
-    "i18n": "lerna run i18n",    
+    "i18n": "lerna run i18n",
     "repl": "moleculer-runner  --config steedos.config.js --repl",
     "sync": "lerna exec --no-private  -- cnpm sync \\$LERNA_PACKAGE_NAME",
     "prepare": "husky install"
@@ -28,18 +28,23 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.8.4",
     "@commitlint/cli": "19.7.1",
     "@commitlint/config-angular": "19.7.1",
-    "@babel/core": "^7.8.4",
+    "@eslint/js": "9.22.0",
     "@types/node": "18.0.3",
     "cnpm": "9.0.1",
     "concurrently": "8.2.1",
+    "eslint": "9.22.0",
+    "globals": "16.0.0",
+    "husky": "9.1.7",
     "lerna": "^4.0.0",
     "lint-staged": "15.4.3",
     "nodemon": "^2.0.19",
-    "husky": "9.1.7",
+    "rimraf": "6.0.1",
     "tslib": "^2.4.0",
     "typescript": "5.7.3",
+    "typescript-eslint": "8.26.1",
     "vite": "^6.1.0",
     "vite-plugin-external": "^4.3.1"
   }
