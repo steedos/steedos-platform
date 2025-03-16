@@ -1,22 +1,16 @@
-/*
- * @Author: baozhoutao@steedos.com
- * @Date: 2024-03-22 14:37:50
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-03-03 16:47:40
- * @Description: 由于 collection observe 在 steedos-server.started 事件中被触发报错需要 Fiber ,添加Fiber 后, 不报错,但是无法订阅到数据. 所以单写服务处理此问题.
- * 
- */
-
+/* eslint-disable no-undef */
+/* eslint-disable @typescript-eslint/no-require-imports */
 "use strict";
 const _ = require('lodash')
 const register = require('@steedos/metadata-registrar');
-const { ActionFieldUpdateCacher, WorkflowOutboundMessageCacher, WorkflowNotificationCacher, WorkflowRuleCacher, ObjectValidationRulesCacher, SettingsCacher, ObjectWebhookCacher
+const { ObjectValidationRulesCacher, SettingsCacher, ObjectWebhookCacher
 	, ObjectFunctionsCacher
  } = require('./lib/index')
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * 软件包服务启动后也需要抛出事件。
  */
+// eslint-disable-next-line no-undef
 module.exports = {
 	name: "metadata-cachers-service",
 	namespace: "steedos",
@@ -28,9 +22,8 @@ module.exports = {
 	events: {
 		'@steedos/server.started': function(){
 			// this.loadMetadataWorkflows();
-			// this.loadMetadataValidationRule();
-			// this.loadMetadataObjectFunctions();
-
+			this.loadMetadataValidationRule();
+			this.loadMetadataObjectFunctions();
 		}
 	},
 
@@ -41,13 +34,14 @@ module.exports = {
 			return res || [];
 		},
 		get: function(ctx){
-			const { _id } = ctx.params;
+			const { _id, metadataName } = ctx.params;
 			return this[`${_.camelCase(metadataName)}Cacher`]?.get(_id)
 		}
 	},
 
 	methods: {
 		loadMetadataWorkflows: async function(){
+			// eslint-disable-next-line no-undef
 			const res = await broker.call(`workflow.getAll`);
 			_.each(res, (wf)=>{
 				_.each(wf.metadata.rules, (item)=>{
@@ -74,6 +68,7 @@ module.exports = {
 			})
 		},
 		loadMetadataObjectFunctions: async function(){
+			// eslint-disable-next-line no-undef
 			const res = await broker.call(`object_functions.getAll`);
 			_.each(res, (item)=>{
 				const metadata = item.metadata;
@@ -96,11 +91,11 @@ module.exports = {
 
         // this.workflowRuleCacher = new WorkflowRuleCacher();
 
-		// this.objectValidationRulesCacher = new ObjectValidationRulesCacher()
+		this.objectValidationRulesCacher = new ObjectValidationRulesCacher()
 
-		// this.settingsCacher = new SettingsCacher();
+		this.settingsCacher = new SettingsCacher();
 
-		// this.objectWebhooksCacher = new ObjectWebhookCacher();
+		this.objectWebhooksCacher = new ObjectWebhookCacher();
 
 		this.objectFunctionsCacher = new ObjectFunctionsCacher();
 
@@ -108,10 +103,10 @@ module.exports = {
 	},
 
 	async stopped(){
-		this.actionFieldUpdatesCacher?.destroy();
-		this.workflowOutboundMessagesCacher?.destroy();
-		this.workflowNotificationsCacher?.destroy();
-		this.workflowRuleCacher?.destroy();
+		// this.actionFieldUpdatesCacher?.destroy();
+		// this.workflowOutboundMessagesCacher?.destroy();
+		// this.workflowNotificationsCacher?.destroy();
+		// this.workflowRuleCacher?.destroy();
 		this.objectValidationRulesCacher?.destroy();
 		this.settingsCacher?.destroy();
 		this.objectWebhooksCacher?.destroy();
