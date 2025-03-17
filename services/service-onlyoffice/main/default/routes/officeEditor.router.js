@@ -10,8 +10,8 @@ const jwt = require('jsonwebtoken');
 const DocManager = require('./docManager');
 const fileUtility = require('./fileUtility');
 const plugins = [];
-const cfgSignatureSecret = process.env.STEEDOS_ONLYOFFICE_JWT_SECRET
-const cfgSignatureSecretExpiresIn = process.env.STEEDOS_ONLYOFFICE_JWT_EXPIRES_IN || '5m'
+const cfgSignatureSecret = process.env.B6_ONLYOFFICE_JWT_SECRET
+const cfgSignatureSecretExpiresIn = process.env.B6_ONLYOFFICE_JWT_EXPIRES_IN || '60m'
 
 router.get('/api/office/editor/cms_file/:cmsId', auth.requireAuthentication, async function (req, res) {
     try {
@@ -82,7 +82,7 @@ router.get('/api/office/editor/cms_file/:cmsId', auth.requireAuthentication, asy
         }
         const name = user.name;
         const data = {
-            apiUrl: process.env.STEEDOS_ONLYOFFICE_URL,
+            apiUrl: process.env.B6_ONLYOFFICE_URL + "/web-apps/apps/api/documents/api.js",
             file: {
                 cmsId: cmsId,
                 name: fileName,
