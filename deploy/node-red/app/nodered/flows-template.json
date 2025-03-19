@@ -1,0 +1,1205 @@
+[
+    {
+        "id": "2276d6559d8cdc4c",
+        "type": "tab",
+        "label": "REST API",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "c10017b236a162fd",
+        "type": "tab",
+        "label": "触发器",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "f5a9cdc65266c00c",
+        "type": "tab",
+        "label": "GraphQL",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "1f5cb3eabbf0fd93",
+        "type": "tab",
+        "label": "ObjectQL",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "c4c22c7401ddf469",
+        "type": "tab",
+        "label": "Events",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "342436a8ef373844",
+        "type": "tab",
+        "label": "Dashboard",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "ce147b46c731d342",
+        "type": "steedos-config",
+        "name": "steedos",
+        "transporter": "${TRANSPORTER}",
+        "namespace": "steedos",
+        "options": "{}",
+        "optionsType": "json"
+    },
+    {
+        "id": "5ab5acead56ffaea",
+        "type": "steedos-service-config",
+        "name": "example-nodered",
+        "version": "",
+        "settings": "{}",
+        "rest": "",
+        "settingsType": "json"
+    },
+    {
+        "id": "8665125dc4ab6298",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "42d9a6c12197166f",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "382f4ce997a61699",
+        "type": "ui_group",
+        "name": "Steedos",
+        "tab": "8665125dc4ab6298",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "3418e127c5b39a40",
+        "type": "ui_tab",
+        "name": "Login",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "5148c23bf8d36777",
+        "type": "ui_group",
+        "name": "Steedos",
+        "tab": "3418e127c5b39a40",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "093de831c44358e0",
+        "type": "inject",
+        "z": "2276d6559d8cdc4c",
+        "name": "定时5秒",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 60,
+        "wires": [
+            [
+                "7b0c5e3f1e731360"
+            ]
+        ]
+    },
+    {
+        "id": "13c359c3e40772f7",
+        "type": "debug",
+        "z": "2276d6559d8cdc4c",
+        "name": "debug ping",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "26c9301fac99bdbe",
+        "type": "steedos-instance",
+        "z": "2276d6559d8cdc4c",
+        "broker": "ce147b46c731d342",
+        "name": "steedos",
+        "topic": "broker",
+        "location": "global",
+        "x": 90,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "fda6f7448b07bc16",
+        "type": "steedos-request-action",
+        "z": "2276d6559d8cdc4c",
+        "broker": "ce147b46c731d342",
+        "service": "5ab5acead56ffaea",
+        "name": "GET /hello",
+        "topic": "hello",
+        "rest": "{\"method\":\"GET\",\"path\":\"/hello/:name\"}",
+        "restType": "json",
+        "trigger": "{}",
+        "triggerType": "json",
+        "params": "{}",
+        "paramsType": "json",
+        "x": 100,
+        "y": 220,
+        "wires": [
+            [
+                "9f92b7a5dc3e810d",
+                "6c8286a229c502d6"
+            ]
+        ],
+        "info": "使用 node-red 定义 REST API。\n\n相当于源码\n\n```javascript\n  actions: {\n    hello: {\n      // 使用微服务方式定义 API 接口。\n      // 访问地址： GET /service/api/example-nodered/hello/:name\n      rest: { method: 'GET', path: '/hello/:name' },\n      handler(ctx) {\n        return {\n          data: 'Welcome ' + ctx.params.name\n        }\n      }\n    },\n  }\n\n```"
+    },
+    {
+        "id": "9f92b7a5dc3e810d",
+        "type": "function",
+        "z": "2276d6559d8cdc4c",
+        "name": "function hello",
+        "func": "msg.emit(\"api.hello.called\", msg.payload);\n\nmsg.payload = {data: `Welcome ${msg.payload.name}, I'm Node-RED.`};\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 220,
+        "wires": [
+            [
+                "42da4c18cc1a406e"
+            ]
+        ]
+    },
+    {
+        "id": "42da4c18cc1a406e",
+        "type": "steedos-response-action",
+        "z": "2276d6559d8cdc4c",
+        "name": "",
+        "x": 500,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "6c8286a229c502d6",
+        "type": "debug",
+        "z": "2276d6559d8cdc4c",
+        "name": "debug hello",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 290,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "df2a067e776f4543",
+        "type": "steedos-request-action",
+        "z": "2276d6559d8cdc4c",
+        "broker": "ce147b46c731d342",
+        "service": "5ab5acead56ffaea",
+        "name": "GET /me",
+        "topic": "me",
+        "rest": "{\"method\":\"GET\",\"path\":\"/me\"}",
+        "restType": "json",
+        "trigger": "{}",
+        "triggerType": "json",
+        "params": "{}",
+        "paramsType": "json",
+        "x": 100,
+        "y": 400,
+        "wires": [
+            [
+                "809b9188731148eb",
+                "a5d9d1090bc80680"
+            ]
+        ],
+        "info": "使用 node-red 定义 REST API。\n\n相当于源码\n\n```javascript\n  actions: {\n    me: {\n      // 使用微服务方式定义 API 接口。\n      // 访问地址： GET /service/api/example-nodered/me\n      rest: { method: 'GET', path: '/me' },\n      handler(ctx) {\n        return ctx.meta.user\n      }\n    },\n  }\n\n```"
+    },
+    {
+        "id": "809b9188731148eb",
+        "type": "function",
+        "z": "2276d6559d8cdc4c",
+        "name": "function me",
+        "func": "msg.emit(\"api.me.called\", msg.payload);\n\nmsg.payload = msg.meta.user\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 400,
+        "wires": [
+            [
+                "5e8b4126fd511dbe"
+            ]
+        ]
+    },
+    {
+        "id": "5e8b4126fd511dbe",
+        "type": "steedos-response-action",
+        "z": "2276d6559d8cdc4c",
+        "name": "",
+        "x": 480,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "a5d9d1090bc80680",
+        "type": "debug",
+        "z": "2276d6559d8cdc4c",
+        "name": "debug me",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 280,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "7b0c5e3f1e731360",
+        "type": "function",
+        "z": "2276d6559d8cdc4c",
+        "name": "function ping",
+        "func": "msg.topic = 'ping'\n\nconsole.log(msg);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 60,
+        "wires": [
+            [
+                "13c359c3e40772f7"
+            ]
+        ]
+    },
+    {
+        "id": "7350d7b42b233ab6",
+        "type": "steedos-request-action",
+        "z": "c10017b236a162fd",
+        "broker": "ce147b46c731d342",
+        "service": "5ab5acead56ffaea",
+        "name": "用户触发器",
+        "topic": "space_users_triggers",
+        "rest": "{}",
+        "restType": "json",
+        "trigger": "{\"listenTo\":\"space_users\",\"when\":[\"beforeInsert\",\"beforeUpdate\"]}",
+        "triggerType": "json",
+        "params": "{}",
+        "paramsType": "json",
+        "x": 100,
+        "y": 120,
+        "wires": [
+            [
+                "0441d3a1237dcd50",
+                "6f988203ee0b8323"
+            ]
+        ]
+    },
+    {
+        "id": "0441d3a1237dcd50",
+        "type": "function",
+        "z": "c10017b236a162fd",
+        "name": "触发器函数",
+        "func": "const doc = msg.payload.doc;\nif (doc.name && doc.name.length < 2) {\n   msg.error = { message: \"姓名最少两位.\" };\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 160,
+        "wires": [
+            [
+                "dd4a70227645def5",
+                "1a4631e22fdbdc5d"
+            ]
+        ]
+    },
+    {
+        "id": "dd4a70227645def5",
+        "type": "debug",
+        "z": "c10017b236a162fd",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "error",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "1a4631e22fdbdc5d",
+        "type": "steedos-response-action",
+        "z": "c10017b236a162fd",
+        "name": "",
+        "x": 700,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "6f988203ee0b8323",
+        "type": "debug",
+        "z": "c10017b236a162fd",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 340,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "041b5cf925523d57",
+        "type": "debug",
+        "z": "f5a9cdc65266c00c",
+        "name": "debug graphql",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "dd19fe76319a55a5",
+        "type": "steedos-request-action",
+        "z": "f5a9cdc65266c00c",
+        "broker": "ce147b46c731d342",
+        "service": "5ab5acead56ffaea",
+        "name": "GET /graphql",
+        "topic": "graphql",
+        "rest": "{\"method\":\"GET\",\"path\":\"/graphql\"}",
+        "restType": "json",
+        "trigger": "{}",
+        "triggerType": "json",
+        "params": "{}",
+        "paramsType": "json",
+        "x": 130,
+        "y": 100,
+        "wires": [
+            [
+                "a4ed0530a13d6eb6"
+            ]
+        ]
+    },
+    {
+        "id": "a4ed0530a13d6eb6",
+        "type": "function",
+        "z": "f5a9cdc65266c00c",
+        "name": "graphql prepare",
+        "func": "msg.call('api.graphql', \n    {\n        query: `query {\n            space_users(filters: [\"user\", \"=\", \"${msg.meta.user.userId}\"]) {\n                name\n                organization\n            }\n        }`\n    }, \n    { meta: { } }\n).then((data) => {\n    msg.payload = data\n    node.send(msg)\n}).catch((err) => {\n    node.error(err, msg)\n})\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 100,
+        "wires": [
+            [
+                "17f73a23ffd99cc2",
+                "041b5cf925523d57"
+            ]
+        ]
+    },
+    {
+        "id": "17f73a23ffd99cc2",
+        "type": "steedos-response-action",
+        "z": "f5a9cdc65266c00c",
+        "name": "",
+        "x": 660,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "2310ebaa9037742a",
+        "type": "steedos-instance",
+        "z": "f5a9cdc65266c00c",
+        "broker": "ce147b46c731d342",
+        "name": "steedos",
+        "topic": "broker",
+        "location": "global",
+        "x": 110,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "02a275df10cd3bec",
+        "type": "debug",
+        "z": "1f5cb3eabbf0fd93",
+        "name": "debug objectql",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "8ff6274b015fe93f",
+        "type": "steedos-request-action",
+        "z": "1f5cb3eabbf0fd93",
+        "broker": "ce147b46c731d342",
+        "service": "5ab5acead56ffaea",
+        "name": "GET /objectql",
+        "topic": "objectql",
+        "rest": "{\"method\":\"GET\",\"path\":\"/objectql\"}",
+        "restType": "json",
+        "trigger": "{}",
+        "triggerType": "json",
+        "params": "{}",
+        "paramsType": "json",
+        "x": 130,
+        "y": 200,
+        "wires": [
+            [
+                "71bc7c2bbf61be62"
+            ]
+        ]
+    },
+    {
+        "id": "71bc7c2bbf61be62",
+        "type": "function",
+        "z": "1f5cb3eabbf0fd93",
+        "name": "objectql ",
+        "func": "msg.call('objectql.find',\n    {\n        \"objectName\": \"space_users\",\n        \"query\": {\n            // \"fields\": [\"name\", \"orgranizations\"],\n            \"filters\": [\"user\", \"=\", msg.meta.user.userId]\n        }\n    },\n    { meta: {} }\n).then((data) => {\n    msg.payload = data\n    node.send(msg)\n}).catch((err) => {\n    node.error(err, msg)\n})\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 200,
+        "wires": [
+            [
+                "33c3bb2545276f1c",
+                "02a275df10cd3bec"
+            ]
+        ]
+    },
+    {
+        "id": "bcbc82273617591c",
+        "type": "inject",
+        "z": "1f5cb3eabbf0fd93",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 300,
+        "wires": [
+            [
+                "a15b522425519db2"
+            ]
+        ]
+    },
+    {
+        "id": "a15b522425519db2",
+        "type": "function",
+        "z": "1f5cb3eabbf0fd93",
+        "name": "objectql function",
+        "func": "const broker = global.get('broker');\n\nmsg.payload = await broker.call('objectql.find', \n    {\n        \"objectName\": \"space_users\",\n        \"query\": {\n            \"fields\": [\"name\", \"organizations\"]\n        }\n    },\n    { meta: {} }\n)\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 300,
+        "wires": [
+            [
+                "9bab092c83da982c"
+            ]
+        ]
+    },
+    {
+        "id": "9bab092c83da982c",
+        "type": "debug",
+        "z": "1f5cb3eabbf0fd93",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "33c3bb2545276f1c",
+        "type": "steedos-response-action",
+        "z": "1f5cb3eabbf0fd93",
+        "name": "",
+        "x": 640,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "035d39aba494e1a4",
+        "type": "steedos-instance",
+        "z": "1f5cb3eabbf0fd93",
+        "broker": "ce147b46c731d342",
+        "name": "steedos",
+        "topic": "broker",
+        "location": "global",
+        "x": 110,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "5a53b89c3935d05d",
+        "type": "steedos-call",
+        "z": "1f5cb3eabbf0fd93",
+        "broker": "ce147b46c731d342",
+        "name": "查询用户信息",
+        "topic": "objectql.find",
+        "options": "{}",
+        "optionsType": "json",
+        "x": 600,
+        "y": 460,
+        "wires": [
+            [
+                "97ea9e8bc0da8a3d"
+            ]
+        ]
+    },
+    {
+        "id": "e7bac5750b865d07",
+        "type": "inject",
+        "z": "1f5cb3eabbf0fd93",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 460,
+        "wires": [
+            [
+                "0d813ebd37fbf532"
+            ]
+        ]
+    },
+    {
+        "id": "0d813ebd37fbf532",
+        "type": "function",
+        "z": "1f5cb3eabbf0fd93",
+        "name": "准备查询参数",
+        "func": "msg.payload = {\n    \"objectName\": \"space_users\",\n    \"query\": {\n        \"fields\": [\"name\", \"organizations\"]\n    }\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 460,
+        "wires": [
+            [
+                "5a53b89c3935d05d"
+            ]
+        ]
+    },
+    {
+        "id": "97ea9e8bc0da8a3d",
+        "type": "debug",
+        "z": "1f5cb3eabbf0fd93",
+        "name": "debug 7",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 800,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "352193fa7679c671",
+        "type": "steedos-event",
+        "z": "c4c22c7401ddf469",
+        "broker": "ce147b46c731d342",
+        "service": "5ab5acead56ffaea",
+        "name": "",
+        "topic": "api.hello.called",
+        "group": "",
+        "x": 170,
+        "y": 120,
+        "wires": [
+            [
+                "66e3f810d17d667e"
+            ]
+        ]
+    },
+    {
+        "id": "66e3f810d17d667e",
+        "type": "debug",
+        "z": "c4c22c7401ddf469",
+        "name": "debug updated",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 540,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "247130d50468606c",
+        "type": "steedos-instance",
+        "z": "c4c22c7401ddf469",
+        "broker": "ce147b46c731d342",
+        "name": "steedos",
+        "topic": "broker",
+        "location": "global",
+        "x": 130,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "58656ca612b011ea",
+        "type": "steedos-event",
+        "z": "c4c22c7401ddf469",
+        "broker": "ce147b46c731d342",
+        "service": "5ab5acead56ffaea",
+        "name": "",
+        "topic": "@space_users.updated",
+        "group": "",
+        "x": 190,
+        "y": 280,
+        "wires": [
+            [
+                "2048b352c7787d0c"
+            ]
+        ]
+    },
+    {
+        "id": "bed69637c34939dd",
+        "type": "debug",
+        "z": "c4c22c7401ddf469",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "2048b352c7787d0c",
+        "type": "function",
+        "z": "c4c22c7401ddf469",
+        "name": "function 2",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 280,
+        "wires": [
+            [
+                "bed69637c34939dd"
+            ]
+        ]
+    },
+    {
+        "id": "26045cbb9dd0451c",
+        "type": "ui_form",
+        "z": "342436a8ef373844",
+        "name": "",
+        "label": "Login Form",
+        "group": "5148c23bf8d36777",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Username",
+                "value": "username",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Password",
+                "value": "password",
+                "type": "password",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "username": "",
+            "password": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "cancel",
+        "topic": "topic",
+        "topicType": "msg",
+        "splitLayout": "",
+        "className": "",
+        "x": 350,
+        "y": 120,
+        "wires": [
+            [
+                "3222eb8b8cdad04d"
+            ]
+        ]
+    },
+    {
+        "id": "d13e914e6d9b0a4f",
+        "type": "ui_template",
+        "z": "342436a8ef373844",
+        "group": "382f4ce997a61699",
+        "name": "Home",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "format": "<div> Welcome \n    <span ng-bind-html=\"msg.payload.username\"></span>\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 615,
+        "y": 300,
+        "wires": [
+            [
+                "eaf7a6eb9d61546b"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "eaf7a6eb9d61546b",
+        "type": "debug",
+        "z": "342436a8ef373844",
+        "name": "debug 8",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 960,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "62e0bcf2f23e797f",
+        "type": "inject",
+        "z": "342436a8ef373844",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 110,
+        "y": 120,
+        "wires": [
+            [
+                "26045cbb9dd0451c"
+            ]
+        ]
+    },
+    {
+        "id": "c36e90df7a226449",
+        "type": "debug",
+        "z": "342436a8ef373844",
+        "name": "debug 9",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1080,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "3222eb8b8cdad04d",
+        "type": "function",
+        "z": "342436a8ef373844",
+        "name": "Login",
+        "func": "msg.payload.tab = 'Home';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 120,
+        "wires": [
+            [
+                "71de26cf9440882d",
+                "0d3abd8e61c58419",
+                "d13e914e6d9b0a4f",
+                "53273a3d2210bb44"
+            ]
+        ]
+    },
+    {
+        "id": "719ed74a01b9eefc",
+        "type": "ui_toast",
+        "z": "342436a8ef373844",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": true,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 1110,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "0d3abd8e61c58419",
+        "type": "ui_ui_control",
+        "z": "342436a8ef373844",
+        "name": "",
+        "events": "change",
+        "x": 860,
+        "y": 200,
+        "wires": [
+            [
+                "c36e90df7a226449"
+            ]
+        ]
+    },
+    {
+        "id": "5cb6e95deba4ad45",
+        "type": "ui_button",
+        "z": "342436a8ef373844",
+        "name": "",
+        "group": "382f4ce997a61699",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Logout",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 210,
+        "y": 420,
+        "wires": [
+            [
+                "17662f9cd3c098a5"
+            ]
+        ]
+    },
+    {
+        "id": "17662f9cd3c098a5",
+        "type": "function",
+        "z": "342436a8ef373844",
+        "name": "function 5",
+        "func": "msg.payload.tab = 'Login'\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 420,
+        "wires": [
+            [
+                "a6a46f71707e3d76"
+            ]
+        ]
+    },
+    {
+        "id": "71de26cf9440882d",
+        "type": "debug",
+        "z": "342436a8ef373844",
+        "name": "debug 10",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 800,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "a6a46f71707e3d76",
+        "type": "ui_ui_control",
+        "z": "342436a8ef373844",
+        "name": "",
+        "events": "change",
+        "x": 620,
+        "y": 420,
+        "wires": [
+            [
+                "5eae0b03d7a7bed4"
+            ]
+        ]
+    },
+    {
+        "id": "53273a3d2210bb44",
+        "type": "function",
+        "z": "342436a8ef373844",
+        "name": "Prepare Notifications",
+        "func": "msg.payload = 'Welcome ' + msg.payload.username\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 860,
+        "y": 120,
+        "wires": [
+            [
+                "719ed74a01b9eefc"
+            ]
+        ]
+    },
+    {
+        "id": "5eae0b03d7a7bed4",
+        "type": "debug",
+        "z": "342436a8ef373844",
+        "name": "debug 11",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 860,
+        "y": 420,
+        "wires": []
+    }
+]
