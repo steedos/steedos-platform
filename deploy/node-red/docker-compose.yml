@@ -5,8 +5,8 @@ services:
     build: 
       context: ./
       dockerfile: ../node-red/Dockerfile
-    image: steedos/steedos-project-lowcode-nodered:latest
-    container_name: steedos-project-lowcode-nodered
+    image: steedos/steedos-project-nodered:latest
+    container_name: steedos-project-nodered
     ports:
       - "1880:1880"
     environment:

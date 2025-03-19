@@ -3,7 +3,7 @@
  # @Author: baozhoutao@steedos.com
  # @Date: 2024-11-28 13:47:30
  # @LastEditors: baozhoutao@steedos.com
- # @LastEditTime: 2024-11-28 13:51:46
+ # @LastEditTime: 2025-03-19 20:11:12
  # @Description: 
 ### 
 export CQP_VERSION=0.0.1
@@ -17,4 +17,4 @@ docker-compose build --no-cache \
     --build-arg OS=alpine3.12 \
     --build-arg BUILD_DATE="$(date +"%Y-%m-%dT%H:%M:%SZ")"
 
-docker tag steedos/steedos-project-lowcode-nodered:latest steedos/steedos-project-lowcode-nodered:${CQP_VERSION}
+docker tag steedos/steedos-project-nodered:latest steedos/steedos-project-nodered:${CQP_VERSION}
