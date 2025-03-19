@@ -34,9 +34,12 @@ module.exports = {
 		saas: {
 			enable: validator.toBoolean(process.env.STEEDOS_TENANT_ENABLE_SAAS || 'false', true)
 		},
-        oidc: {
-            enable: validator.toBoolean(process.env.STEEDOS_IDENTITY_OIDC_ENABLED || 'false', true),
-        }
+		oidc: {
+				enable: validator.toBoolean(process.env.STEEDOS_IDENTITY_OIDC_ENABLED || 'false', true),
+		},
+		onlyoffice: {
+			enable: validator.toBoolean(process.env.B6_ONLYOFFICE_ENABLED || 'false', true)
+		}
 	},
 
 	/**
@@ -154,6 +157,10 @@ module.exports = {
 
 		if (this.settings.saas.enable) {
 			this.broker.createService(require('@steedos/service-saas'));
+		}
+
+		if(this.settings.onlyoffice.enable){
+			this.broker.createService(require("@steedos/service-onlyoffice"));
 		}
 
 		// 启动时间触发器服务

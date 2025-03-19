@@ -132,6 +132,7 @@ router.get('/api/office/editor/cms_file/:cmsId', auth.requireAuthentication, asy
                 protect: !user.deniedPermissions?.includes('protect'),
                 goback: user.goback != null ? user.goback : '',
                 close: user.close || false,
+                logoImage: process.env.ROOT_URL + "/images/logo_platform.png"
             },
             dataInsertImage: {
                 fileType: 'svg',
