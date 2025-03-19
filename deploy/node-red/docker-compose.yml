@@ -1,17 +1,13 @@
 version: "3.9"
 
 services:
-  steedos-enterprise:
-    image: steedos/node-red:latest
-    ports:
-      - 1880:1880
+  lowcodeNodered:
     build: 
       context: ./
-      dockerfile: ./Dockerfile
-    tty: true
-    volumes:
-      - "./steedos-storage:/steedos-storage"
-  
-volumes:
-  portainer_data:
-    driver: local
+      dockerfile: ../nodered/Dockerfile
+    image: steedos/steedos-project-lowcode-nodered:latest
+    container_name: steedos-project-lowcode-nodered
+    ports:
+      - "1880:1880"
+    environment:
+      - ROOT_URL=http://127.0.0.1

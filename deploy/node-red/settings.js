@@ -12,7 +12,7 @@ const axios = require('axios');
 const steedosRootUrl =  process.env.ROOT_URL || "http://127.0.0.1";
 
 const uiPort = process.env.NODERED_PORT || "1880";
-const storageDir = path.join(process.env.STEEDOS_STORAGE_DIR || "./storage", "data", "nodered");
+const storageDir = path.join(process.env.STEEDOS_STORAGE_DIR);
 
 const flowFilePath = path.join(storageDir, 'flows.json');
 const templateFlowFilePath = path.join(__dirname, 'flows-template.json'); // 模板文件路径
@@ -48,7 +48,6 @@ module.exports = {
     uiPort,
     
     httpStatic: path.join(__dirname, 'public'),
-    httpRoot: "/flows/",
     adminAuth: {
         type: "credentials",
         users: function(username) {
