@@ -4,7 +4,7 @@ services:
   lowcodeNodered:
     build: 
       context: ./
-      dockerfile: ../nodered/Dockerfile
+      dockerfile: ../node-red/Dockerfile
     image: steedos/steedos-project-lowcode-nodered:latest
     container_name: steedos-project-lowcode-nodered
     ports:
