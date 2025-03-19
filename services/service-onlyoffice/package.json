@@ -1,7 +1,7 @@
 {
   "name": "@steedos/service-onlyoffice",
   "version": "2.7.17-beta.12",
-  "main": "index.js",
+  "main": "package.service.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

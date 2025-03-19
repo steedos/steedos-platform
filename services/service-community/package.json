@@ -20,6 +20,7 @@
     "@steedos/service-identity-jwt": "2.7.17-beta.12",
     "@steedos/service-metadata-server": "2.7.17-beta.12",
     "@steedos/service-objectql": "2.7.17-beta.12",
+    "@steedos/service-onlyoffice": "2.7.17-beta.12",
     "@steedos/service-package-loader": "2.7.17-beta.12",
     "@steedos/service-package-registry": "2.7.17-beta.12",
     "@steedos/service-package-tool": "2.7.17-beta.12",
