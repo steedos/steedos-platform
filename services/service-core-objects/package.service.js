@@ -217,6 +217,15 @@ module.exports = {
             }
         });
 
+        this.broker.createService({
+            name: '~packages-standard-objects',
+            mixins: [],
+            started: function () {
+            },
+            created: function () {
+            }
+        });
+
     },
 
     /**

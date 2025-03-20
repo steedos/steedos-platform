@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-02-18 11:22:03
+ * @LastEditTime: 2025-03-16 17:29:00
  * @Description: 
  */
 "use strict";
@@ -769,6 +769,7 @@ module.exports = {
 
                 // 启用API(is_rest === true) 的函数才在这里执行
                 // 从缓存获取
+                // eslint-disable-next-line no-undef
                 const fDocs = await broker.call(`${METADATA_CACHER_SERVICE_NAME}.find`, {metadataName: 'object_functions', filters: [
                     ["objectApiName", "=", objectName],
                     ["_name", "=", functionApiName],
