@@ -9,7 +9,7 @@ amis_schema: |-
               "id": "u:edit_online",
               "editorState": "default",
               "confirmText": "",
-              "visibleOn": "${(extention === 'docx' || extention === 'xlsx' || extention === 'pptx') && recordPermissions['allowEdit']}",
+              "visibleOn": "${(extention === 'docx' || extention === 'xlsx' || extention === 'pptx' || extention === 'pdf') && recordPermissions['allowEdit']}",
               "onEvent": {
                   "click": {
                       "weight": 0,
