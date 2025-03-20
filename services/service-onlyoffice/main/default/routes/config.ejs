@@ -36,11 +36,13 @@
     "callbackUrl": "<%- editor.callbackUrl %>",
     "coEditing": <%- JSON.stringify(editor.coEditing) %>,
     "createUrl": <%- JSON.stringify(editor.createUrl) %>,
+    "location": "zh-CHS",
+    "region": "zh-CHS",
     "customization": {
-        "about": true,
+        "about": false,
         "comments": true,
         "close": <%- JSON.stringify(editor.close) %>,
-        "feedback": true,
+        "feedback": false,
         "forcesave": false,
         "goback": <%- JSON.stringify(editor.goback) %>,
         "submitForm": <%- editor.submitForm %>
@@ -61,11 +63,6 @@
         "id": "<%- editor.userid %>",
         "image": "<%- editor.userImage %>",
         "name": "<%- editor.name %>"
-    },
-    "logo": {
-        "image": "<%- editor.logoImage %>",
-        "url": "/",
-        "visible": true
     }
 },
 "height": "100%",

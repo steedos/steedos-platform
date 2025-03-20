@@ -9,10 +9,18 @@ const objectql = require('@steedos/objectql');
 const jwt = require('jsonwebtoken');
 const DocManager = require('./docManager');
 const fileUtility = require('./fileUtility');
-const plugins = [];
 const cfgSignatureSecret = process.env.B6_ONLYOFFICE_JWT_SECRET
 const cfgSignatureSecretExpiresIn = process.env.B6_ONLYOFFICE_JWT_EXPIRES_IN || '60m'
-
+const plugins = {
+    autostart: [
+        "asc.{9DC93CDB-B576-4F0C-B55E-FCC9C48DD007}"
+    ],
+    options: {
+        "asc.{9DC93CDB-B576-4F0C-B55E-FCC9C48DD007}": {
+            
+        }
+    }
+};
 router.get('/api/office/editor/cms_file/:cmsId', auth.requireAuthentication, async function (req, res) {
     try {
         res.set('Content-Type', 'text/html');
