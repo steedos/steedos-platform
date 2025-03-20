@@ -40,7 +40,7 @@
     "graphql": "^15.8.0",
     "graphql-parse-resolve-info": "^4.12.3",
     "jsen": "^0.6.6",
-    "jsonwebtoken": "8.5.1",
+    "jsonwebtoken": "9.0.0",
     "lodash": "^4.17.21",
     "mingo": "^6.0.5",
     "moleculer": "^0.14.25",
