@@ -1,0 +1,33 @@
+name: space_users_invite_token
+objectApiName: space_users
+isEnabled: true
+is_rest: true
+script: >-
+  // global: {_:lodash, moment, validator, filters}
+
+  // objects
+
+  // ctx: {input, params, broker, getObject, getUser}
+
+
+  const userSession = await ctx.getUser(ctx.params.userId, ctx.params.spaceId);
+
+
+  if (!userSession.is_space_admin) {
+      throw new Error('No permission');
+  }
+
+
+  const record = await objects.space_users_invite.find({ filters: [['space',
+  '=', userSession.spaceId], ['valid', '=', true]] })
+
+  if (record.length > 0) {
+      return { token: record[0]._id };
+  } else {
+      const result = await objects.space_users_invite.insert({ valid: true, space: userSession.spaceId }, userSession);
+      if (result) {
+          return { token: result._id };
+      }
+  }
+description: 邀请用户
+locked: false

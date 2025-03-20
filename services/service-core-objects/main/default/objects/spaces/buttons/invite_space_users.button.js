@@ -2,12 +2,11 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-12 11:32:14
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-02-17 11:16:55
+ * @LastEditTime: 2025-03-16 18:04:56
  * @Description: 
  */
 module.exports = { 
     invite_space_users: function(object_name, record_id, fields){
-        debugger
         var inviteToken = Steedos.getInviteToken();
         let address = window.location.origin + "/signup?invite_token=" + inviteToken;
         if(_.isFunction(Steedos.isCordova) && Steedos.isCordova()){

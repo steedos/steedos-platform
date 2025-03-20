@@ -10,7 +10,7 @@ Steedos.getInviteToken = function(){
         name: 'Authorization',
         value: authorization
     }];
-    let url = Steedos.absoluteUrl("api/v4/space_users_invite/get/invite_token")
+    let url = Steedos.absoluteUrl("/api/v1/space_users/functions/invite_token")
     let result = $.ajax({
         type: "get",
         url: url,
