@@ -27,6 +27,7 @@ import { AppLayout } from '../components/AppLayout';
 import { ObjectListView } from '../pages/object/listview';
 import { ObjectDetail } from '../pages/object/detail';
 import { PageView } from '../pages/page';
+import { ObjectRelatedListView } from '../pages/object/objectRelatedListView';
 
 const routes = [
   {
@@ -149,6 +150,16 @@ const routes = [
       <LoggedIn>
         <AppLayout>
           <ObjectListView/>
+        </AppLayout>
+      </LoggedIn>
+    ),
+  },
+  {
+    path: '/app/:appId/:objectName/:recordId/:relatedObjectName/grid',
+    element: (
+      <LoggedIn>
+        <AppLayout>
+          <ObjectRelatedListView/>
         </AppLayout>
       </LoggedIn>
     ),
