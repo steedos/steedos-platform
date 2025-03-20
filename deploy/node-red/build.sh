@@ -1,11 +1,4 @@
 #!/bin/bash
-###
- # @Author: baozhoutao@steedos.com
- # @Date: 2024-11-28 13:47:30
- # @LastEditors: baozhoutao@steedos.com
- # @LastEditTime: 2025-03-19 20:11:12
- # @Description: 
-### 
 export CQP_VERSION=0.0.1
 echo "#########################################################################"
 echo "CQP Low Code version: ${CQP_VERSION}"
