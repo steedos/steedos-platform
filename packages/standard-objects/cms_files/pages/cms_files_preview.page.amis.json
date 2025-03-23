@@ -132,7 +132,7 @@
                     "id": "u:5d4e7e3f6ecc"
                 },
                 {
-                    "title": "相关",
+                    "title": "历史版本",
                     "body": [
                         {
                             "type": "steedos-object-related-lists",
@@ -141,6 +141,24 @@
                             "recordId": "${recordId}",
                             "appId": "${appId}",
                             "id": "u:54b3a6135326"
+                        }
+                    ],
+                    "className": "px-0 pt-4",
+                    "id": "u:f2f42d8195ab"
+                },
+                {
+                    "title": "评论",
+                    "body": [
+                        {
+                            "type": "rooms-provider",
+                            "baseUrl": "${context.rootUrl}",
+                            "body": [
+                              {
+                                "type": "rooms-comments",
+                                "className": "flex flex-col gap-3",
+                                "roomId": "objects:${objectName}:${recordId}"
+                              }
+                            ]
                         }
                     ],
                     "className": "px-0 pt-4",
