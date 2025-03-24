@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  lowcodeNodered:
+    build: 
+      context: ./
+      dockerfile: ../node-red/Dockerfile
+    image: steedos/steedos-project-nodered:latest
+    container_name: steedos-project-nodered
+    ports:
+      - "1880:1880"
+    environment:
+      - ROOT_URL=http://127.0.0.1

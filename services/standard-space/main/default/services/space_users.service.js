@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-06 18:08:21
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-04-24 18:55:10
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2025-03-21 16:45:10
  * @Description: 
  */
 
@@ -373,7 +373,7 @@ module.exports = {
                     fields: ['admins'],
                     filters: [['_id', '=', companyIds], ['space', '=', userSession.spaceId]]
                 }
-                const companys = await objectql.getObject("company").find(query);
+                const companys = await getObject("company").find(query);
                 isAdmin = _.any(companys, (item) => {
                     return item.admins && item.admins.indexOf(userSession.userId) > -1
                 })

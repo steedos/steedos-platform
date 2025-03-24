@@ -275,6 +275,10 @@
   justify-content: space-between
 }
 
+.gap-3 {
+  gap: 0.75rem
+}
+
 .overflow-auto {
   overflow: auto
 }

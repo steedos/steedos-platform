@@ -1,0 +1,17 @@
+{
+  "name": "nodered-app",
+  "version": "1.0.0",
+  "private": "true",
+  "license": "MIT",
+  "scripts": {
+    "start": "node-red --settings settings.js"
+  },
+  "dependencies": {
+    "axios": "1.7.7",
+    "ioredis": "^5.3.2",
+    "lodash": "^4.17.21",
+    "node-red": "^4.0.5",
+    "passport": "0.7.0",
+    "passport-custom": "1.1.1"
+  }
+}

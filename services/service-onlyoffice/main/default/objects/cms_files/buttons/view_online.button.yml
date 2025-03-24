@@ -8,7 +8,7 @@ amis_schema: |-
               "label": "在线查看",
               "id": "u:view_online",
               "editorState": "default",
-              "visibleOn": "${extention === 'docx' || extention === 'xlsx' || extention === 'pptx'}",
+              "visibleOn": "${extention === 'docx' || extention === 'xlsx' || extention === 'pptx' || extention === 'pdf'}",
               "confirmText": "",
               "onEvent": {
                   "click": {
