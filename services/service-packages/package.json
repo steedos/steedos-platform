@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-packages",
-  "version": "2.7.18-beta.1",
+  "version": "2.7.18-beta.2",
   "main": "index.js",
   "scripts": {},
   "license": "MIT",
@@ -8,5 +8,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "93be170428df613cc8bdb9b016bf13846e860a6b"
+  "gitHead": "0e8cf1ed3f0644651db1a7e8c61be421b7d4ea41"
 }
