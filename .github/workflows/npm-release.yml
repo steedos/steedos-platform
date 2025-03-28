@@ -300,6 +300,9 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
+            steedos/steedos-community
+            registry.cn-shanghai.aliyuncs.com/steedos/steedos-community
+            252208178451.dkr.ecr.cn-northwest-1.amazonaws.com.cn/dockerhub/steedos/steedos-community
             steedos/steedos-enterprise
             registry.cn-shanghai.aliyuncs.com/steedos/steedos-enterprise
             252208178451.dkr.ecr.cn-northwest-1.amazonaws.com.cn/dockerhub/steedos/steedos-enterprise
