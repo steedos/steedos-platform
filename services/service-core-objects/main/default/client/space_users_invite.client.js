@@ -29,5 +29,5 @@ Steedos.getInviteToken = function(){
     if(result.error){
         throw new Error(result.error);
     }
-    return result.token
+    return result.data.token
 }

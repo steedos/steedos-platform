@@ -1,3 +1,44 @@
 name: invite_space_users
-label: Invite Users
+amis_schema: |-
+  {
+      "type": "service",
+      "body": [
+          {
+              "type": "button",
+              "label": "邀请注册",
+              "id": "u:invite_space_users",
+              "editorState": "default",
+              "onEvent": {
+                  "click": {
+                      "weight": 0,
+                      "actions": [
+                          {
+                              "ignoreError": false,
+                              "actionType": "custom",
+                              "script": "var inviteToken = Steedos.getInviteToken();\nlet address = window.location.origin + \"/signup?invite_token=\" + inviteToken;\ndoAction({\n  actionType: 'copy',\n  args: {\n    copyFormat: \"text\",\n    content: address\n  }\n});\n"
+                          }
+                      ]
+                  }
+              }
+          }
+      ],
+      "regions": [
+          "body"
+      ],
+      "data": {
+          "context": {},
+          "dataComponentId": "",
+          "record_id": "",
+          "record": {},
+          "permissions": {}
+      },
+      "bodyClassName": "p-0",
+      "id": "u:81db964270d7",
+      "dsType": "api"
+  }
+is_enable: true
+label: 邀请注册
+locked: false
 'on': list
+type: amis_button
+visible: true
