@@ -27,6 +27,7 @@ import { AppLayout } from '../components/AppLayout';
 import { ObjectListView } from '../pages/object/listview';
 import { ObjectDetail } from '../pages/object/detail';
 import { PageView } from '../pages/page';
+import { IframeView } from '../pages/iframe';
 import { ObjectRelatedListView } from '../pages/object/objectRelatedListView';
 
 const routes = [
@@ -174,6 +175,17 @@ const routes = [
       </LoggedIn>
     ),
   },
+
+  {
+    path: '/app/:appId/tab_iframe/:tabId',
+    element: (
+      <LoggedIn>
+        <AppLayout>
+          <IframeView/>
+        </AppLayout>
+      </LoggedIn>
+    ),
+  }
 ]
 
 
