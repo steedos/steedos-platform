@@ -1,5 +1,6 @@
 name: object_fields
 custom: true
+isMetadata: true
 enable_api: true
 enable_dataloader: false
 enable_enhanced_lookup: true

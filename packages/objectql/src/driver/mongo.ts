@@ -221,7 +221,7 @@ export class SteedosMongoDriver implements SteedosDriver {
 
   collection(name: string) {
     if (!this._collections[name]) {
-      let db = this._client.db();
+      const db = this._client.db();
       this._collections[name] = db.collection(name);
     }
     return this._collections[name];
@@ -229,11 +229,11 @@ export class SteedosMongoDriver implements SteedosDriver {
 
   async find(tableName: string, query: SteedosQueryOptions) {
     await this.connect();
-    let collection = this.collection(tableName);
+    const collection = this.collection(tableName);
 
-    let mongoFilters = this.getMongoFilters(query.filters);
-    let mongoOptions = this.getMongoOptions(query);
-    let result = await collection.find(mongoFilters, mongoOptions).toArray();
+    const mongoFilters = this.getMongoFilters(query.filters);
+    const mongoOptions = this.getMongoOptions(query);
+    const result = await collection.find(mongoFilters, mongoOptions).toArray();
 
     return result;
   }
@@ -244,17 +244,17 @@ export class SteedosMongoDriver implements SteedosDriver {
     externalPipeline: any[],
   ) {
     await this.connect();
-    let collection = this.collection(tableName);
+    const collection = this.collection(tableName);
     let pipeline = [];
 
-    let mongoFilters = this.getMongoFilters(query.filters);
-    let aggregateOptions = this.getAggregateOptions(query);
+    const mongoFilters = this.getMongoFilters(query.filters);
+    const aggregateOptions = this.getAggregateOptions(query);
 
     pipeline.push({ $match: mongoFilters });
 
     pipeline = pipeline.concat(aggregateOptions).concat(externalPipeline);
 
-    let result = await collection.aggregate(pipeline).toArray();
+    const result = await collection.aggregate(pipeline).toArray();
 
     return result;
   }

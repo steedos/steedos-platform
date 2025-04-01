@@ -14,7 +14,7 @@ export class MetadataDriver extends SteedosMongoDriver {
   }
 
   queryMetadata(collection, queryOptions, spaceId) {
-    let mongoFilters = this.getMongoFilters(queryOptions.filters);
+    const mongoFilters = this.getMongoFilters(queryOptions.filters);
     if (!spaceId) {
       // 如果没有传spaceId，从filters中获取
       const str = JSON.stringify(mongoFilters);
@@ -100,11 +100,11 @@ export class MetadataDriver extends SteedosMongoDriver {
     console.log(
       `MetadataDriver find tableName: ${tableName}, query: ${JSON.stringify(query)}`,
     );
-    let result = await super.find(tableName, query);
+    const result = await super.find(tableName, query);
     const spaceId = result.length > 0 ? result[0].space || null : null;
     const cachedSources = await this.getCachedSources(tableName);
     console.log(`cachedSources`, cachedSources.length);
-    let sources = await this.mixinSources(result, cachedSources);
+    const sources = await this.mixinSources(result, cachedSources);
     return this.queryMetadata(sources, query, spaceId).all();
   }
 
@@ -115,6 +115,11 @@ export class MetadataDriver extends SteedosMongoDriver {
     const result = await super.find(tableName, query);
     console.log(`directFind result: ${JSON.stringify(result)}`);
     return result;
+  }
+
+  async count(tableName: string, query: SteedosQueryOptions): Promise<any> {
+    const result = await this.find(tableName, query);
+    return result.length;
   }
 
   // find(collection: any, query: SteedosQueryOptions, spaceId?: SteedosIDType) {
