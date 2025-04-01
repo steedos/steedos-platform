@@ -420,19 +420,30 @@ module.exports = {
 								case "directory":
 								case "remote":
 								case "file":
+									installProps.name = parsed.rawSpec;
+									break;
 								case "git":
 									installProps.url = parsed.rawSpec;
 									break;
 								case "alias":
 									throw new Error(`not support ${parsed.type}`);
 							}
-							if(installProps.url){
-								//module, version, url, auth, enable, registry_url, broker
-								await this.installPackageFromUrl(installProps.url, installProps.version, installProps.url, null, true, null, this.broker);
+							if(parsed.type === 'file' || parsed.type === 'directory'){
+								const pInfos = await this.yarnAddPackage(packageName)
+								for(const pInfo of pInfos){
+									await this.broker.call('@steedos/service-project.enablePackage', {module: pInfo.name})
+								}
+								
 							}else{
-								//module, version, label, description, enable, broker
-								await this.installPackage(installProps.name, installProps.version, null, null, true, this.broker, process.env.NPM_REGISTRY_URL);
+								if(installProps.url){
+									//module, version, url, auth, enable, registry_url, broker
+									await this.installPackageFromUrl(installProps.url, installProps.version, installProps.url, null, true, null, this.broker);
+								}else{
+									//module, version, label, description, enable, broker
+									await this.installPackage(installProps.name, installProps.version, null, null, true, this.broker, process.env.NPM_REGISTRY_URL);
+								}
 							}
+							
 						} catch (error) {
 							this.broker.logger.error(`initialPackages: ${packageName}. ${error.message}`);
 						}
@@ -548,6 +559,7 @@ module.exports = {
 						})
 					})
 				}
+				return packages;
             }
 		}
 	},
@@ -556,12 +568,14 @@ module.exports = {
 	 * Service created lifecycle event handler
 	 */
 	async created() {
+
 	},
 
 	/**
 	 * Service started lifecycle event handler
 	 */
 	async started() {
+ 
 		const PACKAGE_INSTALL_NODE = process.env.PACKAGE_INSTALL_NODE
 		if(PACKAGE_INSTALL_NODE){
 			await this.broker.call('metadata.add', {key: `#package_install_node.${this.broker.nodeID}`, data: {nodeID: PACKAGE_INSTALL_NODE}}, {meta: {}}) 
