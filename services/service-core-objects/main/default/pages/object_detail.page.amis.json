@@ -194,7 +194,7 @@
             ],
             "id": "u:6a3b45d7adcf",
             "tabsMode": "vertical",
-            "className": "steedos-record-tabs bg-white mt-3 border-y",
+            "className": "steedos-record-tabs bg-white m-4 border-y",
             "toolbarClassName": "",
             "linksClassName": "",
             "contentClassName": "bg-white",
