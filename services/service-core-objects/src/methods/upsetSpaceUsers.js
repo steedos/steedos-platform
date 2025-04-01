@@ -1,3 +1,4 @@
+const _ = require('lodash');
 module.exports = {
     handler: async function (spaceUsers, spaceInfo, idFieldName, orgIdFieldName) {
         // 创建或者更新用户

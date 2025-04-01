@@ -1,10 +1,3 @@
-/*
- * @Author: baozhoutao@steedos.com
- * @Date: 2024-03-08 16:29:44
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-03-10 16:10:29
- * @Description: 
- */
 const _ = require('lodash');
 
 module.exports = {
