@@ -1,6 +1,6 @@
 {
     "name": "@steedos/standard-space",
-    "version": "2.7.18-beta.4",
+    "version": "2.7.18-beta.5",
     "main": "package.service.js",
     "private": false,
     "publishConfig": {
@@ -10,10 +10,10 @@
         "steedos"
     ],
     "dependencies": {
-        "@steedos/core": "2.7.18-beta.4",
-        "@steedos/data-import": "2.7.18-beta.4",
-        "@steedos/objectql": "2.7.18-beta.4",
-        "@steedos/service-meteor-package-loader": "2.7.18-beta.4",
+        "@steedos/core": "2.7.18-beta.5",
+        "@steedos/data-import": "2.7.18-beta.5",
+        "@steedos/objectql": "2.7.18-beta.5",
+        "@steedos/service-meteor-package-loader": "2.7.18-beta.5",
         "express": "^4.15.4",
         "fibers": "^5.0.3",
         "json2xls": "^0.1.2",
@@ -22,5 +22,5 @@
     "description": "steedos package",
     "repository": {},
     "license": "MIT",
-    "gitHead": "ab8b94baf4e133f143c8aca5d191bcc5a9901902"
+    "gitHead": "ddef33018b8ee568c4c5f6263b8b4b959632b214"
 }
