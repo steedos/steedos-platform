@@ -122,6 +122,34 @@ export async function bootstrap() {
     expressApp.get("/app/*react", (req, res) => {
       res.sendFile(path.join(webappDistPath, "index.html"));
     });
+
+    const frontendRoutes = [
+      "/logout",
+      "/signup",
+      "/login",
+      "/",
+      "/create-space",
+      "/select-space",
+      "/update-password",
+      "/verify/email",
+      "/verify/mobile",
+      "/home",
+      "/home/:spaceId",
+      "/app",
+      "/app/:appId",
+      "/app/:appId/page/:pageId",
+      "/app/:appId/:objectName",
+      "/app/:appId/:objectName/grid/:listviewId",
+      "/app/:appId/:objectName/:recordId/:relatedObjectName/grid",
+      "/app/:appId/:objectName/view/:recordId",
+      "/app/:appId/tab_iframe/:tabId",
+    ];
+
+    console.log("frontendRoutes", frontendRoutes);
+
+    expressApp.get(frontendRoutes, (req, res) => {
+      res.sendFile(path.join(webappDistPath, "index.html"));
+    });
   }
 
   await app.listen(process.env.B6_PORT ?? 5100);
