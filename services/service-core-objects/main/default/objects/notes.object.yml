@@ -1,0 +1,76 @@
+name: notes
+label: Notes
+icon: note
+enable_search: true
+fields:
+  name:
+    label: Title
+    type: text
+    required: true
+    is_wide: true
+    searchable: true
+    index: true
+    name: name
+  description:
+    label: Description
+    type: textarea
+    is_wide: true
+    searchable: true
+    index: true
+    name: description
+  related_to:
+    label: Related Object Record
+    type: lookup
+    index: true
+    reference_to: !<tag:yaml.org,2002:js/function> |-
+      function () {
+        try{
+          let objects = [];
+          var queryResult = Steedos.authRequest(`/graphql`, {
+              type: 'POST', async: false, 
+              data: JSON.stringify({
+                query: `{ objects(filters: ["enable_notes","=",true]){ name,enable_notes } }`
+              })
+          });
+          objects = queryResult && queryResult.data && queryResult.data.objects;
+          return _.map(objects, 'name') ;
+        }catch(e){
+          return []
+        }
+      }
+    name: related_to
+    filterable: true
+list_views:
+  all:
+    label: All Notes
+    filter_scope: space
+    columns:
+      - name
+      - created_by
+      - created
+      - related_to
+  recent:
+    label: Recently Viewed Notes
+    filter_scope: space
+  mine:
+    label: My Notes
+    filter_scope: space
+    filters:
+      - - owner
+        - =
+        - '{userId}'
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

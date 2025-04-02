@@ -1,0 +1,394 @@
+name: reports
+label: Report
+icon: report
+enable_space_global: true
+hidden: true
+version: 2
+fields:
+  name:
+    label: Name
+    type: text
+    required: true
+    searchable: true
+    index: true
+    name: name
+  report_type:
+    label: Report Type
+    type: select
+    defaultValue: tabular
+    options: !<tag:yaml.org,2002:js/function> |-
+      function () {
+        var types = [
+          {
+            "label": t("reports_field_report_type_options_tabular"),
+            "value": "tabular"
+          },
+          {
+            "label": t("reports_field_report_type_options_summary"),
+            "value": "summary"
+          },
+          {
+            "label": t("reports_field_report_type_options_matrix"),
+            "value": "matrix"
+          }
+        ];
+        var plugins = Creator.Plugins;
+        if(plugins["@steedos/plugin-jsreport"]){
+          types.push({
+            "label": "JsReport",
+            "value": "jsreport"
+          });
+        }
+        if(plugins["@steedos/plugin-stimulsoft-report"]){
+          types.push({
+            "label": "StimulsoftReport",
+            "value": "stimulsoft-report"
+          });
+        }
+        return types;
+      }
+    name: report_type
+    filterable: true
+  data_source:
+    label: Data Source
+    type: select
+    defaultValue: odata
+    options:
+      - label: OData
+        value: odata
+      - label: Graphql
+        value: graphql
+    name: data_source
+    filterable: true
+  object_name:
+    label: Object
+    type: lookup
+    reference_to: objects
+    reference_to_field: name
+    required: true
+    name: object_name
+    filterable: true
+  filter_scope:
+    label: Filter Scope
+    type: select
+    defaultValue: '"space"'
+    hidden: true
+    options:
+      - label: All
+        value: space
+      - label: Mine
+        value: mine
+    name: filter_scope
+    filterable: true
+  filters:
+    label: Filters
+    type: '[Object]'
+    omit: true
+    name: filters
+  filters.$:
+    label: Filter
+    blackbox: true
+    omit: true
+    hidden: true
+    name: filters.$
+  filters.$.field:
+    label: Field
+    type: text
+    name: filters.$.field
+  filters.$.operation:
+    label: Operator
+    type: select
+    defaultValue: =
+    options: !<tag:yaml.org,2002:js/function> |- 
+      function () {
+              return Creator.getFieldOperation();
+          }
+    name: filters.$.operation
+    filterable: true
+  filters.$.value:
+    label: Value
+    blackbox: true
+    name: filters.$.value
+  filter_logic:
+    label: Filter Logic
+    type: text
+    omit: true
+    name: filter_logic
+  fields:
+    label: Fields
+    type: lookup
+    multiple: true
+    is_wide: true
+    depend_on:
+      - object_name
+    defaultIcon: service_contract
+    optionsFunction: !<tag:yaml.org,2002:js/function> |- 
+      function (values) {
+                return Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true, true);
+            }
+    name: fields
+    filterable: true
+  rows:
+    label: Rows
+    type: lookup
+    multiple: true
+    is_wide: true
+    depend_on:
+      - object_name
+    defaultIcon: service_contract
+    optionsFunction: !<tag:yaml.org,2002:js/function> |- 
+      function (values) {
+                return Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true, true);
+            }
+    name: rows
+    filterable: true
+  columns:
+    label: Columns
+    type: lookup
+    multiple: true
+    is_wide: true
+    depend_on:
+      - object_name
+    defaultIcon: service_contract
+    optionsFunction: !<tag:yaml.org,2002:js/function> |- 
+      function (values) {
+                return Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true, true);
+            }
+    name: columns
+    filterable: true
+  values:
+    label: Statistical Values
+    type: lookup
+    multiple: true
+    is_wide: true
+    depend_on:
+      - object_name
+    defaultIcon: service_contract
+    optionsFunction: !<tag:yaml.org,2002:js/function> |- 
+      function (values) {
+                return Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true, true);
+            }
+    name: values
+    filterable: true
+  filter_fields:
+    label: Filter Fields
+    type: grid
+    is_wide: true
+    name: filter_fields
+    depend_on:
+      - object_name
+  filter_fields.$:
+    label: Filter Field
+    blackbox: true
+    type: object
+    name: filter_fields.$
+  filter_fields.$.field:
+    label: Field
+    type: lookup
+    optionsFunction: !<tag:yaml.org,2002:js/function> |- 
+      function (values) {
+                return Creator.getObjectFilterFieldOptions(values != null ? values.object_name : void 0);
+            }
+    name: filter_fields.$.field
+    filterable: true
+  filter_fields.$.required:
+    label: Required
+    type: boolean
+    name: filter_fields.$.required
+  options:
+    label: Options
+    omit: true
+    blackbox: true
+    name: options
+  description:
+    label: Description
+    type: textarea
+    is_wide: true
+    name: description
+  charting:
+    label: Show Chart
+    type: boolean
+    defaultValue: true
+    name: charting
+  grouping:
+    label: Show Group Subtotals
+    type: boolean
+    defaultValue: true
+    name: grouping
+  totaling:
+    label: Show Total
+    type: boolean
+    defaultValue: true
+    name: totaling
+  counting:
+    label: Show Record Count
+    type: boolean
+    defaultValue: true
+    name: counting
+  graphql:
+    label: Graphql
+    type: textarea
+    is_wide: true
+    hidden: false
+    group: JsReport
+    name: graphql
+  html:
+    label: Html
+    type: textarea
+    is_wide: true
+    hidden: false
+    group: JsReport
+    name: html
+  helper:
+    label: Helper
+    type: textarea
+    is_wide: true
+    hidden: false
+    group: JsReport
+    name: helper
+  script:
+    label: Script
+    type: textarea
+    is_wide: true
+    hidden: false
+    group: JsReport
+    name: script
+  mrt:
+    label: Mrt
+    type: textarea
+    is_wide: true
+    hidden: true
+  is_system:
+    type: boolean
+    label: System
+    # omit: true
+    readonly: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
+    disabled: true
+list_views:
+  default:
+    columns:
+      - name
+      - report_type
+      - object_name
+      - is_system
+  all:
+    label: All Reports
+    filter_scope: space
+    filter_fields:
+      - report_type
+      - created
+  application:
+    label: Application Reports
+    filter_scope: space
+    filters: !<tag:yaml.org,2002:js/function> |- 
+      function () {
+              var object_names;
+              object_names = Creator.getAppObjectNames();
+              return [["object_name", "=", object_names]];
+            }
+    filter_fields:
+      - report_type
+      - created
+  mine:
+    label: My Reports
+    filter_scope: mine
+    filter_fields:
+      - report_type
+      - created
+  global:
+    label: Standard Reports
+    filter_scope: space
+    filters:
+      - - space
+        - =
+        - global
+    filter_fields:
+      - report_type
+      - created
+actions:
+  standard_new_by_template:
+    label: Pull from Library
+    visible: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              var permissions;
+              permissions = Creator.getPermissions();
+              if (Creator.getTemplateSpaceId() && permissions) {
+                return permissions["allowCreate"];
+              }
+            }
+    'on': list
+    todo: !<tag:yaml.org,2002:js/function> |-
+      function (object_name, record_id, fields) {
+        Template.gridModal.show({
+            id: 'gridModal',
+            heading: '请选择报表',
+            onConfirm: function (selection) {
+                if (selection && selection.length > 0) {
+                    var record = selection[0];
+                    var recordId = record._id;
+                    var url = Steedos.absoluteUrl("/api/v4/reports/all/copy");
+                    var data = {
+                        recordId: recordId
+                    };
+                    if (recordId) {
+                        $.ajax({
+                            url: url,
+                            type: 'POST',
+                            async: true,
+                            data: JSON.stringify(data),
+                            dataType: 'json',
+                            processData: false,
+                            contentType: 'application/json',
+                            success: function (data) {
+                                if (data.errors) {
+                                    data.errors.forEach(function (e) {
+                                        toastr.error(e.errorMessage);
+                                    });
+                                    return;
+                                } else if (data.value) {
+                                    FlowRouter.go("/app/-/reports/view/" + data.value._id);
+                                }
+                            },
+                            error: function (xhr, msg, ex) {
+                                toastr.error(msg);
+                            }
+                        })
+                    }
+                }
+            },
+            gridProp: {
+                id: 'reports_object_grid',
+                objectName: 'reports',
+                enableSearch: true,
+                selectRows: 'radio',
+                spaceId: Creator.getTemplateSpaceId(),
+                columns: [{
+                    field: 'name',
+                    label: '名称',
+                    width: '30%'
+                }, {
+                    field: 'description',
+                    type: 'markdown',
+                    label: '描述'
+                }]
+            }
+        })
+      }
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+    disabled_list_views:
+      - all
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

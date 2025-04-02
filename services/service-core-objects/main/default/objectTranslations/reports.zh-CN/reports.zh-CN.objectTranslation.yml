@@ -1,0 +1,159 @@
+name: reports
+label: 报表
+description: 
+fields:
+  name:
+    label: 名称
+    help: 
+    description: 
+  report_type:
+    label: 报表类型
+    help: 
+    options: []
+    description: 
+  data_source:
+    label: 报表数据来源
+    help: 
+    options:
+      - label: OData
+        value: odata
+      - label: Graphql
+        value: graphql
+    description: 
+  object_name:
+    label: 对象名
+    help: 
+    description: 
+  filter_scope:
+    label: 过虑范围
+    help: 
+    options:
+      - label: 所有
+        value: space
+      - label: 与我相关
+        value: mine
+    description: 
+  filters:
+    label: 过滤条件
+    help: 
+    description: 
+  filters.$:
+    label: Filter
+    help: 
+    description: 
+  filters.$.field:
+    label: 字段名
+    help: 
+    description: 
+  filters.$.operation:
+    label: 操作符
+    help: 
+    options: []
+    description: 
+  filters.$.value:
+    label: 字段值
+    help: 
+    description: 
+  filter_logic:
+    label: 过滤逻辑
+    help: 
+    description: 
+  fields:
+    label: 字段
+    help: 
+    description: 
+  rows:
+    label: 行
+    help: 
+    description: 
+  columns:
+    label: 列
+    help: 
+    description: 
+  values:
+    label: 统计
+    help: 
+    description: 
+  filter_fields:
+    label: 过滤字段
+    help: 
+    description: 
+  filter_fields.$:
+    label: Filter Field
+    help: 
+    description: 
+  filter_fields.$.field:
+    label: 字段名称
+    help: 
+    description: 
+  filter_fields.$.required:
+    label: 必填
+    help: 
+    description: 
+  options:
+    label: 操作
+    help: 
+    description: 
+  description:
+    label: 描述
+    help: 
+    description: 
+  charting:
+    label: 显示图表
+    help: 
+    description: 
+  grouping:
+    label: 显示小计
+    help: 
+    description: 
+  totaling:
+    label: 显示总计
+    help: 
+    description: 
+  counting:
+    label: 显示记录计数
+    help: 
+    description: 
+  graphql:
+    label: Graphql
+    help: 
+    description: 
+  html:
+    label: Html
+    help: 
+    description: 
+  helper:
+    label: Helper
+    help: 
+    description: 
+  script:
+    label: Script
+    help: 
+    description: 
+  mrt:
+    label: Mrt
+    help: 
+    description: 
+  is_system:
+    label: 系统
+    help: 
+    description: 
+groups:
+  jsreport: JsReport
+listviews:
+  default:
+    label: 
+  all:
+    label: 所有报表
+  application:
+    label: 应用报表
+  mine:
+    label: 我的报表
+  global:
+    label: 标准报表
+actions:
+  standard_new_by_template:
+    label: 从模板新建
+CustomLabels:
+  reports_field_filter_fields.$: 
+  reports_field_filters.$: 

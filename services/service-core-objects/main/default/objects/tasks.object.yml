@@ -1,0 +1,182 @@
+name: tasks
+label: Task
+icon: timesheet_entry
+enable_search: true
+enable_files: true
+enable_chatter: true
+version: 2
+fields:
+  name:
+    label: Name
+    type: text
+    required: true
+    is_wide: true
+    searchable: true
+    filterable: true
+    index: true
+    name: name
+  assignees:
+    label: Assignees
+    type: lookup
+    required: true
+    reference_to: users
+    defaultValue: "{userId}"
+    multiple: true
+    name: assignees
+    filterable: true
+  due_date:
+    label: Due Date
+    required: true
+    type: date
+    sortable: true
+    name: due_date
+  state:
+    label: State
+    type: select
+    options:
+      - label: not Started
+        value: not_started
+      - label: in Progress
+        value: in_progress
+      - label: Completed
+        value: completed
+      - label: Waiting
+        value: waiting
+      - label: Deferred
+        value: deferred
+    defaultValue: not_started
+    sortable: true
+    required: true
+    filterable: true
+  priority:
+    label: Priority
+    type: select
+    options:
+      - label: High
+        value: high
+      - label: Normal
+        value: normal
+      - label: Low
+        value: low
+    defaultValue: normal
+    sortable: true
+    required: true
+    filterable: true
+  related_to:
+    label: Related to
+    type: lookup
+    index: true
+    reference_to: !<tag:yaml.org,2002:js/function> |-
+      function () {
+            try{
+              let objects = [];
+              var queryResult = Steedos.authRequest(`/graphql`, {
+                  type: 'POST', async: false, 
+                  data: JSON.stringify({
+                    query: `{ objects(filters: ["enable_tasks","=",true]){ name,space,enable_tasks } }`
+                  })
+              });
+              objects = queryResult && queryResult.data && queryResult.data.objects;
+              return _.map(objects, 'name') ;
+            }catch(e){
+              return []
+            }
+      }
+    name: related_to
+    # filterable: true
+  description:
+    label: Description
+    type: textarea
+    is_wide: true
+    name: description
+list_views:
+  my_open_tasks:
+    label: My Open Tasks
+    filter_scope: space
+    filters:
+      - - assignees
+        - =
+        - '{userId}'
+      - - state
+        - <>
+        - completed
+  my_closed_tasks:
+    label: My Closed Tasks
+    filter_scope: space
+    columns:
+      - name
+      - due_date
+      - state
+      - priority
+      - assignees
+      - related_to
+    filters:
+      - - assignees
+        - =
+        - '{userId}'
+      - - state
+        - =
+        - completed
+  all:
+    label: All Tasks
+    columns:
+      - name
+      - due_date
+      - state
+      - priority
+      - assignees
+      - related_to
+    filters: !<tag:yaml.org,2002:js/function> |-
+      function () {
+        if(Steedos.isSpaceAdmin()){
+          /*工作区管理员可以看整个工作区的所有任务*/
+          return [];
+        }
+        return [[["assignees","=","{userId}"],'or',["owner","=","{userId}"]]]
+      }
+    filter_scope: space
+  created_tasks:
+    label: Tasks Assigned to Me
+    filter_scope: space
+    filters:
+      - - owner
+        - =
+        - '{userId}'
+  recent:
+    label: Recently Viewed Tasks
+  # calendar_view:
+  #   type: calendar
+  #   label: Calendar View
+  #   filter_scope: space
+  #   filters:
+  #     - - assignees
+  #       - =
+  #       - '{userId}'
+  #     - - owner
+  #       - =
+  #       - '{userId}'
+  #   options:
+  #     startDateExpr: due_date
+  #     endDateExpr: due_date
+  #     textExpr: name
+  #     title:
+  #       - name
+  #       - due_date
+  #       - assignees
+  #       - state
+  #     currentView: month
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

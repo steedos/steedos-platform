@@ -1,0 +1,63 @@
+name: tasks
+label: 任务
+description: 
+fields:
+  name:
+    label: 主题
+    help: 
+    description: 
+  assignees:
+    label: 分派给
+    help: 
+    description: 
+  due_date:
+    label: 到期日期
+    help: 
+    description: 
+  state:
+    label: 状态
+    help: 
+    options:
+      - label: 未开始
+        value: not_started
+      - label: 进行中
+        value: in_progress
+      - label: 已完成
+        value: completed
+      - label: 等待其他人
+        value: waiting
+      - label: 延期
+        value: deferred
+    description: 
+  priority:
+    label: 优先级
+    help: 
+    options:
+      - label: 高
+        value: high
+      - label: 中
+        value: normal
+      - label: 低
+        value: low
+    description: 
+  related_to:
+    label: 相关项
+    help: 
+    description: 
+  description:
+    label: 描述
+    help: 
+    description: 
+listviews:
+  my_open_tasks:
+    label: 待办任务
+  my_closed_tasks:
+    label: 已办任务
+  all:
+    label: 所有任务
+  created_tasks:
+    label: 交办任务
+  recent:
+    label: 最近查看
+  calendar_view:
+    label: 日历视图
