@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTenant, getSettings, getSettingsTenantId } from '../selectors';
 import { getCurrentUser } from "../selectors/entities/users";
 import { getCurrentSpace, getCurrentSpaceId } from "../selectors/entities/spaces";
 import { useNavigate } from "react-router";
@@ -13,10 +12,7 @@ const Home = () => {
 
   const currentUser = useSelector(getCurrentUser);
   const currentSpace = useSelector(getCurrentSpace);
-  const currentSpaceId = useSelector(getCurrentSpaceId);
-  const tenant = useSelector(getTenant);
-  const settings = useSelector(getSettings);
-  const settingsTenantId = useSelector(getSettingsTenantId);
+  document.title = `Steedos`;
 
   useEffect(() => {
     if (!currentUser) {
