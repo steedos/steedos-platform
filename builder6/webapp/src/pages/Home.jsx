@@ -3,11 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getTenant, getSettings, getSettingsTenantId } from '../selectors';
 import { getCurrentUser } from "../selectors/entities/users";
 import { getCurrentSpace, getCurrentSpaceId } from "../selectors/entities/spaces";
-import Navbar from '../components/Navbar';
-import { selectSpace, goSpaceHome } from '../actions/spaces';
 import { useNavigate } from "react-router";
-import { t } from 'i18next';
-import { use } from 'react';
+import { validate } from '../actions/users'
 
 // 首页只是用来跳转
 const Home = () => {
@@ -30,7 +27,12 @@ const Home = () => {
       navigate('/select-space');
       return;
     }
-    navigate('/app');
+
+    dispatch(validate()).then((me)=>{
+      Builder.settings.context.user = me.data;
+      navigate('/app');
+    })
+
   }, []);
 
   return null;

@@ -43,7 +43,6 @@ export const Steedos = {
     return false;
   },
   logout: (redirect?) => {
-    debugger;
     localStorage.removeItem("steedos:spaceId");
     localStorage.removeItem("steedos:token");
     localStorage.removeItem("steedos:userId");
