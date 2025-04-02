@@ -145,8 +145,6 @@ export async function bootstrap() {
       "/app/:appId/tab_iframe/:tabId",
     ];
 
-    console.log("frontendRoutes", frontendRoutes);
-
     expressApp.get(frontendRoutes, (req, res) => {
       res.sendFile(path.join(webappDistPath, "index.html"));
     });
