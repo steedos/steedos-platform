@@ -327,3 +327,11 @@ tbody .color-priority-muted *{
 .amis-dialog-widget .instance-detail-service-wrapper .btn-instance-back{
     display: none;
 }
+
+
+.instance-table .inbox{
+    width: auto !important;
+    height: auto !important;
+    display: block;
+    box-shadow: none;
+}
