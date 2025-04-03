@@ -13,7 +13,8 @@ export const IframeView = () => {
         "body": {
           "type": "iframe",
           "src": iframeSrc,
-          "height": 300
+          "height": "100%",
+          "width": "100%"
         }
       }} data ={{
           context: {

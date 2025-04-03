@@ -27,15 +27,17 @@ module.exports = {
     name: packageName,
     namespace: "steedos",
     mixins: [packageLoader],
+    metadata: {
+        $package: {
+            path: __dirname,
+            name: packageName,
+            isPackage: true
+        }
+    },
     /**
      * Settings
      */
     settings: {
-        packageInfo: {
-            path: __dirname,
-            name: packageName,
-            isPackage: true
-        },
         STEEDOS_IDENTITY_OIDC_ENABLED: process.env.STEEDOS_IDENTITY_OIDC_ENABLED,
         STEEDOS_IDENTITY_OIDC_CONFIG_URL: process.env.STEEDOS_IDENTITY_OIDC_CONFIG_URL,
         STEEDOS_IDENTITY_OIDC_CLIENT_ID: process.env.STEEDOS_IDENTITY_OIDC_CLIENT_ID,
@@ -210,22 +212,18 @@ module.exports = {
         this.broker.createService({
             name: 'steedos-server',
             mixins: [],
+			actions: {
+				setSettings(ctx) {
+					console.log(`TODO setSettings:`, ctx.params)
+				}
+			},
             started: function() {
-                global.SteedosStarted=true
+                global.SteedosStarted=true;
+                this.broker.emit('steedos-server.started');
             },
             created: function(){
             }
         });
-
-        this.broker.createService({
-            name: '~packages-standard-objects',
-            mixins: [],
-            started: function () {
-            },
-            created: function () {
-            }
-        });
-
     },
 
     /**

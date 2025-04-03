@@ -33,7 +33,7 @@ module.exports = {
 	/**
 	 * Dependencies
 	 */
-	dependencies: ['metadata','~packages-@steedos/service-core-objects'],
+	dependencies: ['metadata','@steedos/service-core-objects'],
 	methods: {
 		// 加载mo action规则的triggers
 		loadActionTriggers: async function (broker) {

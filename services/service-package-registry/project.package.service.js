@@ -260,7 +260,38 @@ module.exports = {
 	 * Events
 	 */
 	events: {
-
+		'steedos-server.started': async function(){
+			const PACKAGE_INSTALL_NODE = process.env.PACKAGE_INSTALL_NODE
+			if(PACKAGE_INSTALL_NODE){
+				await this.broker.call('metadata.add', {key: `#package_install_node.${this.broker.nodeID}`, data: {nodeID: PACKAGE_INSTALL_NODE}}, {meta: {}}) 
+			}
+			packages.maintainSystemFiles()
+			// 单包路径steedos-app
+			try {
+				const packagePath = path.join(process.cwd(), 'steedos-app');
+				if(fs.existsSync(packagePath)){
+					const packageInfo = require(path.join(packagePath, 'package.json'));
+					loader.appendToPackagesConfig(`${packageInfo.name}`, {version: packageInfo.version, description: packageInfo.description || '', local: true, path: util.getPackageRelativePath(process.cwd(), packagePath)});
+				}
+			} catch (error) {
+				console.log(`started error`, error)
+			}
+	
+			await metadata.uncompressPackages(process.cwd());
+			const mPackages = metadata.getAllPackages(process.cwd());
+			_.each(mPackages, (packagePath)=>{
+				try {
+					const packageInfo = require(path.join(packagePath, 'package.json'));
+					loader.appendToPackagesConfig(packageInfo.name, {version: packageInfo.version, description: packageInfo.description, local: true, path: util.getPackageRelativePath(process.cwd(), packagePath)});
+				} catch (error) {
+					console.log(`started error`, error)
+				}
+			})
+			await this.initialPackages();
+			await loader.loadPackages();
+	
+			await this.installPackagesSyncToMetaData()
+		}
 	},
 
 	/**
@@ -575,36 +606,6 @@ module.exports = {
 	 * Service started lifecycle event handler
 	 */
 	async started() {
- 
-		const PACKAGE_INSTALL_NODE = process.env.PACKAGE_INSTALL_NODE
-		if(PACKAGE_INSTALL_NODE){
-			await this.broker.call('metadata.add', {key: `#package_install_node.${this.broker.nodeID}`, data: {nodeID: PACKAGE_INSTALL_NODE}}, {meta: {}}) 
-		}
-		packages.maintainSystemFiles()
-		// 单包路径steedos-app
-		try {
-			const packagePath = path.join(process.cwd(), 'steedos-app');
-			if(fs.existsSync(packagePath)){
-				const packageInfo = require(path.join(packagePath, 'package.json'));
-				loader.appendToPackagesConfig(`${packageInfo.name}`, {version: packageInfo.version, description: packageInfo.description || '', local: true, path: util.getPackageRelativePath(process.cwd(), packagePath)});
-			}
-		} catch (error) {
-			console.log(`started error`, error)
-		}
-
-		await metadata.uncompressPackages(process.cwd());
-		const mPackages = metadata.getAllPackages(process.cwd());
-		_.each(mPackages, (packagePath)=>{
-			try {
-				const packageInfo = require(path.join(packagePath, 'package.json'));
-				loader.appendToPackagesConfig(packageInfo.name, {version: packageInfo.version, description: packageInfo.description, local: true, path: util.getPackageRelativePath(process.cwd(), packagePath)});
-			} catch (error) {
-				console.log(`started error`, error)
-			}
-		})
-		await loader.loadPackages();
-
-		await this.installPackagesSyncToMetaData()
 		
 	},
 

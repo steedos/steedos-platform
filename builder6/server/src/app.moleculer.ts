@@ -47,15 +47,6 @@ export class AppMoleculer extends Service {
               enable_register: true,
             });
           }
-          try {
-            await ctx.broker.call(
-              "@steedos/service-project.initialPackages",
-              {},
-              {},
-            );
-          } catch (error) {
-            console.error(`initialPackages error`, error);
-          }
         },
         "$services.changed": async function (ctx) {
           const { broker } = ctx;
