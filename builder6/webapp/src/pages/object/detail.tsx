@@ -14,12 +14,14 @@ export const ObjectDetail = () => {
           "name": "steedosPageObjectControl",
           "data": {
             objectName: objectName,
+            object_name: objectName,
             pageType: 'record',
             recordId: recordId
           }
         },
         data: {
           objectName: objectName,
+          object_name: objectName,
           pageType: 'record',
           recordId: recordId
         }

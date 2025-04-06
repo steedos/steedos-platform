@@ -21,12 +21,14 @@ export const ObjectListView = () => {
         "name": "steedosPageObjectControl",
         "data": {
           objectName: objectName,
+          object_name: objectName,
           pageType: 'list',
           listName: listName || '',
         }
       },
       data: {
         objectName: objectName,
+        object_name: objectName,
         pageType: 'list',
         listName: listName || '',
       }
@@ -43,6 +45,7 @@ export const ObjectListView = () => {
         app_id: appId,
         listName: listName || '',
         objectName: objectName,
+        object_name: objectName,
     }} env = {{}} />
   );
 };

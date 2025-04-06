@@ -1,17 +1,21 @@
 const objectql = require('@steedos/objectql');
 const auth = require("@steedos/auth");
-
+const _ = require('underscore');
 module.exports = {
     beforeInsert: async function () {
         const { userId, spaceId } = this;
+        const obj = objectql.getObject("object_listviews")
         if(userId && spaceId){
             const userSession = await auth.getSessionByUserId(userId, spaceId);
             if(userSession){
-                const { allowCreateListViews } = await objectql.getObject("object_listviews").getUserObjectPermission(userSession, false);
+                const { allowCreateListViews } = await obj.getUserObjectPermission(userSession, false);
                 if(!allowCreateListViews){
                     throw new Error('没有权限创建视图')
                 }
             }
+        }
+        if(!this.doc._id){
+            this.doc._id = await obj._makeNewID()
         }
         if (!this.doc.name) {
             this.doc.name = 'listview_' + this.doc._id.toLowerCase();

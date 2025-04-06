@@ -6,3 +6,4 @@ required: true
 reference_to: objects
 reference_to_field: name
 sort_no: 120
+defaultValue: "${targetObjectName}"

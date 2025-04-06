@@ -145,6 +145,7 @@ export const ObjectRelatedListView =  () => {
         app_id: appId,
         listName: listName || '',
         objectName: objectName,
+        object_name: objectName,
     }} env = {{}} />
   );
 };
