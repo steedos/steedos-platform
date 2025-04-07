@@ -40,8 +40,9 @@
     }
 
     Steedos.Page.getDisplay = (objectName)=>{
-        const object = Creator.getObject(objectName)
-        let display = FlowRouter.current().queryParams.display;
+        const object = window.getUISchemaSync(objectName)
+        var searchParams = new URLSearchParams(window.location.search)
+        let display = searchParams.get('display');
         // console.log('=====getDisplay====>', display)
         const key = `tab_${objectName}_display`;
         // const key = 'page_display'

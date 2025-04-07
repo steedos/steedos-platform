@@ -16,7 +16,8 @@ export const ObjectDetail = () => {
             objectName: objectName,
             object_name: objectName,
             pageType: 'record',
-            recordId: recordId
+            recordId: recordId,
+            display: Steedos.Page.getDisplay(objectName)
           }
         },
         data: {

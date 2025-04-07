@@ -24,6 +24,7 @@ export const ObjectListView = () => {
           object_name: objectName,
           pageType: 'list',
           listName: listName || '',
+          display: Steedos.Page.getDisplay(objectName)
         }
       },
       data: {
