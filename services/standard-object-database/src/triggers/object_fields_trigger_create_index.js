@@ -23,7 +23,11 @@ module.exports = {
                 if (object && (index || unique)) {
                     const obj = this.getObject(object)
                     setTimeout(async function () {
-                        await obj.createIndex(name)
+                        try {
+                            await obj.createIndex(name)
+                        } catch (error) {
+                            console.error(error)
+                        }
                     }, 6000) // 等待对象重新加载
                 }
             }
