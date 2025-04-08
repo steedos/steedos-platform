@@ -31,6 +31,17 @@ if (!fs.existsSync(flowFilePath)) {
     fs.copyFileSync(templateFlowFilePath, flowFilePath);
 }
 
+console.log("node red storageDir", storageDir)
+console.log("node red userDir", path.join(storageDir, '.node-red'))
+
+try {
+    fs.mkdirSync(path.join(storageDir, '.node-red'), { recursive: true });
+    console.log("目录已成功创建或已存在。");
+    // 在这里继续执行其他操作
+} catch (err) {
+    console.error("创建目录失败:", err);
+}
+
 module.exports = {
     flowFile: path.join(storageDir,'flows.json'),
     flowFilePretty: true,

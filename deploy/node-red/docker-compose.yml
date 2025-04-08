@@ -10,4 +10,5 @@ services:
     ports:
       - "1880:1880"
     environment:
-      - ROOT_URL=http://127.0.0.1
+      - ROOT_URL=https://5000-steedos-steedosplatform-jiaahdvmfa8.ws-eu118.gitpod.io
+      - STEEDOS_STORAGE_DIR=/storage
