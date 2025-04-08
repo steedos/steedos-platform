@@ -1,7 +1,7 @@
 #!/bin/bash
-export CQP_VERSION=0.0.1
+export VERSION=0.0.3
 echo "#########################################################################"
-echo "CQP Low Code version: ${CQP_VERSION}"
+echo "NODERED Version: ${VERSION}"
 echo "#########################################################################"
 
 docker-compose build --no-cache \
@@ -10,4 +10,4 @@ docker-compose build --no-cache \
     --build-arg OS=alpine3.12 \
     --build-arg BUILD_DATE="$(date +"%Y-%m-%dT%H:%M:%SZ")"
 
-docker tag steedos/steedos-project-nodered:latest steedos/steedos-project-nodered:${CQP_VERSION}
+docker tag steedos/steedos-project-nodered:latest steedos/steedos-project-nodered:${VERSION}
