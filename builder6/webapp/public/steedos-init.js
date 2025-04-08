@@ -1,10 +1,3 @@
-/*
- * @Author: baozhoutao@steedos.com
- * @Date: 2023-02-26 15:22:12
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-02-21 17:43:07
- * @Description:
- */
 try {
   Steedos.authRequest = function (url, options) {
     var userSession = Steedos.User.get();
