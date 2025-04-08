@@ -154,6 +154,7 @@ module.exports = {
         // 产品分析
         this.broker.createService(require("@steedos/service-analytics"));
 
+		this.broker.createService(require("@steedos-labs/analytics"));
 
 		if (this.settings.saas.enable) {
 			this.broker.createService(require('@steedos/service-saas'));
