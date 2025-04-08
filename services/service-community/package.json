@@ -11,7 +11,7 @@
   "author": "steedos",
   "license": "MIT",
   "dependencies": {
-    "@steedos-labs/analytics": "^0.1.40",
+    "@steedos-labs/analytics": "^0.1.41",
     "@steedos-builder/amis-editor": "6.3.0-beta.13",
     "@steedos/ee_sso-oidc": "2.7.18-beta.5",
     "@steedos/service-analytics": "2.7.18-beta.5",
