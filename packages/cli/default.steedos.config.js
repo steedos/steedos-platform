@@ -13,6 +13,10 @@ if (_.isEmpty(process.env.STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN)) {
 	process.env.STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN = 'true';
 }
 
+if(_.isEmpty(process.env.STEEDOS_WIDGETS_ADDITIONAL)){
+	process.env.STEEDOS_WIDGETS_ADDITIONAL='@steedos-widgets/liveblocks';
+}
+
 if (_.isEmpty(process.env.STEEDOS_UNPKG_URL)) {
 	process.env.STEEDOS_UNPKG_URL = 'https://unpkg.steedos.cn';
 }
