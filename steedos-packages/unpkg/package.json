@@ -1,6 +1,6 @@
 {
   "name": "@steedos/unpkg",
-  "version": "2.7.18-beta.5",
+  "version": "2.7.18-beta.6",
   "main": "package.service.js",
   "scripts": {},
   "license": "MIT",
@@ -8,5 +8,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "ddef33018b8ee568c4c5f6263b8b4b959632b214"
+  "gitHead": "c97ef6fa1574e42db011f8fcc51bdad42bc3e20f"
 }

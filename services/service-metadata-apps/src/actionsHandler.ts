@@ -300,6 +300,27 @@ async function tabMenus(ctx: any, appPath, tabApiName, menu, mobile, userSession
                         }
                     )
                 }
+                if (tab.type === 'analytics_dashboard') {
+                    const url = `/analytics/embed/dashboard/${tab.analytics_dashboard}?titled=false&bordered=false`
+                    tab.label = translationTabLabel(userSession.language, tab.name, tab.label || tab.name);
+                    let urlMenu: any = {
+                        id: `${tab.name}`,
+                        type: tab.type,
+                        icon: tab.icon,
+                        path: `${url}`,
+                        name: `${tab.label}`,
+                        ...props
+                    };
+                    if (tab.is_new_window) {
+                        urlMenu.target = '_blank'
+                    }else{
+                        urlMenu.is_use_iframe = true;
+                        urlMenu.path = `${appPath}/tab_iframe/${tab.name}/?url=${url}`
+                    }
+                    menu.children.push(
+                        urlMenu
+                    )
+                }
             }
         }
     } catch (error) {

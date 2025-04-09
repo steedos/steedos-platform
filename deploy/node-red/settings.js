@@ -14,6 +14,14 @@ const steedosRootUrl =  process.env.ROOT_URL || "http://127.0.0.1";
 const uiPort = process.env.NODERED_PORT || "1880";
 const storageDir = path.join(process.env.STEEDOS_STORAGE_DIR || "./storage", "data", "nodered");
 
+try {
+    fs.mkdirSync(storageDir, { recursive: true });
+    console.log("目录已成功创建或已存在。");
+    // 在这里继续执行其他操作
+} catch (err) {
+    console.error("创建目录失败:", err);
+}
+
 const flowFilePath = path.join(storageDir, 'flows.json');
 const templateFlowFilePath = path.join(__dirname, 'flows-template.json'); // 模板文件路径
 
@@ -21,6 +29,17 @@ const templateFlowFilePath = path.join(__dirname, 'flows-template.json'); // 模
 if (!fs.existsSync(flowFilePath)) {
     console.log(`flows.json 文件不存在，从模板文件复制: ${templateFlowFilePath} 到 ${flowFilePath}`);
     fs.copyFileSync(templateFlowFilePath, flowFilePath);
+}
+
+console.log("node red storageDir", storageDir)
+console.log("node red userDir", path.join(storageDir, '.node-red'))
+
+try {
+    fs.mkdirSync(path.join(storageDir, '.node-red'), { recursive: true });
+    console.log("目录已成功创建或已存在。");
+    // 在这里继续执行其他操作
+} catch (err) {
+    console.error("创建目录失败:", err);
 }
 
 module.exports = {

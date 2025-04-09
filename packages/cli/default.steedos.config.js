@@ -13,6 +13,10 @@ if (_.isEmpty(process.env.STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN)) {
 	process.env.STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN = 'true';
 }
 
+if(_.isEmpty(process.env.STEEDOS_WIDGETS_ADDITIONAL)){
+	process.env.STEEDOS_WIDGETS_ADDITIONAL='@steedos-widgets/liveblocks';
+}
+
 if (_.isEmpty(process.env.STEEDOS_UNPKG_URL)) {
 	process.env.STEEDOS_UNPKG_URL = 'https://unpkg.steedos.cn';
 }
@@ -38,7 +42,7 @@ if (_.isEmpty(process.env.STEEDOS_AMIS_URL)) {
 process.env.STEEDOS_AMIS_URL = process.env.STEEDOS_AMIS_URL.replace(/\/+$/, "");
 
 if (_.isEmpty(process.env.STEEDOS_WIDGETS_VERSION)) {
-	process.env.STEEDOS_WIDGETS_VERSION = 'v6.3.12-beta.31';
+	process.env.STEEDOS_WIDGETS_VERSION = 'v6.3.12';
 }
 
 if (_.isEmpty(process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS)) {
@@ -153,23 +157,11 @@ module.exports = {
 	// More info: https://moleculer.services/docs/0.14/networking.html
 	// Note: During the development, you don't need to define it because all services will be loaded locally.
 	// In production you can set it via `TRANSPORTER=nats://localhost:4222` environment variable.
-	transporter: function () {
-		try {
-			return JSON.parse(process.env.STEEDOS_TRANSPORTER);
-		} catch (error) {
-			return process.env.STEEDOS_TRANSPORTER;
-		}
-	}(), //process.env.STEEDOS_TRANSPORTER,
+	transporter: process.env.TRANSPORTER || process.env.STEEDOS_TRANSPORTER,
 
 	// Define a cacher.
 	// More info: https://moleculer.services/docs/0.14/caching.html
-	cacher: function () {
-		try {
-			return JSON.parse(process.env.STEEDOS_CACHER);
-		} catch (error) {
-			return process.env.STEEDOS_CACHER;
-		}
-	}(),
+	cacher: process.env.CACHER || process.env.STEEDOS_CACHER,
 
 	// Define a serializer.
 	// Available values: "JSON", "Avro", "ProtoBuf", "MsgPack", "Notepack", "Thrift".

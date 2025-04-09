@@ -10,8 +10,6 @@ module.exports = {
 	// Available values: trace, debug, info, warn, error, fatal
 	logLevel: "warn",
 
-	transporter: process.env.TRANSPORTER,
-
 	// Called after broker started.
 	started(broker) {
         broker.createService(require("@steedos/service-community"));

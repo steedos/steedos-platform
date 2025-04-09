@@ -1,10 +1,3 @@
-/*
- * @Author: baozhoutao@steedos.com
- * @Date: 2023-02-26 15:22:12
- * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2024-01-04 16:44:08
- * @Description:
- */
 try {
   Steedos.authRequest = function (url, options) {
     var userSession = Creator.USER_CONTEXT;

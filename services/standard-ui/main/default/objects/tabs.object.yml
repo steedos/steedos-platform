@@ -53,6 +53,8 @@ fields:
       value: url
     - label: Page
       value: page
+    - label: 仪表盘
+      value: analytics_dashboard
     filterable: true
   mobile: 
     label: Display on the Mobile
@@ -81,18 +83,18 @@ fields:
     filterable: true
     required: "{{'object' === formData.type ? true: false}}"
     visible_on: "{{'object' === formData.type ? true: false}}"
+  analytics_dashboard:
+    label: 仪表盘
+    type: lookup
+    reference_to: analytics_dashboard
+    filterable: true
+    required: "{{'analytics_dashboard' === formData.type ? true: false}}"
+    visible_on: "{{'analytics_dashboard' === formData.type ? true: false}}"
   url:
     type: text
     label: Url
     required: "{{'url' === formData.type ? true: false}}"
     visible_on: "{{'url' === formData.type ? true: false}}"
-  is_new_window:
-    type: boolean
-    visible_on: "{{'url' === formData.type ? true: false}}"
-  is_use_iframe:
-    type: boolean
-    label: Open with iframe
-    defaultValue: false
   page:
     type: lookup
     label: 页面
@@ -102,6 +104,15 @@ fields:
     reference_to_field: name
     filters: 
       - ['type','notin', ['record','list','form']]
+  is_new_window:
+    type: boolean
+    visible_on: "{{'url' === formData.type ? true: false}}"
+  is_use_iframe:
+    type: boolean
+    label: Open with iframe
+    defaultValue: false
+    visible_on: "{{'analytics_dashboard' != formData.type ? true: false}}"
+
   action_overrides:
     type: text
     hidden: true
