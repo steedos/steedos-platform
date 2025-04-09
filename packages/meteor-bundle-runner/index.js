@@ -149,6 +149,8 @@ console.log(`*  VERSION: ${version}`);
 console.log(`*  PORT: ${process.env.PORT}`);
 console.log(`*  ROOT_URL: ${process.env.ROOT_URL}`);
 console.log(`*  MONGO_URL: ${process.env.MONGO_URL}`);
+console.log(`*  TRANSPORTER: ${process.env.TRANSPORTER || process.env.STEEDOS_TRANSPORTER}`);
+console.log(`*  CACHER: ${process.env.CACHER || process.env.STEEDOS_CACHER}`);
 console.log(`*  PROJECT_DIR: ${projectDir}`);
 var ref, ref1;
 if ((typeof settings !== "undefined" && settings !== null ? (ref2 = settings["public"]) != null ? (ref3 = ref2.cfs) != null ? ref3.store : void 0 : void 0 : void 0) === 'local') {
