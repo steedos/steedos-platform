@@ -1,6 +1,5 @@
 // 创建一个 MutationObserver 实例
 const observer = new MutationObserver((mutationsList) => {
-    console.log('MutationObserver 运行中...');
     for (const mutation of mutationsList) {
       if (mutation.type === 'childList') {
         mutation.addedNodes.forEach(node => {
