@@ -162,10 +162,8 @@ module.exports = {
 		  this.broker.createService(require("@steedos/unpkg"));
 	  
 		  this.broker.createService(require("@steedos-builder/amis-editor"));
-	  
-		  // if (this.settings.saas.enable) {
-		  // 	this.broker.createService(require('@steedos/service-saas'));
-		  // }
+
+		  this.broker.createService(require("@steedos/standard-process-approval"));
 	},
 
 	/**

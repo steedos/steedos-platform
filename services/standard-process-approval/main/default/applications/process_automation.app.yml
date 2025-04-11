@@ -3,13 +3,6 @@ name: Process Automation
 icon_slds: approval
 is_creator: false
 admin_menus:
-  # 分部管理员可以创建和设置流程及相关参数。
-  # - _id: process_automation
-  #   name: Process Automation
-  #   permission_sets:
-  #     - admin
-  #   expanded: false
-  #   sort: 500
   - _id: process_definition
     name: Approval Processes
     sort: 400
@@ -17,33 +10,3 @@ admin_menus:
       - admin
     object_name: process_definition
     parent: process_automation
-  # - _id: process_actions
-  #   name: process_actions
-  #   permission_sets:
-  #     - admin
-  #   object_name: process_actions
-  #   parent: process_automation
-  # - _id: process_steps
-  #   name: process_steps
-  #   permission_sets:
-  #     - admin
-  #   object_name: process_approvals
-  #   parent: process_automation
-  # - _id: process_flows
-  #   name: process_flows
-  #   permission_sets:
-  #     - admin
-  #   object_name: process_flows
-  #   parent: process_automation
-  # - _id: process_flows_criteria
-  #   name: process_flows_criteria
-  #   permission_sets:
-  #     - admin
-  #   object_name: process_flows_criteria
-  #   parent: process_automation
-  # - _id: process_flows_criteria_action
-  #   name: process_flows_criteria_action
-  #   permission_sets:
-  #     - admin
-  #   object_name: process_flows_criteria_action
-  #   parent: process_automation
