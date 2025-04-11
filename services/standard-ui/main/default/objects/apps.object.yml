@@ -185,20 +185,17 @@ fields:
     type: lookup
     multiple: true
     group: other
-    optionsFunction: !!js/function |
-      function () {
-        return Steedos.getObjectsOptions()
-      }
+    reference_to: objects
+    reference_to_field: name
     # filterable: true
   mobile_objects:
     label: Mobile Menus(Invalid)
     type: lookup
     multiple: true
+    reference_to: objects
+    reference_to_field: name
+    # filterable: true
     group: other
-    optionsFunction: !!js/function |
-      function () {
-        return Steedos.getObjectsOptions()
-      }
   visible_on:
     name: visible_on
     is_wide: true

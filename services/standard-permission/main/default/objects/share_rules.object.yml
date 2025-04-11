@@ -17,10 +17,6 @@ fields:
     write_requires_master_read: true
     reference_to_field: name
     required: true
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function () {
-        return Steedos.getObjectsOptions();
-      }
     sort_no: 120
   active:
     label: 启用

@@ -6,14 +6,6 @@ fields:
   related_to:
     label: Related Object Record
     type: lookup
-    reference_to: !<tag:yaml.org,2002:js/function> |-
-      function () {
-        if(Meteor.isClient){
-          Steedos.getObjectsOptions();
-        }else{
-          return _.keys(Creator.Objects);
-        }
-      }
     name: related_to
     filterable: true
   name:

@@ -4,8 +4,4 @@ label: 对象
 reference_to: objects
 reference_to_field: name
 required: true
-optionsFunction: !<tag:yaml.org,2002:js/function> |-
-  function () {
-    return Steedos.getObjectsOptions();
-  }
 sort_no: 40
