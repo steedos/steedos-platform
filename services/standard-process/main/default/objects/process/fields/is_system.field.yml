@@ -1,7 +1,0 @@
-name: is_system
-type: boolean
-label: 系统
-visible_on: "{{global.mode ==='read' ? true : false}}"
-readonly: true
-disabled: true
-sort_no: 999

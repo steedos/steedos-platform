@@ -1,5 +1,0 @@
-name: disable
-is_enable: true
-label: 禁用
-'on': record
-visible: true

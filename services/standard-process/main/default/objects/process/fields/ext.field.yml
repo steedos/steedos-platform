@@ -1,5 +1,0 @@
-name: ext
-label: 同步到元数据的后缀名
-type: text
-sort_no: 110
-required: true

@@ -1,5 +1,0 @@
-name: is_active
-label: 已发布
-type: toggle
-sort_no: 40
-readonly: true

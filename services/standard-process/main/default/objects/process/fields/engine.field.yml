@@ -1,5 +1,0 @@
-name: engine
-label: 引擎类型
-type: text
-required: true
-sort_no: 30

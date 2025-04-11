@@ -1,5 +1,0 @@
-name: entry_criteria
-label: 入口公式
-type: textarea
-required: true
-sort_no: 60

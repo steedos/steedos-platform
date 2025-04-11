@@ -1,6 +1,0 @@
-name: deploy_time
-label: 发布时间
-type: datetime
-readonly: true
-sort_no: 100
-visible_on: "{{global.mode ==='read' ? true : false}}"

@@ -1,7 +1,0 @@
-name: object_name
-type: lookup
-label: 对象
-reference_to: objects
-reference_to_field: name
-required: true
-sort_no: 40

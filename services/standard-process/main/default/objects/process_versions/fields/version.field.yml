@@ -1,6 +1,0 @@
-name: version
-label: 版本号
-type: number
-scale: 0
-sort_no: 30
-readonly: true

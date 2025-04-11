@@ -1,7 +1,0 @@
-name: version
-label: 版本号
-type: number
-scale: 0
-sort_no: 60
-readonly: true
-visible_on: "{{global.mode ==='read' ? true : false}}"
