@@ -23,6 +23,10 @@ import project from "../package.json";
 import { AllExceptionsFilter } from "./filters/all-exceptions.filter";
 
 export async function bootstrap() {
+  process.on("uncaughtException", (error) => {
+    console.error("uncaughtException:", error);
+  });
+
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     bufferLogs: true,
   });
