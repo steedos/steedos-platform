@@ -2,7 +2,6 @@ var _ = require("underscore");
 const clone = require('clone');
 const objectql = require('@steedos/objectql');
 const register = require('@steedos/metadata-registrar');
-const auth = require('@steedos/auth');
 const MAX_MASTER_DETAIL_LEAVE = objectql.MAX_MASTER_DETAIL_LEAVE;
 const validateOptionColorValue = (value)=>{
     if(value){
@@ -41,7 +40,7 @@ async function checkOwnerField(doc) {
         const obj = objectql.getObject(doc.object);
         const masters = await obj.getMasters();
         if (masters && masters.length) {
-            throw new Meteor.Error(doc.name, "您无法取消勾选“新建、编辑时隐藏”属性，因为当前对象上有主表子表关系字段！");
+            throw new Error("您无法取消勾选“新建、编辑时隐藏”属性，因为当前对象上有主表子表关系字段！");
         }
     }
 }
@@ -52,7 +51,7 @@ function checkMasterDetailPathsRepeat(doc, masterPaths, detailPaths) {
         _.each(detailPaths, (detailPathItems) => {
             const repeatName = objectql.getRepeatObjectNameFromPaths([masterPathItems.concat(detailPathItems)]);
             if (repeatName) {
-                throw new Meteor.Error(doc.name, "您无法创建此类字段，因为在主表子表关系链条中存在同名对象：" + repeatName);
+                throw new Error("您无法创建此类字段，因为在主表子表关系链条中存在同名对象：" + repeatName);
             }
         });
     });
@@ -63,16 +62,16 @@ async function checkMasterDetailTypeField(doc, oldReferenceTo) {
         return;
     }
     if (doc.reference_to === doc.object) {
-        throw new Meteor.Error(doc.name, "您无法创建一个指向自身的[主表/子表]类型字段！");
+        throw new Error("您无法创建一个指向自身的[主表/子表]类型字段！");
     }
     const obj = objectql.getObject(doc.object);
     if (!obj) {
-        throw new Meteor.Error(doc.name, `所属对象未加载！`);
+        throw new Error(`所属对象未加载！`);
     }
 
     const refObj = objectql.getObject(doc.reference_to);
     if (!refObj) {
-        throw new Meteor.Error(doc.name, `引用对象未加载！`);
+        throw new Error(`引用对象未加载！`);
     }
 
     let currentMasters = await obj.getMasters();
@@ -85,17 +84,17 @@ async function checkMasterDetailTypeField(doc, oldReferenceTo) {
     }
 
     if (currentMasters.indexOf(doc.reference_to) > -1) {
-        throw new Meteor.Error(doc.name, `该对象上已经存在指向相同“引用对象”的其它主表子表关系，无法创建该字段。`);
+        throw new Error(`该对象上已经存在指向相同“引用对象”的其它主表子表关系，无法创建该字段。`);
     }
 
     const mastersCount = currentMasters.length;
     const detailsCount = currentDetails.length;
     if (mastersCount > 5) {
-        throw new Meteor.Error(doc.name, "您无法创建此类型的字段，因为此对象已有5种主表子表关系。");
+        throw new Error("您无法创建此类型的字段，因为此对象已有5种主表子表关系。");
     } 
     // else if (mastersCount > 0) { // 当前对象已经有1个主子表字段
     //     if (detailsCount > 0) { // 当前对象已经作为了其他对象的主子表字段的关联对象
-    //         throw new Meteor.Error(doc.name, "由于此对象上已经存在主表子表关系，同时是另一个主表子表关系的主对象，无法创建此类字段。");
+    //         throw new Error("由于此对象上已经存在主表子表关系，同时是另一个主表子表关系的主对象，无法创建此类字段。");
     //     }
     // }
 
@@ -108,19 +107,19 @@ async function checkMasterDetailTypeField(doc, oldReferenceTo) {
     const maxDetailLeave = await obj.getMaxDetailsLeave(detailPaths);
     // console.log("===maxDetailLeave===", maxDetailLeave);
     if (maxDetailLeave > MAX_MASTER_DETAIL_LEAVE - 1) {
-        throw new Meteor.Error(doc.name, "您无法创建此类字段，因为这将超出主表子表关系的最大深度。");
+        throw new Error("您无法创建此类字段，因为这将超出主表子表关系的最大深度。");
     }
 
     // 新加主表子表关系后，当前对象作为子表往上和往下加起来最多允许有MAX_DETAIL_LEAVE层深度。
     const maxMasterLeave = await refObj.getMaxMastersLeave(masterPaths);
     // console.log("===maxMasterLeave===", maxMasterLeave);
     if (maxMasterLeave + maxDetailLeave > MAX_MASTER_DETAIL_LEAVE - 1) {
-        throw new Meteor.Error(doc.name, "您无法创建此类字段，因为这将超出主表子表关系的最大深度。");
+        throw new Error("您无法创建此类字段，因为这将超出主表子表关系的最大深度。");
     }
     // let fields = await obj.getFields();
     // const ownerField = _.find(fields, (n) => { return n.name === "owner"; });
     // if (!ownerField.omit) {
-    //     throw new Meteor.Error(doc.name, "您无法创建此类字段，因为该对象上“所有者”字段未勾选“新建、编辑时隐藏”属性。");
+    //     throw new Error("您无法创建此类字段，因为该对象上“所有者”字段未勾选“新建、编辑时隐藏”属性。");
     // }
 }
 
@@ -140,9 +139,7 @@ const checkFormulaInfiniteLoop = async function(_doc, oldFieldName){
     if(_doc.type === "formula"){
       doc = clone(_doc)
       delete doc._id
-      const objectConfig = objectql.wrapAsync(async function(){
-        return await objectql.getObject(doc.object).toConfig();
-      })
+      const objectConfig = await objectql.getObject(doc.object).toConfig();
     //   objectCore.loadDBObject(objectConfig)
       delete objectConfig._id;
       try {
@@ -196,6 +193,14 @@ module.exports = {
     beforeInsert: async function () {
         let doc = this.doc;
         delete doc.is_customize
+
+        if(['name','owner','parent','children'].indexOf(doc._name)>-1 || doc._name && doc.is_system){
+            doc.name = doc._name;
+        }else{
+            doc.name = getFieldName(doc.object,doc._name,doc.space);
+        }
+
+
         validateDoc(doc);
         await checkFormulaInfiniteLoop(doc);
         await checkMasterDetailTypeField(doc);
@@ -210,10 +215,10 @@ module.exports = {
                 const value = item.value;
                 const numberValue = Number(item.value);
                 if( doc.data_type === 'number' && !(_.isNumber(numberValue) && !_.isNaN(numberValue)) ){
-                    throw new Meteor.Error(500, "选择项中的选项值类型应该与数据类型值一致, 请输入合法的数值。");
+                    throw new Error(500, "选择项中的选项值类型应该与数据类型值一致, 请输入合法的数值。");
                 }
                 if( doc.data_type === 'boolean' && ['true','false'].indexOf(value) < 0){
-                    throw new Meteor.Error(500, "选择项中的选项值类型应该与数据类型值一致, 请输入 true 或 false。");
+                    throw new Error(500, "选择项中的选项值类型应该与数据类型值一致, 请输入 true 或 false。");
                 }
             })
         }
@@ -222,14 +227,15 @@ module.exports = {
         let { doc, object_name, id} = this;
         delete doc.is_customize
         validateDoc(doc);
-        // const dbDoc = await objectql.getObject(object_name).findOne(id)
-        const dbDoc = objectql.wrapAsync(async function(){
-          return await objectql.getObject(object_name).findOne(id)
-        })
+        const dbDoc = await objectql.getObject(object_name).findOne(id)
 
         if(doc && _.has(doc, 'multiple') && doc.multiple != dbDoc.multiple){
             throw new Error('禁止单选、多选切换')
         }
+
+        if(_.has(doc, "_name") && dbDoc._name != doc._name){
+            doc.name = getFieldName(doc.object, doc._name, doc.space, doc.name);
+          }
 
         let oldReferenceTo = dbDoc.type === "master_detail" && dbDoc.reference_to;
         await checkFormulaInfiniteLoop(doc, dbDoc.name);
@@ -250,7 +256,7 @@ module.exports = {
                 isImportField = true;
             }
             if(isImportField){
-                throw new Meteor.Error(500, "字段parent、children是启用树状结构显示记录的对象的内置字段，不能修改其”所属对象、字段名、字段类型、引用对象、多选、新建/编辑时隐藏”等属性");
+                throw new Error(500, "字段parent、children是启用树状结构显示记录的对象的内置字段，不能修改其”所属对象、字段名、字段类型、引用对象、多选、新建/编辑时隐藏”等属性");
             }
         }
 
@@ -260,11 +266,11 @@ module.exports = {
                 const value = item.value;
                 const numberValue = Number(item.value);
                 if( doc.data_type === 'number' && !(_.isNumber(numberValue) && !_.isNaN(numberValue)) ){
-                    throw new Meteor.Error(500, "选择项中的选项值类型应该与数据类型值一致, 请输入合法的数值。");
+                    throw new Error(500, "选择项中的选项值类型应该与数据类型值一致, 请输入合法的数值。");
                 }
                 // console.log('doc==>',doc.data_type , value)
                 if( doc.data_type === 'boolean' && ['true','false'].indexOf(value) < 0){
-                    throw new Meteor.Error(500, "选择项中的选项值类型应该与数据类型值一致, 请输入 true 或 false。");
+                    throw new Error(500, "选择项中的选项值类型应该与数据类型值一致, 请输入 true 或 false。");
                 }
             })
         }
@@ -290,7 +296,7 @@ module.exports = {
         const field = await this.getObject(this.object_name).findOne(this.id,{fields:['name','object']});
         const enable_tree = await objectql.getObject(field.object).enable_tree;
         if( ["parent","children"].indexOf(field.name) > -1 && enable_tree ){
-            throw new Meteor.Error(500, "启用树状结构显示记录的对象不能删除parent、children字段。");
+            throw new Error(500, "启用树状结构显示记录的对象不能删除parent、children字段。");
         }
     },
 
