@@ -1,0 +1,28 @@
+name: object_actions_set_default_amis_schema
+listenTo: object_actions
+when:
+  - beforeInsert
+isEnabled: true
+handler: |-
+  const { doc, userId } = ctx.params;
+
+  if(!doc.amis_schema) {
+    doc.amis_schema = JSON.stringify({
+      "type": "service",
+      "body": [
+          {
+              "type": "button",
+              "label": doc.label,
+              "id": "u:"+ doc.name
+          }
+      ],
+      "bodyClassName": "p-0"
+    });
+    return {
+      doc
+    }
+  }
+
+authentication_type: none
+locked: false
+type: code
