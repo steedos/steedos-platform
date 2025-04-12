@@ -15,22 +15,6 @@ field_groups:
     collapsed: true
   - group_name: External data source
     collapsed: false
-form:
-  initialValues: !<tag:yaml.org,2002:js/function> |-
-    function() {
-
-      //应用程序微页面内Session.get("record_id")获取不到值（比如设计字段布局微页面）
-      var object = Creator.odata.get('objects', Session.get("record_id") || (this.master && this.master.recordId), "fields_serial_number");
-      if(object){
-        let fields_serial_number = object.fields_serial_number
-        if(!fields_serial_number || fields_serial_number < 100){
-          fields_serial_number = 100 + 10
-        }
-        return {sort_no: fields_serial_number}
-      }
-      return {}
-
-    }
 hidden: false
 icon: textbox
 label: Object Fields
