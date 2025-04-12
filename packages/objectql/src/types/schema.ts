@@ -5,8 +5,6 @@ import _ = require("underscore");
 import { getFromContainer } from "typeorm";
 import { MetadataDriverOld } from "../driver/metadataOld";
 import { MetadataRegister } from "@steedos/metadata-registrar";
-// const deasync = require("deasync");
-const DB_OBJECT_SERVICE_NAME = "~database-objects";
 const defaultDatasourceName = "default";
 const meteorDatasourceName = "meteor";
 
@@ -86,97 +84,6 @@ export class SteedosSchema {
     this.addDataSourceFromSteedosConfig();
   }
 
-  async loadObjectFromDb(objectName) {
-    if ((global as any).SteedosStarted != true) {
-      return null;
-    }
-    console.log("loadObjectFromDb objectName", objectName);
-    const timeout = 60000; // 1分钟
-    const interval = 300; // 轮询间隔 300 毫秒
-
-    try {
-      const records = await this.getObject("objects").directFind({
-        filters: ["name", "=", objectName],
-      });
-      if (!records || records.length === 0) {
-        return null;
-      }
-
-      const record = records[0];
-
-      // 查询字段
-      const fieldRecords = await this.getObject("object_fields").directFind({
-        filters: ["object", "=", objectName],
-      });
-      const fields = {};
-      _.map(fieldRecords, (field) => {
-        fields[field.name] = field;
-      });
-
-      // 查询按钮
-      const btnRecords = await this.getObject("object_actions").directFind({
-        filters: ["object", "=", objectName],
-      });
-
-      const actions = {};
-      _.map(btnRecords, (action) => {
-        actions[action.name] = action;
-      });
-
-      // 查询列表视图
-      const lvRecords = await this.getObject("object_listviews").directFind({
-        filters: ["object_name", "=", objectName],
-      });
-
-      const list_views = {};
-      _.map(lvRecords, (listview) => {
-        list_views[listview.name] = listview;
-      });
-
-      console.log(
-        `addObjectConfig record`,
-        JSON.stringify(
-          Object.assign({}, record, {
-            isMain: true,
-            fields,
-            actions,
-            list_views,
-          }),
-        ),
-      );
-      await this.metadataRegister.addObjectConfig(
-        DB_OBJECT_SERVICE_NAME,
-        Object.assign({}, record, {
-          isMain: true,
-          fields,
-          actions,
-          list_views,
-        }),
-      );
-      broker.broadcast("$packages.statisticsActivatedPackages", {});
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  }
-
-  // _loadObjectFromDb(objectName){
-  //   const loadObjectFromDb = this.loadObjectFromDb;
-  //   const self = this;
-  //   console.log('_loadObjectFromDb===')
-  //   const syncFunction = deasync((objectName,cb) => {
-  //     console.log('_loadObjectFromDb===1')
-  //     loadObjectFromDb(objectName, self).then((res)=>{
-  //       console.log('_loadObjectFromDb===2')
-  //         cb(null, res);
-  //       });
-  //   });
-  //   console.log('_loadObjectFromDb===3')
-  //   let data = syncFunction(objectName);
-  //   console.log('_loadObjectFromDb===4')
-  //   return data;
-  // }
-
   /**
    * 获取对象
    * @param {string} name : {datacource_name}.{object_name} ，如果没有${datacource_name}部分，则默认为default
@@ -196,10 +103,6 @@ export class SteedosSchema {
       object_name = name;
       let objectMap = this.getObjectMap(name);
       if (!objectMap) {
-        // const services = require('../services');
-        // return services.getObjectDispatcher(object_name)
-        //TODO 此函数如何转化为同步函数
-        this.loadObjectFromDb(name);
         throw new Error(`Object ${name} is not found`);
       }
       datasource_name = objectMap.datasourceName;

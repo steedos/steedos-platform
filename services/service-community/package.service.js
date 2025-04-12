@@ -164,6 +164,8 @@ module.exports = {
 		  this.broker.createService(require("@steedos-builder/amis-editor"));
 
 		  this.broker.createService(require("@steedos/standard-process-approval"));
+
+		  this.broker.createService(require("@steedos/service-metadata-database"));
 	},
 
 	/**

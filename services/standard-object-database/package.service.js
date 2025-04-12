@@ -13,6 +13,7 @@ const serviceObjectMixin = require('@steedos/service-object-mixin');
 const validator = require('validator');
 const triggers = require('./src/triggers');
 const { checkAPIName } = require('@steedos/objectql')
+const _ = require('lodash');
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context

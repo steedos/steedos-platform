@@ -1,0 +1,11 @@
+{
+  "name": "@steedos/service-metadata-database",
+  "version": "1.0.0",
+  "main": "package.service.js",
+  "scripts": {
+    "build": "rm -rf ./lib && tsc"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

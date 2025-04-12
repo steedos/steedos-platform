@@ -3,6 +3,7 @@ label: List View
 icon: forecasts
 version: 2
 enable_dataloader: false
+isMetadata: true
 hidden: true
 paging:
   enabled: false

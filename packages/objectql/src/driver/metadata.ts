@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { SteedosMongoDriver } from ".";
-import { SteedosQueryOptions, getAllObject } from "../types";
+import { SteedosIDType, SteedosQueryOptions, getAllObject } from "../types";
 import { SteedosDriverConfig } from "./driver";
 import mingo = require("mingo");
 import clone = require("clone");
 import _ = require("underscore");
+import { Dictionary } from "@salesforce/ts-types";
 
 export class MetadataDriver extends SteedosMongoDriver {
   databaseVersion?: string;
@@ -97,29 +99,54 @@ export class MetadataDriver extends SteedosMongoDriver {
   }
 
   async find(tableName: string, query: SteedosQueryOptions) {
-    console.log(
-      `MetadataDriver find tableName: ${tableName}, query: ${JSON.stringify(query)}`,
-    );
+    // console.log(
+    //   `MetadataDriver find tableName: ${tableName}, query: ${JSON.stringify(query)}`,
+    // );
     const result = await super.find(tableName, query);
     const spaceId = result.length > 0 ? result[0].space || null : null;
     const cachedSources = await this.getCachedSources(tableName);
-    console.log(`cachedSources`, cachedSources.length);
+    // console.log(`cachedSources`, cachedSources.length);
     const sources = await this.mixinSources(result, cachedSources);
     return this.queryMetadata(sources, query, spaceId).all();
   }
 
   async directFind(tableName: string, query: SteedosQueryOptions) {
-    console.log(
-      `MetadataDriver directFind tableName: ${tableName}, query: ${JSON.stringify(query)}`,
-    );
+    // console.log(
+    //   `MetadataDriver directFind tableName: ${tableName}, query: ${JSON.stringify(query)}`,
+    // );
     const result = await super.find(tableName, query);
-    console.log(`directFind result: ${JSON.stringify(result)}`);
+    // console.log(`directFind result: ${JSON.stringify(result)}`);
     return result;
   }
 
   async count(tableName: string, query: SteedosQueryOptions): Promise<any> {
     const result = await this.find(tableName, query);
     return result.length;
+  }
+
+  async insert(tableName: string, doc: any) {
+    const result = await super.insert(tableName, doc);
+    broker.call(`$metadata.inserted`, { type: tableName, data: result });
+    return result;
+  }
+
+  async update(
+    tableName: string,
+    id: SteedosIDType | SteedosQueryOptions,
+    data: Dictionary<any>,
+  ): Promise<any> {
+    const result = await super.update(tableName, id, data);
+    broker.call(`$metadata.updated`, { type: tableName, id, data: result });
+    return result;
+  }
+
+  async delete(
+    tableName: string,
+    id: SteedosIDType | SteedosQueryOptions,
+  ): Promise<any> {
+    const result = await super.delete(tableName, id);
+    broker.call(`$metadata.deleted`, { type: tableName, id, data: result });
+    return result;
   }
 
   // find(collection: any, query: SteedosQueryOptions, spaceId?: SteedosIDType) {
