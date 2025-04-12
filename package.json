@@ -9,6 +9,7 @@
   ],
   "scripts": {
     "clean": "lerna clean",
+    "bootstrap": "lerna bootstrap",
     "start": "cd builder6/server && yarn start",
     "webapp": "cd builder6/webapp && yarn dev",
     "build": "lerna run build",
