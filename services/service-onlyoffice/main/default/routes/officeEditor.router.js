@@ -20,11 +20,7 @@ const plugins = {
             
         }
     },
-    pluginsData: {
-        "asc.{9DC93CDB-B576-4F0C-B55E-FCC9C48DD007}": {
-            
-        }
-    }
+    pluginsData: []
 };
 router.get('/api/office/editor/cms_file/:cmsId', auth.requireAuthentication, async function (req, res) {
     try {
