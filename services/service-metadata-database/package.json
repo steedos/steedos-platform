@@ -5,6 +5,11 @@
   "scripts": {
     "build": "rm -rf ./lib && tsc"
   },
+  "dependencies": {
+    "@steedos/objectql": "3.0.0-beta.2",
+    "@steedos/metadata-registrar": "3.0.0-beta.2",
+    "lodash": "^4.17.21"
+  },
   "author": "",
   "license": "ISC",
   "description": ""
