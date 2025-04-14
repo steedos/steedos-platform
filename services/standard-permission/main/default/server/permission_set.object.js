@@ -115,16 +115,4 @@ Creator.Objects['permission_set'].triggers = Object.assign({}, Creator.Objects['
             }
         }
     },
-    "before.remove.server.check": {
-        on: "server",
-        when: "before.remove",
-        todo: function (userId, doc) {
-            var documents, object_collections;
-            console.log('permission_objects', {permission_set_id: doc._id, space: doc.space});
-            var pero= Creator.getCollection("permission_objects").find({permission_set_id: doc._id, space: doc.space}, {fields:{_id:1}});
-            if (pero.count() > 0) {
-                throw new Meteor.Error(500, `此记录已在对象权限中引用`);
-            }
-        }
-    }
 })
