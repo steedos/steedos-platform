@@ -177,16 +177,16 @@ module.exports = {
                     const field = objectConfig.fields[fieldName];
                     if (field && field.type != 'boolean') {
                         options.push({
-                            label: t("action_field_updates_field_operation_options_null",{},lng),
+                            label: steedosI18n.t("action_field_updates_field_operation_options_null",{},lng),
                             value: 'null',
                         })
                     }
                     options.push({
-                        label: t("action_field_updates_field_operation_options_formula",{},lng),
+                        label: steedosI18n.t("action_field_updates_field_operation_options_formula",{},lng),
                         value: 'formula',
                     });
                     options.push({
-                        label: t("action_field_updates_field_operation_options_literal",{},lng),
+                        label: steedosI18n.t("action_field_updates_field_operation_options_literal",{},lng),
                         value: 'literal',
                     })
                 }
