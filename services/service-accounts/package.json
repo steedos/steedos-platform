@@ -4,6 +4,7 @@
   "main": "package.service.js",
   "license": "MIT",
   "dependencies": {
+    "@steedos/auth": "3.0.0-beta.2",
     "node-schedule": "^2.0.0"
   },
   "private": false,
