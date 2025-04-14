@@ -41,39 +41,6 @@ if(_window['Steedos']){
   _window['Steedos'] = Steedos;
 }
 
-Builder.settings.appId = '-';
-Builder.settings.context = {
-  rootUrl: import.meta.env.VITE_B6_ROOT_URL as string,
-  userId: localStorage.getItem('steedos:userId'),
-  tenantId: localStorage.getItem('steedos:spaceId'),
-  authToken: localStorage.getItem('steedos:token'),
-  user: {},
-};
-Builder.settings.unpkgUrl = 'https://unpkg.steedos.cn';
-// Builder.settings.assetUrls = ['https://unpkg.steedos.cn/@steedos-widgets/amis-object@v6.3.12-beta.6/dist/assets.json'];
-Builder.settings.assetUrls = ['http://127.0.0.1:8080/@steedos-widgets/amis-object/dist/assets-dev.json'];
-
-
-Builder.settings.env = {
-  requestAdaptor: (config: any)=>{
-    // 请求中转到 rootUrl
-    if (config.url.startsWith('/')) {
-      config.url = Builder.settings.context.rootUrl + config.url;
-    }
-    // if(config.allowCredentials != true){
-    //   config.withCredentials = false;
-    //   delete config.allowCredentials
-    // }
-    return config;
-  }
-}
-
-window.addEventListener('load', function() {
-  _window.loadJs('/steedos-init.js');
-  _window.loadJs(`${Builder.settings.context.rootUrl}/client_scripts.js`);
-});
-
-
 const Root: React.FC<any> = (props) => {
   const [configLoaded, setConfigLoaded] = useState<boolean>(false);
 
