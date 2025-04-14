@@ -33,9 +33,6 @@ tasks:
       yarn
     command: |
       git config pull.rebase false
-      rm creator/.env.local
-      cp creator/.env creator/.env.local
-      sed -i "/^ROOT_URL=*/cROOT_URL=$(gp url 3100)" creator/.env.local
       yarn install
       yarn build
       gp await-port 27017
