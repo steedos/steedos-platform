@@ -18,7 +18,9 @@
     "i18n": "lerna run i18n",
     "repl": "moleculer-runner  --config steedos.config.js --repl",
     "sync": "lerna exec --no-private  -- cnpm sync \\$LERNA_PACKAGE_NAME",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "depcheck:services": "depcheck services/* --json > depcheck-services-result.json",
+    "depcheck:packages":"depcheck packages/* --json > depcheck-packages-result.json"
   },
   "resolutions": {},
   "lint-staged": {
@@ -37,6 +39,7 @@
     "@types/node": "18.0.3",
     "cnpm": "9.0.1",
     "concurrently": "8.2.1",
+    "depcheck": "1.4.7",
     "eslint": "9.22.0",
     "globals": "16.0.0",
     "husky": "9.1.7",
