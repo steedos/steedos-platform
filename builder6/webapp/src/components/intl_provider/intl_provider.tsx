@@ -55,7 +55,7 @@ export default class IntlProvider extends React.PureComponent<IntlProviderProps,
 
     fetchSettings = async () => {
         try {
-            const response = await axios.get('http://192.168.3.59:6900/api/public/settings');
+            const response = await axios.get('/api/public/settings');
             const settingsData = response.data;
             this.setState({ settings: settingsData, loading: false });
             
