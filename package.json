@@ -14,6 +14,7 @@
     "webapp": "cd builder6/webapp && yarn dev",
     "build": "lerna run build",
     "docker": "docker-compose up",
+    "docker:db": "docker-compose up mongodb mongodb-init redis nats",
     "i18n": "lerna run i18n",
     "repl": "moleculer-runner  --config steedos.config.js --repl",
     "sync": "lerna exec --no-private  -- cnpm sync \\$LERNA_PACKAGE_NAME",
