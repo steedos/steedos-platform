@@ -66,7 +66,8 @@ export default class IntlProvider extends React.PureComponent<IntlProviderProps,
             const Builder = (window as any).Builder;
             Builder.settings.appId = '-';
             Builder.settings.context = {
-            rootUrl: settingsData.rootUrl,
+            rootUrl: '',
+            _rootUrl: settingsData.rootUrl,
             userId: localStorage.getItem('steedos:userId'),
             tenantId: localStorage.getItem('steedos:spaceId'),
             authToken: localStorage.getItem('steedos:token'),
