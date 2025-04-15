@@ -4,6 +4,9 @@ icon: filter_criteria
 version: 2
 enable_dataloader: false
 hidden: true
+isMetadata: true
+paging:
+  enabled: false
 fields:
   name:
     label: Api 名称

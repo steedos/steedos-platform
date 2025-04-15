@@ -4,5 +4,6 @@ icon: apps
 version: 2
 hidden: true
 enable_dataloader: false
+isMetadata: true
 paging:
   enabled: false

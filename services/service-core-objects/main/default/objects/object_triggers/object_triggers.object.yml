@@ -3,6 +3,7 @@ icon: apex
 label: Object Triggers
 version: 2
 hidden: true
+isMetadata: true
 enable_dataloader: false
 paging:
   enabled: false

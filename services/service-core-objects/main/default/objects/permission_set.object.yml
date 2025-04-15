@@ -5,6 +5,7 @@ hidden: true
 enable_inline_edit: false
 version: 2
 enable_dataloader: false
+isMetadata: true
 paging:
   enabled: false
 fields:

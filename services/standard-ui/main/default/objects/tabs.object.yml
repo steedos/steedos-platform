@@ -4,6 +4,7 @@ icon: timeslot
 hidden: true
 version: 2.0
 enable_dataloader: false
+isMetadata: true
 paging:
   enabled: false
 fields:

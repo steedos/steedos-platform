@@ -4,6 +4,7 @@ icon: assigned_resource
 version: 2
 enable_dataloader: false
 hidden: true
+isMetadata: true
 fields:
   name:
     label: Api 名称
