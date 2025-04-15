@@ -18,6 +18,11 @@ const GlobalLinkInterceptor = () => {
       if (target) {
         const href = target.getAttribute('href');
         const targetAttr = target.getAttribute('target');
+        const onclick = target.getAttribute("onclick");
+
+        if(onclick == 'return false;'){
+          return ;
+        }
 
         // 判断是否是内部链接
         const isInternal = href && href.startsWith('/');
@@ -28,7 +33,6 @@ const GlobalLinkInterceptor = () => {
         }
       }
     };
-    console.log(`init...GlobalLinkInterceptor..`)
     document.addEventListener('click', handleClick);
 
     return () => {
