@@ -90,14 +90,11 @@ export default class IntlProvider extends React.PureComponent<IntlProviderProps,
             }
             }
             const self = this;
-            window.addEventListener('load', function() {
-                _window.loadJs('/steedos-init.js');
+            _window.loadJs('/steedos-init.js', ()=>{
                 _window.loadJs(`${Builder.settings.context.rootUrl}/client_scripts.js`, ()=>{
                     self.setState({ settings: settingsData, loading: false });
                 });
             });
-
-
         } catch (error: any) {
             console.error('Error fetching settings:', error);
             this.setState({ error: 'Failed to load settings.', loading: false });
