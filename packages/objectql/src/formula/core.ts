@@ -24,7 +24,6 @@ import {
 import { JsonMap } from "@salesforce/ts-types";
 import { SteedosUserSession } from "../types";
 import _ = require("lodash");
-import reduce from "async/reduce";
 import { extract, parse } from "@steedos/formula";
 import { getFieldSubstitution, FormulonDataType } from "./params";
 import { getSimpleParamSubstitution } from "./simple_params";
@@ -160,15 +159,15 @@ export const computeFormulaParams = async (
         });
         continue;
       }
-      var lastReferenceToField = null;
-      tempValue = reduce(
-        paths,
-        0,
-        async (reslut, next, index) => {
+      tempValue = await (async () => {
+        let reslut = null;
+        let lastReferenceToField = null;
+        for (let index = 0; index < paths.length; index++) {
+          let next = paths[index];
           if (index === 0) {
             lastReferenceToField = next.reference_to_field;
             if (isUserVar) {
-              // $user变量也要按查相关表记录的方式取值，第一个path为根据id取出对应的space_users记录
+              // $user 变量也要按查相关表记录的方式取值，第一个 path 为根据 id 取出对应的 space_users 记录
               const sus = await getSteedosSchema()
                 .getObject("space_users")
                 .find({
@@ -180,42 +179,41 @@ export const computeFormulaParams = async (
                 });
               reslut = sus && sus.length && sus[0];
               if (reslut) {
-                return reslut[next.field_name];
+                reslut = reslut[next.field_name];
               } else {
-                return null;
+                reslut = null;
               }
             } else {
-              return <any>doc[next.field_name];
+              reslut = doc[next.field_name];
             }
           } else {
             if (!reslut) {
-              // 当上一轮返回空值或0时，直接返回
-              return reslut;
+              // 当上一轮返回空值或 0 时，直接返回
+              break;
             }
-
+            let found;
             if (lastReferenceToField && lastReferenceToField !== "_id") {
-              reslut = await getSteedosSchema()
+              found = await getSteedosSchema()
                 .getObject(next.reference_from)
                 .findOne(
                   { filters: [lastReferenceToField, "=", reslut] },
                   { fields: [next.field_name] },
                 );
             } else {
-              reslut = await getSteedosSchema()
+              found = await getSteedosSchema()
                 .getObject(next.reference_from)
-                .findOne(<any>reslut, { fields: [next.field_name] });
+                .findOne(reslut, { fields: [next.field_name] });
             }
-
             lastReferenceToField = next.reference_to_field;
-            if (reslut) {
-              return reslut[next.field_name];
+            if (found) {
+              reslut = found[next.field_name];
             } else {
-              return null;
+              reslut = null;
             }
           }
-        },
-        null,
-      );
+        }
+        return reslut;
+      })();
       params.push({
         key: key,
         path: _.last(paths),

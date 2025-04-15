@@ -28,7 +28,6 @@
     "@steedos/schemas": "3.0.0-beta.2",
     "amis-formula": "~6.3.0",
     "app-root-path": "^2.2.1",
-    "async": "3.2.6",
     "axios": "^0.21.1",
     "body-parser": "^1.18.1",
     "bunyan-sfdx-no-dtrace": "^1.8.2",
