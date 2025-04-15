@@ -17,7 +17,7 @@ amis_schema: |-
                           {
                             "ignoreError": true,
                             "actionType": "custom",
-                            "script": "window.open(`/api/office/editor/cms_file/${event.data.recordId}`);"
+                            "script": "window.open(`/docs/doceditor?fileId=${event.data.recordId}`);"
                           }
                       ]
                   }
