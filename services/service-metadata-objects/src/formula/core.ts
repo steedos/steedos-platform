@@ -29,35 +29,23 @@ const isAmisFormula = (formula: string) => {
 function extractAmisFormulaVariableNames(node) {
     let result = [];
 
-    function traverse(node, currentPath) {
+    function traverse(node) {
         if (!node) return;
 
+        // 如果是变量节点，收集它的name
         if (node.type === 'variable') {
-            // 如果是变量，初始化当前路径为变量名
-            currentPath = node.name;
+            result.push(node.name);
         }
 
-        if (node.type === 'getter') {
-            if (node.key && node.key.type === 'identifier') {
-                // 如果有 getter，先递归其 host，构建路径
-                const newPath = traverse(node.host, currentPath);
-                currentPath = newPath ? `${newPath}.${node.key.name}` : `${currentPath}.${node.key.name}`;
-                // 只在完整路径构建结束后添加
-                result.push(currentPath);
-            }
-        }
-
-        // 遍历当前节点的键值，以继续递归查找
+        // 递归遍历所有子节点
         for (const key in node) {
-            if (typeof node[key] === 'object' && node[key] !== null && key !== 'host') {
-                traverse(node[key], currentPath);
+            if (typeof node[key] === 'object' && node[key] !== null) {
+                traverse(node[key]);
             }
         }
-
-        return currentPath;
     }
     
-    traverse(node, '');
+    traverse(node);
     return result;
 }
 
