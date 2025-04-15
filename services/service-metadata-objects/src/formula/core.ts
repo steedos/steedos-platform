@@ -1,13 +1,13 @@
-import { extract } from '@steedos/formula';
-import { getObjectFieldFormulaConfigs } from './field_formula';
-import { isFieldFormulaConfigQuotingObjectAndFields } from './util';
-import { SteedosFieldFormulaTypeConfig } from './type';
-import { parse } from "amis-formula"
+import { extract } from "@steedos/formula";
+import { getObjectFieldFormulaConfigs } from "./field_formula";
+import { isFieldFormulaConfigQuotingObjectAndFields } from "./util";
+import { SteedosFieldFormulaTypeConfig } from "./type";
+import { parse } from "amis-formula";
 
 const isAmisFormula = (formula: string) => {
-    // 有${}包裹的表达式就识别为amis公式
-    return /\$\{.+\}/.test(formula);
-}
+  // 有${}包裹的表达式就识别为amis公式
+  return /\$\{.+\}/.test(formula);
+};
 
 // const extractAmisFormulaVariableNames = (node, result = []) => {
 //     // 检查当前节点是否有 "type" 属性，并且这个类型是 "variable"
@@ -25,54 +25,40 @@ const isAmisFormula = (formula: string) => {
 //     return result;
 // }
 
-
 function extractAmisFormulaVariableNames(node) {
-    let result = [];
+  const result = [];
 
-    function traverse(node, currentPath) {
-        if (!node) return;
+  function traverse(node) {
+    if (!node) return;
 
-        if (node.type === 'variable') {
-            // 如果是变量，初始化当前路径为变量名
-            currentPath = node.name;
-        }
-
-        if (node.type === 'getter') {
-            if (node.key && node.key.type === 'identifier') {
-                // 如果有 getter，先递归其 host，构建路径
-                const newPath = traverse(node.host, currentPath);
-                currentPath = newPath ? `${newPath}.${node.key.name}` : `${currentPath}.${node.key.name}`;
-                // 只在完整路径构建结束后添加
-                result.push(currentPath);
-            }
-        }
-
-        // 遍历当前节点的键值，以继续递归查找
-        for (const key in node) {
-            if (typeof node[key] === 'object' && node[key] !== null && key !== 'host') {
-                traverse(node[key], currentPath);
-            }
-        }
-
-        return currentPath;
+    // 如果是变量节点，收集它的name
+    if (node.type === "variable") {
+      result.push(node.name);
     }
-    
-    traverse(node, '');
-    return result;
+
+    // 递归遍历所有子节点
+    for (const key in node) {
+      if (typeof node[key] === "object" && node[key] !== null) {
+        traverse(node[key]);
+      }
+    }
+  }
+
+  traverse(node);
+  return result;
 }
 
 /**
  * 根据公式内容，取出其中{}中的变量
- * @param formula 
+ * @param formula
  */
 export const pickFormulaVars = (formula: string): Array<string> => {
-    if(isAmisFormula(formula)){
-        const result = extractAmisFormulaVariableNames(parse(formula));
-        return result;
-    }
-    return extract(formula);
-}
-
+  if (isAmisFormula(formula)) {
+    const result = extractAmisFormulaVariableNames(parse(formula));
+    return result;
+  }
+  return extract(formula);
+};
 
 /**
  * 某个对象上的公式字段是否引用了某个对象和字段
@@ -81,13 +67,22 @@ export const pickFormulaVars = (formula: string): Array<string> => {
  * @param object_name 是否引用了该对象
  * @param field_name 是否引用了该字段
  */
-export const isFormulaFieldQuotingObjectAndFields = async (formulaObjectName: string, formulaFieldName: string, objectName: string, fieldNames?: Array<string>): Promise<boolean> => {
-    const configs: Array<SteedosFieldFormulaTypeConfig> = await getObjectFieldFormulaConfigs(formulaObjectName, formulaFieldName);
-    if (configs && configs.length) {
-        return isFieldFormulaConfigQuotingObjectAndFields(configs[0], objectName, fieldNames);
-    }
-    else {
-        // 没找到公式字段配置说明传入的参数不是公式字段
-        return false;
-    }
-}
+export const isFormulaFieldQuotingObjectAndFields = async (
+  formulaObjectName: string,
+  formulaFieldName: string,
+  objectName: string,
+  fieldNames?: Array<string>,
+): Promise<boolean> => {
+  const configs: Array<SteedosFieldFormulaTypeConfig> =
+    await getObjectFieldFormulaConfigs(formulaObjectName, formulaFieldName);
+  if (configs && configs.length) {
+    return isFieldFormulaConfigQuotingObjectAndFields(
+      configs[0],
+      objectName,
+      fieldNames,
+    );
+  } else {
+    // 没找到公式字段配置说明传入的参数不是公式字段
+    return false;
+  }
+};
