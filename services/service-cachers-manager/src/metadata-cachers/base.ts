@@ -9,8 +9,6 @@ const cachers = require("@steedos/cachers");
 const { metadataDriver } = require("@steedos/utils");
 const { getObject } = require("@steedos/objectql");
 
-declare var Creator;
-
 export class MetadataCacherBase {
   supportSpace = true;
   cacher;
@@ -18,46 +16,49 @@ export class MetadataCacherBase {
   collectionName;
   observeHandle;
   cacherName;
-  observeQuery;
+  filters;
 
-  constructor(collectionName, supportSpace, observeQuery = {}) {
+  async init() {
+    console.log(`${this.collectionName} init`);
+    const records = await getObject(this.collectionName).directFind({
+      filters: this.filters,
+    });
+    for (const record of records) {
+      await this.onAdded(record);
+    }
+  }
+
+  async handleAction(
+    action: "inserted" | "updated" | "deleted",
+    data: unknown,
+  ) {
+    switch (action) {
+      case "inserted":
+        await this.onAdded(data);
+        break;
+      case "updated":
+        await this.onChanged(data);
+        break;
+      case "deleted":
+        await this.onRemoved(data);
+        break;
+      default:
+        console.warn(`未知的操作类型: ${action}`);
+    }
+  }
+
+  constructor(collectionName, supportSpace, filters = null) {
     this.collectionName = collectionName;
     this.supportSpace = supportSpace;
     this.cacherName = `metadata.${collectionName}`;
     this.cacher = cachers.getCacher(this.cacherName);
-    this.observeQuery = observeQuery;
-
-    getObject(collectionName)
-      .getCollection()
-      .then((collection) => {
-        const changeStream = collection.watch();
-        changeStream.on("change", (change) => {
-          console.log("Detected a change:", change);
-          // 处理变化...
-        });
-      });
-
-    // try {
-    //     this.observeHandle = Creator.getCollection(collectionName).find(observeQuery).observe({
-    //         added: (doc)=>{
-    //             this.onAdded(doc)
-    //         },
-    //         changed: (doc, oldDoc)=>{
-    //             this.onChanged(doc, oldDoc)
-    //         },
-    //         removed: (doc)=>{
-    //             this.onRemoved(doc)
-    //         }
-    //     });
-    // } catch (error) {
-    //     console.error(`${collectionName} observeHandle error`, error);
-    // }
+    this.filters = filters;
   }
   onAdded(doc) {
     this.set(doc._id, doc);
   }
 
-  onChanged(newDoc, oldDoc) {
+  onChanged(newDoc) {
     this.set(newDoc._id, newDoc);
   }
 

@@ -11,7 +11,7 @@ import { MetadataCacherBase } from "./base";
 
 export class ObjectFunctionsCacher extends MetadataCacherBase {
   constructor() {
-    super("apps", false, { isEnabled: true });
+    super("object_functions", false, ["isEnabled", "=", true]);
   }
 
   onAdded(doc) {
