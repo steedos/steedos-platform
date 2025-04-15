@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-12-09 18:23:36
- * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2025-04-15 22:33:47
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2023-08-18 10:28:49
  * @Description:
  */
 import { SteedosObjectTypeConfig, getSteedosSchema } from "../types";
@@ -94,16 +94,7 @@ async function _computeFormula(
   }
 
   let params = await computeFormulaParams(doc, vars, userSession);
-  // return runFormula(formula, params, options, {objectName});
-  return runFormula(
-    formula,
-    params,
-    Object.assign({}, options, {
-      record: doc,
-      userSession: userSession,
-    }),
-    { objectName },
-  );
+  return runFormula(formula, params, options, { objectName });
 }
 
 export const computeFormula = _computeFormula;
