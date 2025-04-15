@@ -63,7 +63,7 @@ export class MetadataDriver extends SteedosMongoDriver {
 
   async getCachedSources(tableName: string) {
     switch (tableName) {
-      case "objects":
+      case "objects": {
         const objects = await getAllObject();
         return _.map(objects, (metadataObject: any) => {
           return {
@@ -71,7 +71,8 @@ export class MetadataDriver extends SteedosMongoDriver {
             ...metadataObject.metadata,
           };
         });
-      case "object_fields":
+      }
+      case "object_fields": {
         const objects2 = await getAllObject();
         const fields = [];
         _.each(objects2, (metadataObject: any) => {
@@ -84,6 +85,35 @@ export class MetadataDriver extends SteedosMongoDriver {
           });
         });
         return fields;
+      }
+      case "object_actions": {
+        const objects3 = await getAllObject();
+        const actions = [];
+        _.each(objects3, (metadataObject: any) => {
+          _.each(metadataObject.metadata.actions, (field) => {
+            actions.push({
+              _id: `${metadataObject.metadata.name}.${field.name}`,
+              object: metadataObject.metadata.name,
+              ...field,
+            });
+          });
+        });
+        return actions;
+      }
+      case "object_listviews": {
+        const objects3 = await getAllObject();
+        const list_views = [];
+        _.each(objects3, (metadataObject: any) => {
+          _.each(metadataObject.metadata.list_views, (field) => {
+            list_views.push({
+              _id: `${metadataObject.metadata.name}.${field.name}`,
+              object_name: metadataObject.metadata.name,
+              ...field,
+            });
+          });
+        });
+        return list_views;
+      }
       default:
         break;
     }
