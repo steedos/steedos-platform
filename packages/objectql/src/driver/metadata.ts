@@ -36,18 +36,19 @@ export class MetadataDriver extends SteedosMongoDriver {
       } catch (error) {
         console.error(
           `metadata driver queryMetadata: ${item} is not json data`,
+          error,
         );
       }
     });
-    let mongoOptions = this.getMongoOptions(queryOptions);
-    let query = new mingo.Query(mongoFilters);
-    let projection = queryOptions.projection
+    const mongoOptions = this.getMongoOptions(queryOptions);
+    const query = new mingo.Query(mongoFilters);
+    const projection = queryOptions.projection
       ? Object.assign({}, queryOptions.projection, {
           record_permissions: 1,
           is_system: 1,
         })
       : null;
-    let cursor = query.find(_collection, projection);
+    const cursor = query.find(_collection, projection);
     if (mongoOptions.sort) {
       cursor.sort(mongoOptions.sort as any);
     }
@@ -91,8 +92,11 @@ export class MetadataDriver extends SteedosMongoDriver {
   async mixinSources(dbSources = [], codeSources = []) {
     const dbMap = new Map(dbSources.map((item) => [item.name, item]));
     codeSources.forEach((item) => {
-      if (!dbMap.has(item.name)) {
-        dbMap.set(item.name, item);
+      if (!item._id) {
+        console.error("error: item._id is null");
+      }
+      if (!dbMap.has(item._id)) {
+        dbMap.set(item._id, item);
       }
     });
     return Array.from(dbMap.values());
