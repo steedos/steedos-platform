@@ -57,7 +57,6 @@ export default class IntlProvider extends React.PureComponent<IntlProviderProps,
         try {
             const response = await axios.get('/api/public/settings');
             const settingsData = response.data;
-            this.setState({ settings: settingsData, loading: false });
             
             // If settings are needed to load translations or other actions, you can dispatch them here
             // For example:
@@ -90,10 +89,12 @@ export default class IntlProvider extends React.PureComponent<IntlProviderProps,
                 return config;
             }
             }
-
+            const self = this;
             window.addEventListener('load', function() {
                 _window.loadJs('/steedos-init.js');
-                _window.loadJs(`${Builder.settings.context.rootUrl}/client_scripts.js`);
+                _window.loadJs(`${Builder.settings.context.rootUrl}/client_scripts.js`, ()=>{
+                    self.setState({ settings: settingsData, loading: false });
+                });
             });
 
 
