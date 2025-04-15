@@ -126,7 +126,10 @@ export class MetadataDriver extends SteedosMongoDriver {
 
   async insert(tableName: string, doc: any) {
     const result = await super.insert(tableName, doc);
-    broker.call(`$metadata.inserted`, { type: tableName, data: result });
+    await broker.call(`b6-metadata.inserted`, {
+      type: tableName,
+      data: result,
+    });
     return result;
   }
 
@@ -136,7 +139,11 @@ export class MetadataDriver extends SteedosMongoDriver {
     data: Dictionary<any>,
   ): Promise<any> {
     const result = await super.update(tableName, id, data);
-    broker.call(`$metadata.updated`, { type: tableName, id, data: result });
+    await broker.call(`b6-metadata.updated`, {
+      type: tableName,
+      id,
+      data: result,
+    });
     return result;
   }
 
@@ -145,7 +152,11 @@ export class MetadataDriver extends SteedosMongoDriver {
     id: SteedosIDType | SteedosQueryOptions,
   ): Promise<any> {
     const result = await super.delete(tableName, id);
-    broker.call(`$metadata.deleted`, { type: tableName, id, data: result });
+    await broker.call(`b6-metadata.deleted`, {
+      type: tableName,
+      id,
+      data: result,
+    });
     return result;
   }
 
