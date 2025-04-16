@@ -105,7 +105,7 @@ The following command can be used to take a backup dump of Steedos Platform's da
 Before running this, ensure you are in the directory where `docker-compose.yml` is located.
 
 ```sh
-docker-compose exec steedos-enterprise steedosctl export_db
+docker-compose exec steedos steedosctl export_db
 ```
 
 The output file will be stored in the container directory `/steedos-storage/data/backup/steedos-data.archive`. Thanks to the volume configuration in the `docker-compose.yml` file, it should be available on your host machine at `./storage/data/backup/steedos-data.archive`.
