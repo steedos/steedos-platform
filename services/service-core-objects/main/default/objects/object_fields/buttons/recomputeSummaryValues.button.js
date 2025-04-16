@@ -1,60 +1,35 @@
 module.exports = {
 
     recomputeSummaryValues: function(object_name, record_id, item_element) {
-        $("body").addClass("loading");
-        var userSession = Steedos.User.get();
-        var authorization = "Bearer " + userSession.spaceId + "," + userSession.authToken;
-        $.ajax({
-            type: "POST",
-            url: Steedos.absoluteUrl("/api/v4/" + object_name + "/" + record_id + "/recomputeSummaryValues"),
-            data: JSON.stringify({}),
-            dataType: "json",
-            contentType: 'application/json',
-            beforeSend: function(XHR) {
-                XHR.setRequestHeader('Content-Type', 'application/json');
-                XHR.setRequestHeader('Authorization', authorization);
-            },
-            success: function(data) {
-                $("body").removeClass("loading");
-                if (data) {
-                    if (data.error) {
-                        toastr.error(t("object_fields_function_recomputeSummaryValues_error", t(data.error.reason)));
-                    } else {
-                        toastr.success(t("object_fields_function_recomputeSummaryValues_success"));
+
+        SteedosUI.Modal.confirm({
+            title: '重算公式值',
+            content: `确定要重算吗?`,
+            okText: '重算',
+            cancelText: t('Cancel'),
+            onOk: function(){
+                Steedos.authRequest(Steedos.absoluteUrl("/api/object_fields/recomputeSummaryValues"), {type: 'post', async: false, data: JSON.stringify({
+                    record_id:record_id
+                    }),
+                    success: function(data){
+                        if(data.status == 1){
+                            SteedosUI.notification.error("object_fields_function_recomputeSummaryValues_error", t(data.error.reason));
+                            return;
+                        }
+                        SteedosUI.notification.success(t('object_fields_function_recomputeSummaryValues_success'))
+                    },
+                    error: function(XMLHttpRequest){
+                        SteedosUI.notification.error({message: XMLHttpRequest.responseJSON.msg});
                     }
-                }
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                $("body").removeClass("loading");
-                var errorMsg = errorThrown;
-                var error = XMLHttpRequest.responseJSON.error;
-                if (error) {
-                    console.error("Recompute Summary Values Faild:", error);
-                    if (error.reason) {
-                        errorMsg = error.reason;
-                    } else if (error.message) {
-                        errorMsg = error.message;
-                    } else {
-                        errorMsg = error;
-                    }
-                }
-                errorMsg = t(errorMsg);
-                if (error.details) {
-                    if (_.isObject(error.details)) {
-                        errorMsg += JSON.stringify(error.details);
-                    } else {
-                        errorMsg += t(error.details);
-                    }
-                }
-                toastr.error(t("object_fields_function_recomputeSummaryValues_error", errorMsg));
+                })
             }
         });
     },
-    recomputeSummaryValuesVisible: function(object_name, record_id, record_permissions) {
+    recomputeSummaryValuesVisible: function(object_name, record_id, record_permissions, data) {
         if (!Steedos.isSpaceAdmin()) {
             return false
         }
-        var record = Creator.odata.get(object_name, record_id, "type");
+        var record = data.record;
         if (record && record.type === "summary") {
             return true;
         }

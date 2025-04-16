@@ -74,6 +74,7 @@ fields:
     label: Instances
     type: grid
     visible_on: "{{false}}"
+    hidden: true
   instances.$._id:
     label: Instance ID
     type: text
@@ -82,38 +83,6 @@ fields:
     label: State
     type: text
     hidden: true
-  sharing:
-    label: Record Level Permission
-    type: grid
-    omit: true
-    hidden: true
-    blackbox: true
-  sharing.$:
-    label: Authorization
-    blackbox: true
-    omit: true
-    hidden: true
-  sharing.$.u:
-    label: Authorized Users
-    type: "[text]"
-    omit: true
-    hidden: true
-  sharing.$.o:
-    label: Authorized Departments
-    type: "[text]"
-    omit: true
-    hidden: true
-  sharing.$.r:
-    label: Rule
-    type: text
-    omit: true
-    hidden: true
-  message_count:
-    label: Number of Messages
-    type: number
-    omit: true
-    hidden: true
-    enable_thousands: true
   locked:
     label: Locked
     type: boolean

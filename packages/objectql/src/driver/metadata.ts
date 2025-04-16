@@ -66,6 +66,9 @@ export class MetadataDriver extends SteedosMongoDriver {
       case "objects": {
         const objects = await getAllObject();
         return _.map(objects, (metadataObject: any) => {
+          if (metadataObject._id) {
+            return;
+          }
           return {
             _id: metadataObject.metadata.name,
             ...metadataObject.metadata,
@@ -77,6 +80,9 @@ export class MetadataDriver extends SteedosMongoDriver {
         const fields = [];
         _.each(objects2, (metadataObject: any) => {
           _.each(metadataObject.metadata.fields, (field) => {
+            if (field.hidden == true || field._id) {
+              return;
+            }
             fields.push({
               _id: `${metadataObject.metadata.name}.${field.name}`,
               object: metadataObject.metadata.name,

@@ -5,6 +5,7 @@ columns:
   - in_development
   - is_system
   - is_customize
+  - created
 extra_columns:
   - datasource
   - fields
@@ -13,5 +14,6 @@ filter_scope: space
 label: All
 shared: true
 shared_to: space
+sort: [["created", "desc"], ["name", "asc"]]
 filters:
   - ['hidden', '!=', true]

@@ -131,3 +131,11 @@ body a:hover {
 .ant-btn-primary{
     color: var(--private);
 }
+
+.ant-modal-mask{
+    z-index: 2999 !important;
+}
+
+.ant-modal-wrap{
+    z-index: 3999 !important;
+}

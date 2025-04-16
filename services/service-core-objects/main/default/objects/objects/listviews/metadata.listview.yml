@@ -13,6 +13,7 @@ filter_scope: space
 label: Metadata
 shared: true
 shared_to: space
+sort: [["created", "desc"], ["name", "asc"]]
 filters:
   - - isMetadata
     - =
