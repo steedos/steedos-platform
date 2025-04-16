@@ -131,13 +131,13 @@ The following command can restore backup archive, that was produced by the expor
 First, copy the archive file into the container using the following command:
 
 ```sh
-docker-compose cp ./steedos-data.archive steedos-enterprise:/steedos-storage/data/restore/
+docker-compose cp ./steedos-data.archive steedos:/steedos-storage/data/restore/
 ```
 
 Second, run the following command to import data from this file:
 
 ```sh
-docker-compose exec steedos-enterprise steedosctl import_db
+docker-compose exec steedos steedosctl import_db
 ```
 
 Note that when you restore, you may also want to copy a `docker.env` from the original instance into this one. You can use the following command to do this (assuming you are in the installation folder and `docker.env` exists in the same folder):
