@@ -9,7 +9,8 @@
 
 const { customAlphabet } = require('nanoid');
 const nanoid = customAlphabet('1234567890abcdef', 10)
-const objectMixin = require('@steedos/service-object-mixin')
+const objectMixin = require('@steedos/service-object-mixin');
+const _ = require('lodash');
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
@@ -38,41 +39,45 @@ module.exports = {
                 fullPath: "/service/api/objects/create_by_design"
 			},
 			async handler(ctx) {
-				const { appId, groupId, name, label, icon } = ctx.params;
-				const userSession = ctx.meta.user;
+				try {
+					const { appId, groupId, name, label, icon } = ctx.params;
+					const userSession = ctx.meta.user;
 
-				if(!appId){
-					return;
+					if(!appId){
+						return;
+					}
+
+					const records = await this.getObject('apps').find({
+						filters: ['code', '=', appId]
+					});
+					const app = records.length > 0 ? records[0] : null;
+
+					if(!app){
+						return ;
+					}
+
+					// 1 创建对象
+					const obj = await this.getObject('objects').insert({
+						name: name || `o_${nanoid(5)}`,
+						label: label || '未命名对象',
+						datasource: 'default',
+						icon: icon || 'account'
+					}, userSession);
+					
+					
+					const tab_items = app.tab_items || {};
+					tab_items[`object_${obj.name.replace(/__c$/, "")}`] = {
+						group: groupId
+					}
+
+					await this.getObject('apps').update(app._id, {
+						tab_items
+					}, userSession);
+					
+					return obj;
+				} catch (error) {
+					console.log(error)
 				}
-
-				const records = await this.getObject('apps').find({
-					filters: ['code', '=', appId]
-				});
-				const app = records.length > 0 ? records[0] : null;
-
-				if(!app){
-					return ;
-				}
-
-				// 1 创建对象
-				const obj = await this.getObject('objects').insert({
-					name: name || `o_${nanoid(5)}`,
-					label: label || '未命名对象',
-					datasource: 'default',
-					icon: icon || 'account'
-				}, userSession);
-				
-				
-				const tab_items = app.tab_items || {};
-				tab_items[`object_${obj.name.replace(/__c$/, "")}`] = {
-					group: groupId
-				}
-
-				await this.getObject('apps').update(app._id, {
-					tab_items
-				}, userSession);
-				
-				return obj;
 			}
 		},
 		create_app_group: {

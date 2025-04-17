@@ -9,7 +9,7 @@
 "use strict";
 // import * as actions from './actions';
 // import * as methods from './methods';
-import { ObjectHandle } from "./handles";
+import { ObjectsHandle, AppsHandle, TabsHandle } from "./handles";
 
 const project = require("../package.json");
 const packageName = project.name;
@@ -38,20 +38,26 @@ module.exports = {
     "$metadata.*": function (payload, sender, event, ctx) {
       // eslint-disable-next-line @typescript-eslint/no-this-alias
       const self = this;
-      console.log(`Event '${event}' received from ${sender} node:`, payload);
+      // console.log(`Event '${event}' received from ${sender} node:`, payload);
       const { type, action, data } = payload;
       switch (type) {
+        case "apps":
+          self.appsHandle.handleAction(action, data);
+          break;
+        case "tabs":
+          self.tabsHandle.handleAction(action, data);
+          break;
         case "object_listviews":
-          self.objectHandle.handleAction(action, { name: data.object_name });
+          self.objectsHandle.handleAction(action, { name: data.object_name });
           break;
         case "object_fields":
-          self.objectHandle.handleAction(action, { name: data.object });
+          self.objectsHandle.handleAction(action, { name: data.object });
           break;
         case "object_actions":
-          self.objectHandle.handleAction(action, { name: data.object });
+          self.objectsHandle.handleAction(action, { name: data.object });
           break;
         case "objects":
-          self.objectHandle.handleAction(action, data);
+          self.objectsHandle.handleAction(action, data);
           break;
         default:
           break;
@@ -70,7 +76,9 @@ module.exports = {
    * Service created lifecycle event handler
    */
   async created() {
-    this.objectHandle = new ObjectHandle();
+    this.objectsHandle = new ObjectsHandle();
+    this.appsHandle = new AppsHandle();
+    this.tabsHandle = new TabsHandle();
   },
 
   /**
@@ -78,7 +86,9 @@ module.exports = {
    */
   async started() {
     console.log(`Service ${packageName} started`);
-    await this.objectHandle.init();
+    await this.appsHandle.init();
+    await this.tabs;
+    await this.objectsHandle.init();
   },
 
   /**

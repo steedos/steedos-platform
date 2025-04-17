@@ -139,3 +139,14 @@ body a:hover {
 .ant-modal-wrap{
     z-index: 3999 !important;
 }
+
+
+.sidebar-wrapper{
+    width: 280px !important;
+}
+
+@media (min-width: 768px) {
+    body.sidebar.sidebar-open #main {
+      margin-left: 280px !important;
+    }
+}

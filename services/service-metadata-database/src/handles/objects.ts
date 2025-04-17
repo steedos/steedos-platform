@@ -4,7 +4,7 @@ import { MetadataRegister } from "@steedos/metadata-registrar";
 import { DB_OBJECT_SERVICE_NAME } from "../constants";
 import { BaseHandle } from "./base";
 
-export class ObjectHandle extends BaseHandle {
+export class ObjectsHandle extends BaseHandle {
   constructor() {
     super("objects");
   }
@@ -26,9 +26,11 @@ export class ObjectHandle extends BaseHandle {
     return this.handle(data.name);
   }
 
-  // async deleted(data) {
-
-  // }
+  async deleted(data) {
+    broker.call("objects.removeConfig", {
+      objectName: data.name,
+    });
+  }
 
   async handle(objectName) {
     try {
