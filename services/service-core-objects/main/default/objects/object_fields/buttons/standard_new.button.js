@@ -8,7 +8,7 @@ module.exports = {
         }
         var record = data && data.record;
         if(!record){
-            record = Creator.odata.get("objects", record_id, "is_deleted");
+            return false;
         }
         return record && record.created;
     }

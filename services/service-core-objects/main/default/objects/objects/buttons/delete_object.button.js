@@ -6,7 +6,7 @@ module.exports = {
             return false
         }
         if (!record) {
-            record = Creator.odata.get("objects", record_id, "is_deleted");
+            return false;
         }
         if (record.is_system) {
             return false;
