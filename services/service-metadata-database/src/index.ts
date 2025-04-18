@@ -9,7 +9,12 @@
 "use strict";
 // import * as actions from './actions';
 // import * as methods from './methods';
-import { ObjectsHandle, AppsHandle, TabsHandle } from "./handles";
+import {
+  ObjectsHandle,
+  AppsHandle,
+  TabsHandle,
+  TriggersHandle,
+} from "./handles";
 
 const project = require("../package.json");
 const packageName = project.name;
@@ -59,6 +64,9 @@ module.exports = {
         case "objects":
           self.objectsHandle.handleAction(action, data);
           break;
+        case "object_triggers":
+          self.triggersHandle.handleAction(action, data);
+          break;
         default:
           break;
       }
@@ -79,6 +87,7 @@ module.exports = {
     this.objectsHandle = new ObjectsHandle();
     this.appsHandle = new AppsHandle();
     this.tabsHandle = new TabsHandle();
+    this.triggersHandle = new TriggersHandle();
   },
 
   /**
@@ -89,6 +98,7 @@ module.exports = {
     await this.appsHandle.init();
     await this.tabs;
     await this.objectsHandle.init();
+    await this.triggersHandle.init();
   },
 
   /**

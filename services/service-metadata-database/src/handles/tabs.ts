@@ -8,9 +8,9 @@ export class TabsHandle extends BaseHandle {
   }
 
   async init() {
-    const dbApps = await getObject("tabs").directFind();
-    for (const dbApp of dbApps) {
-      await this.inserted(dbApp);
+    const dbTabs = await getObject("tabs").directFind();
+    for (const dbTab of dbTabs) {
+      await this.inserted(dbTab);
     }
   }
 
