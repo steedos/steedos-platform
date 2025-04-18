@@ -142,11 +142,11 @@ body a:hover {
 
 
 .sidebar-wrapper{
-    width: 280px !important;
+    width: 240px !important;
 }
 
 @media (min-width: 768px) {
     body.sidebar.sidebar-open #main {
-      margin-left: 280px !important;
+      margin-left: 240px !important;
     }
 }
