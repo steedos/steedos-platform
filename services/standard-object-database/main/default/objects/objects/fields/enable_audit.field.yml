@@ -1,0 +1,6 @@
+name: enable_audit
+type: boolean
+label: Enable Audit
+group: Switch
+sort_no: 305
+visible_on: '{{ Meteor.settings.public.platform && ["platform-standard", "platform-enterprise", "platform-professional"].includes(Meteor.settings.public.platform.product)  }}'

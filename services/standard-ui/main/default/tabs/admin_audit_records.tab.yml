@@ -19,3 +19,7 @@ permissions:
     permission_set: workflow_admin
 type: object
 object: audit_records
+license:
+  - platform-standard
+  - platform-enterprise
+  - platform-professional

@@ -86,10 +86,10 @@ async function getAllTabs(ctx: any) {
     return await ctx.broker.call('tabs.getAll');
 }
 
-async function getContext(ctx: any) {
+async function getContext(ctx: any, allowEditApp = false) {
     const userSession = ctx.meta.user;
     const allTabs = await getAllTabs(ctx);
-    if(userSession.is_space_admin){
+    if(userSession.is_space_admin && true == allowEditApp){
         return {
             tabs: allTabs,
             hiddenTabNames: []
@@ -545,12 +545,14 @@ async function getAppMenus(ctx) {
         if (_.has(appConfig, 'space') && appConfig.space && appConfig.space != spaceId) {
             return;
         }
-        const context = await getContext(ctx)
+        let allowEditApp = false;
+        if (userSession.is_space_admin && appConfig._id && appConfig.code && appConfig._id != appConfig.code) {
+            allowEditApp = true;
+        }
+        const context = await getContext(ctx, allowEditApp)
         const appMenus = await transformAppToMenus(ctx, appConfig, mobile, userSession, context);
 
-        if (userSession.is_space_admin && appConfig._id && appConfig.code && appConfig._id != appConfig.code) {
-            appMenus.allowEditApp = true;
-        }
+        appMenus.allowEditApp = allowEditApp
 
         return appMenus;
     }
