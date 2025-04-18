@@ -75,6 +75,10 @@ fields:
     label: 显示审批单子表
     help: 
     description: 
+  enable_audit:
+    label: 记录字段历史
+    help: 
+    description:
   enable_chatter:
     label: 允许添加评论
     help: 

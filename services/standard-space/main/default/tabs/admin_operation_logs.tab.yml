@@ -19,3 +19,7 @@ permissions:
     permission_set: workflow_admin
 type: object
 object: operation_logs
+license:
+  - platform-standard
+  - platform-enterprise
+  - platform-professional

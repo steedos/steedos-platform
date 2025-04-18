@@ -4,3 +4,4 @@ hidden: false
 label: Enable Comments
 sort_no: 300
 type: boolean
+visible_on: '{{ Meteor.settings.public.platform && ["platform-standard", "platform-enterprise", "platform-professional"].includes(Meteor.settings.public.platform.product)  }}'

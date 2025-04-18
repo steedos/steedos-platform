@@ -78,6 +78,10 @@ fields:
     label: Enable Instances
     help: 
     description: 
+  enable_audit:
+    label: Enable Audit
+    help:
+    description:
   enable_chatter:
     label: Enable Comments
     help: 
