@@ -32,19 +32,13 @@ module.exports = {
       const { type, action, data } = payload;
       switch (type) {
         case "action_field_updates":
-          self.actionFieldUpdatesCacher.handleAction(action, {
-            name: data.object_name,
-          });
+          self.actionFieldUpdatesCacher.handleAction(action, data);
           break;
         case "object_functions":
-          self.objectFunctionsCacher.handleAction(action, {
-            name: data.object,
-          });
+          self.objectFunctionsCacher.handleAction(action, data);
           break;
         case "object_validation_rules":
-          self.objectValidationRulesCacher.handleAction(action, {
-            name: data.object,
-          });
+          self.objectValidationRulesCacher.handleAction(action, data);
           break;
         case "object_webhooks":
           self.objectWebhooksCacher.handleAction(action, data);
