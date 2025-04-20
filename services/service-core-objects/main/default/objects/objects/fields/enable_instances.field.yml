@@ -1,6 +1,6 @@
 name: enable_instances
 group: switch
-hidden: false
+hidden: true
 label: Enable Instances
 sort_no: 140
 type: boolean
