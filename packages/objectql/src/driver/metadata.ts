@@ -142,12 +142,14 @@ export class MetadataDriver extends SteedosMongoDriver {
     // console.log(
     //   `MetadataDriver find tableName: ${tableName}, query: ${JSON.stringify(query)}`,
     // );
+    delete query.fields;
     const result = await super.find(tableName, query);
     const spaceId = result.length > 0 ? result[0].space || null : null;
     const cachedSources = await this.getCachedSources(tableName);
     // console.log(`cachedSources`, cachedSources.length);
     const sources = await this.mixinSources(result, cachedSources);
-    return this.queryMetadata(sources, query, spaceId).all();
+    const data = this.queryMetadata(sources, query, spaceId).all();
+    return data;
   }
 
   async directFind(tableName: string, query: SteedosQueryOptions) {

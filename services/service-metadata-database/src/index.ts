@@ -14,6 +14,7 @@ import {
   AppsHandle,
   TabsHandle,
   TriggersHandle,
+  ShareRulesHandle,
 } from "./handles";
 
 const project = require("../package.json");
@@ -67,6 +68,9 @@ module.exports = {
         case "object_triggers":
           self.triggersHandle.handleAction(action, data);
           break;
+        case "share_rules":
+          self.shareRulesHandle.handleAction(action, data);
+          break;
         default:
           break;
       }
@@ -88,6 +92,7 @@ module.exports = {
     this.appsHandle = new AppsHandle();
     this.tabsHandle = new TabsHandle();
     this.triggersHandle = new TriggersHandle();
+    this.shareRulesHandle = new ShareRulesHandle();
   },
 
   /**
@@ -99,6 +104,7 @@ module.exports = {
     await this.tabs;
     await this.objectsHandle.init();
     await this.triggersHandle.init();
+    await this.shareRulesHandle.init();
   },
 
   /**
