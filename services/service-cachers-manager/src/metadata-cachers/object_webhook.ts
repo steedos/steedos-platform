@@ -9,6 +9,6 @@ import { MetadataCacherBase } from "./base";
 
 export class ObjectWebhookCacher extends MetadataCacherBase {
   constructor() {
-    super("object_webhooks", true, ["active", "=", true]);
+    super("object_webhooks", true, { active: true });
   }
 }

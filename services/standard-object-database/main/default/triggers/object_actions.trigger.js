@@ -1,3 +1,4 @@
+const _ =require('lodash');
 module.exports = {
     beforeInsert: async function(){
         const { doc } = this;

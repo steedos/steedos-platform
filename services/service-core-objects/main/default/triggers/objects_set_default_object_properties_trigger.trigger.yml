@@ -4,95 +4,101 @@ when:
   - afterInsert
 isEnabled: true
 handler: |
-  const { doc, userId } = ctx.params;
-  // 插入默认字段
-  await objects.object_fields.insert({
-      object: doc.name,
-      owner: userId,
-      _name: "name",
-      name: "name",
-      label: "名称",
-      sort_no: 10,
-      space: doc.space,
-      type: "text",
-      required: true,
-      index: true,
-      searchable: true,
-      filterable: true
-  });
+  try{
+    const { doc, userId } = ctx.params;
+    // 插入默认字段
+    await objects.object_fields.insert({
+        object: doc.name,
+        owner: userId,
+        _name: "name",
+        name: "name",
+        label: "名称",
+        sort_no: 10,
+        space: doc.space,
+        type: "text",
+        required: true,
+        index: true,
+        searchable: true,
+        filterable: true
+    });
 
-  // 插入默认列表视图 "所有"
-  await objects.object_listviews.insert({
-      name: "all",
-      label: "所有",
-      space: doc.space,
-      owner: userId,
-      object_name: doc.name,
-      shared_to: "space",
-      filter_scope: "space",
-      crud_mode: 'table',
-      columns: [{ field: 'name' }],
-      sort: [
-          {
-              field_name: "created",
-              order: "desc"
-          }
-      ]
-  });
+    // 插入默认列表视图 "所有"
+    await objects.object_listviews.insert({
+        name: "all",
+        label: "所有",
+        space: doc.space,
+        owner: userId,
+        object_name: doc.name,
+        shared_to: "space",
+        filter_scope: "space",
+        crud_mode: 'table',
+        type: 'grid',
+        columns: [{ field: 'name' }],
+        sort: [
+            {
+                field_name: "created",
+                order: "desc"
+            }
+        ]
+    });
 
-  // 插入默认列表视图 "最近查看"
-  await objects.object_listviews.insert({
-      name: "recent",
-      label: "最近查看",
-      space: doc.space,
-      owner: userId,
-      object_name: doc.name,
-      shared_to: "space",
-      filter_scope: "space",
-      crud_mode: 'table',
-      columns: [{ field: 'name' }]
-  });
-
-
-  const psUserId = "user"; // 用户权限集 ID
-  const psAdminId = "admin"; // 管理员权限集 ID
-
-  const userPermission = {
-      allowCreate: true,
-      allowDelete: true,
-      allowEdit: true,
-      allowRead: true,
-      modifyAllRecords: false,
-      viewAllRecords: false
-  };
-
-  const AdminPermission = {
-      allowCreate: true,
-      allowDelete: true,
-      allowEdit: true,
-      allowRead: true,
-      modifyAllRecords: true,
-      viewAllRecords: true
-  };
+    // 插入默认列表视图 "最近查看"
+    await objects.object_listviews.insert({
+        name: "recent",
+        label: "最近查看",
+        space: doc.space,
+        owner: userId,
+        type: 'grid',
+        object_name: doc.name,
+        shared_to: "space",
+        filter_scope: "space",
+        crud_mode: 'table',
+        columns: [{ field: 'name' }]
+    });
 
 
-  // 插入用户权限对象
-  await objects.permission_objects.insert({
-      ...userPermission,
-      name: `${doc.name}.user`,
-      permission_set_id: psUserId,
-      object_name: doc.name,
-      space: doc.space
-  });
+    const psUserId = "user"; // 用户权限集 ID
+    const psAdminId = "admin"; // 管理员权限集 ID
 
-  // 插入管理员权限对象
-  await objects.permission_objects.insert({
-      ...AdminPermission,
-      name: `${doc.name}.admin`,
-      permission_set_id: psAdminId,
-      object_name: doc.name,
-      space: doc.space
-  });
+    const userPermission = {
+        allowCreate: true,
+        allowDelete: true,
+        allowEdit: true,
+        allowRead: true,
+        modifyAllRecords: false,
+        viewAllRecords: false
+    };
+
+    const AdminPermission = {
+        allowCreate: true,
+        allowDelete: true,
+        allowEdit: true,
+        allowRead: true,
+        modifyAllRecords: true,
+        viewAllRecords: true
+    };
+
+
+    // 插入用户权限对象
+    await objects.permission_objects.insert({
+        ...userPermission,
+        name: `${doc.name}.user`,
+        permission_set_id: psUserId,
+        object_name: doc.name,
+        space: doc.space
+    });
+
+    // 插入管理员权限对象
+    await objects.permission_objects.insert({
+        ...AdminPermission,
+        name: `${doc.name}.admin`,
+        permission_set_id: psAdminId,
+        object_name: doc.name,
+        space: doc.space
+    });
+  }catch(error){
+    console.log(error)
+  }
 authentication_type: none
 locked: false
 type: code

@@ -1,0 +1,17 @@
+name: open_api
+amis_schema: >-
+  {"type":"service","body":[{"type":"button","label":"请求API","id":"u:open_api","editorState":"default","onEvent":{"click":{"weight":0,"actions":[{"ignoreError":false,"actionType":"ajax","outputVar":"responseResult","options":{},"api":{"url":"/graphql","method":"post","requestAdaptor":"api.data
+  = {\n  query: `\n    {\n  object_function: object_functions__findOne(id:
+  \"${context.recordId}\"){\n    name: _name,\n      object:
+  objectApiName__expand{\n      name\n    }\n  }\n}\n 
+  `\n}","adaptor":"","messages":{}}},{"ignoreError":false,"actionType":"custom","script":"const
+  record =
+  event.data.object_function;\nwindow.open(`/api/v1/${record.object.name}/functions/${record.name}`)\n"}]}},"hidden":false,"visibleOn":"${is_rest
+  ==
+  true}"}],"data":{"context":{},"dataComponentId":"","record_id":"","record":{},"permissions":{}},"bodyClassName":"p-0","id":"u:05f888280584","dsType":"api"}
+is_enable: true
+label: 请求API
+locked: false
+'on': record_only
+type: amis_button
+visible: true

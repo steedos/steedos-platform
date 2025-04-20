@@ -8,10 +8,16 @@
 import { AmisRender } from "../../components/AmisRender";
 import { Builder } from "@builder6/react";
 import { useParams } from 'react-router-dom';
+import {values, first} from 'lodash';
 
 export const ObjectListView = () => {
-  const { appId, objectName, listviewId: listName} = useParams();
+  let { appId, objectName, listviewId: listName} = useParams();
+  const uiSchema = (window as any).getUISchemaSync(objectName)
   // console.log(`ObjectListView`, appId, objectName, listName)
+  if(!listName){
+    listName = first(values(uiSchema.list_views))?.name
+  }
+
   return (
     <AmisRender schema = {{
       type: 'page',

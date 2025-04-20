@@ -7,7 +7,7 @@
  */
 const cachers = require("@steedos/cachers");
 const { metadataDriver } = require("@steedos/utils");
-const { getObject } = require("@steedos/objectql");
+const { getDataSource } = require("@steedos/objectql");
 
 export class MetadataCacherBase {
   supportSpace = true;
@@ -16,13 +16,18 @@ export class MetadataCacherBase {
   collectionName;
   observeHandle;
   cacherName;
-  filters;
+  query;
+
+  async getCollection(name) {
+    const adapter = getDataSource("default").adapter;
+    await adapter.connect();
+    return adapter.collection(name);
+  }
 
   async init() {
     console.log(`${this.collectionName} init`);
-    const records = await getObject(this.collectionName).directFind({
-      filters: this.filters,
-    });
+    const coll = await this.getCollection(this.collectionName);
+    const records = await coll.find(this.query).toArray();
     for (const record of records) {
       await this.onAdded(record);
     }
@@ -47,12 +52,12 @@ export class MetadataCacherBase {
     }
   }
 
-  constructor(collectionName, supportSpace, filters = null) {
+  constructor(collectionName, supportSpace, query = null) {
     this.collectionName = collectionName;
     this.supportSpace = supportSpace;
     this.cacherName = `metadata.${collectionName}`;
     this.cacher = cachers.getCacher(this.cacherName);
-    this.filters = filters;
+    this.query = query;
   }
   onAdded(doc) {
     this.set(doc._id, doc);
