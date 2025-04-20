@@ -16,6 +16,7 @@ import {
   TriggersHandle,
   ShareRulesHandle,
 } from "./handles";
+import { RestrictionRulesHandle } from "./handles/restriction_rules";
 
 const project = require("../package.json");
 const packageName = project.name;
@@ -71,6 +72,9 @@ module.exports = {
         case "share_rules":
           self.shareRulesHandle.handleAction(action, data);
           break;
+        case "restriction_rules":
+          self.restrictionRulesHandle.handleAction(action, data);
+          break;
         default:
           break;
       }
@@ -93,6 +97,7 @@ module.exports = {
     this.tabsHandle = new TabsHandle();
     this.triggersHandle = new TriggersHandle();
     this.shareRulesHandle = new ShareRulesHandle();
+    this.restrictionRulesHandle = new RestrictionRulesHandle();
   },
 
   /**
@@ -105,6 +110,7 @@ module.exports = {
     await this.objectsHandle.init();
     await this.triggersHandle.init();
     await this.shareRulesHandle.init();
+    await this.restrictionRulesHandle.init();
   },
 
   /**

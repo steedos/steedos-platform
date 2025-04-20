@@ -19,7 +19,6 @@ export class ShareRulesHandle extends BaseHandle {
   }
 
   async updated(data) {
-    console.log(`updated share_rules`, data);
     return registerShareRules.register(broker, DB_OBJECT_SERVICE_NAME, data);
   }
 
