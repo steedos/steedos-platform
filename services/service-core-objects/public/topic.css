@@ -150,3 +150,16 @@ body a:hover {
       margin-left: 240px !important;
     }
 }
+
+
+.antd-PdfViewer-Tool svg{
+    display: inline !important;
+}
+
+.antd-PdfViewer-Tool .page-input {
+    background: transparent !important;
+}
+
+.antd-PdfViewer-Tool{
+    bottom: 10px !important;
+}

@@ -82,25 +82,7 @@ actions:
     label: Edit
     sort: 0
     visible: false
-    'on': record
-  online_preview:
-    label: Preview
-    sort: 110
-    visible: !<tag:yaml.org,2002:js/function> |-
-      function (object_name, record_id, record_permissions, record) {
-              if(!record){
-                return false;
-              }
-              if (Meteor.isCordova){
-                return false;
-              }
-              var file = record.original;
-              if (Creator.showPreviewButton(file.name) || Creator.isImageAttachment(file.name) || Creator.isHtmlAttachment(file.name))
-                return true;
-              
-              return false;
-            }
-    'on': record
+    'on': record_only_more
   download:
     label: Download
     visible: true
@@ -114,14 +96,6 @@ actions:
         }
         fileId = record_id;
         if (fileId) {
-          if (Meteor.isCordova || window.inAppBrowser) {
-            url = Steedos.absoluteUrl("/api/files/files/" + fileId);
-            filename = file != null ? (ref = file.original) != null ? ref.name : void 0 : void 0;
-            rev = fileId;
-            length = file != null ? (ref1 = file.original) != null ? ref1.size : void 0 : void 0;
-            Steedos.cordovaDownload(url, filename, rev, length);
-          } else {
-            window.location = Steedos.absoluteUrl("/api/files/files/" + fileId + "?download=true");
-          }
+          window.location = Steedos.absoluteUrl("/api/files/files/" + fileId + "?download=true");
         }
       }

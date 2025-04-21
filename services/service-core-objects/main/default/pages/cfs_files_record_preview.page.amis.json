@@ -30,7 +30,7 @@
                                         "bulletUseFont": true,
                                         "enableVar": false
                                     },
-                                    "src": "/api/files/files/${_id}",
+                                    "src": "/api/v6/files/download/cfs.files.filerecord/${_id}/${original.name}",
                                     "visibleOn": "${ARRAYINCLUDES(['application/vnd.openxmlformats-officedocument.wordprocessingml.document'],record.original.type)}",
                                     "className": "flex justify-center items-center h-full",
                                     "loading": true
@@ -43,24 +43,26 @@
                                         "bulletUseFont": true,
                                         "enableVar": false
                                     },
-                                    "src": "/api/files/files/${_id}",
+                                    "src": "/api/v6/files/download/cfs.files.filerecord/${_id}/${original.name}",
                                     "visibleOn": "${ARRAYINCLUDES(['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],record.original.type)}",
                                     "className": "office-viewer-excel",
                                     "id": "u:07ef4d92d664",
                                     "loading": true
                                 },
                                 {
-                                    "type": "iframe",
-                                    "src": "${context.rootUrl}/api/page/public/pdf_view?fileUrl=/api/files/files/${_id}",
-                                    "visibleOn": "${ARRAYINCLUDES(['application/pdf'],record.original.type)}",
-                                    "id": "u:dc63f1f2d0ab",
-                                    "source": "src"
+                                    "type": "pdf-viewer",
+                                    "id": "pdf-viewer",
+                                    "name": "file",
+                                    "width": 500,
+                                    "source": "src",
+                                    "src": "/api/v6/files/download/cfs.files.filerecord/${_id}/${original.name}",
+                                    "visibleOn": "${ARRAYINCLUDES(['application/pdf'],record.original.type)}"
                                 },
                                 {
                                     "type": "image",
                                     "id": "u:4d9071791016",
                                     "visibleOn": "${ARRAYINCLUDES(['image/png','image/jpeg','image/bmp','image/gif','image/webp','image/psd','image/svg','image/tiff'],record.original.type)}",
-                                    "src": "/api/files/files/${_id}",
+                                    "src": "/api/v6/files/download/cfs.files.filerecord/${_id}/${original.name}",
                                     "imageMode": "original",
                                     "enlargeAble": false,
                                     "maxScale": 200,
