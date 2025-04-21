@@ -1,0 +1,73 @@
+name: roles
+label: Role
+icon: job_family
+hidden: true
+version: 2
+fields:
+  name:
+    label: Name
+    type: text
+    required: true
+    searchable: true
+    filterable: true
+  api_name:
+    type: text
+    label: API Name
+    required: true
+    searchable: true
+    name: api_name
+    filterable: true
+  parent:
+    label: Parent Role
+    type: lookup
+    reference_to: roles
+    reference_to_field: api_name
+    filterable: true
+  users:
+    label: Users
+    type: lookup
+    reference_to: users
+    multiple: true
+    is_wide: true
+    filterable: true
+  description:
+    label: Description
+    type: textarea
+    rows: 3
+    is_wide: true
+  is_system:
+    type: boolean
+    label: System
+    # omit: true
+    readonly: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
+    disabled: true
+paging:
+  enabled: false
+list_views:
+  all:
+    label: All Roles
+    filter_scope: space
+    columns:
+      - name
+      - parent
+      - users
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true
+actions:
+  customize:
+    label: Customize
+    on: record
