@@ -87,20 +87,6 @@
                     "id": "u:d75b105f6d042"
                 },
                 {
-                    "title": "${'objects_amis_page_layout' | t}",
-                    "body": [
-                        {
-                            "type": "steedos-object-related-listview",
-                            "objectApiName": "objects",
-                            "relatedObjectApiName": "object_layouts",
-                            "id": "u:ed9559f8aa86",
-                            "perPage": 20,
-                            "recordId": "${recordId}"
-                        }
-                    ],
-                    "id": "u:ee4ab13a92e6"
-                },
-                {
                     "title": "${'objects_amis_object_permission' | t}",
                     "body": [
                         {
