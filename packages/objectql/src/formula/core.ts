@@ -298,12 +298,12 @@ const getAmisGlobalVariables = (userSession?: SteedosUserSession) => {
   };
 };
 
-const isAmisFormula = (formula: string) => {
+export const isAmisFormula = (formula: string) => {
   // 有${}包裹的表达式就识别为amis公式
   return /\$\{.+\}/.test(formula);
 };
 
-const runAmisFormula = function (
+export const runAmisFormula = function (
   formula: string,
   params: Array<SteedosFormulaParamTypeConfig>,
   options?: SteedosFormulaOptions,
@@ -314,11 +314,15 @@ const runAmisFormula = function (
     const globalVariables = getAmisGlobalVariables(userSession);
     // 这里执行amis公式特意不传入doc，因为按设计是不支持默认值中引用当前记录中字段值
 
-    let data = {};
+    let data: any = {};
 
     _.each(params, (item) => {
       data[item.key] = item.value;
     });
+
+    // 从 amis 公式中的 params 中移除 global 变量，因为 ${ARRAYINCLUDES(global.user.roles, 'admin')} 这种公式中的global是从 globalVariables 中取值
+    // 如果不移除global， 传入的params中global为空值时，global.user.roles 取不到正确的值
+    delete data.global;
 
     data = convertToNestedObject(data);
 

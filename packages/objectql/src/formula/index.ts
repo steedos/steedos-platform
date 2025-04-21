@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-12-09 18:23:36
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2025-04-15 23:00:57
+ * @LastEditTime: 2025-04-21 22:27:20
  * @Description:
  */
 import { SteedosObjectTypeConfig, getSteedosSchema } from "../types";
@@ -128,7 +128,15 @@ async function _computeSimpleFormula(
   }
 
   let params = await computeFormulaParams(data, vars, userSession);
-  return runFormula(formula, params, options);
+  // return runFormula(formula, params, options);
+  return runFormula(
+    formula,
+    params,
+    Object.assign({}, options, {
+      record: data,
+      userSession: userSession,
+    }),
+  );
 }
 
 export const computeSimpleFormula = _computeSimpleFormula;
