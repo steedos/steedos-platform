@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2025-04-21 22:25:29
+ * @LastEditTime: 2025-04-21 22:49:34
  * @Description:
  */
 import { getSteedosSchema } from "../types";
@@ -63,17 +63,26 @@ export class RestrictionRule {
             }
             if (_.isBoolean(meetCriteria) && meetCriteria) {
               try {
-                if (
-                  _.isString(record_filter) &&
-                  isExpression(record_filter.trim())
-                ) {
-                  const filters = parseSingleExpression(
-                    record_filter,
-                    {},
-                    "#",
-                    globalData,
-                    userSession,
-                  );
+                if (_.isString(record_filter)) {
+                  const isFilterExpression = isExpression(record_filter.trim());
+                  const isFilterAmisFormula = isAmisFormula(record_filter);
+                  let filters: any;
+                  if (isFilterExpression) {
+                    filters = parseSingleExpression(
+                      record_filter,
+                      {},
+                      "#",
+                      globalData,
+                      userSession,
+                    );
+                  } else if (isFilterAmisFormula) {
+                    filters = await computeSimpleFormula(
+                      record_filter,
+                      globalData,
+                      userSession,
+                    );
+                  }
+                  // console.log(`RestrictionRule.getUserObjectFilters filters`, filters);
                   if (filters && !_.isString(filters)) {
                     rulesFilters.push(
                       `(${formatFiltersToODataQuery(filters, userSession)})`,
