@@ -29,13 +29,14 @@ fields:
     sort_no: 135
   entry_criteria:
     label: 指定条目条件
-    inlineHelpText: "满足此条件时，使用该记录过滤器。语法为函数表达式, 例如: {{$user.profile !='user'}}"
+    inlineHelpText: "满足此条件时，使用该记录过滤器。语法为 Amis <a href = 'https://aisuda.bce.baidu.com/amis/zh-CN/docs/concepts/data-mapping' target='_blank'>数据映射</a> 或 <a href = 'https://aisuda.bce.baidu.com/amis/zh-CN/docs/concepts/expression' target='_blank'>表达式</a>, 例如: \\${global.user.profile =='user'}"
     type: textarea
     is_wide: true
     sort_no: 140
     required: true
   record_filter:
     label: 记录过滤器
+    inlineHelpText: "满足指定条目条件时，使用该记录过滤器共享指定的数据。语法为 Amis <a href = 'https://aisuda.bce.baidu.com/amis/zh-CN/docs/concepts/data-mapping' target='_blank'>数据映射</a> 或 <a href = 'https://aisuda.bce.baidu.com/amis/zh-CN/docs/concepts/expression' target='_blank'>表达式</a>, 例如: \\${[[\"owner\", \"=\", global.userId]]}，更多详情请参考 <a href='https://docs.steedos.com/zh-CN/admin/permissions/sharing-rules' target='_blank'>此文档</a>。"
     type: textarea
     is_wide: true
     sort_no: 150
