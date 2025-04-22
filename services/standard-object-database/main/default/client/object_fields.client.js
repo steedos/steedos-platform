@@ -94,12 +94,25 @@ Steedos.ObjectFieldManager.getSummaryFiltersOperation = function(field_type) {
         flex-grow: 0;
       }
       
+      .defaultValue_field .defaultValue_field_formula_hidden > .antd-Form-label {
+        display: none;
+      }
+      .defaultValue_field .defaultValue_field_formula_hidden > .antd-Form-value .antd-FormulaPicker .antd-InputBox {
+        display: none;
+      }
+      
       .defaultValue_field .defaultValue_field_formula_hidden {
         margin-left: 0.5rem;
       }
       
       .defaultValue_field.steedos-defaultValue-html-edit .defaultValue_field_formula_hidden {
-        margin-left: 0px;
+        margin-left: 7rem;
+      }
+
+      @media (max-width: 767px) {
+        .defaultValue_field.steedos-defaultValue-html-edit .defaultValue_field_formula_hidden {
+          margin-left: 0rem;
+        }
       }
       </style>`);
     $("head").append(styleCss);
