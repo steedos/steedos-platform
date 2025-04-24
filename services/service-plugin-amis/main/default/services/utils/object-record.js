@@ -160,7 +160,7 @@ function getScriptForRewriteValueForFileFields(fields){
                                     return {
                                         value: value,
                                         name: fileFieldNames[index],
-                                        url: fileRootUrl + value + "?download=true",
+                                        url: fileRootUrl + value,
                                         state: "uploaded"
                                     }
                                 });
@@ -169,7 +169,7 @@ function getScriptForRewriteValueForFileFields(fields){
                             data[item] = {
                                 value: fileFieldValue,
                                 name: fileFieldNames[0],
-                                url: fileRootUrl + fileFieldValue + "?download=true",
+                                url: fileRootUrl + fileFieldValue,
                                 state: "uploaded"
                             };
                         }

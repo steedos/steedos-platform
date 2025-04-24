@@ -193,7 +193,7 @@ function  convertSFieldToAmisFilesField(field,readonly){
         type: getAmisStaticFieldType(fieldType, readonly),
         receiver: {
             method: "post",
-            url: `\${context.rootUrl}/s3/${table_name}`,
+            url: `/api/v6/files/${table_name}`,
             adaptor: `
 var rootUrl = ${JSON.stringify(rootUrl)};
 payload = {

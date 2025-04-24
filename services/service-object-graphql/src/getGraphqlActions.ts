@@ -29,7 +29,7 @@ import { sortBy, each, find } from "lodash";
 // import { LRUMap } from 'lru_map';
 
 export function getGraphqlActions() {
-// objectConfig: SteedosObjectTypeConfig
+  // objectConfig: SteedosObjectTypeConfig
   let actions = {};
   // let objName = objectConfig.name;
 
@@ -861,7 +861,7 @@ export async function translateToUI(
               fType == "file" ||
               fType === "avatar"
             ) {
-              const optionsStr = fType == "file" ? "?download=1" : "";
+              const optionsStr = fType == "file" ? "" : "";
               let fileValue: any = null;
               let value = doc[name];
               if (!value) {

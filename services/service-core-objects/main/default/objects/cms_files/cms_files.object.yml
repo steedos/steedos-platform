@@ -44,10 +44,7 @@ fields:
     readonly: true
     visible_on: "{{global.mode ==='read' ? true : false}}"
     index: true
-    reference_to: !<tag:yaml.org,2002:js/function> |- 
-      function () {
-                return _.keys(Creator.Objects);
-            }
+    reference_to: []
     name: parent
     filterable: true
   allow_anonymous_downloads:
@@ -181,14 +178,11 @@ actions:
                             "extractValue": false,
                             "valueField": "version_id",
                             "receiver": {
-                                "url": "${context.rootUrl}/s3/",
-                                "headers": {
-                                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                                },
+                                "url": "/api/v6/cms_files/upload",
                                 "method": "post",
                                 "messages": {},
                                 "dataType": "form-data",
-                                "requestAdaptor": "const superData = (typeof context != 'undefined') ? context : api.body; api.data.append('record_id', superData._master.recordId);api.data.append('parent', superData._master.recordId);api.data.append('object_name', superData._master.objectName); api.data.append('space', superData.global.spaceId);api.data.append('owner', superData.global.userId);api.data.append('owner_name', superData.global.user.name);return api;",
+                                "requestAdaptor": "debugger; const superData = (typeof context != 'undefined') ? context : api.body; api.data.append('record_id', superData._master.record._id);api.data.append('parent', superData._master.record._id);api.data.append('object_name', superData._master.objectName); api.data.append('space', superData.global.spaceId);api.data.append('owner', superData.global.userId);api.data.append('owner_name', superData.context.user.user.name);return api;",
                                 "adaptor": "if(payload.errors && payload.errors.length > 0){payload = {status: 500,msg: payload.errors[0].errorMessage}};return payload;"
                             },
                             "onEvent": {
@@ -285,14 +279,11 @@ actions:
                             "extractValue": false,
                             "valueField": "version_id",
                             "receiver": {
-                                "url": "${context.rootUrl}/s3/",
-                                "headers": {
-                                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                                },
+                                "url": "/api/v6/cms_files/upload",
                                 "method": "post",
                                 "messages": {},
                                 "dataType": "form-data",
-                                "requestAdaptor": "const superData = (typeof context != 'undefined') ? context : api.body; api.data.append('record_id', superData._master.recordId);api.data.append('object_name', superData._master.objectName); api.data.append('space', superData.global.spaceId);api.data.append('owner', superData.global.userId);api.data.append('owner_name', superData.global.user.name);return api;",
+                                "requestAdaptor": "const superData = (typeof context != 'undefined') ? context : api.body; api.data.append('record_id', superData._master.record._id);api.data.append('object_name', superData._master.objectName); api.data.append('space', superData.global.spaceId);api.data.append('owner', superData.global.userId);api.data.append('owner_name', superData.context.user.user.name);return api;",
                                 "adaptor": "if(payload.errors && payload.errors.length > 0){payload = {status: 500,msg: payload.errors[0].errorMessage}};return payload;"
                             },
                             "onEvent": {
@@ -319,7 +310,7 @@ actions:
                                           "componentId": "",
                                           "args": {},
                                           "actionType": "custom",
-                                          "script": "doAction({\n  componentId: `steedos-record-related-list-${context.props.data.objectName}`,\n  actionType: \"setValue\",\n  args: {\n    value: { \"$count\": undefined }\n  }\n}); SteedosUI.getRef(context.props.data.scopeId).parent?.getComponentById(`listview_${context.props.data.objectName}`).handleAction({}, { actionType: 'reload'})"
+                                          "script": "doAction({\n  componentId: `steedos-record-related-list-${context.props.data.objectName}`,\n  actionType: \"setValue\",\n  args: {\n    value: { \"$count\": undefined }\n  }\n}); event.data._scoped.parent?.getComponentById(`listview_${context.props.data.objectName}`).handleAction({}, { actionType: 'reload'})"
                                         }
                                     ]
                                 },

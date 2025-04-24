@@ -231,7 +231,7 @@ async function translateRecordToUI(record, objectName, selectorFieldNames, userS
                         } else if (fType == "summary") {
                             displayObj[name] = formatBasicFieldValue(dataType, field, record[name], objConfig, userSession);
                         } else if (fType == "image" || fType == "file" || fType === 'avatar') {
-                            const optionsStr = fType == "file" ? '?download=1' : ''
+                            const optionsStr = fType == "file" ? '' : ''
                             let fileValue = null;
                             let value = record[name];
                             if (!value) {

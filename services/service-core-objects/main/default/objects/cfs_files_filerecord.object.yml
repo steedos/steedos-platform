@@ -96,6 +96,6 @@ actions:
         }
         fileId = record_id;
         if (fileId) {
-          window.location = Steedos.absoluteUrl("/api/files/files/" + fileId + "?download=true");
+          window.location = Steedos.absoluteUrl("/api/v6/files/download/cfs.files.filerecord/" + fileId + "/" + file.name);
         }
       }

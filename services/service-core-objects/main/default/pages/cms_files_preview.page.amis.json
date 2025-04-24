@@ -10,7 +10,7 @@
         },
         {
             "type": "tabs",
-            "className": "steedos-record-tabs bg-white p-4 sm:m-2 sm:border sm:rounded",
+            "className": "steedos-record-tabs bg-white p-4 sm:m-4 sm:border sm:rounded",
             "tabs": [
                 {
                     "title": "预览",
@@ -29,7 +29,7 @@
                                         "bulletUseFont": true,
                                         "enableVar": false
                                     },
-                                    "src": "/api/files/files/${versions[0].value}",
+                                    "src": "/api/v6/files/download/cfs.files.filerecord/${versions[0].value}/${name}",
                                     "visibleOn": "${ARRAYINCLUDES(['docx'],extention)}",
                                     "className": "flex justify-center items-center h-full",
                                     "loading": true
@@ -42,24 +42,26 @@
                                         "bulletUseFont": true,
                                         "enableVar": false
                                     },
-                                    "src": "/api/files/files/${versions[0].value}",
+                                    "src": "/api/v6/files/download/cfs.files.filerecord/${versions[0].value}/${name}",
                                     "visibleOn": "${ARRAYINCLUDES(['xlsx'],extention)}",
                                     "className": "office-viewer-excel",
                                     "id": "u:07ef4d92d664",
                                     "loading": true
                                 },
                                 {
-                                    "type": "iframe",
-                                    "src": "${context.rootUrl}/api/page/public/pdf_view?fileUrl=/api/files/files/${versions[0].value}",
-                                    "visibleOn": "${ARRAYINCLUDES(['pdf'],extention)}",
-                                    "id": "u:dc63f1f2d0ab",
-                                    "source": "src"
+                                   "type": "pdf-viewer",
+                                    "id": "pdf-viewer",
+                                    "name": "file",
+                                    "width": 500,
+                                    "source": "src",
+                                    "src": "/api/v6/files/download/cfs.files.filerecord/${versions[0].value}/${name}",
+                                    "visibleOn": "${ARRAYINCLUDES(['pdf','PDF'],extention)}"
                                 },
                                 {
                                     "type": "image",
                                     "id": "u:4d9071791016",
                                     "visibleOn": "${ARRAYINCLUDES(['png', 'jpg', 'jpeg', 'bmp', 'gif', 'webp', 'psd', 'svg', 'tiff'],extention)}",
-                                    "src": "/api/files/files/${versions[0].value}",
+                                    "src": "/api/v6/files/download/cfs.files.filerecord/${versions[0].value}/${name}",
                                     "imageMode": "original",
                                     "enlargeAble": false,
                                     "maxScale": 200,

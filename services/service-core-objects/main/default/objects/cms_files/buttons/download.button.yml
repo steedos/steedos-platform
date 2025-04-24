@@ -11,16 +11,8 @@ amis_schema: |-
                   "click": {
                       "actions": [
                           {
-                              "args": {
-                                  "api": {
-                                      "url": "${(versions[0] && versions[0].url) ? versions[0].url+'?download=true' : context.rootUrl+'/api/files/files/'+record.versions[0].value+'?download=true'}",
-                                      "method": "get",
-                                      "headers": {
-                                          "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                                      }
-                                  }
-                              },
-                              "actionType": "download"
+                            "actionType": "custom",
+                            "script": "const versions = event.data.versions; window.open((versions[0] && versions[0].url) ? versions[0].url+'' : context.rootUrl+'/api/files/files/'+record.versions[0].value+'')"
                           }
                       ],
                       "weight": 0
@@ -31,18 +23,6 @@ amis_schema: |-
       "regions": [
           "body"
       ],
-      "data": {
-          "context": {
-              "rootUrl": "http://127.0.0.1:5800"
-          },
-          "app_id": "",
-          "tab_id": "",
-          "object_name": "",
-          "dataComponentId": "",
-          "record_id": "",
-          "record": {},
-          "permissions": {}
-      },
       "bodyClassName": "p-0",
       "id": "u:be6e9cd18e15"
   }
