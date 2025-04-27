@@ -254,7 +254,6 @@ configure_supervisord() {
   cp -f "$supervisord_conf_source"/steedos.conf "$SUPERVISORD_CONF_TARGET"
   cp -f "$supervisord_conf_source"/unpkg.conf "$SUPERVISORD_CONF_TARGET"
   cp -f "$supervisord_conf_source"/nodered.conf "$SUPERVISORD_CONF_TARGET"
-  cp -f "$supervisord_conf_source"/builder6.conf "$SUPERVISORD_CONF_TARGET"
 
   # Disable services based on configuration
   if [[ -z "${DYNO}" ]]; then

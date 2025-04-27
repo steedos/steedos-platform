@@ -49,10 +49,10 @@ ENV NVM_DIR=/root/.nvm
 
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash \
     && chmod +x "$NVM_DIR/nvm.sh" \
-    && bash -c ". $NVM_DIR/nvm.sh && nvm install 14.21.3 && nvm install 20.18.1 && nvm alias default 14.21.3"
+    && bash -c ". $NVM_DIR/nvm.sh && nvm install 20.15.0 && nvm alias default 20.15.0"
 
 # 确保在构建过程中可用
-ENV PATH=$NVM_DIR/versions/node/v14.21.3/bin:$PATH
+ENV PATH=$NVM_DIR/versions/node/v20.15.0/bin:$PATH
 
 RUN apt-get update \
     && apt-get install -y gnupg curl nodejs
@@ -89,12 +89,6 @@ COPY ./app/nodered /opt/steedos/nodered
 WORKDIR /opt/steedos/nodered
 
 RUN yarn && yarn cache clean
-
-# builder6
-COPY ./app/builder6 /opt/steedos/builder6
-WORKDIR /opt/steedos/builder6
-
-RUN bash -c ". $NVM_DIR/nvm.sh && nvm exec 20 npm i --production"
 
 COPY ./fs /
 
