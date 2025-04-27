@@ -12,5 +12,9 @@
   },
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  }
 }
