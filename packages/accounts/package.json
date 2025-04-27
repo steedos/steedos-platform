@@ -1,7 +1,7 @@
 {
   "name": "@steedos/accounts",
   "private": false,
-  "version": "3.0.0-beta.2",
+  "version": "3.0.0-beta.9",
   "main": "lib/index.js",
   "files": [
     "/package.json",
@@ -24,14 +24,14 @@
     "pubNext": "npm publish --tag next --registry https://registry.npmjs.org"
   },
   "dependencies": {
-    "@steedos/auth": "3.0.0-beta.2",
-    "@steedos/objectql": "3.0.0-beta.2",
     "@accounts/mongo": "^0.19.0",
     "@accounts/server": "^0.19.0",
     "@accounts/two-factor": "^0.20.1",
     "@accounts/types": "0.20.1",
     "@babel/runtime": "^7.12.18",
-    "@steedos/utils": "3.0.0-beta.2",
+    "@steedos/auth": "3.0.0-beta.9",
+    "@steedos/objectql": "3.0.0-beta.9",
+    "@steedos/utils": "3.0.0-beta.9",
     "app-root-path": "^2.2.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "1.19.0",
@@ -60,5 +60,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "72fa51bda8ff714d5fdb933bf0a45ea4cb82df74"
+  "gitHead": "9111ae9e9ce7c57c67c6bd670706f4344c28d69d"
 }
