@@ -3997,6 +3997,11 @@
   resolved "https://registry.yarnpkg.com/@types/long/-/long-4.0.2.tgz#b74129719fc8d11c01868010082d483b7545591a"
   integrity sha512-MqTGEo5bj5t157U6fA/BiDynNkn0YknVdh48CMPkTSpFTVmvao5UQmm7uEF6xBEo7qIMAlY/JSleYaE6VOdpaA==
 
+"@types/luxon@~3.4.0":
+  version "3.4.2"
+  resolved "https://registry.yarnpkg.com/@types/luxon/-/luxon-3.4.2.tgz#e4fc7214a420173cea47739c33cdf10874694db7"
+  integrity sha512-TifLZlFudklWlMBfhubvgqTXRzLDI5pCbGa4P8a3wPyUQSW+1xQ5eDsreP9DWHX3tjq1ke96uYG/nwundroWcA==
+
 "@types/mime@*", "@types/mime@3.0.0", "@types/mime@^1":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-3.0.0.tgz#e9a9903894405c6a6551f1774df4e64d9804d69c"
@@ -7210,12 +7215,13 @@ cron-parser@^4.6.0:
   dependencies:
     luxon "^3.2.1"
 
-cron@^1.3.0:
-  version "1.8.3"
-  resolved "https://registry.yarnpkg.com/cron/-/cron-1.8.3.tgz#2a61d7b15848716885834ec56ac072f4b9744ebd"
-  integrity sha512-JYR/QZFklJCIPndBLfd/2nU1nSlCMrUdtQ2mGLXSVM/qqqEK7DOrFR0gsEiyeqs0PdWrs0ve1ggH4V7XksDwXg==
+cron@^3.1.6:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/cron/-/cron-3.5.0.tgz#e8caa384e998ed275e19598df4dbd0e8578c35d9"
+  integrity sha512-0eYZqCnapmxYcV06uktql93wNWdlTmmBFP2iYz+JPVcQqlyFYcn1lFuIk4R54pkOmE7mcldTAPZv6X5XA4Q46A==
   dependencies:
-    luxon "^1.23.x"
+    "@types/luxon" "~3.4.0"
+    luxon "~3.5.0"
 
 cross-env@^7.0.3:
   version "7.0.3"
@@ -11962,11 +11968,6 @@ lru_map@^0.4.1:
   resolved "https://registry.npmjs.org/lru_map/-/lru_map-0.4.1.tgz#f7b4046283c79fb7370c36f8fca6aee4324b0a98"
   integrity sha512-I+lBvqMMFfqaV8CJCISjI3wbjmwVu/VyOoU7+qtu9d7ioW5klMgsTTiUOUp+DJvfTTzKXoPbyC6YfgkNcyPSOg==
 
-luxon@^1.23.x:
-  version "1.28.1"
-  resolved "https://registry.yarnpkg.com/luxon/-/luxon-1.28.1.tgz#528cdf3624a54506d710290a2341aa8e6e6c61b0"
-  integrity sha512-gYHAa180mKrNIUJCbwpmD0aTu9kV0dREDrwNnuyFAsO1Wt0EVYSZelPnJlbj9HplzXX/YWXHFTL45kvZ53M0pw==
-
 luxon@^1.26.0:
   version "1.28.0"
   resolved "https://registry.yarnpkg.com/luxon/-/luxon-1.28.0.tgz#e7f96daad3938c06a62de0fb027115d251251fbf"
@@ -11981,6 +11982,11 @@ luxon@^3.4.4:
   version "3.6.1"
   resolved "https://registry.npmmirror.com/luxon/-/luxon-3.6.1.tgz#d283ffc4c0076cb0db7885ec6da1c49ba97e47b0"
   integrity sha512-tJLxrKJhO2ukZ5z0gyjY1zPh3Rh88Ej9P7jNrZiHMUXHae1yvI2imgOZtL1TO8TW6biMMKfTtAOoEJANgtWBMQ==
+
+luxon@~3.5.0:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/luxon/-/luxon-3.5.0.tgz#6b6f65c5cd1d61d1fd19dbf07ee87a50bf4b8e20"
+  integrity sha512-rh+Zjr6DNfUYR3bPwJEnuwDdqMbxZW7LOQfUN4B54+Cl+0o5zaU9RJ6bcidfDtC1cWCZXQ+nvX8bf6bAji37QQ==
 
 make-dir@^2.0.0, make-dir@^2.1.0:
   version "2.1.0"
@@ -12664,12 +12670,12 @@ moleculer-bullmq@3.0.0:
   dependencies:
     bullmq "^3.5.1"
 
-moleculer-cron@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/moleculer-cron/-/moleculer-cron-0.0.2.tgz#0fd12eb82d504ed2a8a9ccd2b3699373afc7cfcb"
-  integrity sha512-PChQ1Sw+AIK85dIsKWxuG8M3YMG8qwLWcCV5vSBWhfGOBZ8VBnxAaISAdd4NxkCyaInK2IpoQOXzRNL0JwL3+w==
+moleculer-cron@^0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/moleculer-cron/-/moleculer-cron-0.0.7.tgz#5f44c1fc0e84fc39c2063158ff97b9ba6fb39199"
+  integrity sha512-g7nbdUUYouxebuxI7iALhQ97XXKsPrGwryzH3hFaeIVw5eFv8pTP5RUwD7Po+vceH9cBF/9f61NCFqmGqBCw9w==
   dependencies:
-    cron "^1.3.0"
+    cron "^3.1.6"
 
 moleculer-db@^0.8.4:
   version "0.8.20"

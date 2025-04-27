@@ -50,7 +50,7 @@
     "lodash": "^4.17.21",
     "md5": "^2.3.0",
     "moleculer": "^0.14.25",
-    "moleculer-cron": "^0.0.2",
+    "moleculer-cron": "^0.0.7",
     "moleculer-repl": "^0.7.1",
     "moment": "^2.29.1",
     "mysql": "^2.18.1",
