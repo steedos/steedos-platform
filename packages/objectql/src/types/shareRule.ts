@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-08-30 15:26:07
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2025-04-28 21:39:24
+ * @LastEditTime: 2025-04-28 22:32:28
  * @Description:
  */
 import { getSteedosSchema } from "../types";
@@ -89,25 +89,25 @@ export class ShareRules {
                       globalData,
                       userSession,
                     );
-                  } else if (isFilterAmisFormula) {
-                    // 上面 globalData 变量中目前只有now, 在amis中可以用 ${NOW()} 表示 now，所以不传入globalData
-                    if (record_filter.startsWith("[")) {
+                  } else if (record_filter.startsWith("[")) {
+                    // [["name", "=", "xxx"]] 这种格式，先转为数组，再递归解析计算里面的amis公式
+                    record_filter = safeJsonParseArray(record_filter);
+                    if (isFilterAmisFormula) {
+                      // 上面 globalData 变量中目前只有now, 在amis中可以用 ${NOW()} 表示 now，所以不传入globalData
                       // [["name", "=", "${global.user.name}"]] 这种格式，递归解析计算里面的amis公式
-                      record_filter = safeJsonParseArray(record_filter);
                       traverseNestedArrayFormula(record_filter, userSession);
-                      filters = record_filter;
                     }
-                    // else {
-                    //   // ${[["name", "=", global.user.name]]} 这种格式，不用支持，只支持上面那种[开头的格式
-                    //   filters = await computeSimpleFormula(
-                    //     record_filter,
-                    //     {},
-                    //     userSession,
-                    //   );
-                    // }
+                    filters = record_filter;
+                  } else if (isFilterAmisFormula) {
+                    // // ${[["name", "=", global.user.name]]} 这种格式，不用支持，只支持上面那种[开头的格式
+                    // filters = await computeSimpleFormula(
+                    //   record_filter,
+                    //   {},
+                    //   userSession,
+                    // );
                   }
                   // console.log(`ShareRules.getUserObjectFilters filters`, filters);
-                  if (filters && !_.isString(filters)) {
+                  if (filters && !_.isString(filters) && filters.length) {
                     const filter = `(${formatFiltersToODataQuery(filters, userSession)})`;
                     rulesFilters.push(filter);
                     if (allowEdit) {
