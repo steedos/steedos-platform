@@ -1,7 +1,7 @@
 {
   "name": "@steedos/service-community",
   "main": "package.service.js",
-  "version": "3.0.0-beta.14",
+  "version": "3.0.0-beta.15",
   "private": false,
   "repository": "https://github.com/steedos/steedos-platform.git",
   "description": "",
@@ -12,21 +12,21 @@
   "license": "MIT",
   "dependencies": {
     "@steedos-builder/amis-editor": "6.3.0-beta.13",
-    "@steedos/ee_sso-oidc": "3.0.0-beta.14",
-    "@steedos/service-ancillary": "3.0.0-beta.14",
-    "@steedos/service-i18n": "3.0.0-beta.14",
-    "@steedos/service-identity-jwt": "3.0.0-beta.14",
-    "@steedos/service-metadata-server": "3.0.0-beta.14",
-    "@steedos/service-objectql": "3.0.0-beta.14",
-    "@steedos/service-package-loader": "3.0.0-beta.14",
-    "@steedos/service-package-registry": "3.0.0-beta.14",
-    "@steedos/service-package-tool": "3.0.0-beta.14",
-    "@steedos/service-pages": "3.0.0-beta.14",
-    "@steedos/service-rest": "3.0.0-beta.14",
-    "@steedos/service-saas": "3.0.0-beta.14",
-    "@steedos/steedos-plugin-schema-builder": "3.0.0-beta.14",
-    "@steedos/unpkg": "3.0.0-beta.14",
-    "@steedos/workflow_time_trigger": "3.0.0-beta.14",
+    "@steedos/ee_sso-oidc": "3.0.0-beta.15",
+    "@steedos/service-ancillary": "3.0.0-beta.15",
+    "@steedos/service-i18n": "3.0.0-beta.15",
+    "@steedos/service-identity-jwt": "3.0.0-beta.15",
+    "@steedos/service-metadata-server": "3.0.0-beta.15",
+    "@steedos/service-objectql": "3.0.0-beta.15",
+    "@steedos/service-package-loader": "3.0.0-beta.15",
+    "@steedos/service-package-registry": "3.0.0-beta.15",
+    "@steedos/service-package-tool": "3.0.0-beta.15",
+    "@steedos/service-pages": "3.0.0-beta.15",
+    "@steedos/service-rest": "3.0.0-beta.15",
+    "@steedos/service-saas": "3.0.0-beta.15",
+    "@steedos/steedos-plugin-schema-builder": "3.0.0-beta.15",
+    "@steedos/unpkg": "3.0.0-beta.15",
+    "@steedos/workflow_time_trigger": "3.0.0-beta.15",
     "aliyun-sdk": "1.12.3",
     "async-retry": "^1.3.1",
     "axios": "^0.21.1",
@@ -59,7 +59,7 @@
     "randomcolor": "^0.6.2",
     "randomstring": "^1.2.1",
     "redlock": "^4.2.0",
-    "steedos-cli": "3.0.0-beta.14",
+    "steedos-cli": "3.0.0-beta.15",
     "tslib": "^2.4.0",
     "validator": "^13.6.0"
   },
@@ -67,5 +67,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "6ecc49f17c754defd373f19417304e88bdce8aa9"
+  "gitHead": "9abbe903c15c867571f99d946479bff387862e3f"
 }
