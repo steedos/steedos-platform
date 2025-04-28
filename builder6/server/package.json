@@ -7,7 +7,10 @@
   "files": [
     "dist",
     "public",
-    "views"
+    "views",
+    "app.config.js",
+    "default.steedos.settings.yml",
+    "dist"
   ],
   "main": "app.config.js",
   "scripts": {
