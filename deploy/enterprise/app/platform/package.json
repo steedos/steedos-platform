@@ -9,6 +9,6 @@
     "build": "lerna run build"
   },
   "dependencies": {
-    "@steedos/server": "^3.0.0-beta.14"
+    "@steedos/server": "^3.0.0-beta.16"
   }
 }
