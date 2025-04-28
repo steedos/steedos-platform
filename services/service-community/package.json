@@ -18,6 +18,7 @@
     "@steedos/service-identity-jwt": "3.0.0-beta.15",
     "@steedos/service-metadata-server": "3.0.0-beta.15",
     "@steedos/service-objectql": "3.0.0-beta.15",
+    "@steedos/service-core-objects": "3.0.0-beta.15",
     "@steedos/service-package-loader": "3.0.0-beta.15",
     "@steedos/service-package-registry": "3.0.0-beta.15",
     "@steedos/service-package-tool": "3.0.0-beta.15",
