@@ -2,13 +2,21 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2025-04-21 22:49:34
+ * @LastEditTime: 2025-04-28 20:32:55
  * @Description:
  */
 import { getSteedosSchema } from "../types";
 import * as _ from "lodash";
-import { isExpression, parseSingleExpression } from "../util";
-import { isAmisFormula, computeSimpleFormula } from "../formula";
+import {
+  isExpression,
+  parseSingleExpression,
+  safeJsonParseArray,
+} from "../util";
+import {
+  isAmisFormula,
+  computeSimpleFormula,
+  traverseNestedArrayFormula,
+} from "../formula";
 import { formatFiltersToODataQuery } from "@steedos/filters";
 import { registerRestrictionRules } from "@steedos/metadata-registrar";
 
@@ -37,7 +45,8 @@ export class RestrictionRule {
     const rulesFilters = [];
     const globalData = { now: new Date() };
     for (const rule of rules) {
-      const { active, entry_criteria, record_filter } = rule.metadata;
+      const { active, entry_criteria } = rule.metadata;
+      let { record_filter } = rule.metadata;
       if (active) {
         try {
           if (_.isString(entry_criteria)) {
@@ -64,7 +73,8 @@ export class RestrictionRule {
             if (_.isBoolean(meetCriteria) && meetCriteria) {
               try {
                 if (_.isString(record_filter)) {
-                  const isFilterExpression = isExpression(record_filter.trim());
+                  record_filter = record_filter.trim();
+                  const isFilterExpression = isExpression(record_filter);
                   const isFilterAmisFormula = isAmisFormula(record_filter);
                   let filters: any;
                   if (isFilterExpression) {
@@ -76,11 +86,24 @@ export class RestrictionRule {
                       userSession,
                     );
                   } else if (isFilterAmisFormula) {
-                    filters = await computeSimpleFormula(
-                      record_filter,
-                      globalData,
-                      userSession,
-                    );
+                    // 上面 globalData 变量中目前只有now, 在amis中可以用 ${NOW()} 表示 now，所以不传入globalData
+                    if (record_filter.startsWith("[")) {
+                      // [["name", "=", "${global.user.name}"]] 这种格式，递归解析计算里面的amis公式
+                      record_filter = safeJsonParseArray(record_filter);
+                      await traverseNestedArrayFormula(
+                        record_filter,
+                        userSession,
+                      );
+                      filters = record_filter;
+                    }
+                    // else {
+                    //   // ${[["name", "=", global.user.name]]} 这种格式，不用支持，只支持上面那种[开头的格式
+                    //   filters = await computeSimpleFormula(
+                    //     record_filter,
+                    //     {},
+                    //     userSession,
+                    //   );
+                    // }
                   }
                   // console.log(`RestrictionRule.getUserObjectFilters filters`, filters);
                   if (filters && !_.isString(filters)) {

@@ -534,3 +534,39 @@ export async function checkAPIName(
     throw new Error("该 API 名称 已存在或先前已使用过。请选择其他名称。");
   }
 }
+
+/**
+ * 安全解析 JSON 字符串为数组
+ * @param {string} jsonString 要解析的 JSON 字符串
+ * @returns {Array|null} 解析成功返回数组，失败返回 null
+ */
+export function safeJsonParseArray(jsonString) {
+  try {
+    // 前置校验：输入必须为字符串
+    if (typeof jsonString !== "string") {
+      throw new Error("safeJsonParseArray Input must be a string");
+    }
+
+    // 核心解析逻辑
+    const parsedData = JSON.parse(jsonString);
+
+    // 后置校验：验证结果类型
+    if (!Array.isArray(parsedData)) {
+      throw new Error("safeJsonParseArray Parsed data is not an array");
+    }
+
+    return parsedData;
+  } catch (error) {
+    // 错误分类处理
+    console.error(`解析失败: ${error.message}`);
+
+    // 可根据错误类型返回不同处理
+    if (error instanceof SyntaxError) {
+      console.error("safeJsonParseArray JSON 语法错误");
+    } else if (error instanceof TypeError) {
+      console.error("safeJsonParseArray 类型校验错误");
+    }
+
+    return null;
+  }
+}

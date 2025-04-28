@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-12-09 18:23:36
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2025-04-21 22:27:20
+ * @LastEditTime: 2025-04-28 20:45:23
  * @Description:
  */
 import { SteedosObjectTypeConfig, getSteedosSchema } from "../types";
@@ -140,3 +140,24 @@ async function _computeSimpleFormula(
 }
 
 export const computeSimpleFormula = _computeSimpleFormula;
+
+//递归filters数组，检查每一个元素，判断若是公式，就仅把它解析
+export async function traverseNestedArrayFormula(arr, userSession) {
+  for (let i = 0; i < arr.length; i++) {
+    if (Array.isArray(arr[i])) {
+      // 如果当前元素是数组，则递归调用自身继续遍历
+      await traverseNestedArrayFormula(arr[i], userSession);
+    } else {
+      // 如果当前元素不是数组，则处理该元素
+      // 下面正则用于匹配amis公式\${}
+      if (/\$\{([^}]*)\}/.test(arr[i])) {
+        try {
+          // arr[i] = currentAmis.evaluate(arr[i], api.context);
+          arr[i] = await computeSimpleFormula(arr[i], {}, userSession);
+        } catch (ex) {
+          console.error("运行过滤器公式时出现错误:", ex);
+        }
+      }
+    }
+  }
+}
