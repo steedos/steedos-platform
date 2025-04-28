@@ -11,7 +11,6 @@ export const PageView = () => {
             "method": "get",
             "url": "/api/pageSchema/app?app=${appId}&pageId=${pageId}&formFactor=${formFactor}",
             "adaptor": `
-                console.log('service payload', payload)
                 return {
                     "data": _.isString(payload.schema) ? JSON.parse(payload.schema):payload.schema
                 }

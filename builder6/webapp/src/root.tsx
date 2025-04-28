@@ -11,8 +11,10 @@ import { loadSettings } from './actions/settings';
 import { loadMe } from './actions/users';
 import { Steedos } from './utils/steedos';
 import { t } from 'i18next';
+import axios from 'axios';
 
 const _window: any = window;
+_window['axios'] = axios;
 _window['Builder'] = Builder;
 _window['builder'] = builder;
 _window['t'] = function(key: any, parameters: any, locale: string){

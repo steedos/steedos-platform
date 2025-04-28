@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 export const AppHeader = () => {
     const params = useParams();
     const { appId, objectName } = params;
-    console.log('AppHeader params:', params)
+    // console.log('AppHeader params:', params)
     const isMobile = window.innerWidth < 1024;
 
     const logoSrc = `/images/logo_platform.png`

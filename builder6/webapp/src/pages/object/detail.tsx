@@ -4,7 +4,7 @@ import { Builder } from "@builder6/react";
 
 export const ObjectDetail = () => {
   const { appId, objectName, recordId } = useParams();
-  console.log(`ObjectDetail====>`, appId, objectName, recordId)
+  // console.log(`ObjectDetail====>`, appId, objectName, recordId)
   return (
     <AmisRender schema = {{
         type: 'page',

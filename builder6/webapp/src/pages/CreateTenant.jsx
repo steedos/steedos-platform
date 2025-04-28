@@ -32,7 +32,7 @@ class CreateTenant extends React.PureComponent {
     this.setState({serverError: null, loading: true});
     e.preventDefault();
     this.props.actions.createSpace(this.state.name).then(async ({data}) => {
-      console.log(data)
+      // console.log(data)
       // if (error) {
       //   this.setState({
       //       serverError: (

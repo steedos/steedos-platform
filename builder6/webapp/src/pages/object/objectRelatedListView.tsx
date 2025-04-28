@@ -18,9 +18,9 @@ export const ObjectRelatedListView =  () => {
   const mainUiSchema = (window as any).getUISchemaSync(objectName);
   const idFieldName = mainUiSchema.idFieldName;
   const uiSchema = (window as any).getUISchemaSync(relatedObjectName);
-  console.log(`ObjectRelatedListView 2===>`, uiSchema, relatedKey, uiSchema.fields[relatedKey])
+//   console.log(`ObjectRelatedListView 2===>`, uiSchema, relatedKey, uiSchema.fields[relatedKey])
   const relatedKeyRefToField = uiSchema.fields[relatedKey].reference_to_field || idFieldName || '_id';
-  console.log(`ObjectRelatedListView`, appId, objectName, listName, recordId, relatedObjectName)
+//   console.log(`ObjectRelatedListView`, appId, objectName, listName, recordId, relatedObjectName)
   return (
     <AmisRender schema = {{
         type: 'service',
