@@ -64,7 +64,7 @@
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
   },
-  "private": true,
+  "private": false,
   "publishConfig": {
     "access": "public"
   },
