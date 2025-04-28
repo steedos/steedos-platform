@@ -7,7 +7,7 @@ import { getMoleculerConfigs, getSteedosConfigs } from "./config";
 
 const steedosConfig = getSteedosConfigs();
 
-export const modules = {
+export const modulesConfig = {
   moleculer: (config) => {
     return {
       ...config,
@@ -18,6 +18,10 @@ export const modules = {
 };
 
 export const beforeServerStart = ({ app }) => {
+  process.on("uncaughtException", (error) => {
+    console.error("uncaughtException:", error);
+  });
+
   global.logger = app.logger;
   // 获取 Express App
   const expressApp = app.getHttpAdapter().getInstance();
@@ -63,8 +67,9 @@ export const beforeServerStart = ({ app }) => {
   }
 };
 
-// export const afterServerStart = ()=>{
-// }
+export const afterServerStart = () => {
+  console.log("afterServerStart......");
+};
 
 export const controllers = [AppController];
 

@@ -18,7 +18,7 @@
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
   "dependencies": {
-    "@builder6/server": "^0.16.3-alpha.8",
+    "@builder6/server": "^0.16.3-alpha.10",
     "@steedos/ee_unpkg": "1.0.0",
     "@steedos/service-community": "3.0.0-beta.14",
     "@steedos/service-enterprise": "^3.0.0",
