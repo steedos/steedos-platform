@@ -34,7 +34,6 @@ export class ObjectsHandle extends BaseHandle {
 
   async handle(objectName) {
     try {
-      console.log("ObjectHandle handle", objectName);
       const records = await getObject("objects").directFind({
         filters: ["name", "=", objectName],
       });

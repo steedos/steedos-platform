@@ -5,7 +5,7 @@
     "steedos-packages/*"
   ],
   "scripts": {
-    "start": "node ./node_modules/@steedos/server/dist/main.js",
+    "start": "node ./node_modules/@builder/server/dist/main.js",
     "build": "lerna run build"
   },
   "dependencies": {

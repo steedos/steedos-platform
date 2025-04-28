@@ -25,7 +25,6 @@ export class MetadataCacherBase {
   }
 
   async init() {
-    console.log(`${this.collectionName} init`);
     const coll = await this.getCollection(this.collectionName);
     const records = await coll.find(this.query).toArray();
     for (const record of records) {
