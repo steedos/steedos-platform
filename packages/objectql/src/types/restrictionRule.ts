@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2025-04-28 20:32:55
+ * @LastEditTime: 2025-04-28 21:39:29
  * @Description:
  */
 import { getSteedosSchema } from "../types";
@@ -90,10 +90,7 @@ export class RestrictionRule {
                     if (record_filter.startsWith("[")) {
                       // [["name", "=", "${global.user.name}"]] 这种格式，递归解析计算里面的amis公式
                       record_filter = safeJsonParseArray(record_filter);
-                      await traverseNestedArrayFormula(
-                        record_filter,
-                        userSession,
-                      );
+                      traverseNestedArrayFormula(record_filter, userSession);
                       filters = record_filter;
                     }
                     // else {
