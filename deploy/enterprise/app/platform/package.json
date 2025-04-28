@@ -5,10 +5,10 @@
     "steedos-packages/*"
   ],
   "scripts": {
-    "start": "node ./node_modules/@builder/server/dist/main.js",
+    "start": "steedos start",
     "build": "lerna run build"
   },
   "dependencies": {
-    "@steedos/server": "^3.0.0-beta.9"
+    "@steedos/server": "^3.0.0-beta.10"
   }
 }
