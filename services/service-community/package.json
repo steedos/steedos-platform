@@ -17,6 +17,7 @@
     "@steedos/service-i18n": "3.0.0-beta.14",
     "@steedos/service-identity-jwt": "3.0.0-beta.14",
     "@steedos/service-metadata-server": "3.0.0-beta.14",
+    "@steedos/service-core-objects": "3.0.0-beta.14",
     "@steedos/service-objectql": "3.0.0-beta.14",
     "@steedos/service-package-loader": "3.0.0-beta.14",
     "@steedos/service-package-registry": "3.0.0-beta.14",
