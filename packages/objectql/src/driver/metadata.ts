@@ -97,6 +97,9 @@ export class MetadataDriver extends SteedosMongoDriver {
         const actions = [];
         _.each(objects3, (metadataObject: any) => {
           _.each(metadataObject.metadata.actions, (field) => {
+            if (field._id) {
+              return;
+            }
             actions.push({
               _id: `${metadataObject.metadata.name}.${field.name}`,
               object: metadataObject.metadata.name,
@@ -110,11 +113,14 @@ export class MetadataDriver extends SteedosMongoDriver {
         const objects3 = await getAllObject();
         const list_views = [];
         _.each(objects3, (metadataObject: any) => {
-          _.each(metadataObject.metadata.list_views, (field) => {
+          _.each(metadataObject.metadata.list_views, (list_view) => {
+            if (list_view._id) {
+              return;
+            }
             list_views.push({
-              _id: `${metadataObject.metadata.name}.${field.name}`,
+              _id: `${metadataObject.metadata.name}.${list_view.name}`,
               object_name: metadataObject.metadata.name,
-              ...field,
+              ...list_view,
             });
           });
         });
