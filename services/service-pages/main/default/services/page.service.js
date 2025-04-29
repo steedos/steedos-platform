@@ -3,7 +3,9 @@ const metadataAPI = require('@steedos/metadata-api');
 const _ = require('lodash');
 // 使用变量,存储所有资产
 const ASSETS = {};
-const ENV_ASSETS = process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS.split(',')
+const ENV_ASSETS = process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS
+? process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS.split(",")
+: []
 module.exports = {
     name: "page",
     mixins: [],
