@@ -6,6 +6,7 @@
  * @Description:
  */
 import SteedosConfig from "./steedos.config";
+
 export { getMoleculerConfigs } from "./moleculler.config";
 
 export const steedosConfig = SteedosConfig.getSteedosConfig();

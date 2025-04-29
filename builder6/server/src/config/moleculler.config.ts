@@ -1,7 +1,5 @@
 "use strict";
 import _ from "lodash";
-
-import { pinoConfig } from "@builder6/core";
 /**
  * Steedos ServiceBroker configuration file
  *
