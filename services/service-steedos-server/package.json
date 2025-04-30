@@ -33,6 +33,7 @@
     "@steedos/webapp-accounts": "2.6.36",
     "@steedos/webapp-public": "2.6.36",
     "@steedos/workflow": "2.6.36",
+    "apn": "2.2.0",
     "dotenv-flow": "^3.2.0",
     "helmet": "6.2.0",
     "moleculer": "^0.14.25",

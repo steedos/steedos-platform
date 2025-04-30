@@ -72,7 +72,10 @@ module.exports = {
 			await this.setMasterSpaceId()
 		},
 		'steedos-server.started': async function (ctx) {
-			// console.log(chalk.blue('steedos-server.started'));
+			// console.log(require('chalk').blue('steedos-server.started'));
+			// 调整push
+			require("./push.js");
+
 			const records = await objectql.getObject('spaces').directFind({ top: 1, fields: ['_id'], sort: { created: -1 } });
 			const steedosConfig = objectql.getSteedosConfig();
 			if (records.length > 0) {
