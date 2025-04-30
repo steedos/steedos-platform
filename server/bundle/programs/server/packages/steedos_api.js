@@ -1603,24 +1603,24 @@ Meteor.startup(function () {
       return Push.old_sendGCM(gcmTokens, notification);
     };
 
-    Push.old_sendAPN = Push.sendAPN;
-    return Push.sendAPN = function (userToken, notification) {
-      var e, noti;
+    // Push.old_sendAPN = Push.sendAPN;
+    // return Push.sendAPN = function (userToken, notification) {
+    //   var e, noti;
 
-      try {
-        if (notification.title && notification.text) {
-          noti = _.clone(notification);
-          noti.text = noti.title + " " + noti.text;
-          noti.title = "";
-          return Push.old_sendAPN(userToken, noti);
-        } else {
-          return Push.old_sendAPN(userToken, notification);
-        }
-      } catch (error) {
-        e = error;
-        return console.error(e);
-      }
-    };
+    //   try {
+    //     if (notification.title && notification.text) {
+    //       noti = _.clone(notification);
+    //       noti.text = noti.title + " " + noti.text;
+    //       noti.title = "";
+    //       return Push.old_sendAPN(userToken, noti);
+    //     } else {
+    //       return Push.old_sendAPN(userToken, notification);
+    //     }
+    //   } catch (error) {
+    //     e = error;
+    //     return console.error(e);
+    //   }
+    // };
   }
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

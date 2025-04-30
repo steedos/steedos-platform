@@ -91,6 +91,9 @@ module.exports = {
 			} catch (error) {
 				console.error(`initialPackages error`, error)
 			}
+
+			// 调整push
+			require("./push.js");
 		},
 		'trigger.loaded': async function (ctx) {
 			const { objectName } = ctx.params;
