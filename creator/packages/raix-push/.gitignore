@@ -1,0 +1,6 @@
+/versions.json
+/node_modules/
+.idea
+.build*
+
+.npm/

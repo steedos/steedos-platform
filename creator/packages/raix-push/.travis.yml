@@ -1,0 +1,30 @@
+language: node_js
+
+cache:
+  directories:
+    - ~/.npm
+    - ~/.meteor
+    - "node_modules"
+
+node_js:
+  - '8'
+
+before_install: git fetch --unshallow
+
+install:
+  - npm install
+  - curl https://install.meteor.com/ | sh
+  - export PATH=$HOME/.meteor:$PATH
+
+stages:
+  - test
+  - release
+
+script:
+  - ./bin/lint-commit.sh
+  - npm test
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then npm run semantic-release; fi
+
+branches:
+  except:
+    - /^v\d+\.\d+\.\d+$/
