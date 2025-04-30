@@ -33,6 +33,7 @@
     "@steedos/process": "2.7.18-beta.21",
     "@steedos/standard-objects": "2.7.18-beta.21",
     "@steedos/webapp": "2.2.25",
+    "apn": "2.2.0",
     "basic-auth": "^2.0.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
