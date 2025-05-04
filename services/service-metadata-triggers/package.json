@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-metadata-triggers",
-  "version": "2.6.37",
+  "version": "2.6.38",
   "description": "",
   "main": "lib/triggers2.service.js",
   "scripts": {
@@ -33,5 +33,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "34e17c5093fdbae9b0e4547b078c6b419ae3c804"
+  "gitHead": "9ce2f3ce9ea0d23dc0394db41e388926c468afb5"
 }
