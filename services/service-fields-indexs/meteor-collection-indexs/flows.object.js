@@ -1,12 +1,11 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-02-28 09:25:03
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-11-30 14:10:20
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2025-05-06 19:31:13
  * @Description: 
  */
 if (Meteor.isServer) {
-
     db.flows._ensureIndex({
         "space": 1,
         "is_deleted": 1
@@ -79,6 +78,14 @@ if (Meteor.isServer) {
         "space": 1,
         "form": 1,
         "state:": 1
+    }, {
+        background: true
+    });
+    db.flows._ensureIndex({
+        "space": 1,
+        "category": 1,
+        "state": 1,
+        "sort_no:": 1
     }, {
         background: true
     });
