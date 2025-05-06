@@ -15,11 +15,8 @@ if (!certData) {
     return;
 }
 
-const STEEDOS_PUSH_APP_BUNDLE_ID = process.env.STEEDOS_PUSH_APP_BUNDLE_ID;
-if (!STEEDOS_PUSH_APP_BUNDLE_ID) {
-    console.error("【Push】need to config env STEEDOS_PUSH_APP_BUNDLE_ID!")
-    return;
-}
+const STEEDOS_PUSH_APP_BUNDLE_ID = process.env.STEEDOS_PUSH_APP_BUNDLE_ID || "com.steedos.workflow";
+
 // console.log("STEEDOS_PUSH_APP_BUNDLE_ID:", STEEDOS_PUSH_APP_BUNDLE_ID)
 
 // console.log('process.env.NODE_ENV === "production"', process.env.NODE_ENV === "production");
