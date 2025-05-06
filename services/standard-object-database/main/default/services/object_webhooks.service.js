@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2024-04-23 14:35:03
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2024-09-14 11:24:08
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2025-05-06 13:59:03
  * @Description: 
  */
 
@@ -115,7 +115,15 @@ module.exports = {
               }
             }
 
-            const result = evaluate(condition, newDoc);
+            let result;
+            if (/\$\{.+\}/.test(condition)) {
+              // 有${}包裹的表达式
+              result = evaluate(condition, newDoc, { evalMode: false });
+            }
+            else {
+              // 老版本没有${}包裹的表达式
+              result = evaluate(condition, newDoc, { evalMode: true });
+            }
             if(!result){
               continue;
             }
