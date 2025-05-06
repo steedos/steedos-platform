@@ -1,6 +1,6 @@
 {
   "name": "steedos-server",
-  "version": "2.7.18-beta.23",
+  "version": "2.7.18-beta.24",
   "main": "index.js",
   "files": [
     "/bundle/programs/server/app",
@@ -19,19 +19,19 @@
   },
   "dependencies": {
     "@babel/runtime": "7.12.18",
-    "@steedos/accounts": "2.7.18-beta.23",
-    "@steedos/auth": "2.7.18-beta.23",
-    "@steedos/core": "2.7.18-beta.23",
-    "@steedos/filters": "2.7.18-beta.23",
+    "@steedos/accounts": "2.7.18-beta.24",
+    "@steedos/auth": "2.7.18-beta.24",
+    "@steedos/core": "2.7.18-beta.24",
+    "@steedos/filters": "2.7.18-beta.24",
     "@steedos/form-builder": "3.6.2-patch.5",
-    "@steedos/i18n": "2.7.18-beta.23",
-    "@steedos/meteor-bundle-dependencies": "2.7.18-beta.23",
-    "@steedos/meteor-bundle-runner": "2.7.18-beta.23",
-    "@steedos/objectql": "2.7.18-beta.23",
-    "@steedos/odata-v4-mongodb": "2.7.18-beta.23",
-    "@steedos/odata-v4-parser": "2.7.18-beta.23",
-    "@steedos/process": "2.7.18-beta.23",
-    "@steedos/standard-objects": "2.7.18-beta.23",
+    "@steedos/i18n": "2.7.18-beta.24",
+    "@steedos/meteor-bundle-dependencies": "2.7.18-beta.24",
+    "@steedos/meteor-bundle-runner": "2.7.18-beta.24",
+    "@steedos/objectql": "2.7.18-beta.24",
+    "@steedos/odata-v4-mongodb": "2.7.18-beta.24",
+    "@steedos/odata-v4-parser": "2.7.18-beta.24",
+    "@steedos/process": "2.7.18-beta.24",
+    "@steedos/standard-objects": "2.7.18-beta.24",
     "@steedos/webapp": "2.2.25",
     "apn": "1.6.2",
     "basic-auth": "^2.0.1",
@@ -88,5 +88,5 @@
     "xiaomi-push": "^1.0.0",
     "xml2js": "^0.4.19"
   },
-  "gitHead": "cf911b77309219c34a42e9f5dc9c94088722f133"
+  "gitHead": "3887c76f413023097f6d7738d8085d3f481d650f"
 }

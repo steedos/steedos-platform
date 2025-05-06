@@ -1,8 +1,8 @@
 /*
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-02-27 15:51:42
- * @LastEditors: 涂佳俊 tujiajun@steedos.com
- * @LastEditTime: 2023-11-23 18:02:20
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2025-05-06 19:28:14
  * @FilePath: /project-ee/Users/yinlianghui/Documents/GitHub/steedos-platform2-4/services/service-workflow/main/default/routes/api_workflow_nav.router.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -133,7 +133,7 @@ const getCategoriesMonitor = async (userSession, req, currentUrl) => {
   let categoriesData = await objectql.broker.call('api.graphql', {
     query: `
       query {
-        categories(sort:"sort_no desc"){
+        categories(filters:[["space", "=", "${userSession.spaceId}"]],sort:"sort_no desc"){
           _id,
           app__expand{
             code
@@ -185,7 +185,7 @@ const getCategoriesMonitor = async (userSession, req, currentUrl) => {
     data = await objectql.broker.call('api.graphql', {
       query: `
         query {
-          flows(filters:[["category","in",${JSON.stringify(categoriesIds)}], "and", ["state", "=", "enabled"]],sort:"sort_no desc"){
+          flows(filters:[["space", "=", "${userSession.spaceId}"],["category","in",${JSON.stringify(categoriesIds)}],["state", "=", "enabled"]],sort:"sort_no desc"){
             _id,
             name,
             category__expand{_id,name}
