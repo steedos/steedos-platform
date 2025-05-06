@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2024-04-23 14:35:03
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2025-05-06 13:59:03
+ * @LastEditTime: 2025-05-06 16:19:19
  * @Description: 
  */
 
@@ -11,6 +11,7 @@ const axios = require('axios');
 const { evaluate } = require("amis-formula")
 const serviceObjectMixin = require('@steedos/service-object-mixin');
 const _ = require("lodash");
+const { getAmisGlobalVariables } = require('@steedos/objectql');
 
 module.exports = {
     name: "object_webhooks",
@@ -73,8 +74,9 @@ module.exports = {
         }
         let sender;
         let space;
+        let userSession;
         if(userId && spaceId){
-          const userSession  = await ctx.call('@steedos/service-accounts.getUserSession', {userId, spaceId})
+          userSession  = await ctx.call('@steedos/service-accounts.getUserSession', {userId, spaceId})
           if(userSession){
             sender = {
               _id: userSession.userId,
@@ -108,8 +110,17 @@ module.exports = {
 
           if(condition){
 
+            const globalVariables = getAmisGlobalVariables(userSession);
             if(actionName == 'update' && execute_when === 'trueOnChangeOnly'){
-              const oldResult = evaluate(condition, previousDoc);
+              let oldResult;
+              if (/\$\{.+\}/.test(condition)) {
+                // 有${}包裹的表达式
+                oldResult = evaluate(condition, Object.assign({}, globalVariables, previousDoc), { evalMode: false });
+              }
+              else {
+                // 老版本没有${}包裹的表达式
+                oldResult = evaluate(condition, Object.assign({}, globalVariables, previousDoc), { evalMode: true });
+              }
               if(oldResult){
                 continue;
               }
@@ -118,11 +129,11 @@ module.exports = {
             let result;
             if (/\$\{.+\}/.test(condition)) {
               // 有${}包裹的表达式
-              result = evaluate(condition, newDoc, { evalMode: false });
+              result = evaluate(condition, Object.assign({}, globalVariables, newDoc), { evalMode: false });
             }
             else {
               // 老版本没有${}包裹的表达式
-              result = evaluate(condition, newDoc, { evalMode: true });
+              result = evaluate(condition, Object.assign({}, globalVariables, newDoc), { evalMode: true });
             }
             if(!result){
               continue;

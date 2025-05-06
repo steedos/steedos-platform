@@ -285,7 +285,7 @@ export const runFormula = function (
   }
 };
 
-const getAmisGlobalVariables = (userSession?: SteedosUserSession) => {
+export const getAmisGlobalVariables = (userSession?: SteedosUserSession) => {
   if (!userSession) {
     return {};
   }
