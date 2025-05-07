@@ -34,6 +34,7 @@ handler: |
         crud_mode: 'table',
         type: 'grid',
         columns: [{ field: 'name' }],
+        is_enable: true,
         sort: [
             {
                 field_name: "created",
