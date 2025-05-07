@@ -141,16 +141,18 @@
                     "multiple": false
                   },
                   {
-                    "name": "formula",
-                    "label": "${'action_field_updates.action_field_updates_form.formula' | t}",
-                    "required": false,
-                    "type": "textarea",
-                    "tpl": "<b><%=data.formula%></b>",
+                    "type": "service",
+                    "schemaApi": {
+                      "method": "get",
+                      "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${target_object}/fields/options",
+                      "adaptor": "const field = {label: t('action_field_updates.action_field_updates_form.formula')}; const variables = SteedosUI.getFormulaVariables(payload.data.options);\n payload.data={label: field.label, type:'input-formula', name: 'formula', 'evalMode': false, variableMode: 'tabs', variables: variables, labelRemark: field.inlineHelpText, description: field.description } \n return payload;",
+                      "trackExpression": "${target_object}",
+                      "sendOn": "${target_object}"
+                    },
+                    "dsType": "api",
+                    "id": "u:508198dbfac7",
                     "className": "col-span-2 m-1",
                     "labelClassName": "text-left",
-                    "clearValueOnHidden": true,
-                    "fieldName": "formula",
-                    "id": "u:20766a86a9f4",
                     "hiddenOn": "this.operation != 'formula'"
                   },
                   {
