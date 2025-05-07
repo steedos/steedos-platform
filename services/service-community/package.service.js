@@ -57,7 +57,7 @@ module.exports = {
 	events: {
         "@steedos/server.started": {
             async handler() {
-                if (process.env.B6_OIDC_ENABLED) {
+                if (process.env.B6_OIDC_ENABLED === true || process.env.B6_OIDC_ENABLED === 'true') {
                     objectql.getSteedosConfig().setTenant({
                         disabled_account_register: true,
                         sso_providers: {
