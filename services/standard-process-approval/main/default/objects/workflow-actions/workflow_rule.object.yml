@@ -127,6 +127,7 @@ fields:
     reference_to: object_fields
     reference_to_field: name
     enable_enhanced_lookup: false
+    required: true
     depend_on:
       - object_name
     filtersFunction: !<tag:yaml.org,2002:js/function> |-
