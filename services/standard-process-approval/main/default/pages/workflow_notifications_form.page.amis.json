@@ -1,0 +1,46 @@
+{
+    "type": "service",
+    "body": [
+        {
+            "type": "steedos-object-form",
+            "label": "对象表单",
+            "objectApiName": "workflow_notifications",
+            "recordId": "${recordId}",
+            "className": "",
+            "id": "u:b3d626885b90",
+            "enableTabs": false,
+            "mode": "edit",
+            "layout": "normal",
+            "tabsMode": "",
+            "fieldsExtend": {
+                "title": {
+                    "amis": {
+                        "type": "service",
+                        "schemaApi": {
+                            "method": "get",
+                            "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/fields/options",
+                            "adaptor": "const fields = context.uiSchema.fields;\nconst titleField = fields && fields.title;\nconst bodyField = fields && fields.body;\nconst variables = SteedosUI.getFormulaVariables(payload.data.options);\npayload.data = [{\n  label: titleField.label,\n  type: 'input-formula',\n  name: 'title',\n  evalMode: false,\n  variableMode: 'tabs',\n  variables: variables,\n  labelRemark: titleField.inlineHelpText,\n  description: titleField.description\n}, {\n  label: bodyField.label,\n  type: 'input-formula',\n  name: 'body',\n  evalMode: false,\n  variableMode: 'tabs',\n  variables: variables,\n  labelRemark: bodyField.inlineHelpText,\n  description: bodyField.description\n}]\nreturn payload;",
+                            "trackExpression": "${object_name}",
+                            "sendOn": "${object_name}",
+                            "requestAdaptor": "",
+                            "messages": {}
+                        },
+                        "dsType": "api",
+                        "id": "u:508198dbfac7",
+                        "initFetchSchema": true
+                    }
+                },
+                "body": {
+                    "amis": {
+                        "id": "u:18ca55507d93",
+                        "hidden": true
+                    }
+                }
+            }
+        }
+    ],
+    "data": {},
+    "name": "page_workflow_notifications_form",
+    "id": "u:35c197d6b61a",
+    "dsType": "api"
+}

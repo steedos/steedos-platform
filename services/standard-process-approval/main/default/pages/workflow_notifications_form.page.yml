@@ -1,0 +1,13 @@
+name: workflow_notifications_form
+is_active: true
+label: 消息提醒表单
+locked: false
+object_name: workflow_notifications
+pageAssignments:
+  - type: orgDefault
+    page: workflow_notifications_form
+    desktop: true
+    mobile: true
+render_engine: amis
+type: form
+widgets: []
