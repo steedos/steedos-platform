@@ -1,6 +1,6 @@
 {
   "name": "@steedos/metadata-core",
-  "version": "3.0.0-beta.23",
+  "version": "3.0.0-beta.24",
   "description": "",
   "main": "lib/index.js",
   "files": [
@@ -12,7 +12,7 @@
     "build": "rimraf lib && tsc"
   },
   "dependencies": {
-    "@steedos/client": "3.0.0-beta.23",
+    "@steedos/client": "3.0.0-beta.24",
     "archiver": "^5.1.0",
     "chalk": "^4.1.0",
     "clone": "^2.1.2",
@@ -39,5 +39,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "3ce2ca43f1e0a5188d8f3ac573f13d43d2907b6e"
+  "gitHead": "3df12ff072b51e68b21089386fc9689e1ff8dd88"
 }
