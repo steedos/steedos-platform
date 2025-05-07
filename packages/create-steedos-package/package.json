@@ -1,6 +1,6 @@
 {
   "name": "create-steedos-package",
-  "version": "3.0.0-beta.22",
+  "version": "3.0.0-beta.23",
   "keywords": [
     "steedos"
   ],
@@ -36,5 +36,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "e3405681aa4119365e2d4fee40d6b97b4f667f16"
+  "gitHead": "3ce2ca43f1e0a5188d8f3ac573f13d43d2907b6e"
 }
