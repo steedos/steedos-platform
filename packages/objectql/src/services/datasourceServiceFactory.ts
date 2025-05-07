@@ -13,7 +13,7 @@ import {
   addOriginalObjectConfigs,
   getOriginalObjectConfig,
 } from "@steedos/metadata-registrar";
-
+import { includes } from "lodash";
 const clone = require("clone");
 
 const LocalDataSourceServices = {};
@@ -59,6 +59,9 @@ export async function createDataSourceService(broker, dataSource) {
            * 每次都需要初始化，TypeORM不适用于微服务模式
            */
           await dataSource.initTypeORM();
+          if (dataSourceName === "default") {
+            newCollection(objectConfig.name, dataSourceName);
+          }
         },
       },
       [`${dataSourceName}.*.metadata.objects.deleted`]: {
@@ -98,4 +101,47 @@ export async function createDataSourceService(broker, dataSource) {
   await broker.waitForServices(service.name, null, 10);
   LocalDataSourceServices[serviceName] = true;
   return service;
+}
+
+const mongodriversCollectionNames = {};
+
+function newCollection(tableName: string, datasourceName: string) {
+  if (!datasourceName) {
+    datasourceName = "default";
+  }
+  const datasource = getDataSource(datasourceName);
+  const datasourceConfig = datasource.config;
+  const locale = datasourceConfig?.locale || "zh";
+  const documentDB = datasourceConfig?.documentDB || false;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const driver: any = getDataSource(datasourceName).adapter;
+  if (
+    locale &&
+    !includes(mongodriversCollectionNames[datasourceName], tableName)
+  ) {
+    driver.connect().then(function () {
+      let collation = {};
+      const db = driver._client.db();
+      if (!mongodriversCollectionNames[datasourceName]) {
+        mongodriversCollectionNames[datasourceName] = [];
+        db.listCollections().forEach((results) => {
+          mongodriversCollectionNames[datasourceName].push(results.name);
+        });
+      }
+      // documentDB不支持collation
+      if (!documentDB) {
+        collation = {
+          collation: { locale: locale },
+        };
+      }
+      db.createCollection(tableName, collation, function (err) {
+        if (err) {
+          if (err.code != 48) {
+            console.error(err);
+          }
+        }
+        mongodriversCollectionNames[datasourceName].push(tableName);
+      });
+    });
+  }
 }
