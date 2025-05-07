@@ -65,15 +65,17 @@ export class MetadataDriver extends SteedosMongoDriver {
     switch (tableName) {
       case "objects": {
         const objects = await getAllObject();
-        return _.map(objects, (metadataObject: any) => {
-          if (metadataObject._id) {
-            return;
-          }
-          return {
-            _id: metadataObject.metadata.name,
-            ...metadataObject.metadata,
-          };
-        });
+        return _.compact(
+          _.map(objects, (metadataObject: any) => {
+            if (metadataObject.metadata?._id) {
+              return;
+            }
+            return {
+              _id: metadataObject.metadata.name,
+              ...metadataObject.metadata,
+            };
+          }),
+        );
       }
       case "object_fields": {
         const objects2 = await getAllObject();
