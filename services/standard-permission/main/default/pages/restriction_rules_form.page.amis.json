@@ -1,0 +1,50 @@
+{
+    "type": "service",
+    "body": [
+        {
+            "type": "steedos-object-form",
+            "label": "对象表单",
+            "objectApiName": "restriction_rules",
+            "recordId": "${recordId}",
+            "className": "",
+            "enableTabs": false,
+            "mode": "edit",
+            "layout": "normal",
+            "tabsMode": "",
+            "onEvent": {
+                "inited": {
+                    "actions": [
+                        {
+                            "actionType": "custom",
+                            "script": "event.data.formulaVariables = SteedosUI.getFormulaVariables();"
+                        },
+                        {
+                            "actionType": "setValue",
+                            "args": {
+                                "value": {
+                                    "formulaVariables": "${event.data.formulaVariables}"
+                                }
+                            },
+                            "componentId": "page_restriction_rules_form"
+                        }
+                    ]
+                }
+            },
+            "fieldsExtend": {
+                "entry_criteria": {
+                    "amis": {
+                        "type": "input-formula",
+                        "evalMode": false,
+                        "variableMode": "tabs",
+                        "variables": "${formulaVariables}",
+                        "visibleOn": "${formulaVariables}"
+                    }
+                }
+            }
+        }
+    ],
+    "data": {},
+    "id": "page_restriction_rules_form",
+    "name": "page_restriction_rules_form",
+    "dsType": "api"
+}

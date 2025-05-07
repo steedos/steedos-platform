@@ -1,0 +1,13 @@
+name: restriction_rules_form
+is_active: true
+label: 限制规则表单
+locked: false
+object_name: restriction_rules
+pageAssignments:
+  - type: orgDefault
+    page: restriction_rules_form
+    desktop: true
+    mobile: true
+render_engine: amis
+type: form
+widgets: []

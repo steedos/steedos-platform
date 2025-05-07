@@ -1,0 +1,13 @@
+name: share_rules_form
+is_active: true
+label: 共享规则表单
+locked: false
+object_name: share_rules
+pageAssignments:
+  - type: orgDefault
+    page: share_rules_form
+    desktop: true
+    mobile: true
+render_engine: amis
+type: form
+widgets: []
