@@ -29,6 +29,7 @@ export class ObjectsHandle extends BaseHandle {
   async deleted(data) {
     broker.call("objects.removeConfig", {
       objectName: data.name,
+      serviceName: DB_OBJECT_SERVICE_NAME,
     });
   }
 
@@ -85,12 +86,18 @@ export class ObjectsHandle extends BaseHandle {
       // );
       await MetadataRegister.addObjectConfig(
         DB_OBJECT_SERVICE_NAME,
-        Object.assign({}, record, {
-          isMain: true,
-          fields,
-          actions,
-          list_views,
-        }),
+        Object.assign(
+          {
+            datasource: "default",
+          },
+          record,
+          {
+            isMain: true,
+            fields,
+            actions,
+            list_views,
+          },
+        ),
       );
       broker.broadcast("$packages.statisticsActivatedPackages", {});
     } catch (error) {
