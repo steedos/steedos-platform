@@ -118,7 +118,7 @@ fi
   # }
 
   location / {
-    proxy_pass http://localhost:3000/;
+    proxy_pass http://localhost:5100/;
     proxy_http_version 1.1;
     proxy_set_header Upgrade \$http_upgrade;
     proxy_set_header Connection "upgrade";
@@ -127,7 +127,7 @@ fi
   }
 
   location /sockjs/ {
-    proxy_pass http://localhost:3000/sockjs/;
+    proxy_pass http://localhost:5100/sockjs/;
     proxy_http_version 1.1;
     proxy_set_header Upgrade \$http_upgrade;
     proxy_set_header Connection "upgrade";
