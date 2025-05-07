@@ -1,0 +1,13 @@
+name: object_validation_rules_form
+is_active: true
+label: 对象验证规则表单
+locked: false
+object_name: object_validation_rules
+pageAssignments:
+  - type: orgDefault
+    page: object_validation_rules_form
+    desktop: true
+    mobile: true
+render_engine: amis
+type: form
+widgets: []

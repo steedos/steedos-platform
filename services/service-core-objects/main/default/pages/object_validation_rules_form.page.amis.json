@@ -1,0 +1,38 @@
+{
+    "type": "service",
+    "body": [
+        {
+            "type": "steedos-object-form",
+            "label": "对象表单",
+            "objectApiName": "object_validation_rules",
+            "recordId": "${recordId}",
+            "className": "",
+            "id": "u:b3d626885b90",
+            "enableTabs": false,
+            "mode": "edit",
+            "layout": "normal",
+            "tabsMode": "",
+            "fieldsExtend": {
+                "error_condition_formula": {
+                    "amis": {
+                        "type": "service",
+                        "schemaApi": {
+                            "method": "get",
+                            "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/fields/options",
+                            "cache": 30000,
+                            "adaptor": "const field = context.uiSchema.fields.error_condition_formula; const variables = SteedosUI.getFormulaVariables(payload.data.options); \n var fieldSchema={label: field.label, type:'input-formula', name: 'error_condition_formula', 'evalMode': false, variableMode: 'tabs', variables: variables, labelRemark: field.inlineHelpText, description: field.description } \n return {...payload, data:fieldSchema};",
+                            "trackExpression": "${object_name}",
+                            "sendOn": "${object_name}"
+                        },
+                        "dsType": "api",
+                        "id": "u:508198dbfac7"
+                    }
+                }
+            }
+        }
+    ],
+    "data": {},
+    "name": "page_object_validation_rules_form",
+    "id": "u:5f4f07272db7",
+    "dsType": "api"
+}
