@@ -1,0 +1,13 @@
+name: workflow_rule_form
+is_active: true
+label: 工作流规则表单
+locked: false
+object_name: workflow_rule
+pageAssignments:
+  - type: orgDefault
+    page: workflow_rule_form
+    desktop: true
+    mobile: true
+render_engine: amis
+type: form
+widgets: []
