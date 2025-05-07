@@ -116,34 +116,11 @@ fields:
     group: time_dependent_action
     amis:
       showIndex: true
-      columns: ["number", "unit", "type", "date_field"]
+      columns: ["date_field", "type", "number", "unit"]
   time_triggers.$:
     label: Field
     blackbox: true
     type: object
-  time_triggers.$.number:
-    label: 数值
-    type: number
-    scale: 0
-    required: true
-  time_triggers.$.unit:
-    label: 单位
-    type: select
-    options: 
-      - label: 小时
-        value: hour
-      - label: 天
-        value: day
-    required: true
-  time_triggers.$.type:
-    label: 类型
-    type: select
-    options: 
-      - label: 早于
-        value: earlier_than
-      - label: 晚于
-        value: later_than
-    required: true
   time_triggers.$.date_field:
     label: 日期字段
     type: lookup
@@ -161,6 +138,29 @@ fields:
           return ['_id', '=', 'no']
         }
       }
+  time_triggers.$.type:
+    label: 类型
+    type: select
+    options: 
+      - label: 早于
+        value: earlier_than
+      - label: 晚于
+        value: later_than
+    required: true
+  time_triggers.$.number:
+    label: 数值
+    type: number
+    scale: 0
+    required: true
+  time_triggers.$.unit:
+    label: 单位
+    type: select
+    options: 
+      - label: 小时
+        value: hour
+      - label: 天
+        value: day
+    required: true
   time_triggers.$.updates_field_actions:
     type: lookup
     multiple: true
