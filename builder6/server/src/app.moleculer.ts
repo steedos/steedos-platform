@@ -70,7 +70,7 @@ export class AppMoleculer extends Service {
 
   async serviceStarted() {
     require("@steedos/objectql").getSteedosSchema(this.broker);
-
+    const logger = global.logger;
     // 获取环境变量
     let edition = "ce";
 
@@ -86,16 +86,16 @@ export class AppMoleculer extends Service {
 
     switch (edition) {
       case "ce":
-        console.log("🎉 欢迎使用 Steedos 社区版！");
+        logger.log("🎉 欢迎使用 Steedos 社区版！");
         break;
       case "ee":
-        console.log("🎉 欢迎使用 Steedos 企业版！");
+        logger.log("🎉 欢迎使用 Steedos 企业版！");
         break;
       case "cloud":
-        console.log("🎉 欢迎使用 Steedos Cloud 版！");
+        logger.log("🎉 欢迎使用 Steedos Cloud 版！");
         break;
       default:
-        console.log("🤔 我们未能识别您启动的版本。");
+        logger.log("🤔 我们未能识别您启动的版本。");
     }
 
     if (edition == "ee" || edition == "cloud") {

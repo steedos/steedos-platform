@@ -67,9 +67,9 @@ export const beforeServerStart = ({ app }) => {
   }
 };
 
-export const afterServerStart = () => {
-  console.log("afterServerStart......");
-};
+// export const afterServerStart = () => {
+//   console.log("afterServerStart......");
+// };
 
 export const controllers = [AppController];
 
