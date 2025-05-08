@@ -67,7 +67,7 @@ export async function createDataSourceService(broker, dataSource) {
       [`${dataSourceName}.*.metadata.objects.deleted`]: {
         handler(ctx) {
           try {
-            console.log(`${serviceName} deleted`, ctx.params.objectApiName);
+            // console.log(`${serviceName} deleted`, ctx.params.objectApiName);
             // console.log(`${dataSourceName} removeLocalObject`, ctx.params.objectApiName)
             getDataSource(dataSourceName).removeLocalObject(
               ctx.params.objectApiName,
