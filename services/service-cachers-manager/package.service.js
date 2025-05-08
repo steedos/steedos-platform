@@ -265,6 +265,7 @@ module.exports = {
 		this.loadActionTriggers(this.broker);
 		this.loadTriggers(this.broker);
 		this.loadProfiles();
+		// eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef
 		this.broker.createService(require("./metadata-cachers.service"));
 	},
 

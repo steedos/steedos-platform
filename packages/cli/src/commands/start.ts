@@ -5,12 +5,12 @@ import * as path from "path";
 class StartCommand extends Command {
   async run() {
     try {
-      console.log(`process path`, process.cwd());
+      // console.log(`process path`, process.cwd());
       this.checkModuleExists("@builder6/server");
       this.checkModuleExists("@steedos/server");
 
       const serverPath = require.resolve("@builder6/server");
-      console.log(`serverPath`, serverPath);
+      // console.log(`serverPath`, serverPath);
       const steedosPath = require.resolve("@steedos/server");
       // eslint-disable-next-line @typescript-eslint/no-require-imports
       const appConfig = require(steedosPath);

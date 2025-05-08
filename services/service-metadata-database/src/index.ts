@@ -104,7 +104,6 @@ module.exports = {
    * Service started lifecycle event handler
    */
   async started() {
-    console.log(`Service ${packageName} started`);
     await this.appsHandle.init();
     await this.tabs;
     await this.objectsHandle.init();

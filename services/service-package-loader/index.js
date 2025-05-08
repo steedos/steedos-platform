@@ -112,7 +112,9 @@ module.exports = {
             ]
             const matchedPaths2 = metaDataCore.syncMatchFiles(filePatten2);
             for await (const filePath of matchedPaths2) {
-                this.broker.logger.warn(`The object.js file has been deprecated. ${filePath}`); 
+                if(!filePath.endsWith("_base/base.object.js")){
+                    this.broker.logger.warn(`The object.js file has been deprecated. ${filePath}`); 
+                }
             }
 
             // 扫描软件包中的元数据, 如果有 .router.js 文件, 则输出警告信息
