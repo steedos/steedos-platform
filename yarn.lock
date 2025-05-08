@@ -2065,23 +2065,23 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@builder6/cli@0.16.3-alpha.10":
-  version "0.16.3-alpha.10"
-  resolved "https://registry.npmmirror.com/@builder6/cli/-/cli-0.16.3-alpha.10.tgz#b7c9bcec47224b6b57169dd16ed46cffadc32b0a"
-  integrity sha512-i4uug686QiBZ6cYBHbn/PxRhVVNldtB2tiyITUD+S81QfjmHCMvI4oBjHU5FIODIf81kwrvE5M44L2wtrd7WSg==
+"@builder6/cli@0.16.3-alpha.11":
+  version "0.16.3-alpha.11"
+  resolved "https://registry.npmjs.org/@builder6/cli/-/cli-0.16.3-alpha.11.tgz#7ac8bf33e97c071218ebd99173406bb8b8244afa"
+  integrity sha512-eL4JF5RYEADesMeEZJfaIGRpksgxjk0hVvMPQ6JBXkUIikbzkcxVDWVYCFxwxD3J3zVY61DRqfWNiEKG42i2Dw==
   dependencies:
     "@oclif/core" "^4"
     "@oclif/plugin-help" "^6"
     "@oclif/plugin-plugins" "^5"
     fs-extra "^11.2.0"
 
-"@builder6/core@0.16.3-alpha.10":
-  version "0.16.3-alpha.10"
-  resolved "https://registry.npmmirror.com/@builder6/core/-/core-0.16.3-alpha.10.tgz#fc33a84caccfe596f3c47b730c196a371ccd64b0"
-  integrity sha512-KWgx4rBzTj6qkpwfvxNxF7JjTcUPhKeT69t5DgByop8iCmJTwohIVH/kUIEnid+MPAzpQUFyz+xLtFHWjehOXg==
+"@builder6/core@0.16.3-alpha.11":
+  version "0.16.3-alpha.11"
+  resolved "https://registry.npmjs.org/@builder6/core/-/core-0.16.3-alpha.11.tgz#8ed80660544ada70ed169e3ac78f9e5d3cf0e848"
+  integrity sha512-bCDmRKVKzvRBh0wmsdr6FG3PkWXCqNeFvUvCb/sm9sb18vPi0gAk2SiUJJSqGz69P6QqIeSBH0z16qGc72+RcQ==
   dependencies:
     "@aws-sdk/client-cloudwatch-logs" "^3.721.0"
-    "@builder6/query-mongodb" "0.16.3-alpha.10"
+    "@builder6/query-mongodb" "0.16.3-alpha.11"
     "@socket.io/redis-adapter" "^8.3.0"
     moleculer "^0.14.35"
     pino-http "^10.3.0"
@@ -2092,17 +2092,17 @@
   resolved "https://registry.npmmirror.com/@builder6/docs-client/-/docs-client-3.0.4-beta.8.tgz#476350d8a2829dcae49d5e3a620837dd27c271e8"
   integrity sha512-bXb/kls1fbWVfkUXVkyCM0SXkyUOkgaqedqdxMUlVdVcYGcEghDuw9BwxuvqSYOuiA3A35zI6Jt29/QKIv9sWg==
 
-"@builder6/docs@0.16.3-alpha.10":
-  version "0.16.3-alpha.10"
-  resolved "https://registry.npmmirror.com/@builder6/docs/-/docs-0.16.3-alpha.10.tgz#aa42e3a6139a967d18e551a151c4cf52dfcdb266"
-  integrity sha512-nXNioR2cclJzlCAqHZw2P5+Iz/zcjeI+MWp3LzttuhkH7YQWNhdlLESzGaKUWls54iZE8mrA8PGEAR0ZUpa5QA==
+"@builder6/docs@0.16.3-alpha.11":
+  version "0.16.3-alpha.11"
+  resolved "https://registry.npmjs.org/@builder6/docs/-/docs-0.16.3-alpha.11.tgz#da8e9be87eb744188517dbe2f2a1110cf8fda7e1"
+  integrity sha512-znG8wvk+v+P8+5OYqklfIg98Mhm/wBNmYvBov/XX/mNH50hYXReGJJyEdh4zLxK+F6+8g72VOmgIPp7TWTYETw==
   dependencies:
-    "@builder6/core" "0.16.3-alpha.10"
+    "@builder6/core" "0.16.3-alpha.11"
     "@builder6/docs-client" "^3.0.4-beta.8"
-    "@builder6/files" "0.16.3-alpha.10"
-    "@builder6/moleculer" "0.16.3-alpha.10"
-    "@builder6/oidc" "0.16.3-alpha.10"
-    "@builder6/onlyoffice" "0.16.3-alpha.10"
+    "@builder6/files" "0.16.3-alpha.11"
+    "@builder6/moleculer" "0.16.3-alpha.11"
+    "@builder6/oidc" "0.16.3-alpha.11"
+    "@builder6/onlyoffice" "0.16.3-alpha.11"
     "@nestjs/common" "^11.0.0"
     "@nestjs/config" "^4.0.1"
     "@nestjs/core" "^11.0.0"
@@ -2125,72 +2125,72 @@
     reflect-metadata "^0.2.0"
     rxjs "^7.8.1"
 
-"@builder6/email@0.16.3-alpha.10":
-  version "0.16.3-alpha.10"
-  resolved "https://registry.npmmirror.com/@builder6/email/-/email-0.16.3-alpha.10.tgz#8a944860fa7af01ebf8de020d9b5ac22ba26af48"
-  integrity sha512-oE3EGEQ1DUvQS8uOezjW7GlMGt5ufwF7oBuYLfBJDW+bVRcFTjOnI8toa2nZyWv5jXqglxIrVg0LqAxYq0B/OA==
+"@builder6/email@0.16.3-alpha.11":
+  version "0.16.3-alpha.11"
+  resolved "https://registry.npmjs.org/@builder6/email/-/email-0.16.3-alpha.11.tgz#323a491f91e4ccf216b43979a04557a5363392d0"
+  integrity sha512-3VGdRM0XbuCoMaJ21tEyfvQCarnf3NH8O2IlzGNw+lClTpWaf54jFLrsFcabVIhhphhnZpHMFesi03UY1IMmgg==
   dependencies:
-    "@builder6/core" "0.16.3-alpha.10"
+    "@builder6/core" "0.16.3-alpha.11"
     bluebird "^3.7.2"
     email-addresses "^5.0.0"
     lodash "^4.17.5"
     nodemailer "^6.9.16"
 
-"@builder6/files@0.16.3-alpha.10":
-  version "0.16.3-alpha.10"
-  resolved "https://registry.npmmirror.com/@builder6/files/-/files-0.16.3-alpha.10.tgz#a8cd6eeb87bdb83cdbceeec380d6cfebb1848305"
-  integrity sha512-WMK0NOM8+GeYfaLziffOnBvpHVH2AKJIbgMsXvlnWik0udlc5oaR4YMS8D7vIDdw8a6niR9X14cxTIDBFYuYoA==
+"@builder6/files@0.16.3-alpha.11":
+  version "0.16.3-alpha.11"
+  resolved "https://registry.npmjs.org/@builder6/files/-/files-0.16.3-alpha.11.tgz#aa76a3aeab8cc160c438e64045f66d40102754cf"
+  integrity sha512-lAMoxjJ6a8jncbIDSv07z+U/61jlL/Vyr+e2QbQNPtRVejBbVQq/Kcd1bB5D0wsjmoOD18UQbY7ztArCg29B4w==
   dependencies:
-    "@builder6/core" "0.16.3-alpha.10"
+    "@builder6/core" "0.16.3-alpha.11"
     nodemailer "^6.9.16"
 
-"@builder6/moleculer@0.16.3-alpha.10":
-  version "0.16.3-alpha.10"
-  resolved "https://registry.npmmirror.com/@builder6/moleculer/-/moleculer-0.16.3-alpha.10.tgz#dee230154e8f9442c493942f29b12f33b30f7a53"
-  integrity sha512-N7X7QoLodKzUFHXHvv4onnrZV/y3rwOgAoX1oGgu91XujhPGJDov4zR/5Eeo9veqQIGx0ZPK3N+A8ooibaIeIA==
+"@builder6/moleculer@0.16.3-alpha.11":
+  version "0.16.3-alpha.11"
+  resolved "https://registry.npmjs.org/@builder6/moleculer/-/moleculer-0.16.3-alpha.11.tgz#9728e238e924329990f0c66ce55003bc79bf1688"
+  integrity sha512-OT2Vl4RRJ9RTQ8yY3NHKjMfH6rxCKujYaETeIk6ITf5PXWWOvyOoa+nJfs9AsB8OYuS8VdFwjymh9a5TulUSmw==
 
-"@builder6/oidc-provider@0.16.3-alpha.10":
-  version "0.16.3-alpha.10"
-  resolved "https://registry.npmmirror.com/@builder6/oidc-provider/-/oidc-provider-0.16.3-alpha.10.tgz#2518b8b9af5c74e57af88116f8ff2a70f68a8db3"
-  integrity sha512-+zl6GmNjp3joCeL1nPpkYfKkIel2Hx3cCTmFG64J2vN+WaESqWEMJyOLuhYpKOzTAcMtPXfJSXHcTa9OJfO2/A==
+"@builder6/oidc-provider@0.16.3-alpha.11":
+  version "0.16.3-alpha.11"
+  resolved "https://registry.npmjs.org/@builder6/oidc-provider/-/oidc-provider-0.16.3-alpha.11.tgz#6af61019abda594322200eef739dd07937de22d6"
+  integrity sha512-gYcdGDYIHlYLhErOKIxGfXL5C+quc8p3BT8wZCNHBUUugfv72ElSKhcYhxamIgTZ0jV/2JPohZpQfYGGyQnJBA==
   dependencies:
-    "@builder6/core" "0.16.3-alpha.10"
+    "@builder6/core" "0.16.3-alpha.11"
     lodash "^4.17.5"
     oidc-provider "^8.8.1"
 
-"@builder6/oidc@0.16.3-alpha.10":
-  version "0.16.3-alpha.10"
-  resolved "https://registry.npmmirror.com/@builder6/oidc/-/oidc-0.16.3-alpha.10.tgz#6da266facb45a4f80667d2951205b277fe4b9a3e"
-  integrity sha512-HwVjkkNB1bftPE5SYQcRcl1K48NWGNlIp6Nce5+1vJPIY9Ns+EfCGMh2hosD4P9+9c3klD3k/SWJ2W7PEuEi2A==
+"@builder6/oidc@0.16.3-alpha.11":
+  version "0.16.3-alpha.11"
+  resolved "https://registry.npmjs.org/@builder6/oidc/-/oidc-0.16.3-alpha.11.tgz#9de76ab7c19613a0a902a6fc8eee38eab8a27671"
+  integrity sha512-SlHBl/foNf+hI3MekAHsYnsTzyNmsXRD5SI9bh1sHvNowcZUvz8n2ctomtWVT+ISHn06ysaK9NEed3ZvHP8vEQ==
   dependencies:
-    "@builder6/core" "0.16.3-alpha.10"
+    "@builder6/core" "0.16.3-alpha.11"
     ejs "^3.1.10"
     lodash "^4.17.5"
     openid-client "^5.7.1"
 
-"@builder6/onlyoffice@0.16.3-alpha.10":
-  version "0.16.3-alpha.10"
-  resolved "https://registry.npmmirror.com/@builder6/onlyoffice/-/onlyoffice-0.16.3-alpha.10.tgz#371219de8705f9066e498635dd2de507e37cc446"
-  integrity sha512-zo2ecX8tN5yihqDo5zGnXLWAV1Kgz3SJX+C6lHEtrPUWI7xWsT69Gc+l5wE0Utvdhpt328xL4SCQfxj4msZWpg==
+"@builder6/onlyoffice@0.16.3-alpha.11":
+  version "0.16.3-alpha.11"
+  resolved "https://registry.npmjs.org/@builder6/onlyoffice/-/onlyoffice-0.16.3-alpha.11.tgz#9c569b5725129393809154aa27805a5fc0b891cb"
+  integrity sha512-AoRqhRzL1wr/Af0XAgj7OiVcgjG9abaOLJ6JB7nMfNE9WeFQ7O1AHwp30uBqZYNhbdeFrat003TObovxb9PNHg==
   dependencies:
-    "@builder6/core" "0.16.3-alpha.10"
-    "@builder6/email" "0.16.3-alpha.10"
-    "@builder6/files" "0.16.3-alpha.10"
+    "@builder6/core" "0.16.3-alpha.11"
+    "@builder6/email" "0.16.3-alpha.11"
+    "@builder6/files" "0.16.3-alpha.11"
     url "~0.11.4"
 
-"@builder6/pages@0.16.3-alpha.10":
-  version "0.16.3-alpha.10"
-  resolved "https://registry.npmmirror.com/@builder6/pages/-/pages-0.16.3-alpha.10.tgz#065c9cd4fb92aa0f423142d1c65a79144fb182fe"
-  integrity sha512-Jh4a5gl0jUGcUXEmagKKAPR/Gj6jKCNrGQha6z77XiGd9vAGQcv8FwocspGhR40l9XIONBqawQaF30nzXGlu4A==
+"@builder6/pages@0.16.3-alpha.11":
+  version "0.16.3-alpha.11"
+  resolved "https://registry.npmjs.org/@builder6/pages/-/pages-0.16.3-alpha.11.tgz#def776fcb1960233162f804569e8a04113ca83c9"
+  integrity sha512-RdD08hM8syoGSjdF2pYn1bGQ4TbvqyYAhE/vPyHSpI5rKDSnw07gv6h3z4hpg5iAmUUyp3PWxTb7wGuQHQu1oQ==
   dependencies:
-    "@builder6/core" "0.16.3-alpha.10"
+    "@builder6/core" "0.16.3-alpha.11"
     dataloader "^2.2.3"
     liquidjs "^10.19.0"
 
-"@builder6/query-mongodb@0.16.3-alpha.10":
-  version "0.16.3-alpha.10"
-  resolved "https://registry.npmmirror.com/@builder6/query-mongodb/-/query-mongodb-0.16.3-alpha.10.tgz#00d3f3dbf328e41e66cadb518392fc910d6ff006"
-  integrity sha512-642j/P2j/eQIn0tatgFGcUCfH5EtzrZKGlxtz5r4hzazf+aQC0GnCTEteIkoXVLG1YqyeycQbkpaRSlymWiIWg==
+"@builder6/query-mongodb@0.16.3-alpha.11":
+  version "0.16.3-alpha.11"
+  resolved "https://registry.npmjs.org/@builder6/query-mongodb/-/query-mongodb-0.16.3-alpha.11.tgz#f1d126c8a93e7ca3e177427a00a57caeaa650122"
+  integrity sha512-Gb8rJtfU01pJJHzY1ojIJDk3q6x6GFg26HeCRBQmeI1ETvQqA8GRybcouKBv6sAGZuORuYje2jhHEK99KpeQ6A==
   dependencies:
     yup "^1.1.0"
 
@@ -2208,16 +2208,16 @@
     node-fetch "^2.6.1"
     prop-types "^15.7.2"
 
-"@builder6/rooms@0.16.3-alpha.10":
-  version "0.16.3-alpha.10"
-  resolved "https://registry.npmmirror.com/@builder6/rooms/-/rooms-0.16.3-alpha.10.tgz#9d976d66f7e2b8656abcab0af955690ed959c961"
-  integrity sha512-bM4cNi3v9oluo9l6808mHhVzA7XZMo4S1gOaYygCi/Keuro72hqTvlOgYTFr7kwC8m5oFTbbJQDjp5nrREEkBA==
+"@builder6/rooms@0.16.3-alpha.11":
+  version "0.16.3-alpha.11"
+  resolved "https://registry.npmjs.org/@builder6/rooms/-/rooms-0.16.3-alpha.11.tgz#95a2d4367dea0874a36459659e756e3e1b0a344d"
+  integrity sha512-GoZ7Hy4ikoliRG5ov48rOxKPRFdX06DKVIRUsQhhRj4pCtFuBxA5qSKmllzrL8crkODTtRoYaNWrF/6PiLg2DA==
   dependencies:
-    "@builder6/core" "0.16.3-alpha.10"
-    "@builder6/email" "0.16.3-alpha.10"
-    "@builder6/files" "0.16.3-alpha.10"
-    "@builder6/moleculer" "0.16.3-alpha.10"
-    "@builder6/pages" "0.16.3-alpha.10"
+    "@builder6/core" "0.16.3-alpha.11"
+    "@builder6/email" "0.16.3-alpha.11"
+    "@builder6/files" "0.16.3-alpha.11"
+    "@builder6/moleculer" "0.16.3-alpha.11"
+    "@builder6/pages" "0.16.3-alpha.11"
     "@liveblocks/emails" "2.12.0"
     "@liveblocks/node" "2.12.0"
     "@react-email/components" "^0.0.31"
@@ -2239,27 +2239,27 @@
     node-fetch "^2.3.0"
     tslib "^2.6.3"
 
-"@builder6/server@^0.16.3-alpha.10":
-  version "0.16.3-alpha.10"
-  resolved "https://registry.npmmirror.com/@builder6/server/-/server-0.16.3-alpha.10.tgz#017eea7bb347c4e609d55a981e40e034c490fc4f"
-  integrity sha512-HFkfkOHOB2HR/yCPmggY6orXcP55vn2fXxRLJ9wdDHjD48Ed4ViG25lm/45hiBCSByLr88yAK3HuVEOBw0TxwA==
+"@builder6/server@^0.16.3-alpha.11":
+  version "0.16.3-alpha.11"
+  resolved "https://registry.npmjs.org/@builder6/server/-/server-0.16.3-alpha.11.tgz#5d393ede07ef7ab1d20a5efc2bfeb0e89959e3a2"
+  integrity sha512-I+sR4R17+1pB/+2kfb7ceglS6+n5zmWko9EQbMxIP56DcbzosQDxLghncU1RnBLpeIbSOitVzxfONz2ybdV3sg==
   dependencies:
-    "@builder6/cli" "0.16.3-alpha.10"
-    "@builder6/core" "0.16.3-alpha.10"
-    "@builder6/docs" "0.16.3-alpha.10"
-    "@builder6/email" "0.16.3-alpha.10"
-    "@builder6/files" "0.16.3-alpha.10"
-    "@builder6/moleculer" "0.16.3-alpha.10"
-    "@builder6/oidc" "0.16.3-alpha.10"
-    "@builder6/oidc-provider" "0.16.3-alpha.10"
-    "@builder6/onlyoffice" "0.16.3-alpha.10"
-    "@builder6/pages" "0.16.3-alpha.10"
-    "@builder6/query-mongodb" "0.16.3-alpha.10"
-    "@builder6/rooms" "0.16.3-alpha.10"
-    "@builder6/services" "0.16.3-alpha.10"
-    "@builder6/sharepoint" "0.16.3-alpha.10"
-    "@builder6/steedos" "0.16.3-alpha.10"
-    "@builder6/tables" "0.16.3-alpha.10"
+    "@builder6/cli" "0.16.3-alpha.11"
+    "@builder6/core" "0.16.3-alpha.11"
+    "@builder6/docs" "0.16.3-alpha.11"
+    "@builder6/email" "0.16.3-alpha.11"
+    "@builder6/files" "0.16.3-alpha.11"
+    "@builder6/moleculer" "0.16.3-alpha.11"
+    "@builder6/oidc" "0.16.3-alpha.11"
+    "@builder6/oidc-provider" "0.16.3-alpha.11"
+    "@builder6/onlyoffice" "0.16.3-alpha.11"
+    "@builder6/pages" "0.16.3-alpha.11"
+    "@builder6/query-mongodb" "0.16.3-alpha.11"
+    "@builder6/rooms" "0.16.3-alpha.11"
+    "@builder6/services" "0.16.3-alpha.11"
+    "@builder6/sharepoint" "0.16.3-alpha.11"
+    "@builder6/steedos" "0.16.3-alpha.11"
+    "@builder6/tables" "0.16.3-alpha.11"
     "@nestjs/common" "^11.0.0"
     "@nestjs/config" "^4.0.1"
     "@nestjs/core" "^11.0.0"
@@ -2307,40 +2307,40 @@
     uuid "^9.0.0"
     ws "8.13.0"
 
-"@builder6/services@0.16.3-alpha.10":
-  version "0.16.3-alpha.10"
-  resolved "https://registry.npmmirror.com/@builder6/services/-/services-0.16.3-alpha.10.tgz#f5d5d0474cd6ff7560491e581100b5e98e25ea5c"
-  integrity sha512-3qQY+HpUJLWOErh1ZznOy/J5fLqKrFcpPnrKMJS0ELuzOciDaa/jLQZ29YMeWaj/0VRyW1//fAnl8HoiUGIwAQ==
+"@builder6/services@0.16.3-alpha.11":
+  version "0.16.3-alpha.11"
+  resolved "https://registry.npmjs.org/@builder6/services/-/services-0.16.3-alpha.11.tgz#141801ac72d4ca7c7574fcb5dcb3d1c5f7c8636e"
+  integrity sha512-foB+xgi5OXjRG0MQ7KwtObb72hgYc63Ohh2+zq8CUnl8vVp6qv5vCtWsFe+X+bZ+8AG7j6G91WO1FKpfNZotXg==
   dependencies:
-    "@builder6/core" "0.16.3-alpha.10"
+    "@builder6/core" "0.16.3-alpha.11"
 
-"@builder6/sharepoint@0.16.3-alpha.10":
-  version "0.16.3-alpha.10"
-  resolved "https://registry.npmmirror.com/@builder6/sharepoint/-/sharepoint-0.16.3-alpha.10.tgz#fdebd655233dd9bef277d4bde68ed11f7ec0b842"
-  integrity sha512-jluDsdV5lkZS36BVXH02KZgsN94Q7TE8xBp3CeYFo1F103eXo2iNGeoTU9H1R1B4nmyFy+vs8hOFwe/GlkRDQg==
+"@builder6/sharepoint@0.16.3-alpha.11":
+  version "0.16.3-alpha.11"
+  resolved "https://registry.npmjs.org/@builder6/sharepoint/-/sharepoint-0.16.3-alpha.11.tgz#cece4e05d2fb1ea01c5c74bd4011167abed4a44c"
+  integrity sha512-/xsn6LWUJuEGBbbf5jVVXP0YV//6N/JFjyi+5wUTuqy9hYhANh7qbh2spt3jMfWiclibpV51PfFR/AABgyeoHA==
   dependencies:
-    "@builder6/core" "0.16.3-alpha.10"
-    "@builder6/files" "0.16.3-alpha.10"
+    "@builder6/core" "0.16.3-alpha.11"
+    "@builder6/files" "0.16.3-alpha.11"
     form-data "^4.0.1"
     line-reader "^0.4.0"
     nodemailer "^6.9.16"
 
-"@builder6/steedos@0.16.3-alpha.10":
-  version "0.16.3-alpha.10"
-  resolved "https://registry.npmmirror.com/@builder6/steedos/-/steedos-0.16.3-alpha.10.tgz#257ea886d1da797d383dce7c86c3d19acd1e743e"
-  integrity sha512-XNekF1HhiGKXhWfvG2wi4OXgUhImtXyJh/kAs4+LbPwzYcl/amyxk2/8TApuk25I3c8JM+eJ0t08Y1wTVnJaAw==
+"@builder6/steedos@0.16.3-alpha.11":
+  version "0.16.3-alpha.11"
+  resolved "https://registry.npmjs.org/@builder6/steedos/-/steedos-0.16.3-alpha.11.tgz#17cf52f0dc3bec71bc7603cbe1179219def3ee49"
+  integrity sha512-J9cjRCi7LvkClBeIcSheQmXo6Pu3oW1xFGQABAcKPw1MyHfab55fI9RWpIfHahQVn4Rutpf1jHKGvE5aTM0p1A==
   dependencies:
-    "@builder6/core" "0.16.3-alpha.10"
-    "@builder6/moleculer" "0.16.3-alpha.10"
+    "@builder6/core" "0.16.3-alpha.11"
+    "@builder6/moleculer" "0.16.3-alpha.11"
     nodemailer "^6.9.16"
 
-"@builder6/tables@0.16.3-alpha.10":
-  version "0.16.3-alpha.10"
-  resolved "https://registry.npmmirror.com/@builder6/tables/-/tables-0.16.3-alpha.10.tgz#da59084deaa0b2c908117fabdf57f0540af17811"
-  integrity sha512-Q9IzQfbOoe+ooe50uIoDrahHdwJYc0VYQL6e/YkiTF5cLwpz2eRB/mo/F3Rhx0DkxHbw4tZ0DSUITINgqFSpKw==
+"@builder6/tables@0.16.3-alpha.11":
+  version "0.16.3-alpha.11"
+  resolved "https://registry.npmjs.org/@builder6/tables/-/tables-0.16.3-alpha.11.tgz#0fd9d3210973786494343d7bac7087744f47197c"
+  integrity sha512-HF0F3JXl7j3fNXGI4Fpgz+gJq0dzmqnvt3j10T+U0BOkmZR6AO5Opo1ieb1cWSfZL879SbjQcqLMa66Q9closw==
   dependencies:
-    "@builder6/core" "0.16.3-alpha.10"
-    "@builder6/pages" "0.16.3-alpha.10"
+    "@builder6/core" "0.16.3-alpha.11"
+    "@builder6/pages" "0.16.3-alpha.11"
     dataloader "^2.2.3"
 
 "@bull-board/api@4.12.2":

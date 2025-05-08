@@ -18,7 +18,6 @@ export class BaseHandle {
     action: "inserted" | "updated" | "deleted",
     data: ActionData,
   ) {
-    console.log("BaseHandle handleAction", action, JSON.stringify(data));
     switch (action) {
       case "inserted":
         await this.inserted(data);
