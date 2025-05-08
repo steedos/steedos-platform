@@ -212,9 +212,10 @@ module.exports = {
         this.broker.createService({
             name: 'steedos-server',
             mixins: [],
+            dependencies: ['metadata-cachers-service'],
 			actions: {
 				setSettings(ctx) {
-					console.log(`TODO setSettings:`, ctx.params)
+                    global.Steedos.settings = Object.assign(global.Steedos.settings, ctx.params)
 				}
 			},
             started: function() {
