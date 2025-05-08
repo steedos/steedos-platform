@@ -115,6 +115,8 @@ export class DbManager {
 
     update["modified"] = new Date();
     update["modified_by"] = this.userSession.userId;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    delete (update as any)._id;
     return await this.client
       .db()
       .collection(collectionName)
