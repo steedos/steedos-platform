@@ -58,10 +58,10 @@ export class DashboardCollection extends MetadataBaseCollection {
   }
 
   async saveDashboardCard(dbManager, data) {
-    var idKey = this.getIdKey();
-    var filter = { [idKey]: data[idKey] };
-    var collectionName = "analytics_dashboard_card";
-    var record = await dbManager.findOne(collectionName, filter);
+    const idKey = this.getIdKey();
+    const filter = { [idKey]: data[idKey] };
+    const collectionName = "analytics_dashboard_card";
+    let record = await dbManager.findOne(collectionName, filter);
 
     if (record == null) {
       record = await dbManager.findOne(collectionName, filter, false);
