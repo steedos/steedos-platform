@@ -26,7 +26,8 @@ const Home = () => {
 
     dispatch(validate()).then((me)=>{
       Builder.settings.context.user = me.data;
-      navigate('/app');
+      window.location.href = '/app';
+      // navigate('/app');
     })
 
   }, []);
