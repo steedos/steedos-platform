@@ -54,6 +54,7 @@ export class DashboardCollection extends MetadataBaseCollection{
                 await this.saveDashboardCard(dbManager, card);
             }
         }
+        return metadata;
     }
 
     async saveDashboardCard(dbManager, data){
