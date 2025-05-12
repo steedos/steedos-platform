@@ -2,29 +2,9 @@
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2025-04-14 09:47:57
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2025-05-12 16:45:57
+ * @LastEditTime: 2025-05-12 22:10:33
  */
 module.exports = {
-  enableVisible: function (object_name, record_id, record_permissions) {
-    var result = Steedos.authRequest(`/api/v1/${object_name}/${record_id}?fields=["active", "is_system"]`, { type: 'get', async: false });
-    result = result.data;
-    return !result.active && !result.is_system
-  },
-  enable: function (object_name, record_id, fields) {
-    Steedos.authRequest(`/api/v1/${object_name}/${record_id}`, { type: 'put', async: false, data: JSON.stringify({ doc: { active: true } }) });
-    // TODO: 使用 React Router 刷新页面提升性能
-    window.location.reload();
-  },
-  disableVisible: function (object_name, record_id, record_permissions) {
-    var result = Steedos.authRequest(`/api/v1/${object_name}/${record_id}`, { type: 'get', async: false });
-    result = result.data;
-    return result.active && !result.is_system
-  },
-  disable: function (object_name, record_id, fields) {
-    Steedos.authRequest(`/api/v1/${object_name}/${record_id}`, { type: 'put', async: false, data: JSON.stringify({ doc: { active: false } }) });
-    // TODO: 使用 React Router 刷新页面提升性能
-    window.location.reload();
-  },
   copyVisible: function () {
     return true;
   },

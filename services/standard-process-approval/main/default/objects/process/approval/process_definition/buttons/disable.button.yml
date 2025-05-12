@@ -1,0 +1,64 @@
+name: disable
+amis_schema: |-
+    {
+        "type": "service",
+        "body": [
+          {
+            "type": "button",
+            "label": "${'CustomAction.process_definition.disable' | t}",
+            "id": "u:disable",
+            "onEvent": {
+              "click": {
+                "weight": 0,
+                "actions": [
+                  {
+                    "ignoreError": false,
+                    "actionType": "ajax",
+                    "outputVar": "responseResult",
+                    "options": {},
+                    "api": {
+                      "url": "${context.rootUrl}/api/v1/process_definition/${recordId}",
+                      "method": "put",
+                      "requestAdaptor": "return {\n  ...api,\n  data: {\n    doc: {\n      active: false\n    }\n  }\n};",
+                      "adaptor": "",
+                      "messages": {}
+                    }
+                  },
+                  {
+                    "actionType": "broadcast",
+                    "args": {
+                      "eventName": "@data.changed.process_definition"
+                    },
+                    "data": {
+                      "objectName": "process_definition"
+                    }
+                  }
+                ]
+              }
+            },
+            "visibleOn": "${active && !is_system}"
+          }
+        ],
+        "regions": [
+            "body"
+        ],
+        "data": {
+            "context": {},
+            "dataComponentId": "",
+            "record_id": "",
+            "record": {},
+            "permissions": {}
+        },
+        "bodyClassName": "p-0",
+        "dsType": "api",
+        "asideResizor": false,
+        "editorState": "default",
+        "pullRefresh": {
+            "disabled": true
+        }
+    }
+is_enable: true
+label: 停用
+"on": record
+type: amis_button
+visible: true
