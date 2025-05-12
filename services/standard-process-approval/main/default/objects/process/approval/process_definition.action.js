@@ -1,21 +1,31 @@
+/*
+ * @Author: 殷亮辉 yinlianghui@hotoa.com
+ * @Date: 2025-04-14 09:47:57
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2025-05-12 16:45:57
+ */
 module.exports = {
   enableVisible: function (object_name, record_id, record_permissions) {
-    var result = Steedos.authRequest(`/api/v4/${object_name}/${record_id}`, { type: 'get', async: false });
+    var result = Steedos.authRequest(`/api/v1/${object_name}/${record_id}?fields=["active", "is_system"]`, { type: 'get', async: false });
+    result = result.data;
     return !result.active && !result.is_system
   },
   enable: function (object_name, record_id, fields) {
-    Steedos.authRequest(`/api/v4/${object_name}/${record_id}`, { type: 'put', async: false, data: JSON.stringify({ active: true }) });
-    FlowRouter.reload();
+    Steedos.authRequest(`/api/v1/${object_name}/${record_id}`, { type: 'put', async: false, data: JSON.stringify({ doc: { active: true } }) });
+    // TODO: 使用 React Router 刷新页面提升性能
+    window.location.reload();
   },
   disableVisible: function (object_name, record_id, record_permissions) {
-    var result = Steedos.authRequest(`/api/v4/${object_name}/${record_id}`, { type: 'get', async: false });
+    var result = Steedos.authRequest(`/api/v1/${object_name}/${record_id}`, { type: 'get', async: false });
+    result = result.data;
     return result.active && !result.is_system
   },
   disable: function (object_name, record_id, fields) {
-    Steedos.authRequest(`/api/v4/${object_name}/${record_id}`, { type: 'put', async: false, data: JSON.stringify({ active: false }) });
-    FlowRouter.reload();
+    Steedos.authRequest(`/api/v1/${object_name}/${record_id}`, { type: 'put', async: false, data: JSON.stringify({ doc: { active: false } }) });
+    // TODO: 使用 React Router 刷新页面提升性能
+    window.location.reload();
   },
-  copyVisible: function(){
+  copyVisible: function () {
     return true;
   },
   copy: function (object_name, record_id, fields) {
@@ -35,9 +45,9 @@ module.exports = {
     let docName = doc.name
     let docObjectName = doc.object_name
 
-    Creator.odata.insert(object_name, Object.assign(newDoc, { name: docName, object_name: docObjectName, active:false }), function (result, error) {
+    Creator.odata.insert(object_name, Object.assign(newDoc, { name: docName, object_name: docObjectName, active: false }), function (result, error) {
       if (result) {
-        for(let node of doc.process_nodes){
+        for (let node of doc.process_nodes) {
           let nodeName = node.name
           var newNode = {}
           _.each(Creator.getObject('process_node').fields, function (v, k) {
