@@ -50,7 +50,7 @@ export class ObjectsHandle extends BaseHandle {
       });
       const fields = {};
       _.map(fieldRecords, (field) => {
-        fields[field.name] = field;
+        fields[field.name || field._name] = field;
       });
 
       // 查询按钮

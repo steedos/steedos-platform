@@ -199,8 +199,6 @@ module.exports = {
         }else{
             doc.name = getFieldName(doc.object,doc._name,doc.space);
         }
-
-
         validateDoc(doc);
         await checkFormulaInfiniteLoop(doc);
         await checkMasterDetailTypeField(doc);
