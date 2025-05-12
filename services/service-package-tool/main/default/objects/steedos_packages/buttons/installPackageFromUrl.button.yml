@@ -19,7 +19,6 @@ amis_schema: |-
                                   "type": "dialog",
                                   "title": "${'steedos_packages.install.install_package_from_url' | t}",
                                   "body": [
-                                        
                                       {
                                           "type": "form",
                                           "id": "u:add9d810b386",

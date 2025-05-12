@@ -28,7 +28,9 @@ module.exports = {
                                 return;
                             }
                             setTimeout(function(){
-                                SteedosUI.notification.success(t('steedos_packages.disable.toastr_success'))
+                                SteedosUI.notification.success({
+                                    message: t('steedos_packages.disable.toastr_success')
+                                });
                                 window.location.reload()
                             }, 100 * 1)
                         },

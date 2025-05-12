@@ -24,8 +24,10 @@ module.exports = {
                                 return;
                             }
                             setTimeout(function(){
-                                SteedosUI.notification.success(t('steedos_packages.uninstall.toastr_success'))
-                                window.location.reload()
+                                SteedosUI.notification.success({
+                                    message: t('steedos_packages.uninstall.toastr_success')
+                                });
+                                navigate("/app/admin/steedos_packages")
                             }, 1000 * 2)
                         },
                         error: function(XMLHttpRequest){

@@ -28,7 +28,9 @@ module.exports = {
                                 return;
                             }
                             setTimeout(function(){
-                                SteedosUI.notification.success('已启用')
+                                SteedosUI.notification.success({
+                                    message: t('已启用')
+                                });
                                 window.location.reload()
                             }, 100 * 1)
                         },

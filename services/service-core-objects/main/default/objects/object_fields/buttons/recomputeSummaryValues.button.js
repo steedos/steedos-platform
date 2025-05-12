@@ -13,10 +13,14 @@ module.exports = {
                     }),
                     success: function(data){
                         if(data.status == 1){
-                            SteedosUI.notification.error("object_fields_function_recomputeSummaryValues_error", t(data.error.reason));
+                            SteedosUI.notification.error({
+                                message: t('object_fields_function_recomputeSummaryValues_error')
+                            });
                             return;
                         }
-                        SteedosUI.notification.success(t('object_fields_function_recomputeSummaryValues_success'))
+                        SteedosUI.notification.success({
+                            message: t('object_fields_function_recomputeSummaryValues_success')
+                        });
                     },
                     error: function(XMLHttpRequest){
                         SteedosUI.notification.error({message: XMLHttpRequest.responseJSON.msg});
