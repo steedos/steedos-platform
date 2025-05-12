@@ -1,0 +1,13 @@
+name: process_definition_form
+is_active: true
+label: 批准过程表单
+locked: false
+object_name: process_definition
+pageAssignments:
+  - type: orgDefault
+    page: process_definition_form
+    desktop: true
+    mobile: true
+render_engine: amis
+type: form
+widgets: []

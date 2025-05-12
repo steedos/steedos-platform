@@ -1,0 +1,13 @@
+name: process_node_form
+is_active: true
+label: 批准步骤表单
+locked: false
+object_name: process_node
+pageAssignments:
+  - type: orgDefault
+    page: process_node_form
+    desktop: true
+    mobile: true
+render_engine: amis
+type: form
+widgets: []
