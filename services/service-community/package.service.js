@@ -142,8 +142,6 @@ module.exports = {
 	  
 		  // 启动 加载软件包服务
 		  this.broker.createService(require("@steedos/service-package-registry"));
-		  // 启动 软件包安装、卸载、重载等操作
-		  this.broker.createService(require("@steedos/service-package-tool"));
 	  
 		  this.broker.createService(require("@steedos/standard-permission"));
 		  this.broker.createService(require("@steedos/standard-ui"));

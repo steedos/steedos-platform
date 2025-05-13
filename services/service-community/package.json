@@ -27,7 +27,6 @@
     "@steedos/service-objectql": "3.0.0-beta.25",
     "@steedos/service-package-loader": "3.0.0-beta.25",
     "@steedos/service-package-registry": "3.0.0-beta.25",
-    "@steedos/service-package-tool": "3.0.0-beta.25",
     "@steedos/service-pages": "3.0.0-beta.25",
     "@steedos/service-plugin-amis": "3.0.0-beta.25",
     "@steedos/service-rest": "3.0.0-beta.25",
