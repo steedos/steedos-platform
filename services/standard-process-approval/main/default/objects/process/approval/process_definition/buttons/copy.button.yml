@@ -1,0 +1,60 @@
+name: copy
+amis_schema: |-
+    {
+        "type": "service",
+        "body": [
+          {
+            "type": "button",
+            "label": "${'CustomAction.process_definition.copy' | t}",
+            "id": "u:copy",
+            "onEvent": {
+              "click": {
+                "weight": 0,
+                "actions": [
+                  {
+                    "ignoreError": false,
+                    "actionType": "ajax",
+                    "outputVar": "responseResult",
+                    "options": {},
+                    "api": {
+                      "url": "${context.rootUrl}/service/api/approval_process/process_definition/${recordId}/copy",
+                      "method": "get",
+                      "adaptor": "",
+                      "messages": {}
+                    }
+                  },
+                  {
+                    "actionType": "link",
+                    "args": {
+                      "link": "/app/admin/process_definition/view/${responseResult._id}"
+                    },
+                    "expression": "${responseResult.state == 'SUCCESS'}"
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "regions": [
+            "body"
+        ],
+        "data": {
+            "context": {},
+            "dataComponentId": "",
+            "record_id": "",
+            "record": {},
+            "permissions": {}
+        },
+        "bodyClassName": "p-0",
+        "dsType": "api",
+        "asideResizor": false,
+        "editorState": "default",
+        "pullRefresh": {
+            "disabled": true
+        }
+    }
+is_enable: true
+label: 复制
+"on": record
+type: amis_button
+visible: true

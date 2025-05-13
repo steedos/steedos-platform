@@ -2,16 +2,9 @@
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2025-04-14 09:47:57
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2025-05-12 22:10:33
+ * @LastEditTime: 2025-05-13 12:09:08
  */
 module.exports = {
-  copyVisible: function () {
-    return true;
-  },
-  copy: function (object_name, record_id, fields) {
-    let result = Steedos.authRequest(`/api/v4/${object_name}/${record_id}/copy`, { type: 'get', async: false });
-    FlowRouter.go(`/app/admin/process_definition/view/${result._id}`);
-  },
   customize: function (object_name, record_id, fields) {
     var doc = Creator.odata.get(object_name, record_id);
     var newDoc = {}
