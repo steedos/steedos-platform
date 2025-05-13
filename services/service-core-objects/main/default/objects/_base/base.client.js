@@ -166,14 +166,14 @@ Steedos.StandardObjects = {
             //         });
             //     }
             // },
-            // standard_submit_for_approval:{
-            //     visible: function (object_name, record_id) {
-            //         return Steedos.ProcessManager.allowSubmit(object_name, record_id);
-            //     },
-            //     todo: function (object_name, record_id) {
-            //         Steedos.ProcessManager.submit(object_name, record_id);
-            //     }
-            // },
+            standard_submit_for_approval:{
+                visible: function (object_name, record_id) {
+                    return Steedos.ProcessManager.allowSubmit(object_name, record_id);
+                },
+                // todo: function (object_name, record_id) {
+                //     Steedos.ProcessManager.submit(object_name, record_id);
+                // }
+            },
             standard_import_data:{
                 visible: function(objectName){
                     var allowCreate = Steedos.Object.base.actions.standard_new.visible.apply(this, arguments);
