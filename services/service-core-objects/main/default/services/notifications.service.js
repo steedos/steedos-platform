@@ -91,11 +91,11 @@ module.exports = {
                     modified_by: from
                 }, message)
 
-                _.each(to, function(userId){
-                    let notifications_id = objectql.getObject('notifications')._makeNewID();
+                for (const userId of to) {
+                    let notifications_id = await objectql.getObject('notifications')._makeNewID();
                     bulk.insert(Object.assign({}, doc, {_id: notifications_id, owner: userId}));
                     notifications_ids.push(notifications_id)
-                })
+                }
 
                 bulk.execute().catch(function (error) {
                     console.error("通知数据插入失败，错误信息：", error);
