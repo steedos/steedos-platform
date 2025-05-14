@@ -2,9 +2,12 @@ module.exports = {
 showDesign:function (object_name, record_id) {
     document.location = Steedos.absoluteUrl(`/api/amisListviewDesign?id=${record_id}&object=${this.record.object_name}&assetUrls=${Builder.settings.assetUrls}&locale=${Builder.settings.locale}`);
   },
-showDesignVisible:function (object_name, record_id, record_permissions) {
+showDesignVisible:function (object_name, record_id, record_permissions, data) {
       var perms= {};
-      var record = Creator.getObjectRecord(object_name, record_id);
+      var record = data && data.record;
+       if (!Steedos.isSpaceAdmin()) {
+            return false
+        }
       if(!record){
         return false;
       }
@@ -14,10 +17,7 @@ showDesignVisible:function (object_name, record_id, record_permissions) {
       if (record_permissions) {
         perms = record_permissions;
       } else {
-          record_permissions = Creator.getRecordPermissions(object_name, record, Meteor.userId());
-          if (record_permissions) {
-              perms = record_permissions;
-          }
+          return false
       }
       return perms["allowEdit"];
   }

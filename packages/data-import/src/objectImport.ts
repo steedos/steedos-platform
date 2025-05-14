@@ -3,7 +3,7 @@ const _ = require("underscore");
 const objectql = require("@steedos/objectql");
 const moment = require("moment");
 const auth = require("@steedos/auth");
-const i18n = require('@steedos/i18n')
+const i18n = require("@steedos/i18n");
 
 type ImportOptions = {
   objectName: string;
@@ -17,12 +17,16 @@ type ImportOptions = {
   queueImportId: string | null;
 };
 
-const FILE_EXT_TYPES = ['.xlsx', '.xls'];
+const FILE_EXT_TYPES = [".xlsx", ".xls"];
+
+declare const broker;
 
 const FIX_SECONDS = 43; // 解决 nodejs date.getTimezoneOffset不准问题 https://github.com/SheetJS/sheetjs/issues/2350
 
 function _getDate(date: Date, utcOffset: Number) {
-    return new Date(moment(date).add(utcOffset, 'h').add(FIX_SECONDS, 's').format('YYYY-MM-DD'));
+  return new Date(
+    moment(date).add(utcOffset, "h").add(FIX_SECONDS, "s").format("YYYY-MM-DD"),
+  );
 }
 
 function converterString(field_name, dataCell, jsonObj) {
@@ -38,14 +42,14 @@ function converterDate(field_name, dataCell, jsonObj, utcOffset) {
   var date, date_error;
   date_error = "";
   if (_.isEmpty(dataCell) && !_.isDate(dataCell)) {
-    return
+    return;
   }
 
   if (_.isDate(dataCell)) {
     try {
-      jsonObj[field_name] = _getDate(dataCell, utcOffset)
+      jsonObj[field_name] = _getDate(dataCell, utcOffset);
     } catch (error) {
-      return error.message
+      return error.message;
     }
     return "";
   }
@@ -55,7 +59,7 @@ function converterDate(field_name, dataCell, jsonObj, utcOffset) {
     date.getFullYear() &&
     Object.prototype.toString.call(date) === "[object Date]"
   ) {
-    jsonObj[field_name] = _getDate(date, utcOffset)
+    jsonObj[field_name] = _getDate(date, utcOffset);
   } else {
     date_error = `${dataCell}不是日期类型数据`;
   }
@@ -66,14 +70,16 @@ function converterDateTime(field_name, dataCell, jsonObj, utcOffset) {
   var date, date_error;
   date_error = "";
   if (_.isEmpty(dataCell) && !_.isDate(dataCell)) {
-    return
+    return;
   }
   date = new Date(dataCell);
   if (
     date.getFullYear() &&
     Object.prototype.toString.call(date) === "[object Date]"
   ) {
-    jsonObj[field_name] = moment(dataCell).add(moment().utcOffset() - utcOffset * 60, 'm').toDate();
+    jsonObj[field_name] = moment(dataCell)
+      .add(moment().utcOffset() - utcOffset * 60, "m")
+      .toDate();
   } else {
     date_error = `${dataCell}不是日期时间类型数据`;
   }
@@ -85,14 +91,17 @@ function converterTime(field_name, dataCell, jsonObj, utcOffset) {
   var date, date_error;
   date_error = "";
   if (_.isEmpty(dataCell) && !_.isDate(dataCell)) {
-    return
+    return;
   }
   date = new Date(`1970-01-01T${dataCell}Z`);
   if (
     date.getFullYear() &&
     Object.prototype.toString.call(date) === "[object Date]"
   ) {
-    jsonObj[field_name] = moment(`1970-01-01T${dataCell}Z`, 'YYYY-MM-DDThh:mmZ').toDate();
+    jsonObj[field_name] = moment(
+      `1970-01-01T${dataCell}Z`,
+      "YYYY-MM-DDThh:mmZ",
+    ).toDate();
   } else {
     date_error = `${dataCell}不是时间类型数据`;
   }
@@ -102,9 +111,9 @@ function converterTime(field_name, dataCell, jsonObj, utcOffset) {
 function converteNum(field, field_name, dataCell, jsonObj) {
   var number, number_error;
   number_error = "";
-  if(_.isNumber(dataCell) || _.isNull(dataCell)){
+  if (_.isNumber(dataCell) || _.isNull(dataCell)) {
     jsonObj[field_name] = dataCell;
-  }else{
+  } else {
     number = parseFloat(dataCell);
     if (!isNaN(number)) {
       jsonObj[field_name] = number;
@@ -113,10 +122,14 @@ function converteNum(field, field_name, dataCell, jsonObj) {
     }
   }
 
-  if (field.required && _.isEmpty(number_error) && _.isNull(jsonObj[field_name])) {
+  if (
+    field.required &&
+    _.isEmpty(number_error) &&
+    _.isNull(jsonObj[field_name])
+  ) {
     number_error += `${field_name}字段为必填项`;
   }
-  
+
   return number_error;
 }
 
@@ -195,7 +208,7 @@ async function converterLookup(
   dataCell,
   jsonObj,
   fieldMap,
-  options
+  options,
 ) {
   var fields,
     lookups,
@@ -244,15 +257,15 @@ async function converterLookup(
     if (!cellContent) {
       continue;
     }
-    
+
     //修复导入单元格为数字式文本问题
-    if (lookupCollection.fields[selectfield]?._type == 'text') {
-        cellContent = cellContent.toString();
+    if (lookupCollection.fields[selectfield]?._type == "text") {
+      cellContent = cellContent.toString();
     }
-    
+
     let cellFilter = [selectfield, "=", cellContent];
     let spaceFilter = ["space", "=", options.userSession.spaceId];
-    let filters = [cellFilter, spaceFilter, ['is_deleted', '!=', true]];
+    let filters = [cellFilter, spaceFilter, ["is_deleted", "!=", true]];
     lookups = await lookupCollection.find({ filters: filters });
 
     if (lookups.length == 0) {
@@ -323,7 +336,7 @@ function converterBool(field_name, dataCell, jsonObj) {
   var bool_error, flag;
   bool_error = "";
   if (!dataCell) {
-    return bool_error
+    return bool_error;
   }
   flag = dataCell.toString().toLowerCase();
   if (flag === "是" || flag === "1" || flag === "yes" || flag === "true") {
@@ -365,7 +378,7 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
     let dataCell = dataRow[i];
     // 如果导入的值是字符串类型，则执行trim()去除头尾空白符，空白符包括：空格、制表符 tab、换行符等
     if (_.isString(dataCell)) {
-      dataCell = dataCell.trim()
+      dataCell = dataCell.trim();
     }
     if (!dataCell && !_.isNumber(dataCell)) {
       dataCell = null;
@@ -391,7 +404,12 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
                 error = converterDate(field_name, dataCell, jsonObj, utcOffset);
                 break;
               case "datetime":
-                error = converterDateTime(field_name, dataCell, jsonObj, utcOffset);
+                error = converterDateTime(
+                  field_name,
+                  dataCell,
+                  jsonObj,
+                  utcOffset,
+                );
                 break;
               case "time":
                 error = converterTime(field_name, dataCell, jsonObj, utcOffset);
@@ -407,7 +425,7 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
                   objectName,
                   field_name,
                   dataCell,
-                  jsonObj
+                  jsonObj,
                 );
                 break;
               case "lookup":
@@ -417,7 +435,7 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
                   dataCell,
                   jsonObj,
                   lookupFieldMap,
-                  options
+                  options,
                 );
                 break;
               case "text":
@@ -433,7 +451,7 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
                   dataCell,
                   jsonObj,
                   lookupFieldMap,
-                  options
+                  options,
                 );
                 break;
               case "email":
@@ -567,16 +585,21 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
 
         // }
         // 如果有自定义_id，则校验_id为字符串类型且有字母、数字组成
-        if (jsonObj.hasOwnProperty('_id')) {
+        if (jsonObj.hasOwnProperty("_id")) {
           if (!_.isString(jsonObj._id) || !/^[a-zA-Z0-9]*$/.test(jsonObj._id)) {
-            throw new Error('Primary Key ( _id )必须为字母、数字组成的字符串。');
+            throw new Error(
+              "Primary Key ( _id )必须为字母、数字组成的字符串。",
+            );
           }
         }
         // 如果导入时指定了owner，那么需要给company_id、company_ids赋值，权限保持一致
         if (jsonObj.owner) {
-          const ownerSession = await auth.getSessionByUserId(jsonObj.owner, space)
-          jsonObj['company_id'] = ownerSession.company_id
-          jsonObj['company_ids'] = ownerSession.company_ids
+          const ownerSession = await auth.getSessionByUserId(
+            jsonObj.owner,
+            space,
+          );
+          jsonObj["company_id"] = ownerSession.company_id;
+          jsonObj["company_ids"] = ownerSession.company_ids;
         }
         await objectCollection.insert(jsonObj, options.userSession);
         insertInfo["create"] = true;
@@ -598,7 +621,7 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
 }
 
 function selectObjectToFilters(selectObj) {
-  let filters: any = [['is_deleted', '!=', true]];
+  let filters: any = [["is_deleted", "!=", true]];
   for (let k in selectObj) {
     let filter: any = [];
     filter.push(k);
@@ -611,36 +634,22 @@ function selectObjectToFilters(selectObj) {
 
 function formateFilterValue(value) {
   if (_.isString(value)) {
-    return value.replace(/%/g, "%25")
+    return value.replace(/%/g, "%25");
   }
 
-  return value
+  return value;
 }
 
-
-function loadWorkbook(file) {
+async function loadWorkbook(file) {
   const xlsx = require("node-xlsx");
-  var stream, chunks;
-  stream = file.createReadStream("files");
-  chunks = [];
-
-  let loadStream = new Promise(function(resolve, reject) {
-    stream.on("data", function(chunk) {
-      return chunks.push(chunk);
-    });
-    stream.on("end", function() {
-      try {
-        let workbook = xlsx.parse(Buffer.concat(chunks), {
-          cellDates: true,
-        });
-        resolve(workbook);
-      } catch (error) {
-        reject(error)
-      }
-    });
+  const chunks = await broker.call("@builder6/files.getFileById", {
+    collectionName: "files",
+    fileId: file._id,
   });
-
-  return loadStream;
+  const workbook = xlsx.parse(chunks, {
+    cellDates: true,
+  });
+  return workbook;
 }
 
 /**
@@ -654,7 +663,7 @@ export async function importWithCmsFile(
   importObjId,
   userSession,
   importObjectHistoryId,
-  fileId
+  fileId,
 ) {
   var file, files;
 
@@ -664,7 +673,7 @@ export async function importWithCmsFile(
 
   if (!queueImport) {
     throw new Error(
-      `can not find queue_import record with given id "${importObjId}"`
+      `can not find queue_import record with given id "${importObjId}"`,
     );
   }
   let options: any = {
@@ -682,7 +691,7 @@ export async function importWithCmsFile(
     (!options.externalIdName || _.isEmpty(options.externalIdName))
   ) {
     throw new Error(
-      `external_id_name is required with operation: update or upsert`
+      `external_id_name is required with operation: update or upsert`,
     );
   }
 
@@ -712,7 +721,7 @@ export async function importWithCmsFile(
 
 /**
  * 判断是否符合导入的文件类型
- * @param file 
+ * @param file
  */
 function isImportFileType(file) {
   let fileExt = path.extname(file.original.name);
@@ -721,7 +730,7 @@ function isImportFileType(file) {
   }
 }
 
-const formatErrors = function(errorList) {
+const formatErrors = function (errorList) {
   let errors: any = null;
 
   if (errorList && _.isArray(errorList) && errorList.length > 0) {
@@ -771,13 +780,13 @@ export async function importWithExcelFile(file, options) {
     for (let _externalIdName of options.externalIdName) {
       if (!_.contains(mappedFieldNames, _externalIdName)) {
         throw new Error(
-          `externalIdName "${_externalIdName}" is not mapped in fieldMapping`
+          `externalIdName "${_externalIdName}" is not mapped in fieldMapping`,
         );
       }
       if (!_.contains(_.keys(objectConfig.fields), _externalIdName)) {
         if (_externalIdName != "_id") {
           throw new Error(
-            `externalIdName "${_externalIdName}" should be a field of object  "${options.objectName}"`
+            `externalIdName "${_externalIdName}" should be a field of object  "${options.objectName}"`,
           );
         }
       }
@@ -793,7 +802,7 @@ export async function importWithExcelFile(file, options) {
       !_.contains(mappedFieldNames, fieldName)
     ) {
       throw new Error(
-        `field "${fieldName}" is required but not mapped in fieldMapping`
+        `field "${fieldName}" is required but not mapped in fieldMapping`,
       );
     }
   }
@@ -821,28 +830,34 @@ export async function importWithExcelFile(file, options) {
           state: "finished",
           start_time,
           end_time,
-        }
+        },
       );
     }
 
-    const userSession = await auth.getSessionByUserId(options.userSession.userId);
+    const userSession = await auth.getSessionByUserId(
+      options.userSession.userId,
+    );
     const locale = userSession?.locale;
     const total_count = importResult.total_count;
     const success_count = importResult.success_count;
     const failure_count = importResult.failure_count;
 
     // let notificationBody = `总共导入${importResult.total_count}条记录;\n成功: ${importResult.success_count}条;\n失败: ${importResult.failure_count};`;
-    let notificationBody = i18n.t('queue_import_success_notification_body', {returnObjects: true, total_count,success_count,failure_count }, locale);
+    let notificationBody = i18n.t(
+      "queue_import_success_notification_body",
+      { returnObjects: true, total_count, success_count, failure_count },
+      locale,
+    );
     if (importResult.errorList && importResult.errorList.length > 0) {
-      notificationBody = `${notificationBody}\n${i18n.t('queue_import_error_info', {returnObjects: true}, locale)}: ${importResult.errorList.join(
-        "\n  "
+      notificationBody = `${notificationBody}\n${i18n.t("queue_import_error_info", { returnObjects: true }, locale)}: ${importResult.errorList.join(
+        "\n  ",
       )}`;
     }
 
     //发送通知
-    return objectql.getSteedosSchema().broker.call('notifications.add', {
+    return objectql.getSteedosSchema().broker.call("notifications.add", {
       message: {
-        name: `${i18n.t('queue_import_tips', {returnObjects: true}, locale)}: ${file.original.name}`,
+        name: `${i18n.t("queue_import_tips", { returnObjects: true }, locale)}: ${file.original.name}`,
         body: notificationBody,
         related_to: {
           o: "queue_import_history",
@@ -853,8 +868,8 @@ export async function importWithExcelFile(file, options) {
         space: options.userSession.spaceId,
       },
       from: options.userSession.userId,
-      to: options.userSession.userId
-    })
+      to: options.userSession.userId,
+    });
   }
 
   importDataAsync(recordDatas);
@@ -902,7 +917,7 @@ export async function filetoRecords(file, options) {
     }
     if (headerMap[header]) {
       throw new Error(
-        `The Excel file contained duplicate header(s): ${header}`
+        `The Excel file contained duplicate header(s): ${header}`,
       );
     } else {
       headerMap[header] = true;

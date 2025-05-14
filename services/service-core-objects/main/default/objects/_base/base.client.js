@@ -202,7 +202,8 @@ Steedos.StandardObjects = {
                     }
                     window._hasImportTemplates[objectName] = false;
                     return false;
-                }
+                },
+                todo: function(object_name){}
             },
             standard_export_excel:{
                 visible: function(objectName,  record_id, record_permissions, props){

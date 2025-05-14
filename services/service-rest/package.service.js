@@ -534,7 +534,6 @@ module.exports = {
                 const userSession = ctx.meta.user;
                 const query = {}
                 if (fields) {
-                    console.log(`fields:`, fields)
                     query.fields = JSON.parse(fields)
                 }
                 const doc = await this.findOne(objectName, id, query, userSession)

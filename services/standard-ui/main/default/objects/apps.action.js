@@ -42,42 +42,6 @@ module.exports = {
             return record.from_code_id;
         }
     },
-    createOAuth2App: function (object_name) {
-        // const fields = Creator.getObject(object_name).fields;
-        // const oauthAppFields = {};
-        // _.map(fields, function (v, k) {
-        //     if (k) {
-        //         if (_.include(['name', 'code', 'visible', 'description', 'is_creator', 'mobile', 'sort', 'is_use_iframe', 'is_new_window'], k) || k.startsWith("oauth2")) {
-        //             oauthAppFields[k] = v;
-        //         }
-        //     }
-        // });
-        // const onFinish = async (values = {}) => {
-        //     return new Promise((resolve, reject) => {
-        //         try {
-        //             console.log(`values`, values)
-        //             Creator.odata.insert(object_name, values)
-        //             setTimeout(function () { FlowRouter.reload() }, 100)
-        //             resolve(true);
-        //         } catch (error) {
-        //             console.error(`e2`, error);
-        //             reject(false);
-        //         }
-        //     })
-        // }
-        // SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
-        //     name: "createOAuth2App",
-        //     title: '创建 OAuth 应用',
-        //     objectSchema: {
-        //         fields: oauthAppFields
-        //     },
-        //     // initialValues: initialValues,
-        //     onFinish: onFinish //onFinishByFrame
-        // }, null, { iconPath: '/assets/icons' })
-    },
-    createOAuth2AppVisible: function () {
-        return false && Steedos.Object.base.actions.standard_new.visible();
-    },
     standard_editVisible: function(object_name, record_id, record_permissions, record){
         return false
     },
