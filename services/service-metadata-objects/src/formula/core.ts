@@ -25,27 +25,39 @@ const isAmisFormula = (formula: string) => {
 //     return result;
 // }
 
-function extractAmisFormulaVariableNames(node) {
-  const result = [];
+function extractAmisFormulaVariableNames(data) {
+  let variables = [];
 
-  function traverse(node) {
-    if (!node) return;
+  // 检查当前节点是否是变量（但不是getter的host）
+  if (data.type === "variable" && !data._isGetterHost) {
+    // 添加标记避免重复收集
+    variables.push(data.name);
+  }
+  // 检查当前节点是否是getter
+  else if (data.type === "getter") {
+    // 标记host节点，避免重复收集
+    data.host._isGetterHost = true;
+    variables.push(`${data.host.name}.${data.key.name}`);
+  }
 
-    // 如果是变量节点，收集它的name
-    if (node.type === "variable") {
-      result.push(node.name);
+  // 递归检查所有子节点
+  if (Array.isArray(data)) {
+    for (const item of data) {
+      if (typeof item === "object" && item !== null) {
+        variables = variables.concat(extractAmisFormulaVariableNames(item));
+      }
     }
-
-    // 递归遍历所有子节点
-    for (const key in node) {
-      if (typeof node[key] === "object" && node[key] !== null) {
-        traverse(node[key]);
+  } else if (typeof data === "object" && data !== null) {
+    for (const key in data) {
+      if (typeof data[key] === "object" && data[key] !== null) {
+        variables = variables.concat(
+          extractAmisFormulaVariableNames(data[key]),
+        );
       }
     }
   }
 
-  traverse(node);
-  return result;
+  return variables;
 }
 
 /**
