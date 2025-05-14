@@ -205,7 +205,21 @@ list_views:
       - name
       - object_name
       - operation
-      - template_url
+      - field: template_url
+        amis: 
+          "type": "button-group"
+          "static": false
+          "buttons":
+            - "type": "button"
+              "label": "下载"
+              "visibleOn": "${template_url}"
+              "level": "link"
+              "actionType": "download"
+              "api": 
+                "url": "${template_url}"
+                "method": "get"
+                "headers": 
+                  "Authorization": "Bearer ${context.tenantId},${context.authToken}"
     filter_scope: space
 permission_set:
   user:
