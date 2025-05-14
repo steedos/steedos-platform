@@ -17,3 +17,4 @@ shared_to: space
 sort: [["created", "desc"], ["name", "asc"]]
 filters:
   - ['hidden', '!=', true]
+  - ['isMetadata', '!=', true]

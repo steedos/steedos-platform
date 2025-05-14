@@ -53,10 +53,21 @@ export default class IntlProvider extends React.PureComponent<IntlProviderProps,
         }
     }
 
-    fetchSettings = async () => {
+    fetchSettings = async (retryCount: number = 0, maxRetries: number = 20) => {
         try {
             const response = await axios.get('/api/public/settings');
             const settingsData = response.data;
+
+            // 检查服务器状态
+            if (settingsData.serverStatus === 'starting') {
+                if (retryCount < maxRetries) {
+                    console.log(`Server is starting, retrying in 3 seconds... (${retryCount + 1}/${maxRetries})`);
+                    await new Promise(resolve => setTimeout(resolve, 3000));
+                    return this.fetchSettings(retryCount + 1, maxRetries);
+                } else {
+                    throw new Error('Server is taking too long to start');
+                }
+            }
             
             // If settings are needed to load translations or other actions, you can dispatch them here
             // For example:

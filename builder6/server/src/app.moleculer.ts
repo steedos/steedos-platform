@@ -23,6 +23,8 @@ export class AppMoleculer extends Service {
 
           this.started = true;
 
+          global.STEEDOS_STARTED = true;
+
           ctx.broker.broadcast("@steedos/server.started");
 
           this._logger.log(

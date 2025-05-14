@@ -16,6 +16,7 @@ export class AppController {
         ? process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS.split(",")
         : [],
       unpkgUrl: process.env.STEEDOS_UNPKG_URL,
+      serverStatus: global.STEEDOS_STARTED ? "running" : "starting",
     };
   }
 }
