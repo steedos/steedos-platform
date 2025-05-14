@@ -24,10 +24,8 @@ amis_schema: |-
                     }
                   },
                   {
-                    "actionType": "link",
-                    "args": {
-                      "link": "/app/admin/process_definition/view/${responseResult._id}"
-                    },
+                    "actionType": "custom",
+                    "script": "window.location.href = '/app/admin/process_definition/view/' + (event.data.responseResult && event.data.responseResult._id);",
                     "expression": "${responseResult.state == 'SUCCESS'}"
                   }
                 ]

@@ -89,23 +89,22 @@ fields:
     visible_on: "{{ formData.approver != 'submitter_choose' }}"
     depend_on:
       - process_definition
-    optionsFunction: !!js/function |
-      function (doc){
-        var options = [];
-        if(doc.process_definition){
-          var pid = doc.process_definition;
-          if(_.isObject(pid)){
-            pid = pid._id;
-          }
-          var object_name = Creator.odata.get("process_definition", pid, "object_name").object_name;
-          var userFields = _.filter(Creator.getObject(object_name).fields, function(field){
-            return (field.type === 'lookup' || field.type === 'master_detail') && field.omit != true && (field.reference_to === 'users' || (field.reference_to === 'space_users' && field.reference_to_field === 'user'))
-          });
-          _.each(userFields, function(field){
-            options.push({label:field.label, value:field.name});
-          })
+    reference_to: object_fields
+    reference_to_field: name
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function (filters, values) {
+        var pid = values.process_definition;
+        if(_.isObject(pid)){
+          pid = pid._id;
         }
-        return options;
+        var result = Steedos.authRequest("/api/v1/process_definition/" + pid + "?fields=[\"object_name\"]", {type: 'get', async: false});
+        var pObjectName = result && result.data && result.data.object_name;
+        if(pObjectName){
+          return [['object', '=', pObjectName], [['type', '=', 'lookup'], 'or', ['type', '=', 'master_detail']], [['reference_to', '=', 'users'], 'or', [['reference_to', '=', 'space_users'],['reference_to_field', '=', 'user']]], ['omit', '!=', true]];
+        }
+        else{
+          return ['object', '=', -1];
+        }
       }
   when_multiple_approvers:
     type: select
@@ -149,8 +148,14 @@ fields:
           if(_.isObject(pid)){
             pid = pid._id;
           }
-          var object_name = Creator.odata.get("process_definition", pid, "object_name").object_name;
-          return "object_name eq '" + object_name + "'";
+          var result = Steedos.authRequest("/api/v1/process_definition/" + pid + "?fields=[\"object_name\"]", {type: 'get', async: false});
+          var pObjectName = result && result.data && result.data.object_name;
+          if(pObjectName){
+            return ['object_name', '=', pObjectName];
+          }
+          else{
+            return ['object_name', '=', -1];
+          }
         }
       }
     group: Approval Actions
@@ -169,8 +174,14 @@ fields:
           if(_.isObject(pid)){
             pid = pid._id;
           }
-          var object_name = Creator.odata.get("process_definition", pid, "object_name").object_name;
-          return "object_name eq '" + object_name + "'";
+          var result = Steedos.authRequest("/api/v1/process_definition/" + pid + "?fields=[\"object_name\"]", {type: 'get', async: false});
+          var pObjectName = result && result.data && result.data.object_name;
+          if(pObjectName){
+            return ['object_name', '=', pObjectName];
+          }
+          else{
+            return ['object_name', '=', -1];
+          }
         }
       }
     group: Approval Actions
@@ -189,8 +200,14 @@ fields:
           if(_.isObject(pid)){
             pid = pid._id;
           }
-          var object_name = Creator.odata.get("process_definition", pid, "object_name").object_name;
-          return "object_name eq '" + object_name + "'";
+          var result = Steedos.authRequest("/api/v1/process_definition/" + pid + "?fields=[\"object_name\"]", {type: 'get', async: false});
+          var pObjectName = result && result.data && result.data.object_name;
+          if(pObjectName){
+            return ['object_name', '=', pObjectName];
+          }
+          else{
+            return ['object_name', '=', -1];
+          }
         }
       }
     group: Rejection Actions
@@ -209,8 +226,14 @@ fields:
           if(_.isObject(pid)){
             pid = pid._id;
           }
-          var object_name = Creator.odata.get("process_definition", pid, "object_name").object_name;
-          return "object_name eq '" + object_name + "'";
+          var result = Steedos.authRequest("/api/v1/process_definition/" + pid + "?fields=[\"object_name\"]", {type: 'get', async: false});
+          var pObjectName = result && result.data && result.data.object_name;
+          if(pObjectName){
+            return ['object_name', '=', pObjectName];
+          }
+          else{
+            return ['object_name', '=', -1];
+          }
         }
       }
     group: Rejection Actions

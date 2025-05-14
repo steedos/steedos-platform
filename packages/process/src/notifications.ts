@@ -1,3 +1,9 @@
+/*
+ * @Author: 殷亮辉 yinlianghui@hotoa.com
+ * @Date: 2025-04-14 09:47:57
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2025-05-13 17:51:28
+ */
 const objectql = require("@steedos/objectql");
 import { getUserLocale } from "@steedos/objectql";
 import { t } from "@steedos/i18n";
@@ -51,7 +57,9 @@ export const sendNotifications = async (
     space: instance.space,
   };
 
-  Fiber(function () {
-    Creator.addNotifications(notificationDoc, null, [to]);
-  }).run();
+  objectql.getSteedosSchema().broker.call("notifications.add", {
+    message: notificationDoc,
+    from: null,
+    to: to,
+  });
 };
