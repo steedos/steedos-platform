@@ -163,3 +163,8 @@ body a:hover {
 .antd-PdfViewer-Tool{
     bottom: 10px !important;
 }
+
+
+.ant-notification{
+    z-index: 1900 !important;
+}
