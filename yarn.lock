@@ -2194,10 +2194,10 @@
   dependencies:
     yup "^1.1.0"
 
-"@builder6/react@8.0.36":
-  version "8.0.36"
-  resolved "https://registry.npmjs.org/@builder6/react/-/react-8.0.36.tgz#5e7e1c0df1759051265909a56b9fb77815d352ca"
-  integrity sha512-TkHENIIW91yoK3TVubkd++WTsKePVNaVsKYj+HM9mh1vGI1eCRAkRP4sNa3wWlPUEKuYsH3uMzsP7e1XJeXUiw==
+"@builder6/react@8.0.37":
+  version "8.0.37"
+  resolved "https://registry.npmjs.org/@builder6/react/-/react-8.0.37.tgz#022b7a2a0009cc767592bb2ab2391c08b2258eb7"
+  integrity sha512-3IP4M0j8HUJb+6T387uEUgVUQaKZ4ER3txDnC+/RAjFCOCAYlogWKb200zra7r0TMFbi9VYvEwZ7/N0R3096fA==
   dependencies:
     "@builder6/sdk" "^6.0.0"
     "@emotion/core" "^10.0.17"
