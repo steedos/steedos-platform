@@ -85,6 +85,9 @@ export default class IntlProvider extends React.PureComponent<IntlProviderProps,
             };
             Builder.settings.unpkgUrl = settingsData.unpkgUrl;
             Builder.settings.assetUrls = settingsData.assetUrls;
+            Builder.settings.steedosVersion = settingsData.steedosVersion
+            Builder.settings.rootUrl = settingsData.rootUrl
+            Builder.settings.steedosAmisVersion = settingsData.steedosAmisVersion
 
 
             Builder.settings.env = {
