@@ -7,12 +7,34 @@ import clone = require("clone");
 import _ = require("underscore");
 import { Dictionary } from "@salesforce/ts-types";
 
+const PERMISSIONS = {
+  allowEdit: false,
+  allowDelete: false,
+  allowRead: true,
+};
+
+const BASERECORD = {
+  is_system: true,
+  record_permissions: PERMISSIONS,
+};
+
 export class MetadataDriver extends SteedosMongoDriver {
   databaseVersion?: string;
   config?: SteedosDriverConfig;
 
   constructor(config?: SteedosDriverConfig) {
     super(config);
+  }
+
+  addDefaultProps(records) {
+    if (!records) {
+      return records;
+    }
+    const results = records.map((obj) => ({
+      ...obj,
+      ...BASERECORD,
+    }));
+    return results;
   }
 
   queryMetadata(collection, queryOptions, spaceId) {
@@ -155,7 +177,10 @@ export class MetadataDriver extends SteedosMongoDriver {
     const spaceId = result.length > 0 ? result[0].space || null : null;
     const cachedSources = await this.getCachedSources(tableName);
     // console.log(`cachedSources`, cachedSources.length);
-    const sources = await this.mixinSources(result, cachedSources);
+    const sources = await this.mixinSources(
+      result,
+      this.addDefaultProps(cachedSources),
+    );
     const data = this.queryMetadata(sources, query, spaceId).all();
     return data;
   }
@@ -215,7 +240,13 @@ export class MetadataDriver extends SteedosMongoDriver {
   //     return result;
   // }
 
-  // findOne(collection: any, id: SteedosIDType, query: SteedosQueryOptions, spaceId?: SteedosIDType) {
-  //     throw new Error("Method not implemented.");
-  // }
+  async findOne(
+    collection: any,
+    id: SteedosIDType,
+    query: SteedosQueryOptions,
+    spaceId?: SteedosIDType,
+  ) {
+    const records = await this.find(collection, { filters: ["_id", "=", id] });
+    return records.length > 0 ? records[0] : null;
+  }
 }
