@@ -8,12 +8,6 @@ module.exports = {
         perms = {};
         if (record_permissions) {
             perms = record_permissions;
-        } else {
-            record = Creator.getObjectRecord(object_name, record_id);
-            record_permissions = Creator.getRecordPermissions(object_name, record, Meteor.userId());
-            if (record_permissions) {
-                perms = record_permissions;
-            }
         }
         return perms["allowEdit"];
     }

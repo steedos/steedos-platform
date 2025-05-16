@@ -142,13 +142,13 @@
 
             if (objectName && pageType === "record") {
               const record = await axios.get(
-                `${rootUrl}/api/v4/${objectName}?$orderby=modified&$top=1`,
+                `${rootUrl}/api/v1/${objectName}?$sort=modified&$top=1`,
                 {
                   withCredentials: true,
                   headers: { Authorization: `Bearer ${tenantId},${authToken}` },
                 }
               );
-              const value = record?.data?.value;
+              const value = record?.data?.items;
               if (value?.length > 0) {
                 schema.data.recordId = value[0]._id;
               }
