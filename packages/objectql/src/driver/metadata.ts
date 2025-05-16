@@ -245,12 +245,15 @@ export class MetadataDriver extends SteedosMongoDriver {
     tableName: string,
     id: SteedosIDType | SteedosQueryOptions,
   ): Promise<any> {
+    const record = await super.findOne(tableName, id, {});
     const result = await super.delete(tableName, id);
-    await broker.call(`b6-metadata.deleted`, {
-      type: tableName,
-      id,
-      data: result,
-    });
+    if (record) {
+      await broker.call(`b6-metadata.deleted`, {
+        type: tableName,
+        id,
+        data: record,
+      });
+    }
     return result;
   }
 
