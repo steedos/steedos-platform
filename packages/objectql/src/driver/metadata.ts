@@ -6,6 +6,7 @@ import mingo = require("mingo");
 import clone = require("clone");
 import _ = require("underscore");
 import { Dictionary } from "@salesforce/ts-types";
+import { translationObject } from "@steedos/i18n";
 
 const PERMISSIONS = {
   allowEdit: false,
@@ -49,8 +50,7 @@ export class MetadataDriver extends SteedosMongoDriver {
         spaceId = space;
       }
     }
-    const _collection = clone(collection, false);
-    _.each(_collection, function (item) {
+    _.each(collection, function (item) {
       try {
         if (!item.space && spaceId) {
           item.space = spaceId;
@@ -70,7 +70,7 @@ export class MetadataDriver extends SteedosMongoDriver {
           is_system: 1,
         })
       : null;
-    const cursor = query.find(_collection, projection);
+    const cursor = query.find(collection, projection);
     if (mongoOptions.sort) {
       cursor.sort(mongoOptions.sort as any);
     }
@@ -83,18 +83,27 @@ export class MetadataDriver extends SteedosMongoDriver {
     return cursor;
   }
 
+  translationObjectMetadata(objectConfig, lng = "zh-CN") {
+    const metadata = clone(objectConfig, false);
+    translationObject(lng, metadata.name, metadata, true);
+    return metadata;
+  }
+
   async getCachedSources(tableName: string) {
     switch (tableName) {
       case "objects": {
         const objects = await getAllObject();
         return _.compact(
           _.map(objects, (metadataObject: any) => {
-            if (metadataObject.metadata?._id) {
+            const metadata = this.translationObjectMetadata(
+              metadataObject.metadata,
+            );
+            if (metadata?._id) {
               return;
             }
             return {
-              _id: metadataObject.metadata.name,
-              ...metadataObject.metadata,
+              _id: metadata.name,
+              ...metadata,
             };
           }),
         );
@@ -103,13 +112,16 @@ export class MetadataDriver extends SteedosMongoDriver {
         const objects2 = await getAllObject();
         const fields = [];
         _.each(objects2, (metadataObject: any) => {
-          _.each(metadataObject.metadata.fields, (field) => {
+          const metadata = this.translationObjectMetadata(
+            metadataObject.metadata,
+          );
+          _.each(metadata.fields, (field) => {
             if (field.hidden == true || field._id) {
               return;
             }
             fields.push({
-              _id: `${metadataObject.metadata.name}.${field.name}`,
-              object: metadataObject.metadata.name,
+              _id: `${metadata.name}.${field.name}`,
+              object: metadata.name,
               ...field,
             });
           });
@@ -120,13 +132,16 @@ export class MetadataDriver extends SteedosMongoDriver {
         const objects3 = await getAllObject();
         const actions = [];
         _.each(objects3, (metadataObject: any) => {
-          _.each(metadataObject.metadata.actions, (field) => {
+          const metadata = this.translationObjectMetadata(
+            metadataObject.metadata,
+          );
+          _.each(metadata.actions, (field) => {
             if (field._id) {
               return;
             }
             actions.push({
-              _id: `${metadataObject.metadata.name}.${field.name}`,
-              object: metadataObject.metadata.name,
+              _id: `${metadata.name}.${field.name}`,
+              object: metadata.name,
               ...field,
             });
           });
@@ -137,13 +152,16 @@ export class MetadataDriver extends SteedosMongoDriver {
         const objects3 = await getAllObject();
         const list_views = [];
         _.each(objects3, (metadataObject: any) => {
-          _.each(metadataObject.metadata.list_views, (list_view) => {
+          const metadata = this.translationObjectMetadata(
+            metadataObject.metadata,
+          );
+          _.each(metadata.list_views, (list_view) => {
             if (list_view._id) {
               return;
             }
             list_views.push({
-              _id: `${metadataObject.metadata.name}.${list_view.name}`,
-              object_name: metadataObject.metadata.name,
+              _id: `${metadata.name}.${list_view.name}`,
+              object_name: metadata.name,
               ...list_view,
             });
           });
@@ -182,6 +200,7 @@ export class MetadataDriver extends SteedosMongoDriver {
       this.addDefaultProps(cachedSources),
     );
     const data = this.queryMetadata(sources, query, spaceId).all();
+    // console.log('find', tableName, data.length)
     return data;
   }
 
