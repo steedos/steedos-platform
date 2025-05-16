@@ -1,3 +1,4 @@
 name: logs
 label: Log
+hidden: true
 icon: job_profile

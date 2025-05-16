@@ -21,3 +21,4 @@ is_enable: true
 label: 参数配置
 locked: false
 version: 2
+hidden: true
