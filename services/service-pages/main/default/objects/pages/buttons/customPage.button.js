@@ -7,7 +7,6 @@
  */
 module.exports = {
     customPage: function (object_name, record_id) {
-        $(document.body).addClass('loading');
         let url = `/service/api/page/customPage`;
         let options = {
             type: 'post',
@@ -17,15 +16,13 @@ module.exports = {
                 SteedosUI.notification.success({
                     message: '页面已自定义。'
                 });
-                SteedosUI.router.go({}, "/app/" + Session.get("app_id") + "/" + object_name + "/view/" + data._id);
-                $(document.body).removeClass('loading');
+                navigate("/app/admin/pages/view/" + data._id)
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 SteedosUI.notification.error({
                     message: '操作失败',
                     description: t(XMLHttpRequest.responseJSON.error),
                 });
-                $(document.body).removeClass('loading');
             }
         };
         Steedos.authRequest(url, options);
