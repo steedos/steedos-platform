@@ -7,7 +7,6 @@
  */
 module.exports = {
     deploy: function (object_name, record_id) {
-        $(document.body).addClass('loading');
         let url = `/service/api/page/deploy`;
         let options = {
             type: 'post',
@@ -18,15 +17,13 @@ module.exports = {
                     message: '页面已发布。'
                 });
                 SteedosUI.reloadRecord(object_name, record_id);
-                FlowRouter.reload();
-                $(document.body).removeClass('loading');
+                window.location.reload();
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 SteedosUI.notification.error({
                     message: '操作失败',
                     description: t(XMLHttpRequest.responseJSON.error),
                 });
-                $(document.body).removeClass('loading');
             }
         };
         Steedos.authRequest(url, options);
