@@ -60,10 +60,6 @@
   position: absolute
 }
 
-.relative {
-  position: relative
-}
-
 .sticky {
   position: sticky
 }
@@ -90,14 +86,6 @@
 
 .m-1 {
   margin: 0.25rem
-}
-
-.m-2 {
-  margin: 0.5rem
-}
-
-.m-3 {
-  margin: 0.75rem
 }
 
 .my-2 {
@@ -230,10 +218,6 @@
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
 }
 
-.flex-col {
-  flex-direction: column
-}
-
 .items-center {
   align-items: center
 }
@@ -246,14 +230,6 @@
   justify-content: space-between
 }
 
-.gap-3 {
-  gap: 0.75rem
-}
-
-.gap-y-2 {
-  row-gap: 0.5rem
-}
-
 .overflow-auto {
   overflow: auto
 }
@@ -264,12 +240,6 @@
 
 .overflow-y-auto {
   overflow-y: auto
-}
-
-.truncate {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap
 }
 
 .rounded {
@@ -448,14 +418,6 @@
 
 .filter {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)
-}
-
-.transition {
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms
 }
 
 .focus\:outline-none:focus {
