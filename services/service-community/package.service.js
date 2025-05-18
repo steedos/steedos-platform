@@ -136,7 +136,6 @@ module.exports = {
 		  this.broker.createService(require("@steedos/service-pages"));
 	  
 		  this.broker.createService(require("@steedos/service-plugin-amis"));
-		  // this.broker.createService(require("@steedos/service-files"));
 	  
 		  // this.broker.createService(require("@steedos/service-ancillary"));
 	  
