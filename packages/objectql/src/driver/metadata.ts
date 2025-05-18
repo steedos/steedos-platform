@@ -1,12 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { SteedosMongoDriver } from ".";
-import { SteedosIDType, SteedosQueryOptions, getAllObject } from "../types";
+import {
+  SteedosIDType,
+  SteedosQueryOptions,
+  getAllObject,
+  getAppConfigs,
+} from "../types";
 import { SteedosDriverConfig } from "./driver";
 import mingo = require("mingo");
 import clone = require("clone");
 import _ = require("underscore");
 import { Dictionary } from "@salesforce/ts-types";
-import { translationObject } from "@steedos/i18n";
+import { translationApps, translationObject } from "@steedos/i18n";
 
 const PERMISSIONS = {
   allowEdit: false,
@@ -167,6 +172,17 @@ export class MetadataDriver extends SteedosMongoDriver {
           });
         });
         return list_views;
+      }
+      case "apps": {
+        const allApps = clone(await getAppConfigs());
+        const apps = [];
+        _.each(allApps, function (app) {
+          if (app.is_creator || app.mobile) {
+            apps.push(app);
+          }
+        });
+        translationApps("zh-CN", apps);
+        return apps;
       }
       default:
         break;
