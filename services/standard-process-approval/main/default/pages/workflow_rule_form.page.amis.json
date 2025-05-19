@@ -12,6 +12,8 @@
             "mode": "edit",
             "layout": "normal",
             "tabsMode": "",
+            "initApiAdaptor": "if (recordId) {\n  var data = payload.data;\n  if (data) {\n    data.filters = window.amisConvert.filtersToConditions(data.filters || []);\n  }\n  payload.data = data;\n}\nreturn payload;",
+            "apiRequestAdaptor": "if (formData.filters) {\n  formData.filters = window.amisConvert.conditionsToFilters(formData.filters);\n}\n__saveData = JSON.stringify(JSON.stringify(formData));\napi.data = { query: query.replace('{__saveData}', __saveData) };\n",
             "fieldsExtend": {
                 "formula": {
                     "amis": {
