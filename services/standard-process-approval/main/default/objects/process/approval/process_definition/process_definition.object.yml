@@ -123,8 +123,12 @@ fields:
       - object_name
     filtersFunction: !!js/function |
       function (filters, dependValues) {
-        if(dependValues && dependValues.object_name){
-          return "object_name eq '" + dependValues.object_name + "'";
+        var pObjectName = dependValues && dependValues.object_name;
+        if(pObjectName){
+          return ['object_name', '=', pObjectName];
+        }
+        else{
+          return ['object_name', '=', -1];
         }
       }
     group: Initial Submission Actions
@@ -138,8 +142,12 @@ fields:
       - object_name
     filtersFunction: !!js/function |
       function (filters, dependValues) {
-        if(dependValues && dependValues.object_name){
-          return "object_name eq '" + dependValues.object_name + "'";
+        var pObjectName = dependValues && dependValues.object_name;
+        if(pObjectName){
+          return ['object_name', '=', pObjectName];
+        }
+        else{
+          return ['object_name', '=', -1];
         }
       }
     group: Initial Submission Actions
@@ -165,8 +173,12 @@ fields:
       - object_name
     filtersFunction: !!js/function |
       function (filters, dependValues) {
-        if(dependValues && dependValues.object_name){
-          return "object_name eq '" + dependValues.object_name + "'";
+        var pObjectName = dependValues && dependValues.object_name;
+        if(pObjectName){
+          return ['object_name', '=', pObjectName];
+        }
+        else{
+          return ['object_name', '=', -1];
         }
       }
     group: Final Approval Actions
@@ -180,8 +192,12 @@ fields:
       - object_name
     filtersFunction: !!js/function |
       function (filters, dependValues) {
-        if(dependValues && dependValues.object_name){
-          return "object_name eq '" + dependValues.object_name + "'";
+        var pObjectName = dependValues && dependValues.object_name;
+        if(pObjectName){
+          return ['object_name', '=', pObjectName];
+        }
+        else{
+          return ['object_name', '=', -1];
         }
       }
     group: Final Approval Actions
@@ -207,8 +223,12 @@ fields:
       - object_name
     filtersFunction: !!js/function |
       function (filters, dependValues) {
-        if(dependValues && dependValues.object_name){
-          return "object_name eq '" + dependValues.object_name + "'";
+        var pObjectName = dependValues && dependValues.object_name;
+        if(pObjectName){
+          return ['object_name', '=', pObjectName];
+        }
+        else{
+          return ['object_name', '=', -1];
         }
       }
     group: Final Rejection Actions
@@ -222,8 +242,12 @@ fields:
       - object_name
     filtersFunction: !!js/function |
       function (filters, dependValues) {
-        if(dependValues && dependValues.object_name){
-          return "object_name eq '" + dependValues.object_name + "'";
+        var pObjectName = dependValues && dependValues.object_name;
+        if(pObjectName){
+          return ['object_name', '=', pObjectName];
+        }
+        else{
+          return ['object_name', '=', -1];
         }
       }
     group: Final Rejection Actions
@@ -250,8 +274,12 @@ fields:
       - object_name
     filtersFunction: !!js/function |
       function (filters, dependValues) {
-        if(dependValues && dependValues.object_name){
-          return "object_name eq '" + dependValues.object_name + "'";
+        var pObjectName = dependValues && dependValues.object_name;
+        if(pObjectName){
+          return ['object_name', '=', pObjectName];
+        }
+        else{
+          return ['object_name', '=', -1];
         }
       }
     group: Recall Actions
@@ -265,8 +293,12 @@ fields:
       - object_name
     filtersFunction: !!js/function |
       function (filters, dependValues) {
-        if(dependValues && dependValues.object_name){
-          return "object_name eq '" + dependValues.object_name + "'";
+        var pObjectName = dependValues && dependValues.object_name;
+        if(pObjectName){
+          return ['object_name', '=', pObjectName];
+        }
+        else{
+          return ['object_name', '=', -1];
         }
       }
     group: Recall Actions
