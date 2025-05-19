@@ -24,8 +24,23 @@
                             "trackExpression": "${object_name}",
                             "sendOn": "${object_name}"
                         },
-                        "dsType": "api",
-                        "id": "u:508198dbfac7"
+                        "dsType": "api"
+                    }
+                },
+                "filters": {
+                    "amis": {
+                        "type": "condition-builder",
+                        "description": "",
+                        "source": {
+                            "method": "get",
+                            "url": "${context.rootUrl}/service/api/amis-metadata-listviews/getFilterFields?objectName=${object_name}",
+                            "dataType": "json",
+                            "headers": {
+                                "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                            }
+                        },
+                        "className": "col-span-2 m-0",
+                        "visibleOn": "${object_name}"
                     }
                 }
             }
