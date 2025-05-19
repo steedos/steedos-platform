@@ -6,4 +6,3 @@ omit: true
 readonly: false
 sort_no: 280
 visible_on: '{{false}}'
-type: boolean
