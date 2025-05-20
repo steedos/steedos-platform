@@ -50,7 +50,10 @@ router.post('/api/nodes/uninstall', disabledChangePackageWithSaas, auth.requireA
         const result = await broker.call(`@steedos/service-project.uninstallPackage`, {
             module
         },{
-            nodeID: nodeID
+            nodeID: nodeID,
+            meta: {
+                user: userSession
+            }
         })
         res.status(200).send(result); //TODO 完善返回信息
     } catch (error) {

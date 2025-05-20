@@ -13,14 +13,24 @@ export class DbManager {
 
   private url;
   private userSession;
+  private packageInfo;
 
-  constructor(userSession?) {
+  constructor(userSession?, packageInfo?) {
     this.url = getSteedosConfig().datasources.default.connection.url;
     this.client = new MongoClient(this.url, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
     this.setUserSession(userSession);
+    this.setPackageInfo(packageInfo);
+  }
+
+  setPackageInfo(packageInfo) {
+    this.packageInfo = packageInfo;
+  }
+
+  getPackageInfo() {
+    return this.packageInfo;
   }
 
   setUserSession(userSession) {
@@ -52,6 +62,7 @@ export class DbManager {
       doc["created_by"] = this.userSession.userId;
       doc["modified"] = now;
       doc["modified_by"] = this.userSession.userId;
+      doc["package_name"] = this.packageInfo.name;
     }
     return await this.client
       .db()
@@ -71,6 +82,7 @@ export class DbManager {
         docs[i]["created_by"] = this.userSession.userId;
         docs[i]["modified"] = now;
         docs[i]["modified_by"] = this.userSession.userId;
+        docs[i]["_packageInfo"] = this.packageInfo;
       }
     }
     return await this.client

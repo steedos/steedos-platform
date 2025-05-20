@@ -168,3 +168,22 @@ body a:hover {
 .ant-notification{
     z-index: 1900 !important;
 }
+
+
+.button_uninstall {
+    color: var(--button-danger-default-font-color);
+    background: var(--button-danger-default-bg-color);
+    border-color: var(--button-danger-default-top-border-color) var(--button-danger-default-right-border-color) var(--button-danger-default-bottom-border-color) var(--button-danger-default-left-border-color);
+    border-width: var(--button-danger-default-top-border-width) var(--button-danger-default-right-border-width) var(--button-danger-default-bottom-border-width) var(--button-danger-default-left-border-width);
+    border-style: var(--button-danger-default-top-border-style) var(--button-danger-default-right-border-style) var(--button-danger-default-bottom-border-style) var(--button-danger-default-left-border-style);
+    box-shadow: var(--button-danger-default-shadow);
+}
+
+.button_uninstall:hover {
+    color: var(--button-danger-hover-font-color) !important;
+    background: var(--button-danger-hover-bg-color) !important;
+    border-color: var(--button-danger-hover-top-border-color) var(--button-danger-hover-right-border-color) var(--button-danger-hover-bottom-border-color) var(--button-danger-hover-left-border-color);
+    border-width: 0px !important;
+    border-style: var(--button-danger-hover-top-border-style) var(--button-danger-hover-right-border-style) var(--button-danger-hover-bottom-border-style) var(--button-danger-hover-left-border-style);
+    box-shadow: var(--button-danger-hover-shadow)
+}

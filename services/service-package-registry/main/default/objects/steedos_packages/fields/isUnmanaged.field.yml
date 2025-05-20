@@ -1,0 +1,4 @@
+name: isUnmanaged
+type: boolean
+label: 模板
+visible_on: "{{false}}"

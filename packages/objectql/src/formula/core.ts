@@ -100,7 +100,6 @@ export const computeFormulaParams = async (
   vars: Array<SteedosFormulaVarTypeConfig>,
   userSession: any,
 ) => {
-  // console.log(`computeFormulaParams=====>`, doc, JSON.stringify(vars))
   let params: Array<SteedosFormulaParamTypeConfig> = [];
   const spaceId = userSession?.spaceId;
   const currentUserId = userSession?.userId;
@@ -369,7 +368,6 @@ const runSFFormula = function (
         value,
         blankValue,
       );
-      // console.log('path=======>', path, formulaParams, key)
     } else {
       // 变量中没有path属性说明是普通变量
       formulaParams[key] = getSimpleParamSubstitution(value, blankValue);

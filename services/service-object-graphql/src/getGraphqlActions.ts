@@ -106,7 +106,6 @@ export function getGraphqlActions() {
           }
         });
       }
-      // console.log(`result=====>`, JSON.stringify(selector), result)
       if (_.isString(ctx.params.id)) {
         return result[0];
       }
