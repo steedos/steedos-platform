@@ -30,6 +30,8 @@
                     ]
                 }
             },
+            "initApiAdaptor": "if (recordId && payload.data.version > 1) {\n            var data = payload.data;\n            if (data) {\n            if (typeof data.record_filter === 'string') {\n            try{\n            data.record_filter = JSON.parse(data.record_filter);\n            }\n            catch(e){\n            data.record_filter = [];\n            }\n            };\n            data.record_filter = window.amisConvert.filtersToConditions(data.record_filter || []);\n            }\n  payload.data = data;\n}\nreturn payload;",
+            "apiRequestAdaptor": "if (formData.record_filter && formData.version > 1) {\n  formData.record_filter = JSON.stringify(window.amisConvert.conditionsToFilters(formData.record_filter));\n}\n__saveData = JSON.stringify(JSON.stringify(formData));\napi.data = { query: query.replace('{__saveData}', __saveData) };\n",
             "fieldsExtend": {
                 "entry_criteria": {
                     "amis": {
@@ -38,6 +40,33 @@
                         "variableMode": "tabs",
                         "variables": "${formulaVariables}",
                         "visibleOn": "${formulaVariables}"
+                    }
+                },
+                "record_filter": {
+                    "amis": {
+                        "type": "control",
+                        "body": [
+                            {
+                                "type": "condition-builder",
+                                "name": "record_filter",
+                                "description": "",
+                                "source": {
+                                    "method": "get",
+                                    "url": "${context.rootUrl}/service/api/amis-metadata-listviews/getFilterFields?objectName=${object_name}",
+                                    "dataType": "json",
+                                    "headers": {
+                                        "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                    }
+                                },
+                                "className": "col-span-2 m-0",
+                                "visibleOn": "${object_name && version > 1}"
+                            },
+                            {
+                                "type": "textarea",
+                                "name": "record_filter",
+                                "visibleOn": "${!version || version <= 1}"
+                            }
+                        ]
                     }
                 }
             }
