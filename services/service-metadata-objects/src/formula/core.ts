@@ -88,7 +88,8 @@ function extractAmisFormulaVariableNames(data) {
 export const pickFormulaVars = (formula: string): Array<string> => {
   if (isAmisFormula(formula)) {
     const result = extractAmisFormulaVariableNames(parse(formula));
-    return result;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return result as any;
   }
   return extract(formula);
 };
