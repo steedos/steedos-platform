@@ -319,10 +319,6 @@ export const runAmisFormula = function (
       data[item.key] = item.value;
     });
 
-    // 从 amis 公式中的 params 中移除 global 变量，因为 ${ARRAYINCLUDES(global.user.roles, 'admin')} 这种公式中的global是从 globalVariables 中取值
-    // 如果不移除global， 传入的params中global为空值时，global.user.roles 取不到正确的值
-    delete data.global;
-
     data = convertToNestedObject(data);
 
     const amisFormulaValue = evaluate(
