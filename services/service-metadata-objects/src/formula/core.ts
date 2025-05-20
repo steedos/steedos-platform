@@ -86,7 +86,7 @@ function extractAmisFormulaVariableNames(data) {
  */
 export const pickFormulaVars = (formula: string): Array<string> => {
     if(isAmisFormula(formula)){
-        const result = extractAmisFormulaVariableNames(parse(formula));
+        const result: any[] = extractAmisFormulaVariableNames(parse(formula));
         return result;
     }
     return extract(formula);
