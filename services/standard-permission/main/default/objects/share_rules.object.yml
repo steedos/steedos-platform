@@ -36,7 +36,7 @@ fields:
     required: true
   record_filter:
     label: 记录过滤器
-    inlineHelpText: "满足指定条目条件时，使用该记录过滤器共享指定的数据。语法为 Amis <a href = 'https://aisuda.bce.baidu.com/amis/zh-CN/docs/concepts/data-mapping' target='_blank'>数据映射</a> 或 <a href = 'https://aisuda.bce.baidu.com/amis/zh-CN/docs/concepts/expression' target='_blank'>表达式</a>, 例如: \\${[[\"owner\", \"=\", global.userId]]}，更多详情请参考 <a href='https://docs.steedos.com/zh-CN/admin/permissions/sharing-rules' target='_blank'>此文档</a>。"
+    inlineHelpText: "满足指定条目条件时，使用该记录过滤器共享指定的数据。语法为 Amis <a href = 'https://aisuda.bce.baidu.com/amis/zh-CN/docs/concepts/data-mapping' target='_blank'>数据映射</a> 或 <a href = 'https://aisuda.bce.baidu.com/amis/zh-CN/docs/concepts/expression' target='_blank'>表达式</a>, 例如: \\${[[\"owner\", \"=\", \"global.userId\"]]}，更多详情请参考 <a href='https://docs.steedos.com/zh-CN/admin/permissions/sharing-rules' target='_blank'>此文档</a>。"
     type: textarea
     is_wide: true
     sort_no: 150
@@ -54,6 +54,13 @@ fields:
     disabled: true
     visible_on: "{{global.mode ==='read' ? true : false}}"
     sort_no: 99999
+  version:
+    label: 版本
+    type: number
+    defaultValue: 2
+    # readonly: true 不可以设置为只读，新建编辑表单需要加载这个字段值
+    visible_on: "${false}"
+    inlineHelpText: "版本号，用于记录规则更新，比如版本>=2时，record_filter 显示为amis过滤器"
 actions:
   customize:
     label: 自定义
