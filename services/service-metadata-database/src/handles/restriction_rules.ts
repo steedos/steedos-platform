@@ -17,7 +17,7 @@ export class RestrictionRulesHandle extends BaseHandle {
   async inserted(data) {
     return registerRestrictionRules.register(
       broker,
-      DB_OBJECT_SERVICE_NAME,
+      data.package_name || DB_OBJECT_SERVICE_NAME,
       data,
     );
   }
@@ -25,7 +25,7 @@ export class RestrictionRulesHandle extends BaseHandle {
   async updated(data) {
     return registerRestrictionRules.register(
       broker,
-      DB_OBJECT_SERVICE_NAME,
+      data.package_name || DB_OBJECT_SERVICE_NAME,
       data,
     );
   }
@@ -33,7 +33,7 @@ export class RestrictionRulesHandle extends BaseHandle {
   async deleted(data) {
     return registerRestrictionRules.remove(
       broker,
-      DB_OBJECT_SERVICE_NAME,
+      data.package_name || DB_OBJECT_SERVICE_NAME,
       data,
     );
   }

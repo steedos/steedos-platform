@@ -24,11 +24,11 @@ export class TriggersHandle extends BaseHandle {
       { apiName: `${trigger.listenTo}.${trigger.name}`, data: trigger },
       {
         meta: {
-          metadataServiceName: DB_OBJECT_SERVICE_NAME,
+          metadataServiceName: trigger.package_name || DB_OBJECT_SERVICE_NAME,
           caller: {
             nodeID: broker.nodeID,
             service: {
-              name: DB_OBJECT_SERVICE_NAME,
+              name: trigger.package_name || DB_OBJECT_SERVICE_NAME,
             },
           },
         },
@@ -49,11 +49,11 @@ export class TriggersHandle extends BaseHandle {
       { apiName: `${trigger.listenTo}.${trigger.name}`, data: trigger },
       {
         meta: {
-          metadataServiceName: DB_OBJECT_SERVICE_NAME,
+          metadataServiceName: trigger.package_name || DB_OBJECT_SERVICE_NAME,
           caller: {
             nodeID: broker.nodeID,
             service: {
-              name: DB_OBJECT_SERVICE_NAME,
+              name: trigger.package_name || DB_OBJECT_SERVICE_NAME,
             },
           },
         },
@@ -71,11 +71,11 @@ export class TriggersHandle extends BaseHandle {
       { apiName: `${trigger.listenTo}.${trigger.name}` },
       {
         meta: {
-          metadataServiceName: DB_OBJECT_SERVICE_NAME,
+          metadataServiceName: trigger.package_name || DB_OBJECT_SERVICE_NAME,
           caller: {
             nodeID: broker.nodeID,
             service: {
-              name: DB_OBJECT_SERVICE_NAME,
+              name: trigger.package_name || DB_OBJECT_SERVICE_NAME,
             },
           },
         },
