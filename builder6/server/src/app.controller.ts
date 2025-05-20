@@ -21,4 +21,9 @@ export class AppController {
       steedosAmisVersion: process.env.STEEDOS_AMIS_VERSION,
     };
   }
+
+  @Get("/health_check")
+  health_check() {
+    return { status: "ok" };
+  }
 }
