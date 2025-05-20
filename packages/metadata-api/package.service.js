@@ -169,7 +169,7 @@ module.exports = {
                     const typeInfos = getMetadataTypeInfos();
                     for (const tName in typeInfos) {
                         const typeInfo = typeInfos[tName];
-                        console.log('deleteMany', tName, typeInfo.tableName, {package_name: packageName})
+                        // console.log('deleteMany', tName, typeInfo.tableName, {package_name: packageName})
                         if(typeInfo.tableName){
                             await dbManager.deleteMany(typeInfo.tableName, {package_name: packageName});
                         }
