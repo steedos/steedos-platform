@@ -17,31 +17,6 @@ export const AppHeader = () => {
                 "logoSrc": logoSrc,
                 "customButtons": [
                     {
-                        "type": "button",
-                        "className": "toggle-sidebar",
-                        "visibleOn": "${AND(app.showSidebar,!" + isMobile + ")}",
-                        "onEvent": {
-                            "click": {
-                                "actions": [
-                                    {
-                                        "actionType": "custom",
-                                        "script": "document.body.classList.toggle('sidebar-open')",
-                                    }
-                                ]
-                            }
-                        },
-                        "body": [
-                            {
-                                "type": "steedos-icon",
-                                "category": "utility",
-                                "name": "rows",
-                                "colorVariant": "default",
-                                "id": "u:afc3a08e8cf3",
-                                "className": "slds-button_icon slds-global-header__icon"
-                            }
-                        ],
-                    },
-                    {
                         "type": "steedos-app-launcher",
                         "showAppName": false,
                         "appId": "${app.id}",
