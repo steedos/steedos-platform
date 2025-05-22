@@ -284,7 +284,15 @@ export class MetadataDriver extends SteedosMongoDriver {
     query: SteedosQueryOptions,
     spaceId?: SteedosIDType,
   ) {
-    const records = await this.find(collection, { filters: ["_id", "=", id] });
+    let filters = [];
+
+    if (_.isString(id)) {
+      filters = ["_id", "=", id];
+    } else {
+      filters = id as any;
+    }
+
+    const records = await this.find(collection, { filters: filters });
     return records.length > 0 ? records[0] : null;
   }
 }
