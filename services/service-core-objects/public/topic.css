@@ -254,7 +254,7 @@ body a:hover {
 .steedos-apps-home .antd-Panel .antd-Panel-body .app-item.app-item-_add_admin .slds-app-launcher__tile{
     box-shadow: 0 0 2px var(--private), 0 2px 4px rgba(0, 0, 0, 0.14);
     border: none;
-    animation: shadowBlink 1.5s infinite;
+    animation: shadowPulse 2s infinite;
 }
 
 
@@ -264,5 +264,14 @@ body a:hover {
   }
   50% {
     box-shadow: rgba(0, 0, 0, 0.12);
+  }
+}
+
+@keyframes shadowPulse {
+  0%, 100% {
+    box-shadow: 0 0 2px 0 var(--private);
+  }
+  50% {
+    box-shadow: 0 0 4px 0 var(--private);
   }
 }
