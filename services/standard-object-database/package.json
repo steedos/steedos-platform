@@ -1,6 +1,6 @@
 {
     "name": "@steedos/standard-object-database",
-    "version": "3.0.0-beta.30",
+    "version": "3.0.0-beta.32",
     "main": "package.service.js",
     "private": false,
     "publishConfig": {
@@ -11,13 +11,13 @@
     ],
     "description": "steedos package",
     "dependencies": {
-        "@steedos/metadata-core": "3.0.0-beta.30",
-        "@steedos/service-object-mixin": "3.0.0-beta.30",
+        "@steedos/metadata-core": "3.0.0-beta.32",
+        "@steedos/service-object-mixin": "3.0.0-beta.32",
         "amis-formula": "~6.3.0",
         "clone": "^2.1.2",
         "moleculer-bullmq": "3.0.0"
     },
     "repository": {},
     "license": "MIT",
-    "gitHead": "179adc36b9bc560bad5673f0a068600f5af4848f"
+    "gitHead": "fcff940305b05294cce7c852009c04a769ae0df7"
 }
