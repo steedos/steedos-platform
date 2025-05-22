@@ -22,7 +22,15 @@
     --button-link-default-font-color: var(--private);
     --Toast-paddingY: 10px;
     --Toast-paddingX: 16px;
+
+    --dialog-header-color: var(--private);
+
+    --Form-item-fontSize: 14px !important;
+    --Table-thead-fontSize: 14px !important;
+    --Table-thead-fontSize: 14px !important;
+
 }
+
 .antd-Table-table td.is-sticky{
     background: unset !important;
 }
