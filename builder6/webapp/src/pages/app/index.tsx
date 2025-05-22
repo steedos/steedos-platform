@@ -60,7 +60,6 @@ const on_click_script = `
       object_items
     }
 
-  console.log('payload====>', payload);
     return payload;
   `;
 
