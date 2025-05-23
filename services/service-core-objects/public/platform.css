@@ -115,7 +115,15 @@
     border: none;
 }
 
-.sidebar-open .sidebar-wrapper{
+.sidebar-open .sidebar-wrapper .toggle-sidebar{
     padding-left: 0.35rem;
-    padding-right: 0.35rem;
+}
+
+.sidebar-open .sidebar-wrapper .stacked .antd-Nav-Menu-submenu-title .antd-Nav-Menu-item-label{
+    padding-left: 0.35rem;
+}
+
+
+.sidebar-open .sidebar-wrapper .steedos-app-service-readonly .toggle-sidebar{
+    width: 50px;
 }
