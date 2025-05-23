@@ -1,13 +1,13 @@
 {
   "name": "@steedos/service-metadata-database",
-  "version": "3.0.0-beta.34",
+  "version": "3.0.0-beta.35",
   "main": "package.service.js",
   "scripts": {
     "build": "rm -rf ./lib && tsc"
   },
   "dependencies": {
-    "@steedos/metadata-registrar": "3.0.0-beta.34",
-    "@steedos/objectql": "3.0.0-beta.34",
+    "@steedos/metadata-registrar": "3.0.0-beta.35",
+    "@steedos/objectql": "3.0.0-beta.35",
     "lodash": "^4.17.21"
   },
   "author": "",
@@ -17,5 +17,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "b05489ae68b89eba02a0a036ad2760e1cb1d89cb"
+  "gitHead": "f53ccf8f3f99add8d6bfa1c67bb03ad244fd959c"
 }
