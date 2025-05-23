@@ -1,5 +1,6 @@
 :root {
     --private: var(--colors-brand-5);
+    --primary-onHover: var(--colors-brand-9);
 }
 
 .ant-modal-mask{
@@ -108,6 +109,10 @@
 .steedos-apps-home .antd-Panel .antd-Panel-body .app-item .slds-app-launcher__tile{
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.14);
     border: none;
+}
+
+.steedos-apps-home .antd-Panel .antd-Panel-body .app-item .slds-app-launcher__tile:hover{
+    background: var(--primary-onHover);
 }
 
 .steedos-apps-home .antd-Panel .antd-Panel-body .app-item.app-item-_add_admin .slds-app-launcher__tile{
