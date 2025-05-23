@@ -283,3 +283,8 @@ body a:hover {
     box-shadow: 0 0 4px 0 var(--private);
   }
 }
+
+.sidebar-open .sidebar-wrapper{
+    padding-left: 0.35rem;
+    padding-right: 0.35rem;
+}

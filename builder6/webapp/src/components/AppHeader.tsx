@@ -3,8 +3,13 @@ import { Builder } from '@builder6/react';
 import { useParams } from 'react-router-dom';
 export const AppHeader = () => {
     const params = useParams();
-    const { appId, objectName } = params;
+    let { appId = null, objectName } = params;
     // console.log('AppHeader params:', params)
+
+    if(!appId){
+        document.body.classList.remove('sidebar-open');
+    }
+
     const isMobile = window.innerWidth < 1024;
 
     const logoSrc = `/images/logo_platform.png`
