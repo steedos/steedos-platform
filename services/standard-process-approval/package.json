@@ -1,6 +1,6 @@
 {
     "name": "@steedos/standard-process-approval",
-    "version": "3.0.0-beta.35",
+    "version": "3.0.0-beta.36",
     "main": "package.service.js",
     "private": false,
     "publishConfig": {
@@ -10,11 +10,11 @@
         "steedos"
     ],
     "dependencies": {
-        "@steedos/process": "3.0.0-beta.35",
+        "@steedos/process": "3.0.0-beta.36",
         "nanoid": "^3.3.4"
     },
     "description": "steedos package",
     "repository": {},
     "license": "MIT",
-    "gitHead": "f53ccf8f3f99add8d6bfa1c67bb03ad244fd959c"
+    "gitHead": "469f7a791d1a304b53446dba2a64349d599be897"
 }
