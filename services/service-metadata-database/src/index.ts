@@ -46,11 +46,13 @@ module.exports = {
       // eslint-disable-next-line @typescript-eslint/no-this-alias
       const self = this;
       console.log(`Event '${event}' received from ${sender} node:`, {
-        _id: payload._id,
-        id: payload.id,
-        code: payload.code,
-        name: payload.name,
-        label: payload.label,
+        type: payload.type,
+        action: payload.action,
+        _id: payload.data._id,
+        id: payload.data.id,
+        code: payload.data.code,
+        name: payload.data.name,
+        label: payload.data.label,
       });
       const { type, action, data } = payload;
       switch (type) {
