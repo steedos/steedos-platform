@@ -45,7 +45,13 @@ module.exports = {
     "$metadata.*": function (payload, sender, event, ctx) {
       // eslint-disable-next-line @typescript-eslint/no-this-alias
       const self = this;
-      // console.log(`Event '${event}' received from ${sender} node:`, payload);
+      console.log(`Event '${event}' received from ${sender} node:`, {
+        _id: payload._id,
+        id: payload.id,
+        code: payload.code,
+        name: payload.name,
+        label: payload.label,
+      });
       const { type, action, data } = payload;
       switch (type) {
         case "apps":

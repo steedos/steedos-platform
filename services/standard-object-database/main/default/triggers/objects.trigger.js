@@ -2,7 +2,7 @@ const _ = require('underscore');
 const objectql = require('@steedos/objectql');
 const objectTree = require('../server/objects.tree.js');
 const sleep = async (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
+console.log('load objects.trigger.js.........');
 module.exports = {
     beforeFind: async function () {
         delete this.query.fields;
@@ -21,6 +21,7 @@ module.exports = {
         }
     },
     afterInsert: async function(){
+        console.log('objects afterInsert...');
         const object = this.doc;
         const { spaceId , userId } = this;
         if(object.enable_tree){

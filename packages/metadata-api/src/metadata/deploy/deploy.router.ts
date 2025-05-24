@@ -108,6 +108,11 @@ const uploadMetadata = async function (req, res) {
       for (const metadataItemName in metadataItems) {
         const metadataTypeInfo = getMetadataTypeInfo(metadataName);
         const metadataItem = metadataItems[metadataItemName];
+        console.log(`deploy broker.call b6-metadata.updated`, !!global, {
+          type: metadataTypeInfo.tableName,
+          id: metadataItemName,
+          data: metadataItem,
+        });
         await global?.broker.call(`b6-metadata.updated`, {
           type: metadataTypeInfo.tableName,
           id: metadataItemName,
