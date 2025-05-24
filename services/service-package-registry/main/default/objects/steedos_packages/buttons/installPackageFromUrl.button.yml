@@ -76,6 +76,12 @@ amis_schema: |-
                                                 "weight": 0,
                                                 "actions": [
                                                     {
+                                                        "actionType": "wait",
+                                                        "args": {
+                                                            "time": 3000
+                                                        }
+                                                    },
+                                                    {
                                                         "actionType": "broadcast",
                                                         "args": {
                                                             "eventName": "@data.changed.steedos_packages"

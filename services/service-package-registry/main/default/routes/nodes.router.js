@@ -277,7 +277,7 @@ router.post('/api/nodes/package/add', disabledChangePackageWithSaas, auth.requir
     try {
         let broker = schema.broker;
         const { package: yarnPackage } = req.body;
-        const result = await broker.call(`@steedos/service-project.yarnAddPackage`, {yarnPackage}, {
+        const result = await broker.call(`@steedos/service-project.yarnAddPackage`, {yarnPackage, enable: true}, {
             meta: {
                 user: userSession
             }

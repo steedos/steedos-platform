@@ -90,7 +90,7 @@ module.exports = {
 						instanceID: ctx.broker.instanceID, 
 					}
 				})
-				if(packageConfig.isUnmanaged){
+				if(packageConfig?.isUnmanaged){
 					await ctx.broker.call(`~packages-@steedos/metadata-api.remove`, {
 						name: module
 					}, {
@@ -266,8 +266,8 @@ module.exports = {
 		},
 		yarnAddPackage: {
 			async handler(ctx) {
-				const { yarnPackage } = ctx.params;
-				return await this.yarnAddPackage(yarnPackage);
+				const { yarnPackage, enable = false } = ctx.params;
+				return await this.yarnAddPackage(yarnPackage, enable);
             }
 		}
 	},
@@ -582,11 +582,10 @@ module.exports = {
 			}
 		},
 		yarnAddPackage: {
-			async handler(yarnPackage) {
+			async handler(yarnPackage, enable=false) {
                 const packages = await registry.yarnAddPackage(yarnPackage);
 				for (const packageInfo of packages) {
 					const packagePath = packageInfo.path;
-					let enable = false;
 					if(packageInfo.isUnmanaged){
 						enable = true;
 					}
