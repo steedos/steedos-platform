@@ -114,7 +114,7 @@ const loadPackages = async ()=>{
                         }
                     }
                 } catch (error) {
-                    console.error(`start package ${packageName} error: ${error.message}`)
+                    console.error(`start package ${packageName} error[117]: ${error.message}`)
                 }
 
             }else if(package.local !== true){
@@ -132,7 +132,7 @@ const loadPackages = async ()=>{
                         const packageInfo = await loadPackage(packageName);
                         appendToPackagesConfig(packageInfo.name, {version: packageInfo.version, description: packageInfo.description, local: false});
                     } catch (error) {
-                        console.error(`start package ${packageName} error: ${error.message}`)
+                        console.error(`start package ${packageName} error[135]: ${error.message}`)
                     }
                 }
             }else if(package.local === true && package.static != true){
@@ -147,7 +147,7 @@ const loadPackages = async ()=>{
                             appendToPackagesConfig(packageInfo.name, {version: packageInfo.version, description: packageInfo.description, local: true});
                         }
                     } catch (error) {
-                        console.error(`start package ${packageName} error: ${error.message}`)
+                        console.error(`start package ${packageName} error[150]: ${error.message}`)
                     }
                 }
             }

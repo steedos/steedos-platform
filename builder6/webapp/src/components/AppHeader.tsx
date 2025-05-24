@@ -12,7 +12,28 @@ export const AppHeader = () => {
 
     const isMobile = window.innerWidth < 1024;
 
-    const logoSrc = `/images/logo_platform.png`
+    let logoSrc = `/images/logo_platform.png`
+
+    if(Builder.settings?.context?.user?.space?.avatar){
+        logoSrc = '/api/v6/files/cfs.avatars.filerecord/' + Builder.settings.context.user.space.avatar
+    }
+
+    const faviconLink: any = document.querySelector('link[rel*="icon"], link[rel*="shortcut"]');
+
+    let favicon = '/favicons/favicon.ico';
+    if(Builder.settings?.context?.user?.space?.favicon){
+        favicon = "/api/v6/files/cfs.avatars.filerecord/" + Builder.settings.context.user.space.favicon;
+    }
+
+    if (faviconLink) {
+        faviconLink.href = favicon;
+    }else{
+        const newFaviconLink = document.createElement('link');
+        newFaviconLink.rel = 'icon';
+        newFaviconLink.href = favicon;
+        document.head.appendChild(newFaviconLink);
+    }
+
     const schema = {
         "type": "service",
         name: "globalHeader",
