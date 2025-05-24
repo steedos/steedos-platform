@@ -104,6 +104,18 @@ module.exports = {
 			started: function () {},
 			created: function () {},
 		  });
+		this.broker.createService({
+			name: "~packages-@steedos/standard-space",
+			mixins: [],
+			settings: {
+			  packageInfo: {
+				path: "./",
+			  },
+			},
+			started: function () {},
+			created: function () {},
+		  });
+		  
 		  // 国际化
 		  this.broker.createService(require("@steedos/service-i18n"));
 		  // 启动 元数据服务
