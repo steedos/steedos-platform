@@ -7322,9 +7322,9 @@
     fflate "^0.8.1"
     jsdom "21.0.0"
 
-"@steedos/service-enterprise@^3.0.0":
+"@steedos/service-enterprise@^3.0.0-beta.1":
   version "3.0.0"
-  resolved "https://registry.npmjs.org/@steedos/service-enterprise/-/service-enterprise-3.0.0.tgz#442b706e8fd6b1456239b1656d2759a4941fdb6b"
+  resolved "https://registry.npmmirror.com/@steedos/service-enterprise/-/service-enterprise-3.0.0.tgz#442b706e8fd6b1456239b1656d2759a4941fdb6b"
   integrity sha512-9Eqv6tc0gc3OM2n8ivHucKsuuWf7J65EH4kiPJrjikEWQIGgEeFDnO8rHUJYURRaBXEO3lPIW0WCtgaOsDoE7Q==
   dependencies:
     "@steedos-labs/analytics" "^0.1.27"
