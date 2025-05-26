@@ -5,6 +5,7 @@ hidden: true
 version: 2
 isMetadata: true
 enable_dataloader: false
+enable_form_tabs: true
 fields:
   name:
     label: Name
@@ -80,23 +81,7 @@ fields:
     required: false
     group: Tabs
     visible_on: "{{global.mode ==='read' ? false : true}}"
-  # tab_items.$:
-  #   label: Tabs
-  #   blackbox: true
-  #   type: object
-  # tab_items.$.tab_name:
-  #   label: Tab Name
-  #   type: lookup
-  #   multiple: false
-  #   is_wide: false
-  #   required: true
-  #   reference_to: tabs
-  #   reference_to_field: name
-  # tab_items.$.group:
-  #   label: Group
-  #   type: text
-  
-    # filterable: true
+    hidden: true
   is_creator:
     type: boolean
     label: Show this app for Desktop
@@ -117,7 +102,7 @@ fields:
   showSidebar:
     label: 显示左侧导航
     type: boolean
-    defaultValue: false
+    defaultValue: true
 
   nav_schema:
     label: 自定义导航
@@ -145,12 +130,6 @@ fields:
     label: URL
     type: url
     group: External Application
-  is_use_ie:
-    type: boolean
-    label: Open in IE (Using Steedos Desktop)
-    defaultValue: false
-    group: External Application
-    filterable: true
   is_use_iframe:
     type: boolean
     label: Open with iframe
@@ -170,31 +149,20 @@ fields:
     rows: 2
     is_wide: true
     group: External Application
+    hidden: true
 
   auth_name:
     label: Auth Name
     type: text
     group: External Application
+    hidden: true
   secret:
     label: API Secret Key
     type: text
     max: 16
     min: 16
     group: External Application
-  objects:
-    label: Desktop Menu(Invalid)
-    type: lookup
-    multiple: true
-    group: other
-    reference_to: objects
-    reference_to_field: name
-  mobile_objects:
-    label: Mobile Menus(Invalid)
-    type: lookup
-    multiple: true
-    group: other
-    reference_to: objects
-    reference_to_field: name
+    hidden: true
   visible_on:
     name: visible_on
     is_wide: true
@@ -331,14 +299,6 @@ actions:
   reset:
     label: Reset
     on: record_only
-  createOAuth2App:
-    label: 创建 OAuth 应用
-    on: list
-    sort: 180
-  standard_edit:
-    visible: false
-  standard_new:
-    visible: false
 list_views:
   all:
     label: All Apps
