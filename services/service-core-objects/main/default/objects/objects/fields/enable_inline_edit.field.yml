@@ -1,7 +1,8 @@
 name: enable_inline_edit
 defaultValue: true
-group: advanced
+group: switch
 hidden: false
 label: Enable Single Field Edit
 sort_no: 210
 type: boolean
+inlineHelpText: 在列表页中直接对某些字段进行行内编辑，无需切换详情页即可完成快速录入或修改。

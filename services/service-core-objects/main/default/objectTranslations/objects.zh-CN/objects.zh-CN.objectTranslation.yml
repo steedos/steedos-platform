@@ -53,7 +53,7 @@ fields:
     description: 
   enable_form_tabs:
     label: 启用选项卡
-    help: 在表单中以选项卡模式显示分组，只在编辑模式时识别该属性
+    help: 当对象拥有大量字段或需要分组归类时，默认使用分组模式，也可以切换为选项卡模式。
     description: 
   enable_events:
     label: 允许添加日程
@@ -81,19 +81,19 @@ fields:
     description: 
   enable_inline_edit:
     label: 允许编辑单个字段
-    help: 
+    help: 在列表页中直接对某些字段进行行内编辑，无需切换详情页即可完成快速录入或修改。
     description: 
   enable_tree:
     label: 启用树状结构显示记录
-    help: 当启用时，与此对象关联的查找字段将以树状结构的形式显示其选项。
+    help: 适用于存在层级关系或有父子关联的对象，让用户通过折叠、展开的方式查看数据层次。
     description: 
   enable_enhanced_lookup:
     label: 启用弹出窗口查找模式
-    help: 当启用时，与此对象关联的查找字段将以弹出窗口的形式显示其选项。
+    help: 当此对象被其他对象引用时，查找字段会以弹出窗口形式显示选项，便于在弹窗内快速搜索、筛选并选中所需数据。
     description: 
   enable_split:
-    label: 默认使用分栏视图
-    help: 
+    label: 启用分屏模式
+    help: 在列表页同时显示记录列表和所选记录的详情，实现快速切换、预览和编辑，常见于需要频繁查看多条记录的场景。
     description: 
   enable_lock_detail:
     label: 锁定子表
@@ -171,7 +171,8 @@ fields:
     label: 自定义
 groups:
   external_data_source: 外部数据源
-  switch: 界面
+  switch: 界面开关
+  feature: 功能开关
   advanced: 高级
 listviews:
   all:
