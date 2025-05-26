@@ -1,5 +1,6 @@
 :root {
-    --private: var(--colors-brand-5);
+    --tw-border-opacity: 1;
+    --private: rgb(14 165 233 / var(--tw-border-opacity));
     --primary-onHover: var(--colors-brand-9);
 }
 
@@ -81,8 +82,8 @@
 .steedos-apps-home .antd-Panel .antd-Panel-heading .antd-TplField{
     font-size: 16px;
     font-weight: 600;
-    background: var(--private) !important;
-    color: #fff;
+    background: #000000 !important;
+    color: #ffffff;
     padding: 0.45rem 1rem;
     border-radius: 6.7rem;
 }
@@ -94,7 +95,7 @@
 
 
 .steedos-apps-home .antd-Panel .antd-Panel-body .slds-app-launcher__tile-body .slds-link{
-    color: var(--private) !important;
+    color: #000000 !important;
     font-weight: 600;
 }
 
@@ -112,13 +113,13 @@
 }
 
 .steedos-apps-home .antd-Panel .antd-Panel-body .app-item .slds-app-launcher__tile:hover{
-    background: var(--primary-onHover);
+    background: #f5f5f5;
 }
 
-.steedos-apps-home .antd-Panel .antd-Panel-body .app-item.app-item-_add_admin .slds-app-launcher__tile{
+/* .steedos-apps-home .antd-Panel .antd-Panel-body .app-item.app-item-_add_admin .slds-app-launcher__tile{
     box-shadow: 0 0 2px var(--private), 0 2px 4px rgba(0, 0, 0, 0.14);
     border: none;
-}
+} */
 
 .sidebar-open .sidebar-wrapper .toggle-sidebar{
     padding-left: 0.35rem;
@@ -131,4 +132,9 @@
 
 .sidebar-open .sidebar-wrapper .steedos-app-service-readonly .toggle-sidebar{
     width: 50px;
+}
+
+
+.steedos-app-menu-plus .fa-cog{
+    margin-top: -6px;
 }
