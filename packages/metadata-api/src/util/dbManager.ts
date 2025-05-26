@@ -62,7 +62,7 @@ export class DbManager {
       doc["created_by"] = this.userSession.userId;
       doc["modified"] = now;
       doc["modified_by"] = this.userSession.userId;
-      doc["package_name"] = this.packageInfo.name;
+      doc["package_name"] = this.packageInfo?.name;
     }
     return await this.client
       .db()
