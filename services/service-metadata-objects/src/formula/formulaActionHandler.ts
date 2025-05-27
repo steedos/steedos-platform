@@ -226,6 +226,7 @@ export class FormulaActionHandler {
         }
       } else {
         // 不是引用类型字段，则直接退出
+        // 考虑到 amis 公式，比如 ${name.length} 这种，name不是lookup字段，不需要进一步处理引用关系，但是也不能 throw new Error
         // if (i < varItems.length - 1) {
         //   // 提前找到非跨对象字段，说明varItems中后面没计算的变量是多余错误的，因为.后面肯定是跨对象引用出来的字段（除非是$user等全局变量）
         //   throw new Error(
