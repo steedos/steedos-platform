@@ -36,8 +36,84 @@ export const AppHeader = () => {
 
     const schema = {
         "type": "service",
+        "id": "u:global-header",
         name: "globalHeader",
         body: [
+            {
+                "type": "button",
+                "label": "刷新",
+                "className": "hidden btn-reload-page-object-detail",
+                "onEvent": {
+                    "click": {
+                        "actions": [
+                            {
+                                "componentId": "u:steedos-page-object-detail",
+                                "actionType": "reload"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "type": "button",
+                "label": "刷新",
+                "className": "hidden btn-reload-page-object-listview",
+                "onEvent": {
+                    "click": {
+                        "actions": [
+                            {
+                                "componentId": "u:steedos-page-object-listview",
+                                "actionType": "reload"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "type": "button",
+                "label": "刷新",
+                "className": "hidden btn-reload-object-listview",
+                "onEvent": {
+                    "click": {
+                        "actions": [
+                            {
+                                "componentId": "u:steedos-object-listview",
+                                "actionType": "reload"
+                            }
+                        ]
+                    }
+                }
+            },
+             {
+                "type": "button",
+                "label": "刷新",
+                "className": "hidden btn-reload-app-menu-${appId}",
+                "onEvent": {
+                    "click": {
+                    "actions": [
+                        {
+                        "componentId": "u:app-menu",
+                        "actionType": "reload"
+                        }
+                    ]
+                    }
+                }
+            },
+             {
+                "type": "button",
+                "label": "刷新",
+                "className": "hidden btn-reload-global-header btn-reload-global-header-${appId}",
+                "onEvent": {
+                    "click": {
+                    "actions": [
+                        {
+                        "componentId": "u:global-header",
+                        "actionType": "reload"
+                        }
+                    ]
+                    }
+                }
+            },
             {
                 "type": "steedos-global-header",
                 "logoSrc": logoSrc,

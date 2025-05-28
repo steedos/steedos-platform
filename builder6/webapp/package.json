@@ -60,6 +60,7 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.4.1",
     "serialize-error": "^7.0.1",
+    "socket.io-client": "^4.8.1",
     "tslib": "^2.3.1",
     "typescript": "5.7.3"
   },

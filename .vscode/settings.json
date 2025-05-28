@@ -20,7 +20,18 @@
         "./packages/schemas/dashboard/schema.json": "/*.dashboard.yml"
     },
     "cSpell.words": [
+        "Accountzoom",
+        "ASSETURLS",
+        "autoform",
+        "Backgroundimage",
+        "coreform",
         "historys",
-        "sobject"
+        "languagedetector",
+        "liveblocks",
+        "nbsp",
+        "smtps",
+        "sobject",
+        "tabbar",
+        "tailwindui"
     ]
 }

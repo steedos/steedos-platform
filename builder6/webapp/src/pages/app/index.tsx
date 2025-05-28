@@ -74,6 +74,21 @@ export const AppDashboard = () => {
       "id": "u:0f6224a0836f",
       "affixFooter": false,
       "body": [
+          {
+          "type": "button",
+          "label": "刷新",
+          "className": "hidden btn-reload-app-dashboard",
+          "onEvent": {
+            "click": {
+              "actions": [
+                {
+                  "componentId": "u:0f6224a0836f",
+                  "actionType": "reload"
+                }
+              ]
+            }
+          }
+        },
         {
           "type": "panel",
           "key": "1",
