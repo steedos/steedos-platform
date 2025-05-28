@@ -138,3 +138,9 @@
 .steedos-app-menu-plus .fa-cog{
     margin-top: -6px;
 }
+
+
+.antd-Pagination > li > a, .antd-Pagination > li > span {
+    line-height: 28px;
+    height: 28px;
+}
