@@ -202,3 +202,34 @@ export function isPropValueChanged(
   }
   return false;
 }
+
+/**
+ * 检查是否只有元数据字段（created/created_by/modified/modified_by）发生了变化
+ * @param newDoc 新文档对象
+ * @param oldDoc 旧文档对象
+ * @returns 如果只有元数据字段变化返回false，否则返回true
+ */
+export function isOnlyMetadataChanged(newDoc: any, oldDoc: any): boolean {
+  const metadataFields = ["created", "created_by", "modified", "modified_by"];
+
+  // 获取所有唯一键
+  const allKeys = Object.keys({ ...newDoc, ...oldDoc });
+
+  for (const key of allKeys) {
+    // 比较两个值（处理undefined的情况）
+    const newValue =
+      newDoc[key] !== undefined ? String(newDoc[key]) : undefined;
+    const oldValue =
+      oldDoc[key] !== undefined ? String(oldDoc[key]) : undefined;
+
+    if (newValue !== oldValue) {
+      // 如果有变化且不是元数据字段，返回true
+      if (!metadataFields.includes(key)) {
+        return true;
+      }
+    }
+  }
+
+  // 如果只有元数据字段变化或没有变化，返回false
+  return false;
+}

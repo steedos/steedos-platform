@@ -1,7 +1,7 @@
 import { getSteedosSchema, getObject } from "@steedos/objectql";
 import { isExpried } from "./utils";
 import { getCacher } from "@steedos/cachers";
-import { isPropValueChanged } from "./session";
+import { isOnlyMetadataChanged, isPropValueChanged } from "./session";
 import { removeUserSessionFromCache } from "./userSession";
 import _ = require("underscore");
 import {
@@ -94,7 +94,10 @@ async function getUserPermissionShares(spaceUser) {
 }
 
 export function getSpaceSessionFromCache(spaceId, userId) {
-  let spaceUserSession = getConfig(SPACEUSERCACHENAME, `${spaceId}-${userId}`);
+  const spaceUserSession = getConfig(
+    SPACEUSERCACHENAME,
+    `${spaceId}-${userId}`,
+  );
   if (!spaceUserSession) {
     return null;
   }
@@ -209,6 +212,13 @@ export async function getSpaceUserSession(spaceId, userId) {
     } else {
       spaceSession = { roles: ["guest"], expiredAt: expiredAt };
     }
+  } else {
+    const userSpaceIds = _.pluck(spaceSession.spaces, "_id");
+    const spaces = await getSpaces(userSpaceIds);
+    spaceSession.spaces = spaces;
+    spaceSession.space = _.find(spaceSession.spaces, (record) => {
+      return record._id === spaceSession.spaceId;
+    });
   }
   if (spaceSession.space && spaceSession.space.admins) {
     spaceSession.is_space_admin =
@@ -277,16 +287,7 @@ export function deleteSpaceUserSessionCacheByChangedProp(
     "email", // 邮箱
   ];
 
-  // space_users session
-  const suProps = [
-    "company_id", // 主分部
-    "company_ids", // 所属公司
-    "organization", // 主部门
-    "organizations", // 所属部门
-    "profile", // 简档
-    ...uProps,
-  ];
-  const suChanged = isPropValueChanged(newDoc, oldDoc, suProps);
+  const suChanged = isOnlyMetadataChanged(newDoc, oldDoc);
   if (suChanged) {
     removeSpaceUserSessionFromCache(spaceId, userId);
   }
@@ -303,11 +304,7 @@ export function deleteSpaceUserSessionCacheByChangedProp(
  */
 export function deleteSpaceCacheByChangedProp(newDoc: any, oldDoc: any): void {
   const { _id: spaceId } = oldDoc;
-  const props = [
-    "name", // 工作区名称
-    "admins", // 管理员
-  ];
-  const changed = isPropValueChanged(newDoc, oldDoc, props);
+  const changed = isOnlyMetadataChanged(newDoc, oldDoc);
   if (changed) {
     // 清除spaces缓存
     const cacher = getCacher(SPACES_CACHER_NAME);

@@ -16,7 +16,7 @@ socket.on("metadata:change", (data) => {
     window.$(`.btn-reload-app-menu-${data.name}`).trigger('click');
     setTimeout(function(){
       window.$(".btn-reload-app-dashboard").trigger('click');
-    }, 1000 * 3)
+    }, 1000 * 1)
   }else if(data.type === 'objects'){
     window.getUISchema(data.name, true).then(()=>{
       if(window.location.pathname.includes(`/${data.name}/view`)){
