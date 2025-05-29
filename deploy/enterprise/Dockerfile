@@ -6,11 +6,13 @@ ENV LC_ALL C.UTF-8
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Etc/UTC
 
-RUN apt-get update || : && apt-get install -y \
-    python \
-    curl \
-    jq \
-    build-essential 
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+       python3 \
+       curl \
+       jq \
+       build-essential \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install MongoDB 4.4.25
 # https://www.mongodb.com/docs/v4.4/tutorial/install-mongodb-on-ubuntu/
