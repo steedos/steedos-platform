@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-pages",
-  "version": "3.0.0-beta.41",
+  "version": "3.0.0-beta.42",
   "main": "package.service.js",
   "scripts": {},
   "license": "MIT",
@@ -8,7 +8,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "ced69704b1534e85ba4797fce8a623ede1eba2c0",
+  "gitHead": "5f8aace8aca89b3e250b51d1728ad764a2338202",
   "dependencies": {
     "clone": "^2.1.2",
     "ejs": "^3.1.8"
