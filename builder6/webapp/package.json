@@ -1,6 +1,6 @@
 {
   "name": "@steedos/webapp",
-  "version": "3.0.0-beta.42",
+  "version": "3.0.0-beta.43",
   "files": [
     "dist"
   ],
@@ -69,5 +69,5 @@
     "access": "public"
   },
   "repository": "https://github.com/steedos/app-builder/tree/master/apps/accounts",
-  "gitHead": "5f8aace8aca89b3e250b51d1728ad764a2338202"
+  "gitHead": "ddd8c7acda2d17c0530de4d21822dc694f56f69f"
 }
