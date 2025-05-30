@@ -346,7 +346,7 @@ jobs:
           regex: false
 
       - name: Build and push docker
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v6
         if: ${{ steps.version.outputs.is_stable != 'true' }}
         with:
           context: ./deploy/enterprise
@@ -357,7 +357,7 @@ jobs:
 
       # 正式版才发布 arm64
       - name: Build and push docker
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v6
         if: ${{ steps.version.outputs.is_stable == 'true' }}
         with:
           context: ./deploy/enterprise
