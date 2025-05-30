@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-cachers-manager",
-  "version": "3.0.0-beta.44",
+  "version": "3.0.0-beta.45",
   "main": "package.service.js",
   "license": "MIT",
   "private": false,
@@ -8,12 +8,12 @@
     "build": "rm -rf ./lib && tsc"
   },
   "dependencies": {
-    "@steedos/cachers": "3.0.0-beta.44",
-    "@steedos/metadata-registrar": "3.0.0-beta.44",
-    "@steedos/utils": "3.0.0-beta.44"
+    "@steedos/cachers": "3.0.0-beta.45",
+    "@steedos/metadata-registrar": "3.0.0-beta.45",
+    "@steedos/utils": "3.0.0-beta.45"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "a371a63daedb5fcb051643cdfbf73e104e1b5f62"
+  "gitHead": "039a42509cb749da5e628847bc1512233baa844b"
 }
