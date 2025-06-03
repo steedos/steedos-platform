@@ -66,7 +66,7 @@ socket.on(SocketEvents.metadataChange, (data) => {
 
 socket.on(SocketEvents.notificationChange, (data)=>{
   if(data.message){
-    window.SteedosUI.notification.open({
+    window.SteedosUI.notification.info({
       message: data.message.name,
       description: data.message.body
     })
