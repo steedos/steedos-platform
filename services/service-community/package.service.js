@@ -175,6 +175,8 @@ module.exports = {
 		  this.broker.createService(require("@steedos/standard-process-approval"));
 
 		  this.broker.createService(require("@steedos/service-metadata-database"));
+
+		  this.broker.createService(require("@steedos-labs/plugin-package-store"));
 	},
 
 	/**
