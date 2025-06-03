@@ -6,8 +6,8 @@ powered-test
 
 # asset directories
 website
-images
-assets
+# images
+# assets
 
 # examples
 example
