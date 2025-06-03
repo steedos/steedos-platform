@@ -115,6 +115,28 @@ export const AppHeader = () => {
                 }
             },
             {
+                "type": "button",
+                "label": "刷新",
+                "className": "hidden btn-reload-global-header-notifications",
+                "onEvent": {
+                    "click": {
+                        "actions": [
+                            {
+                                "actionType": "broadcast",
+                                "args": {
+                                    "eventName": "@data.changed.notifications"
+                                },
+                                "data": {
+                                    "type": "${event.data.type}",
+                                    "objectName": "notifications",
+                                    "recordId": "reload"
+                                }
+                            }
+                        ]
+                    }
+                },
+            },
+            {
                 "type": "steedos-global-header",
                 "logoSrc": logoSrc,
                 "customButtons": [

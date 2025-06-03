@@ -112,11 +112,16 @@ module.exports = {
 		 * 当space_users属性值发生变更后清除userSession缓存
 		 */
 		"@space_users.updated": {
-			handler(ctx) {
-				const params = ctx.params
-				const { isUpdate, isAfter } = params;
+			async handler(ctx) {
+				await ctx.broker.call('b6-microservice.broadcast', {name: '@space_users.updated', data: ctx.params})
+			}
+		},
+		"$broadcast.@space_users.updated": {
+			async handler(ctx){
+				const { data } = ctx.params;
+				const { isUpdate, isAfter, doc, previousDoc } = data;
 				if (isAfter && isUpdate) {
-					auth.deleteSpaceUserSessionCacheByChangedProp(params.doc, params.previousDoc)
+					auth.deleteSpaceUserSessionCacheByChangedProp(doc, previousDoc)
 				}
 			}
 		},
@@ -125,11 +130,16 @@ module.exports = {
 		 * 当spaces属性值发生变更后清除spaces缓存
 		 */
 		"@spaces.updated": {
+			async handler(ctx) {
+				await ctx.broker.call('b6-microservice.broadcast', {name: '@spaces.updated', data: ctx.params})
+			}
+		},
+		"$broadcast.@spaces.updated":{
 			handler(ctx) {
-				const params = ctx.params
-				const { isUpdate, isAfter } = params;
+				const { data } = ctx.params
+				const { isUpdate, isAfter, doc, previousDoc} = data;
 				if (isAfter && isUpdate) {
-					auth.deleteSpaceCacheByChangedProp(params.doc, params.previousDoc)
+					auth.deleteSpaceCacheByChangedProp(doc, previousDoc)
 				}
 			}
 		},
@@ -189,9 +199,14 @@ module.exports = {
 		},
 		"@permission_set.*": {
 			async handler(ctx) {
+				await ctx.broker.call('b6-microservice.broadcast', {name: '@permission_set.*', data: ctx.params})
+			}
+		},
+		"$broadcast.@permission_set.*": {
+			async handler(ctx) {
 				// 数据库数据变化后，重新加载缓存
-				const params = ctx.params
-				const { isUpdate, isAfter, isInsert, isDelete, doc, previousDoc } = params;
+				const { data } = ctx.params
+				const { isUpdate, isAfter, isInsert, isDelete, doc, previousDoc } = data;
 				if (isAfter && (isUpdate || isInsert || isDelete) && ('profile' === (doc || {}).type || 'profile' === (previousDoc || {}).type)) {
 					// 先清理缓存
 					cachers.clearCacher('profiles');
@@ -216,8 +231,13 @@ module.exports = {
 		},
 		"$user.logout": {
 			async handler(ctx) {
-				const { authToken } = ctx.params;
-				auth.removeUserTokenByToken(authToken)
+				await ctx.broker.call('b6-microservice.broadcast', {name: '$user.logout', data: ctx.params})
+			}
+		},
+		"$broadcast.$user.logout": {
+			async handler(ctx) {
+				const { data } = ctx.params;
+				auth.removeUserTokenByToken(data.authToken)
 			}
 		}
 	},

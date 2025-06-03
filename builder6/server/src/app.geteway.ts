@@ -115,8 +115,6 @@ export class AppGateway implements OnGatewayConnection, OnGatewayDisconnect {
     const changeSubscription = (roomParts, individual, changeFunc) => {
       if (!roomParts) return;
 
-      changeFunc(roomParts);
-
       if (individual) {
         if (Array.isArray(roomParts)) {
           changeFunc(roomParts.map((p) => `${p}-${userId()}`));
@@ -131,6 +129,8 @@ export class AppGateway implements OnGatewayConnection, OnGatewayDisconnect {
             changeFunc(`${roomParts}-${linkId()}`);
           }
         }
+      } else {
+        changeFunc(roomParts);
       }
     };
 
@@ -170,7 +170,7 @@ export class AppGateway implements OnGatewayConnection, OnGatewayDisconnect {
   }
 
   metadataChange({ type, action, _id, name, objectName }) {
-    this.server.emit("metadata:change", {
+    this.server.emit("s:metadata:change", {
       type,
       action,
       _id,
@@ -179,8 +179,11 @@ export class AppGateway implements OnGatewayConnection, OnGatewayDisconnect {
     });
   }
 
-  logoutSession({ room, loginEventId }) {
-    this.logger.log(`logout user ${room} session ${loginEventId}`);
-    this.server.to(room).emit("s:logout-session", loginEventId);
+  notificationChange(tenantId, users, message) {
+    for (const userId of users) {
+      this.server
+        .to(`${tenantId}-notification-change-${userId}`)
+        .emit("s:notification-change", { message: message });
+    }
   }
 }

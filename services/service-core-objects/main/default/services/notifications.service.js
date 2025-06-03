@@ -105,8 +105,9 @@ module.exports = {
                     this.broker.emit(`notifications.hasBeenSent`, {
                         ids: notifications_ids
                     });
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                } catch (Exception) { /* empty */ }
+                    await ctx.broker.call('b6-microservice.broadcast', {name: '$notification.users', data: {tenantId: message.space, users: to, message: {name: message.name, body: message.body}}})
+                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                } catch (e) { console.log(e) }
             }
         },
         /**

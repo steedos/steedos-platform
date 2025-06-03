@@ -78,6 +78,19 @@ export class AppMoleculer extends Service {
             });
           }
         },
+        "$broadcast.$notification.users": async (
+          payload,
+          sender,
+          event,
+          ctx,
+        ) => {
+          const { data } = payload;
+          appGateway.notificationChange(
+            data.tenantId,
+            data.users,
+            data.message,
+          );
+        },
       },
       created: this.serviceCreated,
       started: this.serviceStarted,

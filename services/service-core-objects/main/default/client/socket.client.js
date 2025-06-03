@@ -1,16 +1,48 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const SocketCommands = {
+  subscribe: "subscribe",
+  unsubscribe:"unsubscribe"
+}
+
+const SocketEvents = {
+  metadataChange: 's:metadata:change',
+  notificationChange: 's:notification-change'
+}
+
+const SocketRoomParts = {
+  space: 'space',
+  me: 'me',
+  notificationChange: 'notification-change'
+}
+
 // 连接到服务器
-const socket = window.io("http://192.168.3.59:6900", {
+const socket = window.io("/", {
   path: "/socket.io"
 });
 
 // 监听连接事件
-socket.on("connect", () => {
-  console.log("Connected to server!");
-});
+socket.on("connect", () => {});
+
+socket.on("connection-init", ()=>{
+  console.log('emit', SocketCommands.subscribe, SocketRoomParts.space);
+  socket.emit(SocketCommands.subscribe, {
+    roomParts: SocketRoomParts.space
+  });
+  console.log('emit', SocketCommands.subscribe, SocketRoomParts.me);
+  socket.emit(SocketCommands.subscribe, {
+    roomParts: SocketRoomParts.me,
+    individual: true
+  });
+
+  console.log('emit', SocketCommands.subscribe, SocketRoomParts.notificationChange);
+  socket.emit(SocketCommands.subscribe, {
+    roomParts: SocketRoomParts.notificationChange,
+    individual: true
+  });
+})
 
 // 监听自定义事件（根据服务器提供的接口）
-socket.on("metadata:change", (data) => {
-  console.log("Received:", data);
+socket.on(SocketEvents.metadataChange, (data) => {
   if(data.type === 'apps'){
     window.$(`.btn-reload-global-header-${data.name}`).trigger('click');
     window.$(`.btn-reload-app-menu-${data.name}`).trigger('click');
@@ -32,8 +64,19 @@ socket.on("metadata:change", (data) => {
   }
 });
 
-// 发送消息
-socket.emit("event", { key: "value" });
+socket.on(SocketEvents.notificationChange, (data)=>{
+  if(data.message){
+    window.SteedosUI.notification.open({
+      message: data.message.name,
+      description: data.message.body
+    })
+  }
+  window.$('.btn-reload-global-header-notifications').trigger('click');
+})
+
+socket.on("connect_error", (err) => {
+  console.log("连接错误:", err);
+});
 
 // 断开连接时
 socket.on("disconnect", () => {
