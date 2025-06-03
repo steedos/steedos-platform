@@ -236,7 +236,6 @@ export class MetadataDriver extends SteedosMongoDriver {
 
   async insert(tableName: string, doc: any) {
     const result = await super.insert(tableName, doc);
-    console.log(`broker.call b6-metadata.inserted`, tableName, result);
     await broker.call(`b6-metadata.inserted`, {
       type: tableName,
       data: result,
@@ -250,7 +249,7 @@ export class MetadataDriver extends SteedosMongoDriver {
     data: Dictionary<any>,
   ): Promise<any> {
     const result = await super.update(tableName, id, data);
-    console.log(`broker.call b6-metadata.updated`, tableName, result);
+    // console.log(`broker.call b6-metadata.updated`, tableName, result);
     await broker.call(`b6-metadata.updated`, {
       type: tableName,
       id,
@@ -265,7 +264,6 @@ export class MetadataDriver extends SteedosMongoDriver {
   ): Promise<any> {
     const record = await super.findOne(tableName, id, {});
     const result = await super.delete(tableName, id);
-    console.log(`broker.call b6-metadata.deleted`, tableName, result);
     if (record) {
       await broker.call(`b6-metadata.deleted`, {
         type: tableName,
@@ -291,8 +289,10 @@ export class MetadataDriver extends SteedosMongoDriver {
 
     if (_.isString(id)) {
       filters = ["_id", "=", id];
-    } else {
+    } else if (_.isArray(id)) {
       filters = id as any;
+    } else if (_.has(id, "filters")) {
+      filters = (id as any).filters;
     }
 
     const records = await this.find(collection, { filters: filters });
