@@ -37,20 +37,34 @@ filtersFunction: !<tag:yaml.org,2002:js/function> |-
         currentFilter.push(['multiple', '!=', true]);
       }
     }
-    if (fromField && fromField.data_type) {
-        currentFilter.push(['type', 'in', fieldFilters[fromField.data_type] || fromField.data_type.split()]);
-    }else if (fromField) {
-        currentFilter.push(['type', 'in', fieldFilters[fromField.type] || fromField.type.split()]);
-        if (fromField.type == "lookup" || fromField.type == "master_detail") {
-          if(fromField.reference_to === "users"){
-            currentFilter.push([['reference_to', '=', "users"],"or", ['reference_to', '=', "space_users"]]);
+    if (fromField) {
+        if(fromField.type == "select"){
+          //要注意下拉框字段类型有data_type属性，可能为boolean/number/text/null，默认值为null，表示text类型
+          var fromFieldDataType = fromField.data_type || "text";
+          currentFilter.push(['type', '=', 'select']);
+          if (fromFieldDataType === "text") {
+            currentFilter.push([['data_type', '=', 'text'], 'or', ['data_type', '=', null]]);
           }
-          else{
-            if (fromField.reference_to) {
-              currentFilter.push(['reference_to', '=', fromField.reference_to]);
+          else {
+            currentFilter.push(['data_type', '=', fromFieldDataType]);
+          }
+        }
+        else if (fromField.data_type) {
+            // 公式字段类型按data_type属性处理
+            currentFilter.push(['type', 'in', fieldFilters[fromField.data_type] || fromField.data_type.split()]);
+        } else {
+          currentFilter.push(['type', 'in', fieldFilters[fromField.type] || fromField.type.split()]);
+          if (fromField.type == "lookup" || fromField.type == "master_detail") {
+            if(fromField.reference_to === "users"){
+              currentFilter.push([['reference_to', '=', "users"],"or", ['reference_to', '=', "space_users"]]);
             }
-            if (fromField.reference_to_field) {
-              currentFilter.push(['reference_to_field', '=', fromField.reference_to_field]);
+            else{
+              if (fromField.reference_to) {
+                currentFilter.push(['reference_to', '=', fromField.reference_to]);
+              }
+              if (fromField.reference_to_field) {
+                currentFilter.push(['reference_to_field', '=', fromField.reference_to_field]);
+              }
             }
           }
         }
