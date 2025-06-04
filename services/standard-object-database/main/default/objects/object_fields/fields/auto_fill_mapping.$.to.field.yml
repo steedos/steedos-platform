@@ -21,7 +21,8 @@ filtersFunction: !<tag:yaml.org,2002:js/function> |-
         "email": ["email", "text", "textarea"]
     };
     var currentFilter = [];
-    var referenceObject = BuilderAmisObject && BuilderAmisObject.AmisLib && BuilderAmisObject.AmisLib.getUISchemaSync(values.reference_to);
+    //这里调用getUISchemaSync时传入true强制抓取最新schema是因为：设置自动填充时，如果from中选择了一个刚新建的字段，下面的fromField变量会取不到刚新建的字段，造成设置to属性会报错
+    var referenceObject = BuilderAmisObject && BuilderAmisObject.AmisLib && BuilderAmisObject.AmisLib.getUISchemaSync(values.reference_to, true);
     var fromField = referenceObject && referenceObject.fields[values.from];
 
     if (values.multiple) {
