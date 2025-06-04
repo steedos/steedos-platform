@@ -13,17 +13,6 @@
 }
 
 
-.sidebar-wrapper{
-    width: 240px !important;
-}
-
-@media (min-width: 768px) {
-    body.sidebar.sidebar-open #main {
-      margin-left: 240px !important;
-    }
-}
-
-
 .antd-PdfViewer-Tool svg{
     display: inline !important;
 }
@@ -120,24 +109,6 @@
     box-shadow: 0 0 2px var(--private), 0 2px 4px rgba(0, 0, 0, 0.14);
     border: none;
 } */
-
-.sidebar-open .sidebar-wrapper .toggle-sidebar{
-    padding-left: 0.35rem;
-}
-
-.sidebar-open .sidebar-wrapper .stacked .antd-Nav-Menu-submenu-title .antd-Nav-Menu-item-label{
-    padding-left: 0.35rem;
-}
-
-
-.sidebar-open .sidebar-wrapper .steedos-app-service-readonly .toggle-sidebar{
-    width: 50px;
-}
-
-
-.steedos-app-menu-plus .fa-cog{
-    margin-top: -6px;
-}
 
 
 .antd-Pagination > li > a, .antd-Pagination > li > span {
