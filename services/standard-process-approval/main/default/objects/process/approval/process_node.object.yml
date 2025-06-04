@@ -25,6 +25,17 @@ fields:
     type: master_detail
     is_wide: true
     reference_to: process_definition
+    auto_fill_mapping:
+      - from: object_name
+        to: object_name
+  object_name:
+    label: Object
+    type: lookup
+    reference_to: objects
+    reference_to_field: name
+    required: true
+    filterable: true
+    visible_on: "${false}"
   filtrad:
     type: boolean
     label: All records should enter this step
