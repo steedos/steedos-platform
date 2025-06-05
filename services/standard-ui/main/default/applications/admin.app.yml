@@ -8,16 +8,19 @@ showSidebar: true
 mobile: true
 tab_groups:
   - group_name: personal_settings
+    default_open: false
   - group_name: company_settings
+    default_open: false
   - group_name: apps
   - group_name: object_settings
   - group_name: user_interface
   - group_name: statistical_analysis
-  - group_name: development    
     default_open: false
   - group_name: process_automation
     default_open: false
   - group_name: approval_workflow
+    default_open: false
+  - group_name: development    
     default_open: false
   - group_name: advanced_settings
     default_open: false
@@ -49,18 +52,18 @@ tab_items:
   admin_license:
     group: company_settings
     index: 9
-  admin_apps:
-    group: apps
-    index: 10
   admin_objects:
     group: apps
-    index: 12
+    index: 10
   admin_pages:
     group: apps
-    index: 14
+    index: 11
   admin_tabs:
     group: apps
-    index: 16
+    index: 12
+  admin_apps:
+    group: apps
+    index: 13
   admin_queue_import:
     group: apps
     index: 18
@@ -79,7 +82,7 @@ tab_items:
   admin_developer_triggers:
     group: development
     index: 19.51
-  admin_developer_graphql:
+  admin_developer_openapi:
     group: development
     index: 19.52
   admin_process_definition:
@@ -88,9 +91,6 @@ tab_items:
   admin_workflow_rule:
     group: process_automation
     index: 21
-  admin_object_validation_rules:
-    group: process_automation
-    index: 22
   admin_action_field_updates:
     group: process_automation
     index: 23
