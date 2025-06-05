@@ -1,5 +1,5 @@
 name: enable_files
-group: switch
+group: feature
 hidden: false
 label: Enable Files
 sort_no: 130

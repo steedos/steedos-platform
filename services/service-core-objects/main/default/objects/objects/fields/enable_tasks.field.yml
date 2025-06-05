@@ -1,5 +1,5 @@
 name: enable_tasks
-group: switch
+group: feature
 hidden: false
 label: Enable Tasks
 sort_no: 150
