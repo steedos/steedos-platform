@@ -17,6 +17,7 @@ fields:
     required: true
     reference_to: permission_set
     index: true
+    is_name: true
     name: permission_set_id
     filterable: true
     reference_limit: 5000
