@@ -171,9 +171,9 @@ fields:
     label: 自定义
 groups:
   external_data_source: 外部数据源
-  switch: 界面开关
-  feature: 功能开关
-  advanced: 高级
+  switch: 功能开关
+  feature: 界面开关
+  advanced: 外部数据源
 listviews:
   all:
     label: 全部

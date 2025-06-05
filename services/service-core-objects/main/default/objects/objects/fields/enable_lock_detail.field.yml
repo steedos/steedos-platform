@@ -1,7 +1,7 @@
 name: enable_lock_detail
 defaultValue: true
 filters: []
-group: feature
+group: switch
 hidden: false
 inlineHelpText: 当主表记录被锁定时，与之关联的子记录（子表）将只读。适合需要在特定阶段或节点对关联的数据做冻结的业务模式。
 label: Enable Lock Details
