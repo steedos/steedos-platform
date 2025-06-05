@@ -1084,10 +1084,10 @@ CustomLabels:
   objects_is_view: 视图
   objects_is_enable: 已启用
   objects_enable_search: 允许搜索
-  objects_enable_files: 系统附件对象
-  objects_enable_tasks: 系统任务对象
-  objects_enable_notes: 系统备注对象
-  objects_enable_events: 系统日程对象
+  objects_enable_files: 启用附件子表
+  objects_enable_tasks: 启用任务子表
+  objects_enable_notes: 启用备注子表
+  objects_enable_events: 启用日程子表
   objects_enable_chatter: 允许添加留言
   objects_enable_audit: 字段修改历史功能
   objects_enable_api: 允许 API 访问

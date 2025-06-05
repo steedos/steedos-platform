@@ -40,15 +40,15 @@ fields:
     help: 
     description: 
   enable_files:
-    label: 系统附件对象
+    label: 启用附件子表
     help: 
     description: 
   enable_tasks:
-    label: 系统任务对象
+    label: 启用任务子表
     help: 
     description: 
   enable_notes:
-    label: 系统备注对象
+    label: 启用备注子表
     help: 平台统一管理任务的备注对象，启用后记录详情页面会显示备注子表对象。
     description: 
   enable_form_tabs:
@@ -56,7 +56,7 @@ fields:
     help: 启用后，在记录详情页中将字段分组以选项卡形式呈现，优化信息展示；若未启用，则所有字段在同一个页面显示。
     description: 
   enable_events:
-    label: 系统日程对象
+    label: 启用日程子表
     help: 
     description: 
   enable_api:
@@ -80,7 +80,7 @@ fields:
     help: 
     description: 
   enable_inline_edit:
-    label: 列表行字段编辑功能
+    label: 列表行字段编辑
     help: 在列表页中直接对某些字段进行行内编辑，无需切换详情页即可完成快速录入或修改。
     description: 
   enable_tree:
@@ -96,7 +96,7 @@ fields:
     help: 在列表页同时显示记录列表和所选记录的详情，实现快速切换、预览和编辑，常见于需要频繁查看多条记录的场景。
     description: 
   enable_lock_detail:
-    label: 联动锁定子表功能
+    label: 联动锁定子表记录
     help: 当主记录被锁定（Locked属性为true）时，同时锁定相关子表记录，不允许对子表记录进行修改，保持数据一致性。
     description: 
   description:
@@ -173,7 +173,7 @@ groups:
   external_data_source: 外部数据源
   switch: 界面开关
   feature: 功能开关
-  advanced: 高级
+  advanced: 外部数据源
 listviews:
   all:
     label: 全部
