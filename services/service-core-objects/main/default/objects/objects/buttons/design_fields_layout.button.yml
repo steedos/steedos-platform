@@ -1,4 +1,4 @@
 name: design_fields_layout
 is_enable: true
-label: 设计对象
+label: 设计字段
 'on': record_only
