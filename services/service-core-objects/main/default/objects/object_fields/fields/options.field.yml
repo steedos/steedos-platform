@@ -3,6 +3,7 @@ amis:
   showIndex: true
   disabledOn: '${is_system == true}'
   enableDialog: false
+  draggable: true
   columns:
     - label
     - value
