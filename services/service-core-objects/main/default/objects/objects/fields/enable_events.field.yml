@@ -4,4 +4,4 @@ hidden: false
 label: Enable Events
 sort_no: 160
 type: boolean
-inlineHelpText: 在对象记录层面关联日历事件，适合需要基于时间轴对事件或活动进行安排的场景。
+inlineHelpText: 平台统一管理日常的系统对象，包含日历视图显示日常、消息通知等功能；启用后记录详情页面会显示日程子表对象。

@@ -4,4 +4,4 @@ hidden: false
 label: Enable Files
 sort_no: 130
 type: boolean
-inlineHelpText: 允许在记录中上传和下载附件，适用于需要存储文档、图像、合同等文件的场景。
+inlineHelpText: 平台统一存储和管理附件的系统对象，包含附件预览、在线编辑等功能；启用后记录详情页面会显示附件子表对象。

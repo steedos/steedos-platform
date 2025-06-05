@@ -24,4 +24,4 @@ reference_to: object_fields
 reference_to_field: name
 sort_no: 120
 type: lookup
-inlineHelpText: 指定若干个字段显示在记录详情页的顶部，让用户第一时间就能看到关键数据。
+inlineHelpText: 指定若干个字段显示在记录详情页的顶部，以便用户迅速定位重要信息。

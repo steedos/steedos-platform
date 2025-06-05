@@ -102,7 +102,7 @@
     },
     "enable_audit": {
       "type": "boolean",
-      "description": "允许记录字段历史"
+      "description": "启用后，系统会记录用户对当前对象的增删改的操作记录。"
     },
     "enable_trash": {
       "type": "boolean",
@@ -114,7 +114,7 @@
     },
     "enable_tree": {
       "type": "boolean",
-      "description": "启用树状结构显示记录"
+      "description": "列表树结构显示"
     },
     "enable_enhanced_lookup": {
       "type": "boolean",
@@ -154,7 +154,7 @@
     },
     "enable_lock_detail": {
       "type": "boolean",
-      "description": "当主表锁定时，所有子表只读。"
+      "description": "当主记录被锁定（Locked属性为true）时，同时锁定相关子表记录，不允许对子表记录进行修改，保持数据一致性。"
     },
     "is_view": {
       "type": "boolean",
