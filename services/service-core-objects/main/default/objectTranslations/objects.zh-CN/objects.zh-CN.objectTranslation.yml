@@ -185,7 +185,7 @@ listviews:
     label: 已删除
 actions:
   show_object:
-    label: 预览
+    label: 列表预览
   copy_odata:
     label: 复制OData网址
   createDefaultRecordView:
