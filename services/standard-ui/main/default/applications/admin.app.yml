@@ -8,9 +8,7 @@ showSidebar: true
 mobile: true
 tab_groups:
   - group_name: personal_settings
-    default_open: false
   - group_name: company_settings
-    default_open: false
   - group_name: apps
   - group_name: object_settings
   - group_name: user_interface
