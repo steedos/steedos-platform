@@ -50,7 +50,10 @@ router.post('/api/nodes/uninstall', disabledChangePackageWithSaas, auth.requireA
         const result = await broker.call(`@steedos/service-project.uninstallPackage`, {
             module
         },{
-            nodeID: nodeID
+            nodeID: nodeID,
+            meta: {
+                user: userSession
+            }
         })
         res.status(200).send(result); //TODO 完善返回信息
     } catch (error) {
@@ -274,7 +277,7 @@ router.post('/api/nodes/package/add', disabledChangePackageWithSaas, auth.requir
     try {
         let broker = schema.broker;
         const { package: yarnPackage } = req.body;
-        const result = await broker.call(`@steedos/service-project.yarnAddPackage`, {yarnPackage}, {
+        const result = await broker.call(`@steedos/service-project.yarnAddPackage`, {yarnPackage, enable: true}, {
             meta: {
                 user: userSession
             }

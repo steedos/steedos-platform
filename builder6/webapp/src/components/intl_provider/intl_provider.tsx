@@ -76,15 +76,18 @@ export default class IntlProvider extends React.PureComponent<IntlProviderProps,
             const Builder = (window as any).Builder;
             Builder.settings.appId = '-';
             Builder.settings.context = {
-            rootUrl: '',
-            _rootUrl: settingsData.rootUrl,
-            userId: localStorage.getItem('steedos:userId'),
-            tenantId: localStorage.getItem('steedos:spaceId'),
-            authToken: localStorage.getItem('steedos:token'),
-            user: {},
+                rootUrl: '',
+                _rootUrl: settingsData.rootUrl,
+                userId: localStorage.getItem('steedos:userId'),
+                tenantId: localStorage.getItem('steedos:spaceId'),
+                authToken: localStorage.getItem('steedos:token'),
+                user: {},
             };
             Builder.settings.unpkgUrl = settingsData.unpkgUrl;
             Builder.settings.assetUrls = settingsData.assetUrls;
+            Builder.settings.steedosVersion = settingsData.steedosVersion
+            Builder.settings.rootUrl = settingsData.rootUrl
+            Builder.settings.steedosAmisVersion = settingsData.steedosAmisVersion
 
 
             Builder.settings.env = {

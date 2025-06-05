@@ -71,6 +71,7 @@ const getAllPackages = async ()=>{
             _package.instance_id = packageInfo.instanceID
             _package.version = packageInfo.version
             _package.homepage = packageInfo.homepage
+            _package.isUnmanaged = packageInfo.isUnmanaged
         }else{
             packages.push({
                 label: packageInfo.label || packageName,
@@ -84,7 +85,8 @@ const getAllPackages = async ()=>{
                 instance_id: packageInfo.instanceID,
                 status : 'enable',
                 version : packageInfo.version,
-                local: false
+                local: false,
+                isUnmanaged: packageInfo.isUnmanaged
             })
         }
     })

@@ -15,14 +15,26 @@ export class ShareRulesHandle extends BaseHandle {
   }
 
   async inserted(data) {
-    return registerShareRules.register(broker, DB_OBJECT_SERVICE_NAME, data);
+    return registerShareRules.register(
+      broker,
+      data.package_name || DB_OBJECT_SERVICE_NAME,
+      data,
+    );
   }
 
   async updated(data) {
-    return registerShareRules.register(broker, DB_OBJECT_SERVICE_NAME, data);
+    return registerShareRules.register(
+      broker,
+      data.package_name || DB_OBJECT_SERVICE_NAME,
+      data,
+    );
   }
 
   async deleted(data) {
-    return registerShareRules.remove(broker, DB_OBJECT_SERVICE_NAME, data);
+    return registerShareRules.remove(
+      broker,
+      data.package_name || DB_OBJECT_SERVICE_NAME,
+      data,
+    );
   }
 }

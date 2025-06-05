@@ -1,6 +1,8 @@
 name: enable_chatter
-hidden: true
+hidden: false
+group: feature
 label: Enable Chatter
 sort_no: 300
 type: boolean
 visible_on: '{{false}}'
+inlineHelpText: 允许用户在记录中进行评论或反馈，便于团队之间的协作和沟通

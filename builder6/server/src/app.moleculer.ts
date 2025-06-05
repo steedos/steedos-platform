@@ -2,12 +2,17 @@ import { Service, Context, ServiceBroker } from "moleculer";
 import { Injectable, Logger } from "@nestjs/common";
 import { InjectBroker } from "@builder6/moleculer";
 import { getSteedosConfigs } from "./config";
+import { AppGateway } from "./app.geteway";
+import { includes } from "lodash";
 
 @Injectable()
 export class AppMoleculer extends Service {
   private readonly _logger = new Logger();
   started: Boolean = false;
-  constructor(@InjectBroker() broker: ServiceBroker) {
+  constructor(
+    @InjectBroker() broker: ServiceBroker,
+    private readonly appGateway: AppGateway,
+  ) {
     super(broker);
 
     this.parseServiceSchema({
@@ -60,6 +65,31 @@ export class AppMoleculer extends Service {
           } else {
             global.HAS_LICENSE_SERVICE = false;
           }
+        },
+        "$metadata.*": async (payload, sender, event, ctx) => {
+          if (includes(["apps", "objects", "object_listviews"], payload.type)) {
+            appGateway.metadataChange({
+              type: payload.type,
+              action: payload.action,
+              _id: payload.data._id || payload.data.id,
+              name:
+                payload.type === "apps" ? payload.data.code : payload.data.name,
+              objectName: payload.data.object || payload.data.object_name,
+            });
+          }
+        },
+        "$broadcast.$notification.users": async (
+          payload,
+          sender,
+          event,
+          ctx,
+        ) => {
+          const { data } = payload;
+          appGateway.notificationChange(
+            data.tenantId,
+            data.users,
+            data.message,
+          );
         },
       },
       created: this.serviceCreated,

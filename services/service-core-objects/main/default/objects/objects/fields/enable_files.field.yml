@@ -1,6 +1,7 @@
 name: enable_files
-group: switch
+group: feature
 hidden: false
 label: Enable Files
 sort_no: 130
 type: boolean
+inlineHelpText: 允许在记录中上传和下载附件，适用于需要存储文档、图像、合同等文件的场景。

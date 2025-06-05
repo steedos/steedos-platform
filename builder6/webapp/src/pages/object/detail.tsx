@@ -1,9 +1,10 @@
 import { AmisRender } from "../../components/AmisRender";
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { Builder } from "@builder6/react";
 
 export const ObjectDetail = () => {
   const { appId, objectName, recordId } = useParams();
+  let location = useLocation();
   // console.log(`ObjectDetail====>`, appId, objectName, recordId)
   return (
     <AmisRender schema = {{
@@ -17,7 +18,8 @@ export const ObjectDetail = () => {
             object_name: objectName,
             pageType: 'record',
             recordId: recordId,
-            display: Steedos.Page.getDisplay(objectName)
+            display: Steedos.Page.getDisplay(objectName),
+            _reloadKey: location.state?.reloadKey || new Date().getTime()
           }
         },
         data: {

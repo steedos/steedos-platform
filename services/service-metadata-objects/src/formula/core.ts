@@ -26,38 +26,59 @@ const isAmisFormula = (formula: string) => {
 // }
 
 function extractAmisFormulaVariableNames(data) {
-  let variables = [];
+  const variables = new Set();
 
-  // 检查当前节点是否是变量（但不是getter的host）
-  if (data.type === "variable" && !data._isGetterHost) {
-    // 添加标记避免重复收集
-    variables.push(data.name);
-  }
-  // 检查当前节点是否是getter
-  else if (data.type === "getter") {
-    // 标记host节点，避免重复收集
-    data.host._isGetterHost = true;
-    variables.push(`${data.host.name}.${data.key.name}`);
-  }
+  function traverse(node) {
+    if (!node || typeof node !== "object") return;
 
-  // 递归检查所有子节点
-  if (Array.isArray(data)) {
-    for (const item of data) {
-      if (typeof item === "object" && item !== null) {
-        variables = variables.concat(extractAmisFormulaVariableNames(item));
-      }
+    // 处理普通变量（排除作为getter host的情况）
+    if (node.type === "variable" && !isGetterHost(node)) {
+      variables.add(node.name);
     }
-  } else if (typeof data === "object" && data !== null) {
-    for (const key in data) {
-      if (typeof data[key] === "object" && data[key] !== null) {
-        variables = variables.concat(
-          extractAmisFormulaVariableNames(data[key]),
-        );
+    // 处理最外层的getter（不处理嵌套的getter host）
+    else if (node.type === "getter" && !isGetterHost(node)) {
+      const path = getFullGetterPath(node);
+      if (path) variables.add(path);
+    }
+
+    // 递归遍历所有子节点
+    for (const key in node) {
+      if (key !== "parent" && typeof node[key] === "object") {
+        // 设置父节点引用
+        node[key].parent = node;
+        traverse(node[key]);
       }
     }
   }
 
-  return variables;
+  function isGetterHost(node) {
+    return (
+      node.parent && node.parent.type === "getter" && node.parent.host === node
+    );
+  }
+
+  function getFullGetterPath(getterNode) {
+    const parts = [getterNode.key.name];
+    let current = getterNode.host;
+
+    // 向上追溯host
+    while (current) {
+      if (current.type === "getter") {
+        parts.unshift(current.key.name);
+        current = current.host;
+      } else if (current.type === "variable") {
+        parts.unshift(current.name);
+        return parts.join(".");
+      } else {
+        break;
+      }
+    }
+
+    return null;
+  }
+
+  traverse(data);
+  return Array.from(variables);
 }
 
 /**
@@ -67,7 +88,8 @@ function extractAmisFormulaVariableNames(data) {
 export const pickFormulaVars = (formula: string): Array<string> => {
   if (isAmisFormula(formula)) {
     const result = extractAmisFormulaVariableNames(parse(formula));
-    return result;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return result as any;
   }
   return extract(formula);
 };

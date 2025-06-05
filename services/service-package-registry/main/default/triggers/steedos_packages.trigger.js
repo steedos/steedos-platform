@@ -18,13 +18,9 @@ module.exports = {
         const { spaceId } = this;
         let dataList = await packages.getAllPackages();
         if (!_.isEmpty(dataList)) {
-            const cloneValues = clone(this.data.values, false);
+            const cloneValues = [];
             dataList.forEach((doc) => {
-                if (!_.find(this.data.values, (value) => {
-                    return value.name === doc.name
-                })) {
-                    cloneValues.push(doc);
-                }
+                cloneValues.push(doc)
             })
             const records = objectql.getSteedosSchema().metadataDriver.find(cloneValues, this.query, spaceId);
             if (records.length > 0) {
@@ -42,12 +38,10 @@ module.exports = {
         this.data.values = result.length;
     },
     afterFindOne: async function(){
-        if(_.isEmpty(this.data.values)){
-            const all = await packages.getAllPackages();
-            const id = this.id;
-            this.data.values = _.find(all, function(item){
-                return item._id === id
-            });
-        }
+        const all = await packages.getAllPackages();
+        const id = this.id;
+        this.data.values = _.find(all, function(item){
+            return item._id === id
+        });
     }
 }

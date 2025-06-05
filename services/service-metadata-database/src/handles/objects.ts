@@ -29,7 +29,7 @@ export class ObjectsHandle extends BaseHandle {
   async deleted(data) {
     broker.call("objects.removeConfig", {
       objectName: data.name,
-      serviceName: DB_OBJECT_SERVICE_NAME,
+      serviceName: data.package_name || DB_OBJECT_SERVICE_NAME,
     });
   }
 
@@ -85,7 +85,7 @@ export class ObjectsHandle extends BaseHandle {
       //   ),
       // );
       await MetadataRegister.addObjectConfig(
-        DB_OBJECT_SERVICE_NAME,
+        record.package_name || DB_OBJECT_SERVICE_NAME,
         Object.assign(
           {
             datasource: "default",

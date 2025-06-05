@@ -43,12 +43,26 @@ const on_click_script = `
       })
     })
     ${convertAppVisibleOnScript}
+    
+    ;if(Builder.settings.context.user.is_space_admin){
+      app_items.push({
+        id: '_add_admin',
+        name: '新建应用',
+        iconCategory: 'action',
+        icon: 'new',
+        visible_on: true,
+        on_event: true,
+        custom_script: 'debugger;'
+      })
+    }
     payload = {
       app_items,
       object_items
     }
+
     return payload;
   `;
+
 export const AppDashboard = () => {
   const isMobile = false;
   const badgeText = "${IF(${id} == 'approve_workflow',${ss:keyvalues.badge.value|pick:'workflow'},${ss:keyvalues.badge.value|pick:${id}}) | toInt}";
@@ -60,99 +74,165 @@ export const AppDashboard = () => {
       "id": "u:0f6224a0836f",
       "affixFooter": false,
       "body": [
-        {
-          "type": "grid",
-          "className": "m-2",
-          "gap": "md",
-          "columns": [
-            {
-              "columnClassName": "",
-              "md": "8",
-              "body": [
+          {
+          "type": "button",
+          "label": "刷新",
+          "className": "hidden btn-reload-app-dashboard",
+          "onEvent": {
+            "click": {
+              "actions": [
                 {
-                  "type": "panel",
-                  "key": "1",
-                  "title": "应用程序",
-                  "body": [
-                    {
-                      "type": "each",
-                      "name": "app_items",
-                      "items": [{
-                        "type": "button",
-                        "level": "link",
-                        "body": [{
-                          "type": "tpl",
-                          "tpl": "<div class='slds-app-launcher__tile slds-text-link_reset'><div class='slds-app-launcher__tile-figure'><svg class='w-12 h-12 slds-icon slds-icon_container slds-icon-standard-${REPLACE(icon, '_', '-')}' aria-hidden='true'><use xlink:href='/assets/icons/standard-sprite/svg/symbols.svg#${icon}'></use></svg><span class='slds-assistive-text'>${name}</span></div><div class='slds-app-launcher__tile-body'><span class='slds-link text-blue-600 text-lg'><span title='${name}'>${name}</span></span><div style='display: -webkit-box; -webkit-line-clamp: 1;-webkit-box-orient: vertical;overflow: hidden;'><span title='${description}'>${description}</span></div></div></div>",
-                          "badge": {
-                            "mode": "text",
-                            "text": badgeText,
-                            "visibleOn": badgeText,
-                            "className": "w-full",
-                            "overflowCount": 99,
-                            "style": {
-                              "top": "20px",
-                              "left": "37px",
-                              "height": "20px",
-                              "border-radius": "10px",
-                              "line-height": "18px",
-                              "margin-left": "${"+ badgeText +">9?("+ badgeText +">99?'-21px':'-11px'):'0'}",
-                              "right": "auto",
-                              "font-size": "16px"
-                            }
-                          }
-                        }],
-                        "onEvent": {
-                          "click": {
-                            "actions": [
-                              {
-                                "actionType": "closeDialog"
-                              },
-                              {
-                                "actionType": "link",
-                                "args": {
-                                  "link": "${path}"
-                                },
-                                "expression": "${AND(!blank , !on_click)}"
-                              },
-                              {
-                                "actionType": "url",
-                                "args": {
-                                  "url": "${path}",
-                                  "blank": true
-                                },
-                                "expression": "${AND(blank , !on_click)}"
-                              },
-                              {
-                                "actionType": "custom",
-                                "script": on_click_script,
-                                "expression": "${!!on_click}"
-                              }      
-                            ]
-                          }
-                        },
-                        "inline": true,
-                        "style": {
-                        },
-                        "visibleOn": "${visible_on}",
-                        "className": "slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-3"
-                      }],
-                      "className": "slds-grid slds-wrap slds-grid_pull-padded"
-                    }
-                  ]
+                  "componentId": "u:0f6224a0836f",
+                  "actionType": "reload"
                 }
               ]
-            },
+            }
+          }
+        },
+        {
+          "type": "panel",
+          "key": "1",
+          "title": "应用程序",
+          "body": [
             {
-              "columnClassName": "",
-              "body": [
-                
-              ]
+              "type": "each",
+              "name": "app_items",
+              "items": [{
+                "type": "button",
+                "level": "link",
+                "body": [{
+                  "type": "tpl",
+                  "tpl": "<div class='slds-app-launcher__tile slds-text-link_reset'><div class='slds-app-launcher__tile-figure'><svg class='w-12 h-12 slds-icon slds-icon_container rounded-sm slds-icon-${iconCategory || \'standard\'}-${REPLACE(icon, '_', '-')}' aria-hidden='true'><use xlink:href='/assets/icons/${iconCategory || \'standard\'}-sprite/svg/symbols.svg#${icon}'></use></svg><span class='slds-assistive-text'>${name}</span></div><div class='slds-app-launcher__tile-body'><span class='slds-link text-blue-600 text-lg'><span title='${name}'>${name}</span></span><div style='display: -webkit-box; -webkit-line-clamp: 1;-webkit-box-orient: vertical;overflow: hidden;'><span title='${description}'>${description}</span></div></div></div>",
+                  "badge": {
+                    "mode": "text",
+                    "text": badgeText,
+                    "visibleOn": badgeText,
+                    "className": "w-full",
+                    "overflowCount": 99,
+                    "style": {
+                      "top": "20px",
+                      "left": "37px",
+                      "height": "20px",
+                      "border-radius": "10px",
+                      "line-height": "18px",
+                      "margin-left": "${"+ badgeText +">9?("+ badgeText +">99?'-21px':'-11px'):'0'}",
+                      "right": "auto",
+                      "font-size": "16px"
+                    }
+                  }
+                }],
+                "onEvent": {
+                  "click": {
+                    "actions": [
+                      {
+                        "actionType": "closeDialog"
+                      },
+                      {
+                        "actionType": "link",
+                        "args": {
+                          "link": "${path}"
+                        },
+                        "expression": "${AND(!blank , !on_click)}"
+                      },
+                      {
+                        "actionType": "url",
+                        "args": {
+                          "url": "${path}",
+                          "blank": true
+                        },
+                        "expression": "${AND(blank , !on_click)}"
+                      },
+                      {
+                        "actionType": "custom",
+                        "script": on_click_script,
+                        "expression": "${!!on_click}"
+                      },
+                      {
+                        "actionType": "dialog",
+                         "dialog": {
+                          "title": "新建应用",
+                          "actions": [
+                            {
+                              "type": "button",
+                              "actionType": "cancel",
+                              "label": "取消",
+                              "id": "u:21d3cccf4d83"
+                            },
+                            {
+                                "type": "button",
+                                "actionType": "confirm",
+                                "label": "确定",
+                                "primary": true,
+                                "id": "u:238e5731a053"
+                            }
+                          ],
+                          "body": [
+                            {
+                              "type": "form",
+                              "canAccessSuperData": false,
+                              "api": {
+                                  "url": "/service/api/apps/create_by_design",
+                                  "method": "post",
+                                  "requestAdaptor": "api.data={code: context.code, name: context.name, icon: context.icon}; return api;",
+                                  "adaptor": "window.location.href=Steedos.getRelativeUrl('/app/' + payload.code);return {}",
+                                  "messages": {}
+                              },
+                              "body": [
+                                {
+                                  "type": "input-text",
+                                  "name": "code",
+                                  "label": "应用唯一标识",
+                                  "value": "a_\${UUID(6)}",
+                                  "required": true,
+                                  "validateOnChange": true,
+                                  "validations": {
+                                      "isVariableName": /^[a-zA-Z]([A-Za-z0-9]|_(?!_))*[A-Za-z0-9]$/
+                                  }
+                                },
+                                {
+                                  "name": "name",
+                                  "type": "input-text",
+                                  "label": "显示名称",
+                                  "required": true
+                                },
+                                {
+                                    "type": "steedos-field",
+                                    "label": "图标",
+                                    "config": {
+                                        "label": "图标",
+                                        "type": "lookup",
+                                        "required": true,
+                                        "sort_no": 30,
+                                        "optionsFunction": "function anonymous() {        var options;        options = [];        _.forEach(Steedos.resources.sldsIcons.standard, function (svg) {          return options.push({            value: svg,            label: svg,            icon: svg          });        });        return options;      }",
+                                        "name": "icon",
+                                        "inlineHelpText": "",
+                                        "description": "",
+                                        "hidden": false,
+                                        "readonly": false,
+                                        "disabled": false
+                                    }
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        "expression": "${id === '_add_admin'}"
+                      }       
+                    ]
+                  }
+                },
+                "inline": true,
+                "style": {
+                },
+                "visibleOn": "${visible_on}",
+                "className": "slds-p-horizontal_small app-item app-item-${id}"
+              }],
+              "className": "slds-grid slds-wrap slds-grid_pull-padded"
             }
           ]
         }
-        
       ],
-      "className": "steedos-apps-service",
+      "className": "steedos-apps-service steedos-apps-home",
       "visibleOn": "",
       "clearValueOnHidden": false,
       "visible": true,

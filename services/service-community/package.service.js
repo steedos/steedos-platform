@@ -104,6 +104,18 @@ module.exports = {
 			started: function () {},
 			created: function () {},
 		  });
+		this.broker.createService({
+			name: "~packages-@steedos/standard-space",
+			mixins: [],
+			settings: {
+			  packageInfo: {
+				path: "./",
+			  },
+			},
+			started: function () {},
+			created: function () {},
+		  });
+		  
 		  // 国际化
 		  this.broker.createService(require("@steedos/service-i18n"));
 		  // 启动 元数据服务
@@ -136,7 +148,6 @@ module.exports = {
 		  this.broker.createService(require("@steedos/service-pages"));
 	  
 		  this.broker.createService(require("@steedos/service-plugin-amis"));
-		  // this.broker.createService(require("@steedos/service-files"));
 	  
 		  // this.broker.createService(require("@steedos/service-ancillary"));
 	  
@@ -164,6 +175,8 @@ module.exports = {
 		  this.broker.createService(require("@steedos/standard-process-approval"));
 
 		  this.broker.createService(require("@steedos/service-metadata-database"));
+
+		  this.broker.createService(require("@steedos-labs/plugin-package-store"));
 	},
 
 	/**

@@ -571,8 +571,12 @@ module.exports = {
             async handler(ctx) {
                 return await this.getPrimarySpaceId()
             }
+        },
+        getPrimarySpace: {
+            async handler(ctx) {
+                return await this.getPrimarySpace()
+            }
         }
-
     },
 
     /**
@@ -653,6 +657,34 @@ module.exports = {
             }
             this.primarySpaceId = spaceId
             return this.primarySpaceId
+        },
+         getPrimarySpace: async function () {
+            if(this.primarySpace){
+                return this.primarySpace;
+            }
+            const steedosConfig = objectql.getSteedosConfig();
+            let spaceId;
+            if (steedosConfig && steedosConfig.tenant && steedosConfig.tenant._id) {
+                spaceId = steedosConfig.tenant._id
+            }
+
+            const datasource = objectql.getDataSource('default');
+            if (datasource) {
+                const adapter = datasource.adapter;
+                await adapter.connect()
+                const collection = adapter.collection('spaces');
+                let space = null;
+                if (spaceId) {
+                    space = await collection.findOne({ _id: spaceId })
+                }else{
+                    space = await collection.findOne()
+                }
+
+                if (space) {
+                    this.primarySpace = space;
+                }
+            }
+            return this.primarySpace
         }
     },
 

@@ -40,6 +40,9 @@ module.exports = {
             return false;
         }
         const record = data?.record || {};
+        if(record.isUnmanaged){
+            return false
+        }
         if (record.status === 'enable') {
             return true;
         }

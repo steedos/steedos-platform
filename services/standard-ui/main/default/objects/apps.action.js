@@ -41,11 +41,5 @@ module.exports = {
         if(Steedos.Object.base.actions.standard_edit.visible(object_name, record_id, record_permissions)){
             return record.from_code_id;
         }
-    },
-    standard_editVisible: function(object_name, record_id, record_permissions, record){
-        return false
-    },
-    standard_newVisible: function(object_name, record_id, record_permissions, record){
-        return false
     }
 }

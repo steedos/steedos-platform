@@ -32,7 +32,7 @@
           "actions": [
             {
               "label": "${uiSchema.actions.enable.label}",
-              "disabledOn": "${status === 'enable' || window:Steedos.settings.public.enable_saas}",
+              "disabledOn": "${status === 'enable' || window:Steedos.settings.public.enable_saas || isUnmanaged === true}",
               "className": "mr-4",
               "onEvent": {
                 "click": {
@@ -48,7 +48,7 @@
             },
             {
               "label": "${uiSchema.actions.disable.label}",
-              "disabledOn": "${status !== 'enable' || window:Steedos.settings.public.enable_saas}",
+              "disabledOn": "${status !== 'enable' || window:Steedos.settings.public.enable_saas || isUnmanaged === true}",
               "onEvent": {
                 "click": {
                   "actions": [

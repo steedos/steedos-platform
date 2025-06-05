@@ -15,11 +15,11 @@ export class TabsHandle extends BaseHandle {
   }
 
   async inserted(data) {
-    return addTabConfig(data, DB_OBJECT_SERVICE_NAME);
+    return addTabConfig(data, data.package_name || DB_OBJECT_SERVICE_NAME);
   }
 
   async updated(data) {
-    return addTabConfig(data, DB_OBJECT_SERVICE_NAME);
+    return addTabConfig(data, data.package_name || DB_OBJECT_SERVICE_NAME);
   }
 
   async deleted(data) {

@@ -31,7 +31,7 @@ module.exports = {
         $package: {
             path: __dirname,
             name: packageName,
-            isPackage: true
+            isPackage: false
         }
     },
     /**

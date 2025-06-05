@@ -76,6 +76,11 @@ module.exports = {
 		uninstallPackage:{
 			async handler(ctx) {
 				const { module } = ctx.params
+				const packages = loader.loadPackagesConfig();
+				let packageConfig = _.find(packages, (_p, pname) => {
+					_p.name = pname;
+					return pname === module;
+				})
                 await loader.removePackage(module);
         		await registry.uninstallModule(module)
 				await ctx.broker.call(`@steedos/service-packages.uninstall`, {
@@ -85,6 +90,17 @@ module.exports = {
 						instanceID: ctx.broker.instanceID, 
 					}
 				})
+				if(packageConfig?.isUnmanaged){
+					await ctx.broker.call(`~packages-@steedos/metadata-api.remove`, {
+						name: module
+					}, {
+                        timeout: 0,
+                        meta: {
+                            user: ctx.meta.user
+                        }
+                    })
+				}
+
 				return {};
             }
 		},
@@ -250,8 +266,8 @@ module.exports = {
 		},
 		yarnAddPackage: {
 			async handler(ctx) {
-				const { yarnPackage } = ctx.params;
-				return await this.yarnAddPackage(yarnPackage);
+				const { yarnPackage, enable = false } = ctx.params;
+				return await this.yarnAddPackage(yarnPackage, enable);
             }
 		}
 	},
@@ -557,7 +573,8 @@ module.exports = {
 								description: _packageInfo.description,
 								metadata: metadata,
 								static: _packageInfo.static,
-								homepage: _packageInfo.homepage
+								homepage: _packageInfo.homepage,
+								isUnmanaged: _packageInfo.isUnmanaged
 							}
 						})
 					}
@@ -565,28 +582,37 @@ module.exports = {
 			}
 		},
 		yarnAddPackage: {
-			async handler(yarnPackage) {
+			async handler(yarnPackage, enable=false) {
                 const packages = await registry.yarnAddPackage(yarnPackage);
 				for (const packageInfo of packages) {
 					const packagePath = packageInfo.path;
+					if(packageInfo.isUnmanaged){
+						enable = true;
+					}
 					loader.appendToPackagesConfig(packageInfo.name, {
 						version: packageInfo.version,
 						path: util.getPackageRelativePath(process.cwd(), packagePath),
-						enable: false
+						enable: enable,
+						isUnmanaged: packageInfo.isUnmanaged || false
 					});
+					if(enable){
+						await this.broker.call('@steedos/service-project.enablePackage', {module: packageInfo.name})
+					}
+
 					const metadata = await loader.getPackageMetadata(util.getPackageRelativePath(process.cwd(), packagePath));
 					const packageYmlData = loader.getPackageYmlData(packagePath);
 					await this.broker.call(`@steedos/service-packages.install`, {
 						serviceInfo: Object.assign({}, {
 							version: packageInfo.version,
-							path: packageInfo.path
+							path: packageInfo.path,
+							isUnmanaged: packageInfo.isUnmanaged || false
 						}, {
 							packageYmlData: packageYmlData,
 							name: packageInfo.name,
 							enable: false, 
 							nodeID: broker.nodeID, 
 							instanceID: broker.instanceID,
-							metadata: metadata
+							metadata: metadata,
 						})
 					})
 				}

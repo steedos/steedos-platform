@@ -172,7 +172,8 @@ fields:
     label: Customize
 groups:
   external_data_source: External data source
-  switch: Switch
+  switch: Web Switch
+  feature: Feature toggle
   script: Script
   advanced: Advanced
 listviews:

@@ -3,44 +3,143 @@ import { Builder } from '@builder6/react';
 import { useParams } from 'react-router-dom';
 export const AppHeader = () => {
     const params = useParams();
-    const { appId, objectName } = params;
+    let { appId = null, objectName } = params;
     // console.log('AppHeader params:', params)
+
+    if(!appId){
+        document.body.classList.remove('sidebar-open');
+    }
+
     const isMobile = window.innerWidth < 1024;
 
-    const logoSrc = `/images/logo_platform.png`
+    let logoSrc = `/images/logo_platform.png`
+
+    if(Builder.settings?.context?.user?.space?.avatar){
+        logoSrc = '/api/v6/files/cfs.avatars.filerecord/' + Builder.settings.context.user.space.avatar
+    }
+
+    const faviconLink: any = document.querySelector('link[rel*="icon"], link[rel*="shortcut"]');
+
+    let favicon = '/favicons/favicon.ico';
+    if(Builder.settings?.context?.user?.space?.favicon){
+        favicon = "/api/v6/files/cfs.avatars.filerecord/" + Builder.settings.context.user.space.favicon;
+    }
+
+    if (faviconLink) {
+        faviconLink.href = favicon;
+    }else{
+        const newFaviconLink = document.createElement('link');
+        newFaviconLink.rel = 'icon';
+        newFaviconLink.href = favicon;
+        document.head.appendChild(newFaviconLink);
+    }
+
     const schema = {
         "type": "service",
+        "id": "u:global-header",
         name: "globalHeader",
         body: [
+            {
+                "type": "button",
+                "label": "刷新",
+                "className": "hidden btn-reload-page-object-detail",
+                "onEvent": {
+                    "click": {
+                        "actions": [
+                            {
+                                "componentId": "u:steedos-page-object-detail",
+                                "actionType": "reload"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "type": "button",
+                "label": "刷新",
+                "className": "hidden btn-reload-page-object-listview",
+                "onEvent": {
+                    "click": {
+                        "actions": [
+                            {
+                                "componentId": "u:steedos-page-object-listview",
+                                "actionType": "reload"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "type": "button",
+                "label": "刷新",
+                "className": "hidden btn-reload-object-listview",
+                "onEvent": {
+                    "click": {
+                        "actions": [
+                            {
+                                "componentId": "u:steedos-object-listview",
+                                "actionType": "reload"
+                            }
+                        ]
+                    }
+                }
+            },
+             {
+                "type": "button",
+                "label": "刷新",
+                "className": "hidden btn-reload-app-menu-${appId}",
+                "onEvent": {
+                    "click": {
+                    "actions": [
+                        {
+                        "componentId": "u:app-menu",
+                        "actionType": "reload"
+                        }
+                    ]
+                    }
+                }
+            },
+             {
+                "type": "button",
+                "label": "刷新",
+                "className": "hidden btn-reload-global-header btn-reload-global-header-${appId}",
+                "onEvent": {
+                    "click": {
+                    "actions": [
+                        {
+                        "componentId": "u:global-header",
+                        "actionType": "reload"
+                        }
+                    ]
+                    }
+                }
+            },
+            {
+                "type": "button",
+                "label": "刷新",
+                "className": "hidden btn-reload-global-header-notifications",
+                "onEvent": {
+                    "click": {
+                        "actions": [
+                            {
+                                "actionType": "broadcast",
+                                "args": {
+                                    "eventName": "@data.changed.notifications"
+                                },
+                                "data": {
+                                    "type": "${event.data.type}",
+                                    "objectName": "notifications",
+                                    "recordId": "reload"
+                                }
+                            }
+                        ]
+                    }
+                },
+            },
             {
                 "type": "steedos-global-header",
                 "logoSrc": logoSrc,
                 "customButtons": [
-                    {
-                        "type": "button",
-                        "className": "toggle-sidebar",
-                        "visibleOn": "${AND(app.showSidebar,!" + isMobile + ")}",
-                        "onEvent": {
-                            "click": {
-                                "actions": [
-                                    {
-                                        "actionType": "custom",
-                                        "script": "document.body.classList.toggle('sidebar-open')",
-                                    }
-                                ]
-                            }
-                        },
-                        "body": [
-                            {
-                                "type": "steedos-icon",
-                                "category": "utility",
-                                "name": "rows",
-                                "colorVariant": "default",
-                                "id": "u:afc3a08e8cf3",
-                                "className": "slds-button_icon slds-global-header__icon"
-                            }
-                        ],
-                    },
                     {
                         "type": "steedos-app-launcher",
                         "showAppName": false,

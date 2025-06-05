@@ -12,8 +12,10 @@ import { loadMe } from './actions/users';
 import { Steedos } from './utils/steedos';
 import { t } from 'i18next';
 import axios from 'axios';
+import { io } from "socket.io-client";
 
 const _window: any = window;
+_window.io = io;
 _window['axios'] = axios;
 _window['Builder'] = Builder;
 _window['builder'] = builder;

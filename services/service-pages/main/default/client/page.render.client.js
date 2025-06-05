@@ -322,12 +322,9 @@
         this.containerList = [];
         this.pageName = null;
         return this.autorun(function(computation) {
-        //   console.log('autorun=====>computation:', computation)
-            // Session.get("record_id");
           var container, e, lastData, ref, ref1, ref2, regions, schema, updateProps, updatePropsData;
           if(self.data.regions){
             regions = self.data.regions();
-            //   console.log('regions====>', regions, this.lastRegions);
               updateProps = true;
               if (regions.objectName !== ((ref = this.lastRegions) != null ? ref.objectName : void 0)) {
                 updateProps = false;

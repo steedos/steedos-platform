@@ -1,5 +1,5 @@
 name: enable_notes
-group: switch
+group: feature
 hidden: false
 label: Enable Notes
 sort_no: 170

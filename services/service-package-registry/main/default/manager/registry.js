@@ -282,10 +282,17 @@ async function yarnAddPackage(yarnPackage){
             paths: [path.join(installDir, 'node_modules')]
         }))
         if(fs.existsSync(path.join(packagePath, 'package.service.js'))){
+            // eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef
+            const schema = require(path.join(packagePath, 'package.service.js'));
+            schema.settings.packageInfo = {
+                ...schema.settings.packageInfo,
+                ...(schema.metadata && schema.metadata.$package ? schema.metadata.$package : {}),
+            }
             steedosPackages.push({
                 name: parsed.name,
                 version: parsed.rawSpec,
-                path: packagePath
+                path: packagePath,
+                isUnmanaged: schema.settings.packageInfo.isUnmanaged
             })
         }
     })

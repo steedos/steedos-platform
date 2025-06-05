@@ -19,8 +19,6 @@ const {
 } = require('@steedos/metadata-core');
 const sRouter = require('@steedos/router');
 
-const loadFlowFile = new metaDataCore.LoadFlowFile();
-
 const getPackageYmlData = (packagePath)=>{
     let packageYmlData = {};
     if(fs.existsSync(path.join(packagePath, 'package.service.yml'))){
@@ -87,8 +85,10 @@ module.exports = {
                 }
                 const { path: packagePath, isUnmanaged } = packageInfo;
                 if (isUnmanaged && packagePath) {
+                    // eslint-disable-next-line @typescript-eslint/no-require-imports
+                    const packageJSON = require(`${packagePath}/package.json`)
                     const userSession = { spaceId: spaceId, userId: spaceDoc.owner };
-                    await this.deployPackage(packagePath, userSession);
+                    await this.deployPackage(packagePath, userSession, {name: packageJSON.name, version: packageJSON.version});
                 }
             }
         }
@@ -237,6 +237,13 @@ module.exports = {
             if (true != isUnmanaged) {
                 // 受管软件包加载元数据文件，非受管软件包不加载
                 await this.loadPackageMetadataFiles(_path, this.name, datasource);
+            }else{
+                if(process.env.STEEDOS_TENANT_ENABLE_SAAS != "true"){
+                    const primarySpace = await this.broker.call("objectql.getPrimarySpace");
+                    const packageJSON = require(`${_path}/package.json`)
+                    const userSession = { spaceId: primarySpace._id, userId: primarySpace.owner };
+                    await this.deployPackage(_path, userSession, {name: packageJSON.name, version: packageJSON.version});
+                }
             }
             if(isPackage !== false){
                 try {
@@ -247,7 +254,7 @@ module.exports = {
                         _packageInfo = metaDataCore.loadJSONFile(path.join(_path, '..', 'package.json'));
                     }
                     const packageYmlData = getPackageYmlData(_path);
-                    await this.broker.call(`@steedos/service-packages.online`, {serviceInfo: {packageYmlData: packageYmlData, name: this.name, nodeID: this.broker.nodeID, instanceID: this.broker.instanceID, path: _path, version: _packageInfo.version, description: _packageInfo.description}})
+                    await this.broker.call(`@steedos/service-packages.online`, {serviceInfo: {isUnmanaged: isUnmanaged, packageYmlData: packageYmlData, name: this.name, nodeID: this.broker.nodeID, instanceID: this.broker.instanceID, path: _path, version: _packageInfo.version, description: _packageInfo.description}})
                 } catch (error) {
                     console.log(`error`, error)
                 }    
@@ -297,14 +304,18 @@ module.exports = {
                 await datasource.init();
             }
         },
-        async deployPackage(sourcePath, userSession){
+        async deployPackage(sourcePath, userSession, packageInfo){
             try {
                 var tempDir = mkTempFolder('deploy-');
                 var option = { includeJs: false, tableTitle: 'Steedos Deploy', showLog: true, inDeploy: true };
-    
+                const dbPackage = await await this.getObject('steedos_packages').directFind({filters: ['name', '=', packageInfo.name]});
+                if(dbPackage.length > 0){
+                    return ;
+                }
                 compressFiles(sourcePath, sourcePath, tempDir, option, async (base64, zipDir) => {
                     const result = await this.broker.call('~packages-@steedos/metadata-api.deploy', {
                         fileBase64: base64,
+                        packageInfo
                     }, {
                         timeout: 0,
                         meta: {
@@ -364,9 +375,12 @@ module.exports = {
      * Service started lifecycle event handler
      */
     async started() {
-        await this.broker.call(`@steedos/service-packages.starting`, {serviceInfo: {name: this.name, nodeID: this.broker.nodeID, instanceID: this.broker.instanceID}})
+        const packageInfo = this.settings.packageInfo;
+        const isUnmanaged = packageInfo?.isUnmanaged || false;
+
+        await this.broker.call(`@steedos/service-packages.starting`, {serviceInfo: {name: this.name, nodeID: this.broker.nodeID, instanceID: this.broker.instanceID, isUnmanaged}})
         await this.onStarted();
-        await this.broker.call(`@steedos/service-packages.started`, {serviceInfo: {name: this.name, nodeID: this.broker.nodeID, instanceID: this.broker.instanceID}})
+        await this.broker.call(`@steedos/service-packages.started`, {serviceInfo: {name: this.name, nodeID: this.broker.nodeID, instanceID: this.broker.instanceID, isUnmanaged}})
     },
 
     /**

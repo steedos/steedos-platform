@@ -1,7 +1,11 @@
 :root {
-    --private: #1e3a8a;
-    --private-bg: #1e3a8a38;
-    --private-onHover-bg: #1e3a8a60;
+    --tw-bg-opacity: 0.1 !important;
+    --tw-onHover-opacity: 0.4;
+    --tw-onHover2-opacity: 0.5;
+    --private: rgb(14, 165, 233);
+    --private-bg: rgb(14, 165, 233, var(--tw-bg-opacity));
+    --private-onHover-bg: rgb(14, 165, 233, var(--tw-onHover-opacity));
+    --private-onHover-bg2: rgb(14, 165, 233, var(--tw-onHover2-opacity));
     --Tabs--line-onHover-borderColor: var(--private);
     --Tabs--line-active-color: var(--private);
     --SearchBox-hover-color: var(--private);
@@ -21,7 +25,15 @@
     --button-link-default-font-color: var(--private);
     --Toast-paddingY: 10px;
     --Toast-paddingX: 16px;
+
+    --dialog-header-color: var(--private);
+
+    --Form-item-fontSize: 14px !important;
+    --Table-thead-fontSize: 14px !important;
+    --Table-thead-fontSize: 14px !important;
+
 }
+
 .antd-Table-table td.is-sticky{
     background: unset !important;
 }
@@ -74,11 +86,11 @@
 
 
 .antd-Nav-Menu-light .antd-Nav-Menu-item.antd-Nav-Menu-item-selected {
-    background: #1e3a8a30 !important; 
+    background: var(--private-bg) !important; 
 }
 
 .antd-Nav-Menu-light .antd-Nav-Menu-item.antd-Nav-Menu-item-active {
-    background: #1e3a8a30 !important; 
+    background: var(--private-bg) !important; 
 }
 
 .steedos-record-related-header .slds-icon {
@@ -130,36 +142,4 @@ body a:hover {
 
 .ant-btn-primary{
     color: var(--private);
-}
-
-.ant-modal-mask{
-    z-index: 2999 !important;
-}
-
-.ant-modal-wrap{
-    z-index: 3999 !important;
-}
-
-
-.sidebar-wrapper{
-    width: 240px !important;
-}
-
-@media (min-width: 768px) {
-    body.sidebar.sidebar-open #main {
-      margin-left: 240px !important;
-    }
-}
-
-
-.antd-PdfViewer-Tool svg{
-    display: inline !important;
-}
-
-.antd-PdfViewer-Tool .page-input {
-    background: transparent !important;
-}
-
-.antd-PdfViewer-Tool{
-    bottom: 10px !important;
 }

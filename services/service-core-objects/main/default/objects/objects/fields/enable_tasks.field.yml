@@ -1,6 +1,7 @@
 name: enable_tasks
-group: switch
+group: feature
 hidden: false
 label: Enable Tasks
 sort_no: 150
 type: boolean
+inlineHelpText: 在对象记录层面关联任务，方便将后续工作跟踪在一起。

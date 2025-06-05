@@ -6,6 +6,7 @@
  * @Description: 
  */
 var objectql = require('@steedos/objectql');
+const _ = require('underscore');
   
 async function insertParentAndChildrenFieldForTreeObject(doc, needToCheckExists){
     const baseProps = {

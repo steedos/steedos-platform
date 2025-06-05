@@ -1,7 +1,8 @@
 name: enable_split
 defaultValue: false
-group: advanced
+group: switch
 hidden: false
 label: Enable Split
 sort_no: 240
 type: boolean
+inlineHelpText: 在列表页同时显示记录列表和所选记录的详情，实现快速切换、预览和编辑，常见于需要频繁查看多条记录的场景。

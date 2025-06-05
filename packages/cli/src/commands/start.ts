@@ -17,6 +17,17 @@ class StartCommand extends Command {
       // eslint-disable-next-line @typescript-eslint/no-require-imports
       const server = require(serverPath);
 
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const { version } = require("@steedos/server/package.json");
+
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const i18n = require("@steedos/i18n");
+      global.t = i18n.t;
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      global._ = require("underscore");
+
+      process.env.STEEDOS_VERSION = version;
+
       server.bootstrap(appConfig);
     } catch (error) {
       this.error(error.message, { exit: 1 });

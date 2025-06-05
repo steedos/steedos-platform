@@ -38,7 +38,7 @@ process.env.STEEDOS_BUILDER_URL = process.env.STEEDOS_BUILDER_URL.replace(
 );
 
 if (isEmpty(process.env.STEEDOS_AMIS_VERSION)) {
-  process.env.STEEDOS_AMIS_VERSION = "6.3.0-patch.3";
+  process.env.STEEDOS_AMIS_VERSION = "6.3.0-patch.4";
 }
 
 if (isEmpty(process.env.STEEDOS_AMIS_URL)) {
@@ -57,7 +57,7 @@ if (isEmpty(process.env.STEEDOS_AMIS_URL)) {
 process.env.STEEDOS_AMIS_URL = process.env.STEEDOS_AMIS_URL.replace(/\/+$/, "");
 
 if (isEmpty(process.env.STEEDOS_WIDGETS_VERSION)) {
-  process.env.STEEDOS_WIDGETS_VERSION = "v6.10.1-beta.13";
+  process.env.STEEDOS_WIDGETS_VERSION = "v6.10.1-beta.29";
 }
 
 if (isEmpty(process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS)) {

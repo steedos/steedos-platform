@@ -195,7 +195,7 @@ const getField = (objectName, fieldName, type, lng)=>{
         case 'date':
             // 华炎魔方中日期字段存的是utc的0点
             field = {
-                type: "date",
+                type: "text",
                 format: "YYYY-MM-DDT00:00:00+00:00",
                 operators: getFieldOperators("date", lng)
             };
@@ -203,7 +203,7 @@ const getField = (objectName, fieldName, type, lng)=>{
         case 'datetime':
             // 即amis中日期时间控件的format默认值为"YYYY-MM-DDTHH:mm+08:00"正好满足需求
             field = {
-                type: "datetime",
+                type: "text",
                 operators: getFieldOperators("datetime", lng)
             };
             break;
@@ -217,6 +217,11 @@ const getField = (objectName, fieldName, type, lng)=>{
             break;
         case 'lookup':
         case 'master_detail':
+            field = {
+                type: 'text',
+                operators: getFieldOperators("select", lng)
+            };
+            break;
         case 'select':
             field = {
                 type: 'select',

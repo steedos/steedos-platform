@@ -15,11 +15,11 @@ export class AppsHandle extends BaseHandle {
   }
 
   async inserted(data) {
-    return addAppConfig(data, DB_OBJECT_SERVICE_NAME);
+    return addAppConfig(data, data.package_name || DB_OBJECT_SERVICE_NAME);
   }
 
   async updated(data) {
-    return addAppConfig(data, DB_OBJECT_SERVICE_NAME);
+    return addAppConfig(data, data.package_name || DB_OBJECT_SERVICE_NAME);
   }
 
   async deleted(data) {

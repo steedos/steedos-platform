@@ -16,7 +16,8 @@ module.exports = {
         }
     },
     viewPageVisible: function (object_name, record_id, permission, data) {
-        var record = data && data.record;
-        return record && record.type === 'app';
+        // var record = data && data.record;
+        // return record && record.type === 'app';
+        return false;
     }
 }

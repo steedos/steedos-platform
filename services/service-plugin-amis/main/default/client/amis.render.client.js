@@ -29,11 +29,6 @@
           
             return true;
           }
-
-        // 加载Amis SDK: 如果直接放到body中会导致 meteor 编译后的 cordova.js 加载报错
-        // let amisSDKScript = document.createElement("script");
-        // amisSDKScript.setAttribute("src", Steedos.absoluteUrl('/unpkg.com/amis/sdk/sdk.js'));
-        // document.getElementsByTagName("head")[0].appendChild(amisSDKScript);
     } catch (error) {
         console.error(error)
     };
@@ -257,13 +252,8 @@
 
                   // 主要是支持 nav 中的跳转
                   if (action && to && action.target) {
-                      if(Meteor.isCordova && to.indexOf('http') != 0){
-                        window.open(Steedos.absoluteUrl(to), action.target);
-                        return;
-                      }else{
-                        window.open(to, action.target);
-                        return;
-                      }
+                      window.open(to, action.target);
+                      return;
                   }
 
                   if (/^https?:\/\//.test(to)) {
@@ -281,27 +271,12 @@
                     }
                     // url是相对路径
                     if(config.url && (!/^http[s]?:\/\//i.test(config.url))){
-                      if(Meteor.isCordova){
-                        config.url = Meteor.absoluteUrl(config.url)
-                      }
-
                       if(!config.headers){
                         config.headers = {}
                       }
 
                       if(!config.headers.Authorization && Builder.settings.context && Builder.settings.context.tenantId && Builder.settings.context.authToken){
                         config.headers.Authorization = `Bearer ${Builder.settings.context.tenantId},${Builder.settings.context.authToken}`;
-                      }
-                    }else if(config.url && Meteor.isCordova && Builder.settings.context && Builder.settings.context.rootUrl && config.url.startsWith(Builder.settings.context.rootUrl)){
-                      // 是绝对路径,且是cordova环境, 且以root url开头, 则自动处理认证
-                      if(Meteor.isCordova){
-                        if(!config.headers){
-                          config.headers = {}
-                        }
-              
-                        if(!config.headers.Authorization && Builder.settings.context && Builder.settings.context.tenantId && Builder.settings.context.authToken){
-                          config.headers.Authorization = `Bearer ${Builder.settings.context.tenantId},${Builder.settings.context.authToken}`;
-                        }
                       }
                     }
                     return config;
@@ -418,23 +393,6 @@
             };
 
             const initMonaco = ()=>{
-
-                // const { detect } = require('detect-browser');
-
-                // const browser = detect();
-
-                // // 低于86版的chrome 不支持code类型字段及功能
-                // if (browser && browser.name === 'chrome' && Number(browser.version.split(".")[0]) < 86) {
-                //     return Promise.resolve(true)
-                // }
-
-                // // 手机版暂不支持code类型字段.
-                // if(Meteor.isCordova){
-                //     return Promise.resolve(true)
-                // }else{
-                //     return Builder.initMonaco()
-                // }
-
                 return Promise.resolve(true)
             }
             //Amis SDK 中已清理了monaco, 所以这里需要提前注册,否则会导致amis code类型报错
