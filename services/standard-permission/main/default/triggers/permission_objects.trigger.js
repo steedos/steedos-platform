@@ -186,13 +186,15 @@ module.exports = {
         return processPermissions(doc)
     },
     beforeUpdate: async function () {
-        let oldDoc = objectql.getObject("permission_set").directFindOne({_id: this.id})
+        let oldDoc = await objectql.getObject("permission_set").findOne(this.id)
         let doc = this.doc;
         let permission_set_id = doc.permission_set_id || oldDoc.permission_set_id
         let object_name = doc.object_name || oldDoc.object_name
         let space = oldDoc.space
-        let existedCount = objectql.getObject("permission_set").directFind({permission_set_id: permission_set_id, object_name: object_name, space: space, _id: {$ne: this.id}}).length;
-        if(existedCount > 0){
+        let dbRecords = await objectql.getObject("permission_set").directFind({
+            filters: [['permission_set_id', '=', permission_set_id], ['object_name', '=', object_name], ['space', '=', space], ['_id', '!=', this.id]]
+        });
+        if(dbRecords.length > 0){
             throw new Error("此对象已有权限对象记录")
         }
 
