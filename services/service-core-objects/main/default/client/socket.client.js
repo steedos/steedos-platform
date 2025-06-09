@@ -49,7 +49,7 @@ socket.on(SocketEvents.metadataChange, (data) => {
     setTimeout(function(){
       window.$(".btn-reload-app-dashboard").trigger('click');
     }, 1000 * 1)
-  }else if(data.type === 'objects'){
+  }else if(data.type === 'objects' || data.type === 'object_actions'){
     window.getUISchema(data.name, true).then(()=>{
       if(window.location.pathname.includes(`/${data.name}/view`)){
         window.navigate(window.location.pathname, {state: {reloadKey: new Date().getTime()}})

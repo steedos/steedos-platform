@@ -67,7 +67,12 @@ export class AppMoleculer extends Service {
           }
         },
         "$metadata.*": async (payload, sender, event, ctx) => {
-          if (includes(["apps", "objects", "object_listviews"], payload.type)) {
+          if (
+            includes(
+              ["apps", "objects", "object_listviews", "object_actions"],
+              payload.type,
+            )
+          ) {
             appGateway.metadataChange({
               type: payload.type,
               action: payload.action,
