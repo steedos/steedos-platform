@@ -1,6 +1,6 @@
 {
   "name": "@steedos/server",
-  "version": "3.0.0-beta.52",
+  "version": "3.0.0-beta.53",
   "description": "",
   "author": "",
   "license": "AGPL-3.0-only",
@@ -23,10 +23,10 @@
   "dependencies": {
     "@builder6/server": "^0.16.3-alpha.18",
     "@steedos/ee_unpkg": "1.0.0",
-    "@steedos/service-community": "3.0.0-beta.52",
+    "@steedos/service-community": "3.0.0-beta.53",
     "@steedos/service-enterprise": "^3.0.0-beta.1",
     "@steedos/service-license": "2.5.49",
-    "@steedos/webapp": "3.0.0-beta.52"
+    "@steedos/webapp": "3.0.0-beta.53"
   },
   "devDependencies": {
     "@nestjs/cli": "^11.0.0",
@@ -71,5 +71,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "1fee70cf304c36f2cbaa6e1e78b866c9af8735ac"
+  "gitHead": "5ce5b122b23cb8975158917272fb74babf0f180b"
 }
