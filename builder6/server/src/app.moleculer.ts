@@ -69,7 +69,13 @@ export class AppMoleculer extends Service {
         "$metadata.*": async (payload, sender, event, ctx) => {
           if (
             includes(
-              ["apps", "objects", "object_listviews", "object_actions"],
+              [
+                "apps",
+                "objects",
+                "object_listviews",
+                "object_actions",
+                "object_fields",
+              ],
               payload.type,
             )
           ) {
