@@ -94,13 +94,7 @@
       "padding-top": "0.5rem",
       "padding-bottom": "0.5rem",
       "padding-left": "1rem",
-      "padding-right": "1rem",
-      "--tw-bg-opacity": "1",
-      "background-color": "rgb(243 244 246 / var(--tw-bg-opacity))",
-      "--tw-border-opacity": "1",
-      "border-color": "rgb(209 213 219 / var(--tw-border-opacity))",
-      "border-style": "solid",
-      "border-bottom-width": "1px"
+      "padding-right": "1rem"
     },
     ".antd-Service.steedos-object-table .antd-Crud .antd-Cards .antd-Cards-body": {
       "margin": "0.25rem"
