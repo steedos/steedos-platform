@@ -38,7 +38,7 @@ process.env.STEEDOS_BUILDER_URL = process.env.STEEDOS_BUILDER_URL.replace(
 );
 
 if (isEmpty(process.env.STEEDOS_AMIS_VERSION)) {
-  process.env.STEEDOS_AMIS_VERSION = "6.3.0-patch.4";
+  process.env.STEEDOS_AMIS_VERSION = "6.3.0-patch.6";
 }
 
 if (isEmpty(process.env.STEEDOS_AMIS_URL)) {
