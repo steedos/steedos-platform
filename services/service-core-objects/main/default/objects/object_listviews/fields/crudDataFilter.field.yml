@@ -3,8 +3,8 @@ label: Crud DataFilter
 type: code
 language: javascript
 is_wide: true
-inlineHelpText: |
-  如果需要对列表视图组件原始返回的crud进行加工，可以自己写一段函数脚本来实现。\n\n函数签名：(crud, env, data) => crud\n\n参数说明：\n\ncrud 组件原始返回的crud schema\n\nenv amis env，可以调用env.fetcher函数实现异步请求\n\ndata 数据域中的data\n\n返回值：\n\n最后需要返回加工后的crud schema\n\n示例：\n\n```\nconsole.log('data===>', data);\nconst api = ...;\nreturn env.fetcher(api, {}).then((result) => {\n  console.log(result);\n  crud.columns.push({'label': 'xxx', name: 'xxx'});\n  return crud;\n});\n\n```\n
+description: |
+  重写列表crud配置，函数签名：(crud, env, data) => crud 
 group: CRUD
 sort_no: 450
 amis:
