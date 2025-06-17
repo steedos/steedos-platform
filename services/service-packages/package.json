@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-packages",
-  "version": "3.0.0-beta.55",
+  "version": "3.0.0-beta.56",
   "main": "index.js",
   "scripts": {},
   "license": "MIT",
@@ -8,5 +8,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "a43fce5ab428f000dfdabf67e98ac5664292181a"
+  "gitHead": "88863d32808d49cafbf8ce9d55546babc12dcef5"
 }
