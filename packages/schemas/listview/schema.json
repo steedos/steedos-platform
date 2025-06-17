@@ -1,153 +1,132 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "name": "steedos-schema_object_listview",
-    "type": "object",
-    "additionalProperties": false,
-    "oneOf": [
-        {
-            "properties": {
-                "type": {
-                    "enum": [
-                        "library"
-                    ]
-                }
-            },
-            "required": [
-                "name",
-                "columns"
-            ]
-        },
-        {
-            "properties": {
-                "type": {
-                    "not": {
-                        "enum": [
-                            "library"
-                        ]
-                    }
-                }
-            }
-        }
-    ],
-    "properties": {
-        "name": {
-            "type": "string",
-            "description": "API 名称"
-        },
-        "label": {
-            "type": "string",
-            "description": "视图显示名称"
-        },
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "name": "steedos-schema_object_listview",
+  "type": "object",
+  "additionalProperties": false,
+  "oneOf": [
+    {
+      "properties": {
         "type": {
-            "type": "string",
-            "description": "列表显示类型，默认为grid",
-            "enum": [
-                "grid",
-                "calendar"
-            ]
-        },
-        "filter_scope": {
-            "type": "string",
-            "description": "范围",
-            "enum": [
-                "space",
-                "mine",
-                "all"
-            ]
-        },
-        "columns": {
-            "type": "array",
-            "description": "列表显示的字段"
-        },
-        "mobile_columns": {
-            "type": "array",
-            "description": "手机模式下列表显示的字段"
-        },
-        "extra_columns": {
-            "type": "array",
-            "description": "额外查询的字段"
-        },
-        "sort": {
-            "type": "array",
-            "description": "排序"
-        },
-        "filters": {
-            "type": [
-                "array",
-                "string"
-            ],
-            "description": "过滤条件"
-        },
-        "filter_fields": {
-            "type": "array",
-            "description": "过滤的字段"
-        },
-        "sort_no": {
-            "type": "number",
-            "description": "显示顺序，从小到大"
-        },
-        "options": {
-            "type": "object",
-            "description": "额外选项"
-        },
-        "show_count": {
-            "type": "boolean",
-            "description": "显示条目数"
-        },
-        "is_enable":{
-            "type": "boolean",
-            "description": "启用"
-        },
-        "searchable_fields":{
-            "type": "array",
-            "description": "可搜索字段"
-        },
-        "enable_amis_schema":{
-            "type": "boolean",
-            "description": "是否使用 amis自定义列表"
-        },
-        "crud_mode":{
-            "type": "string",
-            "description": "crud组件mode属性，默认为table，可选table、cards 或者 list",
-            "enum": [
-                "table",
-                "cards",
-                "list"
-            ]
-        },
-        "shared":{
-            "type": "boolean",
-            "description": "是否共享到工作区"
-        },
-        "shared_to":{
-            "type": "string",
-            "description": "谁可以查看此列表视图？",
-            "enum": [
-                "mine",
-                "space",
-                "organizations"
-            ]
-        },
-        "shared_to_organizations":{
-            "type": "array",
-            "description": "共享列表视图给哪些组织？"
-        },
-        "scrolling_mode":{
-            "type":"string",
-            "description": "滚动条样式",
-            "enum": [
-                "standard",
-                "virtual",
-                "infinite"
-            ]
-        },
-        "requestAdaptor": {
-            "type": "string",
-            "description": "发送适配器"
-        },
-        "adaptor": {
-            "type": "string",
-            "description": "接收适配器"
+          "enum": ["library"]
         }
+      },
+      "required": ["name", "columns"]
+    },
+    {
+      "properties": {
+        "type": {
+          "not": {
+            "enum": ["library"]
+          }
+        }
+      }
     }
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "API 名称"
+    },
+    "label": {
+      "type": "string",
+      "description": "视图显示名称"
+    },
+    "type": {
+      "type": "string",
+      "description": "列表显示类型，默认为grid",
+      "enum": ["grid", "calendar"]
+    },
+    "filter_scope": {
+      "type": "string",
+      "description": "范围",
+      "enum": ["space", "mine", "all"]
+    },
+    "columns": {
+      "type": "array",
+      "description": "列表显示的字段"
+    },
+    "mobile_columns": {
+      "type": "array",
+      "description": "手机模式下列表显示的字段"
+    },
+    "extra_columns": {
+      "type": "array",
+      "description": "额外查询的字段"
+    },
+    "sort": {
+      "type": "array",
+      "description": "排序"
+    },
+    "filters": {
+      "type": ["array", "string"],
+      "description": "过滤条件"
+    },
+    "filter_fields": {
+      "type": "array",
+      "description": "过滤的字段"
+    },
+    "sort_no": {
+      "type": "number",
+      "description": "显示顺序，从小到大"
+    },
+    "options": {
+      "type": "object",
+      "description": "额外选项"
+    },
+    "show_count": {
+      "type": "boolean",
+      "description": "显示条目数"
+    },
+    "is_enable": {
+      "type": "boolean",
+      "description": "启用"
+    },
+    "searchable_fields": {
+      "type": "array",
+      "description": "可搜索字段"
+    },
+    "enable_amis_schema": {
+      "type": "boolean",
+      "description": "是否使用 amis自定义列表"
+    },
+    "crud_mode": {
+      "type": "string",
+      "description": "crud组件mode属性，默认为table，可选table、cards 或者 list",
+      "enum": ["table", "cards", "list"]
+    },
+    "shared": {
+      "type": "boolean",
+      "description": "是否共享到工作区"
+    },
+    "shared_to": {
+      "type": "string",
+      "description": "谁可以查看此列表视图？",
+      "enum": ["mine", "space", "organizations"]
+    },
+    "shared_to_organizations": {
+      "type": "array",
+      "description": "共享列表视图给哪些组织？"
+    },
+    "scrolling_mode": {
+      "type": "string",
+      "description": "滚动条样式",
+      "enum": ["standard", "virtual", "infinite"]
+    },
+    "requestAdaptor": {
+      "type": "string",
+      "description": "发送适配器"
+    },
+    "adaptor": {
+      "type": "string",
+      "description": "接收适配器"
+    },
+    "crudDataFilter": {
+      "type": "string",
+      "description": "如果需要对列表视图组件原始返回的crud进行加工，可以自己写一段函数脚本来实现。\n\n函数签名：(crud, env, data) => crud\n\n参数说明：\n\ncrud 组件原始返回的crud schema\n\nenv amis env，可以调用env.fetcher函数实现异步请求\n\ndata 数据域中的data\n\n返回值：\n\n最后需要返回加工后的crud schema\n\n示例：\n\n\nconsole.log('data===>', data);\nconst api = ...;\nreturn env.fetcher(api, {}).then((result) => {\n  console.log(result);\n  crud.columns.push({'label': 'xxx', name: 'xxx'});\n  return crud;\n});\n\n\n"
+    },
+    "crud": {
+      "type": "object",
+      "description": "重写列表crud配置，请使用json格式配置。"
+    }
+  }
 }
