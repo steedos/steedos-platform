@@ -1,5 +1,5 @@
 name: crudDataFilter
-label: CRUD
+label: 重写表格
 type: code
 language: javascript
 is_wide: true

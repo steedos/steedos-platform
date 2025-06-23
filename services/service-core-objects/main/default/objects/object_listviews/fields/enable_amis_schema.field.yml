@@ -4,3 +4,4 @@ type: boolean
 group: advanced
 required: false
 sort_no: 420
+hidden: true
