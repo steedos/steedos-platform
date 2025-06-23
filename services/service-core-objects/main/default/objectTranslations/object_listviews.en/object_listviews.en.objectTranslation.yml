@@ -196,7 +196,6 @@ groups:
   sort: Sort
   filters: Filters
   search_term: Search Term
-  data_interface: Data Interface
 listviews:
   all:
     label: All List View
