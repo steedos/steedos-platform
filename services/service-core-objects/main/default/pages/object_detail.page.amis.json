@@ -173,6 +173,22 @@
                             "recordId": "${recordId}",
                             "relatedObjectApiName": "object_functions",
                             "relatedKey": "objectApiName",
+                            "perPage": 20,
+                            "id": "u:e0aff125ad0f"
+                        }
+                    ],
+                    "id": "u:13fd52c4e905"
+                },
+                {
+                    "title": "${'objects_amis_queue_import' | t}",
+                    "id": "u:b36e7189917a",
+                    "body": [
+                        {
+                            "type": "steedos-object-related-listview",
+                            "objectApiName": "objects",
+                            "recordId": "${recordId}",
+                            "relatedObjectApiName": "queue_import",
+                            "relatedKey": "object_name",
                             "perPage": 20
                         }
                     ]
