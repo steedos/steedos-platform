@@ -2,7 +2,7 @@ import { Service, Context, ServiceBroker } from "moleculer";
 import { Injectable, Logger } from "@nestjs/common";
 import { InjectBroker } from "@builder6/moleculer";
 import { getSteedosConfigs } from "./config";
-import { AppGateway } from "./app.geteway";
+import { AppGateway } from "./app.gateway";
 import { includes } from "lodash";
 
 @Injectable()

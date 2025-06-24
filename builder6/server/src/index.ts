@@ -1,7 +1,7 @@
 import path, { join } from "path";
 import { AppController } from "./app.controller";
 import { AppMoleculer } from "./app.moleculer";
-import { AppGateway } from "./app.geteway";
+import { AppGateway } from "./app.gateway";
 import express from "express";
 
 import { getMoleculerConfigs, getSteedosConfigs } from "./config";
