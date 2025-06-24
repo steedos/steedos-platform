@@ -1,12 +1,10 @@
 name: crudDataFilter
-label: Crud DataFilter
+label: 重写表格
 type: code
 language: javascript
 is_wide: true
-description: |
+inlineHelpText: |
   重写列表crud配置，函数签名：(crud, env, data) => crud 
-group: CRUD
-sort_no: 450
-amis:
-  label: null
+group: advanced
+sort_no: 420
 

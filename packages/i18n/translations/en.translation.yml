@@ -1108,6 +1108,7 @@ CustomLabels:
   objects_amis_sharing_rule: Sharing Rules
   objects_amis_object_workflows: Object Synchronization Rule
   objects_amis_functions: Object Functions
+  objects_amis_queue_import: Data Import
   object_fields: 字段
   object_fields_name: 字段名
   object_fields_label: 显示名称

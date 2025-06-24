@@ -54,16 +54,16 @@ export class DbManager {
   async insert(collectionName: string, doc: any, autoGenerateId = true) {
     if (autoGenerateId) {
       doc["_id"] = new ObjectId().toHexString();
-      doc["space"] = this.userSession.spaceId;
-
-      const now = new Date();
-      doc["owner"] = this.userSession.userId;
-      doc["created"] = now;
-      doc["created_by"] = this.userSession.userId;
-      doc["modified"] = now;
-      doc["modified_by"] = this.userSession.userId;
-      doc["package_name"] = this.packageInfo?.name;
     }
+    doc["space"] = this.userSession.spaceId;
+
+    const now = new Date();
+    doc["owner"] = this.userSession.userId;
+    doc["created"] = now;
+    doc["created_by"] = this.userSession.userId;
+    doc["modified"] = now;
+    doc["modified_by"] = this.userSession.userId;
+    doc["package_name"] = this.packageInfo?.name;
     return await this.client
       .db()
       .collection(collectionName)
@@ -71,19 +71,19 @@ export class DbManager {
   }
 
   async insertMany(collectionName: string, docs: any[], autoGenerateId = true) {
-    if (autoGenerateId) {
-      for (var i = 0; i < docs.length; i++) {
+    for (var i = 0; i < docs.length; i++) {
+      if (autoGenerateId) {
         docs[i]["_id"] = new ObjectId().toHexString();
-        docs[i]["space"] = this.userSession.spaceId;
-
-        const now = new Date();
-        docs[i]["owner"] = this.userSession.userId;
-        docs[i]["created"] = now;
-        docs[i]["created_by"] = this.userSession.userId;
-        docs[i]["modified"] = now;
-        docs[i]["modified_by"] = this.userSession.userId;
-        docs[i]["_packageInfo"] = this.packageInfo;
       }
+      docs[i]["space"] = this.userSession.spaceId;
+
+      const now = new Date();
+      docs[i]["owner"] = this.userSession.userId;
+      docs[i]["created"] = now;
+      docs[i]["created_by"] = this.userSession.userId;
+      docs[i]["modified"] = now;
+      docs[i]["modified_by"] = this.userSession.userId;
+      docs[i]["_packageInfo"] = this.packageInfo;
     }
     return await this.client
       .db()

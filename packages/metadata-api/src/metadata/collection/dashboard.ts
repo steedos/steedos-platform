@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-07-28 11:37:13
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-07-28 18:06:44
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2025-06-20 17:00:20
  * @Description:
  */
 import { deleteCommonAttribute, sortAttribute } from "../../util/attributeUtil";
@@ -68,9 +68,27 @@ export class DashboardCollection extends MetadataBaseCollection {
       if (record) {
         throw new Error(`process api_name already exists: ${data.name}`);
       }
-      return await dbManager.insert(collectionName, data);
+      const autoGenerateId = data._id ? false : true;
+      return await dbManager.insert(collectionName, data, autoGenerateId);
     } else {
       return await dbManager.update(collectionName, filter, data);
+    }
+  }
+
+  protected async save(dbManager, data) {
+    const idKey = this.getIdKey();
+    const filter = { [idKey]: data[idKey] };
+    let record = await dbManager.findOne(this.collectionName, filter);
+
+    if (record == null) {
+      record = await dbManager.findOne(this.collectionName, filter, false);
+      if (record) {
+        throw new Error(`process api_name already exists: ${data.name}`);
+      }
+      const autoGenerateId = data._id ? false : true;
+      return await dbManager.insert(this.collectionName, data, autoGenerateId);
+    } else {
+      return await dbManager.update(this.collectionName, filter, data);
     }
   }
 }

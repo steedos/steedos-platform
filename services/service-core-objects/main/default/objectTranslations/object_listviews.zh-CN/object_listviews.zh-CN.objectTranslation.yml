@@ -186,12 +186,11 @@ fields:
     description: 
 groups:
   advanced: 高级
-  share_rules: 共享设置
+  share_rules: 共享
   show_columns: 显示列
   sort: 排序
   filters: 过滤
   search_term: 搜索项
-  data_interface: 数据接口
 listviews:
   all:
     label: 全部
