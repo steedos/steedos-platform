@@ -5,6 +5,7 @@ import { AppGateway } from "./app.geteway";
 import express from "express";
 
 import { getMoleculerConfigs, getSteedosConfigs } from "./config";
+import { InstanceFileController } from "./instance_files/file.controller";
 
 const steedosConfig = getSteedosConfigs();
 
@@ -72,6 +73,6 @@ export const beforeServerStart = ({ app }) => {
 //   console.log("afterServerStart......");
 // };
 
-export const controllers = [AppController];
+export const controllers = [AppController, InstanceFileController];
 
 export const providers = [AppMoleculer, AppGateway];
