@@ -41,7 +41,7 @@ Steedos.StandardObjects = {
                     if (permissions) {
                         return permissions["allowDelete"];
                     }
-                    return perms["false"];
+                    return false;
                 }
             },
             standard_delete_many:{
