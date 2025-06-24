@@ -62,9 +62,9 @@ tab_items:
   admin_apps:
     group: apps
     index: 13
-  admin_queue_import:
-    group: apps
-    index: 18
+  # admin_queue_import:
+  #   group: apps
+  #   index: 18
   # admin_datasources:
   #   group: apps
   #   index: 20
