@@ -41,7 +41,7 @@ const getListPageInitSchema = function (objectApiName) {
     return {
         type: 'page',
         name: getScopeId(objectApiName, "list"),
-        bodyClassName: '',
+        bodyClassName: 'p-0',
         regions: [
             "body"
         ],
