@@ -96,6 +96,9 @@ export const AmisRender = function ({schema = {}, data = {}, env = {}}) {
         navigate(to);
       }
     },
+    getModalContainer: (props)=>{
+      return document.body;
+    }
   }
 
   const content = {
