@@ -29,9 +29,6 @@ tab_items:
   admin_personal_information:
     group: personal_settings
     index: 1
-  admin_process_delegation_rules:
-    group: personal_settings
-    index: 2
   admin_space_info:
     group: company_settings
     index: 3
