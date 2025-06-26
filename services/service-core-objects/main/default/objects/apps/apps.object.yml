@@ -177,16 +177,15 @@ fields:
     group: other
 
   oauth2_enabled:
-    group: OAuth2 
+    group: External Application 
     label: OAuth2 Enabled
     type: boolean
-    hidden: true
   oauth2_callback_url:
-    group: OAuth2
+    group: External Application
     label: Callback URL
     type: text
-    required: "{{formData.oauth2_enabled}}"
-    hidden: true
+    required: "${oauth2_enabled == true}"
+    visible_on: "${oauth2_enabled == true}"
   oauth2_scopes:
     group: OAuth2
     label: Scopes
@@ -224,11 +223,11 @@ fields:
     required: "{{formData.oauth2_enabled}}"
     hidden: true
   oauth2_client_secret:
-    group: OAuth2
+    group: External Application
     label: OAuth2 Client secret
     type: text
-    omit: true
-    hidden: true
+    required: "${oauth2_enabled == true}"
+    visible_on: "${oauth2_enabled == true}"
   saml_enabled:
     hidden: true
     group: SAML
