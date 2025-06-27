@@ -6,10 +6,11 @@ export const IframeView = () => {
     const { appId, tabId } = useParams();
     const [searchParams] = useSearchParams(); // 获取查询参数
     const iframeSrc = searchParams.get('url'); // 提取 src 参数
-    // console.log('IframeView iframeSrc:', iframeSrc);
+    console.log('IframeView iframeSrc:', iframeSrc);
     return (
       <AmisRender schema = {{
         "type": "page",
+        "bodyClassName": "p-0 m-0",
         "body": {
           "type": "iframe",
           "src": iframeSrc,
