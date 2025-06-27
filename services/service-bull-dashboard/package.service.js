@@ -81,10 +81,10 @@ module.exports = {
 			serverAdapter.setBasePath(basePath)
 			
 			createBullBoard({
-			queues: [
-				new BullMQAdapter(queueMQ, {readOnlyMode: false}),
-			],
-			serverAdapter 
+				queues: [
+					new BullMQAdapter(queueMQ, {readOnlyMode: false}),
+				],
+				serverAdapter 
 			})
 			// ... express server configuration
 			router.use(basePath, superAdminAuthentication,  serverAdapter.getRouter());

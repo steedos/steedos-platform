@@ -9,7 +9,7 @@
         "access": "public"
     },
     "dependencies": {
-        "@bull-board/express": "^4.6.4",
+        "@bull-board/express": "^6.10.1",
         "@steedos/auth": "3.0.0-beta.57",
         "@steedos/router": "3.0.0-beta.57",
         "@steedos/service-package-loader": "3.0.0-beta.57",

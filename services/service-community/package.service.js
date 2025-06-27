@@ -177,6 +177,8 @@ module.exports = {
 		  this.broker.createService(require("@steedos/service-metadata-database"));
 
 		  this.broker.createService(require("@steedos-labs/plugin-package-store"));
+
+		  this.broker.createService(require("@steedos/service-bull-dashboard"));
 	},
 
 	/**
