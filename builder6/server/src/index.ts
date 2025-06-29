@@ -6,6 +6,8 @@ import express from "express";
 
 import { getMoleculerConfigs, getSteedosConfigs } from "./config";
 import { InstanceFileController } from "./instance_files/file.controller";
+import { FileService } from "./instance_files/file.service";
+import { FileMoleculer } from "./instance_files/file.moleculer";
 
 const steedosConfig = getSteedosConfigs();
 
@@ -75,4 +77,4 @@ export const beforeServerStart = ({ app }) => {
 
 export const controllers = [AppController, InstanceFileController];
 
-export const providers = [AppMoleculer, AppGateway];
+export const providers = [AppMoleculer, AppGateway, FileService, FileMoleculer];
