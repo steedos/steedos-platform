@@ -211,17 +211,6 @@ export class FileService {
     }
   }
 
-  async downloadFile(url: string): Promise<Buffer> {
-    console.log(`downloadFile`, `Bearer apikey,${process.env.STEEDOS_API_KEY}`);
-    const response = await axios.get(url, {
-      responseType: "arraybuffer",
-      headers: {
-        Authorization: `Bearer apikey,${process.env.STEEDOS_API_KEY}`,
-      },
-    });
-    return response.data;
-  }
-
   private formatFileName(originalName: string, uploadFrom?: string): string {
     // Implement your file name formatting logic here
     // This is a placeholder - replace with your actual logic
