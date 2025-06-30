@@ -285,7 +285,7 @@ async function yarnAddPackage(yarnPackage){
             // eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef
             const schema = require(path.join(packagePath, 'package.service.js'));
             schema.settings.packageInfo = {
-                ...schema.settings.packageInfo,
+                ...schema.settings?.packageInfo,
                 ...(schema.metadata && schema.metadata.$package ? schema.metadata.$package : {}),
             }
             steedosPackages.push({

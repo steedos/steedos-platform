@@ -492,6 +492,7 @@ module.exports = {
 							}
 							
 						} catch (error) {
+							console.error(error)
 							this.broker.logger.error(`initialPackages: ${packageName}. ${error.message}`);
 						}
 					}
