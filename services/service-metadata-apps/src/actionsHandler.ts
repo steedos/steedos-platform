@@ -333,7 +333,7 @@ async function tabMenus(
             id: `${tab.name}`,
             type: tab.type,
             icon: tab.icon,
-            path: `${encodeURIComponent(tab.url)}`,
+            path: `${tab.url}`,
             name: `${tab.label}`,
             ...props,
           };
