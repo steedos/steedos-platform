@@ -1,6 +1,10 @@
 name: base
 hidden: true
 fields:
+  external_id:
+    type: text
+    label: 外部ID
+    visible_on: "{{false}}"
   owner:
     label: Owner
     type: lookup
