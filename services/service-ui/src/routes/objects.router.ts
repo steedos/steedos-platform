@@ -3,110 +3,177 @@
  * @Date: 2022-06-09 10:19:47
  * @LastEditors: baozhoutao@steedos.com
  * @LastEditTime: 2025-02-18 11:47:54
- * @Description: 
+ * @Description:
  */
 import { getSteedosSchema } from "@steedos/objectql";
-const express = require('express');
-const router =express.Router();
-const auth = require('@steedos/auth');
+const express = require("express");
+const router = express.Router();
+const auth = require("@steedos/auth");
+const _ = require("lodash");
 
-const callObjectServiceAction = async function(actionName, userSession, data?){
-    const broker = getSteedosSchema().broker;
-    return broker.call(actionName, data, { meta: { user: userSession}})
-}
+const callObjectServiceAction = async function (
+  actionName,
+  userSession,
+  data?,
+) {
+  const broker = getSteedosSchema().broker;
+  return broker.call(actionName, data, { meta: { user: userSession } });
+};
 
-const getObjectName = function(objectServiceName){
-    return objectServiceName.substring(1);
-}
+const getObjectName = function (objectServiceName) {
+  return objectServiceName.substring(1);
+};
 
-router.get('/service/api/:objectServiceName/fields', auth.requireAuthentication, async function (req, res) {
+router.get(
+  "/service/api/:objectServiceName/fields",
+  auth.requireAuthentication,
+  async function (req, res) {
     const userSession = req.user;
     try {
-        const { objectServiceName } = req.params;
-        const result = await callObjectServiceAction(`objectql.getFields`, userSession, { objectName: getObjectName(objectServiceName) });
-        res.status(200).send(result);
-    } catch (error) {
-        res.status(500).send(error.message);
-    }
-});
-
-router.get('/service/api/:objectServiceName/getUserObjectPermission', auth.requireAuthentication, async function (req, res) {
-    const userSession = req.user;
-    try {
-        const { objectServiceName } = req.params;
-        const result = await callObjectServiceAction(`objectql.getUserObjectPermission`, userSession, { objectName: getObjectName(objectServiceName) });
-        res.status(200).send(result);
-    } catch (error) {
-        res.status(500).send(error.message);
-    }
-});
-
-router.get('/service/api/:objectServiceName/recordPermissions/:recordId', auth.requireAuthentication, async function (req, res) {
-    const userSession = req.user;
-    try {
-        const { objectServiceName, recordId } = req.params;
-        const result = await callObjectServiceAction(`objectql.getRecordPermissionsById`, userSession, {
-            objectName: getObjectName(objectServiceName),
-            recordId: recordId
+      const { objectServiceName } = req.params;
+      const { fields } = req.query;
+      const result = await callObjectServiceAction(
+        `objectql.getFields`,
+        userSession,
+        { objectName: getObjectName(objectServiceName) },
+      );
+      if (fields) {
+        const result2 = {};
+        _.each(result, function (item, k) {
+          return (result2[k] = _.pick(item, _.split(fields, ",")));
         });
-        res.status(200).send(result);
+        return res.status(200).send(result2);
+      }
+      res.status(200).send(result);
     } catch (error) {
-        res.status(500).send(error.message);
+      res.status(500).send(error.message);
     }
-});
+  },
+);
 
-router.get('/service/api/:objectServiceName/uiSchema', auth.requireAuthentication, async function (req, res) {
+router.get(
+  "/service/api/:objectServiceName/getUserObjectPermission",
+  auth.requireAuthentication,
+  async function (req, res) {
     const userSession = req.user;
     try {
-        const { objectServiceName } = req.params;
-        const objectName = objectServiceName.substring(1);
-        // const [ result, hasImportTemplates ] = await Promise.all([
-        //     callObjectServiceAction(`objectql.getRecordView`, userSession, { objectName }),
-        //     callObjectServiceAction(`@steedos/data-import.hasImportTemplates`, userSession, {
-        //         objectName: objectName
-        //     })
-        // ])
-        // result.hasImportTemplates = hasImportTemplates  //TODO  这段查的有点多
-        const [ result ] = await Promise.all([
-            callObjectServiceAction(`objectql.getRecordView`, userSession, { objectName }),
-        ])
-        res.status(200).send(result);
+      const { objectServiceName } = req.params;
+      const result = await callObjectServiceAction(
+        `objectql.getUserObjectPermission`,
+        userSession,
+        { objectName: getObjectName(objectServiceName) },
+      );
+      res.status(200).send(result);
     } catch (error) {
-        res.status(500).send(error.message);
+      res.status(500).send(error.message);
     }
-});
+  },
+);
 
-router.post('/service/api/:objectServiceName/defUiSchema', auth.requireAuthentication, async function (req, res) {
+router.get(
+  "/service/api/:objectServiceName/recordPermissions/:recordId",
+  auth.requireAuthentication,
+  async function (req, res) {
     const userSession = req.user;
     try {
-        const { objectServiceName } = req.params;
-        const result = await callObjectServiceAction(`objectql.createDefaultRecordView`, userSession, { objectName: getObjectName(objectServiceName) });
-        res.status(200).send(result);
+      const { objectServiceName, recordId } = req.params;
+      const result = await callObjectServiceAction(
+        `objectql.getRecordPermissionsById`,
+        userSession,
+        {
+          objectName: getObjectName(objectServiceName),
+          recordId: recordId,
+        },
+      );
+      res.status(200).send(result);
     } catch (error) {
-        res.status(500).send(error.message);
+      res.status(500).send(error.message);
     }
-});
+  },
+);
 
-router.get('/service/api/:objectServiceName/uiSchemaTemplate', auth.requireAuthentication, async function (req, res) {
+router.get(
+  "/service/api/:objectServiceName/uiSchema",
+  auth.requireAuthentication,
+  async function (req, res) {
     const userSession = req.user;
     try {
-        const { objectServiceName } = req.params;
-        const result = await callObjectServiceAction(`objectql.getDefaultRecordView`, userSession, { objectName: getObjectName(objectServiceName) });
-        res.status(200).send(result);
+      const { objectServiceName } = req.params;
+      const objectName = objectServiceName.substring(1);
+      // const [ result, hasImportTemplates ] = await Promise.all([
+      //     callObjectServiceAction(`objectql.getRecordView`, userSession, { objectName }),
+      //     callObjectServiceAction(`@steedos/data-import.hasImportTemplates`, userSession, {
+      //         objectName: objectName
+      //     })
+      // ])
+      // result.hasImportTemplates = hasImportTemplates  //TODO  这段查的有点多
+      const [result] = await Promise.all([
+        callObjectServiceAction(`objectql.getRecordView`, userSession, {
+          objectName,
+        }),
+      ]);
+      res.status(200).send(result);
     } catch (error) {
-        res.status(500).send(error.message);
+      res.status(500).send(error.message);
     }
-});
+  },
+);
 
-router.get('/service/api/:objectServiceName/relateds', auth.requireAuthentication, async function (req, res) {
+router.post(
+  "/service/api/:objectServiceName/defUiSchema",
+  auth.requireAuthentication,
+  async function (req, res) {
     const userSession = req.user;
     try {
-        const { objectServiceName } = req.params;
-        const result = await callObjectServiceAction(`objectql.getRelateds`, userSession, { objectName: getObjectName(objectServiceName) });
-        res.status(200).send(result);
+      const { objectServiceName } = req.params;
+      const result = await callObjectServiceAction(
+        `objectql.createDefaultRecordView`,
+        userSession,
+        { objectName: getObjectName(objectServiceName) },
+      );
+      res.status(200).send(result);
     } catch (error) {
-        res.status(500).send(error.message);
+      res.status(500).send(error.message);
     }
-});
+  },
+);
+
+router.get(
+  "/service/api/:objectServiceName/uiSchemaTemplate",
+  auth.requireAuthentication,
+  async function (req, res) {
+    const userSession = req.user;
+    try {
+      const { objectServiceName } = req.params;
+      const result = await callObjectServiceAction(
+        `objectql.getDefaultRecordView`,
+        userSession,
+        { objectName: getObjectName(objectServiceName) },
+      );
+      res.status(200).send(result);
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  },
+);
+
+router.get(
+  "/service/api/:objectServiceName/relateds",
+  auth.requireAuthentication,
+  async function (req, res) {
+    const userSession = req.user;
+    try {
+      const { objectServiceName } = req.params;
+      const result = await callObjectServiceAction(
+        `objectql.getRelateds`,
+        userSession,
+        { objectName: getObjectName(objectServiceName) },
+      );
+      res.status(200).send(result);
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  },
+);
 
 exports.default = router;

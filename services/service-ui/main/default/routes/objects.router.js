@@ -5,6 +5,7 @@ const objectql_1 = require("@steedos/objectql");
 const express = require('express');
 const router = express.Router();
 const auth = require('@steedos/auth');
+const _ = require('lodash');
 const callObjectServiceAction = function (actionName, userSession, data) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const broker = (0, objectql_1.getSteedosSchema)().broker;
@@ -19,7 +20,13 @@ router.get('/service/api/:objectServiceName/fields', auth.requireAuthentication,
         const userSession = req.user;
         try {
             const { objectServiceName } = req.params;
+            const { fields } = req.query;
             const result = yield callObjectServiceAction(`objectql.getFields`, userSession, { objectName: getObjectName(objectServiceName) });
+            if (fields) {
+                const result2 = {};
+                _.each(result, function (item, k) { return result2[k] = _.pick(item, _.split(fields, ',')); });
+                return res.status(200).send(result2);
+            }
             res.status(200).send(result);
         }
         catch (error) {
