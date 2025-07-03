@@ -476,11 +476,7 @@ module.exports = {
 									throw new Error(`not support ${parsed.type}`);
 							}
 							if(parsed.type === 'file' || parsed.type === 'directory'){
-								const pInfos = await this.yarnAddPackage(packageName)
-								for(const pInfo of pInfos){
-									await this.broker.call('@steedos/service-project.enablePackage', {module: pInfo.name})
-								}
-								
+								await this.yarnAddPackage(packageName, false, true)
 							}else{
 								if(installProps.url){
 									//module, version, url, auth, enable, registry_url, broker
@@ -583,7 +579,7 @@ module.exports = {
 			}
 		},
 		yarnAddPackage: {
-			async handler(yarnPackage, enable=false) {
+			async handler(yarnPackage, enable=false, configEnable = false) {
                 const packages = await registry.yarnAddPackage(yarnPackage);
 				for (const packageInfo of packages) {
 					const packagePath = packageInfo.path;
@@ -593,7 +589,7 @@ module.exports = {
 					loader.appendToPackagesConfig(packageInfo.name, {
 						version: packageInfo.version,
 						path: util.getPackageRelativePath(process.cwd(), packagePath),
-						enable: enable,
+						enable: configEnable || enable,
 						isUnmanaged: packageInfo.isUnmanaged || false
 					});
 					if(enable){
