@@ -7168,10 +7168,10 @@
     moment-timezone "^0.5.43"
     ttag "^1.7.29"
 
-"@steedos-labs/plugin-package-store@^1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@steedos-labs/plugin-package-store/-/plugin-package-store-1.0.7.tgz#9160bb399635d3ccb108b9e4c7c0d3194afd3d60"
-  integrity sha512-2IwM0Q4r3lEKU+w/mdZ03pdl+r0HOK9CM+9w7+lud/yFlNI6aLnJhRzbsTw7eIT/WB2RHNMew7Qj9B6YB0C+Qw==
+"@steedos-labs/plugin-package-store@^1.0.8":
+  version "1.0.8"
+  resolved "https://registry.npmmirror.com/@steedos-labs/plugin-package-store/-/plugin-package-store-1.0.8.tgz#3646ac19349ad6ce0a58efc38e81e35a00fd5e43"
+  integrity sha512-21u5PEcgC4AtDTR0KnTo+gu30YD86esmV5yZJC/HrttvSBcj1yCjP89F3g9WXIm4BlzEI8aqPFvqWNnNPjXioQ==
 
 "@steedos/ee_audit-records@2.5.49":
   version "2.5.49"
