@@ -74,17 +74,17 @@ export function getTableColumns(fields: Dictionary<SteedosFieldType>, object: St
             (columns as any)[fieldName]["name"] = field.column_name
         }
         // 服务端增加_id字段统一代理主键字段处理查询
-        if (field.primary) {
-            (columns as any)['_id'] = {
-                ...columns[fieldName],
-                name: field.column_name || fieldName,
-                generated: false,
-                primary: false,
-                nullable: true,
-                insert: false,
-                update: false
-            };
-        }
+        // if (field.primary) {
+        //     (columns as any)['_id'] = {
+        //         ...columns[fieldName],
+        //         name: field.column_name || fieldName,
+        //         generated: false,
+        //         primary: false,
+        //         nullable: true,
+        //         insert: false,
+        //         update: false
+        //     };
+        // }
     }
     if (!primaryColumnCount){
         return null;
