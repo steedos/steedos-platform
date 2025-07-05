@@ -41,7 +41,7 @@ export function getPrimaryFieldType(objectConfig: SteedosObjectTypeConfig) {
                         fieldType = 'JSON'
                         break;
                 }
-                idType = `_id: ${fieldType}`;
+                // idType = `_id: ${fieldType}`;
                 break;
             }
         }
