@@ -279,6 +279,9 @@ function onChangeName(oldName, newDoc){
 //[Task]: 字段名允许输入大写字母 #6702
 //只能包含字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符 TODO 支持表格
 function checkName(name){
+  if(name === '_id'){
+    return true;
+  }
   var reg = new RegExp('^[a-zA-Z]([A-Za-z0-9]|_(?!_))*[A-Za-z0-9]$'); //支持表格类型的验证表达式(待优化.$.限制只能出现一次): new RegExp('^[a-z]([a-z0-9]|_(?!_))*(\\.\\$\\.\\w+)*[a-z0-9]$')
   //TODO 撤销注释
   if(!reg.test(name)){
