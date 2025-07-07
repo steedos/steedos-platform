@@ -3,7 +3,7 @@ icon: announcement
 label: Announcement
 hidden: false
 enable_files: true
-enable_chatter: true
+enable_chatter: false
 version: 2
 fields:
   name:

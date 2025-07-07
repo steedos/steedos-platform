@@ -3,7 +3,7 @@ label: Task
 icon: timesheet_entry
 enable_search: true
 enable_files: true
-enable_chatter: true
+enable_chatter: false
 version: 2
 fields:
   name:

@@ -79,7 +79,7 @@ fields:
     help: 
     description: 
   enable_chatter:
-    label: Enable Chatter
+    label: Enable Comments
     help: 
     description: 
   enable_inline_edit:

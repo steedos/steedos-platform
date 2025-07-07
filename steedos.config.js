@@ -1,3 +1,10 @@
+/*
+ * @Author: 殷亮辉 yinlianghui@hotoa.com
+ * @Date: 2025-07-07 11:46:11
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2025-07-07 13:53:39
+ */
+
 // Moleculer Configuration
 // https://moleculer.services/docs/0.14/configuration.html
 require('dotenv-flow').config({});
