@@ -4,6 +4,5 @@ group: feature
 label: Enable Comments
 sort_no: 300
 type: boolean
-visible_on: '{{false}}'
-# visible_on: '{{ Steedos.settings.public.platform && ["platform-standard", "platform-enterprise", "platform-professional"].includes(Steedos.settings.public.platform.product)  }}'
+visible_on: '{{ Steedos.settings.public.platform && ["platform-standard", "platform-enterprise", "platform-professional"].includes(Steedos.settings.public.platform.product)  }}'
 inlineHelpText: 允许用户在记录中进行评论或反馈，便于团队之间的协作和沟通
