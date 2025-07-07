@@ -164,7 +164,8 @@
                         }
                     ],
                     "className": "px-0 pt-4",
-                    "id": "u:f2f42d8195ab"
+                    "id": "u:f2f42d8195ab",
+                    "visibleOn": "${uiSchema.enable_chatter}"
                 }
             ],
             "id": "u:560caa275d48"
