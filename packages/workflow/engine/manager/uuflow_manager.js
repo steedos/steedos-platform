@@ -918,7 +918,7 @@ uuflowManager.getApproveValues = function (approve_values, permissions, form_id,
     }
     var form_v, instance_form;
     // 如果permissions为null，则approve_values为{}
-    if (permissions === null) {
+    if (_.isEmpty(permissions)) {
         approve_values = {};
     } else {
         // 获得instance中的所有字段
