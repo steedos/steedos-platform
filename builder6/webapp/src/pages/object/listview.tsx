@@ -7,14 +7,16 @@
  */
 import { AmisRender } from "../../components/AmisRender";
 import { Builder } from "@builder6/react";
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useSearchParams } from 'react-router-dom';
 import {values, first} from 'lodash';
 
 export const ObjectListView = () => {
   let { appId, objectName, listviewId: listName} = useParams();
   let location = useLocation();
   const uiSchema = (window as any).getUISchemaSync(objectName)
-  console.log(`ObjectListView`, appId, objectName, listName, location)
+  const [searchParams] = useSearchParams();
+  const allParams = Object.fromEntries(searchParams.entries());
+  console.log(`ObjectListView`, appId, objectName, listName, location, allParams)
   if(!listName){
     listName = first(values(uiSchema.list_views))?.name
   }
@@ -32,7 +34,8 @@ export const ObjectListView = () => {
           pageType: 'list',
           listName: listName || '',
           display: Steedos.Page.getDisplay(objectName),
-          _reloadKey: location.state?.reloadKey || new Date().getTime()
+          _reloadKey: location.state?.reloadKey || new Date().getTime(),
+          ...allParams
         }
       },
       data: {
@@ -55,6 +58,7 @@ export const ObjectListView = () => {
         listName: listName || '',
         objectName: objectName,
         object_name: objectName,
+        ...allParams
     }} env = {{}} />
   );
 };
