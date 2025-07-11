@@ -1,0 +1,14 @@
+name: table_pk_type
+group: 数据源
+hidden: false
+label: 主键值类型
+sort_no: 192
+type: select
+required: true
+options: 
+  - label: 字符串
+    value: text
+  - label: 数值
+    value: number
+visible_on: >-
+  ${datasource != null &&(datasource != "meteor") &&(datasource != "default")}

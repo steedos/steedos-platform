@@ -304,121 +304,173 @@ let objectTriggers = {
         on: "server",
         when: "after.insert",
         todo: function (userId, doc) {
-            //新增object时，默认新建一个name字段
-            Creator.getCollection("object_fields").insert({
-                object: doc.name,
-                owner: userId,
-                _name: "name",
-                label: "名称",
-                space: doc.space,
-                type: "text",
-                required: true,
-                index: true,
-                searchable: true,
-                filterable: true,
-                sort_no: 10
-            });
-            Creator.getCollection("object_fields").insert({
-                object: doc.name,
-                owner: userId,
-                _name: "created",
-                name: "created",
-                label: "创建时间",
-                space: doc.space,
-                type: "datetime",
-                group: '',
-                sort_no: 9999,
-                readonly: true,
-                disabled: true,
-                sortable: true
-            });
-            Creator.getCollection("object_fields").insert({
-                object: doc.name,
-                owner: userId,
-                _name: "created_by",
-                name: "created_by",
-                label: "创建人",
-                space: doc.space,
-                type: "lookup",
-                reference_to: 'users',
-                group: '',
-                sort_no: 9999,
-                readonly: true,
-                disabled: true,
-            });
-            Creator.getCollection("object_fields").insert({
-                object: doc.name,
-                owner: userId,
-                _name: "modified",
-                name: "modified",
-                label: "修改时间",
-                space: doc.space,
-                type: "datetime",
-                group: '',
-                sort_no: 9999,
-                readonly: true,
-                disabled: true,
-                sortable: true
-            });
-            Creator.getCollection("object_fields").insert({
-                object: doc.name,
-                owner: userId,
-                _name: "modified_by",
-                name: "modified_by",
-                label: "修改人",
-                space: doc.space,
-                type: "lookup",
-                reference_to: 'users',
-                group: '',
-                sort_no: 9999,
-                readonly: true,
-                disabled: true,
-            });
-            // Creator.getCollection("object_fields").insert({
-            //     object: doc.name,
-            //     owner: userId,
-            //     _name: "owner",
-            //     label: "所有者",
-            //     space: doc.space,
-            //     type: "lookup",
-            //     reference_to: "users",
-            //     sortable: true,
-            //     index: true,
-            //     defaultValue: "{userId}",
-            //     omit: true,
-            //     hidden: true
-            // });
-            Creator.getCollection("object_listviews").insert({
-                name: "all",
-                label: "所有",
-                space: doc.space,
-                owner: userId,
-                object_name: doc.name,
-                shared_to: "space",
-                filter_scope: "space",
-                crud_mode: 'table',
-                columns: [{field: 'name'}, {field: 'created_by'}, {field: 'created'}],
-                "sort" : [
-                    {
-                        "field_name" : "created",
-                        "order" : "desc"
-                    }
-                ]
-            });
-            Creator.getCollection("object_listviews").insert({
-                name: "recent",
-                label: "最近查看",
-                space: doc.space,
-                owner: userId,
-                object_name: doc.name,
-                shared_to: "space",
-                filter_scope: "space",
-                crud_mode: 'table',
-                columns:  [{field: 'name'}]
-            });
-            
+            if(doc.datasource != 'meteor' && doc.datasource != 'default' && doc.datasource){
+                let { table_pk_name, table_pk_type, table_pk_generated } = doc;
+
+                if(!table_pk_name){
+                    table_pk_name = 'id'
+                }
+
+                if(!table_pk_type){
+                    table_pk_type = 'number'
+                }
+
+                if(table_pk_generated != false){
+                    table_pk_generated = true
+                }
+
+                Creator.getCollection("object_fields").insert({
+                    object: doc.name,
+                    owner: userId,
+                    _name: "_id",
+                    name: '_id',
+                    label: "ID",
+                    column_name: table_pk_name,
+                    primary: true,
+                    generated: table_pk_generated,
+                    space: doc.space,
+                    type: table_pk_type,
+                    searchable: true,
+                    filterable: true,
+                    sort_no: 5,
+                    locked: true
+                });
+
+                Creator.getCollection("object_listviews").insert({
+                    name: "all",
+                    label: "所有",
+                    space: doc.space,
+                    owner: userId,
+                    object_name: doc.name,
+                    shared_to: "space",
+                    filter_scope: "space",
+                    crud_mode: 'table',
+                    columns: [{field: '_id'}],
+                    "sort" : [
+                        {
+                            "field_name" : "_id",
+                            "order" : "asc"
+                        }
+                    ]
+                });
+
+            }else{
+                //新增object时，默认新建一个name字段
+                Creator.getCollection("object_fields").insert({
+                    object: doc.name,
+                    owner: userId,
+                    _name: "name",
+                    label: "名称",
+                    space: doc.space,
+                    type: "text",
+                    required: true,
+                    index: true,
+                    searchable: true,
+                    filterable: true,
+                    sort_no: 10
+                });
+                Creator.getCollection("object_fields").insert({
+                    object: doc.name,
+                    owner: userId,
+                    _name: "created",
+                    name: "created",
+                    label: "创建时间",
+                    space: doc.space,
+                    type: "datetime",
+                    group: '',
+                    sort_no: 9999,
+                    readonly: true,
+                    disabled: true,
+                    sortable: true
+                });
+                Creator.getCollection("object_fields").insert({
+                    object: doc.name,
+                    owner: userId,
+                    _name: "created_by",
+                    name: "created_by",
+                    label: "创建人",
+                    space: doc.space,
+                    type: "lookup",
+                    reference_to: 'users',
+                    group: '',
+                    sort_no: 9999,
+                    readonly: true,
+                    disabled: true,
+                });
+                Creator.getCollection("object_fields").insert({
+                    object: doc.name,
+                    owner: userId,
+                    _name: "modified",
+                    name: "modified",
+                    label: "修改时间",
+                    space: doc.space,
+                    type: "datetime",
+                    group: '',
+                    sort_no: 9999,
+                    readonly: true,
+                    disabled: true,
+                    sortable: true
+                });
+                Creator.getCollection("object_fields").insert({
+                    object: doc.name,
+                    owner: userId,
+                    _name: "modified_by",
+                    name: "modified_by",
+                    label: "修改人",
+                    space: doc.space,
+                    type: "lookup",
+                    reference_to: 'users',
+                    group: '',
+                    sort_no: 9999,
+                    readonly: true,
+                    disabled: true,
+                });
+                // Creator.getCollection("object_fields").insert({
+                //     object: doc.name,
+                //     owner: userId,
+                //     _name: "owner",
+                //     label: "所有者",
+                //     space: doc.space,
+                //     type: "lookup",
+                //     reference_to: "users",
+                //     sortable: true,
+                //     index: true,
+                //     defaultValue: "{userId}",
+                //     omit: true,
+                //     hidden: true
+                // });
+                Creator.getCollection("object_listviews").insert({
+                    name: "all",
+                    label: "所有",
+                    space: doc.space,
+                    owner: userId,
+                    object_name: doc.name,
+                    shared_to: "space",
+                    filter_scope: "space",
+                    crud_mode: 'table',
+                    columns: [{field: 'name'}, {field: 'created_by'}, {field: 'created'}],
+                    "sort" : [
+                        {
+                            "field_name" : "created",
+                            "order" : "desc"
+                        }
+                    ]
+                });
+                Creator.getCollection("object_listviews").insert({
+                    name: "recent",
+                    label: "最近查看",
+                    space: doc.space,
+                    owner: userId,
+                    object_name: doc.name,
+                    shared_to: "space",
+                    filter_scope: "space",
+                    crud_mode: 'table',
+                    columns:  [{field: 'name'}]
+                });
+            }
             initObjectPermission(userId, doc);
         }
+            
     },
     "before.update.server.objects": {
         on: "server",
@@ -467,7 +519,7 @@ let objectTriggers = {
             var set = modifier.$set || {}
             if((set.name || set.datasource) && this.previous.name != doc.name){
                 onChangeObjectName(this.previous.name, doc);
-            }
+            };
         }
     },
     "before.remove.server.objects": {

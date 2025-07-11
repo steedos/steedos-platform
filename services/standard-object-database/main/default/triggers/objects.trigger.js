@@ -150,6 +150,38 @@ module.exports = {
             }
             */
         }
+        if (_.has(doc, 'datasource')) {
+            const obj = this.getObject(object_name);
+            const latestDoc = await obj.findOne(id);
+            const newObjDatasource = doc.datasource;
+            if(doc.datasource != newObjDatasource){
+                throw new Error(`禁止修改数据源`);
+            }
+        }
+        if(doc.datasource != 'meteor' && doc.datasource != 'default' && doc.datasource){
+            var idFieldSet = {}
+            if(_.has(doc, 'table_pk_name')){
+                idFieldSet.column_name = doc.table_pk_name
+            }
+            if(_.has(doc, 'table_pk_type')){
+                idFieldSet.type = doc.table_pk_type
+            }
+            if(_.has(doc, 'table_pk_generated')){
+                idFieldSet.generated = doc.table_pk_generated
+            }
+            if(!_.isEmpty(idFieldSet)){
+                const adapter = objectql.getDataSource('default').adapter;
+                await adapter.connect()
+                let collection = adapter.collection('object_fields');
+                await collection.update({
+                    object: doc.name,
+                    name: '_id'
+                }, {
+                    $set: idFieldSet
+                })
+            }
+            
+        }
     },
     afterUpdate: async function () {
         const { doc, previousDoc } = this;

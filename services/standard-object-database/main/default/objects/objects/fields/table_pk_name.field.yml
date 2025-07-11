@@ -1,0 +1,12 @@
+name: table_pk_name
+group: 数据源
+hidden: false
+index: true
+label: 主键字段名
+searchable: true
+sort_no: 191
+type: text
+required: true
+description: 数据库表的主键字段名
+visible_on: >-
+  ${datasource != null &&(datasource != "meteor") &&(datasource != "default")}

@@ -1,0 +1,8 @@
+name: table_pk_generated
+group: 数据源
+hidden: false
+label: 主键是否自增
+sort_no: 194
+type: boolean
+visible_on: >-
+  ${datasource != null &&(datasource != "meteor") &&(datasource != "default")}

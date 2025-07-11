@@ -3,7 +3,7 @@ amis:
   disabledOn: '${is_system == true}'
 defaultValue: default
 filters: []
-group: advanced
+group: 数据源
 hidden: false
 label: Datasource
 reference_to: datasources

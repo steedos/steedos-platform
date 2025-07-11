@@ -1,7 +1,8 @@
 name: table_name
 amis:
   disabledOn: '${is_system == true}'
-group: advanced
+  requiredOn: ${datasource != null &&(datasource != "meteor") &&(datasource != "default")}
+group: 数据源
 hidden: false
 index: true
 inlineHelpText: The default data source does not support this property

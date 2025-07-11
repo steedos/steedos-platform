@@ -7,7 +7,7 @@
             "objectApiName": "objects",
             "recordId": "${recordId}",
             "className": "",
-            "enableTabs": true,
+            "enableTabs": false,
             "mode": "edit",
             "layout": "horizontal",
             "apiRequestAdaptor": "console.log('api.data.query===', api.data.query);api.data.query = api.data.query.replace('objects__update', 'objects__upsert')",
