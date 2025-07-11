@@ -399,7 +399,8 @@ module.exports = {
         }
     },
     beforeDelete: async function () {
-         let { doc, object_name, id} = this;
+        let { object_name, id} = this;
+        const doc = await this.getObject("object_fields").findOne(id);
         if(doc.name === '_id' || doc._name === '_id'){
             throw new Error('禁止删除ID字段')
         }
