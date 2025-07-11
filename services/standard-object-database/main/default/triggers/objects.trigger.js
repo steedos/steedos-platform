@@ -153,7 +153,7 @@ module.exports = {
         if (_.has(doc, 'datasource')) {
             const obj = this.getObject(object_name);
             const latestDoc = await obj.findOne(id);
-            const newObjDatasource = doc.datasource;
+            const newObjDatasource = latestDoc.datasource;
             if(doc.datasource != newObjDatasource){
                 throw new Error(`禁止修改数据源`);
             }
