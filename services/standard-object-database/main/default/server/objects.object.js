@@ -305,7 +305,7 @@ let objectTriggers = {
         when: "after.insert",
         todo: function (userId, doc) {
             if(doc.datasource != 'meteor' && doc.datasource != 'default' && doc.datasource){
-                let { table_pk_name, table_pk_type, table_pk_generated } = doc;
+                let { table_pk_name, table_pk_type, table_pk_generated, table_pk_is_name } = doc;
 
                 if(!table_pk_name){
                     table_pk_name = 'id'
@@ -313,10 +313,6 @@ let objectTriggers = {
 
                 if(!table_pk_type){
                     table_pk_type = 'number'
-                }
-
-                if(table_pk_generated != false){
-                    table_pk_generated = true
                 }
 
                 Creator.getCollection("object_fields").insert({
@@ -333,6 +329,7 @@ let objectTriggers = {
                     searchable: true,
                     filterable: true,
                     sort_no: 5,
+                    is_name: table_pk_is_name,
                     locked: true
                 });
 

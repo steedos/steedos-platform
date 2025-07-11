@@ -1,5 +1,5 @@
 name: table_pk_name
-group: 数据源
+group: 外部数据源
 hidden: false
 index: true
 label: 主键字段名

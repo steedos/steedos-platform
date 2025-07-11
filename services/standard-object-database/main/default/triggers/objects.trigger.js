@@ -169,6 +169,10 @@ module.exports = {
             if(_.has(doc, 'table_pk_generated')){
                 idFieldSet.generated = doc.table_pk_generated
             }
+            if(_.has(doc, 'table_pk_is_name')){
+                idFieldSet.is_name = doc.table_pk_is_name
+            }
+            
             if(!_.isEmpty(idFieldSet)){
                 const adapter = objectql.getDataSource('default').adapter;
                 await adapter.connect()

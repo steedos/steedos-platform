@@ -1,5 +1,5 @@
 name: table_pk_type
-group: 数据源
+group: 外部数据源
 hidden: false
 label: 主键值类型
 sort_no: 192

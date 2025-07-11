@@ -2,11 +2,13 @@ name: table_name
 amis:
   disabledOn: '${is_system == true}'
   requiredOn: ${datasource != null &&(datasource != "meteor") &&(datasource != "default")}
-group: 数据源
+group: 外部数据源
 hidden: false
 index: true
-inlineHelpText: The default data source does not support this property
 label: Table Name
 searchable: true
-sort_no: 190
+sort_no: 51
 type: text
+description: 数据库中表的名称
+visible_on: >-
+  ${datasource != null &&(datasource != "meteor") &&(datasource != "default")}

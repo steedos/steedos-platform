@@ -4,7 +4,7 @@ enable_dataloader: false
 field_groups:
   - group_name: switch
     collapsed: true
-  - group_name: 数据源
+  - group_name: 外部数据源
     collapsed: false
   - group_name: advanced
     collapsed: true
