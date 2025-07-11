@@ -569,6 +569,17 @@ module.exports = {
             async handler(ctx) {
                 return await this.getPrimarySpaceId()
             }
+        },
+        sql: {
+            params: {
+                sql: { type: "string" },
+                param: { type: "any" },
+            },
+            async handler(ctx) {
+                const { sql, param } = ctx.params;
+                const obj = getObject(objectName)
+                return await obj.sql(sql, param);
+            }
         }
 
     },

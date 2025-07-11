@@ -512,6 +512,13 @@ export class SteedosDataSourceType implements Dictionary {
         }
     }
 
+    async sql(sql: string, param?: any){
+        if(this.driver == SteedosDatabaseDriverType.Mongo){
+            throw new Error('MongoDB does not support SQL functions.')
+        }
+        return await this._adapter.run(sql, param)
+    }
+
     async init() {
         // await this.flushCacheObjects();
         // await this.initObjects();
