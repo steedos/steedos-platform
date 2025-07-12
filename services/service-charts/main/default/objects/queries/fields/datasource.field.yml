@@ -1,5 +1,5 @@
 name: datasource
-type: master_detail
+type: lookup
 label: 数据源
 reference_to: datasources
 reference_to_field: name

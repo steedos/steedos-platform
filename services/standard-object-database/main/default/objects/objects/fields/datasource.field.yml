@@ -9,4 +9,4 @@ reference_to: datasources
 required: false
 showIcon: false
 sort_no: 5
-type: master_detail
+type: lookup
