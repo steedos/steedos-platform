@@ -3,7 +3,15 @@ custom: true
 enable_dataloader: false
 field_groups:
   - group_name: switch
+    collapsed: true
+  - group_name: 外部数据源
+    collapsed: false
   - group_name: advanced
+    collapsed: true
+  - group_name: 高级
+    collapsed: true
+  - group_name: 界面
+    collapsed: true
 hidden: true
 icon: orders
 label: Objects

@@ -329,6 +329,9 @@ module.exports = {
     },
     beforeUpdate: async function () {
         let { doc, object_name, id} = this;
+        if(doc.name === '_id' || doc._name === '_id'){
+            throw new Error('禁止修改ID字段')
+        }
         delete doc.is_customize
         validateDoc(doc);
         // const dbDoc = await objectql.getObject(object_name).findOne(id)
@@ -396,6 +399,11 @@ module.exports = {
         }
     },
     beforeDelete: async function () {
+        let { object_name, id} = this;
+        const doc = await this.getObject("object_fields").findOne(id);
+        if(doc.name === '_id' || doc._name === '_id'){
+            throw new Error('禁止删除ID字段')
+        }
         const field = await this.getObject(this.object_name).findOne(this.id,{fields:['name','object']});
         const enable_tree = await objectql.getObject(field.object).enable_tree;
         if( ["parent","children"].indexOf(field.name) > -1 && enable_tree ){

@@ -1205,6 +1205,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
     }
 
+    async sql(sql: string, param?: any){
+        return await this._datasource.sql(sql, param);
+    }
+
     async find(query: SteedosQueryOptions, userSession?: SteedosUserSession) {
         let clonedQuery = Object.assign({}, query);
         if(userSession)

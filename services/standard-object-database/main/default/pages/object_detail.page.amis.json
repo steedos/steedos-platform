@@ -41,7 +41,8 @@
                             "relatedKey": "object"
                         }
                     ],
-                    "id": "u:f1a52545b642"
+                    "id": "u:f1a52545b642",
+                    "unmountOnExit": true
                 },
                 {
                     "title": "${'objects_amis_list_view' | t}",

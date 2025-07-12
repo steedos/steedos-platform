@@ -1,13 +1,12 @@
 name: datasource
 amis:
-  disabledOn: '${is_system == true}'
+  disabledOn: '${is_system == true || !!recordId}'
 defaultValue: default
 filters: []
-group: advanced
 hidden: false
 label: Datasource
 reference_to: datasources
 required: false
 showIcon: false
-sort_no: 180
+sort_no: 5
 type: master_detail

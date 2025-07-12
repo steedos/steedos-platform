@@ -174,7 +174,7 @@ module.exports = {
 					}
 
 					//TODO 确认 delete\directDelete 功能
-					_.each(['find', 'count', 'findOne', 'insert', 'update', 'delete', 'directFind', 'directInsert', 'directUpdate', 'directDelete'], (funKey) => {
+					_.each(['find', 'count', 'findOne', 'insert', 'update', 'delete', 'directFind', 'directInsert', 'directUpdate', 'directDelete', 'sql'], (funKey) => {
 						objects[objectName][funKey] = function (...args) {
 							return obj[funKey].apply(obj, args)   // 重写this为obj, 防止this异常
 						}

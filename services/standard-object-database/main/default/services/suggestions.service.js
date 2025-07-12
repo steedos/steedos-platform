@@ -124,6 +124,7 @@ module.exports = {
                         directDelete(id: SteedosIDType, userSession?: SteedosUserSession): Promise<any>;
                         count(query: SteedosQueryOptions, userSession?: SteedosUserSession): Promise<any>;
                         _makeNewID(): Promise<any>;
+                        sql(sql: string, param?: any): Promise<any>;
                     }
                     ${objectsTypes}
                     ${servicesTypes}

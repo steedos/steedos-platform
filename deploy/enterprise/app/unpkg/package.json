@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@steedos/ee_unpkg": "1.0.0"
+    "@steedos/ee_unpkg": "1.0.1"
   },
   "resolutions": {
     "cheerio":"1.0.0-rc.2"

@@ -2,6 +2,7 @@ name: all
 columns:
   - label
   - name
+  - column_name
   - group
   - type
   - object

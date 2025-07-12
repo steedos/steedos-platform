@@ -101,5 +101,6 @@ export interface SteedosDriver {
     _makeNewID?(tableName?: string): any;
     encryptValue?(value: any): any;
     decryptValue?(value: any): any;
+    run?(sql: string, param?: any)
 }
 

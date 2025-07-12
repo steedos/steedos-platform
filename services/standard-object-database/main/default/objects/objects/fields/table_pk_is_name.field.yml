@@ -1,0 +1,8 @@
+name: table_pk_is_name
+group: 外部数据源
+hidden: false
+label: 主键作为对象名称字段
+sort_no: 195
+type: boolean
+visible_on: >-
+  ${datasource != null &&(datasource != "meteor") &&(datasource != "default")}

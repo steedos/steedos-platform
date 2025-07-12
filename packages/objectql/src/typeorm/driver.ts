@@ -82,6 +82,9 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         else {
             odataQuery = formatFiltersToODataQuery(filters)
         }
+        if(!odataQuery){
+            return {}
+        }
         return {
             $filter: odataQuery
         };

@@ -19,7 +19,6 @@ fields:
     description: 
   table_name:
     label: Table Name
-    help: The default data source does not support this property
     description: 
   icon:
     label: Icon

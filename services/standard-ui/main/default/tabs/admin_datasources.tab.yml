@@ -20,4 +20,5 @@ permissions:
 type: object
 object: datasources
 license:
+  - platform-professional
   - platform-enterprise
