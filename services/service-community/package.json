@@ -36,6 +36,7 @@
     "@steedos/standard-permission": "3.0.0-beta.61",
     "@steedos/standard-process-approval": "3.0.0-beta.61",
     "@steedos/standard-ui": "3.0.0-beta.61",
+    "@steedos/service-bull-dashboard": "3.0.0-beta.61",
     "@steedos/steedos-plugin-schema-builder": "3.0.0-beta.61",
     "@steedos/unpkg": "3.0.0-beta.61",
     "@steedos/workflow_time_trigger": "3.0.0-beta.61",
