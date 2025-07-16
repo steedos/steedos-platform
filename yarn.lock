@@ -7194,10 +7194,10 @@
     mongodb "^3.7.3"
     mongodb-uri "0.9.7"
 
-"@steedos/ee_unpkg@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/@steedos/ee_unpkg/-/ee_unpkg-1.0.0.tgz"
-  integrity sha512-OsAnytHwulG2aZdUY94f0TPyuAD83w7NuosuxW82MchUhsnKf4mfrj9mttR8giAMekCil1AIsykO6gbOLqqFzw==
+"@steedos/ee_unpkg@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@steedos/ee_unpkg/-/ee_unpkg-1.0.1.tgz#abdba88494dcedb6df10bf31604f7861a15fbb0b"
+  integrity sha512-3ggm0ra+hjxSRqi2eHiaKZ+nHDc2fW+EG0u+f3oGBHOJ6SaxUcpzRepkOVJhElE6sL5eZoJKoL/hzjykiKodHw==
   dependencies:
     "@babel/core" "^7.2.2"
     "@babel/plugin-proposal-class-properties" "^7.2.3"
@@ -7213,6 +7213,7 @@
     compression "^1.7.4"
     cors "^2.8.5"
     date-fns "^1.30.1"
+    dotenv-flow "^4.1.0"
     etag "^1.8.1"
     express "^4.16.4"
     gunzip-maybe "^1.4.1"
