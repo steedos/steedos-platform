@@ -4,17 +4,24 @@ label: Field
 optionsFunction: !<tag:yaml.org,2002:js/function> |-
   function(values
   ) {
-
-
-
-    if(values.summary_object){
-      return Creator.getObjectFilterFieldOptions(values.summary_object)
+    var summaryObject = BuilderAmisObject && BuilderAmisObject.AmisLib && BuilderAmisObject.AmisLib.getUISchemaSync(values.summary_object, false);
+    var fields = summaryObject && summaryObject.fields;
+    let options = [];
+    if (fields) {
+      _.forEach(fields, function(f, k){
+        /*hidden,grid等类型的字段，不需要过滤*/
+        if(!_.includes(["grid","object", "[Object]", "[object]", "Object", "avatar", "image", "markdown", "html"], f.type) && !f.hidden){
+          /*filters.$.field及flow.current等子字段也不需要过滤*/
+          if(k.indexOf(".") < 0){
+            options.push({label: f.label || k, value: k})
+          }
+        }
+      })
     }
-    return []
-
-
-
+    return options;
   }
+depend_on:
+  - summary_object
 showIcon: false
 sort_no: 300
 type: lookup

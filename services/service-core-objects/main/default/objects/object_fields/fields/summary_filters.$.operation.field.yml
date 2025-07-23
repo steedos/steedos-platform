@@ -4,39 +4,36 @@ label: Operator
 optionsFunction: !<tag:yaml.org,2002:js/function> |-
   function(values
   ) {
-
-
-
-    if(values.summary_object){
-      if(!this.template){
-        let options = Steedos.ObjectFieldManager.getSummaryFiltersOperation();
-        return options;
-      }
-      const filter = _.find(values.summary_filters, function (item) {
-        return item._id === values._grid_row_id
-      })
-      if(filter){
-        var field = filter.field;
-        if(field){
-          var object_fields = Creator.getObject(values.summary_object).fields
-          var filter_field_type;
-          if(object_fields[field]){
-            if(Creator.getFieldDataType){
-              filter_field_type = Creator.getFieldDataType(object_fields, field);
-            }
-            else{
-              filter_field_type = object_fields[field].type;
-            }
-            return Steedos.ObjectFieldManager.getSummaryFiltersOperation(filter_field_type);
-          }
+    var summaryObject = BuilderAmisObject && BuilderAmisObject.AmisLib && BuilderAmisObject.AmisLib.getUISchemaSync(values.summary_object, false);
+    var fields = summaryObject && summaryObject.fields;
+    var getFieldDataType = function(objectFields, key){
+      if (objectFields && key){
+        var currentField = objectFields[key];
+        var result = currentField && currentField.type;
+        if (["formula", "summary"].indexOf(result) > -1){
+          result = currentField.data_type;
         }
+        return result;
+      }
+      else{
+        return "text";
       }
     }
-    return [];
-
-
-
+    
+    let options = [];
+    if (fields) {
+      const field = api.context.field;
+      if(field){
+        var filter_field_type = getFieldDataType(fields, field);
+        options = Steedos.ObjectFieldManager.getSummaryFiltersOperation(filter_field_type);
+      }
+    }
+    return options;
   }
+
+depend_on:
+  - summary_object
+  - field
 showIcon: false
 sort_no: 310
 type: lookup
