@@ -1,6 +1,48 @@
 name: enable
+amis_schema: |-
+  {
+      "type": "service",
+      "body": [
+          {
+              "type": "button",
+              "label": "启用",
+              "id": "u:enable",
+              "visibleOn": "${!is_active && !record.is_system}",
+              "actionType": "ajax",
+              "api": {
+                  "url": "${context.rootUrl}/service/api/page/enable",
+                  "method": "post",
+                  "requestAdaptor": "var recordId = context.recordId;\napi.data = {\n  pageId: recordId\n}",
+                  "adaptor": "",
+                  "messages": {
+                      "success": "页面已启用。",
+                      "failed": "操作失败"
+                  }
+              },
+              "editorState": "default"
+          }
+      ],
+      "regions": [
+          "body"
+      ],
+      "data": {
+          "context": {},
+          "dataComponentId": "",
+          "record_id": "",
+          "record": {},
+          "permissions": {}
+      },
+      "bodyClassName": "p-0",
+      "dsType": "api",
+      "asideResizor": false,
+      "editorState": "default",
+      "pullRefresh": {
+          "disabled": true
+      }
+  }
 is_enable: true
 label: 启用
 'on': record_only
+type: amis_button
 visible: true
 sort: 100
