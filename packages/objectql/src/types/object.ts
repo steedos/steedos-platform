@@ -2670,7 +2670,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     const results = await this.directFind({
       fields: ["_id"],
-      filters: `(${filters}) and (${permissionFilters.join(" or ")})`,
+      filters: `(locked ne true) and (${filters}) and (${permissionFilters.join(" or ")})`,
     });
     const allowEditIds = _.pluck(results, "_id");
     _.each(records, (record) => {
