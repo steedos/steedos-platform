@@ -27,4 +27,9 @@ export class AppController {
   health_check() {
     return { status: "ok" };
   }
+
+  @Get("/amis/health_check")
+  amis_health_check() {
+    return { status: 0 };
+  }
 }
