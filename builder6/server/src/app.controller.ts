@@ -4,6 +4,7 @@ import {
   HttpException,
   HttpStatus,
   Param,
+  Post,
 } from "@nestjs/common";
 
 @Controller("/api")
@@ -28,8 +29,9 @@ export class AppController {
     return { status: "ok" };
   }
 
+  @Post("/amis/health_check")
   @Get("/amis/health_check")
   amis_health_check() {
-    return { status: 0 };
+    return { status: 0, data: {} };
   }
 }
