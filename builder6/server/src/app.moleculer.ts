@@ -102,6 +102,26 @@ export class AppMoleculer extends Service {
             data.message,
           );
         },
+        "$socket.emit": async (payload, sender, event, ctx) => {
+          console.log("b6-microservice.broadcast", {
+            name: "socket.emit",
+            data: ctx.params,
+          });
+          return await ctx.broker.call("b6-microservice.broadcast", {
+            name: "socket.emit",
+            data: ctx.params,
+          });
+        },
+        "$broadcast.socket.emit": async (payload, sender, event, ctx) => {
+          const { data } = payload;
+          if (!data.eventName) {
+            throw new Error("Missing required parameter: eventName");
+          }
+          if (!data.eventParams) {
+            throw new Error("Missing required parameter: eventParams");
+          }
+          appGateway.emit(data.eventName, data.eventParams, data.room);
+        },
       },
       created: this.serviceCreated,
       started: this.serviceStarted,

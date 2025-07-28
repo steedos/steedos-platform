@@ -186,4 +186,13 @@ export class AppGateway implements OnGatewayConnection, OnGatewayDisconnect {
         .emit("s:notification-change", { message: message });
     }
   }
+
+  emit(eventName, eventParams, room?) {
+    console.log("socket server [emit]", eventName, eventParams, room);
+    if (room) {
+      this.server.to(room).emit(eventName, eventParams);
+    } else {
+      this.server.emit(eventName, eventParams);
+    }
+  }
 }
