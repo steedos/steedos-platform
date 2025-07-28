@@ -221,14 +221,14 @@ jobs:
           CI: false
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
-      - name: Merge 2.7 -> master
-        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.7') }}  # && steps.version.outputs.is_stable == 'true'}}
-        uses: devmasx/merge-branch@master
-        with:
-          type: now
-          from_branch: 2.7
-          target_branch: master
-          github_token: ${{ github.token }}
+      # - name: Merge 2.7 -> master
+      #   if: ${{ startsWith(steps.branch-name.outputs.tag, '2.7') }}  # && steps.version.outputs.is_stable == 'true'}}
+      #   uses: devmasx/merge-branch@master
+      #   with:
+      #     type: now
+      #     from_branch: 2.7
+      #     target_branch: master
+      #     github_token: ${{ github.token }}
 
      
   docker-enterprise:
