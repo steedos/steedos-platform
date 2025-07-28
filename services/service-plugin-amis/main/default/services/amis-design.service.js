@@ -302,8 +302,9 @@ module.exports = {
                         fields: 1
                     }
                 };
+                const forceUnHiddenObjectNames = ["cms_files", "tasks", "notes", "events", "instances", "approvals", "process_instance_history",  "audit_records"];
                 let objects = _.map(_.filter((allObjects), (obj)=>{
-                    return obj.hidden != true;
+                    return obj.hidden != true || forceUnHiddenObjectNames.includes(obj.name);
                 }), (obj)=>{
                     return {
                         name: obj.name,
