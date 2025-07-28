@@ -20,7 +20,7 @@ export class AppController {
       serverStatus: global.STEEDOS_STARTED ? "running" : "starting",
       steedosVersion: process.env.STEEDOS_VERSION,
       steedosAmisVersion: process.env.STEEDOS_AMIS_VERSION,
-      platform: global.Steedos.settings,
+      PUBLIC_SETTINGS: global.Steedos.settings.PUBLIC_SETTINGS || {},
     };
   }
 

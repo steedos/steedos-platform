@@ -88,8 +88,10 @@ export default class IntlProvider extends React.PureComponent<IntlProviderProps,
             Builder.settings.steedosVersion = settingsData.steedosVersion
             Builder.settings.rootUrl = settingsData.rootUrl
             Builder.settings.steedosAmisVersion = settingsData.steedosAmisVersion
-            Builder.settings.platform = settingsData.platform
-
+            const keys = Object.keys(settingsData.PUBLIC_SETTINGS);
+            for (const key of keys) {
+                Builder.settings[key] = settingsData.PUBLIC_SETTINGS[key]
+            }
 
             Builder.settings.env = {
             requestAdaptor: (config: any)=>{
