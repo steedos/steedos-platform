@@ -39,51 +39,6 @@ export const AppHeader = () => {
         "id": "u:global-header",
         name: "globalHeader",
         body: [
-            {
-                "type": "button",
-                "label": "刷新",
-                "className": "hidden btn-reload-page-object-detail",
-                "onEvent": {
-                    "click": {
-                        "actions": [
-                            {
-                                "componentId": "u:steedos-page-object-detail",
-                                "actionType": "reload"
-                            }
-                        ]
-                    }
-                }
-            },
-            {
-                "type": "button",
-                "label": "刷新",
-                "className": "hidden btn-reload-page-object-listview",
-                "onEvent": {
-                    "click": {
-                        "actions": [
-                            {
-                                "componentId": "u:steedos-page-object-listview",
-                                "actionType": "reload"
-                            }
-                        ]
-                    }
-                }
-            },
-            {
-                "type": "button",
-                "label": "刷新",
-                "className": "hidden btn-reload-object-listview",
-                "onEvent": {
-                    "click": {
-                        "actions": [
-                            {
-                                "componentId": "u:steedos-object-listview",
-                                "actionType": "reload"
-                            }
-                        ]
-                    }
-                }
-            },
              {
                 "type": "button",
                 "label": "刷新",
@@ -175,6 +130,15 @@ export const AppHeader = () => {
             `,
             "messages": {
             }
+        },
+        dataProvider: function(data, setData){
+            window.addEventListener('message', function (event) {
+                const { data } = event;
+                if (data && data.type === 'page.dataProvider.setData') {
+                    console.log('dataProvider====>setData', data);
+                    setData(data.data)
+                }
+            })
         }
     }
 
