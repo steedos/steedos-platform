@@ -156,7 +156,7 @@ module.exports = {
             }
             const steedosConfig = getSteedosConfig();
             const accountsConfig = steedosConfig.public.accounts || {};
-            const usernameMinLength = accountsConfig.username_min_length ? Number(accountsConfig.username_min_length) : 6
+            const usernameMinLength = accountsConfig.username_min_length ? Number(accountsConfig.username_min_length) : 2
             if (username.length <  usernameMinLength) {
                 throw new Error(`用户名最小长度不能小于 ${usernameMinLength} 位字符`);
             }
