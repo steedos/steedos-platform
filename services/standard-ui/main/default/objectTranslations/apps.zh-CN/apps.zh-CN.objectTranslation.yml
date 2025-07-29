@@ -59,11 +59,11 @@ fields:
     help: 
     description: 
   is_creator:
-    label: 在桌面中显示此应用
+    label: 在桌面中显示
     help: 
     description: 
   mobile:
-    label: 在手机上显示此应用
+    label: 在手机上显示
     help: 
     description: 
   members:

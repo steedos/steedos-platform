@@ -163,18 +163,18 @@ fields:
     min: 16
     group: External Application
     hidden: true
-  visible_on:
-    name: visible_on
-    is_wide: true
-    label: Visible On
-    inlineHelpText: Visible On
-    type: textarea
-    group: other
-  enable_nav_schema: 
-    label: 启用自定义导航
-    type: boolean
-    required: false
-    group: other
+  # visible_on:
+  #   name: visible_on
+  #   is_wide: true
+  #   label: Visible On
+  #   inlineHelpText: Visible On
+  #   type: textarea
+  #   group: other
+  # enable_nav_schema: 
+  #   label: 启用自定义导航
+  #   type: boolean
+  #   required: false
+  #   group: other
 
   oauth2_enabled:
     group: External Application 
