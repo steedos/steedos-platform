@@ -28,7 +28,7 @@ module.exports = {
     },
     afterFind: async function(){
         const { spaceId } = this;
-        let lng = Steedos.locale(this.userId, true);
+        let lng = "zh-CN";
         let dataList = [{_id: 'default', name: 'default', label: t(`objects_field_datasource_defaultValue`, {}, lng), ...BASERECORD}];
         let filters = InternalData.parserFilters(this.query.filters)
         if(filters._id === 'meteor'){
@@ -61,7 +61,7 @@ module.exports = {
         if(this.id){
             if(this.id === 'default'){
                 try {
-                    let lng = Steedos.locale(this.userId, true)
+                    let lng = "zh-CN"
                     this.data.values = {_id: 'default', name: 'default', label: t(`objects_field_datasource_defaultValue`, {}, lng), ...BASERECORD};
                 } catch (error) {
                     
@@ -69,7 +69,7 @@ module.exports = {
             }
             if(this.id === 'meteor'){
                 try {
-                    let lng = Steedos.locale(this.userId, true)
+                    let lng = "zh-CN"
                     this.data.values = {_id: 'meteor', name: 'meteor', label: t(`objects_field_datasource_meteor`, {}, lng), ...BASERECORD};
                 } catch (error) {
                     
