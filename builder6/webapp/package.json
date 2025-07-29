@@ -46,7 +46,7 @@
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
-    "i18next-parser": "9.1.0",
+    "i18next-parser": "^9.3.0",
     "mkdirp": "^1.0.4",
     "qrcode.react": "^1.0.1",
     "react": "^18.2.0",
