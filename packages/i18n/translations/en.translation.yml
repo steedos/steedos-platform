@@ -1088,7 +1088,7 @@ CustomLabels:
   objects_enable_tasks: 启用任务子表
   objects_enable_notes: 启用备注子表
   objects_enable_events: 启用日程子表
-  objects_enable_chatter: 允许添加留言
+  objects_enable_chatter: 允许添加评论
   objects_enable_audit: 字段修改历史功能
   objects_enable_api: 允许 API 访问
   objects_enable_share: 允许共享记录
