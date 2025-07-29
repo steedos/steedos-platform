@@ -12,10 +12,18 @@ import { Server, Socket } from "socket.io";
 import moment from "moment";
 import { AuthService } from "@builder6/core";
 import * as cookie from "cookie";
+import { InjectBroker } from "@builder6/moleculer";
+import { ServiceBroker } from "moleculer";
 
 @WebSocketGateway({ path: "/socket.io/", cors: true })
 export class AppGateway implements OnGatewayConnection, OnGatewayDisconnect {
-  constructor(private readonly authService: AuthService) {}
+  private readonly broker;
+  constructor(
+    @InjectBroker() broker: ServiceBroker,
+    private readonly authService: AuthService,
+  ) {
+    this.broker = broker;
+  }
 
   @WebSocketServer()
   server: Server;
@@ -117,24 +125,40 @@ export class AppGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
       if (individual) {
         if (Array.isArray(roomParts)) {
-          changeFunc(roomParts.map((p) => `${p}-${userId()}`));
+          changeFunc(
+            roomParts.map((p) => `${p}-${userId()}`),
+            { roomParts, individual, userId: userId(), space: tenantId() },
+          );
 
           if (linkId()) {
-            changeFunc(roomParts.map((p) => `${p}-${linkId()}`));
+            changeFunc(
+              roomParts.map((p) => `${p}-${linkId()}`),
+              { roomParts, individual, linkId: linkId(), space: tenantId() },
+            );
           }
         } else {
-          changeFunc(`${roomParts}-${userId()}`);
+          changeFunc(`${roomParts}-${userId()}`, {
+            roomParts,
+            individual,
+            userId: userId(),
+            space: tenantId(),
+          });
 
           if (linkId()) {
-            changeFunc(`${roomParts}-${linkId()}`);
+            changeFunc(`${roomParts}-${linkId()}`, {
+              roomParts,
+              individual,
+              linkId: linkId(),
+              space: tenantId(),
+            });
           }
         }
       } else {
-        changeFunc(roomParts);
+        changeFunc(roomParts, { roomParts, individual, space: tenantId() });
       }
     };
 
-    const subscribe = (roomParts) => {
+    const subscribe = (roomParts, ctx) => {
       if (!roomParts) return;
 
       if (Array.isArray(roomParts)) {
@@ -145,6 +169,7 @@ export class AppGateway implements OnGatewayConnection, OnGatewayDisconnect {
         const room = getRoom(roomParts);
         this.logger.log(`client ${socket.id} join room ${room}`);
         socket.join(room);
+        this.broker.emit(`$socket.subscribe.${ctx.roomParts}`, ctx);
       }
     };
 
