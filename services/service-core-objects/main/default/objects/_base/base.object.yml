@@ -5,6 +5,7 @@ fields:
     type: text
     label: 外部ID
     visible_on: "{{false}}"
+    sort_no: 1000
   owner:
     label: Owner
     type: lookup
