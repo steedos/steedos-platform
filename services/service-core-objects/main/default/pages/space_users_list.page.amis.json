@@ -19,7 +19,7 @@
                                 {
                                     "type": "input-tree",
                                     "id": "u:7fd77b7915b0",
-                                    "className": "",
+                                    "className": "bg-none",
                                     "source": {
                                         "method": "post",
                                         "url": "${context.rootUrl}/graphql",

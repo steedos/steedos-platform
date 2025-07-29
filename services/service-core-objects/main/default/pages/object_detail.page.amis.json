@@ -222,16 +222,6 @@
             }
         }
     ],
-    "data": {
-        "objectName": "objects",
-        "recordId": "space_users",
-        "context": {
-            "rootUrl": "http://127.0.0.1:5800",
-            "tenantId": "hKdnwE55WcnWveYxS",
-            "userId": "62ede4f62161e377e35de58c",
-            "authToken": "b6475c5536a26d23d3db84e96536e08e82e1e726380cdd5cb09fc977e1d6e57c08fb23d7a1090006189d3d"
-        }
-    },
     "id": "page_objects_record_detail",
     "objectApiName": "${objectName}",
     "name": "page_objects_record_detail",
