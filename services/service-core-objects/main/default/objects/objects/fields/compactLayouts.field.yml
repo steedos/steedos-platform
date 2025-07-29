@@ -15,7 +15,7 @@ filtersFunction: !<tag:yaml.org,2002:js/function> |-
 
 
   }
-group: switch
+group: feature
 hidden: false
 is_wide: true
 label: 高亮字段
@@ -24,4 +24,3 @@ reference_to: object_fields
 reference_to_field: name
 sort_no: 120
 type: lookup
-inlineHelpText: 指定若干个字段显示在记录详情页的顶部，以便用户迅速定位重要信息。

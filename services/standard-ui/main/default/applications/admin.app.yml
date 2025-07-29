@@ -158,6 +158,12 @@ tab_items:
   admin_logs:
     group: advanced_settings
     index: 52
+  admin_audit_records:
+    group: advanced_settings
+    index: 36
+  admin_operation_logs:
+    group: advanced_settings
+    index: 60
 objects: []
 sort: 999999
 #url: /app/admin

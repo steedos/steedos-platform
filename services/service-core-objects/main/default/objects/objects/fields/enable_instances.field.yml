@@ -1,5 +1,5 @@
 name: enable_instances
-group: switch
+group: advanced
 hidden: true
 label: Enable Instances
 sort_no: 140

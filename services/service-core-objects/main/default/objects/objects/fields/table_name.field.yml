@@ -4,7 +4,6 @@ amis:
 group: advanced
 hidden: false
 index: true
-inlineHelpText: The default data source does not support this property
 label: Table Name
 searchable: true
 sort_no: 190

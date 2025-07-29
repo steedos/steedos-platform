@@ -16,7 +16,7 @@ fields:
     description: 数据库中的表名，只能包含小写字母、数字
   table_name:
     label: 数据库表名称
-    help: 默认数据源不支持此属性
+    help: 
     description: 
   icon:
     label: 图标
@@ -35,6 +35,10 @@ fields:
       - label: 已部署
         value: '0'
     description: 
+  enable_audit:
+    label: 数据修改日志
+    help: 数据变化时，自动保存修改日志
+    description: 
   enable_search:
     label: 允许搜索
     help: 
@@ -52,9 +56,9 @@ fields:
     help: 
     description: 
   enable_form_tabs:
-    label: 记录字段分组选项卡显示
-    help: 启用后，在记录详情页中将字段分组以选项卡形式呈现，优化信息展示；若未启用，则所有字段在同一个页面显示。
-    description: 
+    label: 选项卡样式表单
+    help: 
+    description: 不同分组的字段以选项卡形式呈现
   enable_events:
     label: 允许创建相关日程
     help: 
@@ -80,21 +84,21 @@ fields:
     help: 
     description: 
   enable_inline_edit:
-    label: 列表行字段编辑
-    help: 在列表页中直接对某些字段进行行内编辑，无需切换详情页即可完成快速录入或修改。
+    label: 允许在列表中编辑
+    help: 
     description: 
   enable_tree:
-    label: 列表树结构显示
-    help: 启用后在列表视图中以树状格式呈现数据层级结构，方便查看记录的父子关系。
-    description: 
+    label: 树状结构显示
+    help: 
+    description: 以树状格式呈现数据层级结构，方便查看记录的父子关系。
   enable_enhanced_lookup:
-    label: 弹出窗口查找模式
-    help: 启用该功能后，当此对象被其他对象引用时，编辑该字段会以弹出窗口形式显示选项，便于在弹窗内快速搜索、筛选并选中所需数据。未启用则以下拉框方式进行展现。
-    description: 
+    label: 弹出窗口查找
+    help: 
+    description: 当此对象被其他对象引用时，选择记录时会以弹出窗口形式显示选项。
   enable_split:
     label: 列表分屏模式
-    help: 在列表页同时显示记录列表和所选记录的详情，实现快速切换、预览和编辑，常见于需要频繁查看多条记录的场景。
-    description: 
+    help: 
+    description: 左侧列表，右侧显示记录详情。
   enable_lock_detail:
     label: 级联锁定子表
     help: 
@@ -167,13 +171,12 @@ fields:
     description: 
   compactLayouts:
     label: 高亮字段
+    description: 高亮字段显示在记录详情页的顶部。
   is_customize:
     label: 自定义
 groups:
-  external_data_source: 外部数据源
-  switch: 界面
   feature: 功能
-  advanced: 外部数据源
+  advanced: 高级
 listviews:
   all:
     label: 全部

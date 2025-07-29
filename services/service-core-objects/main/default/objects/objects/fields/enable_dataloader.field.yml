@@ -1,7 +1,6 @@
 name: enable_dataloader
 defaultValue: true
 hidden: true
-inlineHelpText: Enable the dataloader for the object GraphQL API. The default value is "true".
 label: Enable Dataloader
 sort_no: 310
 type: boolean

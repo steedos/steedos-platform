@@ -1,7 +1,7 @@
 name: enable_lock_detail
 defaultValue: true
 filters: []
-group: feature
+group: advanced
 hidden: false
 label: Enable Lock Details
 sort_no: 220
