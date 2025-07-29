@@ -11,9 +11,9 @@ fields:
     help: 
     description: 
   name:
-    label: 对象名
-    help: API 名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符
-    description: 
+    label: API名称
+    help: 
+    description: 数据库中的表名，只能包含小写字母、数字
   table_name:
     label: 数据库表名称
     help: 默认数据源不支持此属性
@@ -28,7 +28,7 @@ fields:
     description: 
   in_development:
     label: 开发状态
-    help: 开发中(仅管理员才可以访问对象)
+    help: 
     options:
       - label: 开发中(仅管理员才可以访问对象)
         value: '1'
@@ -40,23 +40,23 @@ fields:
     help: 
     description: 
   enable_files:
-    label: 启用附件子表
+    label: 允许上传附件
     help: 
     description: 
   enable_tasks:
-    label: 启用任务子表
+    label: 允许创建相关任务
     help: 
     description: 
   enable_notes:
-    label: 启用备注子表
-    help: 平台统一管理任务的备注对象，启用后记录详情页面会显示备注子表对象。
+    label: 允许添加备注
+    help: 
     description: 
   enable_form_tabs:
     label: 记录字段分组选项卡显示
     help: 启用后，在记录详情页中将字段分组以选项卡形式呈现，优化信息展示；若未启用，则所有字段在同一个页面显示。
     description: 
   enable_events:
-    label: 启用日程子表
+    label: 允许创建相关日程
     help: 
     description: 
   enable_api:
@@ -76,7 +76,7 @@ fields:
     help: 
     description: 
   enable_chatter:
-    label: 允许添加评论
+    label: 允许在记录中评论
     help: 
     description: 
   enable_inline_edit:
@@ -96,9 +96,9 @@ fields:
     help: 在列表页同时显示记录列表和所选记录的详情，实现快速切换、预览和编辑，常见于需要频繁查看多条记录的场景。
     description: 
   enable_lock_detail:
-    label: 联动锁定子表记录
-    help: 当主记录被锁定（Locked属性为true）时，同时锁定相关子表记录，不允许对子表记录进行修改，保持数据一致性。
-    description: 
+    label: 级联锁定子表
+    help: 
+    description: 当主记录被锁定时，同时锁定子表记录禁止修改。
   description:
     label: 备注
     help: 
@@ -171,8 +171,8 @@ fields:
     label: 自定义
 groups:
   external_data_source: 外部数据源
-  switch: 界面开关
-  feature: 功能开关
+  switch: 界面
+  feature: 功能
   advanced: 外部数据源
 listviews:
   all:
@@ -185,7 +185,7 @@ listviews:
     label: 已删除
 actions:
   show_object:
-    label: 列表预览
+    label: 预览
   copy_odata:
     label: 复制OData网址
   createDefaultRecordView:

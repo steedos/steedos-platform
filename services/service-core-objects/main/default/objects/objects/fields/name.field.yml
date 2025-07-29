@@ -4,10 +4,6 @@ amis:
 filterable: true
 hidden: false
 index: true
-inlineHelpText: >-
-  Can only contain lowercase letters and numbers, must start with a letter,
-  cannot end with an underscore character or contain two consecutive underscore
-  characters
 label: API Name
 required: true
 searchable: true

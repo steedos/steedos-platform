@@ -12,11 +12,8 @@ fields:
     description: 
   name:
     label: API Name
-    help: >-
-      Can only contain lowercase letters and numbers, must start with a letter,
-      cannot end with an underscore character or contain two consecutive
-      underscore characters
-    description: 
+    help:  
+    description: Can only contain lowercase letters and numbers, must start with a letter
   table_name:
     label: Table Name
     help: The default data source does not support this property
@@ -100,8 +97,8 @@ fields:
     description: 
   enable_lock_detail:
     label: Enable Lock Details
-    help: When the main watch is locked all sub tables are read only.
-    description: 
+    help: 
+    description: When the main record is locked, all sub tables are read only.
   description:
     label: Description
     help: 

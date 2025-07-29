@@ -16,11 +16,7 @@ fields:
     description: 
   name:
     label: API Name
-    help: >-
-      Can only contain lowercase letters and numbers, must start with a letter,
-      cannot end with an underscore character or contain two consecutive
-      underscore characters
-    description: 
+    help: 
   type:
     label: Type
     help: 

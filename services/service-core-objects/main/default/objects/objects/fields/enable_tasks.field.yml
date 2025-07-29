@@ -4,4 +4,3 @@ hidden: false
 label: Enable Tasks
 sort_no: 150
 type: boolean
-inlineHelpText: 平台统一管理任务的系统对象，包含消息通知等功能；启用后记录详情页面会显示任务子表对象。
