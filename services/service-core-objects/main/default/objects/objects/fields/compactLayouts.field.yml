@@ -22,5 +22,5 @@ label: 高亮字段
 multiple: true
 reference_to: object_fields
 reference_to_field: name
-sort_no: 120
+sort_no: 900
 type: lookup
