@@ -279,6 +279,10 @@
   border-right-width: 1px
 }
 
+.border-none {
+  border-style: none
+}
+
 .border-gray-200 {
   --tw-border-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-border-opacity))
