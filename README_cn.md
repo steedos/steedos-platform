@@ -1,16 +1,17 @@
+
 <p align="center">
-  <a href="https://www.steedos.cn/">
-    <img alt="Steedos" src="https://steedos.github.io/assets/logo.png" width="80" />
+  <a href="https://docs.steedos.com">
+    <img alt="Steedos" src="https://docs.steedos.com/img/logo.png" width="80" />
   </a>
 </p>
 <h1 align="center">
-  Steedos低代码PaaS平台
+  Steedos 低代码平台
 </h1>
 
 <p align="center">
 <a href="./README.md">English</a>
 <a href="https://docs.steedos.com/" target="_blank"> · 文档</a>
-<a href="https://github.com/steedos-labs/" target="_blank"> · Steedos Labs</a>
+<a href="https://www.steedos.com/" target="_blank"> · Steedos 官网</a>
 </p>
 
 
