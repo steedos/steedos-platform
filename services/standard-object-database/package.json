@@ -1,6 +1,6 @@
 {
     "name": "@steedos/standard-object-database",
-    "version": "2.7.18-beta.42",
+    "version": "2.7.18-beta.43",
     "main": "package.service.js",
     "private": false,
     "publishConfig": {
@@ -12,14 +12,14 @@
     "description": "steedos package",
     "dependencies": {
         "@steedos-widgets/amis-lib": "^1.0.22",
-        "@steedos/metadata-core": "2.7.18-beta.42",
-        "@steedos/service-object-mixin": "2.7.18-beta.42",
-        "@steedos/standard-objects": "2.7.18-beta.42",
+        "@steedos/metadata-core": "2.7.18-beta.43",
+        "@steedos/service-object-mixin": "2.7.18-beta.43",
+        "@steedos/standard-objects": "2.7.18-beta.43",
         "amis-formula": "~6.3.0",
         "clone": "^2.1.2",
         "moleculer-bullmq": "3.0.0"
     },
     "repository": {},
     "license": "MIT",
-    "gitHead": "d9db08a4b237aaf669d4a3eb6e137853af0e0b6e"
+    "gitHead": "22e49a7b0ada065fc53a5c9ad39ba9fd6376068e"
 }
