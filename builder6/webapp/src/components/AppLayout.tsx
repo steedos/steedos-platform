@@ -15,7 +15,7 @@ export const AppLayout = (props) => {
     <>
       <GlobalLinkInterceptor></GlobalLinkInterceptor>
       <AppHeader />
-      <div className="creator-content-wrapper sm:bg-gray-50" id="main">
+      <div className="creator-content-wrapper" id="main">
         {children}
       </div>
     </>
