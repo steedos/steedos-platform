@@ -5,7 +5,7 @@ language: javascript
 is_wide: true
 required: true
 defaultValue: |-
-  // global: {_:lodash, moment, validator, filters}
+  // global: {_:lodash, moment, validator, filters, axios, formData, mongodb, sequelize}
   // objects
   // ctx: {input, params, broker, getObject, getUser}
 editorDidMount: >-
