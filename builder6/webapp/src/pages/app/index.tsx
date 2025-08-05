@@ -44,17 +44,6 @@ const on_click_script = `
     })
     ${convertAppVisibleOnScript}
     
-    ;if(Builder.settings.context.user.is_space_admin){
-      app_items.push({
-        id: '_add_admin',
-        name: '新建应用',
-        iconCategory: 'action',
-        icon: 'new',
-        visible_on: true,
-        on_event: true,
-        custom_script: 'debugger;'
-      })
-    }
     payload = {
       app_items,
       object_items
@@ -74,25 +63,121 @@ export const AppDashboard = () => {
       "id": "u:0f6224a0836f",
       "affixFooter": false,
       "body": [
-          {
-          "type": "button",
-          "label": "刷新",
-          "className": "hidden btn-reload-app-dashboard",
-          "onEvent": {
-            "click": {
-              "actions": [
-                {
-                  "componentId": "u:0f6224a0836f",
-                  "actionType": "reload"
-                }
-              ]
-            }
-          }
-        },
         {
           "type": "panel",
           "key": "1",
           "title": "应用程序",
+          "className": "p-4 shadow border-none",
+          "header": [
+            {
+              "type": "flex",
+              "justify": "space-between",
+              "items": [
+                {
+                  "type": "wrapper",
+                  "className": "text-xl font-bold p-0",
+                  "body": [
+                    {
+                      "type": "plain",
+                      "text": "应用程序"
+                    }
+                  ]
+                },
+                {
+                  "type": "wrapper",
+                  "className": "p-0",
+                  "body": [
+                    {
+                      "type": "button",
+                      "label": "刷新",
+                      "className": "hidden btn-reload-app-dashboard",
+                      "onEvent": {
+                        "click": {
+                          "actions": [
+                            {
+                              "actionType": "reload"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "label": "新建应用",
+                      "actionType": "dialog",
+                      "level": "primary",
+                      "visibleOn": "Builder.settings.context.user.is_space_admin == true",
+                      "dialog": {
+                        "title": "新建应用",
+                        "actions": [
+                          {
+                            "type": "button",
+                            "actionType": "cancel",
+                            "label": "取消",
+                          },
+                          {
+                              "type": "button",
+                              "actionType": "confirm",
+                              "label": "确定",
+                              "primary": true,
+                          }
+                        ],
+                        "body": [
+                          {
+                            "type": "form",
+                            "canAccessSuperData": false,
+                            "api": {
+                                "url": "/service/api/apps/create_by_design",
+                                "method": "post",
+                                "requestAdaptor": "api.data={code: context.code, name: context.name, icon: context.icon}; return api;",
+                                "adaptor": "window.location.href=Steedos.getRelativeUrl('/app/' + payload.code);return {}",
+                                "messages": {}
+                            },
+                            "body": [
+                              {
+                                "type": "input-text",
+                                "name": "code",
+                                "label": "应用唯一标识",
+                                "value": "a_\${UUID(6)}",
+                                "required": true,
+                                "validateOnChange": true,
+                                "validations": {
+                                    "isVariableName": /^[a-zA-Z]([A-Za-z0-9]|_(?!_))*[A-Za-z0-9]$/
+                                }
+                              },
+                              {
+                                "name": "name",
+                                "type": "input-text",
+                                "label": "显示名称",
+                                "required": true
+                              },
+                              {
+                                  "type": "steedos-field",
+                                  "label": "图标",
+                                  "config": {
+                                      "label": "图标",
+                                      "type": "lookup",
+                                      "required": true,
+                                      "sort_no": 30,
+                                      "optionsFunction": "function anonymous() {        var options;        options = [];        _.forEach(Steedos.resources.sldsIcons.standard, function (svg) {          return options.push({            value: svg,            label: svg,            icon: svg          });        });        return options;      }",
+                                      "name": "icon",
+                                      "inlineHelpText": "",
+                                      "description": "",
+                                      "hidden": false,
+                                      "readonly": false,
+                                      "disabled": false
+                                  }
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                    }
+                  ]
+                }
+              ]
+            },
+          ],
           "body": [
             {
               "type": "each",
@@ -147,77 +232,7 @@ export const AppDashboard = () => {
                         "script": on_click_script,
                         "expression": "${!!on_click}"
                       },
-                      {
-                        "actionType": "dialog",
-                         "dialog": {
-                          "title": "新建应用",
-                          "actions": [
-                            {
-                              "type": "button",
-                              "actionType": "cancel",
-                              "label": "取消",
-                              "id": "u:21d3cccf4d83"
-                            },
-                            {
-                                "type": "button",
-                                "actionType": "confirm",
-                                "label": "确定",
-                                "primary": true,
-                                "id": "u:238e5731a053"
-                            }
-                          ],
-                          "body": [
-                            {
-                              "type": "form",
-                              "canAccessSuperData": false,
-                              "api": {
-                                  "url": "/service/api/apps/create_by_design",
-                                  "method": "post",
-                                  "requestAdaptor": "api.data={code: context.code, name: context.name, icon: context.icon}; return api;",
-                                  "adaptor": "window.location.href=Steedos.getRelativeUrl('/app/' + payload.code);return {}",
-                                  "messages": {}
-                              },
-                              "body": [
-                                {
-                                  "type": "input-text",
-                                  "name": "code",
-                                  "label": "应用唯一标识",
-                                  "value": "a_\${UUID(6)}",
-                                  "required": true,
-                                  "validateOnChange": true,
-                                  "validations": {
-                                      "isVariableName": /^[a-zA-Z]([A-Za-z0-9]|_(?!_))*[A-Za-z0-9]$/
-                                  }
-                                },
-                                {
-                                  "name": "name",
-                                  "type": "input-text",
-                                  "label": "显示名称",
-                                  "required": true
-                                },
-                                {
-                                    "type": "steedos-field",
-                                    "label": "图标",
-                                    "config": {
-                                        "label": "图标",
-                                        "type": "lookup",
-                                        "required": true,
-                                        "sort_no": 30,
-                                        "optionsFunction": "function anonymous() {        var options;        options = [];        _.forEach(Steedos.resources.sldsIcons.standard, function (svg) {          return options.push({            value: svg,            label: svg,            icon: svg          });        });        return options;      }",
-                                        "name": "icon",
-                                        "inlineHelpText": "",
-                                        "description": "",
-                                        "hidden": false,
-                                        "readonly": false,
-                                        "disabled": false
-                                    }
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        "expression": "${id === '_add_admin'}"
-                      }       
+                      
                     ]
                   }
                 },
@@ -227,12 +242,12 @@ export const AppDashboard = () => {
                 "visibleOn": "${visible_on}",
                 "className": "slds-p-horizontal_small app-item app-item-${id}"
               }],
-              "className": "slds-grid slds-wrap slds-grid_pull-padded"
+              "className": "grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4",
             }
           ]
         }
       ],
-      "className": "steedos-apps-service steedos-apps-home",
+      "className": "steedos-apps-service steedos-apps-home p-4",
       "visibleOn": "",
       "clearValueOnHidden": false,
       "visible": true,
