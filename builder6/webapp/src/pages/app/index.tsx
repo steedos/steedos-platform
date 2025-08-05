@@ -54,7 +54,7 @@ const on_click_script = `
 
 export const AppDashboard = () => {
   const isMobile = false;
-  const badgeText = "${IF(${id} == 'approve_workflow',${ss:keyvalues.badge.value|pick:'workflow'},${ss:keyvalues.badge.value|pick:${id}}) | toInt}";
+  const badgeText = "${IF(${id} == 'approve_workflow',${badge|pick:'workflow'},${badge|pick:${id}}) | toInt}";
   // 获取App信息，并跳转到第一个选项卡
   return (
     <>
@@ -292,7 +292,15 @@ export const AppDashboard = () => {
         app: "",
         appId: "",
         app_id: "",
-      }
+      },
+      dataProvider: function(data, setData){
+          (window as any).addEventListener('message', function (event) {
+              const { data } = event;
+              if (data && data.type === 'page.dataProvider.setData') {
+                  setData(data.data)
+              }
+          })
+        }
     } }  data ={{
             context: {
                 objectName: '',

@@ -1,7 +1,7 @@
 
 <p align="center">
-  <a href="https://www.steedos.org">
-    <img alt="Steedos" src="https://www.steedos.org/img/logo.png" width="80" />
+  <a href="https://docs.steedos.com">
+    <img alt="Steedos" src="https://docs.steedos.com/img/logo.png" width="80" />
   </a>
 </p>
 <h1 align="center">
@@ -11,7 +11,7 @@
 <p align="center">
 <a href="./README_cn.md">中文</a>
 <a href="https://docs.steedos.com"> · Docs</a>
-<a href="https://github.com/steedos-labs/" target="_blank"> · Steedos Labs</a>
+<a href="https://www.steedos.com/" target="_blank"> · steedos.com</a>
 </p>
 
 <p align="center">
