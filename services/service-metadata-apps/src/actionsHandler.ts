@@ -1,5 +1,6 @@
 import { getServiceAppConfig, METADATA_TYPE, refreshApp } from ".";
 import _ = require("lodash");
+import { defaultsDeep } from "@steedos/utils";
 import {
   translationApp,
   translationObjectLabel,
@@ -699,7 +700,7 @@ export const ActionHandlers = {
       metadataApiName,
     );
     if (metadataConfig && metadataConfig.metadata) {
-      config = _.defaultsDeep(config, metadataConfig.metadata);
+      config = defaultsDeep(config, metadataConfig.metadata);
     }
     await ctx.broker.call(
       "metadata.addServiceMetadata",

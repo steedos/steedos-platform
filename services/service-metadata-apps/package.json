@@ -21,6 +21,7 @@
   "dependencies": {
     "@steedos/i18n": "3.0.0-beta.65",
     "@steedos/objectql": "3.0.0-beta.65",
+    "@steedos/utils": "3.0.0-beta.65",
     "dotenv-flow": "^3.1.0",
     "ioredis": "^4.22.0",
     "lodash": "^4.17.21",
