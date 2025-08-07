@@ -213,7 +213,6 @@ export class AppGateway implements OnGatewayConnection, OnGatewayDisconnect {
   }
 
   emit(eventName, eventParams, room?) {
-    console.log("socket server [emit]", eventName, eventParams, room);
     if (room) {
       this.server.to(room).emit(eventName, eventParams);
     } else {
