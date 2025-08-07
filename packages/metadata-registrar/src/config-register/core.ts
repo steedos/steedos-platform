@@ -345,7 +345,7 @@ export const loadStandardMetadata = async (
   if (dbMetadataLoaing != true) {
     await loadStandardProfiles(serviceName);
     await loadStandardPermissionsets(serviceName);
-    await loadDbMetadatas(datasourceApiName);
+    // await loadDbMetadatas(datasourceApiName);
     dbMetadataLoaing = true;
   }
 };

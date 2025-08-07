@@ -135,7 +135,7 @@ export const AppHeader = () => {
             window.addEventListener('message', function (event) {
                 const { data } = event;
                 if (data && data.type === 'page.dataProvider.setData') {
-                    console.log('dataProvider====>setData', data);
+                    // console.log('dataProvider====>setData', data);
                     setData(data.data)
                 }
             })
