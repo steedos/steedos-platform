@@ -131,7 +131,7 @@ const maintainSystemFiles = ()=>{
 const getPackageVersions = async (packageName, options)=>{
     //TODO 处理 registry_url
 
-    let registry_url = registryUrl(packageName.toLowerCase().split('/')[0]);
+    let registry_url = process.env.NPM_REGISTRY_URL ||  registryUrl(packageName.toLowerCase().split('/')[0]);
 
     const result = await packageJson(packageName.toLowerCase(), {
         allVersions: true,
