@@ -103,10 +103,10 @@ export class AppMoleculer extends Service {
           );
         },
         "$socket.emit": async (payload, sender, event, ctx) => {
-          console.log("b6-microservice.broadcast", {
-            name: "socket.emit",
-            data: ctx.params,
-          });
+          // console.log("b6-microservice.broadcast", {
+          //   name: "socket.emit",
+          //   data: ctx.params,
+          // });
           return await ctx.broker.call("b6-microservice.broadcast", {
             name: "socket.emit",
             data: ctx.params,
