@@ -190,7 +190,7 @@ module.exports = {
         let doc = this.doc;
         let permission_set_id = doc.permission_set_id || oldDoc.permission_set_id
         let object_name = doc.object_name || oldDoc.object_name
-        let space = oldDoc.space
+        let space = this.space
         let dbRecords = await objectql.getObject("permission_set").directFind({
             filters: [['permission_set_id', '=', permission_set_id], ['object_name', '=', object_name], ['space', '=', space], ['_id', '!=', this.id]]
         });
