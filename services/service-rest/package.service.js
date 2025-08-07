@@ -13,7 +13,7 @@ const {
  } = require('./consts')
 const { translateRecords } = require('./translate');
 const _ = require('lodash')
-const { getObject } = require('@steedos/objectql');
+const { getObject, getObjectConfig } = require('@steedos/objectql');
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -787,6 +787,50 @@ module.exports = {
                 }
             }
         },
+        names: {
+            rest: {
+                method: "POST",
+                path: "/:objectName/names"
+            },
+            params: {
+                objectName: { type: "string" },
+                idKey: { type: "string" },
+                ids: { type: 'array', items: "string"}
+            },
+            async handler(ctx) {
+                const params = ctx.params
+                const { objectName, ids, idKey = '_id' } = params
+
+                if(ids.length > 500){
+                    return {
+                        "status": 1,
+                        "msg": "Exceeded maximum ID limit",
+                        "data": {}
+                    }
+                }
+                
+                const obj = await getObject(objectName);
+
+                const records = await obj.directFind({
+                    filters: [idKey, 'in', ids],
+                    fields: [idKey, obj.NAME_FIELD_KEY || 'name']
+                })
+                
+                return {
+                    "status": REQUEST_SUCCESS_STATUS,
+                    "msg": "",
+                    "data": {
+                        "options": _.map(records, (item)=>{
+                            return {
+                                label: item[obj.NAME_FIELD_KEY || 'name'],
+                                value: item[idKey]
+                            }
+                        }),
+                        "total": records.length
+                    }
+                }
+            }
+        }
     },
 
     /**
