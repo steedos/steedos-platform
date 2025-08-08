@@ -71,6 +71,9 @@ async function _computeFormula(
   options?: SteedosFormulaOptions,
 ) {
   // 允许参数objectName为空，此时formula应该最多只引用了$user变量，未引用任何对象字段相关变量。
+
+  formula = _.trim(formula);
+
   const objectConfig = objectName ? getOriginalObjectConfig(objectName) : null;
   const varsAndQuotes = await computeFormulaVarsAndQuotes(
     formula,
