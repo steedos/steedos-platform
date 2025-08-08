@@ -1,12 +1,16 @@
 const objectql = require('@steedos/objectql');
 async function isSpaceUnique(spaceId, object_name, doc, name, _id){
-    const filters = [];
-    filters.push(['space', '=', spaceId])
-    filters.push(['name', '=', name || doc.name])
+    const query = {space: spaceId, name: name || doc.name};
     if(_id){
-        filters.push(['_id', '!=', _id])
+        query._id = {
+            '$ne': _id
+        }
     }
-    const count = await objectql.getObject(object_name).count({filters: filters})
+    const datasource = objectql.getDataSource('default');
+    const adapter = datasource.adapter
+    await adapter.connect()
+    const collection = adapter.collection(object_name);
+    const count = await collection.countDocuments(query)
     if(count > 0)
         return false
     return true
