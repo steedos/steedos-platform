@@ -1431,7 +1431,7 @@ CustomLabels:
         input: 确认
         approval: 审批
         first_submit_applicant: 请确认:我已代您提交了{$instance_name}
-        first_submit_inbox: "{$instance_name}"
+        first_submit_inbox: "请审批:{$instance_name}"
         submit_pending_rejected_applicant_inbox: 请修改:{$instance_name}
         submit_pending_rejected_applicant: 您的{$instance_name}已驳回给{$nextApprove_usersname}
         submit_pending_rejected_approve: ''

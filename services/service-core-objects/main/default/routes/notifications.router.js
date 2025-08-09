@@ -21,7 +21,7 @@ const util = {
         }
         let url = `/app/${appId}/${objectName}/view/${recordId}`;
         if (objectName === "instances") {
-            url = `/workflow/space/${spaceId}/inbox/${recordId}`;
+            url = `/api/workflow/instances/redirect/${recordId}`
         }
         return url;
     }
