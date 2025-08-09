@@ -7115,10 +7115,10 @@
   resolved "https://registry.yarnpkg.com/@steedos-builder/amis-editor/-/amis-editor-6.3.0-beta.13.tgz#2f06d5358645488e585dc21f81a9c45341735845"
   integrity sha512-ysK2GNyNAqQQz8prpZ7WOht6Uu7t3vZJdPX1RB1O2Cld4QeYy0ozQkct/zTvL3fzAkYFNdSZwXRavLLTlDaisw==
 
-"@steedos-labs/analytics@^0.1.27":
-  version "0.1.45"
-  resolved "https://registry.yarnpkg.com/@steedos-labs/analytics/-/analytics-0.1.45.tgz#9e7bc6442b31e90e874ac33a3d7cd53ffe65592a"
-  integrity sha512-LumiO0SdJ+K8iBnWlbRs6JKMrNRSrjZ2vfNFTHiVbal74Sq3jv0u5aKqDP0xGOcgM0x1nEYCRAka+6OvFiYTPQ==
+"@steedos-labs/analytics@3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@steedos-labs/analytics/-/analytics-3.0.0.tgz#af920d6a54d5a3ffe5e975ffdf681a97f3b064ad"
+  integrity sha512-PkIiw6z87d3v8/GLJMdQsPPDi/NHwVoM1AlsI3NdWoTKTsPOaAkIWU8RCjICRZXthyAHIg1djlIE5TCc1NcODg==
   dependencies:
     "@steedos/utils" "^2.5.11-beta.10"
     date-fns "^3.3.1"
@@ -7131,26 +7131,10 @@
   resolved "https://registry.yarnpkg.com/@steedos-labs/plugin-package-store/-/plugin-package-store-1.0.8.tgz#3646ac19349ad6ce0a58efc38e81e35a00fd5e43"
   integrity sha512-21u5PEcgC4AtDTR0KnTo+gu30YD86esmV5yZJC/HrttvSBcj1yCjP89F3g9WXIm4BlzEI8aqPFvqWNnNPjXioQ==
 
-"@steedos/ee_audit-records@2.5.49":
-  version "2.5.49"
-  resolved "https://registry.yarnpkg.com/@steedos/ee_audit-records/-/ee_audit-records-2.5.49.tgz#2595b643bdeadc7f86e37b7156f8e54e3591e1f2"
-  integrity sha512-9BZMxG2MkSCHbjwvOiojc7FHsDhj5q3jSvZGvK6X6tSTV47Wjo2/Ma0guRC87BlXvFZ+QuQhrD//jAXhJAV5bA==
-
-"@steedos/ee_branding@2.5.49":
-  version "2.5.49"
-  resolved "https://registry.yarnpkg.com/@steedos/ee_branding/-/ee_branding-2.5.49.tgz#1089c08d4afdd7ececf01cccb7cfde360e4673b6"
-  integrity sha512-hi9P6Ou6RcMBp7Y/tzpkIN4xXTi3H8cyF9UJYi3b2LOytXx8w/LiiiZld9ArmKoOkR/v664lXhlk4RJgZbLPFQ==
-
-"@steedos/ee_mongodb-bi-connector@2.5.49":
-  version "2.5.49"
-  resolved "https://registry.yarnpkg.com/@steedos/ee_mongodb-bi-connector/-/ee_mongodb-bi-connector-2.5.49.tgz#c498e51da2b82cc66d8ff97ddbea6736f0372c17"
-  integrity sha512-D72r8+ejlr8QU1JOekYkLyJSSqe+KlC/IR+QhiOwMr6AoXNa4gSIpWmdiIFTtPdwkVubgplc9+EWcKh4kg8Fvw==
-  dependencies:
-    dotenv-flow "^3.1.0"
-    ioredis "^4.22.0"
-    moleculer "^0.14.25"
-    mongodb "^3.7.3"
-    mongodb-uri "0.9.7"
+"@steedos/ee_branding@3.0.0-beta.2":
+  version "3.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@steedos/ee_branding/-/ee_branding-3.0.0-beta.2.tgz#28ed9f8e99dbb2fbac6935b054ee68e74702cc7d"
+  integrity sha512-Wm8v8hGcbaQBJKmGO3SZen7EDeohre3rAixJOaK2igQE7iDm83aqHvwt5pUqWmOizBEdlBz06JbenZz27nXgeA==
 
 "@steedos/ee_unpkg@1.0.1":
   version "1.0.1"
@@ -7196,11 +7180,6 @@
     warning "^4.0.2"
     whatwg-url "^7.0.0"
 
-"@steedos/ee_virus-scan@2.5.49":
-  version "2.5.49"
-  resolved "https://registry.yarnpkg.com/@steedos/ee_virus-scan/-/ee_virus-scan-2.5.49.tgz#3cf68d15b1d9c62d1102d27136268df8562565ca"
-  integrity sha512-ZUmQXigaQFa9NPY8CA5+J7wZk7ubNZN/t2SEPBs6d9suV+YyV+MyZ/v9gPa192xxDDR8JJbvg96LMbXWiQ9NdA==
-
 "@steedos/filters@2.5.11-beta.10":
   version "2.5.11-beta.10"
   resolved "https://registry.yarnpkg.com/@steedos/filters/-/filters-2.5.11-beta.10.tgz#d459bc661e730ed2e9a6b5218e4a18e8ffef15ec"
@@ -7210,10 +7189,10 @@
     lodash "4.17.21"
     moment "^2.24.0"
 
-"@steedos/license@2.5.49":
-  version "2.5.49"
-  resolved "https://registry.yarnpkg.com/@steedos/license/-/license-2.5.49.tgz#cbda7e3bc5d3c4d4a5689656e879e25066ee6687"
-  integrity sha512-Fg7PdiEtLNWmq8+pdJNLWWJVSHN/UOTd0oGkIE6CCghiLUJ/ZzqJLqBgS86+JCP7uczlqy1/vmtaKm729hrOlg==
+"@steedos/license@3.0.0-beta.2":
+  version "3.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@steedos/license/-/license-3.0.0-beta.2.tgz#ddb77f89f593e22054ed4db71b438e14fb036516"
+  integrity sha512-aAGimWUY5j0hModOP5FA61PB6hnDKkRuwAqo8bXlgTg4JYs6MAjJtmPm0TR/XB4AdZWVByU+v8l7129TzvwKEg==
   dependencies:
     abort-controller "^3.0.0"
     crypto "^1.0.1"
@@ -7233,10 +7212,10 @@
   resolved "https://registry.yarnpkg.com/@steedos/odata-v4-parser/-/odata-v4-parser-2.5.11-beta.10.tgz#393281641f59538e3361dfc864628e79034215c9"
   integrity sha512-DBEa7uSwfcf9G1C9myZOyJSxClu0FODmGLDVORoWDCIwBSS8UZp/fa87Q0TyRBS8MW3KBAdbINsIUS8GRow71w==
 
-"@steedos/plugin-dingtalk@2.5.49":
-  version "2.5.49"
-  resolved "https://registry.yarnpkg.com/@steedos/plugin-dingtalk/-/plugin-dingtalk-2.5.49.tgz#5c2fce1941dcb71be5f64a687ca9ec1a12773116"
-  integrity sha512-rUfIBN1nDMzxcoHatskwJi5BFgH5uzFZ9Mu4AoIMYIgVXjrvMJiowM4wGfcYrEWm/c6SjCSHIw92umqDV1UDOA==
+"@steedos/plugin-dingtalk@3.0.0-beta.2":
+  version "3.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@steedos/plugin-dingtalk/-/plugin-dingtalk-3.0.0-beta.2.tgz#dcb8f9688b3240fe9b3aaaced44f8d3cfdc2d768"
+  integrity sha512-RjBlmpknsx4GrUEzIDVbeyXhjVBcezE1V38obfL0POstGtUu9GVzi9nz0xSKcdbWOlpmjXxxkwXGxXlQH0ZKDw==
   dependencies:
     cookies "^0.8.0"
     dotenv-flow "^3.1.0"
@@ -7247,15 +7226,10 @@
     wechat-crypto "^0.0.2"
     wx-ding-aes "^0.0.10"
 
-"@steedos/plugin-keycloak@2.5.49":
-  version "2.5.49"
-  resolved "https://registry.yarnpkg.com/@steedos/plugin-keycloak/-/plugin-keycloak-2.5.49.tgz#cb16b0f2b0f927ee6e7a61652288a3be89e3cf33"
-  integrity sha512-m+0pjb6kxfl43a870y5j60Pd2ncPEyRuAlFYT8XpPUt94mE5VijONzsI+Vz1pQlWvQZrca1rqiH71ZDQEZ8FkQ==
-
-"@steedos/plugin-qywx@2.5.49":
-  version "2.5.49"
-  resolved "https://registry.yarnpkg.com/@steedos/plugin-qywx/-/plugin-qywx-2.5.49.tgz#b3e590f71f03af06c7d00c5f0e3fa249ad8d61be"
-  integrity sha512-zknnx5EfA1KkoyYetbCZ3jgJzMQU6HJQV2tEviipshXxT7g9fKoN4RT8cVXV5ofhudVdfFRFPbyAz+/Li41g0A==
+"@steedos/plugin-qywx@3.0.0-beta.2":
+  version "3.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@steedos/plugin-qywx/-/plugin-qywx-3.0.0-beta.2.tgz#e40090746a41d8ec7bf427c214dd3bd258125240"
+  integrity sha512-1UkCVE0GICfVhhcqToe4OxiNAf6uEpgQaqQzQtkdVTVNZWV95XueHvNv0LRompsKYos+d5RuSpaM/WCNej4pJA==
   dependencies:
     axios "^1.6.7"
     cookies "^0.8.0"
@@ -7269,48 +7243,43 @@
     wechat-crypto "^0.0.2"
     wx-ding-aes "^0.0.10"
 
-"@steedos/plugin-welink@2.5.49":
-  version "2.5.49"
-  resolved "https://registry.yarnpkg.com/@steedos/plugin-welink/-/plugin-welink-2.5.49.tgz#1b4753bac5b4e282f3fdacd036d11fad46f98db4"
-  integrity sha512-5oa0VNynLSeQBLCT+CBsz5a/yuukTjZam+QzoMSHTXLaKYY6Jviixaco3Jr0nvP4uhRRxMFLTKOZSQAHBkzMWQ==
+"@steedos/plugin-welink@3.0.0-beta.2":
+  version "3.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@steedos/plugin-welink/-/plugin-welink-3.0.0-beta.2.tgz#ce6ae10bcadccbe9094e9daea18ebad083136264"
+  integrity sha512-NBctbbjeaUWY9GdppNg+S9eiOJ7IfpPZFSRADP6MNKWx+WMea4Z6yi6qgkWUcMa7xEkaLIDgFT9boyuqoGEGtw==
   dependencies:
     axios "1.5.0"
     moment "2.29.4"
 
-"@steedos/print-template@2.5.49":
-  version "2.5.49"
-  resolved "https://registry.yarnpkg.com/@steedos/print-template/-/print-template-2.5.49.tgz#3d7dbf7e721c74be53be42542b246e6b06e78a15"
-  integrity sha512-txfe+wz5JHLol6hlkbRNVJNyAIADbADVZbOtg0ITEcQxQxw1wo6j8A/UDFqsjXWsS81DhMbLQVXjjw3dw1oW+w==
+"@steedos/print-template@3.0.0-beta.2":
+  version "3.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@steedos/print-template/-/print-template-3.0.0-beta.2.tgz#264cc57ca2fdc3aaafaaa191a1e9dd11da75e5f9"
+  integrity sha512-IEegEVeXsIRjPOc95fNsfyCSWPm8/S12SkTHzxnXCeDFmfw8WGIa6wia1JPJdvO4HVNtIcE20Y3mJj67Y6JmDw==
   dependencies:
     docx "7.8.2"
     fflate "^0.8.1"
     jsdom "21.0.0"
 
-"@steedos/service-enterprise@^3.0.0-beta.2":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@steedos/service-enterprise/-/service-enterprise-3.0.0.tgz#442b706e8fd6b1456239b1656d2759a4941fdb6b"
-  integrity sha512-9Eqv6tc0gc3OM2n8ivHucKsuuWf7J65EH4kiPJrjikEWQIGgEeFDnO8rHUJYURRaBXEO3lPIW0WCtgaOsDoE7Q==
+"@steedos/service-enterprise@3.0.0-beta.2":
+  version "3.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@steedos/service-enterprise/-/service-enterprise-3.0.0-beta.2.tgz#7a7ae588dfe1deef5c19878a83ab448b7695e271"
+  integrity sha512-OMOGBiP+OYxfVGapwlWEiobS38TNDeaY0hM+2uSjPASH/MULJIvAgyuJNhM/eIQ8IZ652rBGOFsH5cb+fWpcZw==
   dependencies:
-    "@steedos-labs/analytics" "^0.1.27"
-    "@steedos/ee_audit-records" "2.5.49"
-    "@steedos/ee_branding" "2.5.49"
-    "@steedos/ee_mongodb-bi-connector" "2.5.49"
-    "@steedos/ee_virus-scan" "2.5.49"
-    "@steedos/plugin-dingtalk" "2.5.49"
-    "@steedos/plugin-keycloak" "2.5.49"
-    "@steedos/plugin-qywx" "2.5.49"
-    "@steedos/plugin-welink" "2.5.49"
-    "@steedos/print-template" "2.5.49"
-    "@steedos/service-license" "2.5.49"
+    "@steedos/ee_branding" "3.0.0-beta.2"
+    "@steedos/plugin-dingtalk" "3.0.0-beta.2"
+    "@steedos/plugin-qywx" "3.0.0-beta.2"
+    "@steedos/plugin-welink" "3.0.0-beta.2"
+    "@steedos/print-template" "3.0.0-beta.2"
+    "@steedos/service-license" "3.0.0-beta.2"
     mssql "^11.0.1"
     oracledb "^6.8.0"
 
-"@steedos/service-license@2.5.49":
-  version "2.5.49"
-  resolved "https://registry.yarnpkg.com/@steedos/service-license/-/service-license-2.5.49.tgz#1d593e903350211a1a55ddf597f4a229235dca9a"
-  integrity sha512-foRs1GUQNftgbaBDuyXAeyWHLWxRd9LvMAiFth0UAOh+GdeXytVVgilU8MU+aT6xe4fwNR8slXDhmDSr9D8KpQ==
+"@steedos/service-license@3.0.0-beta.2":
+  version "3.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@steedos/service-license/-/service-license-3.0.0-beta.2.tgz#a890b0d135e31ae19fa2f800488aac0ba8acc14f"
+  integrity sha512-7PnTLMbOMeJ6oS/RqOIawAVQGOsoyPlgxyvuhP4M1l7DKAsytDPp8ltrnr7br6x9f5zdUViB9XIhmH375S7p1w==
   dependencies:
-    "@steedos/license" "2.5.49"
+    "@steedos/license" "3.0.0-beta.2"
     axios "^0.21.4"
 
 "@steedos/utils@^2.5.11-beta.10":
@@ -21906,7 +21875,7 @@ mongodb-connection-string-url@^3.0.0:
     "@types/whatwg-url" "^11.0.2"
     whatwg-url "^14.1.0 || ^13.0.0"
 
-mongodb-uri@0.9.7, mongodb-uri@^0.9.7:
+mongodb-uri@^0.9.7:
   version "0.9.7"
   resolved "https://registry.yarnpkg.com/mongodb-uri/-/mongodb-uri-0.9.7.tgz#0f771ad16f483ae65f4287969428e9fbc4aa6181"
   integrity sha512-s6BdnqNoEYfViPJgkH85X5Nw5NpzxN8hoflKLweNa7vBxt2V7kaS06d74pAtqDxde8fn4r9h4dNdLiFGoNV0KA==

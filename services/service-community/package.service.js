@@ -3,8 +3,8 @@
 /*
  * @Author: yinlianghui@steedos.com
  * @Date: 2022-07-20 21:31:37
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-03-03 16:48:28
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2025-08-09 12:12:34
  * @Description: 
  */
 "use strict";
@@ -179,6 +179,9 @@ module.exports = {
 		  this.broker.createService(require("@steedos-labs/plugin-package-store"));
 
 		  this.broker.createService(require("@steedos/service-bull-dashboard"));
+
+		  // 报表
+		  this.broker.createService(require("@steedos-labs/analytics"));
 	},
 
 	/**
