@@ -1,6 +1,6 @@
 import { getObject } from "@steedos/objectql";
 import { BaseHandle } from "./base";
-import { DB_OBJECT_SERVICE_NAME } from "../constants";
+import { DB_OBJECT_SERVICE_NAME, DB_SERVICE_PREFIX } from "../constants";
 import * as _ from "lodash";
 
 export class TriggersHandle extends BaseHandle {
@@ -24,11 +24,12 @@ export class TriggersHandle extends BaseHandle {
       { apiName: `${trigger.listenTo}.${trigger.name}`, data: trigger },
       {
         meta: {
-          metadataServiceName: trigger.package_name || DB_OBJECT_SERVICE_NAME,
+          metadataServiceName:
+            trigger.package_name || `${DB_SERVICE_PREFIX}-triggers`,
           caller: {
             nodeID: broker.nodeID,
             service: {
-              name: trigger.package_name || DB_OBJECT_SERVICE_NAME,
+              name: trigger.package_name || `${DB_SERVICE_PREFIX}-triggers`,
             },
           },
         },

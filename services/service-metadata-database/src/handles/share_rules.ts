@@ -1,6 +1,6 @@
 import { registerShareRules, getObject } from "@steedos/objectql";
 import { BaseHandle } from "./base";
-import { DB_OBJECT_SERVICE_NAME } from "../constants";
+import { DB_OBJECT_SERVICE_NAME, DB_SERVICE_PREFIX } from "../constants";
 
 export class ShareRulesHandle extends BaseHandle {
   constructor() {
@@ -17,7 +17,7 @@ export class ShareRulesHandle extends BaseHandle {
   async inserted(data) {
     return registerShareRules.register(
       broker,
-      data.package_name || DB_OBJECT_SERVICE_NAME,
+      data.package_name || `${DB_SERVICE_PREFIX}-share_rules`,
       data,
     );
   }
@@ -25,7 +25,7 @@ export class ShareRulesHandle extends BaseHandle {
   async updated(data) {
     return registerShareRules.register(
       broker,
-      data.package_name || DB_OBJECT_SERVICE_NAME,
+      data.package_name || `${DB_SERVICE_PREFIX}-share_rules`,
       data,
     );
   }

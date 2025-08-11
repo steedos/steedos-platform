@@ -113,7 +113,7 @@ module.exports = {
    */
   async started() {
     await this.appsHandle.init();
-    await this.tabs;
+    await this.tabsHandle.init();
     await this.objectsHandle.init();
     await this.triggersHandle.init();
     await this.shareRulesHandle.init();

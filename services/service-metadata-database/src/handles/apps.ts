@@ -1,6 +1,6 @@
 import { addAppConfig, getObject, removeApp } from "@steedos/objectql";
 import { BaseHandle } from "./base";
-import { DB_OBJECT_SERVICE_NAME } from "../constants";
+import { DB_SERVICE_PREFIX } from "../constants";
 
 export class AppsHandle extends BaseHandle {
   constructor() {
@@ -15,11 +15,11 @@ export class AppsHandle extends BaseHandle {
   }
 
   async inserted(data) {
-    return addAppConfig(data, data.package_name || DB_OBJECT_SERVICE_NAME);
+    return addAppConfig(data, data.package_name || `${DB_SERVICE_PREFIX}-apps`);
   }
 
   async updated(data) {
-    return addAppConfig(data, data.package_name || DB_OBJECT_SERVICE_NAME);
+    return addAppConfig(data, data.package_name || `${DB_SERVICE_PREFIX}-apps`);
   }
 
   async deleted(data) {
