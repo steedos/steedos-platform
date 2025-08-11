@@ -1,3 +1,22 @@
+var standardCustomizeSaveRequestAdaptor = `
+    var uiSchema = context.uiSchema;
+    var objectFields = uiSchema.fields;
+    var doc = context.docForStandardCustomize;
+    var newDoc = {}
+    _.each(objectFields, function(v, k){
+        if(_.has(doc, k)){
+            newDoc[k] = doc[k]
+        }
+    })
+    delete newDoc.is_system;
+    return {
+      ...api,
+      data: {
+        doc: newDoc
+      }
+    };
+`;
+
 module.exports = {
     extend: 'base',
     actions: {
@@ -444,6 +463,107 @@ module.exports = {
                 },
                 "id": "u:038c6047be31",
                 "bodyClassName": "p-0"
+            }
+        },
+        standard_customize: {
+            label: "Customize",
+            visible: function (object_name, record_id, record_permissions, data) {
+                var record = data && data.record;
+                if(!record){
+                    record = {}
+                }
+                return Steedos.Object.base.actions.standard_new.visible() && record.is_system && data.uiSchema.isMetadata;
+            },
+            on: "record_only",
+            type: 'amis_button',
+            amis_schema: {
+                "type": "service",
+                "body": [
+                    {
+                        "type": "button",
+                        "label": "${'CustomAction.base.standard_customize' | t}",
+                        "id": "u:disable",
+                        "onEvent": {
+                            "click": {
+                                "weight": 0,
+                                "actions": [
+                                    {
+                                        "ignoreError": false,
+                                        "actionType": "ajax",
+                                        "outputVar": "docForStandardCustomize",
+                                        "options": {},
+                                        "api": {
+                                            "url": "${context.rootUrl}/api/v1/${objectName}/${recordId}",
+                                            "method": "get",
+                                            "adaptor": "",
+                                            "messages": {}
+                                        }
+                                    },
+                                    {
+                                        "ignoreError": false,
+                                        "actionType": "ajax",
+                                        "outputVar": "standardCustomizeResponseResult",
+                                        "options": {},
+                                        "api": {
+                                            "url": "${context.rootUrl}/api/v1/${objectName}",
+                                            "method": "post",
+                                            "sendOn": "docForStandardCustomize",
+                                            "requestAdaptor": standardCustomizeSaveRequestAdaptor,
+                                            "adaptor": "",
+                                            "messages": {}
+                                        }
+                                    },
+                                    {
+                                        "actionType": "link",
+                                        "args": {
+                                            "link": "/app/${appId}/${objectName}/view/${standardCustomizeResponseResult._id}"
+                                        },
+                                        "expression": "${_inDrawer != true}"
+                                    },
+                                    {
+                                        "actionType": "url",
+                                        "args": {
+                                            "link": "${context.rootUrl}/app/${appId}/${objectName}/view/${standardCustomizeResponseResult._id}",
+                                            "blank": true
+                                        },
+                                        "expression": "${_inDrawer == true}"
+                                    },
+                                    {
+                                        "actionType": "closeDrawer",
+                                        "expression": "${_inDrawer == true}"
+                                    },
+                                    {
+                                        "actionType": "broadcast",
+                                        "args": {
+                                            "eventName": "@data.changed.${objectName}"
+                                        },
+                                        "data": {
+                                            "objectName": "${objectName}"
+                                        },
+                                        "expression": "${_inDrawer == true}"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ],
+                "regions": [
+                    "body"
+                ],
+                "data": {
+                    "context": {},
+                    "dataComponentId": "",
+                    "record_id": "",
+                    "record": {},
+                    "permissions": {}
+                },
+                "bodyClassName": "p-0",
+                "dsType": "api",
+                "asideResizor": false,
+                "editorState": "default",
+                "pullRefresh": {
+                    "disabled": true
+                }
             }
         },
     }
