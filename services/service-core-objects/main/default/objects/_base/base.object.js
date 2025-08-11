@@ -8,7 +8,7 @@ var standardCustomizeSaveRequestAdaptor = `
         if(_.has(doc, k)){
             newDoc[k] = doc[k]
         }
-    })
+    });
     if(objectName === "apps"){
         newDoc = doc;//应用中有隐藏字段，uiSchema中没有这些字段，比如字段tab_items
         newDoc.from_code_id = doc._id;
@@ -483,9 +483,14 @@ module.exports = {
                     record = {}
                 }
                 var isVisible = Steedos.Object.base.actions.standard_new.visible() && record.is_system && data.uiSchema.isMetadata;
-                if (isVisible && object_name == "apps"){
-                    if(record_id === 'admin'){return false;}
-                    isVisible = !record.from_code_id;
+                if (isVisible){
+                    if(object_name == "apps"){
+                        if(record_id === 'admin'){return false;}
+                        isVisible = !record.from_code_id;
+                    }
+                    else if (object_name == "object_actions"){
+                        isVisible = record.type == 'amis_button';
+                    }
                 }
                 return isVisible;
             },
