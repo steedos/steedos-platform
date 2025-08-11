@@ -478,6 +478,9 @@ module.exports = {
         standard_customize: {
             label: "Customize",
             visible: function (object_name, record_id, record_permissions, data) {
+                if(object_name == "objects"){
+                    return false;
+                }
                 var record = data && data.record;
                 if(!record){
                     record = {}
