@@ -1,6 +1,7 @@
 var standardCustomizeSaveRequestAdaptor = `
     var uiSchema = context.uiSchema;
     var objectFields = uiSchema.fields;
+    var objectName = context.objectName;
     var doc = context.docForStandardCustomize;
     var newDoc = {}
     _.each(objectFields, function(v, k){
@@ -8,6 +9,15 @@ var standardCustomizeSaveRequestAdaptor = `
             newDoc[k] = doc[k]
         }
     })
+    if(objectName === "apps"){
+        newDoc = doc;//应用中有隐藏字段，uiSchema中没有这些字段，比如字段tab_items
+        newDoc.from_code_id = doc._id;
+        delete newDoc._id;
+        delete newDoc.record_permissions;
+        delete newDoc.__filename;
+        delete newDoc.responseData;
+        delete newDoc.responseStatus;
+    }
     delete newDoc.is_system;
     return {
       ...api,
@@ -472,7 +482,12 @@ module.exports = {
                 if(!record){
                     record = {}
                 }
-                return Steedos.Object.base.actions.standard_new.visible() && record.is_system && data.uiSchema.isMetadata;
+                var isVisible = Steedos.Object.base.actions.standard_new.visible() && record.is_system && data.uiSchema.isMetadata;
+                if (isVisible && object_name == "apps"){
+                    if(record_id === 'admin'){return false;}
+                    isVisible = !record.from_code_id;
+                }
+                return isVisible;
             },
             on: "record_only",
             type: 'amis_button',
