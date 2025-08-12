@@ -183,6 +183,7 @@ export function validate(): ActionFunc {
     const validateFunc = bindClientFunc({
       clientFunc: Client4.validate,
       onSuccess: UserTypes.RECEIVED_VALIDATE,
+      params: [LocalStorageStore.getItem("spaceId")],
     });
     const me = await validateFunc(dispatch, getState);
 
