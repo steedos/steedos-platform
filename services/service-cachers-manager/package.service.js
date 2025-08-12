@@ -15,6 +15,7 @@ const auth = require('@steedos/auth');
 const { getObject } = require('@steedos/objectql');
 const register = require('@steedos/metadata-registrar');
 const _ = require('underscore');
+const lodash = require('lodash');
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * 软件包服务启动后也需要抛出事件。
@@ -216,6 +217,16 @@ module.exports = {
 					cachers.clearCacher('profiles');
 					// 重新添加缓存
 					await this.loadProfiles();
+				}
+				if(isUpdate && isAfter && doc.type === 'permission_set'){
+					const noChanges = lodash.intersection(doc.users, previousDoc.users);
+					const mergedArray = lodash.concat(doc.users, previousDoc.users);
+					for (const userId of mergedArray) {
+						if(!lodash.includes(noChanges, userId)){
+							console.log('removeSpaceUserSessionFromCache', userId)
+							await auth.removeSpaceUserSessionFromCache(doc.space, userId);
+						}
+					}
 				}
 			}
 		},
