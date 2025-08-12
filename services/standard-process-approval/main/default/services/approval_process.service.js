@@ -132,6 +132,8 @@ module.exports = {
                     delete pd._id;
                     pd.name = `pd_${nowTime}`; // 名称长度不能大于20个字符；名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符
                     pd.active = false; // 批准过程已启用或者已提交过审批, 禁止添加、删除批准步骤
+                    pd.is_system = false;
+                    delete pd.record_permissions
                     let newPD = await pdObj.insert(pd);
                     let newPDID = newPD._id;
                     let pns = await pnObj.find({ filters: ['process_definition', '=', recordId] }, userSession);
@@ -145,6 +147,8 @@ module.exports = {
                         pn.created_by = userSession.userId
                         pn.modified = now;
                         pn.modified_by = userSession.userId
+                        pn.is_system = false;
+                        delete pn.record_permissions
                         await pnObj.directInsert(pn);
                     }
                     return { state: 'SUCCESS', _id: newPDID };
