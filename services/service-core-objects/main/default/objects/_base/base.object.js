@@ -478,7 +478,7 @@ module.exports = {
         standard_customize: {
             label: "Customize",
             visible: function (object_name, record_id, record_permissions, data) {
-                if(object_name == "objects"){
+                if(object_name == "objects" || object_name == "object_fields"){
                     return false;
                 }
                 var record = data && data.record;
