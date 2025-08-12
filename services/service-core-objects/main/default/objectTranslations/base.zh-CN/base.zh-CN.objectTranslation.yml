@@ -164,6 +164,6 @@ actions:
   standard_print:
     label: 打印
   standard_customize:
-    label: 自定义Base
+    label: 自定义
 groups:
   system_information: 系统信息
