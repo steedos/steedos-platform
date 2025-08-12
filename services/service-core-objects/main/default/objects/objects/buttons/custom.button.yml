@@ -31,32 +31,13 @@ amis_schema: |-
                                   "url": "${context.rootUrl}/graphql",
                                   "method": "post",
                                   "sendOn": "docForCustomize",
-                                  "requestAdaptor": "debugger;\n\nvar uiSchema = context.uiSchema;\nvar objectFields = uiSchema.fields;\nvar objectName = context.objectName;\nvar doc = context.docForCustomize;\ndoc.is_customize = true;\ndoc.is_enable = true;\ndoc.in_development = \"0\";\n// delete doc.is_system;\ndelete doc.record_permissions;\ndelete doc.NAME_FIELD_KEY;\ndelete doc.idFieldName;\ndelete doc.idFieldNames;\ndelete doc.table_name;\ndelete doc.originalFields;\ndelete doc.extend;\ndelete doc.listeners;\ndelete doc.responseData;\ndelete doc.responseNsg;\ndelete doc.responseStatus;\ndelete doc.__filename;\ndelete doc.__timestamp;\nvar data = {\n  query: `mutation{objects__upsert(id: \"${doc.name}\", doc: ${JSON.stringify(JSON.stringify(doc))}){_id,name}}`\n};\nreturn {\n  ...api,\n  data\n};",
+                                  "requestAdaptor": "var doc = context.docForCustomize;\ndoc.is_customize = true;\ndoc.is_enable = true;\ndoc.in_development = \"0\";\n// delete doc.is_system;\ndelete doc.record_permissions;\ndelete doc.NAME_FIELD_KEY;\ndelete doc.idFieldName;\ndelete doc.idFieldNames;\ndelete doc.table_name;\ndelete doc.originalFields;\ndelete doc.extend;\ndelete doc.listeners;\ndelete doc.responseData;\ndelete doc.responseNsg;\ndelete doc.responseStatus;\ndelete doc.__filename;\ndelete doc.__timestamp;\nvar data = {\n  query: `mutation{objects__upsert(id: \"${doc.name}\", doc: ${JSON.stringify(JSON.stringify(doc))}){_id,name}}`\n};\nreturn {\n  ...api,\n  data\n};",
                                   "adaptor": "",
                                   "messages": {
                                       "success": "对象已自定义。",
                                       "failed": "${msg}"
                                   }
                               }
-                          },
-                          {
-                              "actionType": "link",
-                              "args": {
-                                  "link": "/app/${appId}/objects/view/${_id}"
-                              },
-                              "expression": "${_inDrawer != true}"
-                          },
-                          {
-                              "actionType": "url",
-                              "args": {
-                                  "link": "${context.rootUrl}/app/${appId}/objects/view/${_id}",
-                                  "blank": true
-                              },
-                              "expression": "${_inDrawer == true}"
-                          },
-                          {
-                              "actionType": "closeDrawer",
-                              "expression": "${_inDrawer == true}"
                           },
                           {
                               "actionType": "broadcast",
@@ -66,7 +47,19 @@ amis_schema: |-
                               "data": {
                                   "objectName": "objects"
                               },
-                              "expression": "${true}"
+                              "expression": "${_inDrawer != true}"
+                          },
+                          {
+                              "actionType": "url",
+                              "expression": "${_inDrawer == true}",
+                              "args": {
+                                  "link": "${context.rootUrl}/app/${appId}/objects/view/${_id}",
+                                  "blank": true
+                              }
+                          },
+                          {
+                              "actionType": "closeDrawer",
+                              "expression": "${_inDrawer == true}"
                           }
                       ],
                       "weight": 0
