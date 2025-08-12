@@ -278,6 +278,9 @@ actions:
     on: list
   standard_print:
     label: Print
+  standard_customize:
+    label: Customize
+    on: record_only
 permission_set:
   none:
     allowCreate: false

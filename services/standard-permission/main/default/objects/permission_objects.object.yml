@@ -314,9 +314,6 @@ list_views:
       - is_system
     filter_scope: space
 actions:
-  customize:
-    label: Customize
-    on: record_only
   resetFieldPermissions:
     label: 重置字段权限
     on: record_only

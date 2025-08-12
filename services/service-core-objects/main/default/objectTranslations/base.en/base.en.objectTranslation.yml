@@ -163,5 +163,7 @@ actions:
     label: Export Excel
   standard_print:
     label: Print
+  standard_customize:
+    label: Customize
 groups:
   system_information: System Information

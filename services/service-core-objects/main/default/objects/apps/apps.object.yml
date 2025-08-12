@@ -292,9 +292,6 @@ fields:
 paging:
   enabled: false
 actions:
-  customize:
-    label: Customize
-    on: record_only
   reset:
     label: Reset
     on: record_only
