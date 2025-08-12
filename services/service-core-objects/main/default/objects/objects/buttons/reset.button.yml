@@ -29,7 +29,8 @@ amis_schema: |-
                                   "showCloseButton": true,
                                   "data": {
                                       "&": "$$",
-                                      "recordId": "${recordId}"
+                                      "recordId": "${recordId}",
+                                      "record": "${record}"
                                   },
                                   "onEvent": {
                                       "confirm": {
