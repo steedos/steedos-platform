@@ -206,10 +206,6 @@ list_views:
       - type
       - license
       - is_system
-actions:
-  customize:
-    label: Customize
-    on: record_only
 # relatedList:
 #   - objectName: permission_objects
 #     filters: !!js/function | 

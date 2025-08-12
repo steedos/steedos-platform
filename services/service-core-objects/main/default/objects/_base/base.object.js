@@ -4,11 +4,6 @@ var standardCustomizeSaveRequestAdaptor = `
     var objectName = context.objectName;
     var doc = context.docForStandardCustomize;
     var newDoc = {}
-    _.each(objectFields, function(v, k){
-        if(_.has(doc, k)){
-            newDoc[k] = doc[k]
-        }
-    });
     if(objectName === "apps"){
         newDoc = doc;//应用中有隐藏字段，uiSchema中没有这些字段，比如字段tab_items
         newDoc.from_code_id = doc._id;
@@ -17,6 +12,21 @@ var standardCustomizeSaveRequestAdaptor = `
         delete newDoc.__filename;
         delete newDoc.responseData;
         delete newDoc.responseStatus;
+    }
+    else if(objectName === "permission_set"){
+        objectFields = ['name', 'label', 'type', 'license', 'lockout_interval', 'max_login_attempts', 'password_history', 'default_standard_buttons'];
+        _.each(objectFields, function(v, k){
+            if(_.has(doc, v)){
+                newDoc[v] = doc[v];
+            }
+        });
+    }
+    else{
+        _.each(objectFields, function(v, k){
+            if(_.has(doc, k)){
+                newDoc[k] = doc[k];
+            }
+        });
     }
     delete newDoc.is_system;
     return {
