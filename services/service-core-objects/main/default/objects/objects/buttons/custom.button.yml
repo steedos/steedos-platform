@@ -1,5 +1,96 @@
 name: custom
+amis_schema: |-
+  {
+      "type": "service",
+      "body": [
+          {
+              "id": "u:custom",
+              "type": "button",
+              "label": "${'CustomAction.objects.custom' | t}",
+              "onEvent": {
+                  "click": {
+                      "actions": [
+                          {
+                              "actionType": "ajax",
+                              "ignoreError": false,
+                              "outputVar": "docForCustomize",
+                              "options": {},
+                              "api": {
+                                  "url": "${context.rootUrl}/api/v1/objects/${recordId}",
+                                  "method": "get",
+                                  "adaptor": "",
+                                  "messages": {}
+                              }
+                          },
+                          {
+                              "ignoreError": false,
+                              "actionType": "ajax",
+                              "outputVar": "customizeResponseResult",
+                              "options": {},
+                              "api": {
+                                  "url": "${context.rootUrl}/graphql",
+                                  "method": "post",
+                                  "sendOn": "docForCustomize",
+                                  "requestAdaptor": "debugger;\n\nvar uiSchema = context.uiSchema;\nvar objectFields = uiSchema.fields;\nvar objectName = context.objectName;\nvar doc = context.docForCustomize;\ndoc.is_customize = true;\n//delete doc.is_system;\ndelete doc.record_permissions;\ndelete doc.NAME_FIELD_KEY;\ndelete doc.idFieldName;\ndelete doc.idFieldNames;\ndelete doc.table_name;\ndelete doc.originalFields;\ndelete doc.extend;\ndelete doc.listeners;\ndelete doc.responseData;\ndelete doc.responseNsg;\ndelete doc.responseStatus;\ndelete doc.__filename;\ndelete doc.__timestamp;\nvar data = {\n  query: `mutation{objects__upsert(id: \"${doc.name}\", doc: ${JSON.stringify(JSON.stringify(doc))}){_id,name}}`\n};\nreturn {\n  ...api,\n  data\n};",
+                                  "adaptor": "",
+                                  "messages": {
+                                      "success": "对象已自定义。",
+                                      "failed": "${msg}"
+                                  }
+                              }
+                          },
+                          {
+                              "actionType": "link",
+                              "args": {
+                                  "link": "/app/${appId}/objects/view/${_id}"
+                              },
+                              "expression": "${_inDrawer != true}"
+                          },
+                          {
+                              "actionType": "url",
+                              "args": {
+                                  "link": "${context.rootUrl}/app/${appId}/objects/view/${_id}",
+                                  "blank": true
+                              },
+                              "expression": "${_inDrawer == true}"
+                          },
+                          {
+                              "actionType": "closeDrawer",
+                              "expression": "${_inDrawer == true}"
+                          },
+                          {
+                              "actionType": "broadcast",
+                              "args": {
+                                  "eventName": "@data.changed.objects"
+                              },
+                              "data": {
+                                  "objectName": "objects"
+                              },
+                              "expression": "${true}"
+                          }
+                      ],
+                      "weight": 0
+                  }
+              },
+              "editorState": "default"
+          }
+      ],
+      "regions": [
+          "body"
+      ],
+      "data": {
+          "context": {},
+          "dataComponentId": "",
+          "record_id": "",
+          "record": {},
+          "permissions": {}
+      },
+      "id": "u:be6e9cd18e15",
+      "bodyClassName": "p-0",
+      "dsType": "api"
+  }
 is_enable: true
 label: 自定义
 'on': record_only
-sort: 200
+type: amis_button
+visible: true
