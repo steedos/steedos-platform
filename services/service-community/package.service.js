@@ -182,6 +182,9 @@ module.exports = {
 
 		  // 报表
 		  this.broker.createService(require("@steedos-labs/analytics"));
+
+		  // 启动时间触发器服务
+		  this.broker.createService(require("@steedos/workflow_time_trigger"));
 	},
 
 	/**
