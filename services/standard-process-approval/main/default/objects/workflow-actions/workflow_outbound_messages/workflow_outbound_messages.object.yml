@@ -5,3 +5,4 @@ version: 2
 hidden: true
 enable_inline_edit: false
 enable_enhanced_lookup: true
+isMetadata: true

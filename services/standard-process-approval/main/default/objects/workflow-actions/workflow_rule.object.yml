@@ -4,6 +4,7 @@ icon: maintenance_work_rule
 hidden: true
 version: 2
 enable_enhanced_lookup: true
+isMetadata: true
 fields:
   object_name:
     label: Object Name

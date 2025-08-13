@@ -49,16 +49,16 @@ module.exports = {
         case "workflow_notifications":
           self.workflowNotificationsCacher.handleAction(action, data);
           break;
-		case "workflow_outbound_messages":
-			self.workflowOutboundMessagesCacher.handleAction(action, data);
-			break;
-		case "workflow_rule":
-			self.workflowRuleCacher.handleAction(action, data);
-			break;
-        default:
+        case "workflow_outbound_messages":
+          self.workflowOutboundMessagesCacher.handleAction(action, data);
           break;
-      }
-    },
+        case "workflow_rule":
+          self.workflowRuleCacher.handleAction(action, data);
+          break;
+            default:
+              break;
+          }
+        },
   },
 
   actions: {

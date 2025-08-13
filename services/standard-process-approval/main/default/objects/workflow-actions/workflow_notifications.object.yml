@@ -5,6 +5,7 @@ hidden: true
 enable_inline_edit: false
 enable_enhanced_lookup: true
 version: 2
+isMetadata: true
 fields:
   name:
     type: text
