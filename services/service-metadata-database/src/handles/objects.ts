@@ -23,6 +23,7 @@ export class ObjectsHandle extends BaseHandle {
   }
 
   async updated(data) {
+    await broker.emit(`translations.object.change`, {});
     return this.handle(data.name);
   }
 

@@ -306,9 +306,9 @@ export class SteedosDataSourceType implements Dictionary {
     if (localObjectConfig) {
       objectConfig.listeners = localObjectConfig.listeners;
       objectConfig.methods = localObjectConfig.methods;
-    } else {
-      setObjectConfig(objectConfig);
     }
+
+    setObjectConfig(objectConfig);
     // else {
     //     if (this.name === "meteor" || this.name === "default") {
     //         let baseObjectConfig = getObjectConfig(MONGO_BASE_OBJECT);

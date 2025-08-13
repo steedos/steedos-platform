@@ -130,6 +130,10 @@ export const getObjectConfig = (object_name: string): any => {
 };
 
 export const setObjectConfig = (config: any): any => {
+  _.remove(_objectConfigs, {
+    name: config.name,
+    datasource: config.datasource,
+  });
   _objectConfigs.push(config);
 };
 
