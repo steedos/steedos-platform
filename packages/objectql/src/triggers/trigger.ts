@@ -145,6 +145,8 @@ export const runTriggerFunction = async (trigger, thisArg, ...args) => {
     if (process.env.NODE_ENV === "development") {
       newError.message = newError.stack;
     }
+    console.log(error);
+    console.log(newError);
     throw newError;
   }
 };
