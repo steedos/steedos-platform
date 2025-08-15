@@ -282,7 +282,7 @@ export class MetadataDriver extends SteedosMongoDriver {
 
   async insert(tableName: string, doc: any) {
     const nameValue = tableName === "apps" ? doc.code : doc.name;
-    if (nameValue) {
+    if (nameValue && tableName != "permission_objects") {
       isAPIName(nameValue);
     }
 
@@ -300,7 +300,7 @@ export class MetadataDriver extends SteedosMongoDriver {
     data: Dictionary<any>,
   ): Promise<any> {
     const nameValue = tableName === "apps" ? data.code : data.name;
-    if (nameValue) {
+    if (nameValue && tableName != "permission_objects") {
       isAPIName(nameValue);
     }
 
