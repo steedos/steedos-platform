@@ -68,7 +68,12 @@ module.exports = {
         filters,
         spaceId
       );
-      return res || [];
+      // 先排序，让有 _id 的排在前面
+      const sortedData = _.sortBy(res || [], item => item._id ? 0 : 1);
+
+      // 然后使用 uniqBy 获取第一个（即有 _id 的优先）
+      const result = _.uniqBy(sortedData, 'name');
+      return result;
     },
     get: function (ctx) {
       const { _id, metadataName } = ctx.params;
