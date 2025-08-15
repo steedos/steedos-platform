@@ -24,6 +24,19 @@ const BASERECORD = {
   record_permissions: PERMISSIONS,
 };
 
+const isAPIName = function (apiName) {
+  const reg = new RegExp("^[a-z]([a-z0-9]|_(?!_))*[a-z0-9]$");
+  if (!reg.test(apiName)) {
+    throw new Error(
+      "API 名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符",
+    );
+  }
+  if (apiName.length > 50) {
+    throw new Error("名称长度不能大于50个字符");
+  }
+  return true;
+};
+
 export class MetadataDriver extends SteedosMongoDriver {
   databaseVersion?: string;
   config?: SteedosDriverConfig;
@@ -235,6 +248,11 @@ export class MetadataDriver extends SteedosMongoDriver {
   }
 
   async insert(tableName: string, doc: any) {
+    const nameValue = tableName === "apps" ? doc.code : doc.name;
+    if (nameValue) {
+      isAPIName(nameValue);
+    }
+
     const result = await super.insert(tableName, doc);
     await broker.call(`b6-metadata.inserted`, {
       type: tableName,
@@ -248,6 +266,11 @@ export class MetadataDriver extends SteedosMongoDriver {
     id: SteedosIDType | SteedosQueryOptions,
     data: Dictionary<any>,
   ): Promise<any> {
+    const nameValue = tableName === "apps" ? data.code : data.name;
+    if (nameValue) {
+      isAPIName(nameValue);
+    }
+
     const result = await super.update(tableName, id, data);
     // console.log(`broker.call b6-metadata.updated`, tableName, result);
     await broker.call(`b6-metadata.updated`, {

@@ -76,7 +76,8 @@ module.exports = {
 					
 					return obj;
 				} catch (error) {
-					console.log(error)
+					console.log(error);
+					throw error
 				}
 			}
 		},
