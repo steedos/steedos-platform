@@ -12,6 +12,7 @@ import clone = require("clone");
 import _ = require("underscore");
 import { Dictionary } from "@salesforce/ts-types";
 import { translationApps, translationObject } from "@steedos/i18n";
+import { getMD5 } from "../util";
 
 const PERMISSIONS = {
   allowEdit: false,
@@ -41,9 +42,56 @@ export class MetadataDriver extends SteedosMongoDriver {
   databaseVersion?: string;
   config?: SteedosDriverConfig;
 
+  cacher: {
+    objects: any;
+  };
+
   constructor(config?: SteedosDriverConfig) {
     super(config);
+    this.cacher = {
+      objects: {},
+    };
   }
+
+  getAllObjects = async () => {
+    // console.log('getAllObjects===>', this.cacher.objects?.time , new Date().getTime());
+    if (
+      this.cacher.objects &&
+      this.cacher.objects.time > new Date().getTime()
+    ) {
+      // console.log('from cacher...');
+      return this.cacher.objects.data;
+    }
+    // console.log('from getAllObject...');
+    const objects = await getAllObject();
+    // const s = new Date().getTime();
+    const md5 = getMD5(JSON.stringify(objects));
+    // console.log(`getMD5:`, new Date().getTime() - s)
+    if (this.cacher.objects.id === md5) {
+      this.cacher.objects.time = new Date().getTime() + 1000;
+      return this.cacher.objects.data;
+    }
+    const result = _.compact(
+      _.map(objects, (metadataObject: any) => {
+        const metadata = this.translationObjectMetadata(
+          metadataObject.metadata,
+        );
+        if (metadata?._id) {
+          return;
+        }
+        return {
+          _id: metadata.name,
+          ...metadata,
+        };
+      }),
+    );
+    this.cacher.objects = {
+      id: md5,
+      data: result,
+      time: new Date().getTime() + 1000,
+    };
+    return result;
+  };
 
   addDefaultProps(records) {
     if (!records) {
@@ -108,31 +156,16 @@ export class MetadataDriver extends SteedosMongoDriver {
   }
 
   async getCachedSources(tableName: string) {
+    // const s = new Date().getTime();
     switch (tableName) {
       case "objects": {
-        const objects = await getAllObject();
-        return _.compact(
-          _.map(objects, (metadataObject: any) => {
-            const metadata = this.translationObjectMetadata(
-              metadataObject.metadata,
-            );
-            if (metadata?._id) {
-              return;
-            }
-            return {
-              _id: metadata.name,
-              ...metadata,
-            };
-          }),
-        );
+        return await this.getAllObjects();
       }
       case "object_fields": {
-        const objects2 = await getAllObject();
+        const objects2 = await this.getAllObjects();
+        // console.log('getCachedSources s1', new Date().getTime() - s);
         const fields = [];
-        _.each(objects2, (metadataObject: any) => {
-          const metadata = this.translationObjectMetadata(
-            metadataObject.metadata,
-          );
+        _.each(objects2, (metadata: any) => {
           _.each(metadata.fields, (field) => {
             if (field.hidden == true || field._id) {
               return;
@@ -144,15 +177,13 @@ export class MetadataDriver extends SteedosMongoDriver {
             });
           });
         });
+        // console.log('getCachedSources s2', new Date().getTime() - s);
         return fields;
       }
       case "object_actions": {
-        const objects3 = await getAllObject();
+        const objects3 = await this.getAllObjects();
         const actions = [];
-        _.each(objects3, (metadataObject: any) => {
-          const metadata = this.translationObjectMetadata(
-            metadataObject.metadata,
-          );
+        _.each(objects3, (metadata: any) => {
           _.each(metadata.actions, (field) => {
             if (field._id) {
               return;
@@ -167,12 +198,9 @@ export class MetadataDriver extends SteedosMongoDriver {
         return actions;
       }
       case "object_listviews": {
-        const objects3 = await getAllObject();
+        const objects3 = await this.getAllObjects();
         const list_views = [];
-        _.each(objects3, (metadataObject: any) => {
-          const metadata = this.translationObjectMetadata(
-            metadataObject.metadata,
-          );
+        _.each(objects3, (metadata: any) => {
           _.each(metadata.list_views, (list_view) => {
             if (list_view._id) {
               return;
@@ -219,16 +247,21 @@ export class MetadataDriver extends SteedosMongoDriver {
     // console.log(
     //   `MetadataDriver find tableName: ${tableName}, query: ${JSON.stringify(query)}`,
     // );
+    // const s = new Date().getTime();
     delete query.fields;
     const result = await super.find(tableName, query);
+    // console.log(`s1: `, new Date().getTime() - s);
     const spaceId = result.length > 0 ? result[0].space || null : null;
     const cachedSources = await this.getCachedSources(tableName);
+    // console.log(`s2: `, new Date().getTime() - s);
     // console.log(`cachedSources`, cachedSources.length);
     const sources = await this.mixinSources(
       result,
       this.addDefaultProps(cachedSources),
     );
+    // console.log(`s3: `, new Date().getTime() - s);
     const data = this.queryMetadata(sources, query, spaceId).all();
+    // console.log(`s4: `, new Date().getTime() - s);
     // console.log('find', tableName, data.length)
     return data;
   }
@@ -308,6 +341,10 @@ export class MetadataDriver extends SteedosMongoDriver {
     query: SteedosQueryOptions,
     spaceId?: SteedosIDType,
   ) {
+    // console.log(
+    //   `MetadataDriver find tableName: ${collection}, id:${id},  query: ${JSON.stringify(query)}`,
+    // );
+
     let filters = [];
 
     if (_.isString(id)) {

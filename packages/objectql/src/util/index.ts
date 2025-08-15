@@ -274,7 +274,7 @@ export function isCloudAdminSpace(spaceId) {
 }
 
 export function getMD5(data) {
-  let md5 = crypto.createHash("md5");
+  const md5 = crypto.createHash("md5");
   return md5.update(data).digest("hex");
 }
 
