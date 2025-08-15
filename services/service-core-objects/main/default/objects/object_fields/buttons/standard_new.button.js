@@ -6,7 +6,7 @@ module.exports = {
         if(!Steedos.isSpaceAdmin()){
             return false
         }
-        var record = data && data.record;
+        var record = data && data._master && data._master.record;
         if(!record){
             return false;
         }
