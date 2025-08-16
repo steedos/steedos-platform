@@ -234,8 +234,9 @@ export class MetadataDriver extends SteedosMongoDriver {
     }
   }
 
-  async mixinSources(dbSources = [], codeSources = []) {
-    const dbMap = new Map(dbSources.map((item) => [item.name, item]));
+  async mixinSources(metaName, dbSources = [], codeSources = []) {
+    const key = metaName === "apps" ? "_id" : "name";
+    const dbMap = new Map(dbSources.map((item) => [item[key], item]));
     codeSources.forEach((item) => {
       if (!item._id) {
         console.error("error: item._id is null");
@@ -260,6 +261,7 @@ export class MetadataDriver extends SteedosMongoDriver {
     // console.log(`s2: `, new Date().getTime() - s);
     // console.log(`cachedSources`, cachedSources.length);
     const sources = await this.mixinSources(
+      tableName,
       result,
       this.addDefaultProps(cachedSources),
     );
