@@ -1,11 +1,20 @@
 const path = require("path");
-import { getFullName } from '@steedos/metadata-core';
+import { getFullName } from "@steedos/metadata-core";
 
-export function checkNameEquals(json, name, filepath, metadataName){
+export function checkNameEquals(json, name, filepath, metadataName) {
+  var fullName = getFullName(metadataName, json);
 
-    var fullName = getFullName(metadataName ,json);
+  if (!fullName && json.extend) {
+    fullName = json.extend;
+  }
 
-    if(fullName != name){
-        throw new Error('The attribute "name" in the file does not match its filename.\nName:"'+json['name']+'" Filename:"'+path.basename(filepath)+'"')
-    }
+  if (fullName != name) {
+    throw new Error(
+      'The attribute "name" in the file does not match its filename.\nName:"' +
+        json["name"] +
+        '" Filename:"' +
+        path.basename(filepath) +
+        '"',
+    );
+  }
 }
