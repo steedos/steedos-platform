@@ -1,7 +1,9 @@
 name: all
 columns:
   - label
-  - name
+  - field: name
+    amis:
+      copyable: true
   - group
   - type
   - object

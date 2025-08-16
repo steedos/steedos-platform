@@ -1,6 +1,7 @@
 name: name
 amis:
   disabledOn: '${is_system == true}'
+  copyable: true
 filterable: true
 hidden: false
 index: true

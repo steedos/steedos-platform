@@ -1,7 +1,9 @@
 name: system
 columns:
   - label
-  - name
+  - field: name
+    amis:
+      copyable: true
   - in_development
   - is_system
   - is_customize
