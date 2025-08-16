@@ -4,15 +4,30 @@
   "workspaces": [
     "steedos-packages/*"
   ],
-  "repository": "git://github.com/steedos/steedos-project-template.git",
   "scripts": {
-    "start": "moleculer-runner steedos-packages/*/package.service.js --hot --repl",
-    "repl": "moleculer-runner --repl"
+    "start": "steedos start",
+    "start:platform": "docker-compose -f steedos-platform/docker-compose.yml up"
   },
   "dependencies": {
-    "@steedos/service-package-loader": "^2.5"
+    "@steedos/service-community": "^3.0.0-beta.64",
+    "@steedos/service-enterprise": "^3.0.0-beta.1",
+    "@steedos/service-package-loader": "^3.0.0-beta.64",
+    "dotenv-flow": "^3.2.0",
+    "moleculer": "^0.14.31",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.3"
   },
-  "devDependencies": {
-    "moleculer-repl": "^0.7.4"
+  "resolutions": {
+    "@azure/core-auth": "1.5.0",
+    "@azure/core-client": "1.7.3",
+    "@azure/core-lro": "2.5.4",
+    "@azure/core-rest-pipeline": "1.12.1",
+    "@azure/core-util": "1.5.0",
+    "@azure/keyvault-keys": "4.7.2",
+    "@azure/logger": "1.0.4",
+    "@azure/core-tracing": "1.0.1",
+    "@azure/core-paging": "1.5.0",
+    "@types/mime": "3.0.0",
+    "undici": "5.16.0"
   }
 }
