@@ -80,17 +80,21 @@ export class MetadataDriver extends SteedosMongoDriver {
         const metadata = this.translationObjectMetadata(
           metadataObject.metadata,
         );
-        return {
+        const obj = {
+          __id: metadata._id,
           _id: metadata.name,
           ...metadata,
         };
+        delete obj.__filename;
+        delete obj.__timestamp;
+        return obj;
       }),
     );
     this.cacher.objects = {
       id: md5,
       data: result,
       noDBData: _.filter(result, function (item) {
-        return !item._id;
+        return !item.__id;
       }),
       time: new Date().getTime() + 1000,
     };
