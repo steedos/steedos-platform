@@ -5,6 +5,22 @@ import { getCurrentSpace, getCurrentSpaceId } from "../selectors/entities/spaces
 import { useNavigate } from "react-router";
 import { validate } from '../actions/users'
 
+
+const getRedirectUrl = ()=>{
+  const redirect = location.href.replace("/steedos/sign-in", "").replace("/accounts/a/#/logout", "");
+  const u = new URL(redirect);
+  u.searchParams.delete('no_redirect');
+  u.searchParams.delete('X-Space-Id');
+  u.searchParams.delete('X-Auth-Token');
+  u.searchParams.delete('X-User-Id');
+  return u.toString();
+}
+
+const goResetPassword = (navigate)=>{
+    const redirect = getRedirectUrl();
+    navigate("/update-password?redirect_uri=" + redirect);
+}
+
 // 首页只是用来跳转
 const Home = () => {
   const navigate = useNavigate();
@@ -26,7 +42,13 @@ const Home = () => {
 
     dispatch(validate()).then((me)=>{
       Builder.settings.context.user = me.data;
-      window.location.href = '/app';
+
+      if(me.data?.password_expired){
+        goResetPassword(navigate)
+      }else{
+        window.location.href = '/app';
+      }
+
       // navigate('/app');
     })
 

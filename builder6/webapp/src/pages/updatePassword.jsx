@@ -108,8 +108,7 @@ class UpdatePassword extends React.Component {
         });
         return;
       }else{
-        // GlobalAction.emitUserLoggedOutEvent('/login');
-        redirect('/logout');
+        GlobalAction.emitUserLoggedOutEvent('/login');
       }
     });
   };

@@ -185,7 +185,7 @@ export function validate(): ActionFunc {
       onSuccess: UserTypes.RECEIVED_VALIDATE,
       params: [LocalStorageStore.getItem("spaceId")],
     });
-    const me = await validateFunc(dispatch, getState);
+    const me: any = await validateFunc(dispatch, getState);
 
     if ("error" in me) {
       LocalStorageStore.removeItem("userId");
