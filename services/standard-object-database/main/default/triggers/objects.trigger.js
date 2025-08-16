@@ -20,7 +20,6 @@ module.exports = {
         }
     },
     afterInsert: async function(){
-        console.log('objects afterInsert...');
         const object = this.doc;
         const { spaceId , userId } = this;
         if(object.enable_tree){

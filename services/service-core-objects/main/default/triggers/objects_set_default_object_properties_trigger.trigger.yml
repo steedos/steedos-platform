@@ -5,7 +5,9 @@ when:
 isEnabled: true
 handler: |
   try{
-    const { doc, userId } = ctx.params;
+    const { doc, userId, spaceId} = ctx.params;
+    const user = await ctx.getUser(userId, spaceId);
+    
     // 插入默认字段
     await objects.object_fields.insert({
         object: doc.name,
@@ -20,7 +22,7 @@ handler: |
         index: true,
         searchable: true,
         filterable: true
-    });
+    }, user);
 
     // 插入默认列表视图 "所有"
     await objects.object_listviews.insert({
@@ -41,7 +43,7 @@ handler: |
                 order: "desc"
             }
         ]
-    });
+    }, user);
 
     // 插入默认列表视图 "最近查看"
     await objects.object_listviews.insert({
@@ -55,7 +57,7 @@ handler: |
         filter_scope: "space",
         crud_mode: 'table',
         columns: [{ field: 'name' }]
-    });
+    }, user);
 
 
     const psUserId = "user"; // 用户权限集 ID
@@ -87,7 +89,7 @@ handler: |
         permission_set_id: psUserId,
         object_name: doc.name,
         space: doc.space
-    });
+    }, user);
 
     // 插入管理员权限对象
     await objects.permission_objects.insert({
@@ -96,7 +98,7 @@ handler: |
         permission_set_id: psAdminId,
         object_name: doc.name,
         space: doc.space
-    });
+    }, user);
   }catch(error){
     console.log(error)
   }

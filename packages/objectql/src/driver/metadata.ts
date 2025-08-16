@@ -53,14 +53,16 @@ export class MetadataDriver extends SteedosMongoDriver {
     };
   }
 
-  getAllObjects = async () => {
+  getAllObjects = async (skipDBObjects = false) => {
     // console.log('getAllObjects===>', this.cacher.objects?.time , new Date().getTime());
     if (
       this.cacher.objects &&
       this.cacher.objects.time > new Date().getTime()
     ) {
       // console.log('from cacher...');
-      return this.cacher.objects.data;
+      return skipDBObjects
+        ? this.cacher.objects.noDBData
+        : this.cacher.objects.data;
     }
     // console.log('from getAllObject...');
     const objects = await getAllObject();
@@ -69,16 +71,15 @@ export class MetadataDriver extends SteedosMongoDriver {
     // console.log(`getMD5:`, new Date().getTime() - s)
     if (this.cacher.objects.id === md5) {
       this.cacher.objects.time = new Date().getTime() + 1000;
-      return this.cacher.objects.data;
+      return skipDBObjects
+        ? this.cacher.objects.noDBData
+        : this.cacher.objects.data;
     }
     const result = _.compact(
       _.map(objects, (metadataObject: any) => {
         const metadata = this.translationObjectMetadata(
           metadataObject.metadata,
         );
-        if (metadata?._id) {
-          return;
-        }
         return {
           _id: metadata.name,
           ...metadata,
@@ -88,6 +89,9 @@ export class MetadataDriver extends SteedosMongoDriver {
     this.cacher.objects = {
       id: md5,
       data: result,
+      noDBData: _.filter(result, function (item) {
+        return !item._id;
+      }),
       time: new Date().getTime() + 1000,
     };
     return result;
@@ -159,7 +163,7 @@ export class MetadataDriver extends SteedosMongoDriver {
     // const s = new Date().getTime();
     switch (tableName) {
       case "objects": {
-        return await this.getAllObjects();
+        return await this.getAllObjects(true);
       }
       case "object_fields": {
         const objects2 = await this.getAllObjects();
