@@ -32,8 +32,14 @@ fields:
         value: url
       - label: Page
         value: page
+      - label: Analytics Dashboard
+        value: analytics_dashboard
   object:
     label: Object
+    help: 
+    description: 
+  analytics_dashboard:
+    label: Analytics Dashboard
     help: 
     description: 
   url:

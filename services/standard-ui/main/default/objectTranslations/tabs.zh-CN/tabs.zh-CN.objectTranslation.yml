@@ -32,8 +32,14 @@ fields:
         value: url
       - label: 页面
         value: page
+      - label: 仪表盘
+        value: analytics_dashboard
   object:
     label: 对象
+    help: 
+    description: 
+  analytics_dashboard:
+    label: 仪表盘
     help: 
     description: 
   url:

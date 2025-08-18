@@ -54,6 +54,8 @@ fields:
       value: url
     - label: Page
       value: page
+    - label: Analytics Dashboard
+      value: analytics_dashboard
     filterable: true
   mobile: 
     label: Display on the Mobile
@@ -82,6 +84,13 @@ fields:
     filterable: true
     required: "{{'object' === formData.type ? true: false}}"
     visible_on: "{{'object' === formData.type ? true: false}}"
+  analytics_dashboard:
+    label: Analytics Dashboard
+    type: lookup
+    reference_to: analytics_dashboard
+    filterable: true
+    required: "{{'analytics_dashboard' === formData.type ? true: false}}"
+    visible_on: "{{'analytics_dashboard' === formData.type ? true: false}}"
   url:
     type: text
     label: Url
@@ -94,6 +103,7 @@ fields:
     type: boolean
     label: Open with iframe
     defaultValue: false
+    visible_on: "{{'analytics_dashboard' != formData.type ? true: false}}"
   page:
     type: lookup
     label: 页面
