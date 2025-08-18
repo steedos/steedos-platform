@@ -28,6 +28,7 @@ Steedos.organizationsTree = {
     // 抄widgets crud中发送适配器整理过滤条件的相关代码
     getApiRequestAdaptor: function (api, context, option = {}) {
         var keywordsSearchBoxName = "__keywords";
+        const __lookupField = context.__lookupField;
         if (option.isLookup) {
             if (context.op === "loadOptions") {
                 var filters = [["_id", "=", context.value]];
@@ -40,7 +41,6 @@ Steedos.organizationsTree = {
                 });
             }
             else{
-                const __lookupField = context.__lookupField;
                 if(__lookupField){
                     keywordsSearchBoxName = `__keywords_lookup__${__lookupField.name.replace(/\./g, "_")}__to__${__lookupField.reference_to}`;
                 }
@@ -76,6 +76,36 @@ Steedos.organizationsTree = {
         var keywordsFilters = SteedosUI.getKeywordsSearchFilter(selfData[keywordsSearchBoxName], allowSearchFields);
         if (keywordsFilters && keywordsFilters.length > 0) {
             filters.push(keywordsFilters);
+        }
+
+        if (option.isLookup) {
+            var fieldFilters = __lookupField.filters;
+            //递归fieldFilters数组，检查每一个元素，判断若是公式，就仅把它解析
+            if(fieldFilters && fieldFilters.length){
+                SteedosUI.traverseNestedArrayFormula(fieldFilters, api.context);
+                filters.push(fieldFilters);
+            }
+
+            var inFilterForm = __lookupField.listviewFiltersFunction;
+            const listviewFiltersFunction = __lookupField.listviewFiltersFunction;
+            let filtersFunction = __lookupField.filtersFunction || __lookupField._filtersFunction;
+            if(typeof filtersFunction === "string"){
+                filtersFunction = new Function(`return ${filtersFunction}`)();
+            }
+
+            if(listviewFiltersFunction && !inFilterForm){
+                const _filters0 = listviewFiltersFunction(filters, api.context);
+                if(_filters0 && _filters0.length){
+                    filters.push(_filters0);
+                }
+            }
+            
+            if(filtersFunction && !inFilterForm){
+                const _filters = filtersFunction(filters, api.context);
+                if(_filters && _filters.length > 0){
+                    filters.push(_filters);
+                }
+            }
         }
 
         api.data = {};
