@@ -139,6 +139,26 @@ Steedos.organizationsTree = {
             api.url = rootURL = "/service/api/organizations/root";
         }
 
+        if (!option.isLookup) {
+            //写入本次存储filters、sort，用于导出excel
+            const listViewPropsStoreKey = location.pathname + "/crud/query";
+            const mainObject = api.context.uiSchema;
+            const listName = api.context.listName;
+            const fields = mainObject.list_views[listName].columns.map(function(n){
+                if(_.isObject(n)){
+                    return n.field;
+                }
+                return n;
+            });
+            sessionStorage.setItem(listViewPropsStoreKey, JSON.stringify({
+                filters: filters,
+                sort: "sort_no desc",
+                // pageSize: pageSize,
+                skip: 0,
+                fields: fields.join(",") //"name,sort_no,hidden,fullname"
+            }));
+        }
+
         return api;
     },
     getApiAdaptor: function (payload, response, api, context, option = {}) {
