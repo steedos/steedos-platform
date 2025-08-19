@@ -21,6 +21,24 @@ var standardCustomizeSaveRequestAdaptor = `
             }
         });
     }
+    else if(objectName === "object_listviews"){
+        _.each(objectFields, function(v, k){
+            if(_.has(doc, k)){
+                newDoc[k] = doc[k];
+            }
+        });
+
+        if(!newDoc.columns || !newDoc.columns.length){
+            newDoc.columns = [];
+        }
+        newDoc.columns = newDoc.columns.map((item)=>{
+            if(typeof item === 'string'){
+            return { field: item }
+            }
+            return item;
+        });
+        newDoc.from_code_id = doc._id;
+    }
     else{
         _.each(objectFields, function(v, k){
             if(_.has(doc, k)){
