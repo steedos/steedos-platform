@@ -34,14 +34,7 @@
                                             "enableInitApi": true
                                         }
                                     ]
-                                }
-                            ],
-                            "id": "u:78283d8a88a6",
-                            "className": "px-0"
-                        },
-                        {
-                            "title": "相关表",
-                            "body": [
+                                },
                                 {
                                     "type": "group",
                                     "id": "u:731d4077557a",
@@ -67,22 +60,23 @@
                                     ]
                                 }
                             ],
-                            "id": "u:2828559659a3"
+                            "id": "u:78283d8a88a6",
+                            "className": "px-0"
                         },
                         {
                             "title": "当前记录",
-                            "className": "px-0 py-4",
                             "body": [
                                 {
                                     "type": "steedos-object-form",
+                                    "id": "u:417063b0c22f",
                                     "label": "对象表单",
                                     "objectApiName": "${objectName}",
                                     "recordId": "${recordId}",
-                                    "appId": "${appId}",
-                                    "id": "u:417063b0c22f"
+                                    "appId": "${appId}"
                                 }
                             ],
-                            "id": "u:5d4e7e3f6ecc"
+                            "id": "u:5d4e7e3f6ecc",
+                            "className": "px-0 py-4"
                         }
                     ],
                     "id": "u:e1251a3f5a0f"
@@ -115,8 +109,7 @@
     "regions": [
         "body"
     ],
-    "data": {
-    },
+    "data": {},
     "id": "page_process_instance_history_record_detail",
     "name": "page_process_instance_history_record_detail",
     "objectApiName": "${objectName}",
