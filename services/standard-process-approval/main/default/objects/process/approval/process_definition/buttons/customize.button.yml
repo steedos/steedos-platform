@@ -1,0 +1,135 @@
+name: customize
+amis_schema: |-
+  {
+      "type": "service",
+      "body": [
+          {
+              "type": "button",
+              "label": "${'CustomAction.process_definition.customize' | t}",
+              "id": "u:customize",
+              "onEvent": {
+                  "click": {
+                      "weight": 0,
+                      "actions": [
+                          {
+                              "ignoreError": false,
+                              "actionType": "ajax",
+                              "outputVar": "docForCustomize",
+                              "options": {},
+                              "api": {
+                                  "url": "${context.rootUrl}/api/v1/process_definition/${recordId}",
+                                  "method": "get",
+                                  "adaptor": "",
+                                  "messages": {}
+                              }
+                          },
+                          {
+                              "actionType": "ajax",
+                              "ignoreError": false,
+                              "outputVar": "customizeResponseResult",
+                              "options": {},
+                              "api": {
+                                  "url": "${context.rootUrl}/api/v1/process_definition",
+                                  "method": "post",
+                                  "requestAdaptor": "\nvar uiSchema = context.uiSchema;\nvar objectFields = uiSchema.fields;\nvar objectName = context.objectName;\nvar doc = context.docForCustomize;\nvar newDoc = {}\n_.each(objectFields, function (v, k) {\n    if (_.has(doc, k)) {\n        newDoc[k] = doc[k];\n    }\n});\nnewDoc.active = false;\ndelete newDoc.is_system;\nreturn {\n    ...api,\n    data: {\n        doc: newDoc\n    }\n};",
+                                  "adaptor": "\n\nreturn {\n  ...payload,\n  data: {\n    ...payload.data,\n    isProcessDefinitionCustomizedSuccess: payload.status == 0,\n    customizedProcessDefinitionId: payload.data && payload.data._id\n  }\n};",
+                                  "messages": {
+                                      "success": "",
+                                      "failed": "${msg}"
+                                  },
+                                  "sendOn": "docForCustomize"
+                              }
+                          },
+                          {
+                              "actionType": "custom",
+                              "args": {},
+                              "script": "\nevent.data.process_nodes = event.data.docForCustomize.process_nodes;\nevent.data.loopName = \"process_nodes\";"
+                          },
+                          {
+                              "actionType": "loop",
+                              "args": {
+                                  "loopName": "${loopName}"
+                              },
+                              "children": [
+                                  {
+                                      "actionType": "custom",
+                                      "script": "event.data.customizedProcessDefinitionId = event.data.__super.customizedProcessDefinitionId;event.data.isProcessDefinitionCustomizedSuccess = event.data.__super.isProcessDefinitionCustomizedSuccess;"
+                                  },
+                                  {
+                                      "actionType": "ajax",
+                                      "ignoreError": false,
+                                      "options": {},
+                                      "api": {
+                                          "url": "${context.rootUrl}/api/v1/process_node",
+                                          "method": "post",
+                                          "requestAdaptor": "\nvar objectName = \"process_node\";\nvar uiSchema = BuilderAmisObject.AmisLib.getUISchemaSync(objectName);\nvar objectFields = uiSchema.fields;\nvar doc = JSON.parse(JSON.stringify(context));\nvar newDoc = {}\n_.each(objectFields, function (v, k) {\n    if (_.has(doc, k)) {\n        newDoc[k] = doc[k];\n    }\n});\nnewDoc.process_definition = context.customizedProcessDefinitionId;\ndelete newDoc.is_system;\nreturn {\n    ...api,\n    data: {\n        doc: newDoc\n    }\n};",
+                                          "adaptor": "\n\nreturn {\n  ...payload,\n  data: {\n    ...payload.data,\n    isProcessNodeCustomizedSuccess: payload.status == 0,\n    customizedProcessNodeId: payload.data && payload.data._id\n  }\n};",
+                                          "messages": {
+                                              "success": "",
+                                              "failed": "${msg}"
+                                          },
+                                          "sendOn": "${isProcessDefinitionCustomizedSuccess}"
+                                      }
+                                  }
+                              ],
+                              "expression": "${isProcessDefinitionCustomizedSuccess}"
+                          },
+                          {
+                              "actionType": "link",
+                              "args": {
+                                  "link": "/app/${appId}/process_definition/view/${customizedProcessDefinitionId}"
+                              },
+                              "expression": "${_inDrawer != true}"
+                          },
+                          {
+                              "actionType": "url",
+                              "expression": "${_inDrawer == true}",
+                              "args": {
+                                  "link": "${context.rootUrl}/app/${appId}/process_definition/view/${customizedProcessDefinitionId}",
+                                  "blank": true
+                              }
+                          },
+                          {
+                              "actionType": "closeDrawer",
+                              "expression": "${_inDrawer == true}"
+                          },
+                          {
+                              "actionType": "broadcast",
+                              "expression": "${_inDrawer == true}",
+                              "args": {
+                                  "eventName": "@data.changed.process_definition"
+                              },
+                              "data": {
+                                  "objectName": "process_definition"
+                              }
+                          }
+                      ]
+                  }
+              },
+              "editorState": "default"
+          }
+      ],
+      "regions": [
+          "body"
+      ],
+      "data": {
+          "context": {},
+          "dataComponentId": "",
+          "record_id": "",
+          "record": {},
+          "permissions": {}
+      },
+      "bodyClassName": "p-0",
+      "dsType": "api",
+      "asideResizor": false,
+      "editorState": "default",
+      "pullRefresh": {
+          "disabled": true
+      },
+      "id": "u:6918b5f52014"
+  }
+is_enable: true
+label: 自定义
+'on': record
+type: amis_button
+visible: true

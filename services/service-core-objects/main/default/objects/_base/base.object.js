@@ -515,7 +515,7 @@ module.exports = {
                     {
                         "type": "button",
                         "label": "${'CustomAction.base.standard_customize' | t}",
-                        "id": "u:disable",
+                        "id": "u:standard_customize",
                         "onEvent": {
                             "click": {
                                 "weight": 0,
