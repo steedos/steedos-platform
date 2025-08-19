@@ -114,10 +114,6 @@
   margin-right: 1.75rem
 }
 
-.mt-3 {
-  margin-top: 0.75rem
-}
-
 .mt-2 {
   margin-top: 0.5rem
 }
@@ -264,11 +260,6 @@
 
 .border-0 {
   border-width: 0px
-}
-
-.border-y {
-  border-top-width: 1px;
-  border-bottom-width: 1px
 }
 
 .border-b {
