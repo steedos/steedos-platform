@@ -215,7 +215,7 @@ module.exports = {
             dependencies: ['metadata-cachers-service'],
 			actions: {
 				setSettings(ctx) {
-                    global.Steedos.settings = Object.assign(global.Steedos.settings, ctx.params)
+                    global.Steedos.settings = _.defaultsDeep({}, ctx.params, global.Steedos.settings);
 				}
 			},
             started: function() {

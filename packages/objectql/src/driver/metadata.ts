@@ -157,7 +157,12 @@ export class MetadataDriver extends SteedosMongoDriver {
     return cursor;
   }
 
-  translationObjectMetadata(objectConfig, lng = "zh-CN") {
+  translationObjectMetadata(objectConfig, lng?) {
+    if (!lng) {
+      lng = process.env.STEEDOS_DEFAULT_LANGUAGE
+        ? process.env.STEEDOS_DEFAULT_LANGUAGE
+        : "zh-CN";
+    }
     const metadata = clone(objectConfig, false);
     translationObject(lng, metadata.name, metadata, true);
     return metadata;

@@ -3,7 +3,7 @@ import { Injectable, Logger } from "@nestjs/common";
 import { InjectBroker } from "@builder6/moleculer";
 import { getSteedosConfigs } from "./config";
 import { AppGateway } from "./app.gateway";
-import { includes } from "lodash";
+import { defaultsDeep, includes } from "lodash";
 
 @Injectable()
 export class AppMoleculer extends Service {
@@ -29,6 +29,17 @@ export class AppMoleculer extends Service {
           this.started = true;
 
           global.STEEDOS_STARTED = true;
+
+          global.Steedos.settings = defaultsDeep(
+            {
+              PUBLIC_SETTINGS: {
+                default_language: process.env.STEEDOS_DEFAULT_LANGUAGE
+                  ? process.env.STEEDOS_DEFAULT_LANGUAGE
+                  : "zh-CN",
+              },
+            },
+            global.Steedos.settings,
+          );
 
           ctx.broker.broadcast("@steedos/server.started");
 

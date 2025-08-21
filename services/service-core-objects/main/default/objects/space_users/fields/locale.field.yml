@@ -13,5 +13,6 @@ options:
     value: en-us
   - label: 日本語
     value: ja
-defaultValue: 'zh-cn'
+amis:
+  value: "${window:Builder.settings.default_language == 'zh-CN' ? 'zh-cn' : (window:Builder.settings.default_language ? (window:Builder.settings.default_language === 'en' ? 'en-us' : window:Builder.settings.default_language) : 'zh-cn')}"
 sort_no: 280

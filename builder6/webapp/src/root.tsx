@@ -26,6 +26,9 @@ _window['t'] = function(key: any, parameters: any, locale: string){
   if (locale === "zh-cn") {
       locale = "zh-CN";
   }
+  if(!locale){
+    locale = Builder.settings.default_language || 'zh-CN'
+  }
   let keys;
   if(lodash.isArray(key)){
       keys = key;
