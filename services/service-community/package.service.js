@@ -185,6 +185,9 @@ module.exports = {
 
 		  // 启动时间触发器服务
 		  this.broker.createService(require("@steedos/workflow_time_trigger"));
+		  if(process.env.STEEDOS_ENABLE_WORKFLOW === 'true'){
+			this.broker.createService(require("@steedos-labs/plugin-workflow"));
+		  }
 	},
 
 	/**
