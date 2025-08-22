@@ -36,9 +36,12 @@ module.exports = {
 		saas: {
 			enable: validator.toBoolean(process.env.STEEDOS_TENANT_ENABLE_SAAS || 'false', true)
 		},
-        oidc: {
-            enable: validator.toBoolean(process.env.STEEDOS_IDENTITY_OIDC_ENABLED || 'false', true),
-        }
+		oidc: {
+			enable: validator.toBoolean(process.env.B6_OIDC_ENABLED || process.env.STEEDOS_IDENTITY_OIDC_ENABLED || 'false', true),
+			name: process.env.B6_OIDC_NAME || process.env.STEEDOS_IDENTITY_OIDC_NAME || 'OIDC',
+			label: process.env.B6_OIDC_LABEL || process.env.STEEDOS_IDENTITY_OIDC_LABEL || 'SSO',
+			logo: process.env.B6_OIDC_LOGO || process.env.STEEDOS_IDENTITY_OIDC_LOGO || '/images/logo.png',
+		}
 	},
 
 	/**
@@ -57,15 +60,15 @@ module.exports = {
 	events: {
         "@steedos/server.started": {
             async handler() {
-                if (process.env.B6_OIDC_ENABLED === true || process.env.B6_OIDC_ENABLED === 'true') {
+                if (this.settings.oidc.enable ) {
                     objectql.getSteedosConfig().setTenant({
                         disabled_account_register: true,
                         sso_providers: {
                             oidc: {
-                                name: process.env.B6_OIDC_NAME,
-                                label: process.env.B6_OIDC_LABEL,
-                                logo: process.env.B6_OIDC_LOGO,
-                                url: process.env.B6_OIDC_URL || '/api/v6/oidc/default/login'
+                                name: this.settings.oidc.name,
+                                label: this.settings.oidc.label,
+                                logo: this.settings.oidc.logo,
+                                url: '/api/v6/oidc/default/login'
                             }
                         }
                     });
