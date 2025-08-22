@@ -1,6 +1,6 @@
 name: enable_instances
-group: advanced
-hidden: true
+group: feature
+hidden: false
 label: Enable Instances
 sort_no: 140
 type: boolean
