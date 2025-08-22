@@ -240,9 +240,11 @@ module.exports = {
             }else{
                 if(process.env.STEEDOS_TENANT_ENABLE_SAAS != "true"){
                     const primarySpace = await this.broker.call("objectql.getPrimarySpace");
-                    const packageJSON = require(`${_path}/package.json`)
-                    const userSession = { spaceId: primarySpace._id, userId: primarySpace.owner };
-                    await this.deployPackage(_path, userSession, {name: packageJSON.name, version: packageJSON.version});
+                    if(primarySpace){
+                        const packageJSON = require(`${_path}/package.json`)
+                        const userSession = { spaceId: primarySpace._id, userId: primarySpace.owner };
+                        await this.deployPackage(_path, userSession, {name: packageJSON.name, version: packageJSON.version});
+                    }
                 }
             }
             if(isPackage !== false){
