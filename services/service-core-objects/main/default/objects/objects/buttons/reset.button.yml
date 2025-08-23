@@ -14,11 +14,11 @@ amis_schema: |-
                               "actionType": "dialog",
                               "dialog": {
                                   "type": "dialog",
-                                  "title": "重置对象: ${record.label}",
+                                  "title": "${'CustomLabels.objects_actions_reset_dialog_title_prefix' | t} ${record.label}",
                                   "body": [
                                       {
                                           "type": "tpl",
-                                          "tpl": "<div>\n<div style=\"text-align: left;\">重置一个自定义对象进行以下操作：</div>\n<ul>\n<li style=\"text-align: left;\">删除自定义的对象</li>\n<li style=\"text-align: left;\">删除自定义对象的字段</li>\n</ul>\n</div>",
+                                          "tpl": "${'CustomLabels.objects_actions_reset_dialog_content' | t}",
                                           "inline": true,
                                           "id": "u:6d0819fc0bda"
                                       }
