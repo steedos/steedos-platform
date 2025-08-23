@@ -193,6 +193,12 @@ actions:
     label: 复制OData网址
   createDefaultRecordView:
     label: 创建默认页面布局
+  design_fields_layout:
+    label: 设计字段
+  reset:
+    label: 重置
+  delete_object:
+    label: 删除
 CustomLabels:
   objects_field_datasource_defaultValue: 默认数据源
   objects_field_datasource_meteor: Meteor

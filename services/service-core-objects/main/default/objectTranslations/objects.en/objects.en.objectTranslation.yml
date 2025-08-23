@@ -188,6 +188,12 @@ actions:
     label: Copy OData URL
   createDefaultRecordView:
     label: Create Default Page Layout
+  design_fields_layout:
+    label: Design Fields
+  reset:
+    label: Reset
+  delete_object:
+    label: Delete
 CustomLabels:
   objects_field_datasource_defaultValue: Default data source
   objects_field_datasource_meteor: Meteor

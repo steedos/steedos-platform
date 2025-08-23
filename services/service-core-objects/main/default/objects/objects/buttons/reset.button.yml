@@ -5,8 +5,8 @@ amis_schema: |-
       "body": [
           {
               "type": "button",
-              "label": "重置",
-              "id": "u:delete_object",
+              "label": "${'CustomAction.objects.reset' | t}",
+              "id": "u:reset",
               "onEvent": {
                   "click": {
                       "actions": [

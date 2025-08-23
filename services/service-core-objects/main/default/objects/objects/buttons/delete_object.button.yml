@@ -5,7 +5,7 @@ amis_schema: |-
       "body": [
           {
               "type": "button",
-              "label": "删除",
+              "label": "${'CustomAction.objects.delete_object' | t}",
               "id": "u:delete_object",
               "onEvent": {
                   "click": {
