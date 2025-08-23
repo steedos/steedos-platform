@@ -14,5 +14,5 @@ options:
   - label: 日本語
     value: ja
 amis:
-  value: "${window:Builder.settings.default_language == 'zh-CN' ? 'zh-cn' : (window:Builder.settings.default_language ? (window:Builder.settings.default_language === 'en' ? 'en-us' : window:Builder.settings.default_language) : 'zh-cn')}"
+  value: "${locale ? locale : (window:Builder.settings.default_language == 'zh-CN' ? 'zh-cn' : (window:Builder.settings.default_language ? (window:Builder.settings.default_language === 'en' ? 'en-us' : window:Builder.settings.default_language) : 'zh-cn'))}"
 sort_no: 280
