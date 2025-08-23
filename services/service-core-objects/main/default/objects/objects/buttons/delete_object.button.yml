@@ -14,11 +14,11 @@ amis_schema: |-
                               "actionType": "dialog",
                               "dialog": {
                                   "type": "dialog",
-                                  "title": "删除对象: ${record.label}",
+                                  "title": "${'CustomLabels.objects_actions_delete_object_dialog_title_prefix' | t} ${record.label}",
                                   "body": [
                                       {
                                           "type": "tpl",
-                                          "tpl": "<div>\n<div style=\"text-align: left;\">删除一个自定义对象进行以下操作：</div>\n<ul>\n<li style=\"text-align: left;\">删除对象的字段和按钮</li>\n<li style=\"text-align: left;\">删除对象的选项卡和列表视图删除对象的页面布局</li>\n<li style=\"text-align: left;\">删除对象的权限</li>\n<li style=\"text-align: left;\">删除对象的验证规则</li>\n<li style=\"text-align: left;\">删除对象的限制规则</li>\n<li style=\"text-align: left;\">删除对象的共享规则</li>\n<li style=\"text-align: left;\">删除使用该对象的流程映射</li>\n<li style=\"text-align: left;\">删除使用该对象的开放流程</li>\n<li style=\"text-align: left;\">删除使用该对象的页面</li>\n</ul>\n</div>",
+                                          "tpl": "${'CustomLabels.objects_actions_delete_object_dialog_content' | t}",
                                           "inline": true,
                                           "id": "u:6d0819fc0bda"
                                       }
@@ -29,7 +29,8 @@ amis_schema: |-
                                   "showCloseButton": true,
                                   "data": {
                                       "&": "$$",
-                                      "recordId": "${recordId}"
+                                      "recordId": "${recordId}",
+                                      "record": "${record}"
                                   },
                                   "onEvent": {
                                       "confirm": {

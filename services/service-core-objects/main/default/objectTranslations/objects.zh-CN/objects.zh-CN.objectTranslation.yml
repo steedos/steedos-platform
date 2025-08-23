@@ -206,3 +206,5 @@ CustomLabels:
   objects_field_enable_space_global: 跨工作区访问数据
   objects_field_enable_web_forms: 允许在线表单
   object_object__error_name_invalid_format: API 名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符
+  objects_actions_delete_object_dialog_title_prefix: "删除对象:"
+  objects_actions_delete_object_dialog_content: "<div>\n<div style=\"text-align: left;\">删除一个自定义对象进行以下操作：</div>\n<ul>\n<li style=\"text-align: left;\">删除对象的字段和按钮</li>\n<li style=\"text-align: left;\">删除对象的选项卡和列表视图</li>\n<li style=\"text-align: left;\">删除对象的页面布局</li>\n<li style=\"text-align: left;\">删除对象的权限</li>\n<li style=\"text-align: left;\">删除对象的验证规则</li>\n<li style=\"text-align: left;\">删除对象的限制规则</li>\n<li style=\"text-align: left;\">删除对象的共享规则</li>\n<li style=\"text-align: left;\">删除使用该对象的流程映射</li>\n<li style=\"text-align: left;\">删除使用该对象的开放流程</li>\n<li style=\"text-align: left;\">删除使用该对象的页面</li>\n</ul>\n</div>"
