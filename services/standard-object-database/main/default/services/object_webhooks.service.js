@@ -5,7 +5,7 @@
  * @LastEditTime: 2025-05-06 16:19:19
  * @Description: 
  */
-
+const { parseURL } = require('ioredis/built/utils');
 const BullMqMixin = require('moleculer-bullmq');
 const axios = require('axios');
 const { evaluate } = require("amis-formula")
@@ -18,7 +18,7 @@ module.exports = {
     mixins: [serviceObjectMixin, BullMqMixin],
     settings: {
       bullmq: {
-        client: process.env.QUEUE_BACKEND,
+        client: parseURL(process.env.QUEUE_BACKEND),
         worker: { concurrency: 50 }
       }
     },

@@ -16,7 +16,7 @@ const { createBullBoard } = require('@bull-board/api')
 const { BullMQAdapter } = require('@bull-board/api/bullMQAdapter');
 const { ExpressAdapter } = require('@bull-board/express')
 const { superAdminAuthentication } = require('@steedos/auth');
-
+const { parseURL } = require('ioredis/built/utils');
 const basePath = '/bull-jobs/dashboard';
 
 
@@ -76,7 +76,7 @@ module.exports = {
 	 */
 	async started() {
 		if(process.env.NODE_ENV != 'production'){
-			const queueMQ = new QueueMQ('object_webhooks', {connection: process.env.QUEUE_BACKEND});
+			const queueMQ = new QueueMQ('object_webhooks', {connection: parseURL(process.env.QUEUE_BACKEND)});
 			const serverAdapter = new ExpressAdapter();
 			serverAdapter.setBasePath(basePath)
 			
