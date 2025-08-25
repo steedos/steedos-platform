@@ -13,12 +13,20 @@ const serviceObjectMixin = require('@steedos/service-object-mixin');
 const _ = require("lodash");
 const { getAmisGlobalVariables } = require('@steedos/objectql');
 
+let client;
+if(process.env.STEEDOS_BULLMQ_REDIS){
+  client = parseURL(process.env.STEEDOS_BULLMQ_REDIS);
+}else{
+  client = parseURL(process.env.CACHER);
+	client.db = 9;
+}
+
 module.exports = {
     name: "object_webhooks",
     mixins: [serviceObjectMixin, BullMqMixin],
     settings: {
       bullmq: {
-        client: parseURL(process.env.QUEUE_BACKEND),
+        client: client,
         worker: { concurrency: 50 }
       }
     },

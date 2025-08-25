@@ -75,20 +75,26 @@ module.exports = {
 	 * Service started lifecycle event handler
 	 */
 	async started() {
-		if(process.env.NODE_ENV != 'production'){
-			const queueMQ = new QueueMQ('object_webhooks', {connection: parseURL(process.env.QUEUE_BACKEND)});
-			const serverAdapter = new ExpressAdapter();
-			serverAdapter.setBasePath(basePath)
-			
-			createBullBoard({
-				queues: [
-					new BullMQAdapter(queueMQ, {readOnlyMode: false}),
-				],
-				serverAdapter 
-			})
-			// ... express server configuration
-			router.use(basePath, superAdminAuthentication,  serverAdapter.getRouter());
+		let client;
+		if(process.env.STEEDOS_BULLMQ_REDIS){
+			client = parseURL(process.env.STEEDOS_BULLMQ_REDIS);
+		}else{
+			client = parseURL(process.env.CACHER);
+			client.db = 9;
 		}
+
+		const queueMQ = new QueueMQ('object_webhooks', {connection: client});
+		const serverAdapter = new ExpressAdapter();
+		serverAdapter.setBasePath(basePath)
+		
+		createBullBoard({
+			queues: [
+				new BullMQAdapter(queueMQ, {readOnlyMode: false}),
+			],
+			serverAdapter 
+		})
+		// ... express server configuration
+		router.use(basePath, superAdminAuthentication,  serverAdapter.getRouter());
 	},
 
 	/**

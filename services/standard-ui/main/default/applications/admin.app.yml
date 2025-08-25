@@ -152,6 +152,9 @@ tab_items:
   admin_api_keys:
     group: development
     index: 42
+  admin_bull_dashboard:
+    group: development
+    index: 43
   admin_settings:
     group: advanced_settings
     index: 50
