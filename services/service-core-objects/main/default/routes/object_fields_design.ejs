@@ -113,6 +113,12 @@
               tenantId,
               authToken,
             },
+            global: {
+              userId: userId,
+              spaceId: tenantId,
+              user: <%- JSON.stringify(userSession) %>, 
+              now: new Date(),
+            }
           },
         };
 
@@ -148,7 +154,12 @@
             schema.data.context.userId = userId;
             schema.data.context.authToken = authToken;
             schema.data.context.user = <%- JSON.stringify(userSession) %>;
-
+            schema.data.global = {
+              userId: userId,
+              spaceId: tenantId,
+              user: <%- JSON.stringify(userSession) %>, 
+              now: new Date(),
+            }
             // if (objectName && pageType === "record") {
             //   const record = await axios.get(
             //     `${rootUrl}/api/v4/${objectName}?$orderby=modified&$top=1`,
@@ -183,11 +194,13 @@
         );
         if (schema.data && typeof schema.data.context === 'object' ) {
           delete schema.data.context
+          delete schema.data.global
         }
 
         try {
           delete schema.data.recordId;
           delete schema.data.objectName;
+          delete schema.data.global
         } catch (error) {
           
         }
