@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2025-01-22 12:51:08
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-03-03 17:36:48
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2025-08-25 15:31:21
  * @Description: 
  */
 import { Builder, builder, BuilderComponent } from '@builder6/react';
@@ -60,6 +60,7 @@ export const AmisRender = function ({schema = {}, data = {}, env = {}}) {
     (window as any).navigate = navigate;
   }
 
+  const locale = Builder.settings.context?.user?.language || Builder.settings.default_language;
   const mergedData = {
     app_id: Builder.settings.appId,
     context: Builder.settings.context,
@@ -114,6 +115,7 @@ export const AmisRender = function ({schema = {}, data = {}, env = {}}) {
                   schema: schema,
                   data: mergedData,
                   env: mergedEnv,
+                  locale: locale,
                 },
               },
               responsiveStyles: {

@@ -2120,10 +2120,10 @@
   dependencies:
     yup "^1.1.0"
 
-"@builder6/react@8.0.39":
-  version "8.0.39"
-  resolved "https://registry.yarnpkg.com/@builder6/react/-/react-8.0.39.tgz#b4e39ba22a6ecf23b21d4b4535749eaea7a4b68e"
-  integrity sha512-nz7TN92fx+0WVQ1F27fwz7Mv+bO49/QfJ5iBCa/G0yQWlHG+UP+xCrmC2aYaCWjT0IaNNe0WcjWVQtJbzbCnqA==
+"@builder6/react@8.0.40":
+  version "8.0.40"
+  resolved "https://registry.yarnpkg.com/@builder6/react/-/react-8.0.40.tgz#b6cf277f7d805249b8fdb57ed1470185a8804464"
+  integrity sha512-4nEJDzdG2FQg8YVhT895EjbxA7GC9l5TXIH7MJh7b4yJvQesTMH+WTxkRfSR8r5xB5mVMQe25E6vK2m/guQ67g==
   dependencies:
     "@builder6/sdk" "^6.0.0"
     "@emotion/core" "^10.0.17"
