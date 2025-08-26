@@ -1,17 +1,17 @@
 {
   "name": "@steedos/migrate",
-  "version": "3.0.0-beta.86",
+  "version": "3.0.0-beta.87",
   "description": "Migration scripts for steedos",
   "main": "index.js",
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "@steedos/service-package-registry": "3.0.0-beta.86",
+    "@steedos/service-package-registry": "3.0.0-beta.87",
     "migrate": "^1.6.2",
     "mongodb": "^3.7.3"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "20f7a29c81eb2095c26cbe89571b5ea631768413"
+  "gitHead": "b92d4f0808d10ea76a0c43ba7ae731adf71eae08"
 }
