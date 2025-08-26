@@ -106,3 +106,13 @@ actions:
     label: Show Design
   viewPage:
     label: View
+CustomLabels:
+  pages_action_disable_success: The page has been disabled.
+  pages_action_disable_failed: Operation failed
+  pages_action_enable_success: The page has been enabled.
+  pages_action_enable_failed: Operation failed
+  pages_action_resetSchema_dialog_title: Reset Page Schema
+  pages_action_resetSchema_dialog_content: After resetting the page, a new page version will be generated based on the latest object field configuration.
+  pages_action_resetSchema_success_message: Operation successful
+  pages_action_resetSchema_success_description: The page has been reset.
+  pages_action_resetSchema_failed_message: Operation failed

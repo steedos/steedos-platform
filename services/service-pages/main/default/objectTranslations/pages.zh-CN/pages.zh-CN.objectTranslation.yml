@@ -106,3 +106,13 @@ actions:
     label: 设计器
   viewPage:
     label: 查看
+CustomLabels:
+  pages_action_disable_success: 页面已禁用。
+  pages_action_disable_failed: 操作失败
+  pages_action_enable_success: 页面已启用。
+  pages_action_enable_failed: 操作失败
+  pages_action_resetSchema_dialog_title: 重置页面
+  pages_action_resetSchema_dialog_content: 重置页面后,会根据最新的对象字段配置生成一个新的页面版本.
+  pages_action_resetSchema_success_message: 操作成功
+  pages_action_resetSchema_success_description: 页面已重置。
+  pages_action_resetSchema_failed_message: 操作失败

@@ -5,7 +5,7 @@ amis_schema: |-
       "body": [
           {
               "type": "button",
-              "label": "禁用",
+              "label": "${'CustomAction.pages.disable' | t}",
               "id": "u:disable",
               "visibleOn": "${is_active && !is_system}",
               "actionType": "ajax",
@@ -15,8 +15,8 @@ amis_schema: |-
                   "requestAdaptor": "var recordId = context.recordId;\napi.data = {\n  pageId: recordId\n}",
                   "adaptor": "",
                   "messages": {
-                      "success": "页面已禁用。",
-                      "failed": "操作失败"
+                      "success": "${'CustomLabels.pages_action_disable_success' | t}",
+                      "failed": "${'CustomLabels.pages_action_disable_failed' | t}"
                   }
               },
               "editorState": "default"
@@ -39,147 +39,6 @@ amis_schema: |-
       "pullRefresh": {
           "disabled": true
       }
-  }
-
-amis_schema__: |-
-  {
-      "type": "service",
-      "body": [
-          {
-              "type": "button",
-              "label": "拒绝",
-              "id": "u:reject",
-              "onEvent": {
-                  "click": {
-                      "weight": 0,
-                      "actions": [
-                          {
-                              "actionType": "confirmDialog",
-                              "dialog": {
-                                  "type": "dialog",
-                                  "title": "拒绝数据",
-                                  "body": [
-                                      {
-                                          "type": "form",
-                                          "title": "拒绝理由",
-                                          "id": "u:reject_form",
-                                          "mode": "normal",
-                                          "body": [
-                                              {
-                                                  "type": "textarea",
-                                                  "name": "comment",
-                                                  "description": "请填写拒绝理由",
-                                                  "required": true,
-                                                  "id": "u:6669c9012efd"
-                                              },
-                                              {
-                                                  "type": "tpl",
-                                                  "tpl": "确定要拒绝该填写任务中的数据吗?",
-                                                  "id": "u:ddf84582ce78"
-                                              }
-                                          ],
-                                          "actions": [
-                                              {
-                                                  "type": "submit",
-                                                  "label": "提交",
-                                                  "primary": true
-                                              }
-                                          ],
-                                          "feat": "Insert"
-                                      }
-                                  ],
-                                  "onEvent": {
-                                      "confirm": {
-                                          "actions": [
-                                              {
-                                                  "actionType": "validate",
-                                                  "componentId": "u:reject_form"
-                                              },
-                                              {
-                                                  "actionType": "custom",
-                                                  "script": "// 之前主动触发表单校验是因为dialog confirm事件执行完成后才会触发，这里判断校验失败就中断后续动作\nevent.data.comment = event.data.comment;\nif (event.data.validateResult && event.data.validateResult.error) { \n  event.stopPropagation();\n}\n\n\n",
-                                                  "args": {}
-                                              },
-                                              {
-                                                  "actionType": "ajax",
-                                                  "ignoreError": false,
-                                                  "outputVar": "responseResult",
-                                                  "options": {},
-                                                  "api": {
-                                                      "url": "${context.rootUrl}/api/builder6/b6_collect/actions/reject",
-                                                      "method": "post",
-                                                      "requestAdaptor": "var targets = [{\n  id: context._id\n}];\napi.data = {\n  targets,\n  comment: context.comment\n}",
-                                                      "adaptor": "",
-                                                      "messages": {
-                                                          "success": "已拒绝该填写任务中的数据！",
-                                                          "failed": "很抱歉，提交过程中出现问题。请稍后重试或联系技术支持！"
-                                                      }
-                                                  }
-                                              },
-                                              {
-                                                  "actionType": "broadcast",
-                                                  "args": {
-                                                      "eventName": "@data.changed.b6_collect"
-                                                  },
-                                                  "data": {
-                                                      "objectName": "b6_collect",
-                                                      "displayAs": "${displayAs}",
-                                                      "recordId": "notEmpty"
-                                                  }
-                                              }
-                                          ]
-                                      }
-                                  },
-                                  "actionType": "confirmDialog",
-                                  "actions": [
-                                      {
-                                          "type": "button",
-                                          "actionType": "cancel",
-                                          "label": "取消",
-                                          "id": "u:6d0b193270fb"
-                                      },
-                                      {
-                                          "type": "button",
-                                          "actionType": "confirm",
-                                          "label": "确定",
-                                          "primary": true,
-                                          "id": "u:da420989ec0f"
-                                      }
-                                  ],
-                                  "showCloseButton": true,
-                                  "closeOnOutside": false,
-                                  "closeOnEsc": false,
-                                  "showErrorMsg": true,
-                                  "showLoading": true,
-                                  "draggable": false,
-                                  "id": "u:e84a743c78f2"
-                              }
-                          }
-                      ]
-                  }
-              },
-              "editorState": "default"
-          }
-      ],
-      "regions": [
-          "body"
-      ],
-      "data": {
-          "context": {},
-          "dataComponentId": "",
-          "record_id": "",
-          "record": {},
-          "permissions": {}
-      },
-      "id": "u:627b94b32af8",
-      "bodyClassName": "p-0",
-      "dsType": "api",
-      "asideResizor": false,
-      "editorState": "default",
-      "pullRefresh": {
-          "disabled": true
-      },
-      "definitions": {}
   }
 is_enable: true
 label: 禁用

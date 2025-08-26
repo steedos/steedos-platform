@@ -1,15 +1,15 @@
 /*
  * @Author: baozhoutaon@hotoa.com
  * @Date: 2022-03-29 20:33:44
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-05-27 18:08:21
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2025-08-26 13:58:13
  * @Description: 
  */
 module.exports = {
     resetSchema: function (object_name, record_id) {
         SteedosUI.Modal.confirm({
-            title: "重置页面", 
-            content: "重置页面后,会根据最新的对象字段配置生成一个新的页面版本.", 
+            title: t("CustomLabels.pages_action_resetSchema_dialog_title"), 
+            content: t("CustomLabels.pages_action_resetSchema_dialog_title"), 
             onOk: function(){
                 $(document.body).addClass('loading');
                 let url = `/service/api/page/resetDefaultSchema`;
@@ -19,8 +19,8 @@ module.exports = {
                     data: JSON.stringify({ pageId: record_id }),
                     success: function (data) {
                         SteedosUI.notification.success({
-                            message: '操作成功',
-                            description: `页面已重置.`,
+                            message: t("CustomLabels.pages_action_resetSchema_success_message"),
+                            description: t("CustomLabels.pages_action_resetSchema_success_description"),
                         });
                         SteedosUI.router.go({
                             type: 'new',
@@ -31,7 +31,7 @@ module.exports = {
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
                         SteedosUI.notification.error({
-                            message: '操作失败',
+                            message: t("CustomLabels.pages_action_resetSchema_failed_message"),
                             description: t(XMLHttpRequest.responseJSON.error),
                         });
                         $(document.body).removeClass('loading');

@@ -5,7 +5,7 @@ amis_schema: |-
       "body": [
           {
               "type": "button",
-              "label": "启用",
+              "label": "${'CustomAction.pages.enable' | t}",
               "id": "u:enable",
               "visibleOn": "${!is_active && !record.is_system}",
               "actionType": "ajax",
@@ -15,8 +15,8 @@ amis_schema: |-
                   "requestAdaptor": "var recordId = context.recordId;\napi.data = {\n  pageId: recordId\n}",
                   "adaptor": "",
                   "messages": {
-                      "success": "页面已启用。",
-                      "failed": "操作失败"
+                      "success": "${'CustomLabels.pages_action_enable_success' | t}",
+                      "failed": "${'CustomLabels.pages_action_enable_failed' | t}"
                   }
               },
               "editorState": "default"
