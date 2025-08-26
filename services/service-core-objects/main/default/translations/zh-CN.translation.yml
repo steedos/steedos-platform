@@ -82,7 +82,7 @@ CustomTabs:
   admin_company: 分部
   admin_space_users: 人员
   admin_permission_set: 简档 & 权限集
-  admin_license: 
+  admin_license: 许可证
   admin_apps: 应用程序
   admin_steedos_packages: 软件包
   admin_objects: 对象

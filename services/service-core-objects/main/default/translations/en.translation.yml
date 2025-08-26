@@ -84,7 +84,7 @@ CustomTabs:
   admin_space_users: Users
   admin_permission_set: Profiles & Permission Sets
   admin_personal_information: Personal Information
-  admin_license: 
+  admin_license: Licenses
   admin_apps: Apps
   admin_steedos_packages: Packages
   admin_objects: Objects
