@@ -1,0 +1,66 @@
+name: operation_logs
+label: Security Log
+description: 
+fields:
+  data:
+    label: Data
+    help: 
+    description: 
+  http_user_agent:
+    label: User Agent
+    help: 
+    description: 
+  is_mobile:
+    label: Mobile
+    help: 
+    description: 
+  is_tablet:
+    label: Tablet
+    help: 
+    description: 
+  message:
+    label: Message
+    help: 
+    description: 
+  name:
+    label: Name
+    help: 
+    description: 
+  object:
+    label: Object
+    help: 
+    description: 
+  related_to:
+    label: Related To
+    help: 
+    description: 
+  remote_addr:
+    label: IP Addr
+    help: 
+    description: 
+  remote_user:
+    label: Operator
+    help: 
+    description: 
+  status:
+    label: Status
+    help: 
+    options:
+      - label: Success
+        value: success
+        color: 008000
+      - label: Fail
+        value: fail
+        color: ff0000
+    description: 
+  type:
+    label: Type
+    help: 
+    description: 
+listviews:
+  all:
+    label: All
+  change_password:
+    label: Change password
+  login:
+    label: Login log
