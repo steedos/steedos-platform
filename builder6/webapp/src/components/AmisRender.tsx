@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2025-01-22 12:51:08
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2025-08-25 15:31:21
+ * @LastEditTime: 2025-08-26 11:52:51
  * @Description: 
  */
 import { Builder, builder, BuilderComponent } from '@builder6/react';
@@ -60,7 +60,10 @@ export const AmisRender = function ({schema = {}, data = {}, env = {}}) {
     (window as any).navigate = navigate;
   }
 
-  const locale = Builder.settings.context?.user?.language || Builder.settings.default_language;
+  let locale = Builder.settings.context?.user?.language || Builder.settings.default_language;
+  if (locale === 'en') {
+    locale = 'en-US'
+  }
   const mergedData = {
     app_id: Builder.settings.appId,
     context: Builder.settings.context,
