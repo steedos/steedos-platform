@@ -5,6 +5,7 @@ enable_files: false
 enable_enhanced_lookup: true
 hidden: true
 version: 2
+isMetadata: true
 fields:
   name:
     index: true

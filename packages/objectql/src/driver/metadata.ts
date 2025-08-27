@@ -18,6 +18,7 @@ import {
   getAllWorkflowNotifications,
   getAllWorkflowRules,
   getWorkflowOutboundMessages,
+  registerImport,
 } from "@steedos/metadata-registrar";
 
 const PERMISSIONS = {
@@ -255,6 +256,17 @@ export class MetadataDriver extends SteedosMongoDriver {
       }
       case "workflow_rule": {
         return getAllWorkflowRules();
+      }
+      case "queue_import": {
+        const configs = await registerImport.getAll(broker);
+        const dataList = _.pluck(configs, "metadata");
+
+        _.each(dataList, function (item) {
+          if (!item._id) {
+            item._id = `${item.name}`;
+          }
+        });
+        return dataList;
       }
       default:
         break;
