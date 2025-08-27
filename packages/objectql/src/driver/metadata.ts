@@ -13,6 +13,12 @@ import _ = require("underscore");
 import { Dictionary } from "@salesforce/ts-types";
 import { translationApps, translationObject } from "@steedos/i18n";
 import { getMD5 } from "../util";
+import {
+  getAllActionFieldUpdates,
+  getAllWorkflowNotifications,
+  getAllWorkflowRules,
+  getWorkflowOutboundMessages,
+} from "@steedos/metadata-registrar";
 
 const PERMISSIONS = {
   allowEdit: false,
@@ -237,6 +243,18 @@ export class MetadataDriver extends SteedosMongoDriver {
         });
         translationApps("zh-CN", apps);
         return apps;
+      }
+      case "action_field_updates": {
+        return getAllActionFieldUpdates();
+      }
+      case "workflow_notifications": {
+        return getAllWorkflowNotifications();
+      }
+      case "workflow_outbound_messages": {
+        return getWorkflowOutboundMessages();
+      }
+      case "workflow_rule": {
+        return getAllWorkflowRules();
       }
       default:
         break;
