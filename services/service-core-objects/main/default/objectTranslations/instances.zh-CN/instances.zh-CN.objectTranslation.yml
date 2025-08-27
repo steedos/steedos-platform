@@ -190,3 +190,7 @@ CustomLabels:
   instance_action_instance_distribute_dialog_field_to_self: 同时分发给自己
   instance_action_instance_distribute_dialog_field_to_attachment: 将原表单存储为附件
   instance_action_instance_distribute_dialog_field_related: 自动创建关联文件
+  instance_action_instance_cc_dialog_title_prefix: 当前步骤：
+  instance_action_instance_cc_dialog_field_users: 传阅对象
+  instance_action_instance_cc_dialog_field_description: 传阅说明
+  instance_action_instance_cc_dialog_sub_title: 将当前选中的文件转发到新的流程，继续执行审批操作

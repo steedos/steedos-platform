@@ -192,4 +192,8 @@ CustomLabels:
   instance_action_instance_distribute_dialog_field_to_self: Distribute it to yourself too
   instance_action_instance_distribute_dialog_field_to_attachment: Save the original form as an attachment
   instance_action_instance_distribute_dialog_field_related: Automatically create associated files
+  instance_action_instance_cc_dialog_title_prefix: "Current Step:"
+  instance_action_instance_cc_dialog_field_users: Carbon Copy To
+  instance_action_instance_cc_dialog_field_description: Carbon Copy Description
+  instance_action_instance_cc_dialog_sub_title: Forward the currently selected file to the new process and continue to execute the approval operation.
  
