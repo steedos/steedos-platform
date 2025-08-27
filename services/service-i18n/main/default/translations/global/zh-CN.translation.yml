@@ -4,6 +4,7 @@ CustomLabels:
   apply: 应用
   asc: 正序
   desc: 降序
+  confirm_delete: 确认要删除吗?
   apps:
     apps_form:
       tab: 选项卡

@@ -166,7 +166,7 @@ actions:
   instance_related:
     label: 关联文件
   instance_distribute:
-    label: 
+    label: 分发
   instance_submit:
     label: 发送
   instance_forward:
@@ -174,6 +174,19 @@ actions:
   instance_cc:
     label: 传阅
   instance_new:
-    label: 删除
+    label: 新建
   instance_delete_many:
     label: 删除
+CustomLabels:
+  instance_action_new_dialog_title: 请选择流程
+  instance_action_new_dialog_msg_success: 创建成功！
+  instance_action_delete_many_msg_not_select: 请至少选择一条记录
+  instance_action_instance_save_msg_success: 暂存成功
+  instance_action_instance_save_msg_failed: 暂存失败
+  instance_action_instance_distribute_dialog_sub_title: 将当前选中的文件分发到新的流程，继续执行审批操作
+  instance_action_instance_distribute_dialog_field_process: 流程名称
+  instance_action_instance_distribute_dialog_field_users: 分发对象
+  instance_action_instance_distribute_dialog_field_description: 备注
+  instance_action_instance_distribute_dialog_field_to_self: 同时分发给自己
+  instance_action_instance_distribute_dialog_field_to_attachment: 将原表单存储为附件
+  instance_action_instance_distribute_dialog_field_related: 自动创建关联文件

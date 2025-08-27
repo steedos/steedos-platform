@@ -4,6 +4,7 @@ CustomLabels:
   apply: Apply
   asc: Asc
   desc: Desc
+  confirm_delete: Are you sure you want to delete it?
   apps:
     apps_form:
       tab: Tab

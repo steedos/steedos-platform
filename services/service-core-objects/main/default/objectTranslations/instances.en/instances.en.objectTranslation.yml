@@ -179,3 +179,17 @@ actions:
     label: Delete
   instance_delete_many:
     label: Delete
+CustomLabels:
+  instance_action_new_dialog_title: Please select the process
+  instance_action_new_dialog_msg_success: Created successfully!
+  instance_action_delete_many_msg_not_select: Please select at least one record
+  instance_action_instance_save_msg_success: Temporary storage successful
+  instance_action_instance_save_msg_failed: Temporary storage failed
+  instance_action_instance_distribute_dialog_sub_title: Distribute the currently selected file to the new process and continue to execute the approval operation
+  instance_action_instance_distribute_dialog_field_process: Process name
+  instance_action_instance_distribute_dialog_field_users: Distribute to
+  instance_action_instance_distribute_dialog_field_description: Description
+  instance_action_instance_distribute_dialog_field_to_self: Distribute it to yourself too
+  instance_action_instance_distribute_dialog_field_to_attachment: Save the original form as an attachment
+  instance_action_instance_distribute_dialog_field_related: Automatically create associated files
+ 
