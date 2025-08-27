@@ -150,6 +150,32 @@ listviews:
     label: Outbox
   draft:
     label: Draft
+  pending:
+    label: Pending
+  completed:
+    label: Completed
+  monitor:
+    label: Monitor
 actions:
   view_instance:
     label: View Instance
+  instance_terminate:
+    label: Cancel Request
+  instance_save:
+    label: Save
+  instance_related:
+    label: Linked requests
+  instance_distribute:
+    label: Distribute
+  instance_submit:
+    label: Submit
+  instance_forward:
+    label: Request Forward
+  instance_cc:
+    label: Carbon Copy
+  instance_new:
+    label: New Request
+  instance_delete:
+    label: Delete
+  instance_delete_many:
+    label: Delete

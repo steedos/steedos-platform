@@ -150,6 +150,30 @@ listviews:
     label: 已办文件
   draft:
     label: 草稿
+  pending:
+    label: 进行中
+  completed:
+    label: 已完成
+  monitor:
+    label: 监控箱
 actions:
   view_instance:
     label: 查看审批单
+  instance_terminate:
+    label: 取消申请
+  instance_save:
+    label: 保存
+  instance_related:
+    label: 关联文件
+  instance_distribute:
+    label: 
+  instance_submit:
+    label: 发送
+  instance_forward:
+    label: 转发
+  instance_cc:
+    label: 传阅
+  instance_new:
+    label: 删除
+  instance_delete_many:
+    label: 删除
