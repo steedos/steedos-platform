@@ -1,6 +1,6 @@
 {
     "name": "@steedos/service-identity-jwt",
-    "version": "2.7.18-beta.48",
+    "version": "2.7.18-beta.49",
     "main": "package.service.js",
     "keywords": [
         "steedos"
@@ -11,7 +11,7 @@
     "description": "steedos package",
     "repository": {},
     "dependencies": {
-        "@steedos/accounts": "2.7.18-beta.48",
+        "@steedos/accounts": "2.7.18-beta.49",
         "express": "4.18.1",
         "jsonwebtoken": "8.5.1",
         "passport": "^0.6.0",
@@ -22,5 +22,5 @@
     "publishConfig": {
         "access": "public"
     },
-    "gitHead": "4f2474e944f80e168c1aea19c9f76e491bfc74aa"
+    "gitHead": "5d49ae14e78768b87d3aaaf09eec9f834c5544fd"
 }
