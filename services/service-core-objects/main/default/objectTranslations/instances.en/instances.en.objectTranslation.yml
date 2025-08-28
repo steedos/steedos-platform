@@ -182,6 +182,7 @@ actions:
 CustomLabels:
   instance_action_new_dialog_title: Please select the process
   instance_action_new_dialog_msg_success: Created successfully!
+  instance_action_new_dialog_msg_failed: Created failed!
   instance_action_delete_many_msg_not_select: Please select at least one record
   instance_action_instance_save_msg_success: Temporary storage successful
   instance_action_instance_save_msg_failed: Temporary storage failed

@@ -180,6 +180,7 @@ actions:
 CustomLabels:
   instance_action_new_dialog_title: 请选择流程
   instance_action_new_dialog_msg_success: 创建成功！
+  instance_action_new_dialog_msg_failed: 创建失败！
   instance_action_delete_many_msg_not_select: 请至少选择一条记录
   instance_action_instance_save_msg_success: 暂存成功
   instance_action_instance_save_msg_failed: 暂存失败
