@@ -1,4 +1,5 @@
 import { AmisRender } from "../../components/AmisRender";
+import { localizeMessage } from '../../utils/utils';
 const on_click_script = `
     var evalFunString = "(function(){" + event.data.on_click + "})()";
     try{
@@ -66,7 +67,7 @@ export const AppDashboard = () => {
         {
           "type": "panel",
           "key": "1",
-          "title": "应用程序",
+          "title": localizeMessage('accounts.app'),
           "className": "p-4 shadow border-none",
           "header": [
             {
@@ -79,7 +80,7 @@ export const AppDashboard = () => {
                   "body": [
                     {
                       "type": "plain",
-                      "text": "应用程序"
+                      "text": localizeMessage('accounts.app')
                     }
                   ]
                 },
@@ -89,7 +90,7 @@ export const AppDashboard = () => {
                   "body": [
                     {
                       "type": "button",
-                      "label": "刷新",
+                      "label": localizeMessage('accounts.refresh'),
                       "className": "hidden btn-reload-app-dashboard",
                       "onEvent": {
                         "click": {
@@ -103,22 +104,22 @@ export const AppDashboard = () => {
                     },
                     {
                       "type": "button",
-                      "label": "新建应用",
+                      "label": localizeMessage('accounts.newApp'),
                       "actionType": "dialog",
                       "level": "primary",
                       "visibleOn": "Builder.settings.context.user.is_space_admin == true",
                       "dialog": {
-                        "title": "新建应用",
+                        "title": localizeMessage('accounts.newApp'),
                         "actions": [
                           {
                             "type": "button",
                             "actionType": "cancel",
-                            "label": "取消",
+                            "label": localizeMessage('accounts.Cancel'),
                           },
                           {
                               "type": "button",
                               "actionType": "confirm",
-                              "label": "确定",
+                              "label": localizeMessage('accounts.OK'),
                               "primary": true,
                           }
                         ],
@@ -137,7 +138,7 @@ export const AppDashboard = () => {
                               {
                                 "type": "input-text",
                                 "name": "code",
-                                "label": "应用唯一标识",
+                                "label": localizeMessage('accounts.appCode'),
                                 "value": "a_\${UUID(6)}",
                                 "required": true,
                                 "validateOnChange": true,
@@ -148,14 +149,14 @@ export const AppDashboard = () => {
                               {
                                 "name": "name",
                                 "type": "input-text",
-                                "label": "显示名称",
+                                "label": localizeMessage('accounts.appName'),
                                 "required": true
                               },
                               {
                                   "type": "steedos-field",
-                                  "label": "图标",
+                                  "label": localizeMessage('accounts.appIcon'),
                                   "config": {
-                                      "label": "图标",
+                                      "label": localizeMessage('accounts.appIcon'),
                                       "type": "lookup",
                                       "required": true,
                                       "sort_no": 30,

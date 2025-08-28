@@ -105,5 +105,13 @@
     "accounts.passwordLogin": "Login with password",
     "accounts.codeLogin": "Login with Verify code",
     "accounts.accept_invitation": "Accept invitation",
-    "accounts.decline_invitation": "Decline"
+    "accounts.decline_invitation": "Decline",
+    "accounts.app": "Application",
+    "accounts.appCode": "App ID",
+    "accounts.appName": "Label",
+    "accounts.appIcon": "Icon",
+    "accounts.refresh": "Refresh",
+    "accounts.newApp": "New App",
+    "accounts.Cancel": "Cancel",
+    "accounts.OK": "OK"
 }

@@ -127,5 +127,13 @@
     "accounts.passwordLogin": "密码登录",
     "accounts.codeLogin": "验证码登录",
     "accounts.accept_invitation": "接受邀请",
-    "accounts.decline_invitation": "拒绝"
+    "accounts.decline_invitation": "拒绝",
+    "accounts.app": "应用程序",
+    "accounts.appCode": "应用唯一标识",
+    "accounts.appName": "显示名称",
+    "accounts.appIcon": "图标",
+    "accounts.refresh": "刷新",
+    "accounts.newApp": "新建应用",
+    "accounts.Cancel": "取消",
+    "accounts.OK": "确定"
 }
