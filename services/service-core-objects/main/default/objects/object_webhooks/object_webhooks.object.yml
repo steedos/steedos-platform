@@ -2,4 +2,5 @@ name: object_webhooks
 label: Object Webhook
 icon: output
 hidden: true
+isMetadata: true
 version: 2
