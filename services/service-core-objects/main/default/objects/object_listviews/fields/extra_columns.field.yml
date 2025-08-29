@@ -1,0 +1,18 @@
+name: extra_columns
+label: Extra Columns
+type: lookup
+multiple: true
+is_wide: false
+required: true
+depend_on:
+  - object_name
+reference_to: object_fields
+reference_to_field: name
+enable_enhanced_lookup: false
+filtersFunction: !<tag:yaml.org,2002:js/function> |-
+  function anonymous(filters,values
+  ) {
+    return ['object', '=', values.object_name]
+  }
+sort_no: 355
+group: show_columns

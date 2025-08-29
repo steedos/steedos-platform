@@ -184,6 +184,9 @@ fields:
     label: 接收适配器
     help: "函数签名: (payload, response, api) => payload"
     description: 
+  extra_columns:
+    label: 其他字段
+    description: 仅通过接口查询, 在列表中不显示
 groups:
   advanced: 高级
   share_rules: 共享

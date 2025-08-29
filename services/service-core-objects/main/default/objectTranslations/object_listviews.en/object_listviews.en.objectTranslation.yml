@@ -189,6 +189,9 @@ fields:
     label: Adaptor
     help: "Function signature: (payload, response, api)=>payload"
     description: 
+  extra_columns:
+    label: Extra Columns
+    description: Query only through the interface, not displayed in the list.
 groups:
   advanced: Advanced
   share_rules: Share Rules
