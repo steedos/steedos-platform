@@ -15,7 +15,7 @@ optionsFunction: !!js/function |
       return [];
     }
     _options = [];
-    _object = Creator.getObject(object_name);
+    _object = getUISchemaSync(object_name);
     fields = _object.fields;
     icon = _object.icon;
     _.forEach(fields, function(f, k) {
