@@ -34,9 +34,10 @@ const BASERECORD = {
 
 const isAPIName = function (apiName) {
   const reg = new RegExp("^[a-z]([a-z0-9]|_(?!_))*[a-z0-9]$");
-  if (!reg.test(apiName)) {
+  if (!reg.test(apiName.replace("__c", ""))) {
     throw new Error(
-      "API 名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符",
+      "API 名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符." +
+        apiName,
     );
   }
   if (apiName.length > 50) {
