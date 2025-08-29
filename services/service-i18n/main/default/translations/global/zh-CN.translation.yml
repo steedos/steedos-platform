@@ -5,6 +5,7 @@ CustomLabels:
   asc: 正序
   desc: 降序
   confirm_delete: 确认要删除吗?
+  alert_info: 系统消息
   apps:
     apps_form:
       tab: 选项卡

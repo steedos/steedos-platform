@@ -5,6 +5,7 @@ CustomLabels:
   asc: Asc
   desc: Desc
   confirm_delete: Are you sure you want to delete it?
+  alert_info: System Info
   apps:
     apps_form:
       tab: Tab
