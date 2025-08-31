@@ -149,7 +149,7 @@
                     "id": "u:f2f42d8195ab"
                 },
                 {
-                    "title": "评论",
+                    "title": "${'CustomLabels.cms_files_pagedetail_tab_chatter' | t}",
                     "body": [
                         {
                             "type": "rooms-provider",
