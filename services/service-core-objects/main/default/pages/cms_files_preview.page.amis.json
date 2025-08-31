@@ -13,7 +13,7 @@
             "className": "steedos-record-tabs bg-white p-4 sm:m-4 sm:border sm:rounded",
             "tabs": [
                 {
-                    "title": "预览",
+                    "title": "${'CustomLabels.cms_files_pagedetail_tab_preview' | t}",
                     "className": "tab-container-office-preview",
                     "body": [
                         {
@@ -119,7 +119,7 @@
                     "visibleOn": "${ARRAYINCLUDES(['docx', 'xlsx', 'pdf', 'png', 'jpg', 'jpeg', 'bmp', 'gif', 'webp', 'psd', 'svg', 'tiff'],${extention})}"
                 },
                 {
-                    "title": "详细",
+                    "title": "${'CustomLabels.cms_files_pagedetail_tab_detail' | t}",
                     "body": [
                         {
                             "type": "steedos-object-form",
@@ -134,7 +134,7 @@
                     "id": "u:5d4e7e3f6ecc"
                 },
                 {
-                    "title": "历史版本",
+                    "title": "${'CustomLabels.cms_files_pagedetail_tab_historical_versions' | t}",
                     "body": [
                         {
                             "type": "steedos-object-related-lists",

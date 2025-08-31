@@ -164,7 +164,7 @@ actions:
                             "label": "",
                             "name": "__file",
                             "id": "u:a58d02614e04",
-                            "btnLabel": "上传新版本",
+                            "btnLabel": "${'CustomAction.cms_files.new_version' | t}",
                             "btnClassName": "m-0",
                             "className": "p-0",
                             "multiple": false,
@@ -202,7 +202,7 @@ actions:
                                                 "position": "top-right",
                                                 "closeButton": true,
                                                 "showIcon": true,
-                                                "msg": "上传成功"
+                                                "msg": "${'CustomLabels.cms_files_upload_success' | t}"
                                             },
                                             "actionType": "toast"
                                         },
@@ -265,7 +265,7 @@ actions:
                             "label": "",
                             "name": "__file",
                             "id": "u:a58d02614e04",
-                            "btnLabel": "上传",
+                            "btnLabel": "${'CustomAction.cms_files.standard_new' | t}",
                             "btnClassName": "m-0",
                             "className": "p-0",
                             "multiple": false,
@@ -303,7 +303,7 @@ actions:
                                                 "position": "top-right",
                                                 "closeButton": true,
                                                 "showIcon": true,
-                                                "msg": "${'cms_files.upload.message_success' | t}"
+                                                "msg": "${'CustomLabels.cms_files_upload_success' | t}"
                                             },
                                             "actionType": "toast"
                                         },

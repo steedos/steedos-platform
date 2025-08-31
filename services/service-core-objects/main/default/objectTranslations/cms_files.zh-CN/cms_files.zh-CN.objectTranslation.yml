@@ -35,7 +35,7 @@ listviews:
     label: 所有
 actions:
   standard_new:
-    label: 新建
+    label: 上传
   standard_open_view:
     label: 查看
   online_preview:
@@ -48,3 +48,8 @@ actions:
     label: 下载
   new_version:
     label: 上传新版本
+CustomLabels:
+  cms_files_upload_success: 上传成功
+  cms_files_pagedetail_tab_preview: 预览
+  cms_files_pagedetail_tab_detail: 详细
+  cms_files_pagedetail_tab_historical_versions: 历史版本

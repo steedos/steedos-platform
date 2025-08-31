@@ -6,7 +6,7 @@ amis_schema: |-
           {
               "id": "u:download",
               "type": "button",
-              "label": "下载",
+              "label": "${'CustomAction.cms_files.download' | t}",
               "onEvent": {
                   "click": {
                       "actions": [

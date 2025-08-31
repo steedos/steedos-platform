@@ -35,7 +35,7 @@ listviews:
     label: all
 actions:
   standard_new:
-    label: New
+    label: Upload
   standard_open_view:
     label: Open View
   online_preview:
@@ -48,3 +48,8 @@ actions:
     label: Download
   new_version:
     label: Upgrade
+CustomLabels:
+  cms_files_upload_success: Uploaded successfully
+  cms_files_pagedetail_tab_preview: Preview
+  cms_files_pagedetail_tab_detail: Details
+  cms_files_pagedetail_tab_historical_versions: Historical Versions
