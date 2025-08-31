@@ -167,8 +167,25 @@ actions:
     label: Verify Email
   verify_mobile:
     label: Verify Mobile
+  clear_login_tokens:
+    label: Log out all logins
 CustomLabels:
   space_users_field_profile_def_options_admin: Administrator
   space_users_field_profile_def_options_user: Employee
   space_users_field_profile_def_options_supplier: Supplier
   space_users_field_profile_def_options_customer: Customer
+  space_users_actions_disable_confirmText: Are you sure you want to disable this user?
+  space_users_actions_disable_success: The user has disabled successfully
+  space_users_actions_disable_failed: The user failed to disable. Please try again later
+  space_users_actions_enable_confirmText: Are you sure you want to enable this user?
+  space_users_actions_enable_success: The user has enabled successfully
+  space_users_actions_enable_failed: The user failed to enable. Please try again later
+  space_users_actions_lockout_confirmText: Are you sure you want to lockout this user?
+  space_users_actions_lockout_success: The user has lockouted successfully
+  space_users_actions_lockout_failed: The user failed to lockout. Please try again later
+  space_users_actions_unlock_confirmText: Are you sure you want to unlock this user?
+  space_users_actions_unlock_success: The user has unlocked successfully
+  space_users_actions_unlock_failed: The user failed to unlock. Please try again later
+  space_users_actions_clear_login_tokens_confirmText: After logging out of all logins, all the logged-in flowers and clients of the user need to log in again. Are you sure you want to clean it up?
+  space_users_actions_clear_login_tokens_success: Logging out successfully
+

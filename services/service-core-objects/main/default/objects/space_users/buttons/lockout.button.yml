@@ -19,9 +19,9 @@ amis_schema: |-
       "body": [
         {
           "type": "button",
-          "label": "锁定",
+          "label": "${'CustomAction.space_users.lockout' | t}",
           "id": "u:lockout",
-          "confirmText": "确定要锁定此用户吗?",
+          "confirmText": "${'CustomLabels.space_users_actions_lockout_confirmText' | t}",
           "onEvent": {
             "click": {
               "weight": 0,
@@ -32,11 +32,7 @@ amis_schema: |-
                     "url": "/service/api/space_users/lockout",
                     "method": "post",
                     "requestAdaptor": "api.data={suId: context.recordId}\n\n\nreturn api;",
-                    "adaptor": "",
-                    "messages": {
-                      "success": "用户已锁定",
-                      "failed": "用户锁定失败,请稍后再试"
-                    }
+                    "adaptor": "return payload.success ? {data: {...payload}, status: 0, msg: t('CustomLabels.space_users_actions_lockout_success')} : {...payload, status: 1, msg: t('CustomLabels.space_users_actions_lockout_failed')};"
                   }
                 },
                 {

@@ -5,10 +5,10 @@ amis_schema: |-
       "body": [
           {
               "type": "button",
-              "label": "注销所有登录",
+              "label": "${'CustomAction.space_users.clear_login_tokens' | t}",
               "id": "u:clear_login_tokens",
               "editorState": "default",
-              "confirmText": "注销所有登录后, 用户所有已登录的流程器、客户端都需要重新登录. 确定要清理吗?",
+              "confirmText": "${'CustomLabels.space_users_actions_clear_login_tokens_confirmText' | t}",
               "hiddenOn": "context.user.is_space_admin != true || Steedos.settings.public.enable_saas == true",
               "onEvent": {
                   "click": {
@@ -23,10 +23,7 @@ amis_schema: |-
                                       "url": "${context.rootUrl}/api/users/${record.user}/clear_login_tokens",
                                       "method": "get",
                                       "requestAdaptor": "",
-                                      "adaptor": "",
-                                      "messages": {
-                                          "success": "注销成功"
-                                      }
+                                      "adaptor": "return payload.success ? {data: {...payload}, status: 0, msg: t('CustomLabels.space_users_actions_clear_login_tokens_success')} : {...payload, status: 1};"
                                   }
                               }
                           }

@@ -20,9 +20,9 @@ amis_schema: |-
       "body": [
         {
           "type": "button",
-          "label": "解锁",
+          "label": "${'CustomAction.space_users.unlock' | t}",
           "id": "u:lockout",
-          "confirmText": "确定要解锁此用户吗?",
+          "confirmText": "${'CustomLabels.space_users_actions_unlock_confirmText' | t}",
           "onEvent": {
             "click": {
               "weight": 0,
@@ -33,11 +33,7 @@ amis_schema: |-
                     "url": "/service/api/space_users/unlock",
                     "method": "post",
                     "requestAdaptor": "api.data={suId: context.recordId}\n\n\nreturn api;",
-                    "adaptor": "",
-                    "messages": {
-                      "success": "用户已解锁",
-                      "failed": "用户解锁失败,请稍后再试"
-                    }
+                    "adaptor": "return payload.success ? {data: {...payload}, status: 0, msg: t('CustomLabels.space_users_actions_unlock_success')} : {...payload, status: 1, msg: t('CustomLabels.space_users_actions_unlock_failed')};"
                   }
                 },
                 {

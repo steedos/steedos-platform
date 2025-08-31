@@ -156,7 +156,7 @@ actions:
   setPassword:
     label: 修改密码
   disable:
-    label: 停用
+    label: 禁用
   enable:
     label: 启用
   lockout:
@@ -167,8 +167,24 @@ actions:
     label: 验证邮箱
   verify_mobile:
     label: 验证手机
+  clear_login_tokens:
+    label: 注销所有登录
 CustomLabels:
   space_users_field_profile_def_options_admin: 管理员
   space_users_field_profile_def_options_user: 员工
   space_users_field_profile_def_options_supplier: 供应商
   space_users_field_profile_def_options_customer: 客户
+  space_users_actions_disable_confirmText: 确定要禁用此用户吗？
+  space_users_actions_disable_success: 用户已禁用
+  space_users_actions_disable_failed: 用户禁用失败，请稍后再试
+  space_users_actions_enable_confirmText: 确定要启用此用户吗？
+  space_users_actions_enable_success: 用户已启用
+  space_users_actions_enable_failed: 用户启用失败，请稍后再试
+  space_users_actions_lockout_confirmText: 确定要锁定此用户吗？
+  space_users_actions_lockout_success: 用户已锁定
+  space_users_actions_lockout_failed: 用户锁定失败，请稍后再试
+  space_users_actions_unlock_confirmText: 确定要解锁此用户吗？
+  space_users_actions_unlock_success: 用户已解锁
+  space_users_actions_unlock_failed: 用户解锁失败，请稍后再试
+  space_users_actions_clear_login_tokens_confirmText: 注销所有登录后，用户所有已登录的流程器、客户端都需要重新登录。 确定要清理吗？
+  space_users_actions_clear_login_tokens_success: 注销成功
