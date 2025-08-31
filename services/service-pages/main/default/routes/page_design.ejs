@@ -50,7 +50,10 @@
         authToken: "<%=authToken%>",
         pageId: "<%=pageId%>",
         messageOnly: true,
-        useOpenAPI: useOpenAPI
+        useOpenAPI: useOpenAPI,
+        title: "<%=locale%>" === 'zh-CN' ? '微页面设计器': 'Page Designer',
+        saveText: "<%=locale%>" === 'zh-CN' ? '保存': 'Save',
+        deployText: "<%=locale%>" === 'zh-CN' ? '发布': 'Deploy',
       };
 
       let comp = document.querySelector("builder-fiddle");

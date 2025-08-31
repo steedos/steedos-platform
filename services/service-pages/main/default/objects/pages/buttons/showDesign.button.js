@@ -9,7 +9,7 @@ module.exports = {
         // Steedos.openWindow();
         var locale = Builder.settings.context?.user?.language || window.navigator.language;
         if(locale === 'en' || locale.startsWith('en-')){
-            locale = 'en-us'
+            locale = 'en-US'
         }
         document.location = Steedos.absoluteUrl(`/api/pageDesign?pageId=${record_id}&assetUrls=${Builder.settings.assetUrls}&locale=${locale}`);
     },

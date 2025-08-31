@@ -7110,10 +7110,10 @@
   resolved "https://registry.yarnpkg.com/@stablelib/base64/-/base64-1.0.1.tgz#bdfc1c6d3a62d7a3b7bbc65b6cce1bb4561641be"
   integrity sha512-1bnPQqSxSuc3Ii6MhBysoWCg58j97aUjuCSZrGSmDxNqtytIi0k8utUenAwTZN4V5mXXYGsVUI9zeBqy+jBOSQ==
 
-"@steedos-builder/amis-editor@6.3.0-beta.13":
-  version "6.3.0-beta.13"
-  resolved "https://registry.yarnpkg.com/@steedos-builder/amis-editor/-/amis-editor-6.3.0-beta.13.tgz#2f06d5358645488e585dc21f81a9c45341735845"
-  integrity sha512-ysK2GNyNAqQQz8prpZ7WOht6Uu7t3vZJdPX1RB1O2Cld4QeYy0ozQkct/zTvL3fzAkYFNdSZwXRavLLTlDaisw==
+"@steedos-builder/amis-editor@6.3.0-beta.15":
+  version "6.3.0-beta.15"
+  resolved "https://registry.npmjs.org/@steedos-builder/amis-editor/-/amis-editor-6.3.0-beta.15.tgz#984cc977e33049c4c0286b4918afde6eba1bd547"
+  integrity sha512-35A1pV3mqL0Rt9BOEx6J19oVDKq67xApo6muHufQJ82zLavNUK0TbvT6EybOHCC/puYXbNVIEITz5o2og9oERg==
 
 "@steedos-labs/analytics@3.0.3":
   version "3.0.3"

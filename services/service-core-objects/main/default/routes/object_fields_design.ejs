@@ -59,7 +59,10 @@
         useOpenAPI: useOpenAPI,
         oid: "<%=id%>",
         pageId: "<%=id%>",
-        hiddenDeploy: true
+        hiddenDeploy: true,
+        title: "<%=locale%>" === 'zh-CN' ? '对象设计器': 'Object Designer',
+        saveText: "<%=locale%>" === 'zh-CN' ? '保存': 'Save',
+        deployText: "<%=locale%>" === 'zh-CN' ? '发布': 'Deploy',
       };
 
       let comp = document.querySelector("builder-fiddle");

@@ -37,9 +37,9 @@ router.get('/api/amisObjectFieldsDesign', auth.requireAuthentication, async func
         //     authToken: userSession.authToken
         // }
         let locale = "zh-CN";
-        if (req.query.locale == "en-us") {
+        if (req.query.locale?.startsWith('en')) {
             locale = "en-US";
-        } else if (req.query.locale == "zh-cn") {
+        } else if (req.query?.locale == "zh-cn") {
             locale = "zh-CN";
         }
         const retUrl = req.query.retUrl || process.env.ROOT_URL + '/app/admin/objects/view/' + req.query.oid
@@ -56,7 +56,8 @@ router.get('/api/amisObjectFieldsDesign', auth.requireAuthentication, async func
             authToken: userSession.authToken,
             userSession: userSession,
             id: req.query.oid,
-            useOpenAPI: process.env.STEEDOS_PUBLIC_USE_OPEN_API
+            useOpenAPI: process.env.STEEDOS_PUBLIC_USE_OPEN_API,
+            locale: locale
         }
         const options = {}
         ejs.renderFile(filename, data, options, function(err, str){

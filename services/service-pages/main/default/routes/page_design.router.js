@@ -37,7 +37,7 @@ router.get('/api/pageDesign', auth.requireAuthentication, async function (req, r
         //     authToken: userSession.authToken
         // }
         let locale = "zh-CN";
-        if (req.query.locale == "en-us") {
+        if (req.query.locale?.startsWith('en')) {
             locale = "en-US";
         } else if (req.query.locale == "zh-cn") {
             locale = "zh-CN";
@@ -57,7 +57,8 @@ router.get('/api/pageDesign', auth.requireAuthentication, async function (req, r
             authToken: userSession.authToken,
             pageId: req.query.pageId,
             userSession: userSession,
-            useOpenAPI: process.env.STEEDOS_PUBLIC_USE_OPEN_API
+            useOpenAPI: process.env.STEEDOS_PUBLIC_USE_OPEN_API,
+            locale: locale
         }
         const options = {}
         ejs.renderFile(filename, data, options, function(err, str){

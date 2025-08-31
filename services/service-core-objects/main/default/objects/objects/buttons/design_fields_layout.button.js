@@ -15,8 +15,11 @@ module.exports = {
         if (!record) {
             return toastr.error("未找到记录");
         }
-
-        window.open(Steedos.getRelativeUrl("/api/amisObjectFieldsDesign?oid=" + record_id+`&assetUrls=${Builder.settings.assetUrls}`));
+        var locale = Builder.settings.context?.user?.language || window.navigator.language;
+        if(locale === 'en' || locale.startsWith('en-')){
+            locale = 'en-US'
+        }
+        window.open(Steedos.getRelativeUrl("/api/amisObjectFieldsDesign?oid=" + record_id+`&assetUrls=${Builder.settings.assetUrls}&locale=${locale}`));
     },
     design_fields_layoutVisible: function(object_name, record_id, record_permissions, data) {
         var record = data && data.record;
