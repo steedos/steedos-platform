@@ -66,6 +66,8 @@ fields:
     label: Execute Script
     help: 
     description: 
+  is_system:
+    label: System
 listviews:
   all:
     label: All

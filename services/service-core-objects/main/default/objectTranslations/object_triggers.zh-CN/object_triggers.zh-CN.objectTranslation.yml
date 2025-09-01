@@ -41,6 +41,15 @@ fields:
     label: 系统
     help: 
     description: 
+  type:
+    label: 类型
+    help: 
+    description: 
+    options:
+      - label: 代码
+        value: code
+      - label: 接口
+        value: url
 listviews:
   all:
     label: 所有

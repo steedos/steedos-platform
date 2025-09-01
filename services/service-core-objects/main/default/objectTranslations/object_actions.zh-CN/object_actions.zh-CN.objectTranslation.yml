@@ -63,6 +63,8 @@ fields:
     label: 执行的脚本
     help: 
     description: 
+  is_system:
+    label: 系统
 listviews:
   all:
     label: 所有

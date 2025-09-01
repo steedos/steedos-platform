@@ -194,6 +194,8 @@ actions:
     label: Reset
   delete_object:
     label: Delete
+  custom:
+    label: Customize
 CustomLabels:
   objects_field_datasource_defaultValue: Default data source
   objects_field_datasource_meteor: Meteor
@@ -205,3 +207,5 @@ CustomLabels:
   objects_actions_delete_object_dialog_content: "<div>\n<div style=\"text-align: left;\">To delete a custom object, perform the following operations:</div>\n<ul>\n<li style=\"text-align: left;\">Delete the fields and buttons of the object</li>\n<li style=\"text-align: left;\">Delete the tabs and list views of the object</li>\n<li style=\"text-align: left;\">Delete the page layouts of the object</li>\n<li style=\"text-align: left;\">Delete the permission of the object</li>\n<li style=\"text-align: left;\">Delete the validation rules of the object</li>\n<li style=\"text-align: left;\">Delete the restriction rules of the object</li>\n<li style=\"text-align: left;\">Delete the sharing rules of the object</li>\n<li style=\"text-align: left;\">Delete the workflow mapping that uses this object</li>\n<li style=\"text-align: left;\">Delete the open processes that use this object</li>\n<li style=\"text-align: left;\">Delete the pages that uses this object</li>\n</ul>\n</div>"
   objects_actions_reset_dialog_title_prefix: "Reset Object:"
   objects_actions_reset_dialog_content: "<div>\n<div style=\"text-align: left;\">Reset a custom object by performing the following operations:</div>\n<ul>\n<li style=\"text-align: left;\">Delete the custom object</li>\n<li style=\"text-align: left;\">Delete the fields of the custom object</li>\n</ul>\n</div>"
+  objects_actions_custom_success: The object has been customized.
+  objects_actions_custom_failed: Custom failed====

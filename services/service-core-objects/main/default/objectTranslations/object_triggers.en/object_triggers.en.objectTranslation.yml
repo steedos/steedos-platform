@@ -44,6 +44,15 @@ fields:
     label: System
     help: 
     description: 
+  type:
+    label: Type
+    help: 
+    description: 
+    options:
+      - label: Code
+        value: code
+      - label: Url
+        value: url
 listviews:
   all:
     label: All Triggers

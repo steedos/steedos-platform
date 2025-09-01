@@ -199,6 +199,8 @@ actions:
     label: 重置
   delete_object:
     label: 删除
+  custom:
+    label: 自定义
 CustomLabels:
   objects_field_datasource_defaultValue: 默认数据源
   objects_field_datasource_meteor: Meteor
@@ -210,3 +212,5 @@ CustomLabels:
   objects_actions_delete_object_dialog_content: "<div>\n<div style=\"text-align: left;\">删除一个自定义对象进行以下操作：</div>\n<ul>\n<li style=\"text-align: left;\">删除对象的字段和按钮</li>\n<li style=\"text-align: left;\">删除对象的选项卡和列表视图</li>\n<li style=\"text-align: left;\">删除对象的页面布局</li>\n<li style=\"text-align: left;\">删除对象的权限</li>\n<li style=\"text-align: left;\">删除对象的验证规则</li>\n<li style=\"text-align: left;\">删除对象的限制规则</li>\n<li style=\"text-align: left;\">删除对象的共享规则</li>\n<li style=\"text-align: left;\">删除使用该对象的流程映射</li>\n<li style=\"text-align: left;\">删除使用该对象的开放流程</li>\n<li style=\"text-align: left;\">删除使用该对象的页面</li>\n</ul>\n</div>"
   objects_actions_reset_dialog_title_prefix: "重置对象: "
   objects_actions_reset_dialog_content: "<div>\n<div style=\"text-align: left;\">重置一个自定义对象进行以下操作：</div>\n<ul>\n<li style=\"text-align: left;\">删除自定义的对象</li>\n<li style=\"text-align: left;\">删除自定义对象的字段</li>\n</ul>\n</div>"
+  objects_actions_custom_success: 对象已自定义。
+  objects_actions_custom_failed: 自定义失败
