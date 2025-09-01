@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-package-registry",
-  "version": "3.0.0-beta.90",
+  "version": "3.0.0-beta.92",
   "description": "",
   "main": "package.service.js",
   "scripts": {
@@ -9,10 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@steedos/auth": "3.0.0-beta.90",
-    "@steedos/metadata-core": "3.0.0-beta.90",
-    "@steedos/objectql": "3.0.0-beta.90",
-    "@steedos/service-package-loader": "3.0.0-beta.90",
+    "@steedos/auth": "3.0.0-beta.92",
+    "@steedos/metadata-core": "3.0.0-beta.92",
+    "@steedos/objectql": "3.0.0-beta.92",
+    "@steedos/service-package-loader": "3.0.0-beta.92",
     "clone": "^2.1.2",
     "fs-extra": "8.1.0",
     "i18next": "20.3.2",
@@ -31,5 +31,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "196645f156c4c4cf4d07f288117c5e5d271bba0f"
+  "gitHead": "16a684ff645d0a9b745e4b49309f2c63d6a41395"
 }
