@@ -2,6 +2,10 @@ name: base
 label: base
 description: 
 fields:
+  external_id:
+    label: 外部ID
+    help: 
+    description: 
   owner:
     label: 所有者
     help: 

@@ -2,6 +2,10 @@ name: base
 label: 
 description: 
 fields:
+  external_id:
+    label: External Id
+    help: 
+    description: 
   owner:
     label: Owner
     help: 
