@@ -203,3 +203,15 @@ actions:
     label: 自定义
   reset:
     label: 重置
+  enable:
+    label: 启用
+  disable:
+    label: 停用
+CustomLabels:
+  apps_not_found: 未找到应用
+  apps_actions_enable_dialog_title: 启用
+  apps_actions_enable_dialog_content_prefix: 确定要启用「
+  apps_actions_enable_dialog_content_suffix: 」应用？
+  apps_actions_disable_dialog_title: 停用
+  apps_actions_disable_dialog_content_prefix: 确定要停用「
+  apps_actions_disable_dialog_content_suffix: 」应用？

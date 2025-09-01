@@ -1,3 +1,9 @@
+/*
+ * @Author: 殷亮辉 yinlianghui@hotoa.com
+ * @Date: 2025-07-07 16:57:38
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2025-09-01 17:18:58
+ */
 module.exports = {
     uninstall: function (object_name, record_id) {
         Steedos.sobject(object_name).retrieve(record_id).then((record)=>{
@@ -7,7 +13,7 @@ module.exports = {
 
             SteedosUI.Modal.confirm({
                 title: t('steedos_packages.uninstall.text') + ` ${record.name} 吗?` ,
-                content: `卸载后，该软件包中的所有组件将被永久删除且无法恢复`,
+                content: t('steedos_packages.uninstall.content'),
                 okText: t('steedos_packages.uninstall.title'),
                 cancelText: t('Cancel'),
                 width: 480,

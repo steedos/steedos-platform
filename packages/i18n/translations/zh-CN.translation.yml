@@ -1390,6 +1390,7 @@ CustomLabels:
     pending: 流转中
     completed: 已结束
   instance:
+    draft_deleted_success: 草稿已删除
     formatter:
       date:
         simple_date: YYYY年MM月DD日
@@ -1854,11 +1855,17 @@ CustomLabels:
     uninstall:
       title: 卸载
       text: 确定要卸载
+      content: 卸载后，该软件包中的所有组件将被永久删除且无法恢复
       toast_info: 卸载中，请稍后...
       toastr_success: 已卸载
     reload:
       toastr_info: 重新加载中，请稍后...
       toastr_success: 已重新加载
+    enable:
+        title: 启用
+        text: 确定要启用 
+        toast_info: 启用中，请稍后..
+        toastr_success: 已启用
     disable:
         title: 停用
         text: 确定要停用 

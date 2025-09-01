@@ -17,7 +17,7 @@
                     "className": "steedos-record-tabs bg-white p-4 sm:m-4 sm:border sm:rounded",
                     "tabs": [
                         {
-                            "title": "简介",
+                            "title": "${'CustomLabels.steedos_packages_tab_introduce_title' | t}",
                             "body": [
                                 {
                                     "type": "markdown",
@@ -31,7 +31,7 @@
                             "id": "u:8ca26c842ff6"
                         },
                         {
-                            "title": "软件包组件",
+                            "title": "${'CustomLabels.steedos_packages_tab_components_title' | t}",
                             "body": [
                                 {
                                     "type": "steedos-object-form",
@@ -56,7 +56,7 @@
                             "className": "p-0"
                         },
                         {
-                            "title": "详细信息",
+                            "title": "${'CustomLabels.steedos_packages_tab_details_title' | t}",
                             "body": [
                                 {
                                     "type": "steedos-object-form",

@@ -1,0 +1,12 @@
+name: steedos_packages
+label: 软件包
+description: 
+CustomLabels:
+  steedos_packages_tab_introduce_title: 简介
+  steedos_packages_tab_components_title: 软件包组件
+  steedos_packages_tab_details_title: 详细信息
+  steedos_packages_button_enable_dialog_title: 启用
+  steedos_packages_button_enable_dialog_confirm_text_prefix: 确定要启用「
+  steedos_packages_button_enable_dialog_confirm_text_suffix: 」？
+  steedos_packages_button_enable_dialog_button_ok: 启用
+  steedos_packages_button_enable_dialog_message_success: 已启用
