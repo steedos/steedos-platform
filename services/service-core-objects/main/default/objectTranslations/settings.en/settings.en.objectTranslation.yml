@@ -18,3 +18,12 @@ fields:
     label: Settings
     help: 
     description: 
+  is_public:
+    label: Public
+    help: Accessible at the front end
+    description: 
+listviews:
+  all:
+    label: All
+  recent:
+    label: Recent
