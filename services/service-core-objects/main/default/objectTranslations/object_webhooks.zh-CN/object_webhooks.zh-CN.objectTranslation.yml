@@ -10,21 +10,23 @@ fields:
     label: 对象
     help: 
     description: 
-  events:
-    label: 事件
+  event:
+    label: 何时触发
     help: 
     options:
-      - label: 新增
+      - label: 记录已创建
         value: create
-      - label: 修改
+      - label: 记录已更新
         value: update
-      - label: 删除
+      - label: 记录已创建或已更新
+        value: createAndUpdate
+      - label: 记录已删除
         value: delete
     description: 
   fields:
     label: 推送字段
     help: 
-    description: 
+    description: 如果未配置, 则推送所有字段
   payload_url:
     label: URL
     help: 

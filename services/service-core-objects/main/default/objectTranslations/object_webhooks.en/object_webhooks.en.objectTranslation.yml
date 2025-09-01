@@ -10,21 +10,23 @@ fields:
     label: Object
     help: 
     description: 
-  events:
-    label: Events
+  event:
+    label: When to trigger
     help: 
     options:
-      - label: create
+      - label: The record has been created.
         value: create
-      - label: update
+      - label: The record has been updated.
         value: update
-      - label: delete
+      - label: The record has been created or updated
+        value: createAndUpdate
+      - label: The record has been deleted.
         value: delete
     description: 
   fields:
     label: Fields
     help: 
-    description: 
+    description: If not configured, push all fields
   payload_url:
     label: Payload URL
     help: 
