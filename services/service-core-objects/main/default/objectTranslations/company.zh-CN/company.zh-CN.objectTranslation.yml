@@ -48,3 +48,8 @@ listviews:
 actions:
   updateOrgs:
     label: 更新组织
+CustomLabels:
+  company_actions_updateOrgs_confirmText_prefix: 更新「
+  company_actions_updateOrgs_confirmText_suffix: 」组织信息？
+  company_actions_updateOrgs_success: 更新组织信息成功
+  company_actions_updateOrgs_failed: 更新组织信息失败，请稍后再试

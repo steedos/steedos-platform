@@ -48,3 +48,8 @@ listviews:
 actions:
   updateOrgs:
     label: Update The Whole Company
+CustomLabels:
+  company_actions_updateOrgs_confirmText_prefix: Update the company「
+  company_actions_updateOrgs_confirmText_suffix: 」info？
+  company_actions_updateOrgs_success: The company has updated successfully
+  company_actions_updateOrgs_failed: The company failed to update. Please try again later

@@ -5,10 +5,10 @@ amis_schema: |-
       "body": [
           {
               "type": "button",
-              "label": "更新组织",
+              "label": "${'CustomAction.company.updateOrgs' | t}",
               "id": "u:updateOrgs",
               "editorState": "default",
-              "confirmText": "更新「${record.name}」组织信息?",
+              "confirmText": "${'CustomLabels.company_actions_updateOrgs_confirmText_prefix' | t}${name}${'CustomLabels.company_actions_updateOrgs_confirmText_suffix' | t}",
               "onEvent": {
                   "click": {
                       "weight": 0,
@@ -23,10 +23,7 @@ amis_schema: |-
                                   "method": "post",
                                   "requestAdaptor": "api.data = {\n    companyId: context.recordId\n}\nreturn api;",
                                   "adaptor": "",
-                                  "messages": {
-                                      "success": "更新组织信息成功",
-                                      "failed": "更新组织信息失败"
-                                  },
+                                  "adaptor": "return payload.updatedOrgs ? {data: {...payload}, status: 0, msg: t('CustomLabels.company_actions_updateOrgs_success')} : {...payload, status: 1, msg: t('CustomLabels.company_actions_updateOrgs_failed')};",
                                   "dataType": "json"
                               }
                           }
