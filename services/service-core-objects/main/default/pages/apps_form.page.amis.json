@@ -85,6 +85,7 @@
                     "type": "button",
                     "id": "u:a35a2276145d",
                     "label": "${'apps.apps_form.tab_generate' | t}",
+                    "hidden": true,
                     "onEvent": {
                       "click": {
                         "actions": [
