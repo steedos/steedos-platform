@@ -7126,15 +7126,15 @@
     moment-timezone "^0.5.43"
     ttag "^1.7.29"
 
-"@steedos-labs/plugin-package-store@^1.0.8":
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/@steedos-labs/plugin-package-store/-/plugin-package-store-1.0.8.tgz#3646ac19349ad6ce0a58efc38e81e35a00fd5e43"
-  integrity sha512-21u5PEcgC4AtDTR0KnTo+gu30YD86esmV5yZJC/HrttvSBcj1yCjP89F3g9WXIm4BlzEI8aqPFvqWNnNPjXioQ==
+"@steedos-labs/plugin-package-store@^1.0.9":
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/@steedos-labs/plugin-package-store/-/plugin-package-store-1.0.9.tgz#13dfcd3bdc842ae498b4b55de18d974ed2c313af"
+  integrity sha512-hQiKdlw1s7uXL7UzPOUHs9oTlFGJejYyvjxnHo87b7S36ekddqvjCj4GngEBelPCfHOiKggNwOP28YHReFmTSw==
 
-"@steedos-labs/plugin-workflow@3.0.0-beta.23":
-  version "3.0.0-beta.23"
-  resolved "https://registry.yarnpkg.com/@steedos-labs/plugin-workflow/-/plugin-workflow-3.0.0-beta.23.tgz#6dcf8e7798a0b19175cfa593253df8156ab95cc4"
-  integrity sha512-eY2K3rJefJmeKi/m4hFEaM6A0ocygCPN4fCpig7k0Yh0LQl9EKqHyfmbOH/m0kUvHuhSRAs61ZyDNGK2xhBC9Q==
+"@steedos-labs/plugin-workflow@3.0.0-beta.24":
+  version "3.0.0-beta.24"
+  resolved "https://registry.yarnpkg.com/@steedos-labs/plugin-workflow/-/plugin-workflow-3.0.0-beta.24.tgz#b80a743ff589236ade3ebd96366d69c4b8d1e460"
+  integrity sha512-HQLN2dYyBReHQGOOmfGyGyYkOOVcQoUoxZsSrokLkr25DgkdGKwtCEIG7dfvCcLTl6T4RuwVvB0P/WJEYbFeJQ==
   dependencies:
     formidable "2.0.1"
     graphql-parse-resolve-info "^4.12.3"
