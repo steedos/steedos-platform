@@ -17,17 +17,17 @@ fields:
       (false).
     description: 
   description:
-    label: description
+    label: Description
     help: 
     description: 
   error_condition_formula:
-    label: errorConditionFormula
+    label: Error Condition Formula
     help: >-
       The formula defined in the validation rule. If the formula returns a value
       of true, an error message is displayed.
     description: 
   error_message:
-    label: errorMessage
+    label: Error Message
     help: >-
       The message that appears if the validation rule fails. The message must be
       255 characters or less.
