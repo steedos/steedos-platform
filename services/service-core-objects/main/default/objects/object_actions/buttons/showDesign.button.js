@@ -1,6 +1,10 @@
 module.exports = { 
 showDesign:function (object_name, record_id) {
-    document.location = Steedos.absoluteUrl(`/api/amisButtonDesign?id=${record_id}&object=${this.record.record.object}&assetUrls=${Builder.settings.assetUrls}&locale=${Builder.settings.locale}`);
+    var locale = Builder.settings.context?.user?.language || window.navigator.language;
+    if(locale === 'en' || locale.startsWith('en-')){
+        locale = 'en-US'
+    }
+    document.location = Steedos.absoluteUrl(`/api/amisButtonDesign?id=${record_id}&object=${this.record.record.object}&assetUrls=${Builder.settings.assetUrls}&locale=${locale}`);
   },
 showDesignVisible:function (object_name, record_id, record_permissions, data) {
       var perms;

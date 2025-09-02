@@ -35,7 +35,7 @@ router.get('/api/amisButtonDesign', auth.requireAuthentication, async function (
         // }
 
         let locale = "zh-CN";
-        if (req.query.locale == "en-us") {
+        if (req.query.locale?.startsWith('en')) {
             locale = "en-US";
         } else if (req.query.locale == "zh-cn") {
             locale = "zh-CN";
@@ -56,7 +56,8 @@ router.get('/api/amisButtonDesign', auth.requireAuthentication, async function (
             userId: userSession.userId,
             authToken: userSession.authToken,
             id: req.query.id,
-            userSession: userSession
+            userSession: userSession,
+            locale
         }
         const options = {}
         ejs.renderFile(filename, data, options, function(err, str){

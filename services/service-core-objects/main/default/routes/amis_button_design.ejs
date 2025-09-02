@@ -16,7 +16,10 @@
         id: "<%=id%>",
         pageId: "<%=id%>",
         messageOnly: true,
-        hiddenDeploy: true
+        hiddenDeploy: true,
+        title: "<%=locale%>" === 'zh-CN' ? '按钮设计器': 'Button Designer',
+        saveText: "<%=locale%>" === 'zh-CN' ? '保存': 'Save',
+        deployText: "<%=locale%>" === 'zh-CN' ? '发布': 'Deploy',
       };
 
       let comp = document.querySelector("builder-fiddle");
