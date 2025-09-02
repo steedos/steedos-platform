@@ -23,6 +23,10 @@ fields:
       - label: The record has been deleted.
         value: delete
     description: 
+  condition:
+    label: Admission conditions
+    help: Specify access conditions to reduce the number of triggered executions. Minimizing the number of unnecessary executions will help save resources. If you create something that will be triggered when the record is updated, we recommend defining the admission conditions first. Then, for when to run for the updated record, select the option "Only when the updated record meets the condition requirements".
+    description: 
   fields:
     label: Fields
     help: 

@@ -5,7 +5,7 @@ amis_schema: |-
       "body": [
           {
               "type": "button",
-              "label": "验证信息",
+              "label": "${'CustomAction.steedos_packages.edit_npmrc' | t}",
               "id": "u:edit_npmrc",
               "editorState": "default",
               "onEvent": {
@@ -16,7 +16,7 @@ amis_schema: |-
                               "actionType": "dialog",
                               "dialog": {
                                   "type": "dialog",
-                                  "title": "验证信息",
+                                  "title": "${'CustomAction.steedos_packages.edit_npmrc' | t}",
                                   "body": [
                                       {
                                           "type": "form",
@@ -49,7 +49,7 @@ amis_schema: |-
                                       },
                                         {
                                         "type": "markdown",
-                                        "value": "##### 验证信息说明(.npmrc)：\r- `; 为范围包设置新的注册表`\r- `@myscope:registry=https://mycustomregistry.example.org`\r- `; 配置新注册表的认证信息(可选)`\r- `//mycustomregistry.example.org:_authToken=\"认证信息\"`"
+                                        "value": "${'steedos_packages_button_edit_npmrc_dialog_describe' | t}"
                                         }
                                   ],
                                   "showCloseButton": true,

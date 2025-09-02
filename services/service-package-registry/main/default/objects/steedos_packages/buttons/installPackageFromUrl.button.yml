@@ -18,6 +18,22 @@ amis_schema: |-
                               "dialog": {
                                   "type": "dialog",
                                   "title": "${'steedos_packages.install.install_package_from_url' | t}",
+                                  "data": {
+                                    "registryOptions": [
+                                        {
+                                            "label": "${'steedos_packages_button_installPackageFromUrl_dialog_field_registry_option_taobao' | t}",
+                                            "value": "https://registry.npmmirror.com"
+                                        },
+                                        {
+                                            "label": "${'steedos_packages_button_installPackageFromUrl_dialog_field_registry_option_cnpm' | t}",
+                                            "value": "https://r.cnpmjs.org"
+                                        },
+                                        {
+                                            "label": "${'steedos_packages_button_installPackageFromUrl_dialog_field_registry_option_npmjs' | t}",
+                                            "value": "https://registry.npmjs.org"
+                                        }
+                                    ]
+                                  },
                                   "body": [
                                       {
                                           "type": "form",
@@ -32,25 +48,12 @@ amis_schema: |-
                                                   "required": true
                                               },
                                               {
-                                                  "label": "镜像源",
+                                                  "label": "${'steedos_packages_button_installPackageFromUrl_dialog_field_registry' | t}",
                                                   "type": "input-text",
                                                   "name": "registry",
                                                   "id": "u:524cb8f8d666",
                                                   "required": false,
-                                                  "options": [
-                                                        {
-                                                            "label": "淘宝源",
-                                                            "value": "https://registry.npmmirror.com"
-                                                        },
-                                                        {
-                                                            "label": "cnpm",
-                                                            "value": "https://r.cnpmjs.org"
-                                                        },
-                                                        {
-                                                            "label": "官方源",
-                                                            "value": "https://registry.npmjs.org"
-                                                        }
-                                                    ]
+                                                  "source": "${registryOptions}"
                                               }
                                           ],
                                           "mode": "normal",
@@ -67,9 +70,9 @@ amis_schema: |-
                                               }
                                           },
                                           "messages": {
-                                              "fetchFailed": "初始化失败",
-                                              "saveSuccess": "安装成功", 
-                                              "saveFailed": "安装失败" 
+                                              "fetchFailed": "Initialization failed",
+                                              "saveSuccess": "Installation successful", 
+                                              "saveFailed": "Installation failed" 
                                           },
                                           "onEvent": {
                                             "submitSucc": {
@@ -101,11 +104,11 @@ amis_schema: |-
                                       },
                                       {
                                         "type": "markdown",
-                                        "value": "##### 您可以使用以下选项之一指定版本： \r- `package-name`安装包的“最新”版本。 \r- `package-name@1.2.3`从以下位置安装包的特定版本 注册表。 \r- `package-name@tag`安装特定的“标签”。（例如）beta、next、latest"
+                                        "value": "${'steedos_packages_button_installPackageFromUrl_dialog_describe1' | t}"
                                         },
                                         {
                                         "type": "markdown",
-                                        "value": "##### 您还可以指定来自不同位置的包：\r- `package-name` 从 npm 注册表安装包 \r- `file:/path/to/local/folder`安装一个位于本地文件系统的包。这对于测试您尚未发布到注册表的软件包很有用。 \r- `file:/path/to/local/tarball.tgz`从 gzip 压缩的 tarball，可用于在发布包之前共享包。 \r- `link:/path/to/local/folder`安装指向软件包的符号链接:在本地文件系统上。适用于monorepo环境。 \r- `<git remote url>`从远程 Git 存储库安装包。 \r- `<git remote url>#<branch/commit/tag>`从远程安装软件包特定 git 分支、git commit 或 git 标签处的 git 存储库。 \r- `https://my-project.org/package.tgz` 从远程gzip压缩压缩包。"
+                                        "value": "${'steedos_packages_button_installPackageFromUrl_dialog_describe2' | t}"
                                         }
                                   ],
                                   "id": "u:efa30bace722",

@@ -125,6 +125,8 @@ actions:
     label: Uninstall
   upgradePackage:
     label: Upgrade Package
+  edit_npmrc:
+    label: Verification information
 CustomLabels:
   steedos_packages_tab_introduce_title: Introduction
   steedos_packages_tab_components_title: Package Components
@@ -134,3 +136,10 @@ CustomLabels:
   steedos_packages_button_enable_dialog_confirm_text_suffix: "\"?"
   steedos_packages_button_enable_dialog_button_ok: Enable
   steedos_packages_button_enable_dialog_message_success: Enabled Successfully
+  steedos_packages_button_edit_npmrc_dialog_describe: "##### Verification Information Description (.npmrc):\r- `; Set a new registry for scoped packages`\r- `@myscope:registry=https://mycustomregistry.example.org`\r- `; Configure authentication information for the new registry (optional)`\r- `//mycustomregistry.example.org:_authToken=\"Authentication Token\"`"
+  steedos_packages_button_installPackageFromUrl_dialog_field_registry: Registry
+  steedos_packages_button_installPackageFromUrl_dialog_field_registry_option_taobao: taobao
+  steedos_packages_button_installPackageFromUrl_dialog_field_registry_option_cnpm: cnpm
+  steedos_packages_button_installPackageFromUrl_dialog_field_registry_option_npmjs: npmjs
+  steedos_packages_button_installPackageFromUrl_dialog_describe1: "##### You can specify a version using one of the following options:\r- `package-name` Install the 'latest' version of the package.\r- `package-name@1.2.3` Install a specific version of the package from the registry.\r- `package-name@tag` Install a specific 'tag', such as beta, next, or latest."
+  steedos_packages_button_installPackageFromUrl_dialog_describe2: "##### You can also specify packages from different locations:\r- `package-name` Install the package from the npm registry.\r- `file:/path/to/local/folder` Install a package located on your local filesystem. This is useful for testing packages you haven’t published to the registry yet.\r- `file:/path/to/local/tarball.tgz` Install from a gzipped tarball, which can be used to share packages before publishing.\r- `link:/path/to/local/folder` Install a symbolic link to a package on your local filesystem. Useful in monorepo environments.\r- `<git remote url>` Install a package from a remote Git repository.\r- `<git remote url>#<branch/commit/tag>` Install a package from a specific git branch, commit, or tag in the remote Git repository.\r- `https://my-project.org/package.tgz` Install from a remote gzipped tarball."
