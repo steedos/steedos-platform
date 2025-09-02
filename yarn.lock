@@ -7115,10 +7115,10 @@
   resolved "https://registry.npmjs.org/@steedos-builder/amis-editor/-/amis-editor-6.3.0-beta.15.tgz#984cc977e33049c4c0286b4918afde6eba1bd547"
   integrity sha512-35A1pV3mqL0Rt9BOEx6J19oVDKq67xApo6muHufQJ82zLavNUK0TbvT6EybOHCC/puYXbNVIEITz5o2og9oERg==
 
-"@steedos-labs/analytics@3.0.4":
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/@steedos-labs/analytics/-/analytics-3.0.4.tgz#b3bb9fed1a64310fc22754d68a4032186cb926d4"
-  integrity sha512-Xt8wGlxu8OyTGLO1icmntA1hRONuGzqUHsumGIgH7p66I/AlyAirRx6wUzWhoFtSGNIq+4L6URf7wn3vsp1vjQ==
+"@steedos-labs/analytics@3.0.5":
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/@steedos-labs/analytics/-/analytics-3.0.5.tgz#0971af252e6ff81fc70bc2d7eae83740ab321251"
+  integrity sha512-cf5oe949SaYEnXyfsRsbNEwgF+EW8Axdq+t52Yz+9oXFPiIoKU6KGRutyQFxkcOoLp4n5RzdT8qEVRWcCEo/Bg==
   dependencies:
     "@steedos/utils" "^2.5.11-beta.10"
     date-fns "^3.3.1"
