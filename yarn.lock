@@ -7115,10 +7115,10 @@
   resolved "https://registry.npmjs.org/@steedos-builder/amis-editor/-/amis-editor-6.3.0-beta.15.tgz#984cc977e33049c4c0286b4918afde6eba1bd547"
   integrity sha512-35A1pV3mqL0Rt9BOEx6J19oVDKq67xApo6muHufQJ82zLavNUK0TbvT6EybOHCC/puYXbNVIEITz5o2og9oERg==
 
-"@steedos-labs/analytics@3.0.3":
-  version "3.0.3"
-  resolved "https://registry.npmmirror.com/@steedos-labs/analytics/-/analytics-3.0.3.tgz#e8e6902052ba97402daa9c5f79312cd822bea80b"
-  integrity sha512-jB5OkAnorGDfIcfwRQ84Wdx+KTrfuk1prm/q0H5RhGHtcNoCwIvLxzXe1rmn7RUan3+uRn3DyRoEm9whXhbi7Q==
+"@steedos-labs/analytics@3.0.5":
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/@steedos-labs/analytics/-/analytics-3.0.5.tgz#0971af252e6ff81fc70bc2d7eae83740ab321251"
+  integrity sha512-cf5oe949SaYEnXyfsRsbNEwgF+EW8Axdq+t52Yz+9oXFPiIoKU6KGRutyQFxkcOoLp4n5RzdT8qEVRWcCEo/Bg==
   dependencies:
     "@steedos/utils" "^2.5.11-beta.10"
     date-fns "^3.3.1"
@@ -7131,10 +7131,10 @@
   resolved "https://registry.yarnpkg.com/@steedos-labs/plugin-package-store/-/plugin-package-store-1.0.8.tgz#3646ac19349ad6ce0a58efc38e81e35a00fd5e43"
   integrity sha512-21u5PEcgC4AtDTR0KnTo+gu30YD86esmV5yZJC/HrttvSBcj1yCjP89F3g9WXIm4BlzEI8aqPFvqWNnNPjXioQ==
 
-"@steedos-labs/plugin-workflow@3.0.0-beta.22":
-  version "3.0.0-beta.22"
-  resolved "https://registry.yarnpkg.com/@steedos-labs/plugin-workflow/-/plugin-workflow-3.0.0-beta.22.tgz#3734d542037e4a290d80aa80c73d3d8fbbb1880c"
-  integrity sha512-VbHcgd3CdZ2dnfa/FQP/IO9GwTUzR+EIL1fhvSXpHDcJkyXasHvgl/VHl9e2jtiTUh4I+ymrB7DZktGbzP3B5g==
+"@steedos-labs/plugin-workflow@3.0.0-beta.23":
+  version "3.0.0-beta.23"
+  resolved "https://registry.yarnpkg.com/@steedos-labs/plugin-workflow/-/plugin-workflow-3.0.0-beta.23.tgz#6dcf8e7798a0b19175cfa593253df8156ab95cc4"
+  integrity sha512-eY2K3rJefJmeKi/m4hFEaM6A0ocygCPN4fCpig7k0Yh0LQl9EKqHyfmbOH/m0kUvHuhSRAs61ZyDNGK2xhBC9Q==
   dependencies:
     formidable "2.0.1"
     graphql-parse-resolve-info "^4.12.3"

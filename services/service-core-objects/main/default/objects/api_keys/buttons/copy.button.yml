@@ -9,7 +9,7 @@ amis_schema: |-
     "type": "service",
     "body": [
       {
-        "label": "复制API Key",
+        "label": "${'CustomAction.api_keys.copy' | t}",
         "type": "button",
         "actionType": "copy",
         "content": "${api_key}"

@@ -18,3 +18,12 @@ fields:
     label: 设置
     help: 
     description: 
+  is_public:
+    label: 前端可访问
+    help: 在前端可访问
+    description: 
+listviews:
+  all:
+    label: 全部
+  recent:
+    label: 最近查看

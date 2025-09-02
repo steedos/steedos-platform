@@ -1487,6 +1487,7 @@ CustomLabels:
     pending: Pending
     completed: Completed
   instance:
+    draft_deleted_success: The draft has been deleted.
     formatter:
       date:
         simple_date: bb DD, YYYY
@@ -2006,11 +2007,17 @@ CustomLabels:
     uninstall:
       title: Uninstall
       text: Are you sure you want to uninstall 
+      content: After uninstallation, all components in this software package will be permanently deleted and cannot be restored
       toast_info: Uninstalling, please wait...
       toastr_success: Uninstalled successfully
     reload:
       toastr_info: Reloading, please wait...
       toastr_success: Reloaded successfully
+    enable:
+        title: Enable
+        text: Are you sure you want to enable 
+        toast_info: Enabling, please wait...
+        toastr_success: Enabled successfully
     disable:
       title: Disable
       text: Are you sure you want to disable  

@@ -1,20 +1,20 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2024-03-30 11:37:53
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-04-15 10:43:38
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2025-09-01 20:52:46
  * @Description: 
  */
 module.exports = {
     disable: function (object_name, record_id, record_permissions, data) {
         Steedos.sobject(object_name).retrieve(record_id).then((record)=>{
             if(!record){
-                return SteedosUI.notification.error({message: '未找到应用'})
+                return SteedosUI.notification.error({message: t('apps_not_found')})
             }
             SteedosUI.Modal.confirm({
-                title: '停用',
-                content: `确定要停用「${record.name}」应用?`,
-                okText: '停用',
+                title: t('apps_actions_disable_dialog_title'),
+                content: `${t('apps_actions_disable_dialog_content_prefix')}${record.name}${t('apps_actions_disable_dialog_content_suffix')}`,
+                okText: t('CustomAction.apps.disable'),
                 cancelText: t('Cancel'),
                 onOk: function(){
                     Steedos.authRequest(Steedos.absoluteUrl(`/api/v1/apps/${record_id}`), {type: 'put', async: false, data: JSON.stringify({

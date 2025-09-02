@@ -125,3 +125,12 @@ actions:
     label: Uninstall
   upgradePackage:
     label: Upgrade Package
+CustomLabels:
+  steedos_packages_tab_introduce_title: Introduction
+  steedos_packages_tab_components_title: Package Components
+  steedos_packages_tab_details_title: Details
+  steedos_packages_button_enable_dialog_title: Enable
+  steedos_packages_button_enable_dialog_confirm_text_prefix: "Make sure to enable \""
+  steedos_packages_button_enable_dialog_confirm_text_suffix: "\"?"
+  steedos_packages_button_enable_dialog_button_ok: Enable
+  steedos_packages_button_enable_dialog_message_success: Enabled Successfully

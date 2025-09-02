@@ -1,3 +1,9 @@
+/*
+ * @Author: 殷亮辉 yinlianghui@hotoa.com
+ * @Date: 2025-07-07 16:57:38
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2025-09-01 17:04:07
+ */
 module.exports = {
     enable: function (object_name, record_id) {
         Steedos.sobject(object_name).retrieve(record_id).then((record)=>{
@@ -7,10 +13,10 @@ module.exports = {
             console.log('record.....',record)
 
             SteedosUI.Modal.confirm({
-                title: '启用',
-                content: `确定要启用${record.name}?`,
-                okText: '启用',
-                cancelText: '取消',
+                title: t('steedos_packages.enable.title'),
+                content: t('steedos_packages.enable.text') + ` ${record.name}?`,
+                okText: t('steedos_packages.enable.title'),
+                cancelText: t('Cancel'),
                 onOk: function(){
                     Steedos.authRequest(Steedos.absoluteUrl('/api/nodes/enable'), {type: 'post', async: false, data: JSON.stringify({
                             module: record.name,
@@ -23,7 +29,7 @@ module.exports = {
                             }
                             setTimeout(function(){
                                  SteedosUI.notification.success({
-                                    message: t('已启用')
+                                    message: t('steedos_packages.enable.toastr_success')
                                 });
                                 window.location.reload()
                             }, 1000 * 2)

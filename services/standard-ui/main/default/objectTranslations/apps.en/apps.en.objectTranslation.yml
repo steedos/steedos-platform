@@ -196,3 +196,15 @@ actions:
     label: Customize
   reset:
     label: Reset
+  enable:
+    label: Enable
+  disable:
+    label: Disable
+CustomLabels:
+  apps_not_found: The application Not found
+  apps_actions_enable_dialog_title: Enable App
+  apps_actions_enable_dialog_content_prefix: "Are you sure you want to enable the application \""
+  apps_actions_enable_dialog_content_suffix: "\" ?"
+  apps_actions_disable_dialog_title: Disable App
+  apps_actions_disable_dialog_content_prefix: "Are you sure you want to disable the application \""
+  apps_actions_disable_dialog_content_suffix: "\" ?"
