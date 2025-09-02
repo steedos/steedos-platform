@@ -81,7 +81,7 @@ fields:
     required: false
     group: Tabs
     visible_on: "{{global.mode ==='read' ? false : true}}"
-    hidden: true
+    # hidden: true
   is_creator:
     type: boolean
     label: Show this app for Desktop
