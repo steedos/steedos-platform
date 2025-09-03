@@ -16,7 +16,7 @@ export const getHeaderSchema = (props) => {
                 body: [
                     {
                         "type": "wrapper",
-                        "className": 'flex w-full px-5 py-0 h-[50px] justify-between items-center steedos-header-container-line-one',
+                        "className": 'flex w-full px-4 py-0 h-[50px] justify-between items-center steedos-header-container-line-one',
                         "body": [
                             {
                                 type: "service",
@@ -117,12 +117,12 @@ export const getHeaderSchema = (props) => {
                 body: [
                     {
                         type: "wrapper",
-                        className: 'sidebar-wrapper px-0 pt-0 pb-16 fixed z-20 h-full h-fill ease-in-out duration-300 flex flex-col overflow-y-auto block -translate-x-0 sm:w-[220px] w-64',
+                        className: 'sidebar-wrapper px-0 pt-0 pb-16 fixed z-20 h-full h-fill ease-in-out duration-300 flex flex-col overflow-y-auto block -translate-x-0 sm:w-[220px] w-64 bg-gray-50 border sm:border-none',
                         visibleOn: '${!!app}',
                         body: [
                             {
                                 "type": "steedos-app-launcher",
-                                "className": "px-4 pb-4",
+                                "className": "px-4 py-4",
                                 "visibleOn": "${window:innerWidth < 768}",
                                 "showAppName": true
                             },
