@@ -10,12 +10,12 @@
     right: 0;
     bottom: 0;
     left: 0;
-    margin-top: 90px;
+    margin-top: 50px;
 }
 
 @media (min-width: 767px) {
     .creator-content-wrapper {
-        height:calc(100% - 90px)
+        height:calc(100% - 50px)
     }
 
     .creator-content-wrapper>.builder-component{

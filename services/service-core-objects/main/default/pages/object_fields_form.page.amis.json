@@ -57,7 +57,7 @@
                 "actionType": "toast",
                 "args": {
                     "msgType": "success",
-                    "msg": "操作成功, 请刷新浏览器后查看效果",
+                    "msg": "${'submitSuccRequireRefreshMsg' | t}",
                     "position": "top-right"
                 }
             }
