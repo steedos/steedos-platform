@@ -1,7 +1,163 @@
 import { AmisRender } from "./AmisRender"
 import { Builder } from '@builder6/react';
 import { useParams } from 'react-router-dom';
+
+export const getHeaderSchema = (props) => {
+    const { logoSrc, customButtons, className } = props
+    const isMobile = window.innerWidth <= 768
+
+    const schema = {
+        "type": "wrapper",
+        "className": 'p-0' + (className ? ` ${className}` : ''),
+        body: [
+            {
+                "type": "wrapper",
+                "className": "sticky p-0 top-0 z-40 w-full flex-none backdrop-blur transition-colors duration-500 lg:z-[1000] steedos-header-container",
+                body: [
+                    {
+                        "type": "wrapper",
+                        "className": 'flex w-full px-5 py-0 h-[50px] justify-between items-center steedos-header-container-line-one',
+                        "body": [
+                            {
+                                type: "service",
+                                className: 'p-0 flex flex-1 items-center',
+                                "onEvent": {
+                                    "@history_paths.changed": {
+                                        "actions": [
+                                            {
+                                                "actionType": "reload",
+                                                // amis 3.6需要传入data来触发下面的window:historyPaths重新计算
+                                                "data": {
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                body: [
+                                    {
+                                        "type": "button",
+                                        "className": "toggle-sidebar flex items-center pr-4",
+                                        "visibleOn": "${window:innerWidth < 768}",
+                                        "onEvent": {
+                                            "click": {
+                                                "actions": [
+                                                    {
+                                                        "actionType": "custom",
+                                                        "script": "document.body.classList.toggle('sidebar-open')",
+                                                    },
+                                                    {
+                                                        "actionType": "rebuild",
+                                                        "componentId": "u:app-menu",
+                                                        "args": {
+                                                            "toggleSidebar": true
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "body": [
+                                            {
+                                                "type": "steedos-icon",
+                                                "category": "utility",
+                                                "name": "rows",
+                                                "colorVariant": "default",
+                                                "id": "u:afc3a08e8cf3",
+                                                "className": "slds-button_icon slds-global-header__icon"
+                                            }
+                                        ],
+                                    },
+                                    {
+                                        "type": "button",
+                                        "visibleOn": "${window:innerWidth < 768 && (window:historyPaths.length > 1 || window:historyPaths[0].params.record_id)}",
+                                        "className":"flex",
+                                        "onEvent": {
+                                            "click": {
+                                                "actions": [
+                                                    {
+                                                        "actionType": "custom",
+                                                        "script": "window.goBack()"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "body": [
+                                            {
+                                                "type": "steedos-icon",
+                                                "category": "utility",
+                                                "name": "chevronleft",
+                                                "colorVariant": "default",
+                                                "className": "slds-button_icon slds-global-header__icon"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "steedos-app-launcher",
+                                        "showAppName": true,
+                                        "hiddenOn": "${window:innerWidth < 768}",
+                                        "appId": "${app.id}",
+                                    },
+                                ],
+                            },
+                            {
+                                "type": "steedos-global-header-toolbar",
+                                "label": "Global Header",
+                                className: 'flex flex-nowrap gap-x-4 items-center',
+                                logoutScript: "window.signOut();",
+                                customButtons: customButtons
+                            }
+                        ],
+                    },
+
+                ],
+            },
+            {
+                "type": "button",
+                "className": 'p-0 absolute inset-0 mt-[50px]',
+                visibleOn: '${!!appId}',
+                body: [
+                    {
+                        type: "wrapper",
+                        className: 'sidebar-wrapper px-0 pt-0 pb-16 fixed z-20 h-full h-fill ease-in-out duration-300 flex flex-col overflow-y-auto block -translate-x-0 sm:w-[220px] w-64',
+                        visibleOn: '${!!app}',
+                        body: [
+                            {
+                                "type": "steedos-app-launcher",
+                                "className": "px-4 pb-4",
+                                "visibleOn": "${window:innerWidth < 768}",
+                                "showAppName": true
+                            },
+                            {
+                                "type": "steedos-app-menu",
+                                "stacked": true,
+                                "appId": "${app.id}",
+                            },
+                        ]
+                    },
+                    {
+                        "type": "wrapper",
+                        "className": 'sidebar-overlay',
+                        "hiddenOn": "${!isMobile}",
+                    }
+                ],
+                "onEvent": {
+                    "click": {
+                        "actions": [
+                            {
+                                "actionType": "custom",
+                                "script": "if(window.innerWidth < 768){ document.body.classList.remove('sidebar-open'); }",
+                            }
+                        ]
+                    }
+                },
+            },
+        ],
+    }
+    return schema;
+}
+
+
 export const AppHeader = () => {
+
     const params = useParams();
     let { appId = null, objectName } = params;
     // console.log('AppHeader params:', params)
@@ -34,76 +190,12 @@ export const AppHeader = () => {
         document.head.appendChild(newFaviconLink);
     }
 
+    const headerSchema = getHeaderSchema({logoSrc, appId});
     const schema = {
         "type": "service",
         "id": "u:global-header",
         name: "globalHeader",
-        body: [
-             {
-                "type": "button",
-                "label": "刷新",
-                "className": "hidden btn-reload-app-menu-${appId}",
-                "onEvent": {
-                    "click": {
-                    "actions": [
-                        {
-                        "componentId": "u:app-menu",
-                        "actionType": "reload"
-                        }
-                    ]
-                    }
-                }
-            },
-             {
-                "type": "button",
-                "label": "刷新",
-                "className": "hidden btn-reload-global-header btn-reload-global-header-${appId}",
-                "onEvent": {
-                    "click": {
-                    "actions": [
-                        {
-                        "componentId": "u:global-header",
-                        "actionType": "reload"
-                        }
-                    ]
-                    }
-                }
-            },
-            {
-                "type": "button",
-                "label": "刷新",
-                "className": "hidden btn-reload-global-header-notifications",
-                "onEvent": {
-                    "click": {
-                        "actions": [
-                            {
-                                "actionType": "broadcast",
-                                "args": {
-                                    "eventName": "@data.changed.notifications"
-                                },
-                                "data": {
-                                    "type": "${event.data.type}",
-                                    "objectName": "notifications",
-                                    "recordId": "reload"
-                                }
-                            }
-                        ]
-                    }
-                },
-            },
-            {
-                "type": "steedos-global-header",
-                "logoSrc": logoSrc,
-                "customButtons": [
-                    {
-                        "type": "steedos-app-launcher",
-                        "showAppName": false,
-                        "appId": "${app.id}",
-                        "visibleOn": "${isMobile}"
-                    }
-                ]
-            },
-        ],
+        body: headerSchema,
         "api": {
             "method": "get",
             "cache": "10000",
@@ -114,11 +206,7 @@ export const AppHeader = () => {
             },
             "adaptor": `
                 const app = payload;
-                if (app.showSidebar){
-                    document.body.classList.add('sidebar')
-                } else {
-                    document.body.classList.remove("sidebar")
-                }
+                document.body.classList.add('sidebar')
 
                 if (window.innerWidth >= 768) {
                     document.body.classList.add('sidebar-open')
