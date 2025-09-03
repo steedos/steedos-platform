@@ -142,37 +142,37 @@ export const getHeaderSchema = (props) => {
                                 "className": "px-4 py-4",
                                 "visibleOn": "${window:innerWidth < 768}",
                                 "items": [
-                                    {
-                                        "type": "button",
-                                        "className": "toggle-sidebar flex items-center pr-4",
-                                        "onEvent": {
-                                            "click": {
-                                                "actions": [
-                                                    {
-                                                        "actionType": "custom",
-                                                        "script": "document.body.classList.toggle('sidebar-open')",
-                                                    },
-                                                    {
-                                                        "actionType": "rebuild",
-                                                        "componentId": "u:app-menu",
-                                                        "args": {
-                                                            "toggleSidebar": true
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        "body": [
-                                            {
-                                                "type": "steedos-icon",
-                                                "category": "utility",
-                                                "name": "rows",
-                                                "colorVariant": "default",
-                                                "id": "u:afc3a08e8cf3",
-                                                "className": "slds-button_icon slds-global-header__icon"
-                                            }
-                                        ],
-                                    },
+                                    // {
+                                    //     "type": "button",
+                                    //     "className": "toggle-sidebar flex items-center pr-4",
+                                    //     "onEvent": {
+                                    //         "click": {
+                                    //             "actions": [
+                                    //                 {
+                                    //                     "actionType": "custom",
+                                    //                     "script": "document.body.classList.toggle('sidebar-open')",
+                                    //                 },
+                                    //                 {
+                                    //                     "actionType": "rebuild",
+                                    //                     "componentId": "u:app-menu",
+                                    //                     "args": {
+                                    //                         "toggleSidebar": true
+                                    //                     }
+                                    //                 }
+                                    //             ]
+                                    //         }
+                                    //     },
+                                    //     "body": [
+                                    //         {
+                                    //             "type": "steedos-icon",
+                                    //             "category": "utility",
+                                    //             "name": "rows",
+                                    //             "colorVariant": "default",
+                                    //             "id": "u:afc3a08e8cf3",
+                                    //             "className": "slds-button_icon slds-global-header__icon"
+                                    //         }
+                                    //     ],
+                                    // },
                                     {
                                         "type": "steedos-app-launcher",
                                         // "className": "px-4 py-4",
