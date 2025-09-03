@@ -13,9 +13,8 @@ export const IframeView = () => {
         "bodyClassName": "p-0 m-0",
         "body": {
           "type": "iframe",
+          "className": "w-full h-full rounded border",
           "src": iframeSrc,
-          "height": "100%",
-          "width": "100%"
         }
       }} data ={{
           context: {
