@@ -167,6 +167,22 @@ fields:
     label: Highlight Fields
   is_customize:
     label: Customize
+  field_groups:
+    label: Field Grouping
+    help: 
+    description: 
+  field_groups.$.group_name:
+    label: Name
+    help: 
+    description: 
+  field_groups.$.collapsed:
+    label: Collapsed by default
+    help: 
+    description: 
+  field_groups.$.visible_on:
+    label: Visible On
+    help: 
+    description: 
 groups:
   feature: Features
   advanced: Advanced
