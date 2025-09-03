@@ -6,6 +6,7 @@ CustomLabels:
   desc: 降序
   confirm_delete: 确认要删除吗?
   alert_info: 系统消息
+  submitSuccRequireRefreshMsg: 操作成功，请刷新浏览器后查看效果
   apps:
     apps_form:
       tab: 选项卡
