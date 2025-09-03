@@ -1,6 +1,6 @@
 {
   "name": "@steedos/steedos-plugin-schema-builder",
-  "version": "3.0.0-beta.95",
+  "version": "3.0.0-beta.96",
   "description": "Add Schema Builder to Steedos Object Manager.",
   "main": "index.js",
   "author": "",
@@ -10,5 +10,5 @@
     "access": "public"
   },
   "homepage": "https://github.com/steedos/steedos-platform/tree/master/packages/steedos-plugin-schema-builder",
-  "gitHead": "ebbff21aa5ceccd2bc84cabd973b22998a9e6310"
+  "gitHead": "96b68e266d217fce7ae35724edca75e53930db14"
 }
