@@ -152,7 +152,7 @@ export const getHeaderSchema = (props) => {
                     {
                         "type": "wrapper",
                         "className": 'sidebar-overlay',
-                        "hiddenOn": "${!isMobile}",
+                        "hiddenOn": `${!isMobile}`,
                     }
                 ],
                 "onEvent": {
