@@ -14,7 +14,7 @@
                         {
                             "type": "wrapper",
                             "size": "none",
-                            "className": "flex-shrink-0 min-w-[200px] overflow-y-auto border-r border-gray-200 lg:order-first lg:flex lg:flex-col hidden",
+                            "className": "flex-shrink-0 min-w-[220px] overflow-y-auto rounded shadow bg-white my-4 ml-4 mr-1 lg:order-first lg:flex lg:flex-col hidden",
                             "body": [
                                 {
                                     "type": "input-tree",
@@ -101,7 +101,7 @@
                                         {
                                             "type": "button",
                                             "label": "",
-                                            "align": "right",
+                                            "align": "left",
                                             "icon": "fa fa-bars",
                                             "className": "bg-white p-2 rounded border-gray-300 text-gray-500",
                                             "hiddenOn": "${window:innerWidth < 768}",

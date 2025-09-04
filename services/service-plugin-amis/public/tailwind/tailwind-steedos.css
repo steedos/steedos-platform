@@ -93,6 +93,11 @@
   margin-bottom: 0.5rem
 }
 
+.my-4 {
+  margin-top: 1rem;
+  margin-bottom: 1rem
+}
+
 .mx-4 {
   margin-left: 1rem;
   margin-right: 1rem
@@ -116,6 +121,14 @@
 
 .mr-7 {
   margin-right: 1.75rem
+}
+
+.ml-4 {
+  margin-left: 1rem
+}
+
+.mr-1 {
+  margin-right: 0.25rem
 }
 
 .mt-2 {
@@ -190,8 +203,8 @@
   width: 2.25rem
 }
 
-.min-w-\[200px\] {
-  min-width: 200px
+.min-w-\[220px\] {
+  min-width: 220px
 }
 
 .max-w-4xl {
@@ -266,17 +279,8 @@
   border-bottom-width: 1px
 }
 
-.border-r {
-  border-right-width: 1px
-}
-
 .border-none {
   border-style: none
-}
-
-.border-gray-200 {
-  --tw-border-opacity: 1;
-  border-color: rgb(229 231 235 / var(--tw-border-opacity))
 }
 
 .border-gray-300 {
