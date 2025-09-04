@@ -31,10 +31,6 @@
   "data": {
     "objectName": "organizations",
     "context": {
-      "rootUrl": "http://127.0.0.1:5800",
-      "tenantId": "654300b5074594d15147bcfa",
-      "userId": "654300a4074594d15147bcf8",
-      "authToken": "e9bcdfdc56579ec21b9e520e1e1a903a42fa829de27c9eb70f7e6caf8599f95e705d5aedf2336fbb818d98"
     }
   },
   "id": "u:b7fa9418ef38",
