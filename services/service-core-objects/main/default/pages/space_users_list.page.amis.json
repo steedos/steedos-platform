@@ -1,5 +1,5 @@
 {
-    "type": "service",
+    "type": "page",
     "body": [
         {
             "type": "service",
@@ -14,7 +14,7 @@
                         {
                             "type": "wrapper",
                             "size": "none",
-                            "className": "flex-shrink-0 min-w-[220px] overflow-y-auto rounded shadow bg-white my-4 ml-4 mr-1 lg:order-first lg:flex lg:flex-col hidden",
+                            "className": "space-users-list-sidebar-wrapper flex-shrink-0 min-w-[220px] overflow-y-auto sm:rounded shadow bg-white my-4 ml-4 mr-1 lg:order-first lg:flex lg:flex-col ",
                             "body": [
                                 {
                                     "type": "input-tree",
@@ -37,6 +37,19 @@
                                     "onEvent": {
                                         "change": {
                                             "actions": [
+                                                {
+                                                    "actionType": "custom",
+                                                    "script": "document.querySelector('.space-users-list-custom-page').classList.toggle('space-users-list-sidebar-open');"
+                                                },
+                                                {
+                                                    "actionType": "setValue",
+                                                    "componentId": "u:f6a209c8cf61",
+                                                    "args": {
+                                                        "value": {
+                                                            "isVisible": "${!isVisible}"
+                                                        }
+                                                    }
+                                                },
                                                 {
                                                     "actionType": "setValue",
                                                     "componentId": "u:f6a209c8cf61",
@@ -83,7 +96,41 @@
                                 }
                             ],
                             "id": "u:fd659f5c3657",
-                            "visibleOn": "${isVisible}"
+                            "visibleOn": "${isVisible}",
+                            "isFixedHeight": false,
+                            "isFixedWidth": false
+                        },
+                        {
+                            "type": "button",
+                            "className": "space-users-sidebar-overlay",
+                            "id": "u:773b1d00aab2",
+                            "visibleOn": "${isVisible && isMobile}",
+                            "body": [],
+                            "onEvent": {
+                                "click": {
+                                    "actions": [
+                                        {
+                                            "actionType": "custom",
+                                            "script": "document.querySelector('.space-users-list-custom-page').classList.toggle('space-users-list-sidebar-open');"
+                                        },
+                                        {
+                                            "actionType": "wait",
+                                            "args": {
+                                                "time": 500
+                                            }
+                                        },
+                                        {
+                                            "actionType": "setValue",
+                                            "componentId": "u:f6a209c8cf61",
+                                            "args": {
+                                                "value": {
+                                                    "isVisible": "${!isVisible}"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
                         },
                         {
                             "type": "wrapper",
@@ -104,23 +151,34 @@
                                             "align": "left",
                                             "icon": "fa fa-bars",
                                             "className": "bg-white p-2 rounded border-gray-300 text-gray-500",
-                                            "hiddenOn": "${window:innerWidth < 768}",
                                             "onEvent": {
                                                 "click": {
                                                     "actions": [
                                                         {
                                                             "actionType": "setValue",
-                                                            "componentId": "u:f6a209c8cf61",
                                                             "args": {
                                                                 "value": {
                                                                     "isVisible": "${!isVisible}"
                                                                 }
-                                                            }
+                                                            },
+                                                            "componentId": "u:f6a209c8cf61"
+                                                        },
+                                                        {
+                                                            "actionType": "wait",
+                                                            "args": {
+                                                                "time": 50
+                                                            },
+                                                            "expression": "${!isMobile}"
+                                                        },
+                                                        {
+                                                            "actionType": "custom",
+                                                            "script": "document.querySelector('.space-users-list-custom-page').classList.toggle('space-users-list-sidebar-open');"
                                                         }
                                                     ]
                                                 }
                                             },
-                                            "id": "u:6f237cc36419"
+                                            "id": "u:6f237cc36419",
+                                            "hiddenOn": "${window:innerWidth < 768 && false}"
                                         }
                                     ],
                                     "className": "bg-gray-100",
@@ -143,9 +201,11 @@
                 }
             ],
             "data": {
-                "isVisible": true
+                "isVisible": "${window:innerWidth > 768}",
+                "isMobile": "${window:innerWidth <= 768}"
             },
-            "id": "u:f6a209c8cf61"
+            "id": "u:f6a209c8cf61",
+            "dsType": "api"
         }
     ],
     "regions": [
@@ -153,17 +213,162 @@
     ],
     "data": {
         "objectName": "space_users",
-        "context": {}
+        "context": {
+            "rootUrl": "http://127.0.0.1:5600",
+            "tenantId": "68400b7542187738fb1bab2c",
+            "userId": "68400b7042187738fb1bab2a",
+            "authToken": "cc31877680017ca5bc8b6de2a9f1cb38debce7c39bd2f79e21c43400783f8c4d852662a1e443e9c44584be",
+            "user": {
+                "authToken": "cc31877680017ca5bc8b6de2a9f1cb38debce7c39bd2f79e21c43400783f8c4d852662a1e443e9c44584be",
+                "spaceId": "68400b7542187738fb1bab2c",
+                "userId": "68400b7042187738fb1bab2a",
+                "name": "YLH1",
+                "username": "yinlianghui",
+                "email": "yinlianghui@hotoa.com",
+                "utcOffset": null,
+                "steedos_id": "68400b7042187738fb1bab2a",
+                "locale": "en-us",
+                "language": "en",
+                "roles": [
+                    "admin"
+                ],
+                "profile": "admin",
+                "user": "68400b7042187738fb1bab2a",
+                "user_accepted": true,
+                "organization": {
+                    "_id": "68400b7542187738fb1bab2c",
+                    "name": "TEW",
+                    "fullname": "TEW",
+                    "company_id": "68400b7542187738fb1bab2c"
+                },
+                "organizations": [
+                    {
+                        "_id": "68400b7542187738fb1bab2c",
+                        "name": "TEW",
+                        "fullname": "TEW",
+                        "company_id": "68400b7542187738fb1bab2c"
+                    },
+                    {
+                        "_id": "684784a17f4aeba0af86e0bb",
+                        "name": "生产部",
+                        "fullname": "生产部",
+                        "company_id": "68400b7542187738fb1bab2c"
+                    }
+                ],
+                "space": {
+                    "_id": "68400b7542187738fb1bab2c",
+                    "name": "TEW",
+                    "admins": [
+                        "68400b7042187738fb1bab2a",
+                        "686ccd4a33466ba7d2a1fce6",
+                        "686cc9f8b6409ed05d63c80d"
+                    ]
+                },
+                "owner": "68400b7042187738fb1bab2a",
+                "created_by": "68400b7042187738fb1bab2a",
+                "created": "2025-06-04T09:01:41.340Z",
+                "modified_by": "68400b7042187738fb1bab2a",
+                "modified": "2025-08-31T09:38:56.388Z",
+                "email_verified": null,
+                "company_id": "68400b7542187738fb1bab2c",
+                "organizations_parents": [
+                    "68400b7542187738fb1bab2c",
+                    "684784a17f4aeba0af86e0bb"
+                ],
+                "company_ids": [
+                    "68400b7542187738fb1bab2c"
+                ],
+                "spaces": [
+                    {
+                        "_id": "68400b7542187738fb1bab2c",
+                        "name": "TEW",
+                        "admins": [
+                            "68400b7042187738fb1bab2a",
+                            "686ccd4a33466ba7d2a1fce6",
+                            "686cc9f8b6409ed05d63c80d"
+                        ]
+                    }
+                ],
+                "companies": [
+                    {
+                        "_id": "68400b7542187738fb1bab2c",
+                        "name": "TEW",
+                        "organization": "68400b7542187738fb1bab2c"
+                    }
+                ],
+                "company": {
+                    "_id": "68400b7542187738fb1bab2c",
+                    "name": "TEW",
+                    "organization": "68400b7542187738fb1bab2c"
+                },
+                "permission_shares": [],
+                "spaceUserId": "68400b7542187738fb1bab2d",
+                "is_space_admin": true,
+                "is_phone": false,
+                "is_tablet": false
+            }
+        }
     },
+    "id": "u:b7167e2fcaf0",
     "name": "page_space_users_list",
     "bodyClassName": "p-0",
-    "id": "u:b7167e2fcaf0",
     "asideResizor": false,
     "pullRefresh": {
         "disabled": true
     },
-    "className": "space-users-list h-full",
-    "style": {
-        "padding": "${displayAs == 'grid'?'':'0px'}"
+    "className": {
+        "space-users-list-custom-page h-full": true,
+        "space-users-list-mobile": "${window:innerWidth < 768}",
+        "space-users-list-pc space-users-list-sidebar-open": "${window:innerWidth > 768}"
+    },
+    "style": {},
+    "dsType": "api",
+    "themeCss": {
+        "baseControlClassName": {
+            "padding-and-margin:default": {
+                "padding": "${displayAs == 'grid'?'':'0px'}"
+            }
+        }
+    },
+    "css": {
+        ".space-users-list-custom-page.space-users-list-mobile .space-users-list-sidebar-wrapper": {
+            "z-index": "601",
+            "top": "50px",
+            "left": "0px",
+            "bottom": "0px",
+            "position": "fixed",
+            "margin": "0px"
+        },
+        ".space-users-list-custom-page.space-users-list-mobile .space-users-sidebar-overlay": {
+            "z-index": "600",
+            "position": "fixed",
+            "bottom": "0px",
+            "right": "0px",
+            "left": "0px",
+            "top": "50px"
+        },
+        ".space-users-list-custom-page .space-users-list-sidebar-wrapper": {
+            "transition": "0.5s ease transform",
+            "will-change": "transform",
+            "transform": "translate(-100%,0)",
+            "-webkit-transform": "translate(-100%,0)",
+            "-moz-transform": "translate(-100%,0)",
+            "-ms-transform": "translate(-100%,0)",
+            "-o-transform": "translate(-100%,0)"
+        },
+        ".space-users-list-custom-page.space-users-list-sidebar-open .space-users-list-sidebar-wrapper": {
+            "transform": "translate(0,0)",
+            "-webkit-transform": "translate(0,0)",
+            "-moz-transform": "translate(0,0)",
+            "-ms-transform": "translate(0,0)",
+            "-o-transform": "translate(0,0)"
+        },
+        ".space-users-list-custom-page.space-users-list-pc .space-users-list-sidebar-wrapper": {
+            "min-width": "0px",
+            "width": "0px"
+        },
+        ".space-users-list-custom-page.space-users-list-pc.space-users-list-sidebar-open .space-users-list-sidebar-wrapper": {
+            "min-width": "220px"
+        }
     }
 }
