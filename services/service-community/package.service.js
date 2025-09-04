@@ -165,11 +165,6 @@ module.exports = {
 		  // 	this.broker.createService(require("@steedos/service-identity-jwt"));
 		  // }
 	  
-		  // 启动 OIDC SSO 服务
-		  // if (this.settings.oidc.enable) {
-		  //     this.broker.createService(require("@steedos/ee_sso-oidc"));
-		  // }
-	  
 		  // 启动 本地 CDN
 		  this.broker.createService(require("@steedos/unpkg"));
 	  
