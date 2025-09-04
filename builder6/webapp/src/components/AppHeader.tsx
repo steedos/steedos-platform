@@ -230,7 +230,7 @@ export const AppHeader = () => {
 
     const faviconLink: any = document.querySelector('link[rel*="icon"], link[rel*="shortcut"]');
 
-    let favicon = '/favicons/favicon.ico';
+    let favicon = '/favicon.ico';
     if(Builder.settings?.context?.user?.space?.favicon){
         favicon = "/api/v6/files/cfs.avatars.filerecord/" + Builder.settings.context.user.space.favicon;
     }
