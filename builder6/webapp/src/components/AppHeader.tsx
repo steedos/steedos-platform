@@ -102,11 +102,11 @@ export const getHeaderSchema = (props) => {
                                         "tpl": `<a href='/app' class='flex items-center '><img class='block h-6 w-auto' src='${logoSrc}'></a>`,
                                         "hiddenOn": "${window:innerWidth < 768 && (window:historyPaths.length > 1 || window:historyPaths[0].params.record_id)}"
                                     },
-                                    {
-                                        "className": 'bg-gray-300 w-[1px] h-6 inline-block align-middle mr-4',
-                                        "type": "tpl",
-                                        "tpl": '',
-                                    },
+                                    // {
+                                    //     "className": 'bg-gray-300 w-[1px] h-6 inline-block align-middle mr-4',
+                                    //     "type": "tpl",
+                                    //     "tpl": '',
+                                    // },
                                     {
                                         "className": 'w-auto mr-4 font-bold text-lg inline-block align-middle',
                                         "type": "tpl",
