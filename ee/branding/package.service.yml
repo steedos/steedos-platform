@@ -1,0 +1,6 @@
+label: 自定义品牌
+description: 系统可自定义登陆背景及系统logo。
+icon: brand
+license:
+  - platform-professional
+  - platform-enterprise

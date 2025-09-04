@@ -9,9 +9,8 @@
     "start:platform": "docker-compose -f steedos-platform/docker-compose.yml up"
   },
   "dependencies": {
-    "@steedos/service-community": "^3.0.0-beta.64",
-    "@steedos/service-enterprise": "^3.0.0-beta.1",
-    "@steedos/service-package-loader": "^3.0.0-beta.64",
+    "@steedos/service-community": "^3.0.0-beta.96",
+    "@steedos/service-package-loader": "^3.0.0-beta.96",
     "dotenv-flow": "^3.2.0",
     "moleculer": "^0.14.31",
     "ts-node": "^10.9.1",

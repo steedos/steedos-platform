@@ -1,0 +1,21 @@
+name: admin_license
+desktop: true
+icon: webcart
+is_new_window: false
+label: 许可证
+mobile: true
+permissions:
+  - permission: 'on'
+    permission_set: admin
+  - permission: 'off'
+    permission_set: user
+  - permission: 'off'
+    permission_set: customer
+  - permission: 'off'
+    permission_set: supplier
+  - permission: 'off'
+    permission_set: organization_admin
+  - permission: 'off'
+    permission_set: workflow_admin
+type: url
+url: /app/admin/license/grid/all

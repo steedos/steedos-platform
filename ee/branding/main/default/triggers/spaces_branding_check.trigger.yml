@@ -1,0 +1,28 @@
+name: spaces_branding_check
+hidden: true
+listenTo: spaces
+when:
+  - beforeInsert
+  - beforeUpdate
+isEnabled: true
+handler: >-
+  const LOGO_FIELDS = ['account_logo', 'avatar_dark', 'avatar_square', 'avatar',
+  'background', 'favicon'];
+
+  const { doc, spaceId } = ctx.params;
+
+  let needToCheck = false
+
+  for (const fieldName of LOGO_FIELDS) {
+      if (doc[fieldName]) {
+          needToCheck = true
+          break
+      }
+  }
+
+  if (needToCheck) {
+      const allow = await ctx.broker.call(`@steedos/service-license.isPlatformProfessional`, { spaceId });
+      if (!allow) {
+          throw new Error('need_platform_enterprise');
+      }
+  }
