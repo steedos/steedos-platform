@@ -173,6 +173,8 @@ actions:
     label: Request Forward
   instance_cc:
     label: Carbon Copy
+  instance_relocate:
+    label: Relocate
   instance_new:
     label: New Request
   instance_delete:
@@ -197,4 +199,13 @@ CustomLabels:
   instance_action_instance_cc_dialog_field_users: Carbon Copy To
   instance_action_instance_cc_dialog_field_description: Carbon Copy Description
   instance_action_instance_cc_dialog_sub_title: Forward the currently selected file to the new process and continue to execute the approval operation.
- 
+  instance_action_terminate_dialog_title: Cancel Request
+  instance_action_terminate_dialog_content: Please fill in the reasons for canceling the application
+  instance_action_terminate_dialog_msg_success: The cancellation application has been successful!
+  instance_action_terminate_dialog_msg_failed: The cancellation application failed.
+  instance_action_instance_relocate_dialog_title: Relocate
+  instance_action_instance_relocate_dialog_title_prefix: "Current Step:"
+  instance_action_instance_relocate_dialog_field_reason: Please fill in the reasons for the Relocating
+  instance_action_relocate_dialog_msg_success: Relocated successful
+  instance_action_relocate_dialog_msg_failed: Relocated failed
+
