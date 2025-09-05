@@ -36,7 +36,7 @@ router.get('/api/amisObjectFieldsDesign', auth.requireAuthentication, async func
         //     userId: userSession.userId,
         //     authToken: userSession.authToken
         // }
-        let locale = "zh-CN";
+        let locale = userSession.language || process.env.STEEDOS_DEFAULT_LANGUAGE || "zh-CN";
         if (req.query.locale?.startsWith('en')) {
             locale = "en-US";
         } else if (req.query?.locale == "zh-cn") {

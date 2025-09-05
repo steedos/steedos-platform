@@ -36,7 +36,7 @@ router.get('/api/pageDesign', auth.requireAuthentication, async function (req, r
         //     userId: userSession.userId,
         //     authToken: userSession.authToken
         // }
-        let locale = "zh-CN";
+        let locale = userSession.language || process.env.STEEDOS_DEFAULT_LANGUAGE || "zh-CN";
         if (req.query.locale?.startsWith('en')) {
             locale = "en-US";
         } else if (req.query.locale == "zh-cn") {
