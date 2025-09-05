@@ -3,7 +3,6 @@
     "body": [
         {
             "type": "service",
-            "messages": {},
             "className": "h-full",
             "body": [
                 {
@@ -39,7 +38,8 @@
                                             "actions": [
                                                 {
                                                     "actionType": "custom",
-                                                    "script": "document.querySelector('.space-users-list-custom-page').classList.toggle('space-users-list-sidebar-open');"
+                                                    "script": "document.querySelector('.space-users-list-custom-page').classList.toggle('space-users-list-sidebar-open');",
+                                                    "expression": "${isMobile}"
                                                 },
                                                 {
                                                     "actionType": "setValue",
@@ -48,7 +48,8 @@
                                                         "value": {
                                                             "isVisible": "${!isVisible}"
                                                         }
-                                                    }
+                                                    },
+                                                    "expression": "${isMobile}"
                                                 },
                                                 {
                                                     "actionType": "setValue",
