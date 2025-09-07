@@ -151,9 +151,9 @@ listviews:
   draft:
     label: Draft
   pending:
-    label: Pending
+    label: In Progress
   completed:
-    label: Completed
+    label: Finished
   monitor:
     label: Monitor
 actions:
