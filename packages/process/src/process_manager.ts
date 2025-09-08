@@ -97,6 +97,9 @@ const getProcessNodeApprover = async (
               .getObject("flow_roles")
               .findOne(flowRoleKey);
           }
+          if (!dbFlowRole) {
+            throw new Error("not find flow roles");
+          }
           assigned_approver_flow_role_ids.push(dbFlowRole._id);
         }
 
@@ -155,12 +158,10 @@ const getProcessNodes = async (
   processDefinitionId: string,
   spaceId: string,
 ) => {
-  return await objectql
-    .getObject("process_node")
-    .find({
-      filters: [["process_definition", "=", processDefinitionId]],
-      sort: "order asc",
-    });
+  return await objectql.getObject("process_node").find({
+    filters: [["process_definition", "=", processDefinitionId]],
+    sort: "order asc",
+  });
 };
 
 const addInstanceHistory = async (
