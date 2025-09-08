@@ -7107,10 +7107,10 @@
   resolved "https://registry.yarnpkg.com/@steedos-labs/plugin-package-store/-/plugin-package-store-1.0.9.tgz#13dfcd3bdc842ae498b4b55de18d974ed2c313af"
   integrity sha512-hQiKdlw1s7uXL7UzPOUHs9oTlFGJejYyvjxnHo87b7S36ekddqvjCj4GngEBelPCfHOiKggNwOP28YHReFmTSw==
 
-"@steedos-labs/plugin-workflow@3.0.0-beta.27":
-  version "3.0.0-beta.27"
-  resolved "https://registry.yarnpkg.com/@steedos-labs/plugin-workflow/-/plugin-workflow-3.0.0-beta.27.tgz#3aba79c6d393067dce5f769f97c10af45dad8939"
-  integrity sha512-bIXKDmX6hdEhOfyUzdHGkR6uXzoscNiD/3DGMBuV8IsaNcyyTW2r0UKhFfynu/S4wl2FMOeC2jqnM0+Ami51MA==
+"@steedos-labs/plugin-workflow@3.0.0-beta.28":
+  version "3.0.0-beta.28"
+  resolved "https://registry.yarnpkg.com/@steedos-labs/plugin-workflow/-/plugin-workflow-3.0.0-beta.28.tgz#56ca9ce8a6ba602dc60d8c57072f365e2404e947"
+  integrity sha512-qUBRSbvmcBZgYof048piLWnIXMkiVnl6aWqemyjuDuQvceJz8ds4SVlnBD4vqkJHD2ccDV1c22Y18dwqx8se1g==
   dependencies:
     formidable "2.0.1"
     graphql-parse-resolve-info "^4.12.3"
