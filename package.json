@@ -33,7 +33,8 @@
     "@types/mime": "3.0.0",
     "undici": "5.16.0",
     "mingo": "6.4.15",
-    "pg": "8.10.0"
+    "pg": "8.10.0",
+    "figlet": "1.5.2"
   },
   "devDependencies": {
     "cnpm": "9.0.1",
