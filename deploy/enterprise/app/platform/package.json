@@ -30,6 +30,7 @@
     "pg": "8.10.0",
     "formidable": "2.0.1",
     "inquirer": "8.2.4",
-    "type-fest": "0.21.3"
+    "type-fest": "0.21.3",
+    "figlet": "1.5.2"
   }
 }
