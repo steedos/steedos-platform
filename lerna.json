@@ -4,7 +4,7 @@
     "steedos-packages/*",
     "services/*",
     "ee/**",
-    "server"
+    "builder6/*"
   ],
   "useWorkspaces": true,
   "npmClient": "yarn",
