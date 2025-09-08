@@ -1,6 +1,6 @@
 {
   "name": "@steedos/webapp-accounts",
-  "version": "2.7.18-beta.49",
+  "version": "2.7.18",
   "main": "package.service.js",
   "scripts": {},
   "files": [
@@ -15,5 +15,5 @@
   "dependencies": {
     "lodash": "^4.17.21"
   },
-  "gitHead": "5d49ae14e78768b87d3aaaf09eec9f834c5544fd"
+  "gitHead": "415fbfe16e7661567e79f2f5735ab34c707562ef"
 }
