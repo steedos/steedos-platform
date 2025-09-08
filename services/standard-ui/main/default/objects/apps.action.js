@@ -2,7 +2,7 @@
  * @Author: baozhoutao@hotoa.com
  * @Date: 2021-12-27 10:49:33
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2025-08-11 18:09:33
+ * @LastEditTime: 2025-09-08 15:56:42
  * @Description: 
  */
 module.exports = {
@@ -37,6 +37,8 @@ module.exports = {
         FlowRouter.reload();
     },
     resetVisible: function(object_name, record_id, record_permissions, data){
+        // TODO:应用重置逻辑先隐藏
+        return false;
         const record = data && data.record;
         if(Steedos.Object.base.actions.standard_edit.visible(object_name, record_id, record_permissions)){
             return record.from_code_id;
