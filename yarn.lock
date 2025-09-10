@@ -1990,23 +1990,23 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@builder6/cli@3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@builder6/cli/-/cli-3.0.1.tgz#e17fecbb375a1f4e2ea90c8a3cece4abd94396f6"
-  integrity sha512-dgP4L0ioLdYThC5OQP5jkluDWS0z6BjfRnMMaxc4XOvyJ53qNHjxq5T7r4dEFTjzEesW/un7LxktXsU+foExSw==
+"@builder6/cli@3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@builder6/cli/-/cli-3.0.2.tgz#c32645da7e81d41980fbdefed475d8ade2b91f67"
+  integrity sha512-FTkARmmoxntGP5OjPDyWuh5Lk4pThozBrgisoiFB5qV2vBPCd4FMDVCRoYZTzR10hXLpLXC/Qn0tnQLaGVfDOQ==
   dependencies:
     "@oclif/core" "^4"
     "@oclif/plugin-help" "^6"
     "@oclif/plugin-plugins" "^5"
     fs-extra "^11.2.0"
 
-"@builder6/core@3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@builder6/core/-/core-3.0.1.tgz#8a5a3e81f50fc763249136eed7b0b8802c06392b"
-  integrity sha512-noahaAmHoVckp8JrFUvVZqr798FsRQkqBiwTMPU3XCrmFBb77SoHxZdAryfHkBml0FSYLYNlQ51G8CIvJ5Uw0A==
+"@builder6/core@3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@builder6/core/-/core-3.0.2.tgz#10ddb0d9ac4f79f90a60dda9ebd99e52e38a7480"
+  integrity sha512-NhB6D1+1w9Wp2j3zN96kcuMdJMwohVHRw6xyfMUi8pIGsGZk/uTRYi6zFgy7ehDfE79sxn5P30+QuGkr/MW+Hw==
   dependencies:
     "@aws-sdk/client-cloudwatch-logs" "^3.721.0"
-    "@builder6/query-mongodb" "3.0.1"
+    "@builder6/query-mongodb" "3.0.2"
     "@socket.io/redis-adapter" "^8.3.0"
     moleculer "^0.14.35"
     pino-http "^10.3.0"
@@ -2017,17 +2017,17 @@
   resolved "https://registry.yarnpkg.com/@builder6/docs-client/-/docs-client-3.0.4-beta.8.tgz#476350d8a2829dcae49d5e3a620837dd27c271e8"
   integrity sha512-bXb/kls1fbWVfkUXVkyCM0SXkyUOkgaqedqdxMUlVdVcYGcEghDuw9BwxuvqSYOuiA3A35zI6Jt29/QKIv9sWg==
 
-"@builder6/docs@3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@builder6/docs/-/docs-3.0.1.tgz#81d36fbacefb819dbf913cfd5f8bd67c8c89495b"
-  integrity sha512-jgD/8czGsTXJWNQuDc9tfZeSsc8ZPa+Pjnb0iHQQQJOtY3QDQa3u2uJvn2zRHHbmcJpxuDoGKUD7NDQRLf3Kzg==
+"@builder6/docs@3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@builder6/docs/-/docs-3.0.2.tgz#bc5976b082f32afadba3220d1827cf4488c187f8"
+  integrity sha512-8s3PdIAimYVB7EhuI1IdCgEvqW67mHvCMb4/uiavh6aAK7YstDT9xPfnHeHb2cZ9tN2POAqlhKvRJnG7bPQo3g==
   dependencies:
-    "@builder6/core" "3.0.1"
+    "@builder6/core" "3.0.2"
     "@builder6/docs-client" "^3.0.4-beta.8"
-    "@builder6/files" "3.0.1"
-    "@builder6/moleculer" "3.0.1"
-    "@builder6/oidc" "3.0.1"
-    "@builder6/onlyoffice" "3.0.1"
+    "@builder6/files" "3.0.2"
+    "@builder6/moleculer" "3.0.2"
+    "@builder6/oidc" "3.0.2"
+    "@builder6/onlyoffice" "3.0.2"
     "@nestjs/common" "^11.0.0"
     "@nestjs/config" "^4.0.1"
     "@nestjs/core" "^11.0.0"
@@ -2050,74 +2050,74 @@
     reflect-metadata "^0.2.0"
     rxjs "^7.8.1"
 
-"@builder6/email@3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@builder6/email/-/email-3.0.1.tgz#6f3135a7fe1ac06c90f185c867ece7cefd974b6c"
-  integrity sha512-b4jFPPpoaRp1sBu0lz10MAm4W1glqzdVT50oYgJI78GhKxYSD5fcceea5fFwvwsnhCpHYBZHTGuYtFXm7vAFQQ==
+"@builder6/email@3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@builder6/email/-/email-3.0.2.tgz#b586ab735fe1536ce90a4585b3eab715a18b6a0e"
+  integrity sha512-ceB5B9JdBmzKWoGK6+ZUfsOdlGYV0ABrwV4tEejG7IoRRRsKKlgou6y1NXGfAFG8kIKR23Y2bKCqPkk40OUfhA==
   dependencies:
-    "@builder6/core" "3.0.1"
+    "@builder6/core" "3.0.2"
     bluebird "^3.7.2"
     email-addresses "^5.0.0"
     lodash "^4.17.5"
     nodemailer "^6.9.16"
 
-"@builder6/files@3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@builder6/files/-/files-3.0.1.tgz#bd6f34cbdea9ef40012ae98f71a134a17958216b"
-  integrity sha512-iL7VpqrXtbYfpUwqoMElP3V20g0WV0V3elO4mTwPhlLufft9kFXgpLazqwFkH5QD9/4vIvZMPsIU7X7Ry9julw==
+"@builder6/files@3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@builder6/files/-/files-3.0.2.tgz#f8755da7690b784aa12e6861c808f73f54447f87"
+  integrity sha512-7YNOwMb37kJFC1bmc3Mx2nGlGkG2vCgL0+ipWLEacyujaZ9nYFacPLtUHBm1DaSpWPn4cXyrgXTJX8nTJN2yZQ==
   dependencies:
-    "@builder6/core" "3.0.1"
+    "@builder6/core" "3.0.2"
     nodemailer "^6.9.16"
 
-"@builder6/moleculer@3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@builder6/moleculer/-/moleculer-3.0.1.tgz#4b1d184747b19f44a6f1e641b8cccc85119b46e9"
-  integrity sha512-+N4lzabK6JPN5jpc8g1/N9eQ5DWLgq2d5EQgkqqqrrBGkrgHmMdbMgxvQCf1VAuS1yvRuIVYXo67gyTIgzG2aQ==
+"@builder6/moleculer@3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@builder6/moleculer/-/moleculer-3.0.2.tgz#ec1f0761308c357a997c3f51add5ffb41fa1f148"
+  integrity sha512-VVVlsmLYIFS5Cw32qQcf8U9MKq+WaGDho3+uMiDinNkvNYR4eH5wclVTv+wFxm4g8IS3pDQhrGkqCcWwY2YvGQ==
 
-"@builder6/oidc-provider@3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@builder6/oidc-provider/-/oidc-provider-3.0.1.tgz#e87a92aa4a035f7a0cdd29ca2f28e15db75f845e"
-  integrity sha512-6lRcIRUszaKA+n/xYyoJe5eddgl6iA9wtSlfcIQuVEmqeI4iP/ZFdOLJw4qp0M9we/MFgfYc/G2Tw6Yuw9Y+9A==
+"@builder6/oidc-provider@3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@builder6/oidc-provider/-/oidc-provider-3.0.2.tgz#1617511aa02532d0c481b624ca474a8e3e873aef"
+  integrity sha512-aBJH+SLJ3FQn0ZS48YDXR3c0N6uJ0dQAozsyOwCNERYwMxnsTZEqe7/inip49bFpTWfi5dtypXNiLLhtdTNK1A==
   dependencies:
-    "@builder6/core" "3.0.1"
+    "@builder6/core" "3.0.2"
     lodash "^4.17.5"
     oidc-provider "^8.8.1"
 
-"@builder6/oidc@3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@builder6/oidc/-/oidc-3.0.1.tgz#aa2b642f2882d2a7da3e791b7963f01caf961543"
-  integrity sha512-91hehTRB3AxVtirLS9Qzfs/u/ShiLSdYC0sOHgdmEbM+Eyx8D18Cf0SMErrKb9l4NZjjSAMTu6pow6t+MISh4Q==
+"@builder6/oidc@3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@builder6/oidc/-/oidc-3.0.2.tgz#3cddb19f0b0c9338dd19178d146c8525ca0f5ed1"
+  integrity sha512-z1E7XZArCJmQCZ1AXUS0MrDWUCzrMkMagfBPdaviUueImH3RPS9h8ddjuIMJvLEKPWUkm0WRp4L12PQferSGxg==
   dependencies:
-    "@builder6/core" "3.0.1"
+    "@builder6/core" "3.0.2"
     ejs "^3.1.10"
     ismobilejs "^1.1.1"
     lodash "^4.17.5"
     openid-client "^5.7.1"
     request-ip "^3.3.0"
 
-"@builder6/onlyoffice@3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@builder6/onlyoffice/-/onlyoffice-3.0.1.tgz#cc195667c152677c4d5d45c03c8f1a02c50956a1"
-  integrity sha512-9P2s5qcFjnoiKIX/4UlX1YnP8rBdgHZYIkoiNDMqDDYoiHT6NOBgORAFQcxC9F+MCx/3r063+dhKogwbjzh6Ew==
+"@builder6/onlyoffice@3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@builder6/onlyoffice/-/onlyoffice-3.0.2.tgz#251af3d9c1aabe29dae7871f479324f476e804e6"
+  integrity sha512-aAesJmy5hy+ynFMDfWJePjmWRmd3gg7fVN6kG/TBzQyaD/4hLPscy2cFEACXckkjU+v15hkx3imOB3m+4qwa0g==
   dependencies:
-    "@builder6/core" "3.0.1"
-    "@builder6/email" "3.0.1"
-    "@builder6/files" "3.0.1"
+    "@builder6/core" "3.0.2"
+    "@builder6/email" "3.0.2"
+    "@builder6/files" "3.0.2"
     url "~0.11.4"
 
-"@builder6/pages@3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@builder6/pages/-/pages-3.0.1.tgz#6a73aacc215390a03a21a97fa8a2423ea70c8d59"
-  integrity sha512-tymn86UjQXvPss0T6c1jcmq4RP8YuGWsiUBY5MVRC5rST8UPzDtRGw2oW+NsvSa5vKYVOXa23vsNEWadPn5aTw==
+"@builder6/pages@3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@builder6/pages/-/pages-3.0.2.tgz#6cb810b5efe354d0ef2ff6f5c68628dbf3c846db"
+  integrity sha512-uuLjsDks57dU2xJrOsrC31GEnccSHcQEeYLNc3scQRHK585YfGDY+AgF2zGSLb9iwHG/zgjv/Y5f3sYd3qAsKw==
   dependencies:
-    "@builder6/core" "3.0.1"
+    "@builder6/core" "3.0.2"
     dataloader "^2.2.3"
     liquidjs "^10.19.0"
 
-"@builder6/query-mongodb@3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@builder6/query-mongodb/-/query-mongodb-3.0.1.tgz#8c1a6e760c0b12701335733b25ec8a688642c807"
-  integrity sha512-u4Vc9kwmPHiCoxY7UA8v28NBL0zULsOnoQLbt+Nqa+h9AlxChYm5Tuj+KZuTkR/O1qagfp6vWsg+xHAw9iBz/Q==
+"@builder6/query-mongodb@3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@builder6/query-mongodb/-/query-mongodb-3.0.2.tgz#6e96db6959fad2e88effc02c0b3609cc8ab5fdd2"
+  integrity sha512-nbPDzmeps/24n1tFfCG/seVm06BdcdKnW1olr7xUxTP3MiMiRHIWg3Q+lgu3f309udQ6DPIPHI2skTQmJgclBw==
   dependencies:
     yup "^1.1.0"
 
@@ -2135,16 +2135,16 @@
     node-fetch "^2.6.1"
     prop-types "^15.7.2"
 
-"@builder6/rooms@3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@builder6/rooms/-/rooms-3.0.1.tgz#79a7bbb45e35e8a66d2a874d44437d4f3c8a835b"
-  integrity sha512-bc2kzdbR6DZ1P+GxAfHv4MJnFitfqt7I/K/+2+vF2mn/1FVinNMCsNVvICYt7nZsidopOUVSY52lCxnJmLjx6w==
+"@builder6/rooms@3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@builder6/rooms/-/rooms-3.0.2.tgz#fd19ec0f63b46ee24b247fe4420d83b5cdb4bea1"
+  integrity sha512-RtrHZ7AlwmVsmp307Gnu/Ds+EdpRQ4XlNwgK1m1u2caJwj75sh+MnReBsaw2Jrv2PSIwKp82QA4RMWqp9rs45Q==
   dependencies:
-    "@builder6/core" "3.0.1"
-    "@builder6/email" "3.0.1"
-    "@builder6/files" "3.0.1"
-    "@builder6/moleculer" "3.0.1"
-    "@builder6/pages" "3.0.1"
+    "@builder6/core" "3.0.2"
+    "@builder6/email" "3.0.2"
+    "@builder6/files" "3.0.2"
+    "@builder6/moleculer" "3.0.2"
+    "@builder6/pages" "3.0.2"
     "@liveblocks/emails" "2.12.0"
     "@liveblocks/node" "2.12.0"
     "@react-email/components" "^0.0.31"
@@ -2166,27 +2166,27 @@
     node-fetch "^2.3.0"
     tslib "^2.6.3"
 
-"@builder6/server@^3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@builder6/server/-/server-3.0.1.tgz#5211ba413cde680402e0c823df7975eb1118d698"
-  integrity sha512-4Kg6pluWW8Meaicbb73rmcrOZDgqJm4rY9jy00xcXS1evS2ocUVTxH1kECaFUuxBP2xVO8ou/CJ1uWuz/OXBOQ==
+"@builder6/server@^3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@builder6/server/-/server-3.0.2.tgz#4d8cd02d037a0c26da0309ae3bc5f5aefa6d1c09"
+  integrity sha512-4zUBvCyjkncU8YWQm95elP/uNgcxMCFKQwpmtbrddbUrc8SU0VYsPMAH9C7U6uTRm2+zWm8oqAG0Rbm2C+94Dw==
   dependencies:
-    "@builder6/cli" "3.0.1"
-    "@builder6/core" "3.0.1"
-    "@builder6/docs" "3.0.1"
-    "@builder6/email" "3.0.1"
-    "@builder6/files" "3.0.1"
-    "@builder6/moleculer" "3.0.1"
-    "@builder6/oidc" "3.0.1"
-    "@builder6/oidc-provider" "3.0.1"
-    "@builder6/onlyoffice" "3.0.1"
-    "@builder6/pages" "3.0.1"
-    "@builder6/query-mongodb" "3.0.1"
-    "@builder6/rooms" "3.0.1"
-    "@builder6/services" "3.0.1"
-    "@builder6/sharepoint" "3.0.1"
-    "@builder6/steedos" "3.0.1"
-    "@builder6/tables" "3.0.1"
+    "@builder6/cli" "3.0.2"
+    "@builder6/core" "3.0.2"
+    "@builder6/docs" "3.0.2"
+    "@builder6/email" "3.0.2"
+    "@builder6/files" "3.0.2"
+    "@builder6/moleculer" "3.0.2"
+    "@builder6/oidc" "3.0.2"
+    "@builder6/oidc-provider" "3.0.2"
+    "@builder6/onlyoffice" "3.0.2"
+    "@builder6/pages" "3.0.2"
+    "@builder6/query-mongodb" "3.0.2"
+    "@builder6/rooms" "3.0.2"
+    "@builder6/services" "3.0.2"
+    "@builder6/sharepoint" "3.0.2"
+    "@builder6/steedos" "3.0.2"
+    "@builder6/tables" "3.0.2"
     "@nestjs/common" "^11.0.0"
     "@nestjs/config" "^4.0.1"
     "@nestjs/core" "^11.0.0"
@@ -2234,40 +2234,40 @@
     uuid "^9.0.0"
     ws "8.13.0"
 
-"@builder6/services@3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@builder6/services/-/services-3.0.1.tgz#d813a78755a5640d954e9464ccc34ae5f497f59c"
-  integrity sha512-43SEb5mw3bBoen1uC2SKJm5tLYfOdwFoz+66cEyi914InkpULHa0lj6LXPbBzQJNSQFr5wuEui6T4dHG6x+sSw==
+"@builder6/services@3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@builder6/services/-/services-3.0.2.tgz#7781a5c6dde7d97916661605a5f945257769e2e5"
+  integrity sha512-M/22b8YiaOPahPHsrf52A64MycWnqTNoPL4obEuW+Zua/W6zyXVVD+iLaaPBhNXIvFPI493wL856cfWfaY2QbA==
   dependencies:
-    "@builder6/core" "3.0.1"
+    "@builder6/core" "3.0.2"
 
-"@builder6/sharepoint@3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@builder6/sharepoint/-/sharepoint-3.0.1.tgz#1ad2d09301d268e6f1d45dc14a9e4f7d151c5851"
-  integrity sha512-jhXvifU8GA6T967hsxxWgbls9zmoPVPcAJbnFRE/gNUq2v5WmWaOSD68zIhQl0ZFslWZ+lCB7HeIgtv+aqtvvg==
+"@builder6/sharepoint@3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@builder6/sharepoint/-/sharepoint-3.0.2.tgz#35c623510244dd098350d9ac7c2a43b11aee521a"
+  integrity sha512-Do9o+46tNVW5xNxk6UYib62UyF4mnNriHOzvgif/P9EPGiM1seAAruGlzyUO/WeNjGaSlPU/1BpgMAvSPqgeIQ==
   dependencies:
-    "@builder6/core" "3.0.1"
-    "@builder6/files" "3.0.1"
+    "@builder6/core" "3.0.2"
+    "@builder6/files" "3.0.2"
     form-data "^4.0.1"
     line-reader "^0.4.0"
     nodemailer "^6.9.16"
 
-"@builder6/steedos@3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@builder6/steedos/-/steedos-3.0.1.tgz#e825d5369523b290a62f0ab1b2bf916ff29861fa"
-  integrity sha512-5ekPPuJNqB/kN1ycGTDdJjJe5HSWscFq6IiEEUWM801IqD8D+hXHIf32vjs7lNPLIIE4SSqbhLTbD3M0hXZ9cA==
+"@builder6/steedos@3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@builder6/steedos/-/steedos-3.0.2.tgz#c4f77ce1abe09eb0d0ddec0c950e8412ac42de04"
+  integrity sha512-EVL4Ja4BnTlKGqAc3P06CVGXfFpgHemFDKUxquhMnyMf69ZZJdXnoIszPSkh5htX1fj4YodoIQNFdnAP1oO5QQ==
   dependencies:
-    "@builder6/core" "3.0.1"
-    "@builder6/moleculer" "3.0.1"
+    "@builder6/core" "3.0.2"
+    "@builder6/moleculer" "3.0.2"
     nodemailer "^6.9.16"
 
-"@builder6/tables@3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@builder6/tables/-/tables-3.0.1.tgz#98171842a36e825628d1e3a7ecf2016eb7cb418a"
-  integrity sha512-pFUPGX5TAg5Hnc5K48ZAsGOaMT1ovWfnT1uDoIKBjE3AqAXCuO5KzA2jeyAbhkbLtbhbGs6kIZdrQ7i1CGdTNw==
+"@builder6/tables@3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@builder6/tables/-/tables-3.0.2.tgz#e6e7ec4f6213f0a8f8adc7d79e1125ae11830c4d"
+  integrity sha512-nlj6FDiPxMIPhkhlrntmAUgeZCkHytJcf2NcXJRITUsuzxZqBono8mGDnqRY5hDU5atYheWwaZN37ulDRRodXQ==
   dependencies:
-    "@builder6/core" "3.0.1"
-    "@builder6/pages" "3.0.1"
+    "@builder6/core" "3.0.2"
+    "@builder6/pages" "3.0.2"
     dataloader "^2.2.3"
 
 "@bull-board/api@6.12.0":
@@ -28307,7 +28307,7 @@ string-random@^0.1.3:
   resolved "https://registry.yarnpkg.com/string-random/-/string-random-0.1.3.tgz#083f39835c2430fe0be76b9e72f0736e2e0f7b74"
   integrity sha512-g+UsIwzKhNi+9/+Q3Q7hP8R4HkQxiIkQlttnxw6GRdk9pnnkGIv53C6H8dvh8wxAVDhkqpnWeauaPXS1b2sBJg==
 
-"string-width-cjs@npm:string-width@^4.2.0":
+"string-width-cjs@npm:string-width@^4.2.0", "string-width@^1.0.2 || 2 || 3 || 4", string-width@^4.0.0, string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.2, string-width@^4.2.3:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
@@ -28324,15 +28324,6 @@ string-width@^1.0.1:
     code-point-at "^1.0.0"
     is-fullwidth-code-point "^1.0.0"
     strip-ansi "^3.0.0"
-
-"string-width@^1.0.2 || 2 || 3 || 4", string-width@^4.0.0, string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.2, string-width@^4.2.3:
-  version "4.2.3"
-  resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
-  integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
-  dependencies:
-    emoji-regex "^8.0.0"
-    is-fullwidth-code-point "^3.0.0"
-    strip-ansi "^6.0.1"
 
 string-width@^2.0.0, string-width@^2.1.0:
   version "2.1.1"
@@ -28465,7 +28456,7 @@ stringify-package@^1.0.1:
   resolved "https://registry.yarnpkg.com/stringify-package/-/stringify-package-1.0.1.tgz#e5aa3643e7f74d0f28628b72f3dad5cecfc3ba85"
   integrity sha512-sa4DUQsYciMP1xhKWGuFM04fB0LG/9DlluZoSVywUMRNvzid6XucHK0/90xGxRoHrAaROrcHK1aPKaijCtSrhg==
 
-"strip-ansi-cjs@npm:strip-ansi@^6.0.1":
+"strip-ansi-cjs@npm:strip-ansi@^6.0.1", strip-ansi@^6.0.0, strip-ansi@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
@@ -28492,13 +28483,6 @@ strip-ansi@^5.0.0, strip-ansi@^5.1.0, strip-ansi@^5.2.0:
   integrity sha512-DuRs1gKbBqsMKIZlrffwlug8MHkcnpjs5VPmL1PAh+mA30U0DTotfDZ0d2UUsXpPmPmMMJ6W773MaA3J+lbiWA==
   dependencies:
     ansi-regex "^4.1.0"
-
-strip-ansi@^6.0.0, strip-ansi@^6.0.1:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
-  integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
-  dependencies:
-    ansi-regex "^5.0.1"
 
 strip-ansi@^7.0.1, strip-ansi@^7.1.0:
   version "7.1.0"
@@ -31125,7 +31109,7 @@ workbox-window@6.6.1:
     "@types/trusted-types" "^2.0.2"
     workbox-core "6.6.1"
 
-"wrap-ansi-cjs@npm:wrap-ansi@^7.0.0":
+"wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
@@ -31147,15 +31131,6 @@ wrap-ansi@^6.2.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-6.2.0.tgz#e9393ba07102e6c91a3b221478f0257cd2856e53"
   integrity sha512-r6lPcBGxZXlIcymEu7InxDMhdW0KDxpLgoFLcguasxCaJ/SOIZwINatK9KY/tf+ZrlywOKU0UDj3ATXUBfxJXA==
-  dependencies:
-    ansi-styles "^4.0.0"
-    string-width "^4.1.0"
-    strip-ansi "^6.0.0"
-
-wrap-ansi@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
-  integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
   dependencies:
     ansi-styles "^4.0.0"
     string-width "^4.1.0"
