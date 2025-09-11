@@ -83,7 +83,7 @@ const exportRecordData = async function (req: any, res: any) {
           fields: fields,
           top: Number(queryParams.$top),
         };
-        if (queryParams.hasOwnProperty("$skip")) {
+        if (Object.prototype.hasOwnProperty.call(queryParams, "$skip")) {
           query["skip"] = Number(queryParams.$skip);
         }
         if (queryParams.$orderby) {
@@ -92,13 +92,11 @@ const exportRecordData = async function (req: any, res: any) {
         entities = await collection.find(query, userSession);
       }
       if (entities.length > MAX_EXPORT) {
-        return res
-          .status(403)
-          .send({
-            status: 403,
-            error: 403,
-            msg: `超出允许的导出记录数(${MAX_EXPORT}条), 请调整搜索条件后重试.`,
-          });
+        return res.status(403).send({
+          status: 403,
+          error: 403,
+          msg: `超出允许的导出记录数(${MAX_EXPORT}条), 请调整搜索条件后重试.`,
+        });
       }
       if (entities) {
         const fieldConfigs = (
@@ -326,7 +324,7 @@ const key2value = async function (fieldValue, fieldConfig, userSession) {
       return moment(fieldValue).format("YYYY-MM-DD");
     case "datetime":
       return moment(fieldValue)
-        .utcOffset(userSession.utcOffset)
+        .utcOffset(userSession.utcOffset ?? 8)
         .format("YYYY-MM-DD H:mm");
     case "time":
       return moment(fieldValue).utcOffset(0).format("HH:mm");
@@ -342,28 +340,10 @@ const key2value = async function (fieldValue, fieldConfig, userSession) {
   }
 };
 
-// exportExcelExpress.get('/api/record/export/:objectName', requireAuthentication, function (req, res) {
-//     return Fiber(function () {
-//         return exportRecordData(req, res);
-//     }).run();;
-// });
-
-// // import { getSteedosSchema } from '@steedos/objectql';
-// const express = require('express');
-// const router =express.Router();
-
 router.get(
   "/api/record/export/:objectName",
   requireAuthentication,
   async function (req: any, res: any) {
-    // const userSession = req.user;
-    // const mobile = req.query && req.query.mobile;
-    // try {
-    //     const result = await getSteedosSchema().broker.call('apps.getMenus', {mobile: mobile}, {meta: {user: userSession}});
-    //     res.status(200).send(result);
-    // } catch (error) {
-    //     res.status(500).send(error.message);
-    // }
     return await exportRecordData(req, res);
   },
 );

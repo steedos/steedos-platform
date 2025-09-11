@@ -5,12 +5,12 @@ const querystring = require("querystring");
 const odataV4Mongodb = require("@steedos/odata-v4-mongodb");
 const filters_1 = require("@steedos/filters");
 const auth_1 = require("@steedos/auth");
-const moment = require('moment');
-const json2xls = require('json2xls');
-const objectql = require('@steedos/objectql');
-const _ = require('lodash');
+const moment = require("moment");
+const json2xls = require("json2xls");
+const objectql = require("@steedos/objectql");
+const _ = require("lodash");
 const objectql_1 = require("@steedos/objectql");
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 const MAX_EXPORT = 5000;
 const exportRecordData = function (req, res) {
@@ -43,16 +43,20 @@ const exportRecordData = function (req, res) {
                     query: {},
                     sort: undefined,
                     projection: {},
-                    includes: []
+                    includes: [],
                 };
             }
             let permissions = yield collection.getUserObjectPermission(userSession);
-            if (permissions.allowExport != true && false) {
-                return res.status(403).send({ status: 403, error: 403, msg: `access failed` });
+            if (permissions.allowExport != true) {
+                return res
+                    .status(403)
+                    .send({ status: 403, error: 403, msg: `access failed` });
             }
-            if (permissions.viewAllRecords || (permissions.viewCompanyRecords) || (permissions.allowRead && userId)) {
+            if (permissions.viewAllRecords ||
+                permissions.viewCompanyRecords ||
+                (permissions.allowRead && userId)) {
                 let entities = [];
-                let filters = queryParams.$filter || '';
+                let filters = queryParams.$filter || "";
                 let fields = [];
                 if (queryParams.$select) {
                     fields = _.keys(createQuery.projection);
@@ -60,21 +64,33 @@ const exportRecordData = function (req, res) {
                 if (isPlatformDriver(collection.datasource.driver)) {
                     filters = excludeDeleted(filters);
                 }
-                if (queryParams.$top !== '0') {
-                    let query = { filters: filters, fields: fields, top: Number(queryParams.$top) };
-                    if (queryParams.hasOwnProperty('$skip')) {
-                        query['skip'] = Number(queryParams.$skip);
+                if (queryParams.$top !== "0") {
+                    let query = {
+                        filters: filters,
+                        fields: fields,
+                        top: Number(queryParams.$top),
+                    };
+                    if (Object.prototype.hasOwnProperty.call(queryParams, "$skip")) {
+                        query["skip"] = Number(queryParams.$skip);
                     }
                     if (queryParams.$orderby) {
-                        query['sort'] = queryParams.$orderby;
+                        query["sort"] = queryParams.$orderby;
                     }
                     entities = yield collection.find(query, userSession);
                 }
                 if (entities.length > MAX_EXPORT) {
-                    return res.status(403).send({ status: 403, error: 403, msg: `超出允许的导出记录数(${MAX_EXPORT}条), 请调整搜索条件后重试.` });
+                    return res
+                        .status(403)
+                        .send({
+                        status: 403,
+                        error: 403,
+                        msg: `超出允许的导出记录数(${MAX_EXPORT}条), 请调整搜索条件后重试.`,
+                    });
                 }
                 if (entities) {
-                    const fieldConfigs = (yield objectql.getSteedosSchema().broker.call(`objectql.getRecordView`, { objectName }, { meta: { user: userSession } })).fields;
+                    const fieldConfigs = (yield objectql
+                        .getSteedosSchema()
+                        .broker.call(`objectql.getRecordView`, { objectName }, { meta: { user: userSession } })).fields;
                     for (let i = 0; i < entities.length; i++) {
                         let record = entities[i];
                         delete record._id;
@@ -93,10 +109,14 @@ const exportRecordData = function (req, res) {
                                 continue;
                             }
                             if (fieldValue || fieldValue == false) {
-                                parsedRecord = Object.assign(parsedRecord, { [fieldConfig.label]: yield key2value(fieldValue, fieldConfig, userSession) });
+                                parsedRecord = Object.assign(parsedRecord, {
+                                    [fieldConfig.label]: yield key2value(fieldValue, fieldConfig, userSession),
+                                });
                             }
                             else {
-                                parsedRecord = Object.assign(parsedRecord, { [fieldConfig.label]: null });
+                                parsedRecord = Object.assign(parsedRecord, {
+                                    [fieldConfig.label]: null,
+                                });
                             }
                         }
                         entities[i] = parsedRecord;
@@ -106,15 +126,17 @@ const exportRecordData = function (req, res) {
                     }
                     var xls = json2xls(entities);
                     res.writeHead(200, {
-                        'Content-Type': 'application/octet-stream',
-                        'Content-Disposition': 'attachment;filename=' + encodeURI(filename + '.xlsx'),
-                        'Content-Length': xls.length,
-                        'Access-Control-Expose-Headers': 'Content-Disposition'
+                        "Content-Type": "application/octet-stream",
+                        "Content-Disposition": "attachment;filename=" + encodeURI(filename + ".xlsx"),
+                        "Content-Length": xls.length,
+                        "Access-Control-Expose-Headers": "Content-Disposition",
                     });
-                    res.end(xls, 'binary');
+                    res.end(xls, "binary");
                 }
                 else {
-                    res.status(404).send({ code: 404, error: 404, message: "no record found" });
+                    res
+                        .status(404)
+                        .send({ code: 404, error: 404, message: "no record found" });
                 }
             }
             else {
@@ -131,40 +153,43 @@ const handleError = function (e) {
     console.log(e);
     let body = {};
     let error = {};
-    error['message'] = e.message;
+    error["message"] = e.message;
     let statusCode = 500;
     if (e.error && _.isNumber(e.error)) {
         statusCode = e.error;
     }
-    error['code'] = statusCode;
-    error['error'] = statusCode;
-    error['details'] = e.details;
-    error['reason'] = e.reason;
-    body['error'] = error;
+    error["code"] = statusCode;
+    error["error"] = statusCode;
+    error["details"] = e.details;
+    error["reason"] = e.reason;
+    body["error"] = error;
     return {
         statusCode: statusCode,
-        body: body
+        body: body,
     };
 };
 const removeInvalidMethod = function (queryParams) {
-    if (queryParams.$filter && queryParams.$filter.indexOf('tolower(') > -1) {
+    if (queryParams.$filter && queryParams.$filter.indexOf("tolower(") > -1) {
         let removeMethod = function ($1) {
-            return $1.replace('tolower(', '').replace(')', '');
+            return $1.replace("tolower(", "").replace(")", "");
         };
         queryParams.$filter = queryParams.$filter.replace(/tolower\(([^\)]+)\)/g, removeMethod);
     }
 };
 function isPlatformDriver(driverName) {
-    if (driverName == objectql_1.SteedosDatabaseDriverType.Mongo || driverName == objectql_1.SteedosDatabaseDriverType.MeteorMongo) {
+    if (driverName == objectql_1.SteedosDatabaseDriverType.Mongo ||
+        driverName == objectql_1.SteedosDatabaseDriverType.MeteorMongo) {
         return true;
     }
     return false;
 }
 const excludeDeleted = function (filters) {
-    if (filters && filters.indexOf('(is_deleted eq true)') > -1) {
+    if (filters && filters.indexOf("(is_deleted eq true)") > -1) {
         return filters;
     }
-    return filters ? `(${filters}) and (is_deleted ne true)` : `(is_deleted ne true)`;
+    return filters
+        ? `(${filters}) and (is_deleted ne true)`
+        : `(is_deleted ne true)`;
 };
 const getOptionLabel = function (optionValue, options) {
     let option = _.find(options, function (o) {
@@ -179,6 +204,7 @@ const getOptionLabel = function (optionValue, options) {
 };
 const key2value = function (fieldValue, fieldConfig, userSession) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
+        var _a;
         switch (fieldConfig.type) {
             case "boolean":
                 if (fieldValue) {
@@ -198,14 +224,15 @@ const key2value = function (fieldValue, fieldConfig, userSession) {
                 }
                 else {
                     return getOptionLabel(fieldValue, options);
-                    ;
                 }
             case "master_detail":
             case "lookup":
                 let reference_to = fieldConfig.reference_to;
                 let ref_coll;
                 let id = fieldValue;
-                if (_.isFunction(reference_to) || (fieldConfig._reference_to && fieldConfig._reference_to.startsWith('function'))) {
+                if (_.isFunction(reference_to) ||
+                    (fieldConfig._reference_to &&
+                        fieldConfig._reference_to.startsWith("function"))) {
                     reference_to = fieldValue.o;
                     id = fieldConfig.multiple ? fieldValue.ids : fieldValue.ids[0];
                 }
@@ -217,12 +244,15 @@ const key2value = function (fieldValue, fieldConfig, userSession) {
                     filters[0] = reference_to_field;
                 }
                 else {
-                    filters[0] = '_id';
+                    filters[0] = "_id";
                 }
                 if (!fieldConfig.multiple) {
                     filters[1] = "=";
                     filters[2] = id;
-                    let ref_record = yield ref_coll.find({ filters: filters, fields: [filters[0], nameFieldKey] });
+                    let ref_record = yield ref_coll.find({
+                        filters: filters,
+                        fields: [filters[0], nameFieldKey],
+                    });
                     if (ref_record && ref_record.length == 1) {
                         return ref_record[0][nameFieldKey];
                     }
@@ -236,7 +266,10 @@ const key2value = function (fieldValue, fieldConfig, userSession) {
                     if (!_.isArray(id)) {
                         return id;
                     }
-                    let ref_record = yield ref_coll.find({ filters: filters, fields: [filters[0], nameFieldKey] });
+                    let ref_record = yield ref_coll.find({
+                        filters: filters,
+                        fields: [filters[0], nameFieldKey],
+                    });
                     for (let i = 0; i < id.length; i++) {
                         let _record = _.find(ref_record, function (r) {
                             return r[filters[0]] == id[i];
@@ -250,7 +283,9 @@ const key2value = function (fieldValue, fieldConfig, userSession) {
             case "date":
                 return moment(fieldValue).format("YYYY-MM-DD");
             case "datetime":
-                return moment(fieldValue).utcOffset(userSession.utcOffset).format("YYYY-MM-DD H:mm");
+                return moment(fieldValue)
+                    .utcOffset((_a = userSession.utcOffset) !== null && _a !== void 0 ? _a : 8)
+                    .format("YYYY-MM-DD H:mm");
             case "time":
                 return moment(fieldValue).utcOffset(0).format("HH:mm");
             case "summary":
@@ -265,7 +300,7 @@ const key2value = function (fieldValue, fieldConfig, userSession) {
         }
     });
 };
-router.get('/api/record/export/:objectName', auth_1.requireAuthentication, function (req, res) {
+router.get("/api/record/export/:objectName", auth_1.requireAuthentication, function (req, res) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         return yield exportRecordData(req, res);
     });
