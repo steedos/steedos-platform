@@ -1,7 +1,7 @@
 import { Service, Context, ServiceBroker } from "moleculer";
 import { Injectable, Logger } from "@nestjs/common";
 import { InjectBroker } from "@builder6/moleculer";
-import { getSteedosConfigs } from "./config";
+import { getSteedosConfigs } from "@builder6/core";
 import { AppGateway } from "./app.gateway";
 import { defaultsDeep, includes } from "lodash";
 
@@ -140,11 +140,14 @@ export class AppMoleculer extends Service {
     });
   }
 
-  serviceCreated() {}
+  serviceCreated() {
+    console.log("Moleculer service @steedos/server created");
+  }
 
   async serviceStarted() {
+    console.log("Moleculer service @steedos/server started");
+    debugger;
     require("@steedos/objectql").getSteedosSchema(this.broker);
-    const logger = global.logger;
     // 获取环境变量
     let edition = "ce";
 
@@ -160,16 +163,16 @@ export class AppMoleculer extends Service {
 
     switch (edition) {
       case "ce":
-        logger.log("🎉 欢迎使用 Steedos 社区版！");
+        console.log("🎉 欢迎使用 Steedos 社区版！");
         break;
       case "ee":
-        logger.log("🎉 欢迎使用 Steedos 企业版！");
+        console.log("🎉 欢迎使用 Steedos 企业版！");
         break;
       case "cloud":
-        logger.log("🎉 欢迎使用 Steedos Cloud 版！");
+        console.log("🎉 欢迎使用 Steedos Cloud 版！");
         break;
       default:
-        logger.log("🤔 我们未能识别您启动的版本。");
+        console.log("🤔 我们未能识别您启动的版本。");
     }
 
     if (edition == "ee" || edition == "cloud") {

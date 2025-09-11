@@ -16,16 +16,20 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\"",
-    "start": "steedos start",
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "start:debug": "nest start --debug --watch",
+    "start:prod": "node dist/main",
     "moleculer:repl": "moleculer connect --config ./steedos.config.js",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
   "dependencies": {
-    "@builder6/server": "^3.0.4",
+    "@builder6/server": "^3.0.6",
     "@steedos/ee_unpkg": "1.0.1",
     "@steedos/service-community": "3.0.0-beta.101",
     "@steedos/service-enterprise": "3.0.0-beta.101",
-    "@steedos/webapp": "3.0.0-beta.101"
+    "@steedos/webapp": "3.0.0-beta.101",
+    "@nestjs/schematics": "^11.0.2"
   },
   "devDependencies": {
     "@nestjs/cli": "^11.0.0",
