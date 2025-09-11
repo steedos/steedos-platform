@@ -7,9 +7,9 @@ import {
   Post,
 } from "@nestjs/common";
 
-@Controller("/api")
+@Controller("/api/v6/app")
 export class AppController {
-  @Get("/public/settings")
+  @Get("/public_settings")
   getPublicSettings() {
     return {
       rootUrl: process.env.ROOT_URL,
@@ -27,11 +27,5 @@ export class AppController {
   @Get("/health_check")
   health_check() {
     return { status: "ok" };
-  }
-
-  @Post("/amis/health_check")
-  @Get("/amis/health_check")
-  amis_health_check() {
-    return { status: 0, data: {} };
   }
 }

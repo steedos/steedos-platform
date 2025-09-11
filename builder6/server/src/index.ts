@@ -42,13 +42,6 @@ export const beforeServerStart = async ({ app }) => {
   if (webappPackagePath) {
     expressApp.use("/", express.static(webappDistPath));
 
-    const indexPath = join(webappDistPath, "index.html");
-    // 同步读取 index.html 内容
-    let indexHtml = readFileSync(indexPath, "utf8");
-    indexHtml = indexHtml.replace(
-      /https:\/\/unpkg\.com/g,
-      process.env.STEEDOS_UNPKG_URL || "https://unpkg.com",
-    );
     const frontendRoutes = [
       "/",
       "/app",
@@ -65,6 +58,27 @@ export const beforeServerStart = async ({ app }) => {
       "/home/:spaceId",
     ];
     expressApp.get(frontendRoutes, (req, res) => {
+      const indexPath = join(webappDistPath, "index.html");
+      // 同步读取 index.html 内容
+      let indexHtml = readFileSync(indexPath, "utf8");
+      indexHtml = indexHtml.replace(
+        /https:\/\/unpkg\.com/g,
+        process.env.STEEDOS_UNPKG_URL || "https://unpkg.com",
+      );
+      // 你的自定义脚本
+      const BUILDER6_PUBLIC_SETTINGS = {
+        unpkgUrl: process.env.STEEDOS_UNPKG_URL || "https://unpkg.com",
+        rootUrl: process.env.STEEDOS_ROOT_URL || "",
+      };
+      const scriptTag = `
+        <script>
+          console.log("Server side script injected!");
+          window.BUILDER6_PUBLIC_SETTINGS = ${JSON.stringify(BUILDER6_PUBLIC_SETTINGS)};
+        </script>
+      `;
+
+      // 将脚本插入到 <head> 标签后面
+      indexHtml = indexHtml.replace("<head>", `<head>\n  ${scriptTag}\n`);
       res.send(indexHtml);
     });
   }
