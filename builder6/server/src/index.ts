@@ -8,6 +8,7 @@ import { getMoleculerConfigs, getSteedosConfigs } from "./config";
 import { InstanceFileController } from "./instance_files/file.controller";
 import { FileService } from "./instance_files/file.service";
 import { FileMoleculer } from "./instance_files/file.moleculer";
+import { readFileSync } from "fs";
 
 const steedosConfig = getSteedosConfigs();
 
@@ -21,7 +22,7 @@ export const modulesConfig = {
   },
 };
 
-export const beforeServerStart = ({ app }) => {
+export const beforeServerStart = async ({ app }) => {
   process.on("uncaughtException", (error) => {
     console.error("uncaughtException:", error);
   });
@@ -40,15 +41,21 @@ export const beforeServerStart = ({ app }) => {
   // Use express.static to serve files from the 'dist' directory
   if (webappPackagePath) {
     expressApp.use("/", express.static(webappDistPath));
-    expressApp.get("/app/*react", (req, res) => {
-      res.sendFile(path.join(webappDistPath, "index.html"));
-    });
 
+    const indexPath = join(webappDistPath, "index.html");
+    // 同步读取 index.html 内容
+    let indexHtml = readFileSync(indexPath, "utf8");
+    indexHtml = indexHtml.replace(
+      /https:\/\/unpkg\.com/g,
+      process.env.STEEDOS_UNPKG_URL || "https://unpkg.com",
+    );
     const frontendRoutes = [
+      "/",
+      "/app",
+      "/app/*react",
       "/logout",
       "/signup",
       "/login",
-      "/",
       "/create-space",
       "/select-space",
       "/update-password",
@@ -56,17 +63,9 @@ export const beforeServerStart = ({ app }) => {
       "/verify/mobile",
       "/home",
       "/home/:spaceId",
-      "/app",
-      "/app/:appId",
-      "/app/:appId/page/:pageId",
-      "/app/:appId/:objectName",
-      "/app/:appId/:objectName/grid/:listviewId",
-      "/app/:appId/:objectName/:recordId/:relatedObjectName/grid",
-      "/app/:appId/:objectName/view/:recordId",
-      "/app/:appId/tab_iframe/:tabId",
     ];
     expressApp.get(frontendRoutes, (req, res) => {
-      res.sendFile(path.join(webappDistPath, "index.html"));
+      res.send(indexHtml);
     });
   }
 };
