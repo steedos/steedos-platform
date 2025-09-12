@@ -11,7 +11,7 @@ import { AccountsServer } from "../../server";
 import { sendError } from "../utils/send-error";
 import { clearAuthCookies } from "../utils/steedos-auth";
 import { getObject } from "@steedos/objectql";
-import * as requestIp from "request-ip";
+import { getClientIp } from "../utils/getClientIp";
 import { getUserAgent } from "../utils/get-user-agent";
 import isMobile from "ismobilejs";
 import { getSteedosSchema } from "@steedos/objectql";
@@ -37,7 +37,7 @@ export const logout =
       //sendError(res, err);
     } finally {
       let userAgent = getUserAgent(req) || "";
-      const ip = requestIp.getClientIp(req);
+      const ip = getClientIp(req);
       let status = "success";
       let message = "";
       let is_phone = false;

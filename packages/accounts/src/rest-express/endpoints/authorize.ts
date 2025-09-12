@@ -5,7 +5,7 @@ import { AccountsServer } from "../../server";
 import { sendError } from "../utils/send-error";
 import { setAuthCookies, clearAuthCookies } from "../utils/steedos-auth";
 import { getUserIdByToken } from "@steedos/auth";
-import * as requestIp from "request-ip";
+import { getClientIp } from "../utils/getClientIp";
 import { getUserAgent } from "../utils/get-user-agent";
 
 const queryString = require("querystring");
@@ -20,7 +20,7 @@ export const authorize =
     const connection = req.query.connection || "steedos";
     const state = req.query.state || "";
     const userAgent = getUserAgent(req);
-    const ip = requestIp.getClientIp(req);
+    const ip = getClientIp(req);
     let query = queryString.stringify(req.query);
     let redirect_uri = req.query.redirect_uri
       ? (req.query.redirect_uri as string)

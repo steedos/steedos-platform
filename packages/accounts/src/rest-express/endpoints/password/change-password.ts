@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-05-19 11:38:30
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-09-18 17:58:22
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2025-09-12 14:29:58
  * @Description:
  */
 import * as express from "express";
@@ -11,7 +11,7 @@ import { sendError } from "../../utils/send-error";
 import { getSteedosConfig, getObject } from "@steedos/objectql";
 import { hashPassword } from "../../../password/utils";
 
-import * as requestIp from "request-ip";
+import { getClientIp } from "../../utils/getClientIp";
 import { getUserAgent } from "../../utils/get-user-agent";
 import isMobile from "ismobilejs";
 import { db } from "../../../db";
@@ -59,7 +59,7 @@ export const changePassword =
         );
 
         const userAgent = getUserAgent(req);
-        const ip = requestIp.getClientIp(req);
+        const ip = getClientIp(req);
         let is_phone = false;
         let is_tablet = false;
         if (userAgent) {
