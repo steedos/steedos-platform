@@ -8,11 +8,10 @@
     "dist",
     "public",
     "views",
-    "app.config.js",
     "default.steedos.settings.yml",
     "dist"
   ],
-  "main": "app.config.js",
+  "main": "dist/bootstrap.js",
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\"",
