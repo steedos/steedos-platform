@@ -55,7 +55,7 @@ export default class IntlProvider extends React.PureComponent<IntlProviderProps,
 
     fetchSettings = async (retryCount: number = 0, maxRetries: number = 20) => {
         try {
-            const response = await axios.get('/api/v6/app/public_settings');
+            const response = await axios.get('/api/v6/amis/public_settings');
             const settingsData = response.data;
 
             // 检查服务器状态

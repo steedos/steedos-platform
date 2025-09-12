@@ -16,12 +16,7 @@ import { PluginModule } from "@builder6/core";
 import { EmailModule } from "@builder6/email";
 import { PagesModule } from "@builder6/pages";
 import { ServicesModule } from "@builder6/services";
-import {
-  getConfigs,
-  getEnvConfigs,
-  getSteedosConfigs,
-  getMoleculerConfigs,
-} from "@builder6/core";
+import { getConfigs, getEnvConfigs } from "@builder6/core";
 import project from "../package.json";
 import { ScheduleModule } from "@nestjs/schedule";
 import { OnlyOfficeModule } from "@builder6/onlyoffice";
@@ -34,7 +29,7 @@ import { WorkflowModule } from "./workflow/workflow.module";
 import { AppMoleculer } from "./app.moleculer";
 import { AppGateway } from "./app.gateway";
 
-import { moleculerCreated } from "./app.config";
+import { getMoleculerConfigs, getSteedosConfigs } from "./config";
 
 const startModules = [];
 if (process.env.B6_ONLYOFFICE_ENABLED === "true") {
@@ -55,8 +50,8 @@ const getMoleculerConfig = () => {
     transporter: process.env.B6_TRANSPORTER,
     // hotReload: true, // hotReload feature from moleculer will not work
     ...getMoleculerConfigs(),
+    ...getSteedosConfigs(),
     ...getEnvConfigs(),
-    created: moleculerCreated,
   };
 
   return config;

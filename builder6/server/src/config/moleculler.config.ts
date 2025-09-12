@@ -27,7 +27,7 @@ export function getMoleculerConfigs() {
       type: "Console",
       options: {
         // Logging level
-        level: process.env.B6_MO_LOG_LEVEL,
+        level: process.env.B6_LOG_LEVEL,
         // Using colors on the output
         colors: true,
         // Print module names with different colors (like docker-compose for containers)
@@ -105,6 +105,18 @@ export function getMoleculerConfigs() {
     skipProcessEventRegistration: true,
 
     created(broker: any) {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const { version } = require("@steedos/server/package.json");
+
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const i18n = require("@steedos/i18n");
+      global.t = i18n.t;
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      global._ = require("underscore");
+      global.logger = console;
+
+      process.env.STEEDOS_VERSION = version;
+
       global.broker = broker;
       // Clear all cache entries
       broker.logger.warn("Clear all cache entries on startup.");

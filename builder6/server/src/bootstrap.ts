@@ -27,11 +27,7 @@ import { HybridAdapter } from "@builder6/core";
 import express from "express";
 import { readFileSync } from "fs";
 
-import { initSteedos } from "./app.config";
-
 export async function bootstrap() {
-  initSteedos();
-
   const app = await NestFactory.create<NestExpressApplication>(
     AppModule.forRoot(),
     {

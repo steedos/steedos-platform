@@ -6,29 +6,13 @@ class StartCommand extends Command {
   async run() {
     try {
       // console.log(`process path`, process.cwd());
-      this.checkModuleExists("@builder6/server");
       this.checkModuleExists("@steedos/server");
 
-      const serverPath = require.resolve("@builder6/server");
-      // console.log(`serverPath`, serverPath);
       const steedosPath = require.resolve("@steedos/server");
       // eslint-disable-next-line @typescript-eslint/no-require-imports
-      const appConfig = require(steedosPath);
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
-      const server = require(serverPath);
+      const server = require(steedosPath);
 
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
-      const { version } = require("@steedos/server/package.json");
-
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
-      const i18n = require("@steedos/i18n");
-      global.t = i18n.t;
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
-      global._ = require("underscore");
-
-      process.env.STEEDOS_VERSION = version;
-
-      server.bootstrap(appConfig);
+      server.bootstrap();
     } catch (error) {
       this.error(error.message, { exit: 1 });
     }

@@ -79,9 +79,7 @@ const exportRecordData = function (req, res) {
                     entities = yield collection.find(query, userSession);
                 }
                 if (entities.length > MAX_EXPORT) {
-                    return res
-                        .status(403)
-                        .send({
+                    return res.status(403).send({
                         status: 403,
                         error: 403,
                         msg: `超出允许的导出记录数(${MAX_EXPORT}条), 请调整搜索条件后重试.`,

@@ -7,11 +7,6 @@ import {
   get,
   isEmpty,
 } from "lodash";
-import dotenvFlow from "dotenv-flow";
-dotenvFlow.config({
-  path: process.cwd(),
-  silent: true,
-});
 
 if (isEmpty(process.env.STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN)) {
   process.env.STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN = "true";
@@ -285,5 +280,3 @@ export function isPlainObject(value) {
 export function isJsonMap(value) {
   return isPlainObject(value);
 }
-
-export const steedosConfig = SteedosConfig.getSteedosConfig();

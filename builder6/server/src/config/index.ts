@@ -15,10 +15,6 @@ global.Steedos = {
   settings: steedosConfig.settings,
 };
 
-export async function getDbConfigs() {
-  return {};
-}
-
 export function getSteedosConfigs() {
   return steedosConfig;
 }

@@ -1,7 +1,7 @@
 import { Service, Context, ServiceBroker } from "moleculer";
 import { Injectable, Logger } from "@nestjs/common";
 import { InjectBroker } from "@builder6/moleculer";
-import { getSteedosConfigs } from "@builder6/core";
+import { getSteedosConfigs } from "./config";
 import { AppGateway } from "./app.gateway";
 import { defaultsDeep, includes } from "lodash";
 
@@ -146,7 +146,6 @@ export class AppMoleculer extends Service {
 
   async serviceStarted() {
     console.log("Moleculer service @steedos/server started");
-    debugger;
     require("@steedos/objectql").getSteedosSchema(this.broker);
     // 获取环境变量
     let edition = "ce";
