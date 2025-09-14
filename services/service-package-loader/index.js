@@ -19,6 +19,8 @@ const {
 } = require('@steedos/metadata-core');
 const sRouter = require('@steedos/router');
 
+const chalk = require("chalk");
+
 const getPackageYmlData = (packagePath)=>{
     let packageYmlData = {};
     if(fs.existsSync(path.join(packagePath, 'package.service.yml'))){
@@ -201,7 +203,7 @@ module.exports = {
             }
         },
         async errorHandler(error) {
-            this.broker.logger.error(`[${this.name}] 启动失败: ${error.message}`);
+            console.error(chalk.red(`[${this.name}] 启动失败: ${error.message}`));
             await await this.broker.call(`@steedos/service-project.disablePackage`, {
                 module: this.schema.packageName
             })
@@ -268,12 +270,12 @@ module.exports = {
             this.started = true;
             const endTime = moment();
             const serviceName = this.name.length < 50 ? `${_.padEnd(this.name, 50, ' ')}` : this.name
-            logger.log(`service ${serviceName} started: ${endTime.diff(startTime, 'seconds', true)}s`);
+            console.log(chalk.green(`service ${serviceName} started: ${endTime.diff(startTime, 'seconds', true)}s`));
             if(this.afterStart){
                 try {
                     await this.afterStart();
                 } catch (error) {
-                    this.broker.logger.error(`[${this.name}]: ${error.message}`);
+                    console.error(chalk.error(`[${this.name}]: ${error.message}`));
                 }
             }
         },

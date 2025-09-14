@@ -4,6 +4,7 @@ import { InjectBroker } from "@builder6/moleculer";
 import { getSteedosConfigs } from "./config";
 import { AppGateway } from "./app.gateway";
 import { defaultsDeep, includes } from "lodash";
+import chalk from "chalk";
 
 @Injectable()
 export class AppMoleculer extends Service {
@@ -43,8 +44,10 @@ export class AppMoleculer extends Service {
 
           ctx.broker.broadcast("@steedos/server.started");
 
-          this._logger.log(
-            `🚀 Application is running on: ${process.env.ROOT_URL}`,
+          console.log(
+            chalk.green(
+              `🚀 Application is running on: ${process.env.ROOT_URL}`,
+            ),
           );
 
           const records: [any] = await broker.call(
@@ -162,16 +165,16 @@ export class AppMoleculer extends Service {
 
     switch (edition) {
       case "ce":
-        console.log("🎉 欢迎使用 Steedos 社区版！");
+        console.log(chalk.green("🎉 欢迎使用 Steedos 社区版！"));
         break;
       case "ee":
-        console.log("🎉 欢迎使用 Steedos 企业版！");
+        console.log(chalk.green("🎉 欢迎使用 Steedos 企业版！"));
         break;
       case "cloud":
-        console.log("🎉 欢迎使用 Steedos Cloud 版！");
+        console.log(chalk.green("🎉 欢迎使用 Steedos Cloud 版！"));
         break;
       default:
-        console.log("🤔 我们未能识别您启动的版本。");
+        console.log(chalk.green("🤔 我们未能识别您启动的版本。"));
     }
 
     if (edition == "ee" || edition == "cloud") {
