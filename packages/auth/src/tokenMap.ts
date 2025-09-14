@@ -3,13 +3,16 @@
  * @Date: 2022-03-28 09:35:34
  * @LastEditors: baozhoutao@steedos.com
  * @LastEditTime: 2024-01-23 14:36:07
- * @Description: 
+ * @Description:
  */
-import crypto = require('crypto');
+import crypto = require("crypto");
+import { getSteedosSchema } from "@steedos/objectql";
 import {
-  getSteedosSchema,
-} from "@steedos/objectql";
-import { addConfig, getConfig, removeManyConfigs, removeConfig } from '@steedos/metadata-registrar';
+  addConfig,
+  getConfig,
+  removeManyConfigs,
+  removeConfig,
+} from "@steedos/metadata-registrar";
 const TOKENMAPCACHENAME = "token_map_cache";
 
 function getTokenMapCache(token) {
@@ -44,7 +47,7 @@ export async function getUserIdByToken(token, clientInfos = {}) {
       let userId = user._id;
       setTokenMapCache(
         token,
-        Object.assign({}, clientInfos, { userId: userId })
+        Object.assign({}, clientInfos, { userId: userId }),
       );
       return userId;
     } else {
@@ -59,5 +62,7 @@ export function removeUserTokens(userId, is_phone) {
 }
 
 export function removeUserTokenByToken(token) {
-  removeConfig(TOKENMAPCACHENAME, { _id: token });
+  if (token) {
+    removeConfig(TOKENMAPCACHENAME, { _id: token });
+  }
 }
