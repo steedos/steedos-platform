@@ -14,7 +14,7 @@ var standardCustomizeSaveRequestAdaptor = `
         delete newDoc.responseStatus;
     }
     else if(objectName === "permission_set"){
-        objectFields = ['name', 'label', 'type', 'license', 'lockout_interval', 'max_login_attempts', 'password_history', 'default_standard_buttons'];
+        objectFields = ['name', 'label', 'type', 'license', 'lockout_interval', 'max_login_attempts', 'password_history', 'default_standard_buttons', 'assigned_apps'];
         _.each(objectFields, function(v, k){
             if(_.has(doc, v)){
                 newDoc[v] = doc[v];
