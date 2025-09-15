@@ -4,5 +4,5 @@ type: lookup
 reference_to: apps
 reference_to_field: code
 filters:
-  - [['code','!=','admin'], ['secret','!=', null]]
+  - [['code','!=','admin']]
 sort_no: 80
