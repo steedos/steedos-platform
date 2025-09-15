@@ -37,7 +37,7 @@ export class DataController {
   @Post(":objectName")
   @HttpCode(200)
   @ApiOperation({
-    summary: "Create a record",
+    summary: "Create a record as current user.",
   })
   @ApiParam({
     name: "objectName",
@@ -95,7 +95,6 @@ export class DataController {
   ) {
     const user = req["user"];
     const userSession = await getSessionByUserId(user.user, user.space);
-    console.log(`userSession: `, userSession);
     try {
       const result = await this.dataService.insert(
         objectName,
@@ -124,7 +123,7 @@ export class DataController {
 
   @Get(":objectName")
   @ApiOperation({
-    summary: "List the records accessible to the current user.",
+    summary: "List records as current user.",
     description:
       "List records in a object.  \n \
       The server returns one page of records at a time. Each page will contain pageSize records, which is 100 by default.  \n \
@@ -229,7 +228,7 @@ export class DataController {
 
   @Get(":objectName/:recordId")
   @ApiOperation({
-    summary: "Get record",
+    summary: "Get record as current user.",
     description: "Retrieve a single record. ",
   })
   @ApiParam({
@@ -273,7 +272,7 @@ export class DataController {
   }
 
   @Patch(":objectName/:id")
-  @ApiOperation({ summary: "Update record" })
+  @ApiOperation({ summary: "Update record as current user." })
   @ApiBody({
     schema: {
       type: "object",
@@ -315,7 +314,7 @@ export class DataController {
   }
 
   @Delete(":objectName/:id")
-  @ApiOperation({ summary: "Delete record" })
+  @ApiOperation({ summary: "Delete record as current user." })
   async remove(
     @Param("objectName") objectName: string,
     @Param("id") id: string,
