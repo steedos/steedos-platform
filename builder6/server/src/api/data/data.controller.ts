@@ -13,7 +13,7 @@ import {
   Patch,
   HttpCode,
 } from "@nestjs/common";
-import { AdminGuard, MongodbService } from "@builder6/core";
+import { AdminGuard, AuthGuard, MongodbService } from "@builder6/core";
 import { Request, Response } from "express";
 import { getOptions } from "@builder6/query-mongodb";
 import {
@@ -28,10 +28,96 @@ import {
 import { DataService } from "./data.service";
 
 @ApiTags("Records")
-@UseGuards(UseGuards)
+@UseGuards(AuthGuard)
 @Controller("/api/v6/data")
 export class DataController {
   constructor(private readonly dataService: DataService) {}
+
+  @Post(":objectName")
+  @HttpCode(200)
+  @ApiOperation({
+    summary: "Create a record",
+  })
+  @ApiParam({
+    name: "objectName",
+    description: "The name of the object.",
+    example: "test",
+  })
+  @ApiBody({
+    description:
+      "You can specify the `_id` field, or it will be generated automatically. <br /> Additionally, the system will automatically generate the following fields: `created_by`, `created`, `modified_by`, `modified`, `space` (tenant ID), and `owner`.",
+    schema: {
+      type: "object",
+    },
+    examples: {
+      simple: {
+        summary: "Create a simple record",
+        value: {
+          name: "Jack",
+          age: 20,
+        },
+      },
+      withId: {
+        summary: "Create a simple record with _id",
+        value: {
+          _id: "generated_id",
+          name: "Jack",
+          age: 20,
+        },
+      },
+    },
+  })
+  @ApiOkResponse({
+    description: "The created record.",
+    examples: {
+      simple: {
+        summary: "Create a simple record",
+        value: {
+          _id: "f5e2b3c4-1b1b-4b1b-9b1b-1b1b1b1b1b1b",
+          name: "Jack",
+          age: 20,
+          created: new Date(),
+          created_by: "current_user_id",
+          modified: new Date(),
+          modified_by: "current_user_id",
+          owner: "current_user_id",
+          space: "current_tenant_id",
+        },
+      },
+    },
+  })
+  async create(
+    @Param("objectName") objectName: string,
+    @Body() record: object,
+    @Req() req: Request,
+    @Res() res: Response,
+  ) {
+    const user = req["user"];
+    try {
+      const result = await this.dataService.insert(
+        objectName,
+        {
+          ...record,
+          owner: user._id,
+          created_by: user._id,
+          created: new Date(),
+          modified_by: user._id,
+          modified: new Date(),
+          space: user.space,
+        },
+        user._id,
+      );
+      res.status(200).send(result);
+    } catch (error) {
+      console.error("Query error", error);
+      res.status(500).send({
+        error: {
+          code: 500,
+          message: error.message,
+        },
+      });
+    }
+  }
 
   @Get(":objectName")
   @ApiOperation({
@@ -131,8 +217,115 @@ export class DataController {
       query.fields = fields;
     }
 
-    const data = await this.dataService.find(objectName, query, user?._id);
+    const count = await this.dataService.count(objectName, query, user._id);
+    const data = await this.dataService.find(objectName, query, user._id);
 
-    return { data };
+    return { data, totalCount: count };
+  }
+
+  @Get(":objectName/:recordId")
+  @ApiOperation({
+    summary: "Get record",
+    description: "Retrieve a single record. ",
+  })
+  @ApiParam({
+    name: "objectName",
+    type: String,
+    description: "The name of the object.",
+    example: "test",
+  })
+  @ApiParam({
+    name: "recordId",
+    type: String,
+    description: "The _id of the record.",
+  })
+  async findOne(
+    @Req() req: Request,
+    @Res() res: Response,
+    @Param("objectName") objectName: string,
+    @Param("recordId") recordId: string,
+  ) {
+    const user = req["user"];
+    try {
+      const result = await this.dataService.findOne(
+        objectName,
+        recordId,
+        user._id,
+      );
+      if (!result) {
+        return res.status(404).send();
+      }
+      res.status(200).send(result);
+    } catch (error) {
+      console.error("Query error", error);
+      res.status(500).send({
+        error: {
+          code: 500,
+          message: error.message,
+        },
+      });
+    }
+  }
+
+  @Patch(":objectName/:id")
+  @ApiOperation({ summary: "Update record" })
+  @ApiBody({
+    schema: {
+      type: "object",
+    },
+  })
+  async update(
+    @Param("objectName") objectName: string,
+    @Param("id") id: string,
+    @Body() body: any,
+    @Req() req: Request,
+    @Res() res: Response,
+  ) {
+    const user = req["user"];
+    try {
+      const result = await this.dataService.update(
+        objectName,
+        id,
+        {
+          ...body,
+          modified_by: req["user"]._id,
+          modified: new Date(),
+        },
+        user._id,
+      );
+      if (!result) {
+        return res.status(404).send();
+      }
+      res.status(200).send(result);
+    } catch (error) {
+      console.error("Query error", error);
+      res.status(500).send({
+        error: {
+          code: 500,
+          message: error.message,
+        },
+      });
+    }
+  }
+
+  @Delete(":objectName/:id")
+  @ApiOperation({ summary: "Delete record" })
+  async remove(
+    @Param("objectName") objectName: string,
+    @Param("id") id: string,
+    @Req() req: Request,
+    @Res() res: Response,
+  ) {
+    const user = req["user"];
+    try {
+      const result = await this.dataService.delete(objectName, id, user._id);
+      if (result.deletedCount === 0) {
+        return res.status(404).send();
+      }
+      res.status(200).send({ deleted: true, _id: id });
+    } catch (error) {
+      console.error("Query error", error);
+      res.status(500).send(error);
+    }
   }
 }
