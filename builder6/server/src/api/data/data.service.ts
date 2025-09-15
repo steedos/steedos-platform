@@ -1,44 +1,39 @@
 import { Injectable, OnModuleInit } from "@nestjs/common";
 
 import { getObject } from "@steedos/objectql";
+import { getUserSession } from "@steedos/auth";
 
 @Injectable()
 export class DataService {
   constructor() {}
 
-  async find(objectName, query, userId) {
+  async find(objectName, query, userSession) {
     const obj = getObject(objectName);
-    const userSession = null;
     return await obj.find(query, userSession);
   }
 
-  async count(objectName, query, userId) {
+  async count(objectName, query, userSession) {
     const obj = getObject(objectName);
-    const userSession = null;
     return await obj.count(query, userSession);
   }
 
-  async insert(objectName, doc, userId) {
+  async insert(objectName, doc, userSession) {
     const obj = getObject(objectName);
-    const userSession = null;
     return await obj.insert(doc, userSession);
   }
 
-  async findOne(objectName, id, userId) {
+  async findOne(objectName, id, userSession) {
     const obj = getObject(objectName);
-    const userSession = null;
     return await obj.findOne(id, userSession);
   }
 
-  async update(objectName, id, data, userId) {
+  async update(objectName, id, data, userSession) {
     const obj = getObject(objectName);
-    const userSession = null;
     return await obj.update(id, data, userSession);
   }
 
-  async delete(objectName, id, userId) {
+  async delete(objectName, id, userSession) {
     const obj = getObject(objectName);
-    const userSession = null;
     return await obj.update(id, userSession);
   }
 }

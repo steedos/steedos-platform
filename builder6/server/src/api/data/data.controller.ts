@@ -25,6 +25,7 @@ import {
   ApiQuery,
   ApiTags,
 } from "@nestjs/swagger";
+import { getSessionByUserId } from "@steedos/auth";
 import { DataService } from "./data.service";
 
 @ApiTags("Records")
@@ -93,19 +94,21 @@ export class DataController {
     @Res() res: Response,
   ) {
     const user = req["user"];
+    const userSession = await getSessionByUserId(user.user, user.space);
+    console.log(`userSession: `, userSession);
     try {
       const result = await this.dataService.insert(
         objectName,
         {
           ...record,
-          owner: user._id,
-          created_by: user._id,
-          created: new Date(),
-          modified_by: user._id,
-          modified: new Date(),
-          space: user.space,
+          // owner: user._id,
+          // created_by: user._id,
+          // created: new Date(),
+          // modified_by: user._id,
+          // modified: new Date(),
+          // space: user.space,
         },
-        user._id,
+        userSession,
       );
       res.status(200).send(result);
     } catch (error) {
@@ -197,6 +200,7 @@ export class DataController {
     @Query("top", new ParseIntPipe()) top: number = 100,
   ) {
     const user = req["user"];
+    const userSession = await getSessionByUserId(user.user, user.space);
     const query = { top, skip, sort } as any;
 
     if (filters) {
@@ -217,8 +221,8 @@ export class DataController {
       query.fields = fields;
     }
 
-    const count = await this.dataService.count(objectName, query, user._id);
-    const data = await this.dataService.find(objectName, query, user._id);
+    const count = await this.dataService.count(objectName, query, userSession);
+    const data = await this.dataService.find(objectName, query, userSession);
 
     return { data, totalCount: count };
   }
@@ -246,11 +250,12 @@ export class DataController {
     @Param("recordId") recordId: string,
   ) {
     const user = req["user"];
+    const userSession = await getSessionByUserId(user.user, user.space);
     try {
       const result = await this.dataService.findOne(
         objectName,
         recordId,
-        user._id,
+        userSession,
       );
       if (!result) {
         return res.status(404).send();
@@ -282,16 +287,17 @@ export class DataController {
     @Res() res: Response,
   ) {
     const user = req["user"];
+    const userSession = await getSessionByUserId(user.user, user.space);
     try {
       const result = await this.dataService.update(
         objectName,
         id,
         {
           ...body,
-          modified_by: req["user"]._id,
-          modified: new Date(),
+          // modified_by: req["user"]._id,
+          // modified: new Date(),
         },
-        user._id,
+        userSession,
       );
       if (!result) {
         return res.status(404).send();
@@ -317,8 +323,9 @@ export class DataController {
     @Res() res: Response,
   ) {
     const user = req["user"];
+    const userSession = await getSessionByUserId(user.user, user.space);
     try {
-      const result = await this.dataService.delete(objectName, id, user._id);
+      const result = await this.dataService.delete(objectName, id, userSession);
       if (result.deletedCount === 0) {
         return res.status(404).send();
       }
