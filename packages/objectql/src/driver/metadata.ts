@@ -19,6 +19,8 @@ import {
   getAllWorkflowRules,
   getWorkflowOutboundMessages,
   registerImport,
+  registerRestrictionRules,
+  registerShareRules,
 } from "@steedos/metadata-registrar";
 
 const PERMISSIONS = {
@@ -247,16 +249,16 @@ export class MetadataDriver extends SteedosMongoDriver {
         return apps;
       }
       case "action_field_updates": {
-        return getAllActionFieldUpdates();
+        return await getAllActionFieldUpdates();
       }
       case "workflow_notifications": {
-        return getAllWorkflowNotifications();
+        return await getAllWorkflowNotifications();
       }
       case "workflow_outbound_messages": {
-        return getWorkflowOutboundMessages();
+        return await getWorkflowOutboundMessages();
       }
       case "workflow_rule": {
-        return getAllWorkflowRules();
+        return await getAllWorkflowRules();
       }
       case "queue_import": {
         const configs = await registerImport.getAll(broker);
@@ -265,6 +267,27 @@ export class MetadataDriver extends SteedosMongoDriver {
         _.each(dataList, function (item) {
           if (!item._id) {
             item._id = `${item.name}`;
+          }
+        });
+        return dataList;
+      }
+      case "share_rules": {
+        const configs = await registerShareRules.getAll(broker);
+        const dataList = _.pluck(configs, "metadata");
+        _.each(dataList, function (item) {
+          if (!item._id) {
+            item._id = `${item.object_name}.${item.name}`;
+          }
+        });
+        return dataList;
+      }
+      case "restriction_rules": {
+        const configs = await registerRestrictionRules.getAll(broker);
+        const dataList = _.pluck(configs, "metadata");
+
+        _.each(dataList, function (item) {
+          if (!item._id) {
+            item._id = `${item.object_name}.${item.name}`;
           }
         });
         return dataList;

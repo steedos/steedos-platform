@@ -58,10 +58,6 @@ fields:
     # readonly: true 不可以设置为只读，新建编辑表单需要加载这个字段值
     visible_on: "${false}"
     inlineHelpText: "版本号，用于记录规则更新，比如版本>=2时，record_filter 显示为amis过滤器"
-actions:
-  customize:
-    label: 自定义
-    on: record
 list_views:
   all:
     label: 所有
