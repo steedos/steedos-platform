@@ -15,6 +15,7 @@ import {
   TabsHandle,
   TriggersHandle,
   ShareRulesHandle,
+  PermissionObjectsHandle,
 } from "./handles";
 import { RestrictionRulesHandle } from "./handles/restriction_rules";
 
@@ -83,6 +84,9 @@ module.exports = {
         case "restriction_rules":
           self.restrictionRulesHandle.handleAction(action, data);
           break;
+        case "permission_objects":
+          self.permissionObjectsHandle.handleAction(action, data);
+          break;
         default:
           break;
       }
@@ -106,6 +110,7 @@ module.exports = {
     this.triggersHandle = new TriggersHandle();
     this.shareRulesHandle = new ShareRulesHandle();
     this.restrictionRulesHandle = new RestrictionRulesHandle();
+    this.permissionObjectsHandle = new PermissionObjectsHandle();
   },
 
   /**
@@ -118,6 +123,7 @@ module.exports = {
     await this.triggersHandle.init();
     await this.shareRulesHandle.init();
     await this.restrictionRulesHandle.init();
+    await this.permissionObjectsHandle.init();
   },
 
   /**
