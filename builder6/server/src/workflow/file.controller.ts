@@ -10,10 +10,12 @@ import {
 } from "@nestjs/common";
 import { AuthGuard, MongodbService } from "@builder6/core";
 import { FileInterceptor } from "@nestjs/platform-express";
+import { ApiTags } from "@nestjs/swagger";
 import { Request } from "express";
 import { FileService } from "./file.service";
 import * as _ from "lodash";
 
+@ApiTags("Files")
 @Controller("/api")
 export class InstanceFileController {
   constructor(

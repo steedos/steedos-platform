@@ -7,6 +7,9 @@ import {
   Post,
 } from "@nestjs/common";
 
+import { ApiTags } from "@nestjs/swagger";
+
+@ApiTags("App")
 @Controller("/api/")
 export class AppController {
   @Get("/v6/amis/public_settings")

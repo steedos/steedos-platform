@@ -7219,6 +7219,11 @@
     "@steedos/license" "3.0.0-beta.2"
     axios "^0.21.4"
 
+"@steedos/standard-accounts@3.0.0-beta.103":
+  version "3.0.0-beta.103"
+  resolved "https://registry.yarnpkg.com/@steedos/standard-accounts/-/standard-accounts-3.0.0-beta.103.tgz#6a9a0f0d383123a069aaa11c18328d12c78ce625"
+  integrity sha512-uYIq3tyqbi+QxMhfku+YA7eGShVFisksn7vsWGqfCsW8mdc3bvI/NXL6SnhDBgVowGU+2XQr9thFnH/rPz2i/g==
+
 "@steedos/utils@^2.5.11-beta.10":
   version "2.6.38"
   resolved "https://registry.yarnpkg.com/@steedos/utils/-/utils-2.6.38.tgz#c9492774da51b0472ca668133859fd2e6bc31c9a"
