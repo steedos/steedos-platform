@@ -34,6 +34,7 @@
     "@steedos/service-plugin-amis": "3.0.0-beta.104",
     "@steedos/service-rest": "3.0.0-beta.104",
     "@steedos/service-saas": "3.0.0-beta.104",
+    "@steedos/standard-accounts": "3.0.0-beta.103",
     "@steedos/standard-object-database": "3.0.0-beta.104",
     "@steedos/standard-permission": "3.0.0-beta.104",
     "@steedos/standard-process-approval": "3.0.0-beta.104",
