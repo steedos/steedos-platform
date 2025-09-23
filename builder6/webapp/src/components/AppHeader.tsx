@@ -16,7 +16,7 @@ export const getHeaderSchema = (props) => {
                 body: [
                     {
                         "type": "wrapper",
-                        "className": 'flex w-full px-4 py-0 h-[50px] justify-between items-center steedos-header-container-line-one',
+                        "className": 'flex w-full px-4 py-0 h-[50px] justify-between items-center steedos-header-container-line-one border-b bg-white ',
                         "body": [
                             {
                                 type: "service",
@@ -93,14 +93,14 @@ export const getHeaderSchema = (props) => {
                                     {
                                         "type": "steedos-app-launcher",
                                         "showAppName": false,
-                                        "hiddenOn": "${window:innerWidth < 768}",
+                                        // "hiddenOn": "${window:innerWidth < 768}",
                                         "appId": "${app.id}",
                                     },
                                     {
-                                        "className": 'w-auto mx-4 inline-block align-middle',
+                                        "className": 'w-auto ml-4 inline-block align-middle',
                                         "type": "tpl",
                                         "tpl": `<a href='/app' class='flex items-center '><img class='block h-6 w-auto' src='${logoSrc}'></a>`,
-                                        "hiddenOn": "${window:innerWidth < 768 && (window:historyPaths.length > 1 || window:historyPaths[0].params.record_id)}"
+                                        "hiddenOn": "${window:innerWidth < 768}"
                                     },
                                     // {
                                     //     "className": 'bg-gray-300 w-[1px] h-6 inline-block align-middle mr-4',
@@ -108,7 +108,7 @@ export const getHeaderSchema = (props) => {
                                     //     "tpl": '',
                                     // },
                                     {
-                                        "className": 'w-auto mr-4 font-bold text-lg inline-block align-middle',
+                                        "className": 'w-auto ml-4 font-bold text-lg inline-block align-middle',
                                         "type": "tpl",
                                         "tpl": '${app.name}',
                                     },
@@ -133,53 +133,9 @@ export const getHeaderSchema = (props) => {
                 body: [
                     {
                         type: "wrapper",
-                        className: 'sidebar-wrapper px-0 pt-0 pb-16 fixed z-20 h-full h-fill ease-in-out duration-300 flex flex-col overflow-y-auto block -translate-x-0 sm:w-[220px] w-64 bg-gray-50 border sm:border-none',
+                        className: 'sidebar-wrapper px-0 pt-2 pb-16 fixed z-20 h-full h-fill ease-in-out duration-300 flex flex-col overflow-y-auto block -translate-x-0 sm:w-[220px] w-64 bg-gray-50',
                         visibleOn: '${!!app}',
                         body: [
-                            {
-                                "type": "flex",
-                                "justify": "flex-start",
-                                "className": "px-4 py-4",
-                                "visibleOn": "${window:innerWidth < 768}",
-                                "items": [
-                                    // {
-                                    //     "type": "button",
-                                    //     "className": "toggle-sidebar flex items-center pr-4",
-                                    //     "onEvent": {
-                                    //         "click": {
-                                    //             "actions": [
-                                    //                 {
-                                    //                     "actionType": "custom",
-                                    //                     "script": "document.body.classList.toggle('sidebar-open')",
-                                    //                 },
-                                    //                 {
-                                    //                     "actionType": "rebuild",
-                                    //                     "componentId": "u:app-menu",
-                                    //                     "args": {
-                                    //                         "toggleSidebar": true
-                                    //                     }
-                                    //                 }
-                                    //             ]
-                                    //         }
-                                    //     },
-                                    //     "body": [
-                                    //         {
-                                    //             "type": "steedos-icon",
-                                    //             "category": "utility",
-                                    //             "name": "rows",
-                                    //             "colorVariant": "default",
-                                    //             "id": "u:afc3a08e8cf3",
-                                    //             "className": "slds-button_icon slds-global-header__icon"
-                                    //         }
-                                    //     ],
-                                    // },
-                                    {
-                                        "type": "steedos-app-launcher",
-                                        // "className": "px-4 py-4",
-                                        "showAppName": true
-                                    }
-                                ]
-                            },
                             {
                                 "type": "steedos-app-menu",
                                 "stacked": true,
