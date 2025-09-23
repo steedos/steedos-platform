@@ -13,14 +13,14 @@
     "i18n:extract": "i18next --config i18next-parser.config.js && jq 'to_entries | map({(.key): .key}) | add' public/locales/en/translation.json > public/locales/en/translation.tmp.json && mv public/locales/en/translation.tmp.json public/locales/en/translation.json"
   },
   "dependencies": {
+  },
+  "devDependencies": {
     "crypto-js": "^4.1.1",
     "i18next": "24.2.2",
     "i18next-browser-languagedetector": "8.0.2",
     "i18next-http-backend": "3.0.2",
     "i18next-icu": "2.3.0",
-    "react-i18next": "15.4.0"
-  },
-  "devDependencies": {
+    "react-i18next": "15.4.0",
     "@accounts/client": "^0.19.0",
     "@accounts/client-password": "^0.19.0",
     "@accounts/rest-client": "^0.19.0",
@@ -61,6 +61,7 @@
     "redux-thunk": "^2.4.1",
     "serialize-error": "^7.0.1",
     "socket.io-client": "^4.8.1",
+    "tailwindcss": "^3.4.17",
     "tslib": "^2.3.1",
     "typescript": "5.7.3"
   },
