@@ -112,7 +112,7 @@ CustomTabs:
   admin_instances_statistic: Efficiency Statistics
   admin_webhooks: Webhooks
   admin_object_workflows: Object Synchronization Rules
-  admin_sessions: Sessions
+  admin_sessions: Login Sessions
   admin_audit_records: Audit Records
   admin_autonumber: Auto Number
   admin_holidays: Holidays

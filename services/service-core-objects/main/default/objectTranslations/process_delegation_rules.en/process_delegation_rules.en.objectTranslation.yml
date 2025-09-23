@@ -1,5 +1,5 @@
 name: process_delegation_rules
-label: Delegation
+label: Process Delegation
 description: 
 fields:
   from:

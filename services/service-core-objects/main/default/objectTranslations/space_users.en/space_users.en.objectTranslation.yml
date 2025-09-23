@@ -1,5 +1,5 @@
 name: space_users
-label: User
+label: Users
 description: 
 fields:
   name:

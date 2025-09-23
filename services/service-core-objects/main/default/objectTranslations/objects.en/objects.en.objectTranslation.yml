@@ -1,5 +1,5 @@
 name: objects
-label: Object
+label: Objects
 description: 
 fields:
   datasource:

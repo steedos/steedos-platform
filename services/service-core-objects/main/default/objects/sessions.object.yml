@@ -1,5 +1,5 @@
 name: sessions
-label: Session
+label: Login Sessions
 icon: queue
 hidden: true
 fields:

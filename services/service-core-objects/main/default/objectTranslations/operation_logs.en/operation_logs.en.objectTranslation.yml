@@ -1,5 +1,5 @@
 name: operation_logs
-label: Security Log
+label: Security Logs
 description: 
 fields:
   data:

@@ -1,5 +1,5 @@
 name: organizations
-label: Organizational Structures
+label: Organizations
 description: 
 fields:
   name:
