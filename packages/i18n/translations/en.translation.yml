@@ -1088,7 +1088,7 @@ CustomLabels:
   objects_amis_field: Fields
   objects_amis_list_view: List Views
   objects_amis_action_button: Buttons
-  objects_amis_object_page: Mine Pages
+  objects_amis_object_page: Custom Pages
   objects_amis_page_layout: Page Layouts
   objects_amis_object_permission: Permissions
   objects_amis_trigger: Triggers

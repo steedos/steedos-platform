@@ -14,6 +14,17 @@
                     "type": "input-text",
                     "label": {
                         "type": "tpl",
+                        "tpl": "Product"
+                    },
+                    "name": "steedos",
+                    "value": "Steedos Platform",
+                    "static": true,
+                    "className": "mb-0 border-b py-1 ml-2"
+                },
+                {
+                    "type": "input-text",
+                    "label": {
+                        "type": "tpl",
                         "tpl": "<%= ['版本','Version','バージョン'][['zh-cn','en-us','ja'].indexOf(data.global.user.locale  || 'zh-cn')] %>"
                     },
                     "name": "banben",
@@ -28,6 +39,7 @@
                         "tpl": "<%= ['资产包','Asset package','資産パッケージ'][['zh-cn','en-us','ja'].indexOf(data.global.user.locale  || 'zh-cn')] %>"
                     },
                     "type": "input-text",
+                    "hiddenOn": "true",
                     "name": "zichan",
                     "id": "u:65ad5545aeda",
                     "value": "${window:Builder.settings.assetUrls}",
@@ -41,6 +53,7 @@
                         "tpl": "<%= ['Amis版本','Amis Version','Amis バージョン'][['zh-cn','en-us','ja'].indexOf(data.global.user.locale  || 'zh-cn')] %>"
                     },
                     "name": "Amis",
+                    "hiddenOn": "true",
                     "id": "u:8a4d0a674931",
                     "value": "${window:Builder.settings.steedosAmisVersion}",
                     "static": true,
@@ -52,6 +65,7 @@
                         "tpl": "<%= ['CDN服务器','CDN Server','CDN サーバー'][['zh-cn','en-us','ja'].indexOf(data.global.user.locale  || 'zh-cn')] %>"
                     },
                     "name": "CDN",
+                    "hiddenOn": "true",
                     "type": "input-text",
                     "id": "u:5491c057ce27",
                     "value": "${window:Builder.settings.unpkgUrl}",
@@ -59,7 +73,7 @@
                     "className": "mb-0 border-b py-1 ml-2"
                 },
                 {
-                    "label": "ROOT_URL",
+                    "label": "URL",
                     "name": "RootUrl",
                     "type": "input-text",
                     "id": "u:184e9280ea50",
@@ -71,20 +85,20 @@
                     "type": "button-toolbar",
                     "label": {
                         "type": "tpl",
-                        "tpl": "<%= ['技术支持','Technical Support','テクニカルサポート'][['zh-cn','en-us','ja'].indexOf(data.global.user.locale  || 'zh-cn')] %>"
+                        "tpl": "<%= ['官网','Website','テクニカルサポート'][['zh-cn','en-us','ja'].indexOf(data.global.user.locale  || 'zh-cn')] %>"
                     },
                     "className": "mb-0 border-b py-1 ml-2",
                     "buttons": [
                       {
                         "type": "button",
-                        "label": "https://www.steedos.cn/",
+                        "label": "https://www.steedos.com/",
                         "level": "link",
                         "style": {
                           "padding": 0,
                           "margin": 0,
                           "height": "unset"
                         },
-                        "onClick": "Steedos.openWindow('https://www.steedos.cn/');"
+                        "onClick": "Steedos.openWindow('https://www.steedos.com/');"
                       }
                     ],
                     "inputClassName": "antd-Form-static m-0",
@@ -95,6 +109,7 @@
                         "type": "tpl",
                         "tpl": "<%= ['客服热线','Customer Service Hotline','カスタマーサービスホットライン'][['zh-cn','en-us','ja'].indexOf(data.global.user.locale  || 'zh-cn')] %>"
                     },
+                    "hiddenOn": "true",
                     "name": "rexian",
                     "type": "input-text",
                     "id": "u:27b9745bd047",
@@ -104,6 +119,7 @@
                 },
                 {
                     "type": "button-toolbar",
+                    "hiddenOn": "true",
                     "label": {
                         "type": "tpl",
                         "tpl": "<%= ['客服邮箱','Customer Service Email','カスタマーサービスのメールアドレス'][['zh-cn','en-us','ja'].indexOf(data.global.user.locale  || 'zh-cn')] %>"
@@ -123,6 +139,7 @@
                   },
                 {
                     "type": "button-toolbar",
+                    "hiddenOn": "true",
                     "label": {
                         "type": "tpl",
                         "tpl": "<%= ['隐私政策','Privacy Policy','プライバシーポリシー'][['zh-cn','en-us','ja'].indexOf(data.global.user.locale  || 'zh-cn')] %>"
