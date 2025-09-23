@@ -13,7 +13,7 @@ export const IframeView = () => {
         "bodyClassName": "p-0 m-4",
         "body": {
           "type": "iframe",
-          "className": "w-full h-full rounded border",
+          "className": "w-full h-full rounded shadow",
           "src": iframeSrc,
         }
       }} data ={{
