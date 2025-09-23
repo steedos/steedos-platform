@@ -7188,10 +7188,10 @@
     lodash "4.17.21"
     moment "^2.24.0"
 
-"@steedos/license@3.0.0-beta.2":
-  version "3.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@steedos/license/-/license-3.0.0-beta.2.tgz#ddb77f89f593e22054ed4db71b438e14fb036516"
-  integrity sha512-aAGimWUY5j0hModOP5FA61PB6hnDKkRuwAqo8bXlgTg4JYs6MAjJtmPm0TR/XB4AdZWVByU+v8l7129TzvwKEg==
+"@steedos/license@3.0.0":
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/@steedos/license/-/license-3.0.0.tgz#e653466325f81302ff6e3c67a38dfa34463e0d18"
+  integrity sha512-F3CnPaqiX0dEg420pwzs0f7PbGzR1Myeyrne0xVs/2IeUJ3mAyeAa1VmIidi2hIihfUJ32fOyf8W1H3kmnS8Nw==
   dependencies:
     abort-controller "^3.0.0"
     crypto "^1.0.1"
@@ -7211,12 +7211,12 @@
   resolved "https://registry.yarnpkg.com/@steedos/odata-v4-parser/-/odata-v4-parser-2.5.11-beta.10.tgz#393281641f59538e3361dfc864628e79034215c9"
   integrity sha512-DBEa7uSwfcf9G1C9myZOyJSxClu0FODmGLDVORoWDCIwBSS8UZp/fa87Q0TyRBS8MW3KBAdbINsIUS8GRow71w==
 
-"@steedos/service-license@3.0.0-beta.2":
-  version "3.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@steedos/service-license/-/service-license-3.0.0-beta.2.tgz#a890b0d135e31ae19fa2f800488aac0ba8acc14f"
-  integrity sha512-7PnTLMbOMeJ6oS/RqOIawAVQGOsoyPlgxyvuhP4M1l7DKAsytDPp8ltrnr7br6x9f5zdUViB9XIhmH375S7p1w==
+"@steedos/service-license@3.0.0":
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/@steedos/service-license/-/service-license-3.0.0.tgz#1205b591f1debb04fe7db3e56b49330682f95642"
+  integrity sha512-GFO28tWmo8VrB3+Dpikr75kKAotdL5cjbVtg+W3MMuqfWn5uq/dMbxOrqeCJgz5+GiGF2VloJJDAiX4sMxSkvA==
   dependencies:
-    "@steedos/license" "3.0.0-beta.2"
+    "@steedos/license" "3.0.0"
     axios "^0.21.4"
 
 "@steedos/standard-accounts@3.0.0-beta.103":
