@@ -1,7 +1,8 @@
 name: admin_bull_dashboard
 desktop: true
 icon: dashboard
-is_new_window: true
+is_new_window: false
+is_use_iframe: true
 label: Bull Dashboard
 mobile: true
 permissions:

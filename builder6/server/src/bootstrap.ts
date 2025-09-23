@@ -75,9 +75,9 @@ export async function bootstrap() {
   );
 
   const swaggerConfig = new DocumentBuilder()
-    .setTitle("Builder6 API")
+    .setTitle("Steedos API")
     .setDescription(
-      "The Builder6 is a comprehensive low-code platform designed to facilitate a wide range of functionalities and integrations.  \n\
+      "The Steedos is a comprehensive low-code platform designed to facilitate a wide range of functionalities and integrations.  \n\
       [Download OpenAPI Document](/api/v6-json)",
     )
     .addTag("Auth", "Manage authentication and authorization processes.")
