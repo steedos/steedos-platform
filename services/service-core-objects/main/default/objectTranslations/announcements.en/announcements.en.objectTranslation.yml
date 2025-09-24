@@ -1,0 +1,37 @@
+name: announcements
+label: Announcement
+description: 
+fields:
+  name:
+    label: Title
+    help: 
+    description: 
+  body:
+    label: Main Body
+    help: 
+    description: 
+  members:
+    label: User Members
+    help: 
+    description: 
+  organizations:
+    label: Organization Members
+    help: 
+    description: 
+  created:
+    label: Creation Time
+    help: 
+    description: 
+  created_by:
+    label: Created by
+    help: 
+    description: 
+  modified_by:
+    label: Modified by
+    help: 
+    description: 
+groups:
+    members: Members
+listviews:
+  all:
+    label: All Announcements
