@@ -34,7 +34,9 @@ is_enable: true
 label: 对象选项卡
 "on": list
 type: amis_button
-visible: !!js/function |
-    function (object_name, record_id, record_permissions, record) {
-        return Steedos.Object.base.actions.standard_new.visible()
-    }
+# visible: !!js/function |
+#     function (object_name, record_id, record_permissions, record) {
+#         return Steedos.Object.base.actions.standard_new.visible()
+#     }
+visible: false
+# TODO: 暂时隐藏，下一步考虑删除。
