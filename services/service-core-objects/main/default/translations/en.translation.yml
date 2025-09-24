@@ -90,7 +90,7 @@ CustomTabs:
   admin_objects: Objects
   admin_datasources: External Data Sources
   admin_queue_import: Data Import
-  admin_pages: Micro Pages
+  admin_pages: Custom Pages
   admin_tabs: Tabs
   admin_queries: Queries
   admin_charts: Charts
@@ -112,7 +112,7 @@ CustomTabs:
   admin_instances_statistic: Efficiency Statistics
   admin_webhooks: Webhooks
   admin_object_workflows: Object Synchronization Rules
-  admin_sessions: Sessions
+  admin_sessions: Login Sessions
   admin_audit_records: Audit Records
   admin_autonumber: Auto Number
   admin_holidays: Holidays

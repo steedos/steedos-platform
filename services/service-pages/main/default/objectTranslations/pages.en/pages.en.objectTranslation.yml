@@ -1,5 +1,5 @@
 name: pages
-label: Micro Pages
+label: Custom Pages
 description: 
 fields:
   dashboard_filters_enabled:

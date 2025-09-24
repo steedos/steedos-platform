@@ -1,5 +1,5 @@
 name: audit_records
-label: Audit Record
+label: Audit Records
 description: 
 fields:
   related_to:

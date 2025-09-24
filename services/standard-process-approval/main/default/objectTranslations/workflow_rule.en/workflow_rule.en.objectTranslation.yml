@@ -1,5 +1,5 @@
 name: workflow_rule
-label: Workflow Rule
+label: Workflow Rules
 description: 
 fields:
   object_name:
@@ -69,7 +69,7 @@ fields:
   time_triggers.$.workflow_notifications_actions:
     label: Notification
   time_triggers.$.workflow_outbound_messages_actions:
-    label: Outbound Message Actions
+    label: Outbound Messages
 groups:
   rule_criteria: Rule Criteria
   immediate_actions: Immediate Actions

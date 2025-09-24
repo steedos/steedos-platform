@@ -10,10 +10,10 @@ export const IframeView = () => {
     return (
       <AmisRender schema = {{
         "type": "page",
-        "bodyClassName": "p-0 m-0",
+        "bodyClassName": "p-0 m-4",
         "body": {
           "type": "iframe",
-          "className": "w-full h-full rounded border",
+          "className": "w-full h-full rounded shadow",
           "src": iframeSrc,
         }
       }} data ={{

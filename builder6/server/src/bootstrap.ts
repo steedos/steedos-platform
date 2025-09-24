@@ -75,14 +75,15 @@ export async function bootstrap() {
   );
 
   const swaggerConfig = new DocumentBuilder()
-    .setTitle("Builder6 API")
+    .setTitle("Steedos API")
     .setDescription(
-      "The Builder6 is a comprehensive low-code platform designed to facilitate a wide range of functionalities and integrations.  \n\
+      "The Steedos is a comprehensive low-code platform designed to facilitate a wide range of functionalities and integrations.  \n\
       [Download OpenAPI Document](/api/v6-json)",
     )
     .addTag("Auth", "Manage authentication and authorization processes.")
     .addTag("Users", "Access to user profile and avatar. ")
-    .addTag("Records", "Access and manage records. Admin privileges required.")
+    .addTag("Records", "Access and manage records with user permissions.")
+    .addTag("Mongodb", "Access and manage records. Admin privileges required.")
     .addTag("Files", "Upload, download, and manage files.")
     .addTag(
       "Rooms",
@@ -101,17 +102,18 @@ export async function bootstrap() {
       "Email",
       "Manage email configurations and communications. Admin privileges required.",
     )
-    .addTag(
-      "Office",
-      "Access and manage office-related resources. Admin privileges required.",
-    )
-    .addTag(
-      "Microsoft365",
-      "Integrate and manage Microsoft365 services, Admin privileges required.",
-    )
+    // .addTag(
+    //   "Office",
+    //   "Access and manage office-related resources. Admin privileges required.",
+    // )
+    // .addTag(
+    //   "Microsoft365",
+    //   "Integrate and manage Microsoft365 services, Admin privileges required.",
+    // )
     .addTag("Docs", "Documentation services, Admin privileges required.")
-    // .addTag('Automation', 'Manage automation tasks, Admin privileges required.')
+    .addTag("Automation", "Manage automation tasks, Admin privileges required.")
     .addTag("Oidc", "Implement OpenID Connect for secure user authentication.")
+    .addTag("App", "App services and related APIs.")
     .setVersion(project.version)
     .addBearerAuth()
     .build();

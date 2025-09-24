@@ -1,9 +1,9 @@
-name: admin_bull_dashboard
+name: admin_swagger
 desktop: true
-icon: dashboard
+icon: data_model
 is_new_window: false
 is_use_iframe: true
-label: Bull Dashboard
+label: OpenAPI
 mobile: true
 permissions:
   - permission: 'off'
@@ -19,4 +19,4 @@ permissions:
   - permission: 'off'
     permission_set: workflow_admin
 type: url
-url: /bull-jobs/dashboard/
+url: /api/v6/

@@ -66,7 +66,7 @@ tab_items:
   #   group: apps
   #   index: 20
   admin_steedos_packages:
-    group: development
+    group: apps
     index: 18
   admin_developer:
     group: development
@@ -74,12 +74,6 @@ tab_items:
   # admin_metadata:
   #   group: development
   #   index: 19.505
-  admin_developer_triggers:
-    group: development
-    index: 19.51
-  admin_developer_openapi:
-    group: development
-    index: 19.52
   admin_process_definition:
     group: process_automation
     index: 20
@@ -146,12 +140,21 @@ tab_items:
   # admin_object_webhooks:
   #   group: 高级设置
   #   index: 41
-  admin_object_webhooks:
-    group: development
-    index: 41
   admin_api_keys:
     group: development
+    index: 41
+  admin_swagger:
+    group: development
     index: 42
+  admin_developer_triggers:
+    group: development
+    index: 42.2
+  admin_object_functions:
+    group: development
+    index: 42.3
+  admin_object_webhooks:
+    group: development
+    index: 42.5
   admin_bull_dashboard:
     group: development
     index: 43

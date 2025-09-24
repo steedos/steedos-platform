@@ -1,5 +1,5 @@
 name: permission_set
-label: Profile & Permission Set
+label: Permission Sets
 icon: groups
 hidden: true
 enable_inline_edit: false

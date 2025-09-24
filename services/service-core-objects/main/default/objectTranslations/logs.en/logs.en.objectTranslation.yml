@@ -1,5 +1,5 @@
 name: logs
-label: Logs
+label: System Logs
 description: 
 fields:
   name:

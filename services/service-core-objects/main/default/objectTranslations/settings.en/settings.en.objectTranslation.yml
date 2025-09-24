@@ -1,5 +1,5 @@
 name: settings
-label: Setting
+label: System Settings
 description: 
 fields:
   type:

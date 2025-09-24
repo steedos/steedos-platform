@@ -1,6 +1,6 @@
 {
   "name": "@steedos/server",
-  "version": "3.0.0-beta.104",
+  "version": "3.0.0-beta.105",
   "description": "",
   "author": "",
   "license": "AGPL-3.0-only",
@@ -23,14 +23,14 @@
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
   "dependencies": {
-    "@builder6/server": "^3.0.8",
+    "@builder6/server": "^3.0.9",
     "@nestjs/schematics": "^11.0.2",
-    "@steedos/auth": "3.0.0-beta.104",
+    "@steedos/auth": "3.0.0-beta.105",
     "@steedos/ee_unpkg": "1.0.1",
-    "@steedos/objectql": "3.0.0-beta.104",
-    "@steedos/service-community": "3.0.0-beta.104",
-    "@steedos/service-enterprise": "3.0.0-beta.104",
-    "@steedos/webapp": "3.0.0-beta.104"
+    "@steedos/objectql": "3.0.0-beta.105",
+    "@steedos/service-community": "3.0.0-beta.105",
+    "@steedos/service-enterprise": "3.0.0-beta.105",
+    "@steedos/webapp": "3.0.0-beta.105"
   },
   "devDependencies": {
     "@nestjs/cli": "^11.0.0",
@@ -76,5 +76,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "0b5e09432a643b1f1788d024ff67d53f14a7be72"
+  "gitHead": "4c1305cf315baf00491df315c5c8d8ef508262d0"
 }
