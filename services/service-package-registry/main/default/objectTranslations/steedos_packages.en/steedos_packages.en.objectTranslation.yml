@@ -126,7 +126,7 @@ actions:
   upgradePackage:
     label: Upgrade Package
   edit_npmrc:
-    label: Verification information
+    label: NPM Settings
 CustomLabels:
   steedos_packages_tab_introduce_title: Introduction
   steedos_packages_tab_components_title: Package Components
@@ -136,7 +136,7 @@ CustomLabels:
   steedos_packages_button_enable_dialog_confirm_text_suffix: "\"?"
   steedos_packages_button_enable_dialog_button_ok: Enable
   steedos_packages_button_enable_dialog_message_success: Enabled Successfully
-  steedos_packages_button_edit_npmrc_dialog_describe: "##### Verification Information Description (.npmrc):\r- `; Set a new registry for scoped packages`\r- `@myscope:registry=https://mycustomregistry.example.org`\r- `; Configure authentication information for the new registry (optional)`\r- `//mycustomregistry.example.org:_authToken=\"Authentication Token\"`"
+  steedos_packages_button_edit_npmrc_dialog_describe: "##### NPM Settings (.npmrc):\r- `; Set a new registry for scoped packages`\r- `@myscope:registry=https://mycustomregistry.example.org`\r- `; Configure authentication information for the new registry (optional)`\r- `//mycustomregistry.example.org:_authToken=\"Authentication Token\"`"
   steedos_packages_button_installPackageFromUrl_dialog_field_registry: Registry
   steedos_packages_button_installPackageFromUrl_dialog_field_registry_option_taobao: taobao
   steedos_packages_button_installPackageFromUrl_dialog_field_registry_option_cnpm: cnpm
