@@ -150,7 +150,7 @@ export const BaseObject = {
       //               {
       //                 actionType: "custom",
       //                 script:
-      //                   "// 编写判断,当前可发起的流程是单个还是多个. 并返回数据用于控制下个事件是直接新建申请单草稿还是弹出流程让选择\n\nconst flows = lodash.filter(Creator.object_workflows, (item) => { return item.object_name == event.data.object_name && (!item.sync_direction || item.sync_direction == 'both' || item.sync_direction == 'ins_to_obj') && true !== item.forbid_initiate_instance })\n\nevent.setData({ ...event.data, ...{ flows: flows, flowCount: flows.length } })\n\n",
+      //                   "// 编写判断,当前可发起的流程是单个还是多个. 并返回数据用于控制下个事件是直接新建申请单草稿还是弹出流程让选择\n\nconst flows = lodash.filter(Steedos.object_workflows, (item) => { return item.object_name == event.data.object_name && (!item.sync_direction || item.sync_direction == 'both' || item.sync_direction == 'ins_to_obj') && true !== item.forbid_initiate_instance })\n\nevent.setData({ ...event.data, ...{ flows: flows, flowCount: flows.length } })\n\n",
       //               },
       //               {
       //                 actionType: "ajax",
