@@ -30,10 +30,7 @@ const draftsApiAdaptor = `
         }
     }
     var instance = payload.inserts[0];
-    var url = Steedos.absoluteUrl("/app/" + FlowRouter.current().params.app_id + "/instances/view/" + instance._id + "?display=" + (Steedos.Page.getDisplay('instances') || '') + "&side_object=instances&side_listview_id=draft");
-    // 这里不可以直接openWindow，因为手机浏览器上打不开新窗口，迁移到下面的afterDrafts脚本中，在custom动作单独执行openWindow才行
-    // Steedos.openWindow(url);
-    // if(!Steedos.isMobile()){ FlowRouter.reload();} 
+    var url = Steedos.absoluteUrl("/app/" + context.app_id + "/instances/view/" + instance._id + "?display=" + (Steedos.Page.getDisplay('instances') || '') + "&side_object=instances&side_listview_id=draft");
     payload.draftUrl = url;
     return payload;
 `;
@@ -41,7 +38,7 @@ const draftsApiAdaptor = `
 const afterDrafts = `
     var url = event.data.draftUrl;
     Steedos.openWindow(url);
-    if(!Steedos.isMobile()){ FlowRouter.reload();} 
+    window.navigate(0);
 `;
 
 amisLib.registerAction('steedos_actions_standard_approve', {
@@ -49,7 +46,7 @@ amisLib.registerAction('steedos_actions_standard_approve', {
         return amisLib.runActions([
             {
                 "actionType": "custom",
-                "script": "var objectName = event.data.objectName || event.data.object_name;const flows = lodash.filter(Creator.object_workflows, (item) => { return item.object_name == objectName && (!item.sync_direction || item.sync_direction == 'both' || item.sync_direction == 'obj_to_ins') })\n\nevent.setData({ ...event.data, ...{ flows: flows, flowCount: flows.length } })\n\n"
+                "script": "var objectName = event.data.objectName || event.data.object_name;const flows = lodash.filter(Steedos.object_workflows, (item) => { return item.object_name == objectName && (!item.sync_direction || item.sync_direction == 'both' || item.sync_direction == 'obj_to_ins') })\n\nevent.setData({ ...event.data, ...{ flows: flows, flowCount: flows.length } })\n\n"
             },
             {
                 "actionType": "ajax",
@@ -132,7 +129,7 @@ amisLib.registerAction('steedos_actions_standard_approve', {
                                                             "url": "${context.rootUrl}/api/object/workflow/drafts",
                                                             "method": "post",
                                                             "requestAdaptor":"api.data = {\n    \'Instances\': [{\n        \'flow\': api.body.flowId,\n        \'applicant\': api.body.context.userId,\n        \'space\': api.body.context.tenantId,\n        \'record_ids\': [{ o: api.body.objectName, ids: [api.body.recordId] }]\n    }]\n}\n\nreturn api;",
-                                                            "adaptor":"\nif (payload.error) { \n  return {\n    status: 2,\n    msg: payload.error\n  }\n}\nconst instance = payload.inserts[0];\nSteedos.openWindow(Steedos.absoluteUrl(\'/app/\' + FlowRouter.current().params.app_id + \'/instances/view/\' + instance._id + \'?display=\' + (Steedos.Page.getDisplay('instances') || '') + \'&side_object=instances&side_listview_id=draft\'))\nFlowRouter.reload();\nreturn payload;",
+                                                            "adaptor":"\nif (payload.error) { \n  return {\n    status: 2,\n    msg: payload.error\n  }\n}\nconst instance = payload.inserts[0];\nSteedos.openWindow(Steedos.absoluteUrl(\'/app/\' + context.app_id + \'/instances/view/\' + instance._id + \'?display=\' + (Steedos.Page.getDisplay('instances') || '') + \'&side_object=instances&side_listview_id=draft\'))\nwindow.navigate(0);\nreturn payload;",
                                                             "messages": {},
                                                             "headers": {
                                                                 "Authorization": "Bearer ${context.tenantId},${context.authToken}"
