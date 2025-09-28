@@ -35,7 +35,7 @@ fields:
     description: 
   coordinatesType:
     label: 坐标类型
-    help: 
+    help: 坐标系类型，默认百度坐标'bd09'，使用高德地图时应设置为'gcj02'， 高德地图不支持坐标转换
     description: 
   create:
     label: 弹出选择时允许新建

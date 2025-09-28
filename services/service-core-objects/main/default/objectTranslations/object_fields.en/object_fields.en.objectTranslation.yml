@@ -88,7 +88,7 @@ fields:
     description: 
   coordinatesType:
     label: Coordinates Type
-    help: 
+    help: "Coordinate system type: The default Baidu coordinate is 'bd09'. When using Autonavi Maps, it should be set to 'gcj02'. Autonavi Maps does not support coordinate conversion"
     description: 
   reference_to:
     label: Reference to
@@ -340,11 +340,11 @@ fields:
     help: 
     description: 
   searchable:
-    label: Enable full-text search
+    label: Enable quick search on the list page
     help: 
     description: 
   filterable:
-    label: Filterable
+    label: Default Filter Field
     help: 
     description: 
   show_as_qr:
