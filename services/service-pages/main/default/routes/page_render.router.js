@@ -1,8 +1,8 @@
 /*
  * @Author: 孙浩林 6194896+sunhaolin@users.noreply.github.com
  * @Date: 2023-12-10 11:09:40
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2025-03-05 10:04:42
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2025-09-30 16:39:29
  * @FilePath: /steedos-platform-3.0/services/service-pages/main/default/routes/page_render.router.js
  * @Description: 支持使用schemaApi动态渲染页面，支持匿名访问。
  */
@@ -32,6 +32,14 @@ router.get('/api/page/render', async function (req, res) {
             locale = "zh-CN";
         }
 
+        let parsedQueryData = {};
+        try {
+            parsedQueryData = typeof queryData === "string" ? JSON.parse(queryData) : queryData;
+        }
+        catch (error) {
+            parsedQueryData = {};
+        }
+
         const filename = __dirname + '/page_view.ejs';
         const data = {
             Title: 'page.label',
@@ -54,7 +62,7 @@ router.get('/api/page/render', async function (req, res) {
             },
             pageSchema: pageSchema,
             // __meteor_runtime_config__: __meteor_runtime_config__,
-            queryData,
+            queryData: parsedQueryData,
             STEEDOS_PUBLIC_USE_OPEN_API: process.env.STEEDOS_PUBLIC_USE_OPEN_API
         }
         const options = {}
