@@ -443,7 +443,9 @@ module.exports = {
         },
         standard_print: {
             label: "Print",
-            visible: false,
+            visible: function (object_name, record_id, record_permissions, data) {
+                return data.uiSchema && data.uiSchema.enable_print;
+            },
             on: "record_only",
             type: 'amis_button',
             amis_schema: {
@@ -470,7 +472,7 @@ module.exports = {
                                 "failed": "打印功能需要企业许可证"
                             },
                             "requestAdaptor": "",
-                            "adaptor": "const buttonOptions = [];\nfor (const row of payload.data.rows) {\n  buttonOptions.push({\n    \"type\": \"button\",\n    \"label\": row.label,\n    \"onEvent\": {\n      \"click\": {\n        \"actions\": [\n          {\n            \"actionType\": \"url\",\n            \"args\": {\n              \"url\": \"${context.rootUrl}/api/page/render\",\n              \"blank\": true,\n              \"params\": {\n                \"schemaApi\": \"${context.rootUrl}/service/api/@steedos/print-template/getPrintSchema/\" + row._id,\n                \"data\": {\n                  \"filters\": [\"_id\", \"=\", \"${recordId}\"]\n                }      \n              }\n            }\n          }\n        ]\n      }\n    }\n  })\n}\n\npayload.data = {\n  buttonOptions: buttonOptions \n}\nreturn payload",
+                            "adaptor": "const buttonOptions = [];\nfor (const row of payload.data.rows) {\n  buttonOptions.push({\n    \"type\": \"button\",\n    \"label\": row.label,\n    \"onEvent\": {\n      \"click\": {\n        \"actions\": [\n          {\n            \"actionType\": \"url\",\n            \"args\": {\n              \"url\": \"${context.rootUrl}/api/page/render\",\n              \"blank\": true,\n              \"params\": {\n                \"schemaApi\": \"${context.rootUrl}/service/api/print-template/getPrintSchema/\" + row._id,\n                \"data\": {\n                  \"filters\": [\"_id\", \"=\", \"${recordId}\"]\n                }      \n              }\n            }\n          }\n        ]\n      }\n    }\n  })\n}\n\npayload.data = {\n  buttonOptions: buttonOptions \n}\nreturn payload",
                             "headers": {
                                 "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                             },
