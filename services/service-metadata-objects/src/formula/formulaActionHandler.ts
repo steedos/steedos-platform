@@ -210,12 +210,13 @@ export class FormulaActionHandler {
         tempFieldConfig.type === "master_detail"
       ) {
         // 引用类型字段
-        if (tempFieldConfig.multiple) {
-          // TODO:暂时不支持数组的解析，见：公式字段中要实现lookup关联到数组字段的情况 #783
-          throw new Error(
-            `computeFormulaVarAndQuotes:The field '${tempFieldConfig.name}' for the formula var '${formulaVar}' is a multiple ${tempFieldConfig.type} type, it is not supported yet.`,
-          );
-        }
+        // tempFieldConfig.multiple多选 saleforce 公式不支持，但是amis支持，所以这里不报错
+        // if (tempFieldConfig.multiple) {
+        //   // TODO:暂时不支持数组的解析，见：公式字段中要实现lookup关联到数组字段的情况 #783
+        //   throw new Error(
+        //     `computeFormulaVarAndQuotes:The field '${tempFieldConfig.name}' for the formula var '${formulaVar}' is a multiple ${tempFieldConfig.type} type, it is not supported yet.`,
+        //   );
+        // }
         // if (i === varItems.length - 1) {
         //     // 引用类型字段后面必须继续引用该字段的相关属性，否则直接报错
         //     throw new Error(`computeFormulaVarAndQuotes:The field '${tempFieldConfig.name}' for the formula var '${formulaVar}' is a ${tempFieldConfig.type} type, so you must add more property after it.`);
