@@ -31,6 +31,7 @@ async function streamToMulterFile(
     destination: "", // 不需要磁盘存储时留空
     filename: originalname, // 保存文件名（可选）
     path: "", // 不需要磁盘存储时留空
+    isUTF8: true,
   };
 
   return multerFile;
