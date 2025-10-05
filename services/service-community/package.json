@@ -14,7 +14,7 @@
     "@steedos-builder/amis-editor": "6.3.0-beta.16",
     "@steedos-labs/analytics": "3.0.6",
     "@steedos-labs/plugin-package-store": "^1.0.9",
-    "@steedos-labs/plugin-workflow": "3.0.0-beta.29",
+    "@steedos-labs/plugin-workflow": "3.0.0-beta.30",
     "@steedos/data-import": "3.0.0-beta.105",
     "@steedos/server": "3.0.0-beta.105",
     "@steedos/service-accounts": "3.0.0-beta.105",
