@@ -60,3 +60,8 @@
     line-height: 28px;
     height: 28px;
 }
+
+
+body>.antd-PopOver{
+    z-index: 1410 !important;
+}

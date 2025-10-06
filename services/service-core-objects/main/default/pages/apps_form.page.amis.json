@@ -47,6 +47,7 @@
                 "amis": {
                   "type": "select",
                   "source": "${tab_groups|pick:group_name}",
+                  "popOverContainerSelector": "body",
                   "onEvent": {
                     "change": {
                       "actions": [
