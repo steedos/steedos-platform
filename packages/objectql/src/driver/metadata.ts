@@ -299,7 +299,12 @@ export class MetadataDriver extends SteedosMongoDriver {
 
   async mixinSources(metaName, dbSources = [], codeSources = []) {
     const key = metaName === "apps" ? "_id" : "name";
-    const dbMap = new Map(dbSources.map((item) => [item[key], item]));
+    const dbMap = new Map(
+      dbSources.map((item) => [
+        `${item.object || item.object_name}.${item[key]}`,
+        item,
+      ]),
+    );
     codeSources.forEach((item) => {
       if (!item._id) {
         console.error("error: item._id is null");
