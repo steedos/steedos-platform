@@ -9,6 +9,7 @@ const { NodeVM } = require("vm2");
 const _ = require("lodash");
 import { ObjectId } from "mongodb";
 import axios from "axios";
+const objectql = require("@steedos/objectql");
 
 function str2function(contents, ...args) {
   try {
@@ -81,28 +82,31 @@ export const runTriggerFunction = async (trigger, thisArg, ...args) => {
   if (trigger.type === "url") {
     return await runUrlTrigger(trigger, thisArg, args);
   }
+  const db = objectql.getDataSource("default").adapter;
+  const npm = {
+    _: require("lodash"),
+    lodash: require("lodash"),
+    moment: require("moment"),
+    validator: require("validator"),
+    filters: require("@steedos/filters"),
+    axios: require("axios"),
+    formData: require("form-data"),
+    mongodb: require("mongodb"),
+    sequelize: require("sequelize"),
+  };
 
   // ----- code trigger -----
   const vm = new NodeVM({
     sandbox: {
       str2function,
-      global: {
-        _: require("lodash"),
-        moment: require("moment"),
-        validator: require("validator"),
-        // dateFNS: require('date-fns'),
-        Filters: require("@steedos/filters"),
-        filters: require("@steedos/filters"),
-        axios: require("axios"),
-        formData: require("form-data"),
-        mongodb: require("mongodb"),
-        sequelize: require("sequelize"),
-      },
+      global: npm,
+      npm,
       services: (global as any).services,
       objects: (global as any).objects,
       makeNewID: () => {
         return new ObjectId().toHexString();
       },
+      db,
     },
     require: {
       external: true,

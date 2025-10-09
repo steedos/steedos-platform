@@ -7,6 +7,7 @@
  * @Description:
  */
 const { NodeVM } = require("vm2");
+const objectql = require("@steedos/objectql");
 
 function str2function(contents, ...args) {
   try {
@@ -19,20 +20,26 @@ function str2function(contents, ...args) {
 }
 
 export const runFunction = async (func, thisArg, ...args) => {
+  const db = objectql.getDataSource("default").adapter;
+  const npm = {
+    _: require("lodash"),
+    lodash: require("lodash"),
+    moment: require("moment"),
+    validator: require("validator"),
+    filters: require("@steedos/filters"),
+    axios: require("axios"),
+    formData: require("form-data"),
+    mongodb: require("mongodb"),
+    sequelize: require("sequelize"),
+  };
+
   const vm = new NodeVM({
     sandbox: {
       str2function,
-      global: {
-        _: require("lodash"),
-        moment: require("moment"),
-        validator: require("validator"),
-        filters: require("@steedos/filters"),
-        axios: require("axios"),
-        formData: require("form-data"),
-        mongodb: require("mongodb"),
-        sequelize: require("sequelize"),
-      },
+      global: npm,
+      npm,
       objects: (global as any).objects,
+      db,
     },
     require: {
       external: true,

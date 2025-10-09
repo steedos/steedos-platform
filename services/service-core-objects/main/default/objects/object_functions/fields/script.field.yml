@@ -5,9 +5,10 @@ language: javascript
 is_wide: true
 required: true
 defaultValue: |-
-  // global: {_:lodash, moment, validator, filters, axios, formData, mongodb, sequelize}
-  // objects
   // ctx: {input, params, broker, getObject, getUser}
+  // objects: all steedos objects
+  // db: mongodb client instance
+  // npm: {_, moment, validator, filters, axios, formData, mongodb, sequelize}
 editorDidMount: >-
   if(window._registerCompletionItemProviderFunction){
     return ;
