@@ -458,6 +458,7 @@ module.exports = {
                                 "type": "dropdown-button",
                                 "label": "打印",
                                 "buttons": "${buttonOptions}",
+                                "className": "steedos-DropDown--show-label",
                                 "id": "u:8cd2cefcaf9b",
                                 "disabled": false,
                                 "hidden": false
