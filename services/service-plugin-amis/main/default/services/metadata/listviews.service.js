@@ -146,7 +146,8 @@ const getDateTimeOperators = (lng)=>{
 }
 
 
-const getFieldOperators = (type, lng)=>{
+const getFieldOperators = (type, lng, ctx = {})=>{
+    let { multiple } = ctx;
     switch (type) {
         case 'text':
             return ['equal', 'not_equal', 'like', 'not_like', 'starts_with', 'ends_with']
@@ -162,6 +163,9 @@ const getFieldOperators = (type, lng)=>{
         case 'lookup':
         case 'master_detail':
         case 'select':
+            if (multiple){
+                return ['select_any_in', 'select_not_any_in']
+            }
             return [ 'select_equals', 'select_not_equals', 'select_any_in', 'select_not_any_in' ]
         default:
             return ;
@@ -169,7 +173,7 @@ const getFieldOperators = (type, lng)=>{
 
 }
 
-const getField = (objectName, fieldName, type, lng)=>{
+const getField = (objectName, fieldName, type, lng, ctx = {})=>{
     let field = null;
     switch (type) {
         case 'textarea':
@@ -219,7 +223,7 @@ const getField = (objectName, fieldName, type, lng)=>{
         case 'master_detail':
             field = {
                 type: 'text',
-                operators: getFieldOperators("select", lng)
+                operators: getFieldOperators("select", lng, ctx)
             };
             break;
         case 'select':
@@ -235,7 +239,7 @@ const getField = (objectName, fieldName, type, lng)=>{
                   }
                 ,
                 searchable: true,
-                operators: getFieldOperators("select", lng)
+                operators: getFieldOperators("select", lng, ctx)
             };
             break;
         case 'boolean':
@@ -366,7 +370,7 @@ module.exports = {
                                 fields.push({
                                     label: field.label,
                                     name: field.name,
-                                    ...getField(objectName, field.name, field.type, lng)
+                                    ...getField(objectName, field.name, field.type, lng, { multiple: field.multiple})
                                 })
                                 break;
                         }
