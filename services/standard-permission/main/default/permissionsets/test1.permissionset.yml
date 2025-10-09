@@ -1,6 +1,0 @@
-name: test1
-label: test1
-type: permission_set
-assigned_apps:
-  - admin
-  - mprofle
