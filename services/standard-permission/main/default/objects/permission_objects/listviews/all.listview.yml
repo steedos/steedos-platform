@@ -1,0 +1,17 @@
+name: all
+columns:
+  - permission_set_id
+  - object_name
+  - allowCreate
+  - allowDelete
+  - allowEdit
+  - allowRead
+  - modifyAllRecords
+  - viewAllRecords
+  - modifyCompanyRecords
+  - viewCompanyRecords
+  - is_system
+filter_scope: space
+label: All
+shared: true
+shared_to: space

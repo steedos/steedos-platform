@@ -1,0 +1,16 @@
+name: company_ids
+amis:
+  multiple: true
+  id: 'u:5ca1178a9aef'
+description: ''
+group: 通用
+hidden: false
+index: true
+inlineHelpText: ''
+label: 所属分部
+multiple: true
+reference_to: company
+sort_no: 650
+sortable: true
+type: lookup
+visible_on: '{{false}}'

@@ -1,0 +1,7 @@
+name: viewAllFiles
+amis:
+  id: 'u:d15cb81c85da'
+group: manage_perms
+label: View All Files
+sort_no: 1450
+type: boolean

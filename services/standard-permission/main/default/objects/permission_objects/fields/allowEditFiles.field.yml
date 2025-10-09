@@ -1,0 +1,7 @@
+name: allowEditFiles
+amis:
+  id: 'u:f9999bec1814'
+group: Files permissions
+label: Allow Edit Files
+sort_no: 1050
+type: boolean

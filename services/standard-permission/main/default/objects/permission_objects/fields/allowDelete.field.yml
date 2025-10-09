@@ -1,0 +1,7 @@
+name: allowDelete
+amis:
+  id: 'u:6dd3f11af4db'
+group: owner_perms
+label: Allow Delete
+sort_no: 900
+type: boolean

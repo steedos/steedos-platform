@@ -1,0 +1,12 @@
+name: created_by
+amis: {}
+description: ''
+disabled: true
+group: 系统信息
+index: true
+inlineHelpText: ''
+label: 创建人
+readonly: true
+reference_to: users
+sort_no: 1700
+type: lookup

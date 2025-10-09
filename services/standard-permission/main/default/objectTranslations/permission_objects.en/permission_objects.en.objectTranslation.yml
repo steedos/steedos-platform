@@ -105,7 +105,12 @@ fields:
   allowCreateListViews:
     label: Allow Create ListViews
 groups:
+  owner_perms: >-
+      Owner Permissions: <span class='label label-info'>The creator of this record has "Owner Permissions" over it.</span>
   files_permissions: Files permissions
+  company_perms: Branch Permissions
+  manage_perms: Management Permissions
+  other_perms: Other
 listviews:
   customize:
     label: Customize

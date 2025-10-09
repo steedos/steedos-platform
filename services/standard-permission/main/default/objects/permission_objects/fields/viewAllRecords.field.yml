@@ -1,0 +1,7 @@
+name: viewAllRecords
+amis:
+  id: 'u:6178ede16984'
+group: manage_perms
+label: View All Records
+sort_no: 1500
+type: boolean

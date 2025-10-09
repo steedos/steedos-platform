@@ -1,0 +1,7 @@
+name: allowEdit
+amis:
+  id: 'u:54b6ea9d1d1e'
+group: owner_perms
+label: Allow Edit
+sort_no: 850
+type: boolean

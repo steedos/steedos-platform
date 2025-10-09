@@ -1,0 +1,7 @@
+name: modifyAllRecords
+amis:
+  id: 'u:44b2ef06e51c'
+group: manage_perms
+label: Modify All Records
+sort_no: 1350
+type: boolean

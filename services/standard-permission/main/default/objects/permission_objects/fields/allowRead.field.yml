@@ -1,0 +1,7 @@
+name: allowRead
+amis:
+  id: 'u:603cadcd6837'
+group: owner_perms
+label: Allow Read
+sort_no: 750
+type: boolean

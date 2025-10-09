@@ -1,0 +1,23 @@
+name: permission_objects
+description: 对象描述
+enable_dataloader: false
+field_groups:
+  - group_name: owner_perms
+  - group_name: Files permissions
+  - group_name: company_perms
+  - group_name: manage_perms
+  - group_name: other_perms
+hidden: true
+icon: omni_supervisor
+isMetadata: true
+label: Permission
+paging:
+  enabled: false
+relatedList:
+  - objectName: permission_fields
+    columns:
+      - field
+      - editable
+      - readable
+      - is_system
+version: 2

@@ -1,0 +1,7 @@
+name: allowCreate
+amis:
+  id: 'u:d1a0959bbe58'
+group: owner_perms
+label: Allow Create
+sort_no: 800
+type: boolean

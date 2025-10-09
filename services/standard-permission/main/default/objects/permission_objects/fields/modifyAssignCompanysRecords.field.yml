@@ -1,0 +1,10 @@
+name: modifyAssignCompanysRecords
+amis:
+  multiple: true
+  id: 'u:8311248b7774'
+group: company_perms
+label: 修改指定分部
+multiple: true
+reference_to: company
+sort_no: 1300
+type: lookup

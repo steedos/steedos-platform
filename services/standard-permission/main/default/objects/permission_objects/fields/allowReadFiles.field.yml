@@ -1,0 +1,7 @@
+name: allowReadFiles
+amis:
+  id: 'u:b9fe906c42bd'
+group: Files permissions
+label: Allow Read Files
+sort_no: 1000
+type: boolean

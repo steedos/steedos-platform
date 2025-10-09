@@ -1,0 +1,15 @@
+name: permission_set_id
+amis:
+  id: 'u:83592d946a47'
+filterable: true
+group: 通用
+index: true
+is_name: true
+label: Permission Set
+reference_limit: 5000
+reference_sort:
+  name: 1
+reference_to: permission_set
+required: true
+sort_no: 100
+type: master_detail

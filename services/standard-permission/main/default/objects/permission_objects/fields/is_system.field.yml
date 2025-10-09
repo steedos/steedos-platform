@@ -1,0 +1,10 @@
+name: is_system
+amis:
+  id: 'u:2350f0a19bf8'
+disabled: true
+group: 通用
+label: 系统
+readonly: true
+sort_no: 400
+type: boolean
+visible_on: '{{global.mode ===''read'' ? true : false}}'

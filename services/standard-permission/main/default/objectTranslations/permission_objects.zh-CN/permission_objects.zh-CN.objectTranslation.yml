@@ -99,7 +99,13 @@ fields:
   allowExport:
     label: 允许导出Excel
 groups:
+  owner_perms: >-
+      所有者权限: <span span class='label
+      label-info'>谁创建了这条记录，谁就对这条记录拥有「所有者权限」</span>
   files_permissions: 附件权限
+  company_perms: 分部权限
+  manage_perms: 管理权限
+  other_perms: 其他
 listviews:
   customize:
     label: 自定义

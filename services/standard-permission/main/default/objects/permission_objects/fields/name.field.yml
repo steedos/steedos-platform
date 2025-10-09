@@ -1,0 +1,9 @@
+name: name
+amis:
+  id: 'u:466a9719997a'
+group: 通用
+is_wide: true
+label: Name
+sort_no: 50
+type: text
+visible_on: '{{false}}'

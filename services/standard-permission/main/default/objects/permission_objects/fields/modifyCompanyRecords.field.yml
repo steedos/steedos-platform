@@ -1,0 +1,7 @@
+name: modifyCompanyRecords
+amis:
+  id: 'u:d799f72e8e5d'
+group: company_perms
+label: Modify Division's Records
+sort_no: 1200
+type: boolean

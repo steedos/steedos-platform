@@ -1,0 +1,14 @@
+name: object_name
+amis:
+  id: 'u:d4937ed813a8'
+create: false
+filterable: true
+group: 通用
+index: true
+label: Object
+reference_to: objects
+reference_to_field: name
+required: true
+sort_no: 150
+type: lookup
+write_requires_master_read: true

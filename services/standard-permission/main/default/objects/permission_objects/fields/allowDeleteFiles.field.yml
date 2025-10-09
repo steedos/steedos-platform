@@ -1,0 +1,7 @@
+name: allowDeleteFiles
+amis:
+  id: 'u:c6fd5239f7e6'
+group: Files permissions
+label: Allow Delete Files
+sort_no: 1100
+type: boolean

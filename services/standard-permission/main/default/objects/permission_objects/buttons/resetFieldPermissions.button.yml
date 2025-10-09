@@ -1,0 +1,4 @@
+name: resetFieldPermissions
+is_enable: true
+label: 重置字段权限
+'on': record_only

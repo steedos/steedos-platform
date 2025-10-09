@@ -1,0 +1,7 @@
+name: modifyAllFiles
+amis:
+  id: 'u:bca069fbe90e'
+group: manage_perms
+label: Modify All Files
+sort_no: 1400
+type: boolean

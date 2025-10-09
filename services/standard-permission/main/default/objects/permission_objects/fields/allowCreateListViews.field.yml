@@ -1,0 +1,8 @@
+name: allowCreateListViews
+amis:
+  id: 'u:71020c7345c3'
+defaultValue: true
+group: other_perms
+label: Allow Create ListViews
+sort_no: 1550
+type: boolean

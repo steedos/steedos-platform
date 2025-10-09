@@ -1,0 +1,8 @@
+name: allowExport
+amis:
+  id: 'u:77d162ebe047'
+defaultValue: true
+group: other_perms
+label: Allow Export Excel
+sort_no: 1600
+type: boolean

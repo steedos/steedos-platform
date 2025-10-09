@@ -1,0 +1,7 @@
+name: allowCreateFiles
+amis:
+  id: 'u:4370ce4ad448'
+group: Files permissions
+label: Allow Create Files
+sort_no: 950
+type: boolean

@@ -1,0 +1,7 @@
+name: viewCompanyRecords
+amis:
+  id: 'u:29cede3c778a'
+group: company_perms
+label: View Division's Records
+sort_no: 1150
+type: boolean
