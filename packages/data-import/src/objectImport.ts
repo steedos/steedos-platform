@@ -259,7 +259,10 @@ async function converterLookup(
     }
 
     //修复导入单元格为数字式文本问题
-    if (lookupCollection.fields[selectfield]?._type == "text") {
+    if (
+      lookupCollection.fields[selectfield]?._type == "text" ||
+      selectfield === "_id"
+    ) {
       cellContent = cellContent.toString();
     }
 
