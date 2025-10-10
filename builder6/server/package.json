@@ -25,6 +25,7 @@
   "dependencies": {
     "@builder6/server": "^3.0.9",
     "@nestjs/schematics": "^11.0.2",
+    "@nestjs/swagger": "^11.0.0",
     "@steedos/auth": "3.0.0-beta.107",
     "@steedos/ee_unpkg": "1.0.1",
     "@steedos/objectql": "3.0.0-beta.107",

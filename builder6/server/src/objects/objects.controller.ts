@@ -20,4 +20,9 @@ export class ObjectsController {
   async getObject(@Param("objectApiName") objectApiName: string) {
     return await this.objectsService.getObjectConfig(objectApiName);
   }
+
+  @Get(":objectApiName/simplified")
+  async getObjectSimplified(@Param("objectApiName") objectApiName: string) {
+    return await this.objectsService.getObjectSimplified(objectApiName);
+  }
 }

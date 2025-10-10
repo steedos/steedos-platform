@@ -13,6 +13,32 @@ export class ObjectsService {
     return obj.getConfig();
   }
 
+  async getObjectSimplified(objectApiName: string) {
+    const obj = getObject(objectApiName);
+    if (!obj) {
+      throw new Error(`Object ${objectApiName} not found`);
+    }
+    const config = obj.getConfig();
+    // 提取 `fields` 下的核心字段
+    const simplifiedFields = {};
+    for (const [key, value] of Object.entries(config.fields)) {
+      const field = value as any;
+      if (!field.hidden) {
+        simplifiedFields[key] = {
+          label: field.label,
+          type: field.type,
+          name: field.name,
+        };
+      }
+    }
+
+    return {
+      name: config.name,
+      label: config.label,
+      fields: simplifiedFields,
+    };
+  }
+
   async runFunction(
     objectApiName: string,
     functionApiName: string,

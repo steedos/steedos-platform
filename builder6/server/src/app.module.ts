@@ -32,6 +32,7 @@ import { AppGateway } from "./app.gateway";
 import { getMoleculerConfigs, getSteedosConfigs } from "./config";
 import { ApiModule } from "./api/api.module";
 import { ObjectsModule } from "./objects/objects.module";
+import { AiModule } from "./ai/ai.module";
 
 const startModules = [];
 if (process.env.B6_ONLYOFFICE_ENABLED === "true") {
@@ -60,7 +61,7 @@ const getMoleculerConfig = () => {
 };
 
 @Module({
-  imports: [ApiModule, ObjectsModule],
+  imports: [ApiModule, ObjectsModule, AiModule],
 })
 export class AppModule {
   private readonly logger = new Logger(AppModule.name);
