@@ -29,7 +29,6 @@ export class AiService {
         simplifiedFields[key] = {
           label: field.label,
           type: field.type,
-          name: field.name,
           reference_to: field.reference_to,
         };
       }
