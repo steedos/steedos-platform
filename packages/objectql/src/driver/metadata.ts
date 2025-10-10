@@ -299,21 +299,28 @@ export class MetadataDriver extends SteedosMongoDriver {
 
   async mixinSources(metaName, dbSources = [], codeSources = []) {
     const key = metaName === "apps" ? "_id" : "name";
-    const dbMap = new Map(
-      dbSources.map((item) => [
-        `${item.object || item.object_name}.${item[key]}`,
-        item,
-      ]),
+    const dbSIDMap = new Map(
+      dbSources.map((item) => {
+        const idValue = `${item.object || item.object_name}.${item[key]}`;
+        return [idValue, item];
+      }),
+    );
+
+    const dbIdMap = new Map(
+      dbSources.map((item) => {
+        const idValue = item._id;
+        return [idValue, item];
+      }),
     );
     codeSources.forEach((item) => {
       if (!item._id) {
         console.error("error: item._id is null");
       }
-      if (!dbMap.has(item._id)) {
-        dbMap.set(item._id, item);
+      if (!dbSIDMap.has(item._id) && !dbIdMap.has(item._id)) {
+        dbSIDMap.set(item._id, item);
       }
     });
-    return Array.from(dbMap.values());
+    return Array.from(dbSIDMap.values());
   }
 
   async find(tableName: string, query: SteedosQueryOptions) {
