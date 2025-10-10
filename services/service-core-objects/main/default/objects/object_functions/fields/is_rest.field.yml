@@ -1,5 +1,0 @@
-name: is_rest
-type: boolean
-label: Rest
-sort_no: 170
-defaultValue: true

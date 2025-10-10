@@ -868,10 +868,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
     });
     const len = fDocs.length;
     if (0 == len) {
-      throw new Error(`can not find function: ${functionName}.`);
+      throw new Error(`Can not find function: ${functionName}.`);
     }
     if (len > 1) {
-      throw new Error(`found multiple functions by ${functionName}.`);
+      throw new Error(`Found multiple functions by ${functionName}.`);
     }
     if (1 == len) {
       const fDoc = fDocs[0];

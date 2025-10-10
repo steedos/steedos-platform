@@ -5,10 +5,6 @@ fields:
   _name:
     label: API 名称
     help: API 名称只能包含小写字母、数字
-    description:
-  is_rest:
-    label: 启用API
-    help:
     description: (POST/GET) /api/v6/functions/:objectName/:functionApiName
   is_system:
     label: 系统

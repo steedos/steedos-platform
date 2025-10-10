@@ -766,19 +766,6 @@ module.exports = {
                 const { objectName, functionApiName } = ctx.params;
                 const object = getObject(objectName)
 
-                // 启用API(is_rest === true) 的函数才在这里执行
-                // 从缓存获取
-                // eslint-disable-next-line no-undef
-                const fDocs = await broker.call(`${METADATA_CACHER_SERVICE_NAME}.find`, {metadataName: 'object_functions', filters: [
-                    ["objectApiName", "=", objectName],
-                    ["_name", "=", functionApiName],
-                    ["is_rest", "=", true]
-                ]});
-
-                if (!fDocs || fDocs.length == 0) {
-                    throw new Error(`function need to enable api access.`);
-                }
-
                 const result = await object.runFunction(functionApiName, ctx.params, userSession);
                 return {
                     "status": REQUEST_SUCCESS_STATUS,

@@ -3,7 +3,6 @@ columns:
   - name
   - objectApiName
   - isEnabled
-  - is_rest
   - is_system
 label: 自定义
 filters:

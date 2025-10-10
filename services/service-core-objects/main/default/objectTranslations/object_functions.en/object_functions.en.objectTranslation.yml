@@ -8,10 +8,6 @@ fields:
       Can only contain lowercase letters and numbers, must start with a letter,
       cannot end with an underscore character or contain two consecutive
       underscore characters
-    description:
-  is_rest:
-    label: Enable API
-    help:
     description: (POST/GET) /api/v6/functions/:objectName/:functionApiName
   is_system:
     label: System
