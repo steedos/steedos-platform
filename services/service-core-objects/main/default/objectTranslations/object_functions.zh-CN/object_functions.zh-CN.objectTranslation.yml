@@ -9,7 +9,7 @@ fields:
   is_rest:
     label: 启用API
     help:
-    description: 允许使用API接口访问：{POST/GET} /api/v1/:objectName/functions/:functionApiName
+    description: (POST/GET) /api/v6/functions/:objectName/:functionApiName
   is_system:
     label: 系统
     help:
