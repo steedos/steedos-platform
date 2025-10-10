@@ -17,8 +17,9 @@ export class ObjectsService {
     objectApiName: string,
     functionApiName: string,
     params: any,
+    userSession?: any,
   ) {
     const obj = getObject(objectApiName);
-    return await obj.runFunction(functionApiName, params);
+    return await obj.runFunction(functionApiName, params, userSession);
   }
 }
