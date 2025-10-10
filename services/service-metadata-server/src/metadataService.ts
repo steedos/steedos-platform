@@ -108,6 +108,9 @@ module.exports = {
           (_configs, metadataApiName) => {
             let config: any = {};
             const __configs = _.map(_configs, "metadata");
+            _.sortBy(__configs, function (o) {
+              return -o.__timestamp;
+            });
             config = _.defaultsDeep(
               {},
               ..._.sortBy(__configs, function (o) {
