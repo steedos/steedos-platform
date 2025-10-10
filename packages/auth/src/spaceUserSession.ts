@@ -63,16 +63,7 @@ async function getObjectDataByIds(
     return [];
   }
 
-  let filters = _.map(ids, function (id) {
-    if (!id) {
-      return "";
-    }
-    return `(_id eq '${id}')`;
-  }).join(" or ");
-
-  if (!filters) {
-    return [];
-  }
+  const filters = ["_id", "in", ids];
 
   let query = { filters: filters };
   if (fields && fields.length > 0) {
@@ -83,14 +74,15 @@ async function getObjectDataByIds(
 }
 
 async function getUserPermissionShares(spaceUser) {
-  let userFilters = [`(users eq '${spaceUser.user}')`];
-  _.each(spaceUser.organizations_parents, (orgId) => {
-    userFilters.push(`(organizations eq '${orgId}')`);
-  });
-  let filters = `((${userFilters.join(" or ")}) and space eq '${spaceUser.space}')`;
-  return await getSteedosSchema()
-    .getObject("permission_shares")
-    .find({ filters: filters, fields: ["_id", "object_name"] });
+  return [];
+  // let userFilters = [`(users eq '${spaceUser.user}')`];
+  // _.each(spaceUser.organizations_parents, (orgId) => {
+  //   userFilters.push(`(organizations eq '${orgId}')`);
+  // });
+  // let filters = `((${userFilters.join(" or ")}) and space eq '${spaceUser.space}')`;
+  // return await getSteedosSchema()
+  //   .getObject("permission_shares")
+  //   .find({ filters: filters, fields: ["_id", "object_name"] });
 }
 
 export function getSpaceSessionFromCache(spaceId, userId) {
