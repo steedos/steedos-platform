@@ -182,7 +182,7 @@
                                             "hiddenOn": "${window:innerWidth < 768 && false}"
                                         }
                                     ],
-                                    "className": "bg-gray-100",
+                                    "className": "",
                                     "style": {
                                         "border": 0,
                                         "border-radius": 0
