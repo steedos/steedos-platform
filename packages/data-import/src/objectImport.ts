@@ -553,7 +553,11 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
         //     jsonObj['modified_by'] = options.userSession.userId;
         // }
         delete jsonObj._id; // 更新内容不包括_id
-        await objectCollection.update(recordExistsDoc._id, jsonObj);
+        await objectCollection.update(
+          recordExistsDoc._id,
+          jsonObj,
+          options.userSession,
+        );
         insertInfo["create"] = false;
         insertInfo["update"] = true;
       } catch (error) {
