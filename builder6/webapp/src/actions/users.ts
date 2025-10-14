@@ -155,9 +155,6 @@ export function logout(): ActionFunc {
 
 export function getMe(): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
-    if (!LocalStorageStore.getItem("userId"))
-      return { error: "user not found." };
-
     const getMeFunc = bindClientFunc({
       clientFunc: Client4.getMe,
       onSuccess: UserTypes.RECEIVED_ME,
@@ -174,9 +171,6 @@ export function getMe(): ActionFunc {
 
 export function validate(): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
-    if (!LocalStorageStore.getItem("userId"))
-      return { error: "userId not found." };
-
     if (!LocalStorageStore.getItem("spaceId"))
       return { error: "spaceId not found." };
 
