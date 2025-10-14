@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-07 14:19:57
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2025-02-18 16:58:48
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2025-10-14 10:16:10
  * @Description: 
  */
 "use strict";
@@ -258,7 +258,7 @@ async function updatevaildate(suDoc, doc) {
             filters: [
                 ['mobile', '=', tmpMobile]
             ]
-        }))[0]
+        }))
 
         if (mobileUser && mobileUser._id !== suDoc.user) {
             throw new Error("space_users_error_phone_already_existed");
