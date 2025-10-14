@@ -78,7 +78,7 @@
                                     "initiallyOpen": false,
                                     "extractValue": true,
                                     "onlyChildren": true,
-                                    "treeContainerClassName": "no-border",
+                                    "treeContainerClassName": "no-border h-full",
                                     "showIcon": false,
                                     "enableNodePath": false,
                                     "autoCheckChildren": false,
@@ -276,6 +276,9 @@
         },
         ".space-users-list-custom-page.space-users-list-pc.space-users-list-sidebar-open .space-users-list-sidebar-wrapper": {
             "min-width": "220px"
+        },
+        ".space-users-list-custom-page.space-users-list-pc .space-users-list-sidebar-wrapper .antd-Form-item .antd-Tree": {
+            "max-height": "none"
         }
     }
 }
