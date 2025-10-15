@@ -1,5 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { getObject } from "@steedos/objectql";
+import { z } from "zod";
+import { tool } from "ai";
 
 @Injectable()
 export class AiService {
@@ -11,7 +13,7 @@ export class AiService {
     return obj.getConfig();
   }
 
-  async getObjectPrompt(objectApiName: string) {
+  async getObjectSchema(objectApiName: string) {
     const obj = getObject(objectApiName);
     if (!obj) {
       throw new Error(`Object ${objectApiName} not found`);
@@ -41,10 +43,10 @@ export class AiService {
     };
   }
 
-  async getObjectPromptMultiple(objectApiNames: string[], includeRelated) {
+  async getObjectSchemaWithRelated(objectApiNames: string[], includeRelated) {
     const results = {};
     for (const objectApiName of objectApiNames) {
-      const fields = await this.getObjectPrompt(objectApiName);
+      const fields = await this.getObjectSchema(objectApiName);
       results[objectApiName] = fields;
       //  If includeRelatedObjects is true, you can implement logic to fetch related objects here
       if (includeRelated) {
@@ -54,7 +56,7 @@ export class AiService {
           if (field.type === "lookup" || field.type === "master_detail") {
             const relatedObjectApiName = field.reference_to;
             if (relatedObjectApiName && !results[relatedObjectApiName]) {
-              const fields = await this.getObjectPrompt(relatedObjectApiName);
+              const fields = await this.getObjectSchema(relatedObjectApiName);
               results[relatedObjectApiName] = fields;
             }
           }
@@ -62,5 +64,40 @@ export class AiService {
       }
     }
     return results;
+  }
+
+  getObjectSchemaTool() {
+    return tool({
+      description: "Get object schema",
+      inputSchema: z.object({
+        objectApiName: z
+          .string()
+          .describe('The object API name, e.g., "space_users"'),
+      }),
+      execute: async ({ objectApiName }) => {
+        const schema = await this.getObjectSchema(objectApiName);
+        console.log("Calling tool getObjectSchema:", schema);
+        return schema;
+      },
+    });
+  }
+
+  getObjectSchemaWithRelatedTool() {
+    return tool({
+      description: "Get schema for object and related objects",
+      inputSchema: z.object({
+        objectApiName: z
+          .string()
+          .describe('The object API name, e.g., "space_users"'),
+      }),
+      execute: async ({ objectApiName }) => {
+        const schema = await this.getObjectSchemaWithRelated(
+          [objectApiName],
+          true,
+        );
+        console.log("Calling tool getObjectSchemaWithRelated:", schema);
+        return schema;
+      },
+    });
   }
 }

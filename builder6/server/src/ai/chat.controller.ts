@@ -11,11 +11,13 @@ import {
 } from "@nestjs/swagger";
 import { generateText, streamText, stepCountIs } from "ai";
 import { Response } from "express";
-import { getObjectSchemaTool } from "../ai/tools/get_objects_schema";
-import { text } from "stream/consumers";
+import { AiService } from "./ai.service";
 
+@ApiTags("AI")
 @Controller("api/v6/ai/chat")
 export class ChatController {
+  constructor(private readonly aiService: AiService) {}
+
   @ApiBody({
     schema: {
       type: "object",
@@ -40,7 +42,9 @@ export class ChatController {
       system,
       prompt,
       tools: {
-        getObjectSchema: getObjectSchemaTool,
+        getObjectSchema: this.aiService.getObjectSchemaTool(),
+        getObjectSchemaWithRelated:
+          this.aiService.getObjectSchemaWithRelatedTool(),
       },
       stopWhen: stepCountIs(5), // stop after a maximum of 5 steps if tools were called
     });

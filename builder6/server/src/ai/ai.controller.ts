@@ -10,6 +10,7 @@ import {
 } from "@nestjs/swagger";
 import { AiService } from "./ai.service";
 
+@ApiTags("AI")
 @Controller("/api/v6/ai")
 export class AiController {
   constructor(private readonly aiService: AiService) {}
@@ -44,7 +45,7 @@ export class AiController {
     // Explicitly convert string to boolean
     const includeRelatedBoolean = includeRelated.toLowerCase() === "true";
 
-    const results = await this.aiService.getObjectPromptMultiple(
+    const results = await this.aiService.getObjectSchemaWithRelated(
       objectApiNames,
       includeRelatedBoolean,
     );
