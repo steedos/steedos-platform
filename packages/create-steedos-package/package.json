@@ -22,9 +22,7 @@
     "templates/**",
     "createSteedosPackage.js"
   ],
-  "bin": {
-    "create-steedos-package": "./index.js"
-  },
+  "bin": "./index.js",
   "dependencies": {
     "@geek/spinner": "1.0.0",
     "chalk": "3.0.0",
@@ -32,7 +30,6 @@
     "cpy": "7.3.0",
     "fs-extra": "8.1.0"
   },
-  "private": false,
   "publishConfig": {
     "access": "public"
   },

@@ -16,7 +16,6 @@
   "scripts": {
     "build": "tsc"
   },
-  "private": false,
   "publishConfig": {
     "access": "public"
   },

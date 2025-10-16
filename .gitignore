@@ -42,3 +42,5 @@ steedos-packages
 depcheck-result.json
 depcheck-services-result.json
 depcheck-packages-result.json
+
+.yarn

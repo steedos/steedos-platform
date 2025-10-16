@@ -1,6 +1,5 @@
 {
   "name": "@steedos/odata-v4-typeorm",
-  "private": false,
   "version": "3.0.0-beta.109",
   "description": "OData to TYPEORM query compiler",
   "main": "lib/index.js",

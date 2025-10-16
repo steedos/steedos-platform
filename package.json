@@ -20,9 +20,8 @@
     "sync": "lerna exec --no-private  -- cnpm sync \\$LERNA_PACKAGE_NAME",
     "prepare": "husky install",
     "depcheck:services": "depcheck services/* --json > depcheck-services-result.json",
-    "depcheck:packages":"depcheck packages/* --json > depcheck-packages-result.json"
+    "depcheck:packages": "depcheck packages/* --json > depcheck-packages-result.json"
   },
-  "resolutions": {},
   "lint-staged": {
     "**/*.ts": [
       "prettier --ignore-path ./.prettierignore --write"
@@ -49,8 +48,10 @@
     "rimraf": "6.0.1",
     "tslib": "^2.4.0",
     "typescript": "5.7.3",
-    "typescript-eslint": "8.26.1",
-    "vite": "^6.1.0",
-    "vite-plugin-external": "^4.3.1"
-  }
+    "typescript-eslint": "8.26.1"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "packageManager": "yarn@3.8.7"
 }

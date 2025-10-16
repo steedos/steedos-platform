@@ -6,7 +6,6 @@
   "dependencies": {
     "node-schedule": "^2.0.0"
   },
-  "private": false,
   "publishConfig": {
     "access": "public"
   },

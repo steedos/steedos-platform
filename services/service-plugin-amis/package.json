@@ -9,7 +9,6 @@
     "build:tailwind": "tailwindcss -i ./src/styles/tailwind.css -o ./public/tailwind/tailwind-steedos.css"
   },
   "license": "MIT",
-  "private": false,
   "publishConfig": {
     "access": "public"
   },

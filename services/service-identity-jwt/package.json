@@ -18,7 +18,6 @@
         "passport-jwt": "^4.0.0"
     },
     "license": "MIT",
-    "private": false,
     "publishConfig": {
         "access": "public"
     },

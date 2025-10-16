@@ -1,6 +1,5 @@
 {
   "name": "@steedos/utils",
-  "private": false,
   "version": "3.0.0-beta.109",
   "description": "",
   "main": "lib/index.js",

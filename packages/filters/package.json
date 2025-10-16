@@ -1,6 +1,5 @@
 {
   "name": "@steedos/filters",
-  "private": false,
   "version": "3.0.0-beta.109",
   "description": "filters lib for steedos",
   "main": "lib/index.js",
@@ -31,7 +30,10 @@
     "@babel/plugin-syntax-import-meta": "^7.8.4",
     "@babel/plugin-transform-runtime": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
-    "@babel/register": "^7.8.4"
+    "@babel/register": "^7.8.4",
+    "@types/uglify-js": "^3",
+    "rollup": "^4.52.4",
+    "uglify-js": "^3.19.3"
   },
   "publishConfig": {
     "access": "public"

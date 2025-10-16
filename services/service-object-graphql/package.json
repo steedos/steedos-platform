@@ -2,7 +2,6 @@
     "name": "@steedos/service-object-graphql",
     "version": "3.0.0-beta.109",
     "main": "package.service.js",
-    "private": false,
     "publishConfig": {
         "access": "public"
     },
@@ -23,7 +22,7 @@
         "@steedos/service-object-mixin": "3.0.0-beta.109",
         "graphql": "^15.8.0",
         "graphql-parse-resolve-info": "^4.12.3",
-        "moleculer": "^0.14.25",
+        "moleculer": "^0.14.35",
         "moment": "^2.29.1",
         "open": "^7.3.0",
         "underscore": "1.5.2"

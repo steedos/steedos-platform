@@ -4,7 +4,6 @@
     "description": "",
     "main": "package.service.js",
     "license": "MIT",
-    "private": false,
     "publishConfig": {
         "access": "public"
     },

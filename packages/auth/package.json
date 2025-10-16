@@ -1,6 +1,5 @@
 {
   "name": "@steedos/auth",
-  "private": false,
   "version": "3.0.0-beta.109",
   "main": "lib/index.js",
   "scripts": {

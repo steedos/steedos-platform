@@ -7,7 +7,6 @@
     "@steedos/auth": "3.0.0-beta.109",
     "node-schedule": "^2.0.0"
   },
-  "private": false,
   "publishConfig": {
     "access": "public"
   },

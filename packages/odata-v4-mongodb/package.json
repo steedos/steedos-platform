@@ -29,7 +29,6 @@
     "@steedos/odata-v4-parser": "3.0.0-beta.109",
     "odata-v4-literal": "^0.1.0"
   },
-  "private": false,
   "publishConfig": {
     "access": "public"
   },

@@ -61,12 +61,16 @@
     "socket.io-client": "^4.8.1",
     "tailwindcss": "^3.4.17",
     "tslib": "^2.3.1",
-    "typescript": "5.7.3"
+    "typescript": "5.7.3",
+    "vite": "^6.1.0",
+    "vite-plugin-external": "^4.3.1"
   },
-  "private": false,
   "publishConfig": {
     "access": "public"
   },
   "repository": "https://github.com/steedos/app-builder/tree/master/apps/accounts",
-  "gitHead": "5c0958e88a1e3db12f511609cd827e3e93782822"
+  "gitHead": "5c0958e88a1e3db12f511609cd827e3e93782822",
+  "dependencies": {
+    "history": "^5.3.0"
+  }
 }

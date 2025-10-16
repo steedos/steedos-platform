@@ -2,14 +2,12 @@
     "name": "@steedos/service-objectql",
     "version": "3.0.0-beta.109",
     "main": "package.service.js",
-    "private": false,
     "publishConfig": {
         "access": "public"
     },
     "keywords": [
         "steedos"
     ],
-    "scripts": {},
     "description": "steedos package",
     "repository": {},
     "license": "MIT",

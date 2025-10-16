@@ -27,7 +27,6 @@
     "radwag-mass": "~1.0.5",
     "validator": "^13.5.2"
   },
-  "private": false,
   "publishConfig": {
     "access": "public"
   },

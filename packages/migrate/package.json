@@ -4,7 +4,6 @@
   "description": "Migration scripts for steedos",
   "main": "index.js",
   "license": "MIT",
-  "private": false,
   "dependencies": {
     "@steedos/service-package-registry": "3.0.0-beta.109",
     "migrate": "^1.6.2",

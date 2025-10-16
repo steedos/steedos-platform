@@ -5,7 +5,6 @@
   "repository": "https://github.com/steedos/schemas.git",
   "author": "sunhaolin <sunhaolin@hotoa.com>",
   "license": "MIT",
-  "private": false,
   "publishConfig": {
     "access": "public"
   },

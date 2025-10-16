@@ -2,9 +2,7 @@
   "name": "@steedos/workflow_time_trigger",
   "version": "3.0.0-beta.109",
   "main": "package.service.js",
-  "scripts": {},
   "license": "MIT",
-  "private": false,
   "publishConfig": {
     "access": "public"
   },
