@@ -43,11 +43,11 @@ depcheck-result.json
 depcheck-services-result.json
 depcheck-packages-result.json
 
-.yarn/*
-!.yarn/releases
-!.yarn/plugins
-!.yarn/patches
-!.yarn/sdks
-!.yarn/versions
-.yarn/cache
 
+**/.pnp.*
+**/.yarn/*
+!**/.yarn/patches
+!**/.yarn/plugins
+!**/.yarn/releases
+!**/.yarn/sdks
+!**/.yarn/versions
