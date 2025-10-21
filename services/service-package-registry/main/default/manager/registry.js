@@ -269,33 +269,169 @@ async function installModule(module, version, url, registry_url) {
     return activePromise;
 }
 
+
+/**
+ * 对比两个 package.json 对象的依赖变化，返回新增和修改的依赖
+ * @param {Object} oldPkg 修改前的 package.json 对象
+ * @param {Object} newPkg 修改后的 package.json 对象
+ * @returns {Array} 包含变化信息的数组，每个元素包含名称、版本号、路径和变化类型
+ */
+function comparePackageJsonChanges(oldPkg, newPkg) {
+  const changes = [];
+  
+  // 检查 dependencies 变化
+  const oldDeps = oldPkg?.dependencies || {};
+  const newDeps = newPkg?.dependencies || {};
+  
+  // 检查 devDependencies 变化
+  const oldDevDeps = oldPkg?.devDependencies || {};
+  const newDevDeps = newPkg?.devDependencies || {};
+  
+  // 对比 dependencies
+  for (const [pkg, newVersion] of Object.entries(newDeps)) {
+    const oldVersion = oldDeps[pkg];
+    
+    if (oldVersion === undefined) {
+      // 新增的依赖
+      changes.push({
+        name: pkg,
+        version: newVersion,
+        path: 'dependencies',
+        changeType: 'added'
+      });
+    } else if (oldVersion !== newVersion) {
+      // 版本变化的依赖
+      changes.push({
+        name: pkg,
+        version: newVersion,
+        oldVersion: oldVersion,
+        path: 'dependencies',
+        changeType: 'changed'
+      });
+    }
+  }
+  
+  // 对比 devDependencies
+  for (const [pkg, newVersion] of Object.entries(newDevDeps)) {
+    const oldVersion = oldDevDeps[pkg];
+    
+    if (oldVersion === undefined) {
+      // 新增的依赖
+      changes.push({
+        name: pkg,
+        version: newVersion,
+        path: 'devDependencies',
+        changeType: 'added'
+      });
+    } else if (oldVersion !== newVersion) {
+      // 版本变化的依赖
+      changes.push({
+        name: pkg,
+        version: newVersion,
+        oldVersion: oldVersion,
+        path: 'devDependencies',
+        changeType: 'changed'
+      });
+    }
+  }
+  
+  return changes;
+}
+
+function loadJson(filePath){
+    const packageData = fs.readFileSync(filePath, 'utf8');
+    return JSON.parse(packageData);
+}
+
 async function yarnAddPackage(yarnPackage){
     var installDir = settings.userDir || ".";
+
+    // eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef
+    const oldPackageInfo = loadJson(path.join(installDir, 'package.json'));
+
     var yarnArgs = ['add', '-E', ...yarnPackage.split(' '), '--json'];
     const data = await exec.run(yarnCommand, yarnArgs, {cwd: installDir}, true);
+
+    // eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef
+    const newPackageInfo = loadJson(path.join(installDir, 'package.json'));
+
+    const changes = comparePackageJsonChanges(oldPackageInfo, newPackageInfo);
     const formatData = JSON.parse(_.last(_.compact(data.stdout.split('\n'))))
+    // console.log(`yarnAddPackage:`, yarnPackage, formatData, data)
     // 解析 yarn add 返回的结果
     const steedosPackages = [];
-    _.each(formatData.data.trees, (module)=>{
-        const parsed = npa(module.name);
-        const packagePath = path.dirname(require.resolve(`${parsed.name}/package.json`, {
-            paths: [path.join(installDir, 'node_modules')]
-        }))
-        if(fs.existsSync(path.join(packagePath, 'package.service.js'))){
-            // eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef
-            const schema = require(path.join(packagePath, 'package.service.js'));
-            schema.settings.packageInfo = {
-                ...schema.settings?.packageInfo,
-                ...(schema.metadata && schema.metadata.$package ? schema.metadata.$package : {}),
+    if(formatData.data.trees){
+        _.each(formatData.data.trees, (module)=>{
+            const parsed = npa(module.name);
+            const packagePath = path.dirname(require.resolve(`${parsed.name}/package.json`, {
+                paths: [path.join(installDir, 'node_modules')]
+            }))
+            if(fs.existsSync(path.join(packagePath, 'package.service.js'))){
+                // eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef
+                const schema = require(path.join(packagePath, 'package.service.js'));
+                schema.settings.packageInfo = {
+                    ...schema.settings?.packageInfo,
+                    ...(schema.metadata && schema.metadata.$package ? schema.metadata.$package : {}),
+                }
+                steedosPackages.push({
+                    name: parsed.name,
+                    version: parsed.rawSpec,
+                    path: packagePath,
+                    isUnmanaged: schema.settings.packageInfo.isUnmanaged
+                })
             }
-            steedosPackages.push({
-                name: parsed.name,
-                version: parsed.rawSpec,
-                path: packagePath,
-                isUnmanaged: schema.settings.packageInfo.isUnmanaged
-            })
+        })
+    }else{
+        // console.log('changes', changes, npa(yarnPackage));
+        const module = npa(yarnPackage);
+        if(module.name){
+            // eslint-disable-next-line no-undef
+            const packagePath = path.dirname(require.resolve(`${module.name}/package.json`, {
+                paths: [path.join(installDir, 'node_modules')]
+            }));
+            if(fs.existsSync(path.join(packagePath, 'package.service.js'))){
+                // eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef
+                const schema = require(path.join(packagePath, 'package.service.js'));
+                const packageInfo = loadJson(path.join(packagePath, 'package.json'));
+                schema.settings.packageInfo = {
+                    ...schema.settings?.packageInfo,
+                    ...(schema.metadata && schema.metadata.$package ? schema.metadata.$package : {}),
+                }
+                steedosPackages.push({
+                    name: module.name,
+                    version: packageInfo.version,
+                    path: packagePath,
+                    isUnmanaged: schema.settings.packageInfo.isUnmanaged
+                })
+            }
+            
         }
-    })
+
+        for (const change of changes) {
+            // eslint-disable-next-line no-undef
+            const packagePath = path.dirname(require.resolve(`${change.name}/package.json`, {
+                paths: [path.join(installDir, 'node_modules')]
+            }))
+            if(fs.existsSync(path.join(packagePath, 'package.service.js'))){
+                // eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef
+                const schema = require(path.join(packagePath, 'package.service.js'));
+                schema.settings.packageInfo = {
+                    ...schema.settings?.packageInfo,
+                    ...(schema.metadata && schema.metadata.$package ? schema.metadata.$package : {}),
+                }
+                if(!_.find(steedosPackages, {name: change.name})){
+                    steedosPackages.push({
+                        name: change.name,
+                        version: change.version,
+                        path: packagePath,
+                        isUnmanaged: schema.settings.packageInfo.isUnmanaged
+                    })
+                }
+                
+            }
+        }
+    }
+    // console.log('steedosPackages===>', steedosPackages);
     return steedosPackages;
 }
 
