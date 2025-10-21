@@ -181,7 +181,7 @@ const destroyExistThePackageService = async (packageInfo)=>{
         });
     }
     if (svc) {
-        console.info(`Destroy previous '${schema.name}' service...`);
+        console.info(`Destroy previous '${packageInfo.name}' service...`);
         await broker.destroyService(svc);
     }
 }
