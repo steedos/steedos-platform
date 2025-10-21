@@ -9563,16 +9563,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos-labs/plugin-workflow@npm:3.0.0-beta.30":
-  version: 3.0.0-beta.30
-  resolution: "@steedos-labs/plugin-workflow@npm:3.0.0-beta.30"
+"@steedos-labs/plugin-workflow@npm:3.0.0-beta.31":
+  version: 3.0.0-beta.31
+  resolution: "@steedos-labs/plugin-workflow@npm:3.0.0-beta.31"
   dependencies:
     formidable: 2.0.1
     graphql-parse-resolve-info: ^4.12.3
     he: 1.2.0
+    jszip: 3.10.1
     lodash: ^4.17.21
     node-schedule: ^2.0.0
-  checksum: ca8a881c5a922608b9850163d4477a8213d5687edad14ae076d13515a400577aed5b3049ed3f1489983f7492dce8b83681fca5450d40cd91136813766eccaf4a
+  checksum: 59d1183370fdf860589af32518db0e4e6d11cb198337ffb384de46d6c9957044726f6980592aaac3ef7c65356c98bfa46585e7581ffafceae75f3aeea1c6b354
   languageName: node
   linkType: hard
 
@@ -10193,7 +10194,7 @@ __metadata:
     "@steedos-builder/amis-editor": 6.3.0-beta.16
     "@steedos-labs/analytics": 3.0.6
     "@steedos-labs/plugin-package-store": ^1.0.9
-    "@steedos-labs/plugin-workflow": 3.0.0-beta.30
+    "@steedos-labs/plugin-workflow": 3.0.0-beta.31
     "@steedos/data-import": 3.0.0-beta.109
     "@steedos/server": 3.0.0-beta.109
     "@steedos/service-accounts": 3.0.0-beta.109
@@ -24154,6 +24155,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"immediate@npm:~3.0.5":
+  version: 3.0.6
+  resolution: "immediate@npm:3.0.6"
+  checksum: f9b3486477555997657f70318cc8d3416159f208bec4cca3ff3442fd266bc23f50f0c9bd8547e1371a6b5e82b821ec9a7044a4f7b944798b25aa3cc6d5e63e62
+  languageName: node
+  linkType: hard
+
 "immer@npm:^9.0.7":
   version: 9.0.21
   resolution: "immer@npm:9.0.21"
@@ -27166,6 +27174,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jszip@npm:3.10.1":
+  version: 3.10.1
+  resolution: "jszip@npm:3.10.1"
+  dependencies:
+    lie: ~3.3.0
+    pako: ~1.0.2
+    readable-stream: ~2.3.6
+    setimmediate: ^1.0.5
+  checksum: abc77bfbe33e691d4d1ac9c74c8851b5761fba6a6986630864f98d876f3fcc2d36817dfc183779f32c00157b5d53a016796677298272a714ae096dfe6b1c8b60
+  languageName: node
+  linkType: hard
+
 "just-diff-apply@npm:^5.2.0":
   version: 5.5.0
   resolution: "just-diff-apply@npm:5.5.0"
@@ -27887,6 +27907,15 @@ __metadata:
   version: 1.12.24
   resolution: "libphonenumber-js@npm:1.12.24"
   checksum: 2803074323db3dd1c8c806f02869e9dc2c83fecdd0d21963d5d298879b3f9ac7b14b0c189891a806eb30ef11d1fa907d62e59bfbc85b26a5765f564d73242eec
+  languageName: node
+  linkType: hard
+
+"lie@npm:~3.3.0":
+  version: 3.3.0
+  resolution: "lie@npm:3.3.0"
+  dependencies:
+    immediate: ~3.0.5
+  checksum: 33102302cf19766f97919a6a98d481e01393288b17a6aa1f030a3542031df42736edde8dab29ffdbf90bebeffc48c761eb1d064dc77592ca3ba3556f9fe6d2a8
   languageName: node
   linkType: hard
 
@@ -32681,6 +32710,13 @@ __metadata:
   version: 0.2.9
   resolution: "pako@npm:0.2.9"
   checksum: 055f9487cd57fbb78df84315873bbdd089ba286f3499daed47d2effdc6253e981f5db6898c23486de76d4a781559f890d643bd3a49f70f1b4a18019c98aa5125
+  languageName: node
+  linkType: hard
+
+"pako@npm:~1.0.2":
+  version: 1.0.11
+  resolution: "pako@npm:1.0.11"
+  checksum: 1be2bfa1f807608c7538afa15d6f25baa523c30ec870a3228a89579e474a4d992f4293859524e46d5d87fd30fa17c5edf34dbef0671251d9749820b488660b16
   languageName: node
   linkType: hard
 
@@ -37690,6 +37726,13 @@ __metadata:
     is-plain-object: ^2.0.3
     split-string: ^3.0.1
   checksum: 09a4bc72c94641aeae950eb60dc2755943b863780fcc32e441eda964b64df5e3f50603d5ebdd33394ede722528bd55ed43aae26e9df469b4d32e2292b427b601
+  languageName: node
+  linkType: hard
+
+"setimmediate@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "setimmediate@npm:1.0.5"
+  checksum: c9a6f2c5b51a2dabdc0247db9c46460152ffc62ee139f3157440bd48e7c59425093f42719ac1d7931f054f153e2d26cf37dfeb8da17a794a58198a2705e527fd
   languageName: node
   linkType: hard
 
