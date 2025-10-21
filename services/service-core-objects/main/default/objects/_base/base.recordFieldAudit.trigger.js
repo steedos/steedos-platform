@@ -219,6 +219,9 @@ const updateRecord = async function(userId, object_name, new_doc, previous_doc, 
     for(var i = 0; i < keys.length; i++ ){
         const k = keys[i];
         const v = modifier[k];
+        if(k == "modified"){
+          continue
+        }
         var auditRecordsObject, db_new_value, db_previous_value, doc, field, new_value, previous_value;
         field = fields != null ? fields[k] : void 0;
         previous_value = previous_doc[k];
