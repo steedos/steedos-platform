@@ -103,10 +103,6 @@ jobs:
 
       - run: yarn --frozen-lockfile
 
-      - name: Bootstrap platform
-        run: |
-          yarn bootstrap
-
       - name: Build platform
         env:
           CI: false
