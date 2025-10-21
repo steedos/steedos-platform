@@ -9601,16 +9601,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos-labs/analytics@npm:3.0.6":
-  version: 3.0.6
-  resolution: "@steedos-labs/analytics@npm:3.0.6"
+"@steedos-labs/analytics@npm:3.0.8":
+  version: 3.0.8
+  resolution: "@steedos-labs/analytics@npm:3.0.8"
   dependencies:
     "@steedos/utils": ^2.5.11-beta.10
     date-fns: ^3.3.1
     luxon: ^3.4.4
     moment-timezone: ^0.5.43
     ttag: ^1.7.29
-  checksum: 0bbb898a9a4010190075f45cb624b0985ef8966bbc810e7f81c5f50af2fb2fed72d03256484fa24fdf34bd3398583094128684b63c4a42f03a2d74c027b469ec
+  checksum: 160dfafe16d88d0c6dfc9553bb68cc5d11d1936f01b6ce19796a962e01523371ca30c94cf5e4b814699a4894647108347fb390e735d99619d625609fa214acd6
   languageName: node
   linkType: hard
 
@@ -10253,7 +10253,7 @@ __metadata:
   resolution: "@steedos/service-community@workspace:services/service-community"
   dependencies:
     "@steedos-builder/amis-editor": 6.3.0-beta.16
-    "@steedos-labs/analytics": 3.0.6
+    "@steedos-labs/analytics": 3.0.8
     "@steedos-labs/plugin-package-store": ^1.0.9
     "@steedos-labs/plugin-workflow": 3.0.0-beta.31
     "@steedos/data-import": 3.0.0-beta.112
