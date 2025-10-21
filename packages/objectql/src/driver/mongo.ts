@@ -386,6 +386,14 @@ export class SteedosMongoDriver implements SteedosDriver {
         }
       }
     });
+    // options.$set is empty, remove it
+    if (_.isEmpty(options.$set)) {
+      delete options.$set;
+    }
+    // options.$unset is empty, remove it
+    if (_.isEmpty(options.$unset)) {
+      delete options.$unset;
+    }
     let result = await collection.updateOne(selector, options);
     if (result.result.ok) {
       result = await collection.findOne(selector);
