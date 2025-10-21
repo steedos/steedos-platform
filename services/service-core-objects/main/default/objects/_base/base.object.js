@@ -444,7 +444,12 @@ module.exports = {
         standard_print: {
             label: "Print",
             visible: function (object_name, record_id, record_permissions, data) {
-                return data.uiSchema && data.uiSchema.enable_print;
+                var uiSchema = data.uiSchema;
+                // 记录详细页面中如果有相关子记录，用RecordService组件显示子记录的话，子记录中打印按钮取的uiSchema是父记录的uiSchema，造成子记录详细界面也显示了打印按钮，这里判断下对象名称不一致时重新取uiSchema变量
+                if (!uiSchema || uiSchema.name !== object_name){
+                    uiSchema = window.getUISchemaSync(object_name);
+                }
+                return uiSchema && uiSchema.enable_print;
             },
             on: "record_only",
             type: 'amis_button',
