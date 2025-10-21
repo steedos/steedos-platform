@@ -9,8 +9,6 @@ services:
     build: 
       context: ./
       dockerfile: ./Dockerfile
-    env_file:
-      - .env
     environment:
       - TRANSPORTER=redis://redis:6379
       - CACHER=redis://redis:6379/1
