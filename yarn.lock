@@ -2727,9 +2727,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@builder6/cli@npm:3.0.9":
-  version: 3.0.9
-  resolution: "@builder6/cli@npm:3.0.9"
+"@builder6/cli@npm:3.0.11":
+  version: 3.0.11
+  resolution: "@builder6/cli@npm:3.0.11"
   dependencies:
     "@oclif/core": ^4
     "@oclif/plugin-help": ^6
@@ -2737,21 +2737,31 @@ __metadata:
     fs-extra: ^11.2.0
   bin:
     b6: ./bin/run.js
-  checksum: d57c08b97bb2c3d972506fbc10fec01179017a81ffdc135a1d067e8dffda0993bcebe7264edb2ae3f7cd12333d738efe64b0dcd9056d76a3ddf0b7f255ffd012
+  checksum: 5bc17e4825ae1a33195365b4e4347fe761dd7652821d2579aba4c8ba95e0c0c0fda258ac8ce28cdc1b4fced60e2321735d645e9d1e1df21e9e37c660c15ae981
   languageName: node
   linkType: hard
 
-"@builder6/core@npm:3.0.9":
-  version: 3.0.9
-  resolution: "@builder6/core@npm:3.0.9"
+"@builder6/core@npm:3.0.11":
+  version: 3.0.11
+  resolution: "@builder6/core@npm:3.0.11"
   dependencies:
     "@aws-sdk/client-cloudwatch-logs": ^3.721.0
-    "@builder6/query-mongodb": 3.0.9
+    "@builder6/query-mongodb": 3.0.11
     "@socket.io/redis-adapter": ^8.3.0
+    socket.io-adapter: ^2.5.5
+  peerDependencies:
+    "@nestjs/common": ^11.0.0
+    "@nestjs/config": ^4.0.1
+    "@nestjs/core": ^11.0.0
+    "@nestjs/jwt": ^11.0.0
+    "@nestjs/platform-socket.io": ^11.0.0
+    "@nestjs/platform-ws": ^11.0.0
+    "@nestjs/swagger": ^11.0.7
     moleculer: ^0.14.35
+    nestjs-pino: ^4.2.0
     pino-http: ^10.3.0
     pino-pretty: ^13.0.0
-  checksum: 9348606b8926d225dc3e6b2112a9167295d6b34a9abf248096fbc235d0e1a8942c3910a1fb2a6283766816a00e13ae66ac6f67d99ab39b583d9325ebc431f2fe
+  checksum: c61f603107b59b2377533fc77b85a6321026e64f8065c50812b8434e95bc673a2d5cb91d73df0d28f6652149df96348d19dfe865ef0ba30de3f70f5e9771b4c8
   languageName: node
   linkType: hard
 
@@ -2762,24 +2772,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@builder6/docs@npm:3.0.9":
-  version: 3.0.9
-  resolution: "@builder6/docs@npm:3.0.9"
+"@builder6/docs@npm:3.0.11":
+  version: 3.0.11
+  resolution: "@builder6/docs@npm:3.0.11"
   dependencies:
-    "@builder6/core": 3.0.9
     "@builder6/docs-client": ^3.0.4-beta.8
-    "@builder6/files": 3.0.9
-    "@builder6/moleculer": 3.0.9
-    "@builder6/oidc": 3.0.9
-    "@builder6/onlyoffice": 3.0.9
-    "@nestjs/common": ^11.0.0
-    "@nestjs/config": ^4.0.1
-    "@nestjs/core": ^11.0.0
-    "@nestjs/jwt": ^11.0.0
-    "@nestjs/platform-express": ^11.0.0
-    "@nestjs/platform-socket.io": ^11.0.13
-    "@nestjs/serve-static": ^5.0.3
-    "@nestjs/swagger": ^11.0.7
     aws-sdk: ^2.1692.0
     bcrypt: ^5.1.1
     cookie-parser: ^1.4.7
@@ -2789,107 +2786,149 @@ __metadata:
     express-session: ^1.18.1
     ioredis: ^5.6.0
     moment: ^2.30.1
-    mongodb: ^6.15.0
+    mongodb: ^3.7.3
     openid-client: ^5.7.1
     reflect-metadata: ^0.2.0
     rxjs: ^7.8.1
-  checksum: 8bd9a12fa79ad0169542e8bf75b0be31b90c1126183e2c1ae969bd7fe044abbb3534a3dcb8c7077afe6f9f5cc74e2bfddcfd7f9aa58e262bb70d03d07ba202b6
+  peerDependencies:
+    "@builder6/core": ^3.0.10
+    "@builder6/files": ^3.0.10
+    "@builder6/moleculer": ^3.0.10
+    "@builder6/oidc": ^3.0.10
+    "@builder6/onlyoffice": ^3.0.10
+    "@nestjs/common": ^11.0.0
+    "@nestjs/config": ^4.0.1
+    "@nestjs/core": ^11.0.0
+    "@nestjs/jwt": ^11.0.0
+    "@nestjs/platform-express": ^11.0.0
+    "@nestjs/serve-static": ^5.0.3
+    "@nestjs/swagger": ^11.0.7
+  checksum: 717fd805163c3edb9e689895f5d27481bbdc787a40af32260c58a3c5563ff0361a19a896d40a69920be7923758ef4a46ecdbf8dda344cfd818a1dc470e2965ac
   languageName: node
   linkType: hard
 
-"@builder6/email@npm:3.0.9":
-  version: 3.0.9
-  resolution: "@builder6/email@npm:3.0.9"
+"@builder6/email@npm:3.0.11":
+  version: 3.0.11
+  resolution: "@builder6/email@npm:3.0.11"
   dependencies:
-    "@builder6/core": 3.0.9
     bluebird: ^3.7.2
     email-addresses: ^5.0.0
     lodash: ^4.17.5
     nodemailer: ^6.9.16
-  checksum: 10eace0da0f0f52bb95d6461f56c9c193f73383b2ba204783c466460f6fc2c28b2f8530035613fc78bb5b6287c56c12d4c7732dc1639750da4f4e0bdf56dadac
+  peerDependencies:
+    "@builder6/core": ^3.0.10
+    "@builder6/moleculer": ^3.0.10
+    "@nestjs/common": ^11.0.0
+    "@nestjs/core": ^11.0.0
+    "@nestjs/swagger": ^11.0.7
+  checksum: bf3009eabb13001a423b7db6c6f3c05eac6ebb33685fec3a794c9e30d77dc4b7bb70432e715cdd14f614a404bb2a227bba933fc6f0795079531f2df94609e256
   languageName: node
   linkType: hard
 
-"@builder6/files@npm:3.0.9":
-  version: 3.0.9
-  resolution: "@builder6/files@npm:3.0.9"
+"@builder6/files@npm:3.0.11":
+  version: 3.0.11
+  resolution: "@builder6/files@npm:3.0.11"
   dependencies:
-    "@builder6/core": 3.0.9
     nodemailer: ^6.9.16
-  checksum: 058a4f3f5e23386403d5e47c53240b250f7c7ca7eae85d07f70a08c640473ae896457aeca01dd33bccb05b4a2be351727818c9ee65eb0e097c1bc7f3af869f43
+  peerDependencies:
+    "@builder6/core": ^3.0.10
+    "@builder6/moleculer": ^3.0.10
+    "@nestjs/common": ^11.0.0
+    "@nestjs/core": ^11.0.0
+    "@nestjs/swagger": ^11.0.7
+  checksum: 126e904afd7df87242cd2ea32653623565618beed39e31ef9f5fe70859a4b74ff865407f61b6a15fb4191798370e312660bd752e7d0fbfd9504eeb983f9a1089
   languageName: node
   linkType: hard
 
-"@builder6/microservices@npm:3.0.9":
-  version: 3.0.9
-  resolution: "@builder6/microservices@npm:3.0.9"
-  checksum: 839cea9e11d176a2a479e8ac7de02883692681abdcd387862953168c05a9f8b2813deb0efe7ddcbf994de40bcd54a18833acc469e4f70f876ee8cac01115cafd
+"@builder6/microservices@npm:3.0.11":
+  version: 3.0.11
+  resolution: "@builder6/microservices@npm:3.0.11"
+  checksum: 180903cf4bd019d09a96392e945f6bc08be76c20dd1257437e8dcf55db148383dbcf900fcdf685203d04506c0808bbf26d68ce3fddfda488e7d90e49d1ccb34f
   languageName: node
   linkType: hard
 
-"@builder6/moleculer@npm:3.0.9":
-  version: 3.0.9
-  resolution: "@builder6/moleculer@npm:3.0.9"
+"@builder6/moleculer@npm:3.0.11":
+  version: 3.0.11
+  resolution: "@builder6/moleculer@npm:3.0.11"
   peerDependencies:
     moleculer: ^0.14.35
-  checksum: eeaf03001fbde551038b11e88d5f6eeab0ead49d654afd12aedb3e1fe9d44292cc87ec4089474e91e360877abdb1f0c343b1323b721ac3ee133d02c4bf73bce9
+  checksum: fe66c7644dce8c2a582149626ee4411eb3369647d1a919e6b6e9f942d29a3ab2168c28ac6c00ccf7fd38456c2d51f477eadc82aaf6cf1d6f47af06db971d9693
   languageName: node
   linkType: hard
 
-"@builder6/oidc-provider@npm:3.0.9":
-  version: 3.0.9
-  resolution: "@builder6/oidc-provider@npm:3.0.9"
+"@builder6/oidc-provider@npm:3.0.11":
+  version: 3.0.11
+  resolution: "@builder6/oidc-provider@npm:3.0.11"
   dependencies:
-    "@builder6/core": 3.0.9
     lodash: ^4.17.5
     oidc-provider: ^8.8.1
-  checksum: fab9fedb6d2594ef385aa7a6d95c851d095508b42235faa83f6adb24ac56c984dd301c7c485d99e9439de7f4c0f3a1328b55985a9d26847ddf0b728632bfd409
+  peerDependencies:
+    "@builder6/core": ^3.0.10
+    "@builder6/moleculer": ^3.0.10
+    "@nestjs/common": ^11.0.0
+    "@nestjs/core": ^11.0.0
+    "@nestjs/swagger": ^11.0.7
+  checksum: 3e5ffbefc96212b934affe7e7d663f83f2fe385077741ab3e5e44098a439d578ee0aaccdb948e705482b08ecce41d8bdc75cd7a1ebe56053638b05fbd2a739b2
   languageName: node
   linkType: hard
 
-"@builder6/oidc@npm:3.0.9":
-  version: 3.0.9
-  resolution: "@builder6/oidc@npm:3.0.9"
+"@builder6/oidc@npm:3.0.11":
+  version: 3.0.11
+  resolution: "@builder6/oidc@npm:3.0.11"
   dependencies:
-    "@builder6/core": 3.0.9
     ejs: ^3.1.10
     ismobilejs: ^1.1.1
     lodash: ^4.17.5
     openid-client: ^5.7.1
     request-ip: ^2.2.0
-  checksum: a6fc92314c4312ddcc39c67eec05adf3675696863ebd262b4fa026c213581890b420b3cbd8ffc59fef96bdc601d4c0b51674c0bd838a932cecd247a1e2344804
+  peerDependencies:
+    "@builder6/core": ^3.0.10
+    "@nestjs/common": ^11.0.0
+    "@nestjs/core": ^11.0.0
+    "@nestjs/swagger": ^11.0.7
+  checksum: 99dc1fb794db4a4fc4127dc6dfa2a25ae494c8b2672116813356a0ce823d778a6c387492289b83409546db36c03b488f85668896407d14c426a87978b5b66c0e
   languageName: node
   linkType: hard
 
-"@builder6/onlyoffice@npm:3.0.9":
-  version: 3.0.9
-  resolution: "@builder6/onlyoffice@npm:3.0.9"
+"@builder6/onlyoffice@npm:3.0.11":
+  version: 3.0.11
+  resolution: "@builder6/onlyoffice@npm:3.0.11"
   dependencies:
-    "@builder6/core": 3.0.9
-    "@builder6/email": 3.0.9
-    "@builder6/files": 3.0.9
     url: ~0.11.4
-  checksum: 61bf5f20afc7a9e4a68dcc5f53036af93f897ef4711ebc3083b8d161961aa0f529ada5f58d529363699234a7514c1db4c232392ebf2600c10b5a316432383f4c
+  peerDependencies:
+    "@builder6/core": ^3.0.10
+    "@builder6/email": ^3.0.10
+    "@builder6/files": ^3.0.10
+    "@builder6/moleculer": ^3.0.10
+    "@nestjs/common": ^11.0.0
+    "@nestjs/core": ^11.0.0
+    "@nestjs/swagger": ^11.0.7
+  checksum: 23ca8d4995989f22bdda71e614e582fe04c21847e472618f58ffb702c9279079fd21c2bbcd7098ceaa51a849786aedbae1b7e8446746d85b06f2c29ee8e94c1c
   languageName: node
   linkType: hard
 
-"@builder6/pages@npm:3.0.9":
-  version: 3.0.9
-  resolution: "@builder6/pages@npm:3.0.9"
+"@builder6/pages@npm:3.0.11":
+  version: 3.0.11
+  resolution: "@builder6/pages@npm:3.0.11"
   dependencies:
-    "@builder6/core": 3.0.9
     dataloader: ^2.2.3
     liquidjs: ^10.19.0
-  checksum: 9e6552df8121c204fe0dc53efab4c2edd72913ffd3d36363949d7a3a11ff2147772554ae482042c1733c36787d02b36cc15ec7a30ae359fbed51164a66e9c851
+  peerDependencies:
+    "@builder6/core": ^3.0.10
+    "@builder6/moleculer": ^3.0.10
+    "@nestjs/common": ^11.0.0
+    "@nestjs/core": ^11.0.0
+    "@nestjs/swagger": ^11.0.7
+  checksum: fdca8b4344dba94dbfe4a91a6c9d8f574528fa28f7df11eff31b878aea538fd62209526f23498806a4a7874a3a39a2cc5c56b7614f325ad1a130b78e1a194bc4
   languageName: node
   linkType: hard
 
-"@builder6/query-mongodb@npm:3.0.9":
-  version: 3.0.9
-  resolution: "@builder6/query-mongodb@npm:3.0.9"
+"@builder6/query-mongodb@npm:3.0.11":
+  version: 3.0.11
+  resolution: "@builder6/query-mongodb@npm:3.0.11"
   dependencies:
     yup: ^1.1.0
-  checksum: 1c7d8b6304718d6d26960c207b7c980e23c1b09f394f8882955da61583948c4e808fa1a5432ac6205e5c51bebf9f3a458634ee45ac8df16baa75b31a9ebc0227
+  checksum: 11274461e1d613dfd338e77e12c517512a60f2afe241ebaff70af9c18acb52b6a38fcfae9e72b8385f0f5d320c87f86d6d566ac21ef6d95f3551a82d5ab141d6
   languageName: node
   linkType: hard
 
@@ -2916,15 +2955,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@builder6/rooms@npm:3.0.9":
-  version: 3.0.9
-  resolution: "@builder6/rooms@npm:3.0.9"
+"@builder6/rooms@npm:3.0.11":
+  version: 3.0.11
+  resolution: "@builder6/rooms@npm:3.0.11"
   dependencies:
-    "@builder6/core": 3.0.9
-    "@builder6/email": 3.0.9
-    "@builder6/files": 3.0.9
-    "@builder6/moleculer": 3.0.9
-    "@builder6/pages": 3.0.9
     "@liveblocks/emails": 2.12.0
     "@liveblocks/node": 2.12.0
     "@react-email/components": ^0.0.31
@@ -2937,8 +2971,16 @@ __metadata:
     tailwind-merge: ^2.6.0
     tailwindcss: ^3.4.17
   peerDependencies:
+    "@builder6/core": ^3.0.10
+    "@builder6/email": ^3.0.10
+    "@builder6/files": ^3.0.10
+    "@builder6/moleculer": ^3.0.10
+    "@builder6/pages": ^3.0.10
+    "@nestjs/common": ^11.0.0
+    "@nestjs/core": ^11.0.0
+    "@nestjs/swagger": ^11.0.7
     moleculer: ^0.14.35
-  checksum: 8d52e377449df72982887257e16a0b9e19e5de54181da9358efb22f91e7ce01c109669395bad775755d0c6bad104a9e81bf912cf641864102e63b9cbbfd12a97
+  checksum: cfa0da42c11cd285dde2d3d3cc88854ba65e785f0e4525e884a23d3e90ee35d0b4edb60dc99b7cd5b6043c3820a991a3d5d943b10bedb4a7a8e15840fb241b9b
   languageName: node
   linkType: hard
 
@@ -2953,47 +2995,65 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@builder6/services@npm:3.0.9":
-  version: 3.0.9
-  resolution: "@builder6/services@npm:3.0.9"
-  dependencies:
-    "@builder6/core": 3.0.9
-  checksum: 694656f43a62c48fa4a72ac2e6b51796e1eab5890bba484f74e494511483c97f6f5f44d0c080f3d93681cc72e80e197821aef81f22a2c92f5e6cbdabd2dce378
+"@builder6/services@npm:3.0.11":
+  version: 3.0.11
+  resolution: "@builder6/services@npm:3.0.11"
+  peerDependencies:
+    "@builder6/core": ^3.0.10
+    "@builder6/moleculer": ^3.0.10
+    "@nestjs/common": ^11.0.0
+    "@nestjs/core": ^11.0.0
+    "@nestjs/swagger": ^11.0.7
+  checksum: 8be001fa58ae943292b0f7e11fba8bf19b840a82da7440b71907c6d15ef9515aaddff1584a2f3261949af66b1f1394fa41a9a2c6cfba2e4dc244ada6adfcd157
   languageName: node
   linkType: hard
 
-"@builder6/sharepoint@npm:3.0.9":
-  version: 3.0.9
-  resolution: "@builder6/sharepoint@npm:3.0.9"
+"@builder6/sharepoint@npm:3.0.11":
+  version: 3.0.11
+  resolution: "@builder6/sharepoint@npm:3.0.11"
   dependencies:
-    "@builder6/core": 3.0.9
-    "@builder6/files": 3.0.9
     form-data: ^4.0.1
     line-reader: ^0.4.0
     nodemailer: ^6.9.16
-  checksum: 66bd6c423fd39009a115ec986accda53a2624c9c63d277e6a052f1b9732205feae7aeb953645ae98843c757eb45861a1fdbb554a466d7f60f3471d26b6a03e5e
+  peerDependencies:
+    "@builder6/core": ^3.0.10
+    "@builder6/files": ^3.0.10
+    "@builder6/moleculer": ^3.0.10
+    "@nestjs/common": ^11.0.0
+    "@nestjs/core": ^11.0.0
+    "@nestjs/swagger": ^11.0.7
+  checksum: 83547fc3acd9b35e33514638bc93efd203115976a455aed26d9fd4d5e2c12c21b4407b02056dabf3d84f13ea94823c959f9fdec13528498b5f5f785ab44e7376
   languageName: node
   linkType: hard
 
-"@builder6/steedos@npm:3.0.9":
-  version: 3.0.9
-  resolution: "@builder6/steedos@npm:3.0.9"
-  dependencies:
-    "@builder6/core": 3.0.9
-    "@builder6/moleculer": 3.0.9
-    nodemailer: ^6.9.16
-  checksum: 997cf7e88b4f177664e0a26191f78a98ba38bb0c5a6a7c300728dfea33fe3be0b27e01b0967d0d085c0d0d56d2918ca617f7818fd2b6f1cd8869f1c2b1419add
+"@builder6/steedos@npm:3.0.11":
+  version: 3.0.11
+  resolution: "@builder6/steedos@npm:3.0.11"
+  peerDependencies:
+    "@builder6/core": ^3.0.10
+    "@builder6/files": ^3.0.10
+    "@builder6/moleculer": ^3.0.10
+    "@nestjs/common": ^11.0.0
+    "@nestjs/core": ^11.0.0
+    "@nestjs/swagger": ^11.0.7
+  checksum: 57e37ee999b5cfdc19e120883a202ef1deba19e5611e842b79bbdbac40cc93d5e6d6c49bc15b2c5b40b8c77263f1261c8620a441d8787d40cf16a2c62c5dfa86
   languageName: node
   linkType: hard
 
-"@builder6/tables@npm:3.0.9":
-  version: 3.0.9
-  resolution: "@builder6/tables@npm:3.0.9"
+"@builder6/tables@npm:3.0.11":
+  version: 3.0.11
+  resolution: "@builder6/tables@npm:3.0.11"
   dependencies:
-    "@builder6/core": 3.0.9
-    "@builder6/pages": 3.0.9
     dataloader: ^2.2.3
-  checksum: cab21cb8f9e5b5ed96523641e0072aab157e3e309dbb3a5dc03a6bd884834df55368815f0bc9bae87c9595c36964de7b9d00e605cbfe9481068af4caa7706b4a
+  peerDependencies:
+    "@builder6/core": ^3.0.10
+    "@builder6/files": ^3.0.10
+    "@builder6/moleculer": ^3.0.10
+    "@builder6/pages": ^3.0.10
+    "@nestjs/common": ^11.0.0
+    "@nestjs/core": ^11.0.0
+    "@nestjs/swagger": ^11.0.7
+  checksum: 84ce48c498f1a18c2c28d1b4dec795dadd1541755a9297dbd69cf273d365c53c1f1c6d33e8640fd401f5e7a6a5eeea0bd28e4a86994534c212d4c53e05ce4bc9
   languageName: node
   linkType: hard
 
@@ -6210,15 +6270,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mongodb-js/saslprep@npm:^1.3.0":
-  version: 1.3.1
-  resolution: "@mongodb-js/saslprep@npm:1.3.1"
-  dependencies:
-    sparse-bitfield: ^3.0.3
-  checksum: ccf4a48f172ec2886ece674a15d7be20e5a35dd79e2bd2c2a4fc390bbccae096ba4fb543c9d62cc18263abefe6078b64be04a45b19c1808a11e032399fc8b995
-  languageName: node
-  linkType: hard
-
 "@mrmlnc/readdir-enhanced@npm:^2.2.1":
   version: 2.2.1
   resolution: "@mrmlnc/readdir-enhanced@npm:2.2.1"
@@ -6471,7 +6522,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/platform-socket.io@npm:^11.0.0, @nestjs/platform-socket.io@npm:^11.0.13":
+"@nestjs/platform-socket.io@npm:^11.0.0":
   version: 11.1.6
   resolution: "@nestjs/platform-socket.io@npm:11.1.6"
   dependencies:
@@ -6526,7 +6577,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/serve-static@npm:^5.0.0, @nestjs/serve-static@npm:^5.0.3":
+"@nestjs/serve-static@npm:^5.0.0":
   version: 5.0.4
   resolution: "@nestjs/serve-static@npm:5.0.4"
   dependencies:
@@ -6548,7 +6599,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/swagger@npm:^11.0.0, @nestjs/swagger@npm:^11.0.7":
+"@nestjs/swagger@npm:^11.0.0":
   version: 11.2.1
   resolution: "@nestjs/swagger@npm:11.2.1"
   dependencies:
@@ -7908,6 +7959,13 @@ __metadata:
   dependencies:
     "@noble/hashes": ^1.1.5
   checksum: f7f6ac70e0268ec2c72e555719240d5c2c9a859ce541ac1c637eed3f3ee971b42881d299dedafbded53e7365b9e98176c5a31c442c1112f7e9e7306f2fd0ecbb
+  languageName: node
+  linkType: hard
+
+"@pinojs/redact@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "@pinojs/redact@npm:0.4.0"
+  checksum: e7338ed7a00fc4f2f633f343ca7f8dd125a3a229aaf6a8af10ea0a7bb584ed0bc2d93ac67a712cc4083d45e2415b4d4e07b2c04f0f424e77d776cd1ef3567153
   languageName: node
   linkType: hard
 
@@ -9577,7 +9635,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos/accounts@3.0.0-beta.109, @steedos/accounts@workspace:packages/accounts":
+"@steedos/accounts@3.0.0-beta.112, @steedos/accounts@workspace:packages/accounts":
   version: 0.0.0-use.local
   resolution: "@steedos/accounts@workspace:packages/accounts"
   dependencies:
@@ -9586,9 +9644,9 @@ __metadata:
     "@accounts/two-factor": ^0.20.1
     "@accounts/types": 0.20.1
     "@babel/runtime": ^7.12.18
-    "@steedos/auth": 3.0.0-beta.109
-    "@steedos/objectql": 3.0.0-beta.109
-    "@steedos/utils": 3.0.0-beta.109
+    "@steedos/auth": 3.0.0-beta.112
+    "@steedos/objectql": 3.0.0-beta.112
+    "@steedos/utils": 3.0.0-beta.112
     app-root-path: ^2.2.1
     bcryptjs: ^2.4.3
     body-parser: 1.19.0
@@ -9616,13 +9674,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/auth@3.0.0-beta.109, @steedos/auth@workspace:packages/auth":
+"@steedos/auth@3.0.0-beta.112, @steedos/auth@workspace:packages/auth":
   version: 0.0.0-use.local
   resolution: "@steedos/auth@workspace:packages/auth"
   dependencies:
-    "@steedos/cachers": 3.0.0-beta.109
-    "@steedos/objectql": 3.0.0-beta.109
-    "@steedos/utils": 3.0.0-beta.109
+    "@steedos/cachers": 3.0.0-beta.112
+    "@steedos/objectql": 3.0.0-beta.112
+    "@steedos/utils": 3.0.0-beta.112
     bcryptjs: ^2.4.3
     cookies: ^0.8.0
     express: ^4.16.4
@@ -9634,7 +9692,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/cachers@3.0.0-beta.109, @steedos/cachers@workspace:packages/cachers":
+"@steedos/cachers@3.0.0-beta.112, @steedos/cachers@workspace:packages/cachers":
   version: 0.0.0-use.local
   resolution: "@steedos/cachers@workspace:packages/cachers"
   dependencies:
@@ -9644,23 +9702,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/client@3.0.0-beta.109, @steedos/client@workspace:packages/client":
+"@steedos/client@3.0.0-beta.112, @steedos/client@workspace:packages/client":
   version: 0.0.0-use.local
   resolution: "@steedos/client@workspace:packages/client"
   dependencies:
-    "@steedos/filters": 3.0.0-beta.109
+    "@steedos/filters": 3.0.0-beta.112
     node-fetch: ^2.6.7
     typescript: 5.7.3
   languageName: unknown
   linkType: soft
 
-"@steedos/data-import@3.0.0-beta.109, @steedos/data-import@workspace:packages/data-import":
+"@steedos/data-import@3.0.0-beta.112, @steedos/data-import@workspace:packages/data-import":
   version: 0.0.0-use.local
   resolution: "@steedos/data-import@workspace:packages/data-import"
   dependencies:
-    "@steedos/metadata-api": 3.0.0-beta.109
-    "@steedos/metadata-core": 3.0.0-beta.109
-    "@steedos/objectql": 3.0.0-beta.109
+    "@steedos/metadata-api": 3.0.0-beta.112
+    "@steedos/metadata-core": 3.0.0-beta.112
+    "@steedos/objectql": 3.0.0-beta.112
     bson: 4.6.4
     csvtojson: ~2.0.10
     dotenv-flow: ^3.1.0
@@ -9670,7 +9728,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/ee_branding@3.0.0-beta.109, @steedos/ee_branding@workspace:ee/branding":
+"@steedos/ee_branding@3.0.0-beta.112, @steedos/ee_branding@workspace:ee/branding":
   version: 0.0.0-use.local
   resolution: "@steedos/ee_branding@workspace:ee/branding"
   languageName: unknown
@@ -9722,7 +9780,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos/filters@3.0.0-beta.109, @steedos/filters@workspace:packages/filters":
+"@steedos/filters@3.0.0-beta.112, @steedos/filters@workspace:packages/filters":
   version: 0.0.0-use.local
   resolution: "@steedos/filters@workspace:packages/filters"
   dependencies:
@@ -9755,7 +9813,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos/formula@3.0.0-beta.109, @steedos/formula@workspace:packages/formula":
+"@steedos/formula@3.0.0-beta.112, @steedos/formula@workspace:packages/formula":
   version: 0.0.0-use.local
   resolution: "@steedos/formula@workspace:packages/formula"
   dependencies:
@@ -9773,11 +9831,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/i18n@3.0.0-beta.109, @steedos/i18n@workspace:packages/i18n":
+"@steedos/i18n@3.0.0-beta.112, @steedos/i18n@workspace:packages/i18n":
   version: 0.0.0-use.local
   resolution: "@steedos/i18n@workspace:packages/i18n"
   dependencies:
-    "@steedos/cachers": 3.0.0-beta.109
+    "@steedos/cachers": 3.0.0-beta.112
     i18next: ^19.3.4
     i18next-sprintf-postprocessor: ^0.2.2
     typescript: 5.7.3
@@ -9797,13 +9855,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos/metadata-api@3.0.0-beta.109, @steedos/metadata-api@workspace:packages/metadata-api":
+"@steedos/metadata-api@3.0.0-beta.112, @steedos/metadata-api@workspace:packages/metadata-api":
   version: 0.0.0-use.local
   resolution: "@steedos/metadata-api@workspace:packages/metadata-api"
   dependencies:
-    "@steedos/auth": 3.0.0-beta.109
-    "@steedos/metadata-core": 3.0.0-beta.109
-    "@steedos/objectql": 3.0.0-beta.109
+    "@steedos/auth": 3.0.0-beta.112
+    "@steedos/metadata-core": 3.0.0-beta.112
+    "@steedos/objectql": 3.0.0-beta.112
     chalk: ^4.1.0
     clone: 2.1.2
     compressing: ^1.5.1
@@ -9817,11 +9875,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/metadata-core@3.0.0-beta.109, @steedos/metadata-core@workspace:packages/metadata-core":
+"@steedos/metadata-core@3.0.0-beta.112, @steedos/metadata-core@workspace:packages/metadata-core":
   version: 0.0.0-use.local
   resolution: "@steedos/metadata-core@workspace:packages/metadata-core"
   dependencies:
-    "@steedos/client": 3.0.0-beta.109
+    "@steedos/client": 3.0.0-beta.112
     "@types/glob": ^7.1.3
     "@types/node": ^14.14.10
     archiver: ^5.1.0
@@ -9842,13 +9900,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/metadata-registrar@3.0.0-beta.109, @steedos/metadata-registrar@workspace:packages/metadata-registrar":
+"@steedos/metadata-registrar@3.0.0-beta.112, @steedos/metadata-registrar@workspace:packages/metadata-registrar":
   version: 0.0.0-use.local
   resolution: "@steedos/metadata-registrar@workspace:packages/metadata-registrar"
   dependencies:
     "@salesforce/ts-types": 1.1.2
-    "@steedos/client": 3.0.0-beta.109
-    "@steedos/metadata-core": 3.0.0-beta.109
+    "@steedos/client": 3.0.0-beta.112
+    "@steedos/metadata-core": 3.0.0-beta.112
     "@types/glob": ^7.1.3
     "@types/node": ^14.14.10
     archiver: ^5.1.0
@@ -9872,13 +9930,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@steedos/migrate@workspace:packages/migrate"
   dependencies:
-    "@steedos/service-package-registry": 3.0.0-beta.109
+    "@steedos/service-package-registry": 3.0.0-beta.112
     migrate: ^1.6.2
     mongodb: ^3.7.3
   languageName: unknown
   linkType: soft
 
-"@steedos/moleculer-apollo-server@3.0.0-beta.109, @steedos/moleculer-apollo-server@workspace:packages/moleculer-apollo-server":
+"@steedos/moleculer-apollo-server@3.0.0-beta.112, @steedos/moleculer-apollo-server@workspace:packages/moleculer-apollo-server":
   version: 0.0.0-use.local
   resolution: "@steedos/moleculer-apollo-server@workspace:packages/moleculer-apollo-server"
   dependencies:
@@ -9895,22 +9953,22 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/objectql@3.0.0-beta.109, @steedos/objectql@workspace:packages/objectql":
+"@steedos/objectql@3.0.0-beta.112, @steedos/objectql@workspace:packages/objectql":
   version: 0.0.0-use.local
   resolution: "@steedos/objectql@workspace:packages/objectql"
   dependencies:
     "@salesforce/kit": 1.0.4
     "@salesforce/ts-types": 1.1.1
-    "@steedos/cachers": 3.0.0-beta.109
-    "@steedos/filters": 3.0.0-beta.109
-    "@steedos/formula": 3.0.0-beta.109
-    "@steedos/i18n": 3.0.0-beta.109
-    "@steedos/metadata-core": 3.0.0-beta.109
-    "@steedos/metadata-registrar": 3.0.0-beta.109
-    "@steedos/odata-v4-mongodb": 3.0.0-beta.109
-    "@steedos/odata-v4-sql": 3.0.0-beta.109
-    "@steedos/odata-v4-typeorm": 3.0.0-beta.109
-    "@steedos/schemas": 3.0.0-beta.109
+    "@steedos/cachers": 3.0.0-beta.112
+    "@steedos/filters": 3.0.0-beta.112
+    "@steedos/formula": 3.0.0-beta.112
+    "@steedos/i18n": 3.0.0-beta.112
+    "@steedos/metadata-core": 3.0.0-beta.112
+    "@steedos/metadata-registrar": 3.0.0-beta.112
+    "@steedos/odata-v4-mongodb": 3.0.0-beta.112
+    "@steedos/odata-v4-sql": 3.0.0-beta.112
+    "@steedos/odata-v4-typeorm": 3.0.0-beta.112
+    "@steedos/schemas": 3.0.0-beta.112
     "@types/express": ^4.16.1
     "@types/node": ^11.10.4
     "@types/underscore": ^1.8.13
@@ -9945,11 +10003,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/odata-v4-mongodb@3.0.0-beta.109, @steedos/odata-v4-mongodb@workspace:packages/odata-v4-mongodb":
+"@steedos/odata-v4-mongodb@3.0.0-beta.112, @steedos/odata-v4-mongodb@workspace:packages/odata-v4-mongodb":
   version: 0.0.0-use.local
   resolution: "@steedos/odata-v4-mongodb@workspace:packages/odata-v4-mongodb"
   dependencies:
-    "@steedos/odata-v4-parser": 3.0.0-beta.109
+    "@steedos/odata-v4-parser": 3.0.0-beta.112
     odata-v4-literal: ^0.1.0
   languageName: unknown
   linkType: soft
@@ -9964,7 +10022,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos/odata-v4-parser@3.0.0-beta.109, @steedos/odata-v4-parser@workspace:packages/odata-v4-parser":
+"@steedos/odata-v4-parser@3.0.0-beta.112, @steedos/odata-v4-parser@workspace:packages/odata-v4-parser":
   version: 0.0.0-use.local
   resolution: "@steedos/odata-v4-parser@workspace:packages/odata-v4-parser"
   languageName: unknown
@@ -9977,38 +10035,38 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos/odata-v4-sql@3.0.0-beta.109, @steedos/odata-v4-sql@workspace:packages/odata-v4-sql":
+"@steedos/odata-v4-sql@3.0.0-beta.112, @steedos/odata-v4-sql@workspace:packages/odata-v4-sql":
   version: 0.0.0-use.local
   resolution: "@steedos/odata-v4-sql@workspace:packages/odata-v4-sql"
   dependencies:
-    "@steedos/odata-v4-parser": 3.0.0-beta.109
+    "@steedos/odata-v4-parser": 3.0.0-beta.112
     odata-v4-literal: ^0.1.0
     typescript: 5.7.3
   languageName: unknown
   linkType: soft
 
-"@steedos/odata-v4-typeorm@3.0.0-beta.109, @steedos/odata-v4-typeorm@workspace:packages/odata-v4-typeorm":
+"@steedos/odata-v4-typeorm@3.0.0-beta.112, @steedos/odata-v4-typeorm@workspace:packages/odata-v4-typeorm":
   version: 0.0.0-use.local
   resolution: "@steedos/odata-v4-typeorm@workspace:packages/odata-v4-typeorm"
   dependencies:
-    "@steedos/odata-v4-parser": 3.0.0-beta.109
-    "@steedos/odata-v4-sql": 3.0.0-beta.109
+    "@steedos/odata-v4-parser": 3.0.0-beta.112
+    "@steedos/odata-v4-sql": 3.0.0-beta.112
     odata-v4-literal: ^0.1.0
   languageName: unknown
   linkType: soft
 
-"@steedos/process@3.0.0-beta.109, @steedos/process@workspace:packages/process":
+"@steedos/process@3.0.0-beta.112, @steedos/process@workspace:packages/process":
   version: 0.0.0-use.local
   resolution: "@steedos/process@workspace:packages/process"
   dependencies:
-    "@steedos/auth": 3.0.0-beta.109
-    "@steedos/objectql": 3.0.0-beta.109
+    "@steedos/auth": 3.0.0-beta.112
+    "@steedos/objectql": 3.0.0-beta.112
     express: 4.18.1
     typescript: 5.7.3
   languageName: unknown
   linkType: soft
 
-"@steedos/router@3.0.0-beta.109, @steedos/router@workspace:packages/router":
+"@steedos/router@3.0.0-beta.112, @steedos/router@workspace:packages/router":
   version: 0.0.0-use.local
   resolution: "@steedos/router@workspace:packages/router"
   dependencies:
@@ -10017,34 +10075,34 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/schemas@3.0.0-beta.109, @steedos/schemas@workspace:packages/schemas":
+"@steedos/schemas@3.0.0-beta.112, @steedos/schemas@workspace:packages/schemas":
   version: 0.0.0-use.local
   resolution: "@steedos/schemas@workspace:packages/schemas"
   languageName: unknown
   linkType: soft
 
-"@steedos/server@3.0.0-beta.109, @steedos/server@workspace:builder6/server":
+"@steedos/server@3.0.0-beta.112, @steedos/server@workspace:builder6/server":
   version: 0.0.0-use.local
   resolution: "@steedos/server@workspace:builder6/server"
   dependencies:
     "@ai-sdk/openai": ^2.0.52
-    "@builder6/cli": 3.0.9
-    "@builder6/core": 3.0.9
-    "@builder6/docs": 3.0.9
-    "@builder6/email": 3.0.9
-    "@builder6/files": 3.0.9
-    "@builder6/microservices": 3.0.9
-    "@builder6/moleculer": 3.0.9
-    "@builder6/oidc": 3.0.9
-    "@builder6/oidc-provider": 3.0.9
-    "@builder6/onlyoffice": 3.0.9
-    "@builder6/pages": 3.0.9
-    "@builder6/query-mongodb": 3.0.9
-    "@builder6/rooms": 3.0.9
-    "@builder6/services": 3.0.9
-    "@builder6/sharepoint": 3.0.9
-    "@builder6/steedos": 3.0.9
-    "@builder6/tables": 3.0.9
+    "@builder6/cli": 3.0.11
+    "@builder6/core": 3.0.11
+    "@builder6/docs": 3.0.11
+    "@builder6/email": 3.0.11
+    "@builder6/files": 3.0.11
+    "@builder6/microservices": 3.0.11
+    "@builder6/moleculer": 3.0.11
+    "@builder6/oidc": 3.0.11
+    "@builder6/oidc-provider": 3.0.11
+    "@builder6/onlyoffice": 3.0.11
+    "@builder6/pages": 3.0.11
+    "@builder6/query-mongodb": 3.0.11
+    "@builder6/rooms": 3.0.11
+    "@builder6/services": 3.0.11
+    "@builder6/sharepoint": 3.0.11
+    "@builder6/steedos": 3.0.11
+    "@builder6/tables": 3.0.11
     "@nestjs/cli": ^11.0.0
     "@nestjs/common": ^11.0.0
     "@nestjs/config": ^4.0.1
@@ -10061,12 +10119,12 @@ __metadata:
     "@nestjs/swagger": ^11.0.0
     "@nestjs/testing": ^11.0.0
     "@nestjs/websockets": ^11.0.0
-    "@steedos/auth": 3.0.0-beta.109
+    "@steedos/auth": 3.0.0-beta.112
     "@steedos/ee_unpkg": 1.0.1
-    "@steedos/objectql": 3.0.0-beta.109
-    "@steedos/service-community": 3.0.0-beta.109
-    "@steedos/service-enterprise": 3.0.0-beta.109
-    "@steedos/webapp": 3.0.0-beta.109
+    "@steedos/objectql": 3.0.0-beta.112
+    "@steedos/service-community": 3.0.0-beta.112
+    "@steedos/service-enterprise": 3.0.0-beta.112
+    "@steedos/webapp": 3.0.0-beta.112
     "@types/express": ^5.0.0
     "@types/jest": ^29.5.2
     "@types/multer": ^1.4.12
@@ -10102,6 +10160,9 @@ __metadata:
     passport: ^0.7.0
     passport-local: ^1.0.0
     passport-openidconnect: ^0.1.2
+    pino: ^9.14.0
+    pino-http: ^10.3.0
+    pino-pretty: ^13.0.0
     prettier: ^3.0.0
     raw-body: ^3.0.0
     redis: ^4.7.0
@@ -10123,35 +10184,35 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-accounts@3.0.0-beta.109, @steedos/service-accounts@workspace:services/service-accounts":
+"@steedos/service-accounts@3.0.0-beta.112, @steedos/service-accounts@workspace:services/service-accounts":
   version: 0.0.0-use.local
   resolution: "@steedos/service-accounts@workspace:services/service-accounts"
   dependencies:
-    "@steedos/auth": 3.0.0-beta.109
+    "@steedos/auth": 3.0.0-beta.112
     node-schedule: ^2.0.0
   languageName: unknown
   linkType: soft
 
-"@steedos/service-ancillary@3.0.0-beta.109, @steedos/service-ancillary@workspace:services/service-ancillary":
+"@steedos/service-ancillary@3.0.0-beta.112, @steedos/service-ancillary@workspace:services/service-ancillary":
   version: 0.0.0-use.local
   resolution: "@steedos/service-ancillary@workspace:services/service-ancillary"
   dependencies:
-    "@steedos/utils": 3.0.0-beta.109
+    "@steedos/utils": 3.0.0-beta.112
     express: ^4.17.1
     express-xml-bodyparser: 0.3.0
     xml2js: 0.4.23
   languageName: unknown
   linkType: soft
 
-"@steedos/service-api@3.0.0-beta.109, @steedos/service-api@workspace:services/service-api":
+"@steedos/service-api@3.0.0-beta.112, @steedos/service-api@workspace:services/service-api":
   version: 0.0.0-use.local
   resolution: "@steedos/service-api@workspace:services/service-api"
   dependencies:
-    "@steedos/auth": 3.0.0-beta.109
-    "@steedos/moleculer-apollo-server": 3.0.0-beta.109
-    "@steedos/router": 3.0.0-beta.109
-    "@steedos/service-object-graphql": 3.0.0-beta.109
-    "@steedos/service-ui": 3.0.0-beta.109
+    "@steedos/auth": 3.0.0-beta.112
+    "@steedos/moleculer-apollo-server": 3.0.0-beta.112
+    "@steedos/router": 3.0.0-beta.112
+    "@steedos/service-object-graphql": 3.0.0-beta.112
+    "@steedos/service-ui": 3.0.0-beta.112
     "@types/graphql-iso-date": ^3.4.0
     "@types/react-dev-utils": ^9.0.11
     graphql: ^15.8.0
@@ -10165,29 +10226,29 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-bull-dashboard@3.0.0-beta.109, @steedos/service-bull-dashboard@workspace:services/service-bull-dashboard":
+"@steedos/service-bull-dashboard@3.0.0-beta.112, @steedos/service-bull-dashboard@workspace:services/service-bull-dashboard":
   version: 0.0.0-use.local
   resolution: "@steedos/service-bull-dashboard@workspace:services/service-bull-dashboard"
   dependencies:
     "@bull-board/express": ^6.10.1
-    "@steedos/auth": 3.0.0-beta.109
-    "@steedos/router": 3.0.0-beta.109
-    "@steedos/service-package-loader": 3.0.0-beta.109
+    "@steedos/auth": 3.0.0-beta.112
+    "@steedos/router": 3.0.0-beta.112
+    "@steedos/service-package-loader": 3.0.0-beta.112
     bullmq: 5.7.4
   languageName: unknown
   linkType: soft
 
-"@steedos/service-cachers-manager@3.0.0-beta.109, @steedos/service-cachers-manager@workspace:services/service-cachers-manager":
+"@steedos/service-cachers-manager@3.0.0-beta.112, @steedos/service-cachers-manager@workspace:services/service-cachers-manager":
   version: 0.0.0-use.local
   resolution: "@steedos/service-cachers-manager@workspace:services/service-cachers-manager"
   dependencies:
-    "@steedos/cachers": 3.0.0-beta.109
-    "@steedos/metadata-registrar": 3.0.0-beta.109
-    "@steedos/utils": 3.0.0-beta.109
+    "@steedos/cachers": 3.0.0-beta.112
+    "@steedos/metadata-registrar": 3.0.0-beta.112
+    "@steedos/utils": 3.0.0-beta.112
   languageName: unknown
   linkType: soft
 
-"@steedos/service-community@3.0.0-beta.109, @steedos/service-community@workspace:services/service-community":
+"@steedos/service-community@3.0.0-beta.112, @steedos/service-community@workspace:services/service-community":
   version: 0.0.0-use.local
   resolution: "@steedos/service-community@workspace:services/service-community"
   dependencies:
@@ -10195,33 +10256,33 @@ __metadata:
     "@steedos-labs/analytics": 3.0.6
     "@steedos-labs/plugin-package-store": ^1.0.9
     "@steedos-labs/plugin-workflow": 3.0.0-beta.31
-    "@steedos/data-import": 3.0.0-beta.109
-    "@steedos/server": 3.0.0-beta.109
-    "@steedos/service-accounts": 3.0.0-beta.109
-    "@steedos/service-ancillary": 3.0.0-beta.109
-    "@steedos/service-api": 3.0.0-beta.109
-    "@steedos/service-bull-dashboard": 3.0.0-beta.109
-    "@steedos/service-cachers-manager": 3.0.0-beta.109
-    "@steedos/service-core-objects": 3.0.0-beta.109
-    "@steedos/service-i18n": 3.0.0-beta.109
-    "@steedos/service-identity-jwt": 3.0.0-beta.109
-    "@steedos/service-metadata-database": 3.0.0-beta.109
-    "@steedos/service-metadata-server": 3.0.0-beta.109
-    "@steedos/service-objectql": 3.0.0-beta.109
-    "@steedos/service-package-loader": 3.0.0-beta.109
-    "@steedos/service-package-registry": 3.0.0-beta.109
-    "@steedos/service-pages": 3.0.0-beta.109
-    "@steedos/service-plugin-amis": 3.0.0-beta.109
-    "@steedos/service-rest": 3.0.0-beta.109
-    "@steedos/service-saas": 3.0.0-beta.109
+    "@steedos/data-import": 3.0.0-beta.112
+    "@steedos/server": 3.0.0-beta.112
+    "@steedos/service-accounts": 3.0.0-beta.112
+    "@steedos/service-ancillary": 3.0.0-beta.112
+    "@steedos/service-api": 3.0.0-beta.112
+    "@steedos/service-bull-dashboard": 3.0.0-beta.112
+    "@steedos/service-cachers-manager": 3.0.0-beta.112
+    "@steedos/service-core-objects": 3.0.0-beta.112
+    "@steedos/service-i18n": 3.0.0-beta.112
+    "@steedos/service-identity-jwt": 3.0.0-beta.112
+    "@steedos/service-metadata-database": 3.0.0-beta.112
+    "@steedos/service-metadata-server": 3.0.0-beta.112
+    "@steedos/service-objectql": 3.0.0-beta.112
+    "@steedos/service-package-loader": 3.0.0-beta.112
+    "@steedos/service-package-registry": 3.0.0-beta.112
+    "@steedos/service-pages": 3.0.0-beta.112
+    "@steedos/service-plugin-amis": 3.0.0-beta.112
+    "@steedos/service-rest": 3.0.0-beta.112
+    "@steedos/service-saas": 3.0.0-beta.112
     "@steedos/standard-accounts": 3.0.0-beta.103
-    "@steedos/standard-object-database": 3.0.0-beta.109
-    "@steedos/standard-permission": 3.0.0-beta.109
-    "@steedos/standard-process-approval": 3.0.0-beta.109
-    "@steedos/standard-ui": 3.0.0-beta.109
-    "@steedos/steedos-plugin-schema-builder": 3.0.0-beta.109
-    "@steedos/unpkg": 3.0.0-beta.109
-    "@steedos/workflow_time_trigger": 3.0.0-beta.109
+    "@steedos/standard-object-database": 3.0.0-beta.112
+    "@steedos/standard-permission": 3.0.0-beta.112
+    "@steedos/standard-process-approval": 3.0.0-beta.112
+    "@steedos/standard-ui": 3.0.0-beta.112
+    "@steedos/steedos-plugin-schema-builder": 3.0.0-beta.112
+    "@steedos/unpkg": 3.0.0-beta.112
+    "@steedos/workflow_time_trigger": 3.0.0-beta.112
     aliyun-sdk: 1.12.3
     async-retry: ^1.3.1
     axios: ^0.21.1
@@ -10254,27 +10315,27 @@ __metadata:
     randomcolor: ^0.6.2
     randomstring: ^1.2.1
     redlock: ^4.2.0
-    steedos-cli: 3.0.0-beta.109
+    steedos-cli: 3.0.0-beta.112
     tslib: ^2.4.0
     validator: ^13.6.0
   languageName: unknown
   linkType: soft
 
-"@steedos/service-core-objects@3.0.0-beta.109, @steedos/service-core-objects@workspace:services/service-core-objects":
+"@steedos/service-core-objects@3.0.0-beta.112, @steedos/service-core-objects@workspace:services/service-core-objects":
   version: 0.0.0-use.local
   resolution: "@steedos/service-core-objects@workspace:services/service-core-objects"
   dependencies:
-    "@steedos/service-package-loader": 3.0.0-beta.109
+    "@steedos/service-package-loader": 3.0.0-beta.112
     json2xls: ^0.1.2
     lodash: ^4.17.21
   languageName: unknown
   linkType: soft
 
-"@steedos/service-enterprise@3.0.0-beta.109, @steedos/service-enterprise@workspace:ee/service-enterprise":
+"@steedos/service-enterprise@3.0.0-beta.112, @steedos/service-enterprise@workspace:ee/service-enterprise":
   version: 0.0.0-use.local
   resolution: "@steedos/service-enterprise@workspace:ee/service-enterprise"
   dependencies:
-    "@steedos/ee_branding": 3.0.0-beta.109
+    "@steedos/ee_branding": 3.0.0-beta.112
     "@steedos/service-license": 3.0.0
     mssql: ^11.0.1
     oracledb: ^6.8.0
@@ -10289,17 +10350,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-i18n@3.0.0-beta.109, @steedos/service-i18n@workspace:services/service-i18n":
+"@steedos/service-i18n@3.0.0-beta.112, @steedos/service-i18n@workspace:services/service-i18n":
   version: 0.0.0-use.local
   resolution: "@steedos/service-i18n@workspace:services/service-i18n"
   languageName: unknown
   linkType: soft
 
-"@steedos/service-identity-jwt@3.0.0-beta.109, @steedos/service-identity-jwt@workspace:services/service-identity-jwt":
+"@steedos/service-identity-jwt@3.0.0-beta.112, @steedos/service-identity-jwt@workspace:services/service-identity-jwt":
   version: 0.0.0-use.local
   resolution: "@steedos/service-identity-jwt@workspace:services/service-identity-jwt"
   dependencies:
-    "@steedos/accounts": 3.0.0-beta.109
+    "@steedos/accounts": 3.0.0-beta.112
     express: 4.18.1
     jsonwebtoken: 8.5.1
     passport: ^0.6.0
@@ -10317,13 +10378,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos/service-metadata-apps@3.0.0-beta.109, @steedos/service-metadata-apps@workspace:services/service-metadata-apps":
+"@steedos/service-metadata-apps@3.0.0-beta.112, @steedos/service-metadata-apps@workspace:services/service-metadata-apps":
   version: 0.0.0-use.local
   resolution: "@steedos/service-metadata-apps@workspace:services/service-metadata-apps"
   dependencies:
-    "@steedos/i18n": 3.0.0-beta.109
-    "@steedos/objectql": 3.0.0-beta.109
-    "@steedos/utils": 3.0.0-beta.109
+    "@steedos/i18n": 3.0.0-beta.112
+    "@steedos/objectql": 3.0.0-beta.112
+    "@steedos/utils": 3.0.0-beta.112
     dotenv-flow: ^3.1.0
     ioredis: ^4.22.0
     lodash: ^4.17.21
@@ -10333,17 +10394,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-metadata-database@3.0.0-beta.109, @steedos/service-metadata-database@workspace:services/service-metadata-database":
+"@steedos/service-metadata-database@3.0.0-beta.112, @steedos/service-metadata-database@workspace:services/service-metadata-database":
   version: 0.0.0-use.local
   resolution: "@steedos/service-metadata-database@workspace:services/service-metadata-database"
   dependencies:
-    "@steedos/metadata-registrar": 3.0.0-beta.109
-    "@steedos/objectql": 3.0.0-beta.109
+    "@steedos/metadata-registrar": 3.0.0-beta.112
+    "@steedos/objectql": 3.0.0-beta.112
     lodash: ^4.17.21
   languageName: unknown
   linkType: soft
 
-"@steedos/service-metadata-layouts@3.0.0-beta.109, @steedos/service-metadata-layouts@workspace:services/service-metadata-layouts":
+"@steedos/service-metadata-layouts@3.0.0-beta.112, @steedos/service-metadata-layouts@workspace:services/service-metadata-layouts":
   version: 0.0.0-use.local
   resolution: "@steedos/service-metadata-layouts@workspace:services/service-metadata-layouts"
   dependencies:
@@ -10357,14 +10418,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-metadata-objects@3.0.0-beta.109, @steedos/service-metadata-objects@workspace:services/service-metadata-objects":
+"@steedos/service-metadata-objects@3.0.0-beta.112, @steedos/service-metadata-objects@workspace:services/service-metadata-objects":
   version: 0.0.0-use.local
   resolution: "@steedos/service-metadata-objects@workspace:services/service-metadata-objects"
   dependencies:
     "@salesforce/ts-types": 1.1.2
-    "@steedos/formula": 3.0.0-beta.109
-    "@steedos/i18n": 3.0.0-beta.109
-    "@steedos/metadata-registrar": 3.0.0-beta.109
+    "@steedos/formula": 3.0.0-beta.112
+    "@steedos/i18n": 3.0.0-beta.112
+    "@steedos/metadata-registrar": 3.0.0-beta.112
     dotenv-flow: ^3.1.0
     ioredis: ^4.22.0
     lodash: ^4.17.21
@@ -10375,7 +10436,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-metadata-permissionsets@3.0.0-beta.109, @steedos/service-metadata-permissionsets@workspace:services/service-metadata-permissionsets":
+"@steedos/service-metadata-permissionsets@3.0.0-beta.112, @steedos/service-metadata-permissionsets@workspace:services/service-metadata-permissionsets":
   version: 0.0.0-use.local
   resolution: "@steedos/service-metadata-permissionsets@workspace:services/service-metadata-permissionsets"
   dependencies:
@@ -10388,27 +10449,27 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-metadata-server@3.0.0-beta.109, @steedos/service-metadata-server@workspace:services/service-metadata-server":
+"@steedos/service-metadata-server@3.0.0-beta.112, @steedos/service-metadata-server@workspace:services/service-metadata-server":
   version: 0.0.0-use.local
   resolution: "@steedos/service-metadata-server@workspace:services/service-metadata-server"
   dependencies:
-    "@steedos/objectql": 3.0.0-beta.109
-    "@steedos/service-metadata": 3.0.0-beta.109
-    "@steedos/service-metadata-apps": 3.0.0-beta.109
-    "@steedos/service-metadata-layouts": 3.0.0-beta.109
-    "@steedos/service-metadata-objects": 3.0.0-beta.109
-    "@steedos/service-metadata-permissionsets": 3.0.0-beta.109
-    "@steedos/service-metadata-tabs": 3.0.0-beta.109
-    "@steedos/service-metadata-translations": 3.0.0-beta.109
-    "@steedos/service-metadata-triggers": 3.0.0-beta.109
-    "@steedos/service-packages": 3.0.0-beta.109
+    "@steedos/objectql": 3.0.0-beta.112
+    "@steedos/service-metadata": 3.0.0-beta.112
+    "@steedos/service-metadata-apps": 3.0.0-beta.112
+    "@steedos/service-metadata-layouts": 3.0.0-beta.112
+    "@steedos/service-metadata-objects": 3.0.0-beta.112
+    "@steedos/service-metadata-permissionsets": 3.0.0-beta.112
+    "@steedos/service-metadata-tabs": 3.0.0-beta.112
+    "@steedos/service-metadata-translations": 3.0.0-beta.112
+    "@steedos/service-metadata-triggers": 3.0.0-beta.112
+    "@steedos/service-packages": 3.0.0-beta.112
     lodash: ^4.17.21
     typescript: 5.7.3
     underscore: 1.13.4
   languageName: unknown
   linkType: soft
 
-"@steedos/service-metadata-tabs@3.0.0-beta.109, @steedos/service-metadata-tabs@workspace:services/service-metadata-tabs":
+"@steedos/service-metadata-tabs@3.0.0-beta.112, @steedos/service-metadata-tabs@workspace:services/service-metadata-tabs":
   version: 0.0.0-use.local
   resolution: "@steedos/service-metadata-tabs@workspace:services/service-metadata-tabs"
   dependencies:
@@ -10421,11 +10482,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-metadata-translations@3.0.0-beta.109, @steedos/service-metadata-translations@workspace:services/service-metadata-translations":
+"@steedos/service-metadata-translations@3.0.0-beta.112, @steedos/service-metadata-translations@workspace:services/service-metadata-translations":
   version: 0.0.0-use.local
   resolution: "@steedos/service-metadata-translations@workspace:services/service-metadata-translations"
   dependencies:
-    "@steedos/metadata-registrar": 3.0.0-beta.109
+    "@steedos/metadata-registrar": 3.0.0-beta.112
     dotenv-flow: ^3.1.0
     ioredis: ^4.22.0
     lodash: ^4.17.21
@@ -10435,7 +10496,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-metadata-triggers@3.0.0-beta.109, @steedos/service-metadata-triggers@workspace:services/service-metadata-triggers":
+"@steedos/service-metadata-triggers@3.0.0-beta.112, @steedos/service-metadata-triggers@workspace:services/service-metadata-triggers":
   version: 0.0.0-use.local
   resolution: "@steedos/service-metadata-triggers@workspace:services/service-metadata-triggers"
   dependencies:
@@ -10449,11 +10510,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-metadata@3.0.0-beta.109, @steedos/service-metadata@workspace:services/service-metadata":
+"@steedos/service-metadata@3.0.0-beta.112, @steedos/service-metadata@workspace:services/service-metadata":
   version: 0.0.0-use.local
   resolution: "@steedos/service-metadata@workspace:services/service-metadata"
   dependencies:
-    "@steedos/metadata-registrar": 3.0.0-beta.109
+    "@steedos/metadata-registrar": 3.0.0-beta.112
     dotenv-flow: ^3.1.0
     ioredis: ^4.22.0
     lodash: ^4.17.21
@@ -10464,14 +10525,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-object-graphql@3.0.0-beta.109, @steedos/service-object-graphql@workspace:services/service-object-graphql":
+"@steedos/service-object-graphql@3.0.0-beta.112, @steedos/service-object-graphql@workspace:services/service-object-graphql":
   version: 0.0.0-use.local
   resolution: "@steedos/service-object-graphql@workspace:services/service-object-graphql"
   dependencies:
-    "@steedos/filters": 3.0.0-beta.109
-    "@steedos/i18n": 3.0.0-beta.109
-    "@steedos/objectql": 3.0.0-beta.109
-    "@steedos/service-object-mixin": 3.0.0-beta.109
+    "@steedos/filters": 3.0.0-beta.112
+    "@steedos/i18n": 3.0.0-beta.112
+    "@steedos/objectql": 3.0.0-beta.112
+    "@steedos/service-object-mixin": 3.0.0-beta.112
     graphql: ^15.8.0
     graphql-parse-resolve-info: ^4.12.3
     moleculer: ^0.14.35
@@ -10481,30 +10542,30 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-object-mixin@3.0.0-beta.109, @steedos/service-object-mixin@workspace:services/service-object-mixin":
+"@steedos/service-object-mixin@3.0.0-beta.112, @steedos/service-object-mixin@workspace:services/service-object-mixin":
   version: 0.0.0-use.local
   resolution: "@steedos/service-object-mixin@workspace:services/service-object-mixin"
   dependencies:
-    "@steedos/utils": 3.0.0-beta.109
+    "@steedos/utils": 3.0.0-beta.112
   languageName: unknown
   linkType: soft
 
-"@steedos/service-objectql@3.0.0-beta.109, @steedos/service-objectql@workspace:services/service-objectql":
+"@steedos/service-objectql@3.0.0-beta.112, @steedos/service-objectql@workspace:services/service-objectql":
   version: 0.0.0-use.local
   resolution: "@steedos/service-objectql@workspace:services/service-objectql"
   dependencies:
-    "@steedos/objectql": 3.0.0-beta.109
+    "@steedos/objectql": 3.0.0-beta.112
   languageName: unknown
   linkType: soft
 
-"@steedos/service-package-loader@3.0.0-beta.109, @steedos/service-package-loader@workspace:services/service-package-loader":
+"@steedos/service-package-loader@3.0.0-beta.112, @steedos/service-package-loader@workspace:services/service-package-loader":
   version: 0.0.0-use.local
   resolution: "@steedos/service-package-loader@workspace:services/service-package-loader"
   dependencies:
-    "@steedos/metadata-core": 3.0.0-beta.109
-    "@steedos/metadata-registrar": 3.0.0-beta.109
-    "@steedos/router": 3.0.0-beta.109
-    "@steedos/service-object-mixin": 3.0.0-beta.109
+    "@steedos/metadata-core": 3.0.0-beta.112
+    "@steedos/metadata-registrar": 3.0.0-beta.112
+    "@steedos/router": 3.0.0-beta.112
+    "@steedos/service-object-mixin": 3.0.0-beta.112
     clone: ^2.1.2
     csvtojson: ~2.0.10
     moleculer: ^0.14.35
@@ -10515,14 +10576,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-package-registry@3.0.0-beta.109, @steedos/service-package-registry@workspace:services/service-package-registry":
+"@steedos/service-package-registry@3.0.0-beta.112, @steedos/service-package-registry@workspace:services/service-package-registry":
   version: 0.0.0-use.local
   resolution: "@steedos/service-package-registry@workspace:services/service-package-registry"
   dependencies:
-    "@steedos/auth": 3.0.0-beta.109
-    "@steedos/metadata-core": 3.0.0-beta.109
-    "@steedos/objectql": 3.0.0-beta.109
-    "@steedos/service-package-loader": 3.0.0-beta.109
+    "@steedos/auth": 3.0.0-beta.112
+    "@steedos/metadata-core": 3.0.0-beta.112
+    "@steedos/objectql": 3.0.0-beta.112
+    "@steedos/service-package-loader": 3.0.0-beta.112
     clone: ^2.1.2
     fs-extra: 8.1.0
     i18next: 20.3.2
@@ -10539,13 +10600,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-packages@3.0.0-beta.109, @steedos/service-packages@workspace:services/service-packages":
+"@steedos/service-packages@3.0.0-beta.112, @steedos/service-packages@workspace:services/service-packages":
   version: 0.0.0-use.local
   resolution: "@steedos/service-packages@workspace:services/service-packages"
   languageName: unknown
   linkType: soft
 
-"@steedos/service-pages@3.0.0-beta.109, @steedos/service-pages@workspace:services/service-pages":
+"@steedos/service-pages@3.0.0-beta.112, @steedos/service-pages@workspace:services/service-pages":
   version: 0.0.0-use.local
   resolution: "@steedos/service-pages@workspace:services/service-pages"
   dependencies:
@@ -10554,7 +10615,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-plugin-amis@3.0.0-beta.109, @steedos/service-plugin-amis@workspace:services/service-plugin-amis":
+"@steedos/service-plugin-amis@3.0.0-beta.112, @steedos/service-plugin-amis@workspace:services/service-plugin-amis":
   version: 0.0.0-use.local
   resolution: "@steedos/service-plugin-amis@workspace:services/service-plugin-amis"
   dependencies:
@@ -10562,29 +10623,29 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-rest@3.0.0-beta.109, @steedos/service-rest@workspace:services/service-rest":
+"@steedos/service-rest@3.0.0-beta.112, @steedos/service-rest@workspace:services/service-rest":
   version: 0.0.0-use.local
   resolution: "@steedos/service-rest@workspace:services/service-rest"
   dependencies:
-    "@steedos/objectql": 3.0.0-beta.109
-    "@steedos/service-object-mixin": 3.0.0-beta.109
+    "@steedos/objectql": 3.0.0-beta.112
+    "@steedos/service-object-mixin": 3.0.0-beta.112
     lodash: ^4.17.21
   languageName: unknown
   linkType: soft
 
-"@steedos/service-saas@3.0.0-beta.109, @steedos/service-saas@workspace:services/service-saas":
+"@steedos/service-saas@3.0.0-beta.112, @steedos/service-saas@workspace:services/service-saas":
   version: 0.0.0-use.local
   resolution: "@steedos/service-saas@workspace:services/service-saas"
   languageName: unknown
   linkType: soft
 
-"@steedos/service-ui@3.0.0-beta.109, @steedos/service-ui@workspace:services/service-ui":
+"@steedos/service-ui@3.0.0-beta.112, @steedos/service-ui@workspace:services/service-ui":
   version: 0.0.0-use.local
   resolution: "@steedos/service-ui@workspace:services/service-ui"
   dependencies:
-    "@steedos/auth": 3.0.0-beta.109
-    "@steedos/i18n": 3.0.0-beta.109
-    "@steedos/objectql": 3.0.0-beta.109
+    "@steedos/auth": 3.0.0-beta.112
+    "@steedos/i18n": 3.0.0-beta.112
+    "@steedos/objectql": 3.0.0-beta.112
     express: 4.18.1
   languageName: unknown
   linkType: soft
@@ -10602,19 +10663,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/standard-object-database@3.0.0-beta.109, @steedos/standard-object-database@workspace:services/standard-object-database":
+"@steedos/standard-object-database@3.0.0-beta.112, @steedos/standard-object-database@workspace:services/standard-object-database":
   version: 0.0.0-use.local
   resolution: "@steedos/standard-object-database@workspace:services/standard-object-database"
   dependencies:
-    "@steedos/metadata-core": 3.0.0-beta.109
-    "@steedos/service-object-mixin": 3.0.0-beta.109
+    "@steedos/metadata-core": 3.0.0-beta.112
+    "@steedos/service-object-mixin": 3.0.0-beta.112
     amis-formula: ~6.3.0
     clone: ^2.1.2
     moleculer-bullmq: 3.0.0
   languageName: unknown
   linkType: soft
 
-"@steedos/standard-permission@3.0.0-beta.109, @steedos/standard-permission@workspace:services/standard-permission":
+"@steedos/standard-permission@3.0.0-beta.112, @steedos/standard-permission@workspace:services/standard-permission":
   version: 0.0.0-use.local
   resolution: "@steedos/standard-permission@workspace:services/standard-permission"
   dependencies:
@@ -10622,16 +10683,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/standard-process-approval@3.0.0-beta.109, @steedos/standard-process-approval@workspace:services/standard-process-approval":
+"@steedos/standard-process-approval@3.0.0-beta.112, @steedos/standard-process-approval@workspace:services/standard-process-approval":
   version: 0.0.0-use.local
   resolution: "@steedos/standard-process-approval@workspace:services/standard-process-approval"
   dependencies:
-    "@steedos/process": 3.0.0-beta.109
+    "@steedos/process": 3.0.0-beta.112
     nanoid: ^3.3.4
   languageName: unknown
   linkType: soft
 
-"@steedos/standard-ui@3.0.0-beta.109, @steedos/standard-ui@workspace:services/standard-ui":
+"@steedos/standard-ui@3.0.0-beta.112, @steedos/standard-ui@workspace:services/standard-ui":
   version: 0.0.0-use.local
   resolution: "@steedos/standard-ui@workspace:services/standard-ui"
   dependencies:
@@ -10639,24 +10700,24 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/steedos-plugin-schema-builder@3.0.0-beta.109, @steedos/steedos-plugin-schema-builder@workspace:packages/steedos-plugin-schema-builder":
+"@steedos/steedos-plugin-schema-builder@3.0.0-beta.112, @steedos/steedos-plugin-schema-builder@workspace:packages/steedos-plugin-schema-builder":
   version: 0.0.0-use.local
   resolution: "@steedos/steedos-plugin-schema-builder@workspace:packages/steedos-plugin-schema-builder"
   languageName: unknown
   linkType: soft
 
-"@steedos/unpkg@3.0.0-beta.109, @steedos/unpkg@workspace:services/unpkg":
+"@steedos/unpkg@3.0.0-beta.112, @steedos/unpkg@workspace:services/unpkg":
   version: 0.0.0-use.local
   resolution: "@steedos/unpkg@workspace:services/unpkg"
   languageName: unknown
   linkType: soft
 
-"@steedos/utils@3.0.0-beta.109, @steedos/utils@workspace:packages/utils":
+"@steedos/utils@3.0.0-beta.112, @steedos/utils@workspace:packages/utils":
   version: 0.0.0-use.local
   resolution: "@steedos/utils@workspace:packages/utils"
   dependencies:
-    "@steedos/filters": 3.0.0-beta.109
-    "@steedos/odata-v4-mongodb": 3.0.0-beta.109
+    "@steedos/filters": 3.0.0-beta.112
+    "@steedos/odata-v4-mongodb": 3.0.0-beta.112
     clone: ^2.1.2
     cookies: ^0.8.0
     mingo: ^6.0.5
@@ -10680,7 +10741,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos/webapp@3.0.0-beta.109, @steedos/webapp@workspace:builder6/webapp":
+"@steedos/webapp@3.0.0-beta.112, @steedos/webapp@workspace:builder6/webapp":
   version: 0.0.0-use.local
   resolution: "@steedos/webapp@workspace:builder6/webapp"
   dependencies:
@@ -10739,11 +10800,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/workflow_time_trigger@3.0.0-beta.109, @steedos/workflow_time_trigger@workspace:services/workflow_time_trigger":
+"@steedos/workflow_time_trigger@3.0.0-beta.112, @steedos/workflow_time_trigger@workspace:services/workflow_time_trigger":
   version: 0.0.0-use.local
   resolution: "@steedos/workflow_time_trigger@workspace:services/workflow_time_trigger"
   dependencies:
-    "@steedos/objectql": 3.0.0-beta.109
+    "@steedos/objectql": 3.0.0-beta.112
     eval: 0.1.8
     node-schedule: 2.1.0
   languageName: unknown
@@ -12119,13 +12180,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/webidl-conversions@npm:*":
-  version: 7.0.3
-  resolution: "@types/webidl-conversions@npm:7.0.3"
-  checksum: 535ead9de4d3d6c8e4f4fa14e9db780d2a31e8020debc062f337e1420a41c3265e223e4f4b628f97a11ecf3b96390962cd88a9ffe34f44e159dec583ff49aa34
-  languageName: node
-  linkType: hard
-
 "@types/webpack-dev-server@npm:3":
   version: 3.11.6
   resolution: "@types/webpack-dev-server@npm:3.11.6"
@@ -12161,15 +12215,6 @@ __metadata:
     anymatch: ^3.0.0
     source-map: ^0.6.0
   checksum: 3866c3177e1ca0810d9e3cb88fb35183f093b4bcf6cc29f6161425a2a5ea7b4faf5d429c6cf3ed58b780e36dc471a0f511cedb1dcd43f519e1df7d24185f5d4a
-  languageName: node
-  linkType: hard
-
-"@types/whatwg-url@npm:^11.0.2":
-  version: 11.0.5
-  resolution: "@types/whatwg-url@npm:11.0.5"
-  dependencies:
-    "@types/webidl-conversions": "*"
-  checksum: 23a0c45aff51817807b473a6adb181d6e3bb0d27dde54e84883d5d5bc93358e95204d2188e7ff7fdc2cdaf157e97e1188ef0a22ec79228da300fc30d4a05b56a
   languageName: node
   linkType: hard
 
@@ -15147,13 +15192,6 @@ __metadata:
   version: 1.1.6
   resolution: "bson@npm:1.1.6"
   checksum: 75762c9b7e0b3156cb0f38c7eb9ffcade53f0b04ac87dece9cba38f6dc570d9af91251de6a8988b294063cfaa21894c60ac9e85c34176accb3674acb092d66a7
-  languageName: node
-  linkType: hard
-
-"bson@npm:^6.10.4":
-  version: 6.10.4
-  resolution: "bson@npm:6.10.4"
-  checksum: 5b0b625ac9b3661497aa1baec58c8e8979cc501a5c490a5740001b3cc415d0d5d51f16bf9da433b28ffd1303b6f98c1427e8192cf4220b13b09a9a4184bfceb2
   languageName: node
   linkType: hard
 
@@ -29779,16 +29817,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mongodb-connection-string-url@npm:^3.0.2":
-  version: 3.0.2
-  resolution: "mongodb-connection-string-url@npm:3.0.2"
-  dependencies:
-    "@types/whatwg-url": ^11.0.2
-    whatwg-url: ^14.1.0 || ^13.0.0
-  checksum: 382319aa41d381ff4be9370024e3cf765ded14aa581bca7c7a171fcaae618b8d92912329b6b13898334c3b6f3cab12ae8785defad2745ca20226ceeb253ef1ae
-  languageName: node
-  linkType: hard
-
 "mongodb-uri@npm:^0.9.7":
   version: 0.9.7
   resolution: "mongodb-uri@npm:0.9.7"
@@ -29823,40 +29851,6 @@ __metadata:
     snappy:
       optional: true
   checksum: e9b4e932f40029d2fc7b2247737f4fc6fc8951c0ac86530e19d305b58dc8a8251bb42a73af2e9da14fd606856bf240c80951fec9a870719481c0cf2d78327547
-  languageName: node
-  linkType: hard
-
-"mongodb@npm:^6.15.0":
-  version: 6.20.0
-  resolution: "mongodb@npm:6.20.0"
-  dependencies:
-    "@mongodb-js/saslprep": ^1.3.0
-    bson: ^6.10.4
-    mongodb-connection-string-url: ^3.0.2
-  peerDependencies:
-    "@aws-sdk/credential-providers": ^3.188.0
-    "@mongodb-js/zstd": ^1.1.0 || ^2.0.0
-    gcp-metadata: ^5.2.0
-    kerberos: ^2.0.1
-    mongodb-client-encryption: ">=6.0.0 <7"
-    snappy: ^7.3.2
-    socks: ^2.7.1
-  peerDependenciesMeta:
-    "@aws-sdk/credential-providers":
-      optional: true
-    "@mongodb-js/zstd":
-      optional: true
-    gcp-metadata:
-      optional: true
-    kerberos:
-      optional: true
-    mongodb-client-encryption:
-      optional: true
-    snappy:
-      optional: true
-    socks:
-      optional: true
-  checksum: 7f427ca631cf57ce2a0b835fe8ad61791e21abb4e5ebf8af83115ad782d0266dd574e3e540a741a1f27dd201d7e035f34681dd6dd6aa495af6e4b61457b38bec
   languageName: node
   linkType: hard
 
@@ -33438,10 +33432,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pino@npm:^9.0.0":
-  version: 9.13.1
-  resolution: "pino@npm:9.13.1"
+"pino@npm:^9.0.0, pino@npm:^9.14.0":
+  version: 9.14.0
+  resolution: "pino@npm:9.14.0"
   dependencies:
+    "@pinojs/redact": ^0.4.0
     atomic-sleep: ^1.0.0
     on-exit-leak-free: ^2.1.0
     pino-abstract-transport: ^2.0.0
@@ -33450,12 +33445,11 @@ __metadata:
     quick-format-unescaped: ^4.0.3
     real-require: ^0.2.0
     safe-stable-stringify: ^2.3.1
-    slow-redact: ^0.3.0
     sonic-boom: ^4.0.1
     thread-stream: ^3.0.0
   bin:
     pino: bin.js
-  checksum: bc0fecf98ecb658462ba0b90739a5325cb179053f944f602ecb2fbb62d161746f9e33aba089bab7ca0cd5c22133fc0559b49775479fd6f928f258784ef6d5d39
+  checksum: 5e7a88042304be1f3057e05b25033f3f2d6cae446de64caf354e9993479ba40dd466ed720da027f33c33d7ecf3dd6acf72b9c23ff1f8441094bd9c62adb6f4a2
   languageName: node
   linkType: hard
 
@@ -38051,13 +38045,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"slow-redact@npm:^0.3.0":
-  version: 0.3.2
-  resolution: "slow-redact@npm:0.3.2"
-  checksum: 7c5264f93a309684a3a2622d0017af024174f31b4b82921b19791d8a707e8bc5dca56918df685dada23ccc84fbe2cc0cc954a739989c9167d5f60c05fa639f22
-  languageName: node
-  linkType: hard
-
 "slug@npm:^5.3.0":
   version: 5.3.0
   resolution: "slug@npm:5.3.0"
@@ -38117,7 +38104,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"socket.io-adapter@npm:~2.5.2":
+"socket.io-adapter@npm:^2.5.5, socket.io-adapter@npm:~2.5.2":
   version: 2.5.5
   resolution: "socket.io-adapter@npm:2.5.5"
   dependencies:
@@ -38769,7 +38756,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"steedos-cli@3.0.0-beta.109, steedos-cli@workspace:packages/cli":
+"steedos-cli@3.0.0-beta.112, steedos-cli@workspace:packages/cli":
   version: 0.0.0-use.local
   resolution: "steedos-cli@workspace:packages/cli"
   dependencies:
@@ -38779,8 +38766,8 @@ __metadata:
     "@oclif/dev-cli": ^1.26.10
     "@oclif/plugin-help": ^5.1.12
     "@oclif/test": ^2.1.0
-    "@steedos/metadata-core": 3.0.0-beta.109
-    "@steedos/metadata-registrar": 3.0.0-beta.109
+    "@steedos/metadata-core": 3.0.0-beta.112
+    "@steedos/metadata-registrar": 3.0.0-beta.112
     archiver: ^5.0.2
     chalk: 2.4.2
     change-case: ^3.1.0
@@ -40273,15 +40260,6 @@ __metadata:
   dependencies:
     punycode: ^2.1.1
   checksum: ffe6049b9dca3ae329b059aada7f515b0f0064c611b39b51ff6b53897e954650f6f63d9319c6c008d36ead477c7b55e5f64c9dc60588ddc91ff720d64eb710b3
-  languageName: node
-  linkType: hard
-
-"tr46@npm:^5.1.0":
-  version: 5.1.1
-  resolution: "tr46@npm:5.1.1"
-  dependencies:
-    punycode: ^2.3.1
-  checksum: da7a04bd3f77e641abdabe948bb84f24e6ee73e81c8c96c36fe79796c889ba97daf3dbacae778f8581ff60307a4136ee14c9540a5f85ebe44f99c6cc39a97690
   languageName: node
   linkType: hard
 
@@ -42011,13 +41989,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webidl-conversions@npm:^7.0.0":
-  version: 7.0.0
-  resolution: "webidl-conversions@npm:7.0.0"
-  checksum: f05588567a2a76428515333eff87200fae6c83c3948a7482ebb109562971e77ef6dc49749afa58abb993391227c5697b3ecca52018793e0cb4620a48f10bd21b
-  languageName: node
-  linkType: hard
-
 "webpack-dev-middleware@npm:^5.3.4":
   version: 5.3.4
   resolution: "webpack-dev-middleware@npm:5.3.4"
@@ -42256,16 +42227,6 @@ __metadata:
   version: 4.0.0
   resolution: "whatwg-mimetype@npm:4.0.0"
   checksum: f97edd4b4ee7e46a379f3fb0e745de29fe8b839307cc774300fd49059fcdd560d38cb8fe21eae5575b8f39b022f23477cc66e40b0355c2851ce84760339cef30
-  languageName: node
-  linkType: hard
-
-"whatwg-url@npm:^14.1.0 || ^13.0.0":
-  version: 14.2.0
-  resolution: "whatwg-url@npm:14.2.0"
-  dependencies:
-    tr46: ^5.1.0
-    webidl-conversions: ^7.0.0
-  checksum: c4f1ae1d353b9e56ab3c154cd73bf2b621cea1a2499fd2a9b2a17d448c2ed5e73a8922a0f395939de565fc3661461140111ae2aea26d4006a1ad0cfbf021c034
   languageName: node
   linkType: hard
 
