@@ -55,7 +55,7 @@ export default class IntlProvider extends React.PureComponent<IntlProviderProps,
 
     fetchSettings = async (retryCount: number = 0, maxRetries: number = 20) => {
         try {
-            const response = await axios.get('/api/v6/amis/public_settings');
+            const response = await axios.get(`${import.meta.env.VITE_B6_ROOT_URL}/api/v6/amis/public_settings`);
             const settingsData = response.data;
 
             // 检查服务器状态
@@ -76,8 +76,7 @@ export default class IntlProvider extends React.PureComponent<IntlProviderProps,
             const Builder = (window as any).Builder;
             Builder.settings.appId = '-';
             Builder.settings.context = {
-                rootUrl: '',
-                _rootUrl: settingsData.rootUrl,
+                rootUrl: `${import.meta.env.VITE_B6_ROOT_URL}`,
                 userId: localStorage.getItem('steedos:userId'),
                 tenantId: localStorage.getItem('steedos:spaceId'),
                 authToken: localStorage.getItem('steedos:token'),
@@ -109,7 +108,7 @@ export default class IntlProvider extends React.PureComponent<IntlProviderProps,
             const self = this;
             _window.lodash = _window._;
             _window.loadJs('/steedos-init.js', ()=>{
-                _window.loadJs(`${Builder.settings.context.rootUrl}/client_scripts.js`, ()=>{
+                _window.loadJs(`${Builder.settings.rootUrl}/client_scripts.js`, ()=>{
                     self.setState({ settings: settingsData, loading: false });
                 });
             });

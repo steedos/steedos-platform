@@ -16,7 +16,7 @@ const SocketRoomParts = {
 }
 
 // 连接到服务器
-const socket = window.io("/", {
+const socket = window.io(Builder.settings.context.rootUrl, {
   path: "/socket.io"
 });
 
