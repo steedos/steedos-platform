@@ -200,6 +200,7 @@ export async function bootstrap() {
       "/",
       "/app",
       "/app/*react",
+      "/ai/*react",
       "/logout",
       "/signup",
       "/login",
