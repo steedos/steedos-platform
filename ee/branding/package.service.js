@@ -24,7 +24,7 @@ module.exports = {
         packageInfo: {
             path: __dirname,
             name: packageName,
-			isPackage: true
+			isPackage: false
         },
     },
 
