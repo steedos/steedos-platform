@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 16:53:23
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-02-27 15:20:23
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2025-10-22 09:32:01
  * @Description: 
  */
 "use strict";
@@ -98,6 +98,9 @@ module.exports = {
                         }
                     })
                 }
+                return {
+                    success: true
+                };
             }
         },
         invite_user: {

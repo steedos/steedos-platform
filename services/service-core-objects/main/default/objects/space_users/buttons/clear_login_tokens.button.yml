@@ -20,7 +20,7 @@ amis_schema: |-
                               "args": {
                                   "options": {},
                                   "api": {
-                                      "url": "${context.rootUrl}/api/users/${record.user}/clear_login_tokens",
+                                      "url": "${context.rootUrl}/api/users/${user}/clear_login_tokens",
                                       "method": "get",
                                       "requestAdaptor": "",
                                       "adaptor": "return payload.success ? {data: {...payload}, status: 0, msg: t('CustomLabels.space_users_actions_clear_login_tokens_success')} : {...payload, status: 1};"
