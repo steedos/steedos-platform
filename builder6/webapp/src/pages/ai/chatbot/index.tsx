@@ -39,7 +39,7 @@ export const ChatbotView = () => {
           }
         >
           <span className="font-semibold mr-1">
-            {message.role === 'user' ? 'User:' : 'AI:'}
+            {message.role === 'user' ? 'You:' : 'AI:'}
           </span>
           {message.parts.map((part, index) =>
             part.type === 'text' ? <span key={index}>{part.text}</span> : null,
