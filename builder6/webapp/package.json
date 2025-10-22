@@ -1,6 +1,6 @@
 {
   "name": "@steedos/webapp",
-  "version": "3.0.0-beta.112",
+  "version": "3.0.0-beta.113",
   "files": [
     "dist"
   ],
@@ -69,7 +69,7 @@
     "access": "public"
   },
   "repository": "https://github.com/steedos/app-builder/tree/master/apps/accounts",
-  "gitHead": "742d399ecaca836729c200044deee3ef0988be14",
+  "gitHead": "fb75d2f8f1d8b4c840c632cee8966841540b6349",
   "dependencies": {
     "@ai-sdk/react": "^2.0.76",
     "ai": "^5.0.76",
