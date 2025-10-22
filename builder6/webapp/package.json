@@ -71,6 +71,8 @@
   "repository": "https://github.com/steedos/app-builder/tree/master/apps/accounts",
   "gitHead": "742d399ecaca836729c200044deee3ef0988be14",
   "dependencies": {
+    "@ai-sdk/react": "^2.0.76",
+    "ai": "^5.0.76",
     "history": "^5.3.0"
   }
 }

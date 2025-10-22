@@ -29,6 +29,7 @@ import { ObjectDetail } from '../pages/object/detail';
 import { PageView } from '../pages/page';
 import { IframeView } from '../pages/iframe';
 import { ObjectRelatedListView } from '../pages/object/objectRelatedListView';
+import { ChatbotView } from '../pages/ai/chatbot';
 
 const routes = [
   {
@@ -175,7 +176,6 @@ const routes = [
       </LoggedIn>
     ),
   },
-
   {
     path: '/app/:appId/tab_iframe/:tabId',
     element: (
@@ -183,6 +183,14 @@ const routes = [
         <AppLayout>
           <IframeView/>
         </AppLayout>
+      </LoggedIn>
+    ),
+  },
+  {
+    path: '/ai/chatbot/:chatbotId',
+    element: (
+      <LoggedIn>
+        <ChatbotView/>
       </LoggedIn>
     ),
   }

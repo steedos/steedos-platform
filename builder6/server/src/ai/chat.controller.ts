@@ -9,12 +9,18 @@ import {
   ApiQuery,
   ApiTags,
 } from "@nestjs/swagger";
-import { generateText, streamText, stepCountIs } from "ai";
+import {
+  generateText,
+  streamText,
+  stepCountIs,
+  convertToModelMessages,
+  UIMessage,
+} from "ai";
 import { Response } from "express";
 import { AiService } from "./ai.service";
 
 @ApiTags("AI")
-@Controller("api/v6/ai/chat")
+@Controller("api/v6/ai")
 export class ChatController {
   constructor(private readonly aiService: AiService) {}
 
@@ -31,16 +37,17 @@ export class ChatController {
       },
     },
   })
-  @Post("generateText")
-  async generateText(
-    @Body("model") model: string,
-    @Body("system") system: string,
-    @Body("prompt") prompt: string,
+  @Post("chatbot/:chatbotId")
+  async streamText(
+    @Body("model") model: string = "gpt-4o",
+    @Body("system") system: string = "You are a steedos assistant.",
+    @Body("messages") messages: UIMessage[],
+    @Res() res: Response,
   ) {
-    const result = await generateText({
+    const result = await streamText({
       model: openai(model),
       system,
-      prompt,
+      messages: convertToModelMessages(messages),
       tools: {
         getObjectSchema: this.aiService.getObjectSchemaTool(),
         getObjectSchemaWithRelated:
@@ -49,9 +56,7 @@ export class ChatController {
       stopWhen: stepCountIs(5), // stop after a maximum of 5 steps if tools were called
     });
 
-    return {
-      text: result.text,
-    };
+    return result.pipeUIMessageStreamToResponse(res);
   }
 
   @ApiBody({
@@ -67,19 +72,18 @@ export class ChatController {
       },
     },
   })
-  @Post("streamText")
-  async streamText(
+  @Post("chat")
+  async generateText(
     @Body("model") model: string,
     @Body("system") system: string,
     @Body("prompt") prompt: string,
-    @Res() res: Response,
   ) {
-    const result = streamText({
+    const result = await generateText({
       model: openai(model),
       system,
       prompt,
     });
 
-    result.pipeUIMessageStreamToResponse(res);
+    return { text: result.text };
   }
 }

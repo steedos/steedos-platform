@@ -112,6 +112,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ai-sdk/gateway@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@ai-sdk/gateway@npm:2.0.0"
+  dependencies:
+    "@ai-sdk/provider": 2.0.0
+    "@ai-sdk/provider-utils": 3.0.12
+    "@vercel/oidc": 3.0.3
+  peerDependencies:
+    zod: ^3.25.76 || ^4.1.8
+  checksum: cbbe0d3003a63fdd2ecb1caad939c736173fbbf08805a857d6607155e9ac7063635ff00b78f3acf4000effd06552a49a2438fbacbd474e04be9310d221d0c056
+  languageName: node
+  linkType: hard
+
 "@ai-sdk/openai@npm:^2.0.52":
   version: 2.0.52
   resolution: "@ai-sdk/openai@npm:2.0.52"
@@ -143,6 +156,24 @@ __metadata:
   dependencies:
     json-schema: ^0.4.0
   checksum: 6068b327d48d37a5cb994652c29af4206f228c1fd1e5ab38f2db860b5b6ec3e1e7c75a2fab98e633fec59dc7f0ac6f115ce68aad66175264b263509928c67b91
+  languageName: node
+  linkType: hard
+
+"@ai-sdk/react@npm:^2.0.76":
+  version: 2.0.76
+  resolution: "@ai-sdk/react@npm:2.0.76"
+  dependencies:
+    "@ai-sdk/provider-utils": 3.0.12
+    ai: 5.0.76
+    swr: ^2.2.5
+    throttleit: 2.1.0
+  peerDependencies:
+    react: ^18 || ^19 || ^19.0.0-rc
+    zod: ^3.25.76 || ^4.1.8
+  peerDependenciesMeta:
+    zod:
+      optional: true
+  checksum: 1a012e05a206615fe98389476e9d6ef6503e86933d4cafe3786a82d702318ea0732992747cf33f741a160a616852939934cc80d8950a91a2482948d73ef3272a
   languageName: node
   linkType: hard
 
@@ -10759,6 +10790,7 @@ __metadata:
     "@accounts/client": ^0.19.0
     "@accounts/client-password": ^0.19.0
     "@accounts/rest-client": ^0.19.0
+    "@ai-sdk/react": ^2.0.76
     "@builder6/react": 8.0.40
     "@material-ui/core": ^4.4.1
     "@material-ui/icons": ^4.4.1
@@ -10774,6 +10806,7 @@ __metadata:
     "@typescript-eslint/parser": ^7.2.0
     "@vitejs/plugin-react": ^4.2.1
     add: ^2.0.6
+    ai: ^5.0.76
     babel-jest: ^26.6.0
     babel-preset-react-app: ^10.0.1
     core-js: ^3.2.1
@@ -12688,6 +12721,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vercel/oidc@npm:3.0.3":
+  version: 3.0.3
+  resolution: "@vercel/oidc@npm:3.0.3"
+  checksum: 0233e480e6eebfe23ab8a077e04b8c3dccd9870e59ffd76ad089580b8a4b5fd10e5952c36aeb01bce5ad1188be30a53637aebc4f93dc5a7b5ba80055e70b1439
+  languageName: node
+  linkType: hard
+
 "@vitejs/plugin-react@npm:^4.2.1":
   version: 4.7.0
   resolution: "@vitejs/plugin-react@npm:4.7.0"
@@ -13214,6 +13254,20 @@ __metadata:
     clean-stack: ^2.0.0
     indent-string: ^4.0.0
   checksum: 1101a33f21baa27a2fa8e04b698271e64616b886795fd43c31068c07533c7b3facfcaf4e9e0cab3624bd88f729a592f1c901a1a229c9e490eafce411a8644b79
+  languageName: node
+  linkType: hard
+
+"ai@npm:5.0.76, ai@npm:^5.0.76":
+  version: 5.0.76
+  resolution: "ai@npm:5.0.76"
+  dependencies:
+    "@ai-sdk/gateway": 2.0.0
+    "@ai-sdk/provider": 2.0.0
+    "@ai-sdk/provider-utils": 3.0.12
+    "@opentelemetry/api": 1.9.0
+  peerDependencies:
+    zod: ^3.25.76 || ^4.1.8
+  checksum: b7b4704403cdc95f8c0ed3905647a0b11493679a1d8ec819e31e48392ff34dd37b69d2721ca4e5ad073f4be0bc5517984069a1bb905748555fb050a8379ef0ec
   languageName: node
   linkType: hard
 
@@ -18825,6 +18879,13 @@ __metadata:
   version: 0.2.0
   resolution: "deps-regex@npm:0.2.0"
   checksum: a782304d481824c21c5aaff3d7fbd2eba9b112688cbadb36537304dde61e106595d4858bd097fad1df8b96fbff3df571dc9bfd73b749cbd24fd088cce3a999d8
+  languageName: node
+  linkType: hard
+
+"dequal@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "dequal@npm:2.0.3"
+  checksum: 8679b850e1a3d0ebbc46ee780d5df7b478c23f335887464023a631d1b9af051ad4a6595a44220f9ff8ff95a8ddccf019b5ad778a976fd7bbf77383d36f412f90
   languageName: node
   linkType: hard
 
@@ -39634,6 +39695,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"swr@npm:^2.2.5":
+  version: 2.3.6
+  resolution: "swr@npm:2.3.6"
+  dependencies:
+    dequal: ^2.0.3
+    use-sync-external-store: ^1.4.0
+  peerDependencies:
+    react: ^16.11.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: c7cc7dfb73d2437a16951b7217f7a1e1b103cc19c85456a1da2cd07cefcb300fbd5a9a2df5abbbb608c92af8f77777c0c93e9c80e907f145cacf0bd8176360cb
+  languageName: node
+  linkType: hard
+
 "symbol-observable@npm:4.0.0, symbol-observable@npm:^4.0.0":
   version: 4.0.0
   resolution: "symbol-observable@npm:4.0.0"
@@ -40074,6 +40147,13 @@ __metadata:
   version: 6.0.2
   resolution: "throat@npm:6.0.2"
   checksum: 463093768d4884772020bb18b0f33d3fec8a2b4173f7da3958dfbe88ff0f1e686ffadf0f87333bf6f6db7306b1450efc7855df69c78bf0bfa61f6d84a3361fe8
+  languageName: node
+  linkType: hard
+
+"throttleit@npm:2.1.0":
+  version: 2.1.0
+  resolution: "throttleit@npm:2.1.0"
+  checksum: a2003947aafc721c4a17e6f07db72dc88a64fa9bba0f9c659f7997d30f9590b3af22dadd6a41851e0e8497d539c33b2935c2c7919cf4255922509af6913c619b
   languageName: node
   linkType: hard
 
@@ -41595,6 +41675,15 @@ __metadata:
     undici: ^5.28.2
     ylru: ^1.3.2
   checksum: b587fe23f9ec2b24a279a89dc4be0de7b81437edddc62d1e20c064d7c715f755af316ca6b22173e5fc2f4e76fe8c002734b087a725d90abd39e40a0730553299
+  languageName: node
+  linkType: hard
+
+"use-sync-external-store@npm:^1.4.0":
+  version: 1.6.0
+  resolution: "use-sync-external-store@npm:1.6.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 61a62e910713adfaf91bdb72ff2cd30e5ba83687accaf3b6e75a903b45bf635f5722e3694af30d83a03e92cb533c0a5c699298d2fef639a03ffc86b469f4eee2
   languageName: node
   linkType: hard
 
