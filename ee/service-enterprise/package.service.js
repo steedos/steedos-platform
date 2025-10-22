@@ -74,6 +74,9 @@ module.exports = {
 
         this.broker.createService(require("@steedos/ee_branding"));
 
+        // 打印模版
+        this.broker.createService(require("@steedos-labs/plugin-print-template")); 
+
         // 报表
         this.broker.createService(require("@steedos-labs/analytics"));
 
