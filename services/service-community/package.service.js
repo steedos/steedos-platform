@@ -131,7 +131,7 @@ module.exports = {
 		  this.broker.createService(require("@steedos/service-core-objects"));
 	  
 		  if ("true" == process.env.STEEDOS_ENABLE_STANDARD_ACCOUNTS) {
-			this.broker.createService(require("@steedos/standard-accounts"));
+				this.broker.createService(require("@steedos/standard-accounts"));
 		  }
 	  
 		  this.broker.createService(require("@steedos/service-objectql"));
@@ -176,16 +176,10 @@ module.exports = {
 
 		  this.broker.createService(require("@steedos-labs/plugin-package-store"));
 
-		  this.broker.createService(require("@steedos/service-bull-dashboard"));
-
-		  // 报表
-		  this.broker.createService(require("@steedos-labs/analytics"));
+      this.broker.createService(require("@steedos/service-bull-dashboard"));
 
 		  // 启动时间触发器服务
 		  this.broker.createService(require("@steedos/workflow_time_trigger"));
-		  if(process.env.STEEDOS_ENABLE_WORKFLOW === 'true'){
-			this.broker.createService(require("@steedos-labs/plugin-workflow"));
-		  }
 	},
 
 	/**

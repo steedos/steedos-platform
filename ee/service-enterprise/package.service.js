@@ -74,6 +74,11 @@ module.exports = {
 
         this.broker.createService(require("@steedos/ee_branding"));
 
+        // 报表
+        this.broker.createService(require("@steedos-labs/analytics"));
+
+        // 审批王
+        this.broker.createService(require("@steedos-labs/plugin-workflow"));
     },
 
     /**
