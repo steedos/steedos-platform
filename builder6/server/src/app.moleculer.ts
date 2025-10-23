@@ -136,6 +136,20 @@ export class AppMoleculer extends Service {
           }
           appGateway.emit(data.eventName, data.eventParams, data.room);
         },
+        "@objectRecordEvent.*.*": async (payload, sendError, event, ctx) => {
+          const spaceId = payload.spaceId || payload.doc.space;
+          const roomIdPrefix = spaceId ? `${spaceId}-` : "";
+          return await ctx.broker.call("b6-microservice.broadcast", {
+            name: "socket.emit",
+            data: {
+              room: `${roomIdPrefix}record:${payload.objectApiName}:change-${payload.id}`,
+              eventName: `s:record:${payload.objectApiName}:change-${payload.id}`,
+              eventParams: {
+                _id: payload.id,
+              },
+            },
+          });
+        },
       },
       created: this.serviceCreated,
       started: this.serviceStarted,
