@@ -8,11 +8,42 @@
 import Navbar from "./Navbar"
 import { AppHeader } from "./AppHeader"
 import GlobalLinkInterceptor from "./GlobalLinkInterceptor";
+import { useLocation, useNavigationType } from "react-router";
+import { useEffect } from "react";
+
+// 路由监听组件
+function RouteChangeHandler() {
+  const location = useLocation();
+  const navigationType = useNavigationType();
+
+  useEffect(() => {
+    const routeChangeData = {
+      type: 'ROUTE_CHANGE',
+      path: location.pathname,
+      search: location.search,
+      hash: location.hash,
+      navigationType,
+      timestamp: new Date().toISOString()
+    };
+
+    // 发送全局 window message
+    window.postMessage(routeChangeData, '*');
+
+    // 如果是父窗口嵌套（iframe），也可以通知父窗口
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage(routeChangeData, '*');
+    }
+  }, [location, navigationType]);
+
+  return null;
+}
 
 export const AppLayout = (props) => {
   const { children } = props;
+  
   return (
     <>
+      <RouteChangeHandler></RouteChangeHandler>
       <GlobalLinkInterceptor></GlobalLinkInterceptor>
       <AppHeader />
       <div className="creator-content-wrapper" id="main">
