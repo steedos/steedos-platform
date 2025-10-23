@@ -7,7 +7,6 @@
  */
 import { Builder, builder, BuilderComponent } from '@builder6/react';
 import { useNavigate } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
 
 const normalizeLink = (to, location = window.location) => {
   to = to || "";
@@ -50,7 +49,6 @@ const normalizeLink = (to, location = window.location) => {
 export const AmisRender = function ({schema = {}, data = {}, env = {}}) {
   // console.log(`AmisRender`, schema, data, env)
   const navigate = useNavigate(); 
-  const browserHistory = createBrowserHistory();
 
   if(!(window as any).goBack){
     (window as any).goBack = ()=>{
@@ -60,10 +58,6 @@ export const AmisRender = function ({schema = {}, data = {}, env = {}}) {
 
   if(!(window as any).navigate){
     (window as any).navigate = navigate;
-  }
-
-  if(!(window as any).browserHistory){
-    (window as any).browserHistory = browserHistory;
   }
 
   let locale = Builder.settings.context?.user?.language || Builder.settings.default_language;
