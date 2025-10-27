@@ -10,6 +10,13 @@ const project = require('./package.json');
 const serviceName = project.name;
 const validator = require('validator');
 const _ = require('lodash');
+
+const DEFAULT_PLUGINS = [
+    "@steedos/ee_branding",
+    "@steedos-labs/analytics",
+    "@steedos-labs/plugin-workflow",
+    "@steedos-labs/plugin-print-template"
+]
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * 软件包服务启动后也需要抛出事件。
@@ -25,6 +32,7 @@ module.exports = {
             path: __dirname,
             name: serviceName
         },
+        plugins: process.env.STEEDOS_PLUGIN_SERVICES ? process.env.STEEDOS_PLUGIN_SERVICES.split(',') : DEFAULT_PLUGINS,
     },
 
     /**
@@ -72,16 +80,15 @@ module.exports = {
         }
 
 
-        this.broker.createService(require("@steedos/ee_branding"));
-
-        // 打印模版
-        this.broker.createService(require("@steedos-labs/plugin-print-template")); 
-
-        // 报表
-        this.broker.createService(require("@steedos-labs/analytics"));
-
-        // 审批王
-        this.broker.createService(require("@steedos-labs/plugin-workflow"));
+        const steedosPlugins = this.settings.plugins;
+        for (const plugin of steedosPlugins) {
+            try {
+                console.log(`Starting plugin service: ${plugin}`);
+                await this.broker.createService(require(plugin));
+            } catch (error) {
+                console.error(`Failed to start plugin service: ${plugin}`, error);
+            }
+        }
     },
 
     /**
