@@ -17,7 +17,7 @@ amis_schema: |-
               {
                 "actionType": "ajax",
                 "api": {
-                  "url": "/api/permission/permission_objects/resetFieldPermissions",
+                  "url": "${context.rootUrl}/api/permission/permission_objects/resetFieldPermissions",
                   "method": "post",
                   "requestAdaptor": "api.data={permissionObjectId: context.recordId}\n\n\nreturn api;",
                   "adaptor": "return payload.success ? {data: {...payload}, status: 0, msg: t('CustomLabels.permission_objects_actions_resetFieldPermissions_success')} : {...payload, status: 1, msg: t('CustomLabels.permission_objects_actions_resetFieldPermissions_failed')};"
