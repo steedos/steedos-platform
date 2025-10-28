@@ -28,7 +28,7 @@ const LoggedIn = ({ children }) => {
       return
     }
     if (!currentSpaceId) {
-      navigate('/select-space?redirect_to=' + encodeURIComponent(window.location.pathname));
+      navigate('/select-space' + window.location.search);
       return
     }
   }, [currentUser]);

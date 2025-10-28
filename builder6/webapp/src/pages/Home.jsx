@@ -36,7 +36,7 @@ const Home = () => {
       return;
     }
     if (!currentSpace) {
-      navigate('/select-space');
+      navigate('/select-space' + window.location.search);
       return;
     }
 
@@ -46,7 +46,13 @@ const Home = () => {
       if(me.data?.password_expired){
         goResetPassword(navigate)
       }else{
-        window.location.href = '/app';
+        let redirect_uri = new URLSearchParams(location?location.search:"").get('redirect_uri');
+        debugger;
+        if (redirect_uri){
+          window.location.href = redirect_uri;
+        }else{
+          window.location.href = '/app';
+        }
       }
 
       // navigate('/app');

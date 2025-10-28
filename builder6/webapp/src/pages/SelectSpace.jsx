@@ -54,7 +54,7 @@ class SelectSpace extends React.PureComponent {
     if(space) {
       try {
         this.props.actions.selectSpace(space._id);
-        this.props.navigate(`/home/${space._id}`);
+        this.props.navigate(`/home/${space._id}` + (this.props.location.search ? `${this.props.location.search }` : ''));
         // hashHistory.push({
         //   pathname: `/home/${space._id}`,
         //   search: this.props.location.search
@@ -85,7 +85,7 @@ class SelectSpace extends React.PureComponent {
       }
       if(Object.keys(this.props.spaces).length === 1 && this.props.tenant.enable_create_tenant != true){
         this.props.actions.selectSpace(Object.keys(this.props.spaces)[0]);
-        this.props.navigate(`/home/${Object.keys(this.props.spaces)[0]}`);
+        this.props.navigate(`/home/${Object.keys(this.props.spaces)[0]}` + (this.props.location.search ? `${this.props.location.search }` : ''));
       }
     }, 0)
   }
