@@ -110,3 +110,6 @@ listviews:
 actions:
   customize:
     label: 自定义
+CustomLabels:
+  permission_objects_actions_resetFieldPermissions_success: 字段权限初始化成功
+  permission_objects_actions_resetFieldPermissions_failed: 字段权限初始化失败

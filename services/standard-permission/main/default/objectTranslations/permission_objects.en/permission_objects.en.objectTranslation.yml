@@ -118,3 +118,6 @@ actions:
     label: Customize
   resetFieldPermissions:
     label: ResetFieldPermissions
+CustomLabels:
+  permission_objects_actions_resetFieldPermissions_success: The field permission initialization was successful
+  permission_objects_actions_resetFieldPermissions_failed: The field permission initialization was failed

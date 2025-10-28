@@ -1,0 +1,57 @@
+name: resetFieldPermissions
+label: ResetFieldPermissions
+'on': record_only
+type: amis_button
+amis_schema: |-
+  {
+    "type": "service",
+    "body": [
+      {
+        "type": "button",
+        "label": "${'CustomAction.permission_objects.resetFieldPermissions' | t}",
+        "id": "u:resetFieldPermissions",
+        "onEvent": {
+          "click": {
+            "weight": 0,
+            "actions": [
+              {
+                "actionType": "ajax",
+                "api": {
+                  "url": "/api/permission/permission_objects/resetFieldPermissions",
+                  "method": "post",
+                  "requestAdaptor": "api.data={permissionObjectId: context.recordId}\n\n\nreturn api;",
+                  "adaptor": "return payload.success ? {data: {...payload}, status: 0, msg: t('CustomLabels.permission_objects_actions_resetFieldPermissions_success')} : {...payload, status: 1, msg: t('CustomLabels.permission_objects_actions_resetFieldPermissions_failed')};"
+                }
+              },
+              {
+                "actionType": "broadcast",
+                "args": {
+                  "eventName": "@data.changed.permission_objects"
+                },
+                "data": {
+                  "objectName": "permission_objects",
+                  "displayAs": "${displayAs}"
+                }
+              },
+              {
+                "actionType": "broadcast",
+                "args": {
+                  "eventName": "@data.changed.permission_fields"
+                },
+                "data": {
+                  "objectName": "permission_fields",
+                  "displayAs": "${displayAs}"
+                }
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "regions": [
+      "body"
+    ],
+    "bodyClassName": "p-0",
+    "id": "u:6d7a34bd662e",
+    "dsType": "api"
+  }
