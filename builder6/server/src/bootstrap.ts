@@ -20,6 +20,7 @@ import {
   errorResponsePlugin,
   proxyEventsPlugin,
 } from "http-proxy-middleware";
+const unpkg = require("@steedos/ee_unpkg");
 
 import project from "../package.json";
 import { AllExceptionsFilter } from "@builder6/core";
@@ -186,6 +187,9 @@ export async function bootstrap() {
   const expressApp = app.getHttpAdapter().getInstance();
 
   expressApp.use(require("@steedos/router").staticRouter());
+
+  const unpkgApp = unpkg();
+  expressApp.use("/", unpkgApp);
 
   // 加载 webapp
   const webappPackagePath = require.resolve("@steedos/webapp/package.json");

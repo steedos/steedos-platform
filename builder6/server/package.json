@@ -55,7 +55,7 @@
     "@nestjs/swagger": "^11.0.0",
     "@nestjs/websockets": "^11.0.0",
     "@steedos/auth": "3.0.0-beta.118",
-    "@steedos/ee_unpkg": "1.0.1",
+    "@steedos/ee_unpkg": "1.0.2",
     "@steedos/objectql": "3.0.0-beta.118",
     "@steedos/service-community": "3.0.0-beta.118",
     "@steedos/service-enterprise": "3.0.0-beta.118",

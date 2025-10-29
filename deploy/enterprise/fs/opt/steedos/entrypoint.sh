@@ -16,7 +16,7 @@ init_env_file() {
 
   mkdir -p "$CONF_PATH"
 
-  if [[ "${STEEDOS_UNPKG_URL}" == /unpkg* ]]; then
+  if [[ "${STEEDOS_UNPKG_URL}" == /disabled-unpkg* ]]; then
     export STEEDOS_UNPKG_ENABLED=true
   else
     export STEEDOS_UNPKG_ENABLED=false
@@ -314,7 +314,7 @@ else
 fi
 
 
-mkdir -p /steedos-storage/unpkg
+# mkdir -p /steedos-storage/unpkg
 mkdir -p /steedos-storage/builder6
 
 # Ensure the restore path exists in the container, so an archive can be copied to it, if need be.

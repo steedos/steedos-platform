@@ -7,6 +7,11 @@ import {
   get,
   isEmpty,
 } from "lodash";
+const path = require("path");
+const fs = require("fs");
+const clone = require("clone");
+const validator = require("validator");
+const yaml = require("js-yaml");
 
 if (isEmpty(process.env.STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN)) {
   process.env.STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN = "true";
@@ -15,6 +20,15 @@ if (isEmpty(process.env.STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN)) {
 if (isEmpty(process.env.STEEDOS_WIDGETS_ADDITIONAL)) {
   process.env.STEEDOS_WIDGETS_ADDITIONAL = "@steedos-widgets/liveblocks";
 }
+
+// unpkg
+process.env.UNPKG_BASE_URL = "/unpkg";
+process.env.NPM_CACHE_ENABLED = process.env.NPM_CACHE_ENABLED || "true";
+process.env.NPM_CACHE_FOLDER =
+  process.env.NPM_CACHE_FOLDER ||
+  path.join(process.env.B6_STORAGE_DIR, "unpkg");
+process.env.NPM_CACHE_PACKAGE_CONTENT =
+  process.env.NPM_CACHE_PACKAGE_CONTENT || "true";
 
 if (isEmpty(process.env.STEEDOS_UNPKG_URL)) {
   process.env.STEEDOS_UNPKG_URL = "https://unpkg.steedos.cn";
@@ -76,9 +90,6 @@ if (isEmpty(process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS)) {
   process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS = steedosPublicPageAsseturls;
 }
 
-process.env.NPM_CONFIG_REGISTRY =
-  process.env.NPM_REGISTRY_URL || "https://registry.npmjs.org/";
-
 if (isEmpty(process.env.SERIALIZER)) {
   process.env.SERIALIZER = "JSON";
 }
@@ -89,12 +100,6 @@ if (isEmpty(process.env.ROOT_URL)) {
 }
 
 process.env.ROOT_URL = process.env.ROOT_URL.replace(/\/+$/, "");
-
-const path = require("path");
-const fs = require("fs");
-const clone = require("clone");
-const validator = require("validator");
-const yaml = require("js-yaml");
 
 function calcString(str: string, content: any = process.env): any {
   if (!isString(str)) {
