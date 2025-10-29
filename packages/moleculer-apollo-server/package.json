@@ -1,6 +1,6 @@
 {
 	"name": "@steedos/moleculer-apollo-server",
-	"version": "3.0.0-beta.116",
+	"version": "3.0.0-beta.118",
 	"description": "Apollo GraphQL server for Moleculer API Gateway",
 	"main": "index.js",
 	"scripts": {
@@ -58,5 +58,5 @@
 		"lodash": "^4.17.21",
 		"object-hash": "^2.2.0"
 	},
-	"gitHead": "5faa4fd9601e2316a5fa428fcb945e3ecc8d1160"
+	"gitHead": "7511b2250673e97b6b7676aa46c93bd6cb49fd04"
 }
