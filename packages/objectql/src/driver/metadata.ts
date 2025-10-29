@@ -37,7 +37,7 @@ const BASERECORD = {
 const isAPIName = function (apiName, tableName) {
   let reg = new RegExp("^[a-z]([a-z0-9]|_(?!_))*[a-z0-9]$");
   if (tableName == "permission_fields") {
-    reg = new RegExp("^[a-z]([a-z0-9]|_(?!_)|\\.)*[a-z0-9]$");
+    reg = new RegExp("^[a-z]([a-z0-9]|_(?!_)|\\.(?!\\.))*[a-z0-9]$");
   }
   if (!reg.test(apiName.replace("__c", ""))) {
     throw new Error(
