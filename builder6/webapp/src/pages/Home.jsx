@@ -47,7 +47,6 @@ const Home = () => {
         goResetPassword(navigate)
       }else{
         let redirect_uri = new URLSearchParams(location?location.search:"").get('redirect_uri');
-        debugger;
         if (redirect_uri){
           window.location.href = redirect_uri;
         }else{
