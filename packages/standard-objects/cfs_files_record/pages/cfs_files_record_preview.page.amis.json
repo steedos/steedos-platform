@@ -51,10 +51,11 @@
                                 },
                                 {
                                     "type": "iframe",
-                                    "src": "${context.rootUrl}/api/page/public/pdf_view?fileUrl=/api/files/files/${_id}",
+                                    "src": "/api/files/files/${_id}",
                                     "visibleOn": "${ARRAYINCLUDES(['application/pdf'],record.original.type)}",
                                     "id": "u:dc63f1f2d0ab",
-                                    "source": "src"
+                                    "source": "src",
+                                    "className": "w-full"
                                 },
                                 {
                                     "type": "image",
@@ -114,7 +115,7 @@
                     ],
                     "id": "u:0bed5e9e0a6f",
                     "visibleOn": "${ARRAYINCLUDES(['application/vnd.openxmlformats-officedocument.wordprocessingml.document','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/pdf','image/png','image/jpeg','image/bmp','image/gif','image/webp','image/psd','image/svg','image/tiff'],${record.original.type})}",
-                    "className": "tab-container-office-preview"
+                    "className": "tab-container-office-preview p-0"
                 },
                 {
                     "title": "详细",
