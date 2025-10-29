@@ -17,7 +17,6 @@ services:
       - STEEDOS_AUTH_COOKIES_USE_SAMESITE=None
       - STEEDOS_TENANT_ENABLE_REGISTER=false
       - STEEDOS_TENANT_ENABLE_CREATE_TENANT=false
-      - NPM_CONFIG_REGISTRY=https://registry.npmmirror.com
       - B6_PORT=5100
       - B6_MO_LOG_LEVEL=warn
       - STEEDOS_INITIAL_PACKAGES=file:/steedos-packages/media-report,file:/steedos-packages/sync_orgs_users

@@ -76,6 +76,9 @@ if (isEmpty(process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS)) {
   process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS = steedosPublicPageAsseturls;
 }
 
+process.env.NPM_CONFIG_REGISTRY =
+  process.env.NPM_REGISTRY_URL || "https://registry.npmjs.org/";
+
 if (isEmpty(process.env.SERIALIZER)) {
   process.env.SERIALIZER = "JSON";
 }
