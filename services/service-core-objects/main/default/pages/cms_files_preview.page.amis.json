@@ -14,7 +14,7 @@
             "tabs": [
                 {
                     "title": "${'CustomLabels.cms_files_pagedetail_tab_preview' | t}",
-                    "className": "tab-container-office-preview",
+                    "className": "tab-container-office-preview p-0",
                     "body": [
                         {
                             "type": "page",
@@ -49,11 +49,11 @@
                                     "loading": true
                                 },
                                 {
-                                   "type": "pdf-viewer",
+                                   "type": "iframe",
                                     "id": "pdf-viewer",
                                     "name": "file",
-                                    "width": 500,
                                     "source": "src",
+                                    "className": "pdf-viewer w-full",
                                     "src": "/api/v6/files/download/cfs.files.filerecord/${versions[0].value}/${name}",
                                     "visibleOn": "${ARRAYINCLUDES(['pdf','PDF'],extention)}"
                                 },
