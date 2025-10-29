@@ -35,6 +35,9 @@
   },
   "engines": {
     "node": ">= 18.x.x"
+  },  
+  "publishConfig": {
+    "access": "public"
   },
   "dependencies": {
     "bullmq": "5.7.4"
