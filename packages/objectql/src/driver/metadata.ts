@@ -34,8 +34,11 @@ const BASERECORD = {
   record_permissions: PERMISSIONS,
 };
 
-const isAPIName = function (apiName) {
-  const reg = new RegExp("^[a-z]([a-z0-9]|_(?!_))*[a-z0-9]$");
+const isAPIName = function (apiName, tableName) {
+  let reg = new RegExp("^[a-z]([a-z0-9]|_(?!_))*[a-z0-9]$");
+  if (tableName == "permission_fields") {
+    reg = new RegExp("^[a-z]([a-z0-9]|_(?!_)|\\.)*[a-z0-9]$");
+  }
   if (!reg.test(apiName.replace("__c", ""))) {
     throw new Error(
       "API 名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符." +
@@ -364,7 +367,7 @@ export class MetadataDriver extends SteedosMongoDriver {
   async insert(tableName: string, doc: any) {
     const nameValue = tableName === "apps" ? doc.code : doc.name;
     if (nameValue && tableName != "permission_objects") {
-      isAPIName(nameValue);
+      isAPIName(nameValue, tableName);
     }
 
     const result = await super.insert(tableName, doc);
@@ -382,7 +385,7 @@ export class MetadataDriver extends SteedosMongoDriver {
   ): Promise<any> {
     const nameValue = tableName === "apps" ? data.code : data.name;
     if (nameValue && tableName != "permission_objects") {
-      isAPIName(nameValue);
+      isAPIName(nameValue, tableName);
     }
 
     const result = await super.update(tableName, id, data);

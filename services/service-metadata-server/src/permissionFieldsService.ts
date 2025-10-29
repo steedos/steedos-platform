@@ -85,7 +85,7 @@ module.exports = {
             });
           const count = result.length;
           if (count == 0) {
-            const apiName = `${permissionSet.name}_${record.object_name}_${field.name}`;
+            const apiName = `${permissionSet.name}.${record.object_name}.${field.name}`;
             const fieldPermission = await getFieldPermission(apiName);
             await objectql.getObject("permission_fields").directInsert({
               name: apiName,
