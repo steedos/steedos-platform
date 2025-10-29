@@ -1,0 +1,16 @@
+version: "2"
+
+plugins:
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - javascript
+  eslint:
+    enabled: true
+    channel: "eslint-5"
+  fixme:
+    enabled: true
+
+exclude_paths:
+- test/

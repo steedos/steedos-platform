@@ -11,10 +11,10 @@
     "description": "steedos package",
     "dependencies": {
         "@steedos/metadata-core": "3.0.0-beta.116",
+        "@steedos/moleculer-bullmq": "3.0.0-beta.116",
         "@steedos/service-object-mixin": "3.0.0-beta.116",
         "amis-formula": "~6.3.0",
-        "clone": "^2.1.2",
-        "moleculer-bullmq": "3.0.0"
+        "clone": "^2.1.2"
     },
     "repository": {},
     "license": "MIT",

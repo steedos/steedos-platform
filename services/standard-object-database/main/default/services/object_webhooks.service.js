@@ -6,7 +6,7 @@
  * @Description: 
  */
 const { parseURL } = require('ioredis/built/utils');
-const BullMqMixin = require('moleculer-bullmq');
+const BullMqMixin = require('@steedos/moleculer-bullmq');
 const axios = require('axios');
 const { evaluate } = require("amis-formula")
 const serviceObjectMixin = require('@steedos/service-object-mixin');
