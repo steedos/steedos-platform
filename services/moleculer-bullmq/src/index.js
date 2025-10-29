@@ -22,7 +22,7 @@ module.exports = {
   created() {
     this.$queues = Object.entries(this.schema.actions || {}).filter(([, { queue }]) => queue).map(([name]) => name)
     this.$queueResolved = {}
-    this.$connection = this.settings.bullmq.client ? this.settings.bullmq.client : this.broker.cacher.client.options
+    this.$connection = this.settings.bullmq.client ? this.settings.bullmq.client : process.env.B6_CLUSTER_TRANSPORTER
   },
   started() {
     if (this.$queues.length > 0) {

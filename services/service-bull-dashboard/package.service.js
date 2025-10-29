@@ -76,14 +76,8 @@ module.exports = {
 	 * Service started lifecycle event handler
 	 */
 	async started() {
-		let client;
-		if(process.env.STEEDOS_BULLMQ_REDIS){
-			client = parseURL(process.env.STEEDOS_BULLMQ_REDIS);
-		}else{
-			client = parseURL(process.env.CACHER);
-			client.db = 9;
-		}
-
+		let client = process.env.B6_CLUSTER_TRANSPORTER;
+	
 		const queueMQ = new QueueMQ('object_webhooks', {connection: client});
 		const serverAdapter = new ExpressAdapter();
 		serverAdapter.setBasePath(basePath)
