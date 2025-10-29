@@ -10,9 +10,9 @@ import {
 import { ApiTags } from "@nestjs/swagger";
 
 @ApiTags("App")
-@Controller("/api/")
+@Controller("/")
 export class AppController {
-  @Get("/v6/amis/public_settings")
+  @Get("/api/v6/amis/public_settings")
   getPublicSettings() {
     return {
       rootUrl: process.env.ROOT_URL,
@@ -27,20 +27,26 @@ export class AppController {
     };
   }
 
-  @Get("/health_check")
+  @Get("/api/health_check")
   health_check() {
     return { status: "ok" };
   }
 
-  @Post("/amis/health_check")
-  @Get("/amis/health_check")
+  @Post("/api/amis/health_check")
+  @Get("/api/amis/health_check")
   amis_health_check() {
     return { status: 0, data: {} };
   }
 
-  @Post("/v6/amis/health_check")
-  @Get("/v6/amis/health_check")
+  @Post("/api/v6/amis/health_check")
+  @Get("/api/v6/amis/health_check")
   amis_health_check_v6() {
     return { status: 0, data: {} };
+  }
+
+  @Get(".well-known/appspecific/com.chrome.devtools.json")
+  handleDevtoolsJson() {
+    // Return empty or dummy data, adjust as needed
+    return {};
   }
 }
