@@ -35,12 +35,12 @@
   },
   "engines": {
     "node": ">= 18.x.x"
-  },  
+  },
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
-    "bullmq": "5.7.4"
+    "bullmq": "^5.62.0"
   },
   "devDependencies": {
     "@types/jest": "^29.2.4",

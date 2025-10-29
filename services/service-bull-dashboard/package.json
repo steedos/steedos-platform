@@ -8,11 +8,11 @@
         "access": "public"
     },
     "dependencies": {
-        "@bull-board/express": "^6.10.1",
+        "@bull-board/express": "^6.14.0",
         "@steedos/auth": "3.0.0-beta.116",
         "@steedos/router": "3.0.0-beta.116",
         "@steedos/service-package-loader": "3.0.0-beta.116",
-        "bullmq": "5.7.4"
+        "bullmq": "^5.62.0"
     },
     "gitHead": "5faa4fd9601e2316a5fa428fcb945e3ecc8d1160"
 }

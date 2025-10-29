@@ -3088,35 +3088,35 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@bull-board/api@npm:6.13.1":
-  version: 6.13.1
-  resolution: "@bull-board/api@npm:6.13.1"
+"@bull-board/api@npm:6.14.0":
+  version: 6.14.0
+  resolution: "@bull-board/api@npm:6.14.0"
   dependencies:
     redis-info: ^3.1.0
   peerDependencies:
-    "@bull-board/ui": 6.13.1
-  checksum: f4ec28aff79d124434adb305b3cb5027854f63fc02260dfbf3e82898e3fc9bb2fa91c4c7b5c8e50c0977490a983de4651c06a045ce5b66ff962bf9d6bc9330a2
+    "@bull-board/ui": 6.14.0
+  checksum: 715d616f29bc6a9063c8e109532b04433c97520499e8b016926a63bb26721abca0bdda8e4842f7333ed8efa2abf1dd1bd4dfb5505441bc99897bc7a80e1cd49b
   languageName: node
   linkType: hard
 
-"@bull-board/express@npm:^6.10.1":
-  version: 6.13.1
-  resolution: "@bull-board/express@npm:6.13.1"
+"@bull-board/express@npm:^6.14.0":
+  version: 6.14.0
+  resolution: "@bull-board/express@npm:6.14.0"
   dependencies:
-    "@bull-board/api": 6.13.1
-    "@bull-board/ui": 6.13.1
+    "@bull-board/api": 6.14.0
+    "@bull-board/ui": 6.14.0
     ejs: ^3.1.10
     express: ^4.21.1 || ^5.0.0
-  checksum: 159ce6f5d596f7b4ee4863f6b827abc5d22a5e51e4b818607bd1fd334ca037f1ba3589eaeaba4b7513a8da8eddd7a766df0e5a915b887a2349cab255d05e758c
+  checksum: 6779574ca6ec03ce74df78e066fb1dc75376441d4e9fb08995cc9110c921753d46bdcf5b4d7f95c7c607c86f0657aaf80d0505b2074be9c993c8945d64e60503
   languageName: node
   linkType: hard
 
-"@bull-board/ui@npm:6.13.1":
-  version: 6.13.1
-  resolution: "@bull-board/ui@npm:6.13.1"
+"@bull-board/ui@npm:6.14.0":
+  version: 6.14.0
+  resolution: "@bull-board/ui@npm:6.14.0"
   dependencies:
-    "@bull-board/api": 6.13.1
-  checksum: ddf6f5ae27c37b532b0f614823755bde1b208121fdaa329e8bfc4bd95f9c949639921acdae35aecf5226aaa42448eecc9255156fc3b68757570f8b2e4ef8a536
+    "@bull-board/api": 6.14.0
+  checksum: defb02b4581a1cf2afc9cb85f805570498cdbfe7cc58acfae72597cb22dae60d749f2578ab3b7baf2067cd69351abce813623707491d4465f583d2b328452ebb
   languageName: node
   linkType: hard
 
@@ -9999,7 +9999,7 @@ __metadata:
   resolution: "@steedos/moleculer-bullmq@workspace:services/moleculer-bullmq"
   dependencies:
     "@types/jest": ^29.2.4
-    bullmq: 5.7.4
+    bullmq: ^5.62.0
     coveralls: ^3.1.1
     eslint: ^8.30.0
     eslint-plugin-jest: ^27.1.7
@@ -10288,11 +10288,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@steedos/service-bull-dashboard@workspace:services/service-bull-dashboard"
   dependencies:
-    "@bull-board/express": ^6.10.1
+    "@bull-board/express": ^6.14.0
     "@steedos/auth": 3.0.0-beta.116
     "@steedos/router": 3.0.0-beta.116
     "@steedos/service-package-loader": 3.0.0-beta.116
-    bullmq: 5.7.4
+    bullmq: ^5.62.0
   languageName: unknown
   linkType: soft
 
@@ -15402,18 +15402,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bullmq@npm:5.7.4":
-  version: 5.7.4
-  resolution: "bullmq@npm:5.7.4"
+"bullmq@npm:^5.62.0":
+  version: 5.62.0
+  resolution: "bullmq@npm:5.62.0"
   dependencies:
-    cron-parser: ^4.6.0
-    ioredis: ^5.3.2
-    msgpackr: ^1.10.1
+    cron-parser: ^4.9.0
+    ioredis: ^5.4.1
+    msgpackr: ^1.11.2
     node-abort-controller: ^3.1.1
     semver: ^7.5.4
     tslib: ^2.0.0
-    uuid: ^9.0.0
-  checksum: 71b45f9cdc05eee06549297fe2a1c56181caf0de92379e7135d5efc7326abbafaced5bbc5e9a2d4edca46bf11e8578cec5eff7e7583c82db4bb6cab22a01e213
+    uuid: ^11.1.0
+  checksum: 2c15d29df7ebd6d37bef82d7185dd5b4f795eb43c184d1f9bc041edd60c6fe1af134f87a2b8c6b4fbe108f41239b6086ab461920c33bff17a51377048df3543f
   languageName: node
   linkType: hard
 
@@ -17781,7 +17781,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cron-parser@npm:^4.2.0, cron-parser@npm:^4.6.0":
+"cron-parser@npm:^4.2.0, cron-parser@npm:^4.9.0":
   version: 4.9.0
   resolution: "cron-parser@npm:4.9.0"
   dependencies:
@@ -30146,7 +30146,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"msgpackr@npm:^1.10.1":
+"msgpackr@npm:^1.11.2":
   version: 1.11.5
   resolution: "msgpackr@npm:1.11.5"
   dependencies:
@@ -41836,6 +41836,15 @@ __metadata:
   bin:
     uuid: dist/bin/uuid
   checksum: 56d4e23aa7ac26fa2db6bd1778db34cb8c9f5a10df1770a27167874bf6705fc8f14a4ac414af58a0d96c7653b2bd4848510b29d1c2ef8c91ccb17429c1872b5e
+  languageName: node
+  linkType: hard
+
+"uuid@npm:^11.1.0":
+  version: 11.1.0
+  resolution: "uuid@npm:11.1.0"
+  bin:
+    uuid: dist/esm/bin/uuid
+  checksum: 840f19758543c4631e58a29439e51b5b669d5f34b4dd2700b6a1d15c5708c7a6e0c3e2c8c4a2eae761a3a7caa7e9884d00c86c02622ba91137bd3deade6b4b4a
   languageName: node
   linkType: hard
 
