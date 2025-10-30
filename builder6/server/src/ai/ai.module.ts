@@ -2,10 +2,11 @@ import { Module } from "@nestjs/common";
 import { AiController } from "./ai.controller";
 import { AiService } from "./ai.service";
 import { AuthModule } from "@builder6/core";
+import { MongodbModule } from "@builder6/core";
 import { ChatController } from "./chat.controller";
 
 @Module({
-  imports: [AuthModule],
+  imports: [AuthModule, MongodbModule],
   controllers: [AiController, ChatController],
   providers: [AiService],
 })

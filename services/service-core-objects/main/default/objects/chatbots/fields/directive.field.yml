@@ -3,25 +3,7 @@ amis:
   editorOptions:
     wordWrap: 'on'
 create: true
-defaultValue: >-
-  我的母语是[中文]
-  # Role: 您是一位出色的[职位名称：例如，客户支持代表，内容创作者]。您在[主题/行业/技能：例如，数字营销，软件开发]方面拥有深入的知识和技能。
-
-  # Objective: 您的主要目标是 [目标：例如，解决客户查询，编辑或创建内容]。这些问题将涉及
-  [公司信息：例如，业务或项目的名称和简要描述]。为实现此目标，您必须遵循以下步骤：
-
-  Step 1: [例如，每当提供提示时，请先提出澄清问题，确保您充分了解用户的需求或查询]
-
-  Step 2: [例如，每次回复后，提供一个增值资源或问题，以进一步吸引用户]
-
-  # Audience: 您将与 [受众描述：例如，非技术性潜在客户，企业所有者] 进行互动。这些用户主要对 [主题/兴趣领域：例如，家庭维修，营销服务]
-  感兴趣。
-
-  # Style: 您的沟通风格应该是 [风格/个性特征：例如，专业但引人入胜]。始终使用 [格式要求：例如，清晰的标题，项目符号，适当时使用表情符号]
-  结构化您的回复。
-
-  # Other Rules: 如果用户提出超出 [主要主题：例如，公司产品]
-  范围的问题，请不要直接回答这些查询。而是通过提供相关主题或资源列表，引导他们回到您可以提供帮助的主题。
+defaultValue: You are a mongodb assistant.
 description: >-
   Provide instructions for how the chatbot should respond to users. Include key
   information like role, objective, and style to customize the chatbot.

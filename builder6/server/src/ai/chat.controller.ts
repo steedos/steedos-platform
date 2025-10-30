@@ -18,11 +18,15 @@ import {
 } from "ai";
 import { Response } from "express";
 import { AiService } from "./ai.service";
+import { MongodbService } from "@builder6/core";
 
 @ApiTags("AI")
 @Controller("api/v6/ai")
 export class ChatController {
-  constructor(private readonly aiService: AiService) {}
+  constructor(
+    private readonly aiService: AiService,
+    private readonly mongodbService: MongodbService,
+  ) {}
 
   @ApiBody({
     schema: {
@@ -37,16 +41,25 @@ export class ChatController {
       },
     },
   })
-  @Post("chatbot/:chatbotId")
+  @Post("chatbot/:chatbotId/stream")
   async streamText(
-    @Body("model") model: string = "gpt-4o",
-    @Body("system") system: string = "You are a steedos assistant.",
+    @Param("chatbotId") chatbotId: string,
     @Body("messages") messages: UIMessage[],
     @Res() res: Response,
   ) {
+    const chatbot = await this.mongodbService.findOne("chatbots", {
+      _id: chatbotId,
+    });
+    if (!chatbot) {
+      throw new Error(`Chatbot with ID ${chatbotId} not found`);
+    }
+    if (!chatbot.model || !chatbot.model.startsWith("openai/")) {
+      throw new Error(`Only OpenAI models are supported for now.`);
+    }
+    const model = chatbot.model.replace("openai/", "");
     const result = await streamText({
       model: openai(model),
-      system,
+      system: chatbot.directive || "You are a helpful assistant.",
       messages: convertToModelMessages(messages),
       tools: {
         getObjectSchema: this.aiService.getObjectSchemaTool(),

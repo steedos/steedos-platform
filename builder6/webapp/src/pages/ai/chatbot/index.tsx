@@ -8,7 +8,7 @@ export const ChatbotView = () => {
     const { chatbotId } = useParams();
       const { messages, sendMessage, status } = useChat({
     transport: new DefaultChatTransport({
-      api: `${import.meta.env.VITE_B6_ROOT_URL}/api/v6/ai/chatbot/${chatbotId}`,
+      api: `${import.meta.env.VITE_B6_ROOT_URL}/api/v6/ai/chatbot/${chatbotId}/stream`,
     }),
   });
   const [input, setInput] = useState('');
