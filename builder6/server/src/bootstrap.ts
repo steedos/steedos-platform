@@ -175,7 +175,7 @@ export async function bootstrap() {
   }
 
   await app.startAllMicroservices();
-  console.log("Microservice is listening");
+  // console.log("Microservice is listening");
 
   process.on("uncaughtException", (error) => {
     console.error("uncaughtException:", error);

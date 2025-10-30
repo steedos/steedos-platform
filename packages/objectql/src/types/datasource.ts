@@ -718,13 +718,13 @@ export class SteedosDataSourceType implements Dictionary {
     this.initializing = true;
     this.initPromise = (async () => {
       try {
-        logger.log(`datasource.init started: ${this.name}`);
+        // logger.log(`datasource.init started: ${this.name}`);
         this.initObjectPermissions();
         if (!this.service) {
           const broker = this._schema.metadataBroker;
           this.service = await createDataSourceService(broker, this);
         }
-        logger.log(`datasource.init completed: ${this.name}`);
+        // logger.log(`datasource.init completed: ${this.name}`);
       } catch (error) {
         console.error(
           "Initialization failed for datasource:",
