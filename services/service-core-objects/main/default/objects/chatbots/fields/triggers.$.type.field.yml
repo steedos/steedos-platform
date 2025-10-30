@@ -1,0 +1,10 @@
+name: triggers.$.type
+type: select
+label: 类型
+sort_no: 185
+is_wide: true
+options: 
+  - label: 建议
+    value: suggestions
+amis:
+  value: suggestions

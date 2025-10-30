@@ -1,0 +1,5 @@
+name: locked
+label: 已锁定
+sort_no: 190
+type: boolean
+visible_on: '{{false}}'

@@ -1,0 +1,7 @@
+name: owner
+hidden: false
+index: true
+label: 作者
+omit: false
+sort_no: 120
+sortable: true

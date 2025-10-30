@@ -68,6 +68,9 @@ tab_items:
   admin_steedos_packages:
     group: apps
     index: 18
+  admin_chatbots:
+    group: apps
+    index: 19
   admin_developer:
     group: development
     index: 19.50

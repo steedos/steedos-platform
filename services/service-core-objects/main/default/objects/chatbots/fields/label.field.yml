@@ -1,0 +1,10 @@
+name: label
+filterable: true
+group: Setup
+hidden: false
+index: true
+label: Name
+required: true
+searchable: true
+sort_no: 10
+type: text

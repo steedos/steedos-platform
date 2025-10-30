@@ -1,0 +1,17 @@
+name: suggestions
+type: select
+label: 建议
+sort_no: 187
+is_wide: true
+group: Actions
+description: 当用户开始对话时显示
+options: []
+multiple: true
+amis:
+  type: "input-array"
+  name: 'suggestions'
+  items: {
+      "type": "input-text",
+      "clearable": false
+  }
+  

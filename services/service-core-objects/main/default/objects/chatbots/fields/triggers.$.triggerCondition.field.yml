@@ -1,0 +1,10 @@
+name: triggers.$.triggerCondition
+type: select
+label: 触发条件
+sort_no: 186
+is_wide: true
+options: 
+  - label: 当用户开始对话时
+    value: beginning_of_conversation
+amis:
+  value: beginning_of_conversation

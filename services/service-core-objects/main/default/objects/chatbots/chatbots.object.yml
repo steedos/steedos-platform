@@ -1,0 +1,32 @@
+name: chatbots
+custom: true
+enable_api: true
+enable_dataloader: false
+enable_enhanced_lookup: true
+enable_events: false
+enable_files: false
+enable_form_tabs: true
+enable_inline_edit: false
+enable_instances: false
+enable_lock_detail: true
+enable_notes: false
+enable_split: false
+enable_tasks: false
+enable_tree: false
+enable_workflow: true
+field_groups:
+  - group_name: Setup
+    collapsed: false
+  - group_name: Instrctions
+    collapsed: true
+  - group_name: Actions
+    collapsed: true
+  - group_name: Style
+    collapsed: true
+  - group_name: 系统信息
+    collapsed: true
+icon: live_chat
+is_enable: true
+label: 智能体
+locked: false
+version: 2

@@ -1,0 +1,15 @@
+name: dataSourcesNoResultsMode
+type: select
+label: 当知识来源中找不到结果时
+description: 定义当知识来源中找不到结果时的体验。
+group: Instrctions
+sort_no: 135
+is_wide: true
+defaultValue: chatgpt
+options:
+  - label: 显示自定义消息
+    value: custom
+  - label: 生成AI响应，不使用知识来源
+    value: chatgpt
+amis:
+  value: chatgpt

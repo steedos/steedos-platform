@@ -1,0 +1,10 @@
+name: name
+filterable: true
+group: Setup
+hidden: false
+index: true
+label: API Name
+required: true
+searchable: true
+sort_no: 15
+type: text

@@ -1,0 +1,55 @@
+name: defaultMessageMode
+amis:
+  type: list-select
+  options:
+    - value: static
+      body: >-
+        <div class="m-l-sm m-r-sm m-b-sm m-t-xs"><svg class="mb-2 mr-2 slds-icon
+        slds-icon--small slds-icon-text-default test-class inline"
+        aria-hidden="true"><use
+        xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit"></use></svg>
+                                        <div class="font-medium text-lg inline">静态</div>
+                                        <div class="text-sm">在每次对话开始时显示相同的信息。</div>
+        </div>
+    - value: generated
+      body: >-
+        <div class="m-l-sm m-r-sm  m-b-sm m-t-xs"><svg class="mb-2 mr-2
+        slds-icon slds-icon--small slds-icon-text-default test-class inline"
+        aria-hidden="true"><use
+        xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#magicwand"></use></svg>
+                                        <div class="font-medium text-lg inline">生成</div>
+                                    <div class="text-sm">使用 AI 为每次对话生成独特的问候语。</div>
+        </div>
+create: true
+data_type: text
+defaultValue: static
+enable_enhanced_lookup: true
+enable_thousands: true
+filterable: false
+filters: []
+generated: false
+group: Setup
+hidden: false
+index: false
+is_name: false
+is_wide: true
+label: Greeting type
+multiple: false
+options:
+  - label: Static
+    value: static
+    description: Show the same message at he start of every conversation
+  - label: Generated
+    value: generated
+    description: Use AI to generate a unique greeting for every conversation
+primary: false
+readonly: false
+required: false
+searchable: false
+show_as_qr: false
+sort_no: 30
+sortable: true
+static: false
+type: select
+unique: false
+write_requires_master_read: false

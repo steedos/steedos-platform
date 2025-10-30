@@ -1,0 +1,13 @@
+name: triggers.$.suggestions
+type: text
+label: 建议
+sort_no: 187
+is_wide: true
+amis:
+  type: "input-array"
+  name: 'suggestions'
+  items: {
+      "type": "input-text",
+      "clearable": false
+  }
+  

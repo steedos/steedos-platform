@@ -1,0 +1,7 @@
+name: embedHosts
+hidden: false
+label: Embed Hosts
+language: json
+sort_no: 10
+type: code
+visible_on: '{{false}}'

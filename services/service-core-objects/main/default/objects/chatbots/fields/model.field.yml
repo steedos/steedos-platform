@@ -1,0 +1,11 @@
+name: model
+filterable: true
+group: Setup
+hidden: false
+index: true
+label: Model
+required: true
+searchable: true
+sort_no: 20
+type: text
+description: Example openai/gpt-4o
