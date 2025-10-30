@@ -29,7 +29,6 @@ module.exports = {
 			name: packageName,
 			isPackage: false
 		},
-		unpkgUrl: process.env.STEEDOS_UNPKG_URL ? process.env.STEEDOS_UNPKG_URL: 'https://unpkg.steedos.cn',
 	},
 
 	/**
@@ -59,16 +58,26 @@ module.exports = {
 		loadUnpkgRoutes: function() {
 			try {
 				const router = require('@steedos/router').staticRouter()
-				if (this.settings.unpkgUrl) {
-					router.get('/unpkg.com/*', (req, res) => {
-						const packageUrl = req.path.split('/unpkg.com')[1]
-						res.redirect(this.settings.unpkgUrl + packageUrl);
-						return
-					})
+				if (process.env.STEEDOS_LICENSE) {
+					 // unpkg
+					process.env.STEEDOS_UNPKG_URL = "/unpkg";
+					process.env.UNPKG_BASE_URL = "/unpkg";
+					process.env.NPM_CACHE_FOLDER = path.join(
+						process.env.B6_STORAGE_DIR,
+						"unpkg",
+					);
+					const eeUnpkg = require("@steedos/ee_unpkg");
+			
+					const unpkgApp = eeUnpkg();
+					router.use("/", unpkgApp);
 				}
+
+				router.get('/unpkg.com/*', (req, res) => {
+					const packageUrl = req.path.split('/unpkg.com')[1]
+					res.redirect(process.env.STEEDOS_UNPKG_URL + packageUrl);
+					return
+				})
 				
-				// WebApp.connectHandlers.use(router);
-				// SteedosApi?.server?.use(router);
 			} catch (error) {
 				console.error(error)
 			}

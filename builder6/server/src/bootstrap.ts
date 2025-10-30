@@ -20,7 +20,6 @@ import {
   errorResponsePlugin,
   proxyEventsPlugin,
 } from "http-proxy-middleware";
-const eeUnpkg = require("@steedos/ee_unpkg");
 
 import project from "../package.json";
 import { AllExceptionsFilter } from "@builder6/core";
@@ -187,23 +186,6 @@ export async function bootstrap() {
   const expressApp = app.getHttpAdapter().getInstance();
 
   expressApp.use(require("@steedos/router").staticRouter());
-
-  if (
-    process.env.STEEDOS_LICENSE &&
-    process.env.STEEDOS_UNPKG_URL == "/unpkg"
-  ) {
-    // unpkg
-    process.env.UNPKG_BASE_URL = "/unpkg";
-    process.env.NPM_CACHE_ENABLED = process.env.NPM_CACHE_ENABLED || "true";
-    process.env.NPM_CACHE_FOLDER = path.join(
-      process.env.B6_STORAGE_DIR,
-      "unpkg",
-    );
-    process.env.NPM_CACHE_PACKAGE_CONTENT = "true";
-
-    const unpkgApp = eeUnpkg();
-    expressApp.use("/", unpkgApp);
-  }
 
   // 加载 webapp
   const webappPackagePath = require.resolve("@steedos/webapp/package.json");
