@@ -78,11 +78,6 @@ WORKDIR /opt/steedos/steedosctl
 
 RUN npm install --only=prod && npm install --only=prod -g
 
-# unpkg
-COPY ./app/unpkg /opt/steedos/unpkg
-WORKDIR /opt/steedos/unpkg
-
-RUN yarn && yarn cache clean
 
 # nodered
 COPY ./app/nodered /opt/steedos/nodered

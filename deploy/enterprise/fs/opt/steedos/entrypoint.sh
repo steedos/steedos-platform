@@ -16,12 +16,6 @@ init_env_file() {
 
   mkdir -p "$CONF_PATH"
 
-  if [[ "${STEEDOS_UNPKG_URL}" == /disabled-unpkg* ]]; then
-    export STEEDOS_UNPKG_ENABLED=true
-  else
-    export STEEDOS_UNPKG_ENABLED=false
-  fi
-
   if [ -z "${STEEDOS_NODERED_ENABLED}" ]; then
     export STEEDOS_NODERED_ENABLED=true
   fi
@@ -252,7 +246,6 @@ configure_supervisord() {
 
   cp -f "$supervisord_conf_source"/nginx.conf "$SUPERVISORD_CONF_TARGET"
   cp -f "$supervisord_conf_source"/steedos.conf "$SUPERVISORD_CONF_TARGET"
-  cp -f "$supervisord_conf_source"/unpkg.conf "$SUPERVISORD_CONF_TARGET"
   cp -f "$supervisord_conf_source"/nodered.conf "$SUPERVISORD_CONF_TARGET"
 
   # Disable services based on configuration
@@ -314,14 +307,11 @@ else
 fi
 
 
-# mkdir -p /steedos-storage/unpkg
-mkdir -p /steedos-storage/builder6
-
 # Ensure the restore path exists in the container, so an archive can be copied to it, if need be.
-mkdir -p /steedos-storage/data/{backup,restore,nodered,unpkg}
+mkdir -p /steedos-storage/data/{backup,restore,nodered}
 
 # Create sub-directory to store services log in the container mounting folder
-mkdir -p /steedos-storage/logs/{supervisor,steedos,cron,mongodb,redis,nginx,unpkg,nodered,builder6}
+mkdir -p /steedos-storage/logs/{supervisor,steedos,cron,mongodb,redis,nginx,nodered}
 
 configure_supervisord
 
