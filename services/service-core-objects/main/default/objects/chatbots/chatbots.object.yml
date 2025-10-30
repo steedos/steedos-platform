@@ -17,7 +17,7 @@ enable_workflow: true
 field_groups:
   - group_name: Setup
     collapsed: false
-  - group_name: Instrctions
+  - group_name: Instructions
     collapsed: true
   - group_name: Actions
     collapsed: true
