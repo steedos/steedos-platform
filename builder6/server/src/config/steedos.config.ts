@@ -21,15 +21,6 @@ if (isEmpty(process.env.STEEDOS_WIDGETS_ADDITIONAL)) {
   process.env.STEEDOS_WIDGETS_ADDITIONAL = "@steedos-widgets/liveblocks";
 }
 
-// unpkg
-process.env.UNPKG_BASE_URL = "/unpkg";
-process.env.NPM_CACHE_ENABLED = process.env.NPM_CACHE_ENABLED || "true";
-process.env.NPM_CACHE_FOLDER =
-  process.env.NPM_CACHE_FOLDER ||
-  path.join(process.env.B6_STORAGE_DIR, "unpkg");
-process.env.NPM_CACHE_PACKAGE_CONTENT =
-  process.env.NPM_CACHE_PACKAGE_CONTENT || "true";
-
 if (isEmpty(process.env.STEEDOS_UNPKG_URL)) {
   process.env.STEEDOS_UNPKG_URL = "https://unpkg.steedos.cn";
 }
