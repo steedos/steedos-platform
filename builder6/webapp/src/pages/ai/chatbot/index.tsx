@@ -2,22 +2,42 @@ import { useParams, useSearchParams } from 'react-router-dom';
 
 import { useChat } from '@ai-sdk/react';
 import { DefaultChatTransport } from 'ai';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const ChatbotView = () => {
-    const { chatbotId } = useParams();
-      const { messages, sendMessage, status } = useChat({
+  const { chatbotId } = useParams();
+  const { messages, sendMessage, status } = useChat({
     transport: new DefaultChatTransport({
       api: `${import.meta.env.VITE_B6_ROOT_URL}/api/v6/ai/chatbot/${chatbotId}/stream`,
     }),
   });
   const [input, setInput] = useState('');
+  const [chatbot, setChatbot] = useState(null);
+
+  useEffect(() => {
+    if (!chatbotId) return;
+
+    const fetchChatbot = async () => {
+      try {
+        const res = await fetch(
+          `${import.meta.env.VITE_B6_ROOT_URL}/api/v6/data/chatbots/${chatbotId}`
+        );
+        const data = await res.json();
+        // 假设服务端返回的 JSON 中包含 name 字段
+        setChatbot(data ?? null);
+      } catch (error) {
+        console.error('获取 Chatbot 名称失败:', error);
+      }
+    };
+
+    fetchChatbot();
+  }, [chatbotId]);
 
   return (
 <div className="flex flex-col h-screen bg-gray-50">
   {/* 顶部标题（可选） */}
   <div className="p-4 border-b border-gray-300 bg-white shadow-sm">
-  <h1 className="text-xl font-semibold">AI Chat</h1>
+  <h1 className="text-xl font-semibold">{chatbot?.label || 'Chatbot'}</h1>
   </div>
 
   <div className="flex-grow overflow-y-auto p-4 space-y-2">
