@@ -191,7 +191,7 @@ export class AppGateway implements OnGatewayConnection, OnGatewayDisconnect {
   }
 
   handleDisconnect(client: Socket) {
-    console.log("Socket.IO disconnected:", client.id);
+    // console.log("Socket.IO disconnected:", client.id);
   }
 
   metadataChange({ type, action, _id, name, objectName }) {
