@@ -1,10 +1,10 @@
-import { getSteedosConfig } from "@steedos/objectql";
+import { getSteedosConfig, getSteedosSchema } from "@steedos/objectql";
 import { db } from "../db";
 import * as _ from "lodash";
 import chalk from "chalk";
 const clone = require("clone");
 
-declare var MailQueue;
+// declare var MailQueue;
 declare var SMSQueue;
 
 const config = getSteedosConfig();
@@ -242,24 +242,16 @@ export const getSteedosService = () => {
 
 export const sendMail = async (mail: any): Promise<void> => {
   const { to, subject, html } = mail;
-  const config = getSteedosConfig().email || {};
-  let canSend = canSendEmail();
-  //如果没有配置发送邮件服务，则打印log
   console.log(chalk.green(`MAIL: ${to}, ${subject}`));
-  if (!canSend) {
-    console.log(
-      chalk.red(
-        "ERROR sending mail, please set email configs in steedos.config.js",
-      ),
-    );
-    return;
-  } else {
-    MailQueue.send({
-      to: to,
-      from: config.from || "华炎魔方",
-      subject: subject,
-      html: html,
-    });
+  try {
+    const mailOptions = {
+      to, // 收件人
+      subject, // 主题
+      html, // 内容
+    };
+    await getSteedosSchema().broker.call("@builder6/email.send", mailOptions);
+  } catch (e) {
+    console.log(e);
   }
 };
 
