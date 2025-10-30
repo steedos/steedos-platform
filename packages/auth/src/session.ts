@@ -147,11 +147,11 @@ export async function auth(request: Request, response: Response): Promise<any> {
     }
   }
 
-  if (request.query["X-Auth-Token"]) {
+  if (request.query && request.query["X-Auth-Token"]) {
     authToken = request.query["X-Auth-Token"];
   }
 
-  if (request.query["X-Space-Id"]) {
+  if (request.query && request.query["X-Space-Id"]) {
     spaceId = request.query["X-Space-Id"];
   }
 
