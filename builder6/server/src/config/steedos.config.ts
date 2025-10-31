@@ -87,7 +87,7 @@ if (isEmpty(process.env.SERIALIZER)) {
 
 if (isEmpty(process.env.ROOT_URL)) {
   console.error("ERROR: Environment variable ROOT_URL is not defined.");
-  process.env.ROOT_URL = "http://localhost";
+  process.env.ROOT_URL = `http://127.0.0.1:${process.env.B6_PORT}`
 }
 
 process.env.ROOT_URL = process.env.ROOT_URL.replace(/\/+$/, "");
