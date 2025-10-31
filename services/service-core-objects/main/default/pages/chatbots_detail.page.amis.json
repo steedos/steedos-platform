@@ -1,0 +1,393 @@
+{
+    "type": "page",
+    "title": "Welcome to Steedos",
+    "body": [
+        {
+            "type": "flex",
+            "id": "u:1ba760c11831",
+            "items": [
+                {
+                    "type": "container",
+                    "body": [
+                        {
+                            "id": "u:3638656e8e37",
+                            "type": "steedos-object-form",
+                            "label": "对象表单",
+                            "objectApiName": "chatbots",
+                            "recordId": "${recordId}",
+                            "appId": "${appId}",
+                            "mode": "edit",
+                            "className": "mb-4",
+                            "enableInitApi": false,
+                            "form": {
+                                "id": "u:2efee5835bf6",
+                                "actions": [
+                                    {
+                                        "type": "submit",
+                                        "label": "保存",
+                                        "primary": true,
+                                        "disabled": true,
+                                        "id": "u:66a9cecdc4bb"
+                                    }
+                                ],
+                                "feat": "Insert",
+                                "dsType": "api",
+                                "submitOnChange": false,
+                                "onEvent": {
+                                    "submitSucc": {
+                                        "weight": 0,
+                                        "actions": [
+                                            {
+                                                "actionType": "reload"
+                                            },
+                                            {
+                                                "componentId": "u:66a9cecdc4bb",
+                                                "ignoreError": false,
+                                                "actionType": "disabled"
+                                            },
+                                            {
+                                                "actionType": "wait",
+                                                "args": {
+                                                  "time": 2000
+                                                }
+                                            },
+                                            {
+                                                "actionType": "reload",
+                                                "componentId": "u:d0cb32b561f2"
+                                            }
+                                        ]
+                                    },
+                                    "change": {
+                                        "actions": [
+                                            {
+                                                "componentId": "u:66a9cecdc4bb",
+                                                "ignoreError": false,
+                                                "actionType": "enabled"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "debug": false,
+                                "className": "",
+                                "panelClassName": " shadow border-none p-4",
+                                "mode": "normal"
+                            },
+                            "height": "100%"
+                        }
+                    ],
+                    "size": "none",
+                    "style": {
+                        "position": "static",
+                        "display": "block",
+                        "flex": "0 0 150px",
+                        "flexBasis": "650px"
+                    },
+                    "wrapperBody": false,
+                    "isFixedHeight": false,
+                    "isFixedWidth": false,
+                    "id": "u:05614dd5e285"
+                },
+                {
+                    "type": "container",
+                    "className": "shadow rounded bg-white",
+                    "body": [
+                        {
+                            "id": "u:d9c07905e0e5",
+                            "type": "container",
+                            "body": [
+                                {
+                                    "type": "container",
+                                    "body": [
+                                        {
+                                            "type": "button-group",
+                                            "id": "u:77ff1aca25d2",
+                                            "className": "float-end",
+                                            "buttons": [
+                                                {
+                                                    "type": "button",
+                                                    "label": "共享",
+                                                    "onEvent": {
+                                                        "click": {
+                                                          "actions": [
+                                                            {
+                                                              "ignoreError": false,
+                                                              "actionType": "dialog",
+                                                              "dialog": {
+                                                                "type": "dialog",
+                                                                "title": "",
+                                                                "body": [
+                                                                  {
+                                                                    "type": "tpl",
+                                                                    "tpl": "<p>Upgrade Plan</p>",
+                                                                    "id": "u:5b4399733b7e"
+                                                                  }
+                                                                ],
+                                                                "id": "u:edc8fd90ad49",
+                                                                "actions": [
+                                                                  {
+                                                                    "type": "button",
+                                                                    "actionType": "cancel",
+                                                                    "label": "取消",
+                                                                    "id": "u:562235bb4625"
+                                                                  },
+                                                                  {
+                                                                    "type": "button",
+                                                                    "actionType": "confirm",
+                                                                    "label": "确定",
+                                                                    "primary": true,
+                                                                    "id": "u:0458a9c5d81b"
+                                                                  }
+                                                                ],
+                                                                "showCloseButton": true,
+                                                                "closeOnOutside": false,
+                                                                "closeOnEsc": false,
+                                                                "showErrorMsg": true,
+                                                                "showLoading": true,
+                                                                "draggable": false
+                                                              }
+                                                            }
+                                                          ]
+                                                        }
+                                                      },
+                                                    "id": "u:9b13e1cf1b23"
+                                                },
+                                                {
+                                                    "type": "button",
+                                                    "label": "嵌入",
+                                                    "onEvent": {
+                                                        "click": {
+                                                          "actions": [
+                                                            {
+                                                              "ignoreError": false,
+                                                              "actionType": "dialog",
+                                                              "dialog": {
+                                                                "type": "dialog",
+                                                                "title": "",
+                                                                "body": [
+                                                                  {
+                                                                    "type": "tpl",
+                                                                    "tpl": "<p>Upgrade Plan</p>",
+                                                                    "id": "u:5b4399733b7e"
+                                                                  }
+                                                                ],
+                                                                "id": "u:edc8fd90ad49",
+                                                                "actions": [
+                                                                  {
+                                                                    "type": "button",
+                                                                    "actionType": "cancel",
+                                                                    "label": "取消",
+                                                                    "id": "u:562235bb4625"
+                                                                  },
+                                                                  {
+                                                                    "type": "button",
+                                                                    "actionType": "confirm",
+                                                                    "label": "确定",
+                                                                    "primary": true,
+                                                                    "id": "u:0458a9c5d81b"
+                                                                  }
+                                                                ],
+                                                                "showCloseButton": true,
+                                                                "closeOnOutside": false,
+                                                                "closeOnEsc": false,
+                                                                "showErrorMsg": true,
+                                                                "showLoading": true,
+                                                                "draggable": false
+                                                              }
+                                                            }
+                                                          ]
+                                                        }
+                                                      },
+                                                    "id": "u:2ac0c15683f3"
+                                                }
+                                            ],
+                                            "vertical": false,
+                                            "tiled": false,
+                                            "visible": false
+                                        },
+                                        {
+                                            "type": "button",
+                                            "label": "预览",
+                                            "onEvent": {
+                                                "click": {
+                                                    "actions": [
+                                                        {
+                                                            "ignoreError": false,
+                                                            "actionType": "url",
+                                                            "args": {
+                                                                "url": "/ai/chatbot/${recordId}",
+                                                                "blank": true
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "id": "u:617338ddfe5b",
+                                            "className": "mr-2",
+                                            "level": "primary"
+                                        }
+                                    ],
+                                    "style": {
+                                        "position": "relative",
+                                        "display": "flex",
+                                        "inset": "auto",
+                                        "flexWrap": "nowrap",
+                                        "flexDirection": "row-reverse",
+                                        "alignItems": "baseline",
+                                        "justifyContent": "space-between",
+                                        "flex": "0 0 auto"
+                                    },
+                                    "size": "none",
+                                    "wrapperBody": false,
+                                    "id": "u:1b82cb69d311",
+                                    "isFixedHeight": false
+                                },
+                                {
+                                    "type": "button",
+                                    "id": "u:284e51032f92",
+                                    "label": "刷新",
+                                    "onEvent": {
+                                        "click": {
+                                            "actions": [
+                                                {
+                                                    "actionType": "reload",
+                                                    "componentId": "u:d0cb32b561f2"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "block": false,
+                                    "size": "md",
+                                    "level": "link",
+                                    "className": "float-start",
+                                    "icon": "fa fa-refresh"
+                                }
+                            ],
+                            "style": {
+                                "position": "static",
+                                "display": "flex",
+                                "flexWrap": "nowrap",
+                                "flexDirection": "row-reverse",
+                                "alignItems": "center",
+                                "justifyContent": "space-between",
+                                "height": "46px",
+                                "overflowY": "visible"
+                            },
+                            "size": "none",
+                            "wrapperBody": false,
+                            "isFixedHeight": true,
+                            "isFixedWidth": false,
+                            "themeCss": {
+                                "baseControlClassName": {
+                                    "background:default": "#ffffff"
+                                }
+                            },
+                            "className": "mx-2 p-0"
+                        },
+                        {
+                            "id": "u:d0cb32b561f2",
+                            "type": "iframe",
+                            "src": "/ai/chatbot/${recordId}",
+                            "className": "bg-white m-0 sm:rounded-b-lg shadow-none border-t antd-Panel--form chatbots-chat",
+                            "editorState": "default",
+                            "height": "calc(100% - 48px)"
+                        }
+                    ],
+                    "size": "none",
+                    "style": {
+                        "position": "static",
+                        "display": "block",
+                        "flex": "1 1 auto",
+                        "flexGrow": 2,
+                        "flexBasis": "0px"
+                    },
+                    "wrapperBody": false,
+                    "isFixedHeight": false,
+                    "isFixedWidth": false,
+                    "id": "u:582091f4824e"
+                }
+            ],
+            "style": {
+                "position": "relative",
+                "rowGap": "10px",
+                "columnGap": "10px"
+            },
+            "isFixedHeight": false,
+            "isFixedWidth": false,
+            "className": "steedos-chatbot-page"
+        }
+    ],
+    "regions": [
+        "body"
+    ],
+    "data": {
+    },
+    "id": "page_b6_chatbots_record_detail",
+    "name": "page_b6_chatbots_record_detail",
+    "objectApiName": "${objectName}",
+    "bodyClassName": "",
+    "className": "object-detail-page steedos-record-content overflow-y-auto p-0 m-0 flex-1 h-full",
+    "asideResizor": false,
+    "editorState": "default",
+    "pullRefresh": {
+        "disabled": true
+    },
+    "css": {
+        ".chatbots-chat": {
+            "height": "calc(100 - 45px) !important"
+        },
+        ".antd-Card-avtar": {
+            "display": "flex",
+            "justify-content": "center",
+            "align-items": "center",
+            "border-radius": "unset",
+            "height": "64px",
+            "border-width": "2px"
+        },
+        ".antd-Card-img": {
+            "height": "auto !important",
+            "border-radius": "unset !important",
+            "width": "30px !important"
+        },
+        ".antd-Card-subTitle": {
+            "color": "rgba(0, 0, 0, 0.85)"
+        },
+        ".add-knowledge-source-form .antd-ListControl-item":{
+            "display": "inline-flex",
+            "justify-content": "center",
+            "align-items": "center",
+            "width": "120px",
+            "height": "120px"
+        },
+        ".steedos-object-form":{
+            "margin-bottom": "0px !important",
+            "height": "100%"
+        },
+        ".steedos-object-form>.antd-Panel":{
+            "margin-bottom": "0px !important",
+            "padding-bottom": "0px !important",
+            "height": "100%"
+        },
+        ".steedos-object-form>.antd-Panel>div":{
+            "height": "calc(100% - 50px)"
+        },
+        ".antd-Panel-footerWrap": {
+            "height": "unset !important"
+        },
+        ".steedos-amis-form":{
+            "height": "100%"
+        },
+        ".steedos-amis-form>.antd-Wrapper":{
+            "height": "100%"
+        },
+        ".steedos-amis-form>.antd-Wrapper>.antd-Tabs":{
+            "height": "100%"
+        },
+        ".antd-Tabs-content":{
+            "overflow": "auto",
+            "height": "calc(100% - 50px)"
+        },
+        ".steedos-chatbot-page": {
+            "height": "100% !important"
+        }
+    }
+}

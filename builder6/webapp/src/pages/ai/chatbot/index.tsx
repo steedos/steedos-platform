@@ -34,10 +34,10 @@ export const ChatbotView = () => {
   }, [chatbotId]);
 
   return (
-<div className="flex flex-col h-screen bg-gray-50">
+<div className="flex flex-col h-screen bg-white">
   {/* 顶部标题（可选） */}
-  <div className="p-4 border-b border-gray-300 bg-white shadow-sm">
-  <h1 className="text-xl font-semibold">{chatbot?.label || 'Chatbot'}</h1>
+  <div className="p-4 border-b">
+  <h1 className="text-xl font-semibold mb-0">{chatbot?.label || 'Chatbot'}</h1>
   </div>
 
   <div className="flex-grow overflow-y-auto p-4 space-y-2">
@@ -77,7 +77,7 @@ export const ChatbotView = () => {
         setInput('');
       }
     }}
-    className="flex items-center p-4 border-t border-gray-300 bg-white"
+    className="flex items-center p-4"
   >
     <input
       className="flex-grow p-2 mr-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"

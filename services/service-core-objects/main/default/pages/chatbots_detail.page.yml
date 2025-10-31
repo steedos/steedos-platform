@@ -1,0 +1,13 @@
+name: chatbots_detail
+is_active: true
+label: chatbots detail
+locked: false
+object_name: chatbots
+pageAssignments:
+  - type: orgDefault
+    page: chatbots_detail
+    desktop: true
+    mobile: true
+render_engine: amis
+type: record
+widgets: []
