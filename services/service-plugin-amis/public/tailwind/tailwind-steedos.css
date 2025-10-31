@@ -64,12 +64,24 @@
   position: absolute
 }
 
+.relative {
+  position: relative
+}
+
 .sticky {
   position: sticky
 }
 
 .col-span-2 {
   grid-column: span 2 / span 2
+}
+
+.float-start {
+  float: inline-start
+}
+
+.float-end {
+  float: inline-end
 }
 
 .float-right {
@@ -90,6 +102,11 @@
 
 .m-auto {
   margin: auto
+}
+
+.mx-2 {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem
 }
 
 .mx-4 {
@@ -135,6 +152,10 @@
   margin-right: 0.25rem
 }
 
+.mr-2 {
+  margin-right: 0.5rem
+}
+
 .mr-4 {
   margin-right: 1rem
 }
@@ -161,6 +182,10 @@
 
 .flex {
   display: flex
+}
+
+.inline-flex {
+  display: inline-flex
 }
 
 .table {
@@ -281,6 +306,10 @@
 
 .border-b {
   border-bottom-width: 1px
+}
+
+.border-t {
+  border-top-width: 1px
 }
 
 .border-none {
@@ -457,6 +486,11 @@
 
   .sm\:rounded-lg {
     border-radius: 0.5rem
+  }
+
+  .sm\:rounded-b-lg {
+    border-bottom-right-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem
   }
 
   .sm\:border {

@@ -1,6 +1,6 @@
 {
   "name": "@steedos/webapp",
-  "version": "3.0.0-beta.120",
+  "version": "3.0.0-beta.122",
   "files": [
     "dist"
   ],
@@ -16,6 +16,7 @@
     "@accounts/client": "^0.19.0",
     "@accounts/client-password": "^0.19.0",
     "@accounts/rest-client": "^0.19.0",
+    "@ai-sdk/react": "^2.0.76",
     "@builder6/react": "8.0.40",
     "@material-ui/core": "^4.4.1",
     "@material-ui/icons": "^4.4.1",
@@ -32,6 +33,7 @@
     "@typescript-eslint/parser": "^7.2.0",
     "@vitejs/plugin-react": "^4.2.1",
     "add": "^2.0.6",
+    "ai": "^5.0.76",
     "babel-jest": "^26.6.0",
     "babel-preset-react-app": "^10.0.1",
     "core-js": "^3.2.1",
@@ -40,6 +42,7 @@
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
+    "history": "^5.3.0",
     "i18next": "24.2.2",
     "i18next-browser-languagedetector": "8.0.2",
     "i18next-http-backend": "3.0.2",
@@ -66,16 +69,11 @@
     "tslib": "^2.3.1",
     "typescript": "5.7.3",
     "vite": "^6.1.0",
-    "vite-plugin-external": "^4.3.1",
-    "@ai-sdk/react": "^2.0.76",
-    "ai": "^5.0.76",
-    "history": "^5.3.0"
+    "vite-plugin-external": "^4.3.1"
   },
   "publishConfig": {
     "access": "public"
   },
   "repository": "https://github.com/steedos/app-builder/tree/master/apps/accounts",
-  "gitHead": "7d47094f59490c8d6bd0c94395e1dba6e0d86bac",
-  "dependencies": {
-  }
+  "gitHead": "81de9b7d36bd701962cab6b3d11cfa0213cf7e59"
 }
