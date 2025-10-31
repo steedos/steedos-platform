@@ -47,7 +47,7 @@ export class ChatController {
     @Body("messages") messages: UIMessage[],
     @Res() res: Response,
   ) {
-    const chatbot = await this.mongodbService.findOne("chatbots", {
+    const chatbot = await this.mongodbService.findOne("ai_chatbots", {
       _id: chatbotId,
     });
     if (!chatbot) {

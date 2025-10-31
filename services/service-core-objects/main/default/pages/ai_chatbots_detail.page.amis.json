@@ -13,7 +13,7 @@
                             "id": "u:3638656e8e37",
                             "type": "steedos-object-form",
                             "label": "对象表单",
-                            "objectApiName": "chatbots",
+                            "objectApiName": "ai_chatbots",
                             "recordId": "${recordId}",
                             "appId": "${appId}",
                             "mode": "edit",

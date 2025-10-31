@@ -1,4 +1,4 @@
-name: admin_chatbots
+name: admin_ai_chatbots
 desktop: true
 icon: live_chat
 is_new_window: false
@@ -18,7 +18,7 @@ permissions:
   - permission: 'off'
     permission_set: workflow_admin
 type: object
-object: chatbots
+object: ai_chatbots
 license:
   - platform-professional
   - platform-enterprise

@@ -1,4 +1,4 @@
-name: chatbots
+name: ai_chatbots
 custom: true
 enable_api: true
 enable_dataloader: false

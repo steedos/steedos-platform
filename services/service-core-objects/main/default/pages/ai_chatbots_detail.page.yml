@@ -1,11 +1,11 @@
-name: chatbots_detail
+name: ai_chatbots_detail
 is_active: true
-label: chatbots detail
+label: ai_chatbots detail
 locked: false
-object_name: chatbots
+object_name: ai_chatbots
 pageAssignments:
   - type: orgDefault
-    page: chatbots_detail
+    page: ai_chatbots_detail
     desktop: true
     mobile: true
 render_engine: amis
