@@ -8,4 +8,4 @@ required: true
 searchable: true
 sort_no: 20
 type: text
-description: Example openai/gpt-4o
+defaultValue: openai/gpt-4o
