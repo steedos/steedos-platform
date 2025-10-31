@@ -84,7 +84,7 @@ export const ChatbotView = () => {
       value={input}
       onChange={(e) => setInput(e.target.value)}
       disabled={status !== 'ready'}
-      placeholder="Say something..."
+      placeholder={chatbot?.placeholder || 'Ask me anything...'}
     />
     <button
       type="submit"
