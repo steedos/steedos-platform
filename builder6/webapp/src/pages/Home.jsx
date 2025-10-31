@@ -42,6 +42,7 @@ const Home = () => {
 
     dispatch(validate()).then((me)=>{
       Builder.settings.context.user = me.data;
+      Builder.settings.context.authToken = me.data?.authToken;
 
       if(me.data?.password_expired){
         goResetPassword(navigate)
