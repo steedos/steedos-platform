@@ -1793,7 +1793,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
   async getRecordPermissions(record, userSession) {
     const permissions = await this.getUserObjectPermission(userSession);
-    const { userId, company_ids: user_company_ids } = userSession;
+    const { userId, company_ids: user_company_ids, roles } = userSession;
     if (record) {
       if (!isEmpty(record.record_permissions)) {
         return record.record_permissions;
@@ -1844,7 +1844,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
           }
         }
       }
-      if (record.locked && !permissions.modifyAllRecords) {
+      // 锁定记录只有管理员可编辑删除
+      if (record.locked && !roles.includes("admin")) {
         permissions.allowEdit = false;
         permissions.allowDelete = false;
       }
