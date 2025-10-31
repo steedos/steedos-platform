@@ -9676,7 +9676,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos/accounts@3.0.0-beta.119, @steedos/accounts@workspace:packages/accounts":
+"@steedos/accounts@3.0.0-beta.120, @steedos/accounts@workspace:packages/accounts":
   version: 0.0.0-use.local
   resolution: "@steedos/accounts@workspace:packages/accounts"
   dependencies:
@@ -9685,9 +9685,9 @@ __metadata:
     "@accounts/two-factor": ^0.20.1
     "@accounts/types": 0.20.1
     "@babel/runtime": ^7.12.18
-    "@steedos/auth": 3.0.0-beta.119
-    "@steedos/objectql": 3.0.0-beta.119
-    "@steedos/utils": 3.0.0-beta.119
+    "@steedos/auth": 3.0.0-beta.120
+    "@steedos/objectql": 3.0.0-beta.120
+    "@steedos/utils": 3.0.0-beta.120
     app-root-path: ^2.2.1
     bcryptjs: ^2.4.3
     body-parser: 1.19.0
@@ -9715,13 +9715,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/auth@3.0.0-beta.119, @steedos/auth@workspace:packages/auth":
+"@steedos/auth@3.0.0-beta.120, @steedos/auth@workspace:packages/auth":
   version: 0.0.0-use.local
   resolution: "@steedos/auth@workspace:packages/auth"
   dependencies:
-    "@steedos/cachers": 3.0.0-beta.119
-    "@steedos/objectql": 3.0.0-beta.119
-    "@steedos/utils": 3.0.0-beta.119
+    "@steedos/cachers": 3.0.0-beta.120
+    "@steedos/objectql": 3.0.0-beta.120
+    "@steedos/utils": 3.0.0-beta.120
     bcryptjs: ^2.4.3
     cookies: ^0.8.0
     express: ^4.16.4
@@ -9733,7 +9733,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/cachers@3.0.0-beta.119, @steedos/cachers@workspace:packages/cachers":
+"@steedos/cachers@3.0.0-beta.120, @steedos/cachers@workspace:packages/cachers":
   version: 0.0.0-use.local
   resolution: "@steedos/cachers@workspace:packages/cachers"
   dependencies:
@@ -9743,23 +9743,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/client@3.0.0-beta.119, @steedos/client@workspace:packages/client":
+"@steedos/client@3.0.0-beta.120, @steedos/client@workspace:packages/client":
   version: 0.0.0-use.local
   resolution: "@steedos/client@workspace:packages/client"
   dependencies:
-    "@steedos/filters": 3.0.0-beta.119
+    "@steedos/filters": 3.0.0-beta.120
     node-fetch: ^2.6.7
     typescript: 5.7.3
   languageName: unknown
   linkType: soft
 
-"@steedos/data-import@3.0.0-beta.119, @steedos/data-import@workspace:packages/data-import":
+"@steedos/data-import@3.0.0-beta.120, @steedos/data-import@workspace:packages/data-import":
   version: 0.0.0-use.local
   resolution: "@steedos/data-import@workspace:packages/data-import"
   dependencies:
-    "@steedos/metadata-api": 3.0.0-beta.119
-    "@steedos/metadata-core": 3.0.0-beta.119
-    "@steedos/objectql": 3.0.0-beta.119
+    "@steedos/metadata-api": 3.0.0-beta.120
+    "@steedos/metadata-core": 3.0.0-beta.120
+    "@steedos/objectql": 3.0.0-beta.120
     bson: 4.6.4
     csvtojson: ~2.0.10
     dotenv-flow: ^3.1.0
@@ -9769,7 +9769,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/ee_branding@3.0.0-beta.119, @steedos/ee_branding@workspace:ee/branding":
+"@steedos/ee_branding@3.0.0-beta.120, @steedos/ee_branding@workspace:ee/branding":
   version: 0.0.0-use.local
   resolution: "@steedos/ee_branding@workspace:ee/branding"
   languageName: unknown
@@ -9821,7 +9821,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos/filters@3.0.0-beta.119, @steedos/filters@workspace:packages/filters":
+"@steedos/filters@3.0.0-beta.120, @steedos/filters@workspace:packages/filters":
   version: 0.0.0-use.local
   resolution: "@steedos/filters@workspace:packages/filters"
   dependencies:
@@ -9854,7 +9854,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos/formula@3.0.0-beta.119, @steedos/formula@workspace:packages/formula":
+"@steedos/formula@3.0.0-beta.120, @steedos/formula@workspace:packages/formula":
   version: 0.0.0-use.local
   resolution: "@steedos/formula@workspace:packages/formula"
   dependencies:
@@ -9872,11 +9872,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/i18n@3.0.0-beta.119, @steedos/i18n@workspace:packages/i18n":
+"@steedos/i18n@3.0.0-beta.120, @steedos/i18n@workspace:packages/i18n":
   version: 0.0.0-use.local
   resolution: "@steedos/i18n@workspace:packages/i18n"
   dependencies:
-    "@steedos/cachers": 3.0.0-beta.119
+    "@steedos/cachers": 3.0.0-beta.120
     i18next: ^19.3.4
     i18next-sprintf-postprocessor: ^0.2.2
     typescript: 5.7.3
@@ -9896,13 +9896,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos/metadata-api@3.0.0-beta.119, @steedos/metadata-api@workspace:packages/metadata-api":
+"@steedos/metadata-api@3.0.0-beta.120, @steedos/metadata-api@workspace:packages/metadata-api":
   version: 0.0.0-use.local
   resolution: "@steedos/metadata-api@workspace:packages/metadata-api"
   dependencies:
-    "@steedos/auth": 3.0.0-beta.119
-    "@steedos/metadata-core": 3.0.0-beta.119
-    "@steedos/objectql": 3.0.0-beta.119
+    "@steedos/auth": 3.0.0-beta.120
+    "@steedos/metadata-core": 3.0.0-beta.120
+    "@steedos/objectql": 3.0.0-beta.120
     chalk: ^4.1.0
     clone: 2.1.2
     compressing: ^1.5.1
@@ -9916,11 +9916,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/metadata-core@3.0.0-beta.119, @steedos/metadata-core@workspace:packages/metadata-core":
+"@steedos/metadata-core@3.0.0-beta.120, @steedos/metadata-core@workspace:packages/metadata-core":
   version: 0.0.0-use.local
   resolution: "@steedos/metadata-core@workspace:packages/metadata-core"
   dependencies:
-    "@steedos/client": 3.0.0-beta.119
+    "@steedos/client": 3.0.0-beta.120
     "@types/glob": ^7.1.3
     "@types/node": ^14.14.10
     archiver: ^5.1.0
@@ -9941,13 +9941,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/metadata-registrar@3.0.0-beta.119, @steedos/metadata-registrar@workspace:packages/metadata-registrar":
+"@steedos/metadata-registrar@3.0.0-beta.120, @steedos/metadata-registrar@workspace:packages/metadata-registrar":
   version: 0.0.0-use.local
   resolution: "@steedos/metadata-registrar@workspace:packages/metadata-registrar"
   dependencies:
     "@salesforce/ts-types": 1.1.2
-    "@steedos/client": 3.0.0-beta.119
-    "@steedos/metadata-core": 3.0.0-beta.119
+    "@steedos/client": 3.0.0-beta.120
+    "@steedos/metadata-core": 3.0.0-beta.120
     "@types/glob": ^7.1.3
     "@types/node": ^14.14.10
     archiver: ^5.1.0
@@ -9971,13 +9971,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@steedos/migrate@workspace:packages/migrate"
   dependencies:
-    "@steedos/service-package-registry": 3.0.0-beta.119
+    "@steedos/service-package-registry": 3.0.0-beta.120
     migrate: ^1.6.2
     mongodb: ^3.7.3
   languageName: unknown
   linkType: soft
 
-"@steedos/moleculer-apollo-server@3.0.0-beta.119, @steedos/moleculer-apollo-server@workspace:packages/moleculer-apollo-server":
+"@steedos/moleculer-apollo-server@3.0.0-beta.120, @steedos/moleculer-apollo-server@workspace:packages/moleculer-apollo-server":
   version: 0.0.0-use.local
   resolution: "@steedos/moleculer-apollo-server@workspace:packages/moleculer-apollo-server"
   dependencies:
@@ -9994,7 +9994,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/moleculer-bullmq@3.0.0-beta.119, @steedos/moleculer-bullmq@workspace:services/moleculer-bullmq":
+"@steedos/moleculer-bullmq@3.0.0-beta.120, @steedos/moleculer-bullmq@workspace:services/moleculer-bullmq":
   version: 0.0.0-use.local
   resolution: "@steedos/moleculer-bullmq@workspace:services/moleculer-bullmq"
   dependencies:
@@ -10011,22 +10011,22 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/objectql@3.0.0-beta.119, @steedos/objectql@workspace:packages/objectql":
+"@steedos/objectql@3.0.0-beta.120, @steedos/objectql@workspace:packages/objectql":
   version: 0.0.0-use.local
   resolution: "@steedos/objectql@workspace:packages/objectql"
   dependencies:
     "@salesforce/kit": 1.0.4
     "@salesforce/ts-types": 1.1.1
-    "@steedos/cachers": 3.0.0-beta.119
-    "@steedos/filters": 3.0.0-beta.119
-    "@steedos/formula": 3.0.0-beta.119
-    "@steedos/i18n": 3.0.0-beta.119
-    "@steedos/metadata-core": 3.0.0-beta.119
-    "@steedos/metadata-registrar": 3.0.0-beta.119
-    "@steedos/odata-v4-mongodb": 3.0.0-beta.119
-    "@steedos/odata-v4-sql": 3.0.0-beta.119
-    "@steedos/odata-v4-typeorm": 3.0.0-beta.119
-    "@steedos/schemas": 3.0.0-beta.119
+    "@steedos/cachers": 3.0.0-beta.120
+    "@steedos/filters": 3.0.0-beta.120
+    "@steedos/formula": 3.0.0-beta.120
+    "@steedos/i18n": 3.0.0-beta.120
+    "@steedos/metadata-core": 3.0.0-beta.120
+    "@steedos/metadata-registrar": 3.0.0-beta.120
+    "@steedos/odata-v4-mongodb": 3.0.0-beta.120
+    "@steedos/odata-v4-sql": 3.0.0-beta.120
+    "@steedos/odata-v4-typeorm": 3.0.0-beta.120
+    "@steedos/schemas": 3.0.0-beta.120
     "@types/express": ^4.16.1
     "@types/node": ^11.10.4
     "@types/underscore": ^1.8.13
@@ -10061,11 +10061,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/odata-v4-mongodb@3.0.0-beta.119, @steedos/odata-v4-mongodb@workspace:packages/odata-v4-mongodb":
+"@steedos/odata-v4-mongodb@3.0.0-beta.120, @steedos/odata-v4-mongodb@workspace:packages/odata-v4-mongodb":
   version: 0.0.0-use.local
   resolution: "@steedos/odata-v4-mongodb@workspace:packages/odata-v4-mongodb"
   dependencies:
-    "@steedos/odata-v4-parser": 3.0.0-beta.119
+    "@steedos/odata-v4-parser": 3.0.0-beta.120
     odata-v4-literal: ^0.1.0
   languageName: unknown
   linkType: soft
@@ -10080,7 +10080,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos/odata-v4-parser@3.0.0-beta.119, @steedos/odata-v4-parser@workspace:packages/odata-v4-parser":
+"@steedos/odata-v4-parser@3.0.0-beta.120, @steedos/odata-v4-parser@workspace:packages/odata-v4-parser":
   version: 0.0.0-use.local
   resolution: "@steedos/odata-v4-parser@workspace:packages/odata-v4-parser"
   languageName: unknown
@@ -10093,38 +10093,38 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos/odata-v4-sql@3.0.0-beta.119, @steedos/odata-v4-sql@workspace:packages/odata-v4-sql":
+"@steedos/odata-v4-sql@3.0.0-beta.120, @steedos/odata-v4-sql@workspace:packages/odata-v4-sql":
   version: 0.0.0-use.local
   resolution: "@steedos/odata-v4-sql@workspace:packages/odata-v4-sql"
   dependencies:
-    "@steedos/odata-v4-parser": 3.0.0-beta.119
+    "@steedos/odata-v4-parser": 3.0.0-beta.120
     odata-v4-literal: ^0.1.0
     typescript: 5.7.3
   languageName: unknown
   linkType: soft
 
-"@steedos/odata-v4-typeorm@3.0.0-beta.119, @steedos/odata-v4-typeorm@workspace:packages/odata-v4-typeorm":
+"@steedos/odata-v4-typeorm@3.0.0-beta.120, @steedos/odata-v4-typeorm@workspace:packages/odata-v4-typeorm":
   version: 0.0.0-use.local
   resolution: "@steedos/odata-v4-typeorm@workspace:packages/odata-v4-typeorm"
   dependencies:
-    "@steedos/odata-v4-parser": 3.0.0-beta.119
-    "@steedos/odata-v4-sql": 3.0.0-beta.119
+    "@steedos/odata-v4-parser": 3.0.0-beta.120
+    "@steedos/odata-v4-sql": 3.0.0-beta.120
     odata-v4-literal: ^0.1.0
   languageName: unknown
   linkType: soft
 
-"@steedos/process@3.0.0-beta.119, @steedos/process@workspace:packages/process":
+"@steedos/process@3.0.0-beta.120, @steedos/process@workspace:packages/process":
   version: 0.0.0-use.local
   resolution: "@steedos/process@workspace:packages/process"
   dependencies:
-    "@steedos/auth": 3.0.0-beta.119
-    "@steedos/objectql": 3.0.0-beta.119
+    "@steedos/auth": 3.0.0-beta.120
+    "@steedos/objectql": 3.0.0-beta.120
     express: 4.18.1
     typescript: 5.7.3
   languageName: unknown
   linkType: soft
 
-"@steedos/router@3.0.0-beta.119, @steedos/router@workspace:packages/router":
+"@steedos/router@3.0.0-beta.120, @steedos/router@workspace:packages/router":
   version: 0.0.0-use.local
   resolution: "@steedos/router@workspace:packages/router"
   dependencies:
@@ -10133,13 +10133,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/schemas@3.0.0-beta.119, @steedos/schemas@workspace:packages/schemas":
+"@steedos/schemas@3.0.0-beta.120, @steedos/schemas@workspace:packages/schemas":
   version: 0.0.0-use.local
   resolution: "@steedos/schemas@workspace:packages/schemas"
   languageName: unknown
   linkType: soft
 
-"@steedos/server@3.0.0-beta.119, @steedos/server@workspace:builder6/server":
+"@steedos/server@3.0.0-beta.120, @steedos/server@workspace:builder6/server":
   version: 0.0.0-use.local
   resolution: "@steedos/server@workspace:builder6/server"
   dependencies:
@@ -10177,12 +10177,12 @@ __metadata:
     "@nestjs/swagger": ^11.0.0
     "@nestjs/testing": ^11.0.0
     "@nestjs/websockets": ^11.0.0
-    "@steedos/auth": 3.0.0-beta.119
+    "@steedos/auth": 3.0.0-beta.120
     "@steedos/ee_unpkg": 1.1.0
-    "@steedos/objectql": 3.0.0-beta.119
-    "@steedos/service-community": 3.0.0-beta.119
-    "@steedos/service-enterprise": 3.0.0-beta.119
-    "@steedos/webapp": 3.0.0-beta.119
+    "@steedos/objectql": 3.0.0-beta.120
+    "@steedos/service-community": 3.0.0-beta.120
+    "@steedos/service-enterprise": 3.0.0-beta.120
+    "@steedos/webapp": 3.0.0-beta.120
     "@types/express": ^5.0.0
     "@types/jest": ^29.5.2
     "@types/multer": ^1.4.12
@@ -10242,35 +10242,35 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-accounts@3.0.0-beta.119, @steedos/service-accounts@workspace:services/service-accounts":
+"@steedos/service-accounts@3.0.0-beta.120, @steedos/service-accounts@workspace:services/service-accounts":
   version: 0.0.0-use.local
   resolution: "@steedos/service-accounts@workspace:services/service-accounts"
   dependencies:
-    "@steedos/auth": 3.0.0-beta.119
+    "@steedos/auth": 3.0.0-beta.120
     node-schedule: ^2.0.0
   languageName: unknown
   linkType: soft
 
-"@steedos/service-ancillary@3.0.0-beta.119, @steedos/service-ancillary@workspace:services/service-ancillary":
+"@steedos/service-ancillary@3.0.0-beta.120, @steedos/service-ancillary@workspace:services/service-ancillary":
   version: 0.0.0-use.local
   resolution: "@steedos/service-ancillary@workspace:services/service-ancillary"
   dependencies:
-    "@steedos/utils": 3.0.0-beta.119
+    "@steedos/utils": 3.0.0-beta.120
     express: ^4.17.1
     express-xml-bodyparser: 0.3.0
     xml2js: 0.4.23
   languageName: unknown
   linkType: soft
 
-"@steedos/service-api@3.0.0-beta.119, @steedos/service-api@workspace:services/service-api":
+"@steedos/service-api@3.0.0-beta.120, @steedos/service-api@workspace:services/service-api":
   version: 0.0.0-use.local
   resolution: "@steedos/service-api@workspace:services/service-api"
   dependencies:
-    "@steedos/auth": 3.0.0-beta.119
-    "@steedos/moleculer-apollo-server": 3.0.0-beta.119
-    "@steedos/router": 3.0.0-beta.119
-    "@steedos/service-object-graphql": 3.0.0-beta.119
-    "@steedos/service-ui": 3.0.0-beta.119
+    "@steedos/auth": 3.0.0-beta.120
+    "@steedos/moleculer-apollo-server": 3.0.0-beta.120
+    "@steedos/router": 3.0.0-beta.120
+    "@steedos/service-object-graphql": 3.0.0-beta.120
+    "@steedos/service-ui": 3.0.0-beta.120
     "@types/graphql-iso-date": ^3.4.0
     "@types/react-dev-utils": ^9.0.11
     graphql: ^15.8.0
@@ -10284,61 +10284,61 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-bull-dashboard@3.0.0-beta.119, @steedos/service-bull-dashboard@workspace:services/service-bull-dashboard":
+"@steedos/service-bull-dashboard@3.0.0-beta.120, @steedos/service-bull-dashboard@workspace:services/service-bull-dashboard":
   version: 0.0.0-use.local
   resolution: "@steedos/service-bull-dashboard@workspace:services/service-bull-dashboard"
   dependencies:
     "@bull-board/express": ^6.14.0
-    "@steedos/auth": 3.0.0-beta.119
-    "@steedos/router": 3.0.0-beta.119
-    "@steedos/service-package-loader": 3.0.0-beta.119
+    "@steedos/auth": 3.0.0-beta.120
+    "@steedos/router": 3.0.0-beta.120
+    "@steedos/service-package-loader": 3.0.0-beta.120
     bullmq: ^5.62.0
   languageName: unknown
   linkType: soft
 
-"@steedos/service-cachers-manager@3.0.0-beta.119, @steedos/service-cachers-manager@workspace:services/service-cachers-manager":
+"@steedos/service-cachers-manager@3.0.0-beta.120, @steedos/service-cachers-manager@workspace:services/service-cachers-manager":
   version: 0.0.0-use.local
   resolution: "@steedos/service-cachers-manager@workspace:services/service-cachers-manager"
   dependencies:
-    "@steedos/cachers": 3.0.0-beta.119
-    "@steedos/metadata-registrar": 3.0.0-beta.119
-    "@steedos/utils": 3.0.0-beta.119
+    "@steedos/cachers": 3.0.0-beta.120
+    "@steedos/metadata-registrar": 3.0.0-beta.120
+    "@steedos/utils": 3.0.0-beta.120
   languageName: unknown
   linkType: soft
 
-"@steedos/service-community@3.0.0-beta.119, @steedos/service-community@workspace:services/service-community":
+"@steedos/service-community@3.0.0-beta.120, @steedos/service-community@workspace:services/service-community":
   version: 0.0.0-use.local
   resolution: "@steedos/service-community@workspace:services/service-community"
   dependencies:
     "@steedos-builder/amis-editor": 6.3.0-beta.16
     "@steedos-labs/plugin-package-store": ^1.0.9
-    "@steedos/data-import": 3.0.0-beta.119
-    "@steedos/server": 3.0.0-beta.119
-    "@steedos/service-accounts": 3.0.0-beta.119
-    "@steedos/service-ancillary": 3.0.0-beta.119
-    "@steedos/service-api": 3.0.0-beta.119
-    "@steedos/service-bull-dashboard": 3.0.0-beta.119
-    "@steedos/service-cachers-manager": 3.0.0-beta.119
-    "@steedos/service-core-objects": 3.0.0-beta.119
-    "@steedos/service-i18n": 3.0.0-beta.119
-    "@steedos/service-identity-jwt": 3.0.0-beta.119
-    "@steedos/service-metadata-database": 3.0.0-beta.119
-    "@steedos/service-metadata-server": 3.0.0-beta.119
-    "@steedos/service-objectql": 3.0.0-beta.119
-    "@steedos/service-package-loader": 3.0.0-beta.119
-    "@steedos/service-package-registry": 3.0.0-beta.119
-    "@steedos/service-pages": 3.0.0-beta.119
-    "@steedos/service-plugin-amis": 3.0.0-beta.119
-    "@steedos/service-rest": 3.0.0-beta.119
-    "@steedos/service-saas": 3.0.0-beta.119
+    "@steedos/data-import": 3.0.0-beta.120
+    "@steedos/server": 3.0.0-beta.120
+    "@steedos/service-accounts": 3.0.0-beta.120
+    "@steedos/service-ancillary": 3.0.0-beta.120
+    "@steedos/service-api": 3.0.0-beta.120
+    "@steedos/service-bull-dashboard": 3.0.0-beta.120
+    "@steedos/service-cachers-manager": 3.0.0-beta.120
+    "@steedos/service-core-objects": 3.0.0-beta.120
+    "@steedos/service-i18n": 3.0.0-beta.120
+    "@steedos/service-identity-jwt": 3.0.0-beta.120
+    "@steedos/service-metadata-database": 3.0.0-beta.120
+    "@steedos/service-metadata-server": 3.0.0-beta.120
+    "@steedos/service-objectql": 3.0.0-beta.120
+    "@steedos/service-package-loader": 3.0.0-beta.120
+    "@steedos/service-package-registry": 3.0.0-beta.120
+    "@steedos/service-pages": 3.0.0-beta.120
+    "@steedos/service-plugin-amis": 3.0.0-beta.120
+    "@steedos/service-rest": 3.0.0-beta.120
+    "@steedos/service-saas": 3.0.0-beta.120
     "@steedos/standard-accounts": 3.0.0-beta.103
-    "@steedos/standard-object-database": 3.0.0-beta.119
-    "@steedos/standard-permission": 3.0.0-beta.119
-    "@steedos/standard-process-approval": 3.0.0-beta.119
-    "@steedos/standard-ui": 3.0.0-beta.119
-    "@steedos/steedos-plugin-schema-builder": 3.0.0-beta.119
-    "@steedos/unpkg": 3.0.0-beta.119
-    "@steedos/workflow_time_trigger": 3.0.0-beta.119
+    "@steedos/standard-object-database": 3.0.0-beta.120
+    "@steedos/standard-permission": 3.0.0-beta.120
+    "@steedos/standard-process-approval": 3.0.0-beta.120
+    "@steedos/standard-ui": 3.0.0-beta.120
+    "@steedos/steedos-plugin-schema-builder": 3.0.0-beta.120
+    "@steedos/unpkg": 3.0.0-beta.120
+    "@steedos/workflow_time_trigger": 3.0.0-beta.120
     aliyun-sdk: 1.12.3
     async-retry: ^1.3.1
     axios: ^0.21.1
@@ -10371,30 +10371,30 @@ __metadata:
     randomcolor: ^0.6.2
     randomstring: ^1.2.1
     redlock: ^4.2.0
-    steedos-cli: 3.0.0-beta.119
+    steedos-cli: 3.0.0-beta.120
     tslib: ^2.4.0
     validator: ^13.6.0
   languageName: unknown
   linkType: soft
 
-"@steedos/service-core-objects@3.0.0-beta.119, @steedos/service-core-objects@workspace:services/service-core-objects":
+"@steedos/service-core-objects@3.0.0-beta.120, @steedos/service-core-objects@workspace:services/service-core-objects":
   version: 0.0.0-use.local
   resolution: "@steedos/service-core-objects@workspace:services/service-core-objects"
   dependencies:
-    "@steedos/service-package-loader": 3.0.0-beta.119
+    "@steedos/service-package-loader": 3.0.0-beta.120
     json2xls: ^0.1.2
     lodash: ^4.17.21
   languageName: unknown
   linkType: soft
 
-"@steedos/service-enterprise@3.0.0-beta.119, @steedos/service-enterprise@workspace:ee/service-enterprise":
+"@steedos/service-enterprise@3.0.0-beta.120, @steedos/service-enterprise@workspace:ee/service-enterprise":
   version: 0.0.0-use.local
   resolution: "@steedos/service-enterprise@workspace:ee/service-enterprise"
   dependencies:
     "@steedos-labs/analytics": ^3.0.11
     "@steedos-labs/plugin-print-template": ^3.0.0
     "@steedos-labs/plugin-workflow": ^3.0.0
-    "@steedos/ee_branding": 3.0.0-beta.119
+    "@steedos/ee_branding": 3.0.0-beta.120
     "@steedos/service-license": 3.0.0
     mssql: ^11.0.1
     oracledb: ^6.8.0
@@ -10409,17 +10409,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-i18n@3.0.0-beta.119, @steedos/service-i18n@workspace:services/service-i18n":
+"@steedos/service-i18n@3.0.0-beta.120, @steedos/service-i18n@workspace:services/service-i18n":
   version: 0.0.0-use.local
   resolution: "@steedos/service-i18n@workspace:services/service-i18n"
   languageName: unknown
   linkType: soft
 
-"@steedos/service-identity-jwt@3.0.0-beta.119, @steedos/service-identity-jwt@workspace:services/service-identity-jwt":
+"@steedos/service-identity-jwt@3.0.0-beta.120, @steedos/service-identity-jwt@workspace:services/service-identity-jwt":
   version: 0.0.0-use.local
   resolution: "@steedos/service-identity-jwt@workspace:services/service-identity-jwt"
   dependencies:
-    "@steedos/accounts": 3.0.0-beta.119
+    "@steedos/accounts": 3.0.0-beta.120
     express: 4.18.1
     jsonwebtoken: 8.5.1
     passport: ^0.6.0
@@ -10437,13 +10437,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos/service-metadata-apps@3.0.0-beta.119, @steedos/service-metadata-apps@workspace:services/service-metadata-apps":
+"@steedos/service-metadata-apps@3.0.0-beta.120, @steedos/service-metadata-apps@workspace:services/service-metadata-apps":
   version: 0.0.0-use.local
   resolution: "@steedos/service-metadata-apps@workspace:services/service-metadata-apps"
   dependencies:
-    "@steedos/i18n": 3.0.0-beta.119
-    "@steedos/objectql": 3.0.0-beta.119
-    "@steedos/utils": 3.0.0-beta.119
+    "@steedos/i18n": 3.0.0-beta.120
+    "@steedos/objectql": 3.0.0-beta.120
+    "@steedos/utils": 3.0.0-beta.120
     dotenv-flow: ^3.1.0
     ioredis: ^4.22.0
     lodash: ^4.17.21
@@ -10453,17 +10453,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-metadata-database@3.0.0-beta.119, @steedos/service-metadata-database@workspace:services/service-metadata-database":
+"@steedos/service-metadata-database@3.0.0-beta.120, @steedos/service-metadata-database@workspace:services/service-metadata-database":
   version: 0.0.0-use.local
   resolution: "@steedos/service-metadata-database@workspace:services/service-metadata-database"
   dependencies:
-    "@steedos/metadata-registrar": 3.0.0-beta.119
-    "@steedos/objectql": 3.0.0-beta.119
+    "@steedos/metadata-registrar": 3.0.0-beta.120
+    "@steedos/objectql": 3.0.0-beta.120
     lodash: ^4.17.21
   languageName: unknown
   linkType: soft
 
-"@steedos/service-metadata-layouts@3.0.0-beta.119, @steedos/service-metadata-layouts@workspace:services/service-metadata-layouts":
+"@steedos/service-metadata-layouts@3.0.0-beta.120, @steedos/service-metadata-layouts@workspace:services/service-metadata-layouts":
   version: 0.0.0-use.local
   resolution: "@steedos/service-metadata-layouts@workspace:services/service-metadata-layouts"
   dependencies:
@@ -10477,14 +10477,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-metadata-objects@3.0.0-beta.119, @steedos/service-metadata-objects@workspace:services/service-metadata-objects":
+"@steedos/service-metadata-objects@3.0.0-beta.120, @steedos/service-metadata-objects@workspace:services/service-metadata-objects":
   version: 0.0.0-use.local
   resolution: "@steedos/service-metadata-objects@workspace:services/service-metadata-objects"
   dependencies:
     "@salesforce/ts-types": 1.1.2
-    "@steedos/formula": 3.0.0-beta.119
-    "@steedos/i18n": 3.0.0-beta.119
-    "@steedos/metadata-registrar": 3.0.0-beta.119
+    "@steedos/formula": 3.0.0-beta.120
+    "@steedos/i18n": 3.0.0-beta.120
+    "@steedos/metadata-registrar": 3.0.0-beta.120
     dotenv-flow: ^3.1.0
     ioredis: ^4.22.0
     lodash: ^4.17.21
@@ -10495,7 +10495,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-metadata-permissionsets@3.0.0-beta.119, @steedos/service-metadata-permissionsets@workspace:services/service-metadata-permissionsets":
+"@steedos/service-metadata-permissionsets@3.0.0-beta.120, @steedos/service-metadata-permissionsets@workspace:services/service-metadata-permissionsets":
   version: 0.0.0-use.local
   resolution: "@steedos/service-metadata-permissionsets@workspace:services/service-metadata-permissionsets"
   dependencies:
@@ -10508,27 +10508,27 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-metadata-server@3.0.0-beta.119, @steedos/service-metadata-server@workspace:services/service-metadata-server":
+"@steedos/service-metadata-server@3.0.0-beta.120, @steedos/service-metadata-server@workspace:services/service-metadata-server":
   version: 0.0.0-use.local
   resolution: "@steedos/service-metadata-server@workspace:services/service-metadata-server"
   dependencies:
-    "@steedos/objectql": 3.0.0-beta.119
-    "@steedos/service-metadata": 3.0.0-beta.119
-    "@steedos/service-metadata-apps": 3.0.0-beta.119
-    "@steedos/service-metadata-layouts": 3.0.0-beta.119
-    "@steedos/service-metadata-objects": 3.0.0-beta.119
-    "@steedos/service-metadata-permissionsets": 3.0.0-beta.119
-    "@steedos/service-metadata-tabs": 3.0.0-beta.119
-    "@steedos/service-metadata-translations": 3.0.0-beta.119
-    "@steedos/service-metadata-triggers": 3.0.0-beta.119
-    "@steedos/service-packages": 3.0.0-beta.119
+    "@steedos/objectql": 3.0.0-beta.120
+    "@steedos/service-metadata": 3.0.0-beta.120
+    "@steedos/service-metadata-apps": 3.0.0-beta.120
+    "@steedos/service-metadata-layouts": 3.0.0-beta.120
+    "@steedos/service-metadata-objects": 3.0.0-beta.120
+    "@steedos/service-metadata-permissionsets": 3.0.0-beta.120
+    "@steedos/service-metadata-tabs": 3.0.0-beta.120
+    "@steedos/service-metadata-translations": 3.0.0-beta.120
+    "@steedos/service-metadata-triggers": 3.0.0-beta.120
+    "@steedos/service-packages": 3.0.0-beta.120
     lodash: ^4.17.21
     typescript: 5.7.3
     underscore: 1.13.4
   languageName: unknown
   linkType: soft
 
-"@steedos/service-metadata-tabs@3.0.0-beta.119, @steedos/service-metadata-tabs@workspace:services/service-metadata-tabs":
+"@steedos/service-metadata-tabs@3.0.0-beta.120, @steedos/service-metadata-tabs@workspace:services/service-metadata-tabs":
   version: 0.0.0-use.local
   resolution: "@steedos/service-metadata-tabs@workspace:services/service-metadata-tabs"
   dependencies:
@@ -10541,11 +10541,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-metadata-translations@3.0.0-beta.119, @steedos/service-metadata-translations@workspace:services/service-metadata-translations":
+"@steedos/service-metadata-translations@3.0.0-beta.120, @steedos/service-metadata-translations@workspace:services/service-metadata-translations":
   version: 0.0.0-use.local
   resolution: "@steedos/service-metadata-translations@workspace:services/service-metadata-translations"
   dependencies:
-    "@steedos/metadata-registrar": 3.0.0-beta.119
+    "@steedos/metadata-registrar": 3.0.0-beta.120
     dotenv-flow: ^3.1.0
     ioredis: ^4.22.0
     lodash: ^4.17.21
@@ -10555,7 +10555,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-metadata-triggers@3.0.0-beta.119, @steedos/service-metadata-triggers@workspace:services/service-metadata-triggers":
+"@steedos/service-metadata-triggers@3.0.0-beta.120, @steedos/service-metadata-triggers@workspace:services/service-metadata-triggers":
   version: 0.0.0-use.local
   resolution: "@steedos/service-metadata-triggers@workspace:services/service-metadata-triggers"
   dependencies:
@@ -10569,11 +10569,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-metadata@3.0.0-beta.119, @steedos/service-metadata@workspace:services/service-metadata":
+"@steedos/service-metadata@3.0.0-beta.120, @steedos/service-metadata@workspace:services/service-metadata":
   version: 0.0.0-use.local
   resolution: "@steedos/service-metadata@workspace:services/service-metadata"
   dependencies:
-    "@steedos/metadata-registrar": 3.0.0-beta.119
+    "@steedos/metadata-registrar": 3.0.0-beta.120
     dotenv-flow: ^3.1.0
     ioredis: ^4.22.0
     lodash: ^4.17.21
@@ -10584,14 +10584,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-object-graphql@3.0.0-beta.119, @steedos/service-object-graphql@workspace:services/service-object-graphql":
+"@steedos/service-object-graphql@3.0.0-beta.120, @steedos/service-object-graphql@workspace:services/service-object-graphql":
   version: 0.0.0-use.local
   resolution: "@steedos/service-object-graphql@workspace:services/service-object-graphql"
   dependencies:
-    "@steedos/filters": 3.0.0-beta.119
-    "@steedos/i18n": 3.0.0-beta.119
-    "@steedos/objectql": 3.0.0-beta.119
-    "@steedos/service-object-mixin": 3.0.0-beta.119
+    "@steedos/filters": 3.0.0-beta.120
+    "@steedos/i18n": 3.0.0-beta.120
+    "@steedos/objectql": 3.0.0-beta.120
+    "@steedos/service-object-mixin": 3.0.0-beta.120
     graphql: ^15.8.0
     graphql-parse-resolve-info: ^4.12.3
     moleculer: ^0.14.35
@@ -10601,30 +10601,30 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-object-mixin@3.0.0-beta.119, @steedos/service-object-mixin@workspace:services/service-object-mixin":
+"@steedos/service-object-mixin@3.0.0-beta.120, @steedos/service-object-mixin@workspace:services/service-object-mixin":
   version: 0.0.0-use.local
   resolution: "@steedos/service-object-mixin@workspace:services/service-object-mixin"
   dependencies:
-    "@steedos/utils": 3.0.0-beta.119
+    "@steedos/utils": 3.0.0-beta.120
   languageName: unknown
   linkType: soft
 
-"@steedos/service-objectql@3.0.0-beta.119, @steedos/service-objectql@workspace:services/service-objectql":
+"@steedos/service-objectql@3.0.0-beta.120, @steedos/service-objectql@workspace:services/service-objectql":
   version: 0.0.0-use.local
   resolution: "@steedos/service-objectql@workspace:services/service-objectql"
   dependencies:
-    "@steedos/objectql": 3.0.0-beta.119
+    "@steedos/objectql": 3.0.0-beta.120
   languageName: unknown
   linkType: soft
 
-"@steedos/service-package-loader@3.0.0-beta.119, @steedos/service-package-loader@workspace:services/service-package-loader":
+"@steedos/service-package-loader@3.0.0-beta.120, @steedos/service-package-loader@workspace:services/service-package-loader":
   version: 0.0.0-use.local
   resolution: "@steedos/service-package-loader@workspace:services/service-package-loader"
   dependencies:
-    "@steedos/metadata-core": 3.0.0-beta.119
-    "@steedos/metadata-registrar": 3.0.0-beta.119
-    "@steedos/router": 3.0.0-beta.119
-    "@steedos/service-object-mixin": 3.0.0-beta.119
+    "@steedos/metadata-core": 3.0.0-beta.120
+    "@steedos/metadata-registrar": 3.0.0-beta.120
+    "@steedos/router": 3.0.0-beta.120
+    "@steedos/service-object-mixin": 3.0.0-beta.120
     clone: ^2.1.2
     csvtojson: ~2.0.10
     moleculer: ^0.14.35
@@ -10635,14 +10635,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-package-registry@3.0.0-beta.119, @steedos/service-package-registry@workspace:services/service-package-registry":
+"@steedos/service-package-registry@3.0.0-beta.120, @steedos/service-package-registry@workspace:services/service-package-registry":
   version: 0.0.0-use.local
   resolution: "@steedos/service-package-registry@workspace:services/service-package-registry"
   dependencies:
-    "@steedos/auth": 3.0.0-beta.119
-    "@steedos/metadata-core": 3.0.0-beta.119
-    "@steedos/objectql": 3.0.0-beta.119
-    "@steedos/service-package-loader": 3.0.0-beta.119
+    "@steedos/auth": 3.0.0-beta.120
+    "@steedos/metadata-core": 3.0.0-beta.120
+    "@steedos/objectql": 3.0.0-beta.120
+    "@steedos/service-package-loader": 3.0.0-beta.120
     clone: ^2.1.2
     fs-extra: 8.1.0
     i18next: 20.3.2
@@ -10659,13 +10659,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-packages@3.0.0-beta.119, @steedos/service-packages@workspace:services/service-packages":
+"@steedos/service-packages@3.0.0-beta.120, @steedos/service-packages@workspace:services/service-packages":
   version: 0.0.0-use.local
   resolution: "@steedos/service-packages@workspace:services/service-packages"
   languageName: unknown
   linkType: soft
 
-"@steedos/service-pages@3.0.0-beta.119, @steedos/service-pages@workspace:services/service-pages":
+"@steedos/service-pages@3.0.0-beta.120, @steedos/service-pages@workspace:services/service-pages":
   version: 0.0.0-use.local
   resolution: "@steedos/service-pages@workspace:services/service-pages"
   dependencies:
@@ -10674,7 +10674,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-plugin-amis@3.0.0-beta.119, @steedos/service-plugin-amis@workspace:services/service-plugin-amis":
+"@steedos/service-plugin-amis@3.0.0-beta.120, @steedos/service-plugin-amis@workspace:services/service-plugin-amis":
   version: 0.0.0-use.local
   resolution: "@steedos/service-plugin-amis@workspace:services/service-plugin-amis"
   dependencies:
@@ -10682,29 +10682,29 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-rest@3.0.0-beta.119, @steedos/service-rest@workspace:services/service-rest":
+"@steedos/service-rest@3.0.0-beta.120, @steedos/service-rest@workspace:services/service-rest":
   version: 0.0.0-use.local
   resolution: "@steedos/service-rest@workspace:services/service-rest"
   dependencies:
-    "@steedos/objectql": 3.0.0-beta.119
-    "@steedos/service-object-mixin": 3.0.0-beta.119
+    "@steedos/objectql": 3.0.0-beta.120
+    "@steedos/service-object-mixin": 3.0.0-beta.120
     lodash: ^4.17.21
   languageName: unknown
   linkType: soft
 
-"@steedos/service-saas@3.0.0-beta.119, @steedos/service-saas@workspace:services/service-saas":
+"@steedos/service-saas@3.0.0-beta.120, @steedos/service-saas@workspace:services/service-saas":
   version: 0.0.0-use.local
   resolution: "@steedos/service-saas@workspace:services/service-saas"
   languageName: unknown
   linkType: soft
 
-"@steedos/service-ui@3.0.0-beta.119, @steedos/service-ui@workspace:services/service-ui":
+"@steedos/service-ui@3.0.0-beta.120, @steedos/service-ui@workspace:services/service-ui":
   version: 0.0.0-use.local
   resolution: "@steedos/service-ui@workspace:services/service-ui"
   dependencies:
-    "@steedos/auth": 3.0.0-beta.119
-    "@steedos/i18n": 3.0.0-beta.119
-    "@steedos/objectql": 3.0.0-beta.119
+    "@steedos/auth": 3.0.0-beta.120
+    "@steedos/i18n": 3.0.0-beta.120
+    "@steedos/objectql": 3.0.0-beta.120
     express: 4.18.1
   languageName: unknown
   linkType: soft
@@ -10722,19 +10722,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/standard-object-database@3.0.0-beta.119, @steedos/standard-object-database@workspace:services/standard-object-database":
+"@steedos/standard-object-database@3.0.0-beta.120, @steedos/standard-object-database@workspace:services/standard-object-database":
   version: 0.0.0-use.local
   resolution: "@steedos/standard-object-database@workspace:services/standard-object-database"
   dependencies:
-    "@steedos/metadata-core": 3.0.0-beta.119
-    "@steedos/moleculer-bullmq": 3.0.0-beta.119
-    "@steedos/service-object-mixin": 3.0.0-beta.119
+    "@steedos/metadata-core": 3.0.0-beta.120
+    "@steedos/moleculer-bullmq": 3.0.0-beta.120
+    "@steedos/service-object-mixin": 3.0.0-beta.120
     amis-formula: ~6.3.0
     clone: ^2.1.2
   languageName: unknown
   linkType: soft
 
-"@steedos/standard-permission@3.0.0-beta.119, @steedos/standard-permission@workspace:services/standard-permission":
+"@steedos/standard-permission@3.0.0-beta.120, @steedos/standard-permission@workspace:services/standard-permission":
   version: 0.0.0-use.local
   resolution: "@steedos/standard-permission@workspace:services/standard-permission"
   dependencies:
@@ -10742,16 +10742,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/standard-process-approval@3.0.0-beta.119, @steedos/standard-process-approval@workspace:services/standard-process-approval":
+"@steedos/standard-process-approval@3.0.0-beta.120, @steedos/standard-process-approval@workspace:services/standard-process-approval":
   version: 0.0.0-use.local
   resolution: "@steedos/standard-process-approval@workspace:services/standard-process-approval"
   dependencies:
-    "@steedos/process": 3.0.0-beta.119
+    "@steedos/process": 3.0.0-beta.120
     nanoid: ^3.3.4
   languageName: unknown
   linkType: soft
 
-"@steedos/standard-ui@3.0.0-beta.119, @steedos/standard-ui@workspace:services/standard-ui":
+"@steedos/standard-ui@3.0.0-beta.120, @steedos/standard-ui@workspace:services/standard-ui":
   version: 0.0.0-use.local
   resolution: "@steedos/standard-ui@workspace:services/standard-ui"
   dependencies:
@@ -10759,24 +10759,24 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/steedos-plugin-schema-builder@3.0.0-beta.119, @steedos/steedos-plugin-schema-builder@workspace:packages/steedos-plugin-schema-builder":
+"@steedos/steedos-plugin-schema-builder@3.0.0-beta.120, @steedos/steedos-plugin-schema-builder@workspace:packages/steedos-plugin-schema-builder":
   version: 0.0.0-use.local
   resolution: "@steedos/steedos-plugin-schema-builder@workspace:packages/steedos-plugin-schema-builder"
   languageName: unknown
   linkType: soft
 
-"@steedos/unpkg@3.0.0-beta.119, @steedos/unpkg@workspace:services/unpkg":
+"@steedos/unpkg@3.0.0-beta.120, @steedos/unpkg@workspace:services/unpkg":
   version: 0.0.0-use.local
   resolution: "@steedos/unpkg@workspace:services/unpkg"
   languageName: unknown
   linkType: soft
 
-"@steedos/utils@3.0.0-beta.119, @steedos/utils@workspace:packages/utils":
+"@steedos/utils@3.0.0-beta.120, @steedos/utils@workspace:packages/utils":
   version: 0.0.0-use.local
   resolution: "@steedos/utils@workspace:packages/utils"
   dependencies:
-    "@steedos/filters": 3.0.0-beta.119
-    "@steedos/odata-v4-mongodb": 3.0.0-beta.119
+    "@steedos/filters": 3.0.0-beta.120
+    "@steedos/odata-v4-mongodb": 3.0.0-beta.120
     clone: ^2.1.2
     cookies: ^0.8.0
     mingo: ^6.0.5
@@ -10800,7 +10800,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos/webapp@3.0.0-beta.119, @steedos/webapp@workspace:builder6/webapp":
+"@steedos/webapp@3.0.0-beta.120, @steedos/webapp@workspace:builder6/webapp":
   version: 0.0.0-use.local
   resolution: "@steedos/webapp@workspace:builder6/webapp"
   dependencies:
@@ -10812,6 +10812,7 @@ __metadata:
     "@material-ui/core": ^4.4.1
     "@material-ui/icons": ^4.4.1
     "@material-ui/styles": ^4.4.1
+    "@tailwindcss/typography": ^0.5.19
     "@tailwindui/react": ^0.1.1
     "@types/node": ^14.14.19
     "@types/qrcode.react": 0.8.2
@@ -10845,12 +10846,14 @@ __metadata:
     react-dom: ^18.2.0
     react-i18next: 15.4.0
     react-intl: ^3.1.13
+    react-markdown: ^10.1.0
     react-redux: ^7.1.1
     react-router-dom: ^7.1.3
     react-scripts: ^5.0.1
     redux: ^4.0.4
     redux-devtools-extension: ^2.13.8
     redux-thunk: ^2.4.1
+    remark-gfm: ^4.0.1
     serialize-error: ^7.0.1
     socket.io-client: ^4.8.1
     tailwindcss: ^3.4.17
@@ -10861,11 +10864,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/workflow_time_trigger@3.0.0-beta.119, @steedos/workflow_time_trigger@workspace:services/workflow_time_trigger":
+"@steedos/workflow_time_trigger@3.0.0-beta.120, @steedos/workflow_time_trigger@workspace:services/workflow_time_trigger":
   version: 0.0.0-use.local
   resolution: "@steedos/workflow_time_trigger@workspace:services/workflow_time_trigger"
   dependencies:
-    "@steedos/objectql": 3.0.0-beta.119
+    "@steedos/objectql": 3.0.0-beta.120
     eval: 0.1.8
     node-schedule: 2.1.0
   languageName: unknown
@@ -11038,6 +11041,17 @@ __metadata:
   dependencies:
     defer-to-connect: ^2.0.1
   checksum: fc9cb993e808806692e4a3337c90ece0ec00c89f4b67e3652a356b89730da98bc824273a6d67ca84d5f33cd85f317dcd5ce39d8cc0a2f060145a608a7cb8ce92
+  languageName: node
+  linkType: hard
+
+"@tailwindcss/typography@npm:^0.5.19":
+  version: 0.5.19
+  resolution: "@tailwindcss/typography@npm:0.5.19"
+  dependencies:
+    postcss-selector-parser: 6.0.10
+  peerDependencies:
+    tailwindcss: "*"
+  checksum: 6e5b25a2a24b8f112c9628b29aee4579ed024f368111937a5f3be7a4adc2d768c1aa9d5d5bb2d04972c7b49e526bcaade9f9e785e2e7a0b6be3d392f7ba02e17
   languageName: node
   linkType: hard
 
@@ -11358,7 +11372,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/debug@npm:^4.1.8":
+"@types/debug@npm:^4.0.0, @types/debug@npm:^4.1.8":
   version: 4.1.12
   resolution: "@types/debug@npm:4.1.12"
   dependencies:
@@ -11404,7 +11418,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/estree@npm:*, @types/estree@npm:1.0.8, @types/estree@npm:^1.0.6, @types/estree@npm:^1.0.8":
+"@types/estree-jsx@npm:^1.0.0":
+  version: 1.0.5
+  resolution: "@types/estree-jsx@npm:1.0.5"
+  dependencies:
+    "@types/estree": "*"
+  checksum: a028ab0cd7b2950168a05c6a86026eb3a36a54a4adfae57f13911d7b49dffe573d9c2b28421b2d029b49b3d02fcd686611be2622dc3dad6d9791166c083f6008
+  languageName: node
+  linkType: hard
+
+"@types/estree@npm:*, @types/estree@npm:1.0.8, @types/estree@npm:^1.0.0, @types/estree@npm:^1.0.6, @types/estree@npm:^1.0.8":
   version: 1.0.8
   resolution: "@types/estree@npm:1.0.8"
   checksum: bd93e2e415b6f182ec4da1074e1f36c480f1d26add3e696d54fb30c09bc470897e41361c8fd957bf0985024f8fbf1e6e2aff977d79352ef7eb93a5c6dcff6c11
@@ -11531,6 +11554,15 @@ __metadata:
     fs-capacitor: ^8.0.0
     graphql: 0.13.1 - 16
   checksum: 394d5e05f4d5a205dc53f66670af28de73bc73b0910e68907e6d01348caeeb27478621cfdb238a71668f0cca7347ed362c2f1a68266da4b823707dc4daba92ee
+  languageName: node
+  linkType: hard
+
+"@types/hast@npm:^3.0.0":
+  version: 3.0.4
+  resolution: "@types/hast@npm:3.0.4"
+  dependencies:
+    "@types/unist": "*"
+  checksum: 7a973e8d16fcdf3936090fa2280f408fb2b6a4f13b42edeb5fbd614efe042b82eac68e298e556d50f6b4ad585a3a93c353e9c826feccdc77af59de8dd400d044
   languageName: node
   linkType: hard
 
@@ -11754,6 +11786,15 @@ __metadata:
   version: 3.4.2
   resolution: "@types/luxon@npm:3.4.2"
   checksum: 6f92d5bd02e89f310395753506bcd9cef3a56f5940f7a50db2a2b9822bce753553ac767d143cb5b4f9ed5ddd4a84e64f89ff538082ceb4d18739af7781b56925
+  languageName: node
+  linkType: hard
+
+"@types/mdast@npm:^4.0.0":
+  version: 4.0.4
+  resolution: "@types/mdast@npm:4.0.4"
+  dependencies:
+    "@types/unist": "*"
+  checksum: 20c4e9574cc409db662a35cba52b068b91eb696b3049e94321219d47d34c8ccc99a142be5c76c80a538b612457b03586bc2f6b727a3e9e7530f4c8568f6282ee
   languageName: node
   linkType: hard
 
@@ -12236,6 +12277,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/unist@npm:*, @types/unist@npm:^3.0.0":
+  version: 3.0.3
+  resolution: "@types/unist@npm:3.0.3"
+  checksum: 96e6453da9e075aaef1dc22482463898198acdc1eeb99b465e65e34303e2ec1e3b1ed4469a9118275ec284dc98019f63c3f5d49422f0e4ac707e5ab90fb3b71a
+  languageName: node
+  linkType: hard
+
+"@types/unist@npm:^2.0.0":
+  version: 2.0.11
+  resolution: "@types/unist@npm:2.0.11"
+  checksum: 6d436e832bc35c6dde9f056ac515ebf2b3384a1d7f63679d12358766f9b313368077402e9c1126a14d827f10370a5485e628bf61aa91117cf4fc882423191a4e
+  languageName: node
+  linkType: hard
+
 "@types/validate-npm-package-name@npm:3.0.0":
   version: 3.0.0
   resolution: "@types/validate-npm-package-name@npm:3.0.0"
@@ -12713,7 +12768,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ungap/structured-clone@npm:^1.2.0":
+"@ungap/structured-clone@npm:^1.0.0, @ungap/structured-clone@npm:^1.2.0":
   version: 1.3.0
   resolution: "@ungap/structured-clone@npm:1.3.0"
   checksum: 64ed518f49c2b31f5b50f8570a1e37bde3b62f2460042c50f132430b2d869c4a6586f13aa33a58a4722715b8158c68cae2827389d6752ac54da2893c83e480fc
@@ -14732,6 +14787,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"bail@npm:^2.0.0":
+  version: 2.0.2
+  resolution: "bail@npm:2.0.2"
+  checksum: aab4e8ccdc8d762bf3fdfce8e706601695620c0c2eda256dd85088dc0be3cfd7ff126f6e99c2bee1f24f5d418414aacf09d7f9702f16d6963df2fa488cda8824
+  languageName: node
+  linkType: hard
+
 "balanced-match@npm:^1.0.0":
   version: 1.0.2
   resolution: "balanced-match@npm:1.0.2"
@@ -15952,6 +16014,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ccount@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "ccount@npm:2.0.1"
+  checksum: 48193dada54c9e260e0acf57fc16171a225305548f9ad20d5471e0f7a8c026aedd8747091dccb0d900cde7df4e4ddbd235df0d8de4a64c71b12f0d3303eeafd4
+  languageName: node
+  linkType: hard
+
 "cfb@npm:^1.1.4":
   version: 1.2.2
   resolution: "cfb@npm:1.2.2"
@@ -16063,12 +16132,40 @@ __metadata:
   languageName: node
   linkType: hard
 
+"character-entities-html4@npm:^2.0.0":
+  version: 2.1.0
+  resolution: "character-entities-html4@npm:2.1.0"
+  checksum: 7034aa7c7fa90309667f6dd50499c8a760c3d3a6fb159adb4e0bada0107d194551cdbad0714302f62d06ce4ed68565c8c2e15fdef2e8f8764eb63fa92b34b11d
+  languageName: node
+  linkType: hard
+
+"character-entities-legacy@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "character-entities-legacy@npm:3.0.0"
+  checksum: 7582af055cb488b626d364b7d7a4e46b06abd526fb63c0e4eb35bcb9c9799cc4f76b39f34fdccef2d1174ac95e53e9ab355aae83227c1a2505877893fce77731
+  languageName: node
+  linkType: hard
+
+"character-entities@npm:^2.0.0":
+  version: 2.0.2
+  resolution: "character-entities@npm:2.0.2"
+  checksum: cf1643814023697f725e47328fcec17923b8f1799102a8a79c1514e894815651794a2bffd84bb1b3a4b124b050154e4529ed6e81f7c8068a734aecf07a6d3def
+  languageName: node
+  linkType: hard
+
 "character-parser@npm:^2.2.0":
   version: 2.2.0
   resolution: "character-parser@npm:2.2.0"
   dependencies:
     is-regex: ^1.0.3
   checksum: 71826fae509d4dc3ef07c2e824da9c8853f910ba0d8fe699edaab263051fd3b8db77bb96e46ed896bb36ed1d86108e6d6ceedff436bec7786ba7f0b585a0bc93
+  languageName: node
+  linkType: hard
+
+"character-reference-invalid@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "character-reference-invalid@npm:2.0.1"
+  checksum: 98d3b1a52ae510b7329e6ee7f6210df14f1e318c5415975d4c9e7ee0ef4c07875d47c6e74230c64551f12f556b4a8ccc24d9f3691a2aa197019e72a95e9297ee
   languageName: node
   linkType: hard
 
@@ -16812,6 +16909,13 @@ __metadata:
   dependencies:
     delayed-stream: ~1.0.0
   checksum: 49fa4aeb4916567e33ea81d088f6584749fc90c7abec76fd516bf1c5aa5c79f3584b5ba3de6b86d26ddd64bae5329c4c7479343250cfe71c75bb366eae53bb7c
+  languageName: node
+  linkType: hard
+
+"comma-separated-tokens@npm:^2.0.0":
+  version: 2.0.3
+  resolution: "comma-separated-tokens@npm:2.0.3"
+  checksum: e3bf9e0332a5c45f49b90e79bcdb4a7a85f28d6a6f0876a94f1bb9b2bfbdbbb9292aac50e1e742d8c0db1e62a0229a106f57917e2d067fca951d81737651700d
   languageName: node
   linkType: hard
 
@@ -18508,6 +18612,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"decode-named-character-reference@npm:^1.0.0":
+  version: 1.2.0
+  resolution: "decode-named-character-reference@npm:1.2.0"
+  dependencies:
+    character-entities: ^2.0.0
+  checksum: f26b23046c1a137c0b41fa51e3ce07ba8364640322c742a31570999784abc8572fc24cb108a76b14ff72ddb75d35aad3d14b10d7743639112145a2664b9d1864
+  languageName: node
+  linkType: hard
+
 "decode-uri-component@npm:^0.2.0, decode-uri-component@npm:^0.2.2":
   version: 0.2.2
   resolution: "decode-uri-component@npm:0.2.2"
@@ -18898,7 +19011,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dequal@npm:^2.0.3":
+"dequal@npm:^2.0.0, dequal@npm:^2.0.3":
   version: 2.0.3
   resolution: "dequal@npm:2.0.3"
   checksum: 8679b850e1a3d0ebbc46ee780d5df7b478c23f335887464023a631d1b9af051ad4a6595a44220f9ff8ff95a8ddccf019b5ad778a976fd7bbf77383d36f412f90
@@ -18971,6 +19084,15 @@ __metadata:
     detect: ./bin/detect-port
     detect-port: ./bin/detect-port
   checksum: 9dc37b1fa4a9dd6d4889e1045849b8d841232b598d1ca888bf712f4035b07a17cf6d537465a0d7323250048d3a5a0540e3b7cf89457efc222f96f77e2c40d16a
+  languageName: node
+  linkType: hard
+
+"devlop@npm:^1.0.0, devlop@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "devlop@npm:1.1.0"
+  dependencies:
+    dequal: ^2.0.0
+  checksum: d2ff650bac0bb6ef08c48f3ba98640bb5fec5cce81e9957eb620408d1bab1204d382a45b785c6b3314dc867bb0684936b84c6867820da6db97cbb5d3c15dd185
   languageName: node
   linkType: hard
 
@@ -20147,6 +20269,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"escape-string-regexp@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "escape-string-regexp@npm:5.0.0"
+  checksum: 20daabe197f3cb198ec28546deebcf24b3dbb1a5a269184381b3116d12f0532e06007f4bc8da25669d6a7f8efb68db0758df4cd981f57bc5b57f521a3e12c59e
+  languageName: node
+  linkType: hard
+
 "escodegen@npm:^1.8.1":
   version: 1.14.3
   resolution: "escodegen@npm:1.14.3"
@@ -20673,6 +20802,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"estree-util-is-identifier-name@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "estree-util-is-identifier-name@npm:3.0.0"
+  checksum: ea3909f0188ea164af0aadeca87c087e3e5da78d76da5ae9c7954ff1340ea3e4679c4653bbf4299ffb70caa9b322218cc1128db2541f3d2976eb9704f9857787
+  languageName: node
+  linkType: hard
+
 "estree-walker@npm:^1.0.1":
   version: 1.0.1
   resolution: "estree-walker@npm:1.0.1"
@@ -21180,7 +21316,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"extend@npm:~3.0.2":
+"extend@npm:^3.0.0, extend@npm:~3.0.2":
   version: 3.0.2
   resolution: "extend@npm:3.0.2"
   checksum: a50a8309ca65ea5d426382ff09f33586527882cf532931cb08ca786ea3146c0553310bda688710ff61d7668eba9f96b923fe1420cdf56a2c3eaf30fcab87b515
@@ -23500,6 +23636,38 @@ __metadata:
   languageName: node
   linkType: hard
 
+"hast-util-to-jsx-runtime@npm:^2.0.0":
+  version: 2.3.6
+  resolution: "hast-util-to-jsx-runtime@npm:2.3.6"
+  dependencies:
+    "@types/estree": ^1.0.0
+    "@types/hast": ^3.0.0
+    "@types/unist": ^3.0.0
+    comma-separated-tokens: ^2.0.0
+    devlop: ^1.0.0
+    estree-util-is-identifier-name: ^3.0.0
+    hast-util-whitespace: ^3.0.0
+    mdast-util-mdx-expression: ^2.0.0
+    mdast-util-mdx-jsx: ^3.0.0
+    mdast-util-mdxjs-esm: ^2.0.0
+    property-information: ^7.0.0
+    space-separated-tokens: ^2.0.0
+    style-to-js: ^1.0.0
+    unist-util-position: ^5.0.0
+    vfile-message: ^4.0.0
+  checksum: 78c25465cf010f1004b22f0bbb3bd47793f458ead3561c779ea2b9204ceb1adc9c048592b0a15025df0c683a12ebe16a8bef008c06d9c0369f51116f64b35a2d
+  languageName: node
+  linkType: hard
+
+"hast-util-whitespace@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "hast-util-whitespace@npm:3.0.0"
+  dependencies:
+    "@types/hast": ^3.0.0
+  checksum: 41d93ccce218ba935dc3c12acdf586193c35069489c8c8f50c2aa824c00dec94a3c78b03d1db40fa75381942a189161922e4b7bca700b3a2cc779634c351a1e4
+  languageName: node
+  linkType: hard
+
 "hbs@npm:^4.2.0":
   version: 4.2.0
   resolution: "hbs@npm:4.2.0"
@@ -23758,6 +23926,13 @@ __metadata:
     htmlparser2: ^8.0.2
     selderee: ^0.11.0
   checksum: 205e0faa9b9aa281b369122acdffc5f348848e400f4037fde1fb12d68a6baa11644d2b64c3cc6821a79d3bc7316d89e85cc733d86f7f709858cb5c5b72faac65
+  languageName: node
+  linkType: hard
+
+"html-url-attributes@npm:^3.0.0":
+  version: 3.0.1
+  resolution: "html-url-attributes@npm:3.0.1"
+  checksum: 1ecbf9cae0c438d2802386710177b7bbf7e30cc61327e9f125eb32fca7302cd1e3ab45c441859cb1e7646109be322fc1163592ad4dfde9b14d09416d101a6573
   languageName: node
   linkType: hard
 
@@ -24573,6 +24748,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"inline-style-parser@npm:0.2.4":
+  version: 0.2.4
+  resolution: "inline-style-parser@npm:0.2.4"
+  checksum: 5df20a21dd8d67104faaae29774bb50dc9690c75bc5c45dac107559670a5530104ead72c4cf54f390026e617e7014c65b3d68fb0bb573a37c4d1f94e9c36e1ca
+  languageName: node
+  linkType: hard
+
 "inquirer@npm:^6.2.2":
   version: 6.5.2
   resolution: "inquirer@npm:6.5.2"
@@ -24752,6 +24934,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"is-alphabetical@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "is-alphabetical@npm:2.0.1"
+  checksum: 56207db8d9de0850f0cd30f4966bf731eb82cedfe496cbc2e97e7c3bacaf66fc54a972d2d08c0d93bb679cb84976a05d24c5ad63de56fabbfc60aadae312edaa
+  languageName: node
+  linkType: hard
+
+"is-alphanumerical@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "is-alphanumerical@npm:2.0.1"
+  dependencies:
+    is-alphabetical: ^2.0.0
+    is-decimal: ^2.0.0
+  checksum: 87acc068008d4c9c4e9f5bd5e251041d42e7a50995c77b1499cf6ed248f971aadeddb11f239cabf09f7975ee58cac7a48ffc170b7890076d8d227b24a68663c9
+  languageName: node
+  linkType: hard
+
 "is-arguments@npm:^1.0.4":
   version: 1.2.0
   resolution: "is-arguments@npm:1.2.0"
@@ -24909,6 +25108,13 @@ __metadata:
     call-bound: ^1.0.2
     has-tostringtag: ^1.0.2
   checksum: d6c36ab9d20971d65f3fc64cef940d57a4900a2ac85fb488a46d164c2072a33da1cb51eefcc039e3e5c208acbce343d3480b84ab5ff0983f617512da2742562a
+  languageName: node
+  linkType: hard
+
+"is-decimal@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "is-decimal@npm:2.0.1"
+  checksum: 97132de7acdce77caa7b797632970a2ecd649a88e715db0e4dbc00ab0708b5e7574ba5903962c860cd4894a14fd12b100c0c4ac8aed445cf6f55c6cf747a4158
   languageName: node
   linkType: hard
 
@@ -25080,6 +25286,13 @@ __metadata:
   version: 1.0.0
   resolution: "is-gzip@npm:1.0.0"
   checksum: 0d28931c1f445fa29c900cf9f48e06e9d1d477a3bf7bd7332e7ce68f1333ccd8cb381de2f0f62a9a262d9c0912608a9a71b4a40e788e201b3dbd67072bb20d86
+  languageName: node
+  linkType: hard
+
+"is-hexadecimal@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "is-hexadecimal@npm:2.0.1"
+  checksum: 66a2ea85994c622858f063f23eda506db29d92b52580709eb6f4c19550552d4dcf3fb81952e52f7cf972097237959e00adc7bb8c9400cd12886e15bf06145321
   languageName: node
   linkType: hard
 
@@ -28682,6 +28895,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"longest-streak@npm:^3.0.0":
+  version: 3.1.0
+  resolution: "longest-streak@npm:3.1.0"
+  checksum: d7f952ed004cbdb5c8bcfc4f7f5c3d65449e6c5a9e9be4505a656e3df5a57ee125f284286b4bf8ecea0c21a7b3bf2b8f9001ad506c319b9815ad6a63a47d0fd0
+  languageName: node
+  linkType: hard
+
 "loose-envify@npm:^1.0.0, loose-envify@npm:^1.1.0, loose-envify@npm:^1.4.0":
   version: 1.4.0
   resolution: "loose-envify@npm:1.4.0"
@@ -29090,6 +29310,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"markdown-table@npm:^3.0.0":
+  version: 3.0.4
+  resolution: "markdown-table@npm:3.0.4"
+  checksum: bc24b177cbb3ef170cb38c9f191476aa63f7236ebc8980317c5e91b5bf98c8fb471cf46d8920478c5e770d7f4337326f6b5b3efbf0687c2044fd332d7a64dfcb
+  languageName: node
+  linkType: hard
+
 "marked-terminal@npm:^4.1.1":
   version: 4.2.0
   resolution: "marked-terminal@npm:4.2.0"
@@ -29160,6 +29387,216 @@ __metadata:
     crypt: 0.0.2
     is-buffer: ~1.1.6
   checksum: a63cacf4018dc9dee08c36e6f924a64ced735b37826116c905717c41cebeb41a522f7a526ba6ad578f9c80f02cb365033ccd67fe186ffbcc1a1faeb75daa9b6e
+  languageName: node
+  linkType: hard
+
+"mdast-util-find-and-replace@npm:^3.0.0":
+  version: 3.0.2
+  resolution: "mdast-util-find-and-replace@npm:3.0.2"
+  dependencies:
+    "@types/mdast": ^4.0.0
+    escape-string-regexp: ^5.0.0
+    unist-util-is: ^6.0.0
+    unist-util-visit-parents: ^6.0.0
+  checksum: 00dde8aaf87d065034b911bdae20d17c107f5103c6ba5a3d117598c847ce005c6b03114b5603e0d07cc61fefcbb05bdb9f66100efeaa0278dbd80eda1087595f
+  languageName: node
+  linkType: hard
+
+"mdast-util-from-markdown@npm:^2.0.0":
+  version: 2.0.2
+  resolution: "mdast-util-from-markdown@npm:2.0.2"
+  dependencies:
+    "@types/mdast": ^4.0.0
+    "@types/unist": ^3.0.0
+    decode-named-character-reference: ^1.0.0
+    devlop: ^1.0.0
+    mdast-util-to-string: ^4.0.0
+    micromark: ^4.0.0
+    micromark-util-decode-numeric-character-reference: ^2.0.0
+    micromark-util-decode-string: ^2.0.0
+    micromark-util-normalize-identifier: ^2.0.0
+    micromark-util-symbol: ^2.0.0
+    micromark-util-types: ^2.0.0
+    unist-util-stringify-position: ^4.0.0
+  checksum: 1ad19f48b30ac6e0cb756070c210c78ad93c26876edfb3f75127783bc6df8b9402016d8f3e9964f3d1d5430503138ec65c145e869438727e1aa7f3cebf228fba
+  languageName: node
+  linkType: hard
+
+"mdast-util-gfm-autolink-literal@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "mdast-util-gfm-autolink-literal@npm:2.0.1"
+  dependencies:
+    "@types/mdast": ^4.0.0
+    ccount: ^2.0.0
+    devlop: ^1.0.0
+    mdast-util-find-and-replace: ^3.0.0
+    micromark-util-character: ^2.0.0
+  checksum: 5630b12e072d7004cb132231c94f667fb5813486779cb0dfb0a196d7ae0e048897a43b0b37e080017adda618ddfcbea1d7bf23c0fa31c87bfc683e0898ea1cfe
+  languageName: node
+  linkType: hard
+
+"mdast-util-gfm-footnote@npm:^2.0.0":
+  version: 2.1.0
+  resolution: "mdast-util-gfm-footnote@npm:2.1.0"
+  dependencies:
+    "@types/mdast": ^4.0.0
+    devlop: ^1.1.0
+    mdast-util-from-markdown: ^2.0.0
+    mdast-util-to-markdown: ^2.0.0
+    micromark-util-normalize-identifier: ^2.0.0
+  checksum: a23c5531d63b254b46cbcb063b5731f56ccc9d1f038a17fa66d3994255868604a2b963f24e0f5b16dd3374743622afafcfe0c98cf90548d485bdc426ba77c618
+  languageName: node
+  linkType: hard
+
+"mdast-util-gfm-strikethrough@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "mdast-util-gfm-strikethrough@npm:2.0.0"
+  dependencies:
+    "@types/mdast": ^4.0.0
+    mdast-util-from-markdown: ^2.0.0
+    mdast-util-to-markdown: ^2.0.0
+  checksum: fe9b1d0eba9b791ff9001c008744eafe3dd7a81b085f2bf521595ce4a8e8b1b44764ad9361761ad4533af3e5d913d8ad053abec38172031d9ee32a8ebd1c7dbd
+  languageName: node
+  linkType: hard
+
+"mdast-util-gfm-table@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "mdast-util-gfm-table@npm:2.0.0"
+  dependencies:
+    "@types/mdast": ^4.0.0
+    devlop: ^1.0.0
+    markdown-table: ^3.0.0
+    mdast-util-from-markdown: ^2.0.0
+    mdast-util-to-markdown: ^2.0.0
+  checksum: 063a627fd0993548fd63ca0c24c437baf91ba7d51d0a38820bd459bc20bf3d13d7365ef8d28dca99176dd5eb26058f7dde51190479c186dfe6af2e11202957c9
+  languageName: node
+  linkType: hard
+
+"mdast-util-gfm-task-list-item@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "mdast-util-gfm-task-list-item@npm:2.0.0"
+  dependencies:
+    "@types/mdast": ^4.0.0
+    devlop: ^1.0.0
+    mdast-util-from-markdown: ^2.0.0
+    mdast-util-to-markdown: ^2.0.0
+  checksum: 37db90c59b15330fc54d790404abf5ef9f2f83e8961c53666fe7de4aab8dd5e6b3c296b6be19797456711a89a27840291d8871ff0438e9b4e15c89d170efe072
+  languageName: node
+  linkType: hard
+
+"mdast-util-gfm@npm:^3.0.0":
+  version: 3.1.0
+  resolution: "mdast-util-gfm@npm:3.1.0"
+  dependencies:
+    mdast-util-from-markdown: ^2.0.0
+    mdast-util-gfm-autolink-literal: ^2.0.0
+    mdast-util-gfm-footnote: ^2.0.0
+    mdast-util-gfm-strikethrough: ^2.0.0
+    mdast-util-gfm-table: ^2.0.0
+    mdast-util-gfm-task-list-item: ^2.0.0
+    mdast-util-to-markdown: ^2.0.0
+  checksum: ecdadc0b46608d03eea53366cfee8c9441ddacc49fe4e12934eff8fea06f9377d2679d9d9e43177295c09c8d7def5f48d739f99b0f6144a0e228a77f5a1c76bc
+  languageName: node
+  linkType: hard
+
+"mdast-util-mdx-expression@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "mdast-util-mdx-expression@npm:2.0.1"
+  dependencies:
+    "@types/estree-jsx": ^1.0.0
+    "@types/hast": ^3.0.0
+    "@types/mdast": ^4.0.0
+    devlop: ^1.0.0
+    mdast-util-from-markdown: ^2.0.0
+    mdast-util-to-markdown: ^2.0.0
+  checksum: 6af56b06bde3ab971129db9855dcf0d31806c70b3b052d7a90a5499a366b57ffd0c2efca67d281c448c557298ba7e3e61bd07133733b735440840dd339b28e19
+  languageName: node
+  linkType: hard
+
+"mdast-util-mdx-jsx@npm:^3.0.0":
+  version: 3.2.0
+  resolution: "mdast-util-mdx-jsx@npm:3.2.0"
+  dependencies:
+    "@types/estree-jsx": ^1.0.0
+    "@types/hast": ^3.0.0
+    "@types/mdast": ^4.0.0
+    "@types/unist": ^3.0.0
+    ccount: ^2.0.0
+    devlop: ^1.1.0
+    mdast-util-from-markdown: ^2.0.0
+    mdast-util-to-markdown: ^2.0.0
+    parse-entities: ^4.0.0
+    stringify-entities: ^4.0.0
+    unist-util-stringify-position: ^4.0.0
+    vfile-message: ^4.0.0
+  checksum: 224f5f6ad247f0f2622ee36c82ac7a4c6a60c31850de4056bf95f531bd2f7ec8943ef34dfe8a8375851f65c07e4913c4f33045d703df4ff4d11b2de5a088f7f9
+  languageName: node
+  linkType: hard
+
+"mdast-util-mdxjs-esm@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "mdast-util-mdxjs-esm@npm:2.0.1"
+  dependencies:
+    "@types/estree-jsx": ^1.0.0
+    "@types/hast": ^3.0.0
+    "@types/mdast": ^4.0.0
+    devlop: ^1.0.0
+    mdast-util-from-markdown: ^2.0.0
+    mdast-util-to-markdown: ^2.0.0
+  checksum: 1f9dad04d31d59005332e9157ea9510dc1d03092aadbc607a10475c7eec1c158b475aa0601a3a4f74e13097ca735deb8c2d9d37928ddef25d3029fd7c9e14dc3
+  languageName: node
+  linkType: hard
+
+"mdast-util-phrasing@npm:^4.0.0":
+  version: 4.1.0
+  resolution: "mdast-util-phrasing@npm:4.1.0"
+  dependencies:
+    "@types/mdast": ^4.0.0
+    unist-util-is: ^6.0.0
+  checksum: 3a97533e8ad104a422f8bebb34b3dde4f17167b8ed3a721cf9263c7416bd3447d2364e6d012a594aada40cac9e949db28a060bb71a982231693609034ed5324e
+  languageName: node
+  linkType: hard
+
+"mdast-util-to-hast@npm:^13.0.0":
+  version: 13.2.0
+  resolution: "mdast-util-to-hast@npm:13.2.0"
+  dependencies:
+    "@types/hast": ^3.0.0
+    "@types/mdast": ^4.0.0
+    "@ungap/structured-clone": ^1.0.0
+    devlop: ^1.0.0
+    micromark-util-sanitize-uri: ^2.0.0
+    trim-lines: ^3.0.0
+    unist-util-position: ^5.0.0
+    unist-util-visit: ^5.0.0
+    vfile: ^6.0.0
+  checksum: 7e5231ff3d4e35e1421908437577fd5098141f64918ff5cc8a0f7a8a76c5407f7a3ee88d75f7a1f7afb763989c9f357475fa0ba8296c00aaff1e940098fe86a6
+  languageName: node
+  linkType: hard
+
+"mdast-util-to-markdown@npm:^2.0.0":
+  version: 2.1.2
+  resolution: "mdast-util-to-markdown@npm:2.1.2"
+  dependencies:
+    "@types/mdast": ^4.0.0
+    "@types/unist": ^3.0.0
+    longest-streak: ^3.0.0
+    mdast-util-phrasing: ^4.0.0
+    mdast-util-to-string: ^4.0.0
+    micromark-util-classify-character: ^2.0.0
+    micromark-util-decode-string: ^2.0.0
+    unist-util-visit: ^5.0.0
+    zwitch: ^2.0.0
+  checksum: 288d152bd50c00632e6e01c610bb904a220d1e226c8086c40627877959746f83ab0b872f4150cb7d910198953b1bf756e384ac3fee3e7b0ddb4517f9084c5803
+  languageName: node
+  linkType: hard
+
+"mdast-util-to-string@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "mdast-util-to-string@npm:4.0.0"
+  dependencies:
+    "@types/mdast": ^4.0.0
+  checksum: 35489fb5710d58cbc2d6c8b6547df161a3f81e0f28f320dfb3548a9393555daf07c310c0c497708e67ed4dfea4a06e5655799e7d631ca91420c288b4525d6c29
   languageName: node
   linkType: hard
 
@@ -29317,6 +29754,335 @@ __metadata:
   version: 1.1.2
   resolution: "methods@npm:1.1.2"
   checksum: 0917ff4041fa8e2f2fda5425a955fe16ca411591fbd123c0d722fcf02b73971ed6f764d85f0a6f547ce49ee0221ce2c19a5fa692157931cecb422984f1dcd13a
+  languageName: node
+  linkType: hard
+
+"micromark-core-commonmark@npm:^2.0.0":
+  version: 2.0.3
+  resolution: "micromark-core-commonmark@npm:2.0.3"
+  dependencies:
+    decode-named-character-reference: ^1.0.0
+    devlop: ^1.0.0
+    micromark-factory-destination: ^2.0.0
+    micromark-factory-label: ^2.0.0
+    micromark-factory-space: ^2.0.0
+    micromark-factory-title: ^2.0.0
+    micromark-factory-whitespace: ^2.0.0
+    micromark-util-character: ^2.0.0
+    micromark-util-chunked: ^2.0.0
+    micromark-util-classify-character: ^2.0.0
+    micromark-util-html-tag-name: ^2.0.0
+    micromark-util-normalize-identifier: ^2.0.0
+    micromark-util-resolve-all: ^2.0.0
+    micromark-util-subtokenize: ^2.0.0
+    micromark-util-symbol: ^2.0.0
+    micromark-util-types: ^2.0.0
+  checksum: cfb0fd9c895f86a4e9344f7f0344fe6bd1018945798222835248146a42430b8c7bc0b2857af574cf4e1b4ce4e5c1a35a1479942421492e37baddde8de85814dc
+  languageName: node
+  linkType: hard
+
+"micromark-extension-gfm-autolink-literal@npm:^2.0.0":
+  version: 2.1.0
+  resolution: "micromark-extension-gfm-autolink-literal@npm:2.1.0"
+  dependencies:
+    micromark-util-character: ^2.0.0
+    micromark-util-sanitize-uri: ^2.0.0
+    micromark-util-symbol: ^2.0.0
+    micromark-util-types: ^2.0.0
+  checksum: e00a570c70c837b9cbbe94b2c23b787f44e781cd19b72f1828e3453abca2a9fb600fa539cdc75229fa3919db384491063645086e02249481e6ff3ec2c18f767c
+  languageName: node
+  linkType: hard
+
+"micromark-extension-gfm-footnote@npm:^2.0.0":
+  version: 2.1.0
+  resolution: "micromark-extension-gfm-footnote@npm:2.1.0"
+  dependencies:
+    devlop: ^1.0.0
+    micromark-core-commonmark: ^2.0.0
+    micromark-factory-space: ^2.0.0
+    micromark-util-character: ^2.0.0
+    micromark-util-normalize-identifier: ^2.0.0
+    micromark-util-sanitize-uri: ^2.0.0
+    micromark-util-symbol: ^2.0.0
+    micromark-util-types: ^2.0.0
+  checksum: ac6fb039e98395d37b71ebff7c7a249aef52678b5cf554c89c4f716111d4be62ef99a5d715a5bd5d68fa549778c977d85cb671d1d8506dc8a3a1b46e867ae52f
+  languageName: node
+  linkType: hard
+
+"micromark-extension-gfm-strikethrough@npm:^2.0.0":
+  version: 2.1.0
+  resolution: "micromark-extension-gfm-strikethrough@npm:2.1.0"
+  dependencies:
+    devlop: ^1.0.0
+    micromark-util-chunked: ^2.0.0
+    micromark-util-classify-character: ^2.0.0
+    micromark-util-resolve-all: ^2.0.0
+    micromark-util-symbol: ^2.0.0
+    micromark-util-types: ^2.0.0
+  checksum: cdb7a38dd6eefb6ceb6792a44a6796b10f951e8e3e45b8579f599f43e7ae26ccd048c0aa7e441b3c29dd0c54656944fe6eb0098de2bc4b5106fbc0a42e9e016c
+  languageName: node
+  linkType: hard
+
+"micromark-extension-gfm-table@npm:^2.0.0":
+  version: 2.1.1
+  resolution: "micromark-extension-gfm-table@npm:2.1.1"
+  dependencies:
+    devlop: ^1.0.0
+    micromark-factory-space: ^2.0.0
+    micromark-util-character: ^2.0.0
+    micromark-util-symbol: ^2.0.0
+    micromark-util-types: ^2.0.0
+  checksum: 16a59c8c2381c8418d9cf36c605abb0b66cfebaad07e09c4c9b113298d13e0c517b652885529fcb74d149afec3f6e8ab065fd27a900073d5ec0a1d8f0c51b593
+  languageName: node
+  linkType: hard
+
+"micromark-extension-gfm-tagfilter@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "micromark-extension-gfm-tagfilter@npm:2.0.0"
+  dependencies:
+    micromark-util-types: ^2.0.0
+  checksum: cf21552f4a63592bfd6c96ae5d64a5f22bda4e77814e3f0501bfe80e7a49378ad140f827007f36044666f176b3a0d5fea7c2e8e7973ce4b4579b77789f01ae95
+  languageName: node
+  linkType: hard
+
+"micromark-extension-gfm-task-list-item@npm:^2.0.0":
+  version: 2.1.0
+  resolution: "micromark-extension-gfm-task-list-item@npm:2.1.0"
+  dependencies:
+    devlop: ^1.0.0
+    micromark-factory-space: ^2.0.0
+    micromark-util-character: ^2.0.0
+    micromark-util-symbol: ^2.0.0
+    micromark-util-types: ^2.0.0
+  checksum: b1ad86a4e9d68d9ad536d94fb25a5182acbc85cc79318f4a6316034342f6a71d67983cc13f12911d0290fd09b2bda43cdabe8781a2d9cca2ebe0d421e8b2b8a4
+  languageName: node
+  linkType: hard
+
+"micromark-extension-gfm@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "micromark-extension-gfm@npm:3.0.0"
+  dependencies:
+    micromark-extension-gfm-autolink-literal: ^2.0.0
+    micromark-extension-gfm-footnote: ^2.0.0
+    micromark-extension-gfm-strikethrough: ^2.0.0
+    micromark-extension-gfm-table: ^2.0.0
+    micromark-extension-gfm-tagfilter: ^2.0.0
+    micromark-extension-gfm-task-list-item: ^2.0.0
+    micromark-util-combine-extensions: ^2.0.0
+    micromark-util-types: ^2.0.0
+  checksum: 2060fa62666a09532d6b3a272d413bc1b25bbb262f921d7402795ac021e1362c8913727e33d7528d5b4ccaf26922ec51208c43f795a702964817bc986de886c9
+  languageName: node
+  linkType: hard
+
+"micromark-factory-destination@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "micromark-factory-destination@npm:2.0.1"
+  dependencies:
+    micromark-util-character: ^2.0.0
+    micromark-util-symbol: ^2.0.0
+    micromark-util-types: ^2.0.0
+  checksum: 9c4baa9ca2ed43c061bbf40ddd3d85154c2a0f1f485de9dea41d7dd2ad994ebb02034a003b2c1dbe228ba83a0576d591f0e90e0bf978713f84ee7d7f3aa98320
+  languageName: node
+  linkType: hard
+
+"micromark-factory-label@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "micromark-factory-label@npm:2.0.1"
+  dependencies:
+    devlop: ^1.0.0
+    micromark-util-character: ^2.0.0
+    micromark-util-symbol: ^2.0.0
+    micromark-util-types: ^2.0.0
+  checksum: bd03f5a75f27cdbf03b894ddc5c4480fc0763061fecf9eb927d6429233c930394f223969a99472df142d570c831236134de3dc23245d23d9f046f9d0b623b5c2
+  languageName: node
+  linkType: hard
+
+"micromark-factory-space@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "micromark-factory-space@npm:2.0.1"
+  dependencies:
+    micromark-util-character: ^2.0.0
+    micromark-util-types: ^2.0.0
+  checksum: 1bd68a017c1a66f4787506660c1e1c5019169aac3b1cb075d49ac5e360e0b2065e984d4e1d6e9e52a9d44000f2fa1c98e66a743d7aae78b4b05616bf3242ed71
+  languageName: node
+  linkType: hard
+
+"micromark-factory-title@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "micromark-factory-title@npm:2.0.1"
+  dependencies:
+    micromark-factory-space: ^2.0.0
+    micromark-util-character: ^2.0.0
+    micromark-util-symbol: ^2.0.0
+    micromark-util-types: ^2.0.0
+  checksum: b4d2e4850a8ba0dff25ce54e55a3eb0d43dda88a16293f53953153288f9d84bcdfa8ca4606b2cfbb4f132ea79587bbb478a73092a349f893f5264fbcdbce2ee1
+  languageName: node
+  linkType: hard
+
+"micromark-factory-whitespace@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "micromark-factory-whitespace@npm:2.0.1"
+  dependencies:
+    micromark-factory-space: ^2.0.0
+    micromark-util-character: ^2.0.0
+    micromark-util-symbol: ^2.0.0
+    micromark-util-types: ^2.0.0
+  checksum: 67b3944d012a42fee9e10e99178254a04d48af762b54c10a50fcab988688799993efb038daf9f5dbc04001a97b9c1b673fc6f00e6a56997877ab25449f0c8650
+  languageName: node
+  linkType: hard
+
+"micromark-util-character@npm:^2.0.0":
+  version: 2.1.1
+  resolution: "micromark-util-character@npm:2.1.1"
+  dependencies:
+    micromark-util-symbol: ^2.0.0
+    micromark-util-types: ^2.0.0
+  checksum: e9e409efe4f2596acd44587e8591b722bfc041c1577e8fe0d9c007a4776fb800f9b3637a22862ad2ba9489f4bdf72bb547fce5767dbbfe0a5e6760e2a21c6495
+  languageName: node
+  linkType: hard
+
+"micromark-util-chunked@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "micromark-util-chunked@npm:2.0.1"
+  dependencies:
+    micromark-util-symbol: ^2.0.0
+  checksum: f8cb2a67bcefe4bd2846d838c97b777101f0043b9f1de4f69baf3e26bb1f9885948444e3c3aec66db7595cad8173bd4567a000eb933576c233d54631f6323fe4
+  languageName: node
+  linkType: hard
+
+"micromark-util-classify-character@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "micromark-util-classify-character@npm:2.0.1"
+  dependencies:
+    micromark-util-character: ^2.0.0
+    micromark-util-symbol: ^2.0.0
+    micromark-util-types: ^2.0.0
+  checksum: 4d8bbe3a6dbf69ac0fc43516866b5bab019fe3f4568edc525d4feaaaf78423fa54e6b6732b5bccbeed924455279a3758ffc9556954aafb903982598a95a02704
+  languageName: node
+  linkType: hard
+
+"micromark-util-combine-extensions@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "micromark-util-combine-extensions@npm:2.0.1"
+  dependencies:
+    micromark-util-chunked: ^2.0.0
+    micromark-util-types: ^2.0.0
+  checksum: 5d22fb9ee37e8143adfe128a72b50fa09568c2cc553b3c76160486c96dbbb298c5802a177a10a215144a604b381796071b5d35be1f2c2b2ee17995eda92f0c8e
+  languageName: node
+  linkType: hard
+
+"micromark-util-decode-numeric-character-reference@npm:^2.0.0":
+  version: 2.0.2
+  resolution: "micromark-util-decode-numeric-character-reference@npm:2.0.2"
+  dependencies:
+    micromark-util-symbol: ^2.0.0
+  checksum: ee11c8bde51e250e302050474c4a2adca094bca05c69f6cdd241af12df285c48c88d19ee6e022b9728281c280be16328904adca994605680c43af56019f4b0b6
+  languageName: node
+  linkType: hard
+
+"micromark-util-decode-string@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "micromark-util-decode-string@npm:2.0.1"
+  dependencies:
+    decode-named-character-reference: ^1.0.0
+    micromark-util-character: ^2.0.0
+    micromark-util-decode-numeric-character-reference: ^2.0.0
+    micromark-util-symbol: ^2.0.0
+  checksum: e9546ae53f9b5a4f9aa6aaf3e750087100d3429485ca80dbacec99ff2bb15a406fa7d93784a0fc2fe05ad7296b9295e75160ef71faec9e90110b7be2ae66241a
+  languageName: node
+  linkType: hard
+
+"micromark-util-encode@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "micromark-util-encode@npm:2.0.1"
+  checksum: be890b98e78dd0cdd953a313f4148c4692cc2fb05533e56fef5f421287d3c08feee38ca679f318e740530791fc251bfe8c80efa926fcceb4419b269c9343d226
+  languageName: node
+  linkType: hard
+
+"micromark-util-html-tag-name@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "micromark-util-html-tag-name@npm:2.0.1"
+  checksum: dea365f5ad28ad74ff29fcb581f7b74fc1f80271c5141b3b2bc91c454cbb6dfca753f28ae03730d657874fcbd89d0494d0e3965dfdca06d9855f467c576afa9d
+  languageName: node
+  linkType: hard
+
+"micromark-util-normalize-identifier@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "micromark-util-normalize-identifier@npm:2.0.1"
+  dependencies:
+    micromark-util-symbol: ^2.0.0
+  checksum: 1eb9a289d7da067323df9fdc78bfa90ca3207ad8fd893ca02f3133e973adcb3743b233393d23d95c84ccaf5d220ae7f5a28402a644f135dcd4b8cfa60a7b5f84
+  languageName: node
+  linkType: hard
+
+"micromark-util-resolve-all@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "micromark-util-resolve-all@npm:2.0.1"
+  dependencies:
+    micromark-util-types: ^2.0.0
+  checksum: 9275f3ddb6c26f254dd2158e66215d050454b279707a7d9ce5a3cd0eba23201021cedcb78ae1a746c1b23227dcc418ee40dd074ade195359506797a5493550cc
+  languageName: node
+  linkType: hard
+
+"micromark-util-sanitize-uri@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "micromark-util-sanitize-uri@npm:2.0.1"
+  dependencies:
+    micromark-util-character: ^2.0.0
+    micromark-util-encode: ^2.0.0
+    micromark-util-symbol: ^2.0.0
+  checksum: d01517840c17de67aaa0b0f03bfe05fac8a41d99723cd8ce16c62f6810e99cd3695364a34c335485018e5e2c00e69031744630a1b85c6868aa2f2ca1b36daa2f
+  languageName: node
+  linkType: hard
+
+"micromark-util-subtokenize@npm:^2.0.0":
+  version: 2.1.0
+  resolution: "micromark-util-subtokenize@npm:2.1.0"
+  dependencies:
+    devlop: ^1.0.0
+    micromark-util-chunked: ^2.0.0
+    micromark-util-symbol: ^2.0.0
+    micromark-util-types: ^2.0.0
+  checksum: 2e194bc8a5279d256582020500e5072a95c1094571be49043704343032e1fffbe09c862ef9c131cf5c762e296ddb54ff8bc767b3786a798524a68d1db6942934
+  languageName: node
+  linkType: hard
+
+"micromark-util-symbol@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "micromark-util-symbol@npm:2.0.1"
+  checksum: fb7346950550bc85a55793dda94a8b3cb3abc068dbd7570d1162db7aee803411d06c0a5de4ae59cd945f46143bdeadd4bba02a02248fa0d18cc577babaa00044
+  languageName: node
+  linkType: hard
+
+"micromark-util-types@npm:^2.0.0":
+  version: 2.0.2
+  resolution: "micromark-util-types@npm:2.0.2"
+  checksum: 884f7974839e4bc6d2bd662e57c973a9164fd5c0d8fe16cddf07472b86a7e6726747c00674952c0321d17685d700cd3295e9f58a842a53acdf6c6d55ab051aab
+  languageName: node
+  linkType: hard
+
+"micromark@npm:^4.0.0":
+  version: 4.0.2
+  resolution: "micromark@npm:4.0.2"
+  dependencies:
+    "@types/debug": ^4.0.0
+    debug: ^4.0.0
+    decode-named-character-reference: ^1.0.0
+    devlop: ^1.0.0
+    micromark-core-commonmark: ^2.0.0
+    micromark-factory-space: ^2.0.0
+    micromark-util-character: ^2.0.0
+    micromark-util-chunked: ^2.0.0
+    micromark-util-combine-extensions: ^2.0.0
+    micromark-util-decode-numeric-character-reference: ^2.0.0
+    micromark-util-encode: ^2.0.0
+    micromark-util-normalize-identifier: ^2.0.0
+    micromark-util-resolve-all: ^2.0.0
+    micromark-util-sanitize-uri: ^2.0.0
+    micromark-util-subtokenize: ^2.0.0
+    micromark-util-symbol: ^2.0.0
+    micromark-util-types: ^2.0.0
+  checksum: 5306c15dd12f543755bc627fc361d4255dfc430e7af6069a07ac0eacc338fbd761fe8e93f02a8bfab6097bab12ee903192fe31389222459d5029242a5aaba3b8
   languageName: node
   linkType: hard
 
@@ -33002,6 +33768,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"parse-entities@npm:^4.0.0":
+  version: 4.0.2
+  resolution: "parse-entities@npm:4.0.2"
+  dependencies:
+    "@types/unist": ^2.0.0
+    character-entities-legacy: ^3.0.0
+    character-reference-invalid: ^2.0.0
+    decode-named-character-reference: ^1.0.0
+    is-alphanumerical: ^2.0.0
+    is-decimal: ^2.0.0
+    is-hexadecimal: ^2.0.0
+  checksum: db22b46da1a62af00409c929ac49fbd306b5ebf0dbacf4646d2ae2b58616ef90a40eedc282568a3cf740fac2a7928bc97146973a628f6977ca274dedc2ad6edc
+  languageName: node
+  linkType: hard
+
 "parse-json@npm:^4.0.0":
   version: 4.0.0
   resolution: "parse-json@npm:4.0.0"
@@ -34560,6 +35341,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postcss-selector-parser@npm:6.0.10":
+  version: 6.0.10
+  resolution: "postcss-selector-parser@npm:6.0.10"
+  dependencies:
+    cssesc: ^3.0.0
+    util-deprecate: ^1.0.2
+  checksum: 46afaa60e3d1998bd7adf6caa374baf857cc58d3ff944e29459c9a9e4680a7fe41597bd5b755fc81d7c388357e9bf67c0251d047c640a09f148e13606b8a8608
+  languageName: node
+  linkType: hard
+
 "postcss-selector-parser@npm:^6.0.10, postcss-selector-parser@npm:^6.0.4, postcss-selector-parser@npm:^6.0.5, postcss-selector-parser@npm:^6.0.9, postcss-selector-parser@npm:^6.1.1, postcss-selector-parser@npm:^6.1.2":
   version: 6.1.2
   resolution: "postcss-selector-parser@npm:6.1.2"
@@ -34991,6 +35782,13 @@ __metadata:
   version: 2.0.6
   resolution: "property-expr@npm:2.0.6"
   checksum: 89977f4bb230736c1876f460dd7ca9328034502fd92e738deb40516d16564b850c0bbc4e052c3df88b5b8cd58e51c93b46a94bea049a3f23f4a022c038864cab
+  languageName: node
+  linkType: hard
+
+"property-information@npm:^7.0.0":
+  version: 7.1.0
+  resolution: "property-information@npm:7.1.0"
+  checksum: 3875161d204bac89d75181f6d3ebc3ecaeb2699b4e2ecfcf5452201d7cdd275168c6742d7ff8cec5ab0c342fae72369ac705e1f8e9680a9acd911692e80dfb88
   languageName: node
   linkType: hard
 
@@ -35782,6 +36580,28 @@ __metadata:
   version: 18.3.1
   resolution: "react-is@npm:18.3.1"
   checksum: e20fe84c86ff172fc8d898251b7cc2c43645d108bf96d0b8edf39b98f9a2cae97b40520ee7ed8ee0085ccc94736c4886294456033304151c3f94978cec03df21
+  languageName: node
+  linkType: hard
+
+"react-markdown@npm:^10.1.0":
+  version: 10.1.0
+  resolution: "react-markdown@npm:10.1.0"
+  dependencies:
+    "@types/hast": ^3.0.0
+    "@types/mdast": ^4.0.0
+    devlop: ^1.0.0
+    hast-util-to-jsx-runtime: ^2.0.0
+    html-url-attributes: ^3.0.0
+    mdast-util-to-hast: ^13.0.0
+    remark-parse: ^11.0.0
+    remark-rehype: ^11.0.0
+    unified: ^11.0.0
+    unist-util-visit: ^5.0.0
+    vfile: ^6.0.0
+  peerDependencies:
+    "@types/react": ">=18"
+    react: ">=18"
+  checksum: fa7ef860e32a18206c5b301de8672be609b108f46f0f091e9779d50ff8145bd63d0f6e82ffb18fc1b7aee2264cbdac1100205596ff10d2c3d2de6627abb3868f
   languageName: node
   linkType: hard
 
@@ -36583,6 +37403,56 @@ __metadata:
   version: 0.2.7
   resolution: "relateurl@npm:0.2.7"
   checksum: 5891e792eae1dfc3da91c6fda76d6c3de0333a60aa5ad848982ebb6dccaa06e86385fb1235a1582c680a3d445d31be01c6bfc0804ebbcab5aaf53fa856fde6b6
+  languageName: node
+  linkType: hard
+
+"remark-gfm@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "remark-gfm@npm:4.0.1"
+  dependencies:
+    "@types/mdast": ^4.0.0
+    mdast-util-gfm: ^3.0.0
+    micromark-extension-gfm: ^3.0.0
+    remark-parse: ^11.0.0
+    remark-stringify: ^11.0.0
+    unified: ^11.0.0
+  checksum: b278f51c4496f15ad868b72bf2eb2066c23a0892b5885544d3a4c233c964d44e51a0efe22d3fb33db4fbac92aefd51bb33453b8e73077b041a12b8269a02c17d
+  languageName: node
+  linkType: hard
+
+"remark-parse@npm:^11.0.0":
+  version: 11.0.0
+  resolution: "remark-parse@npm:11.0.0"
+  dependencies:
+    "@types/mdast": ^4.0.0
+    mdast-util-from-markdown: ^2.0.0
+    micromark-util-types: ^2.0.0
+    unified: ^11.0.0
+  checksum: d83d245290fa84bb04fb3e78111f09c74f7417e7c012a64dd8dc04fccc3699036d828fbd8eeec8944f774b6c30cc1d925c98f8c46495ebcee7c595496342ab7f
+  languageName: node
+  linkType: hard
+
+"remark-rehype@npm:^11.0.0":
+  version: 11.1.2
+  resolution: "remark-rehype@npm:11.1.2"
+  dependencies:
+    "@types/hast": ^3.0.0
+    "@types/mdast": ^4.0.0
+    mdast-util-to-hast: ^13.0.0
+    unified: ^11.0.0
+    vfile: ^6.0.0
+  checksum: 6eab55cb3464ec01d8e002cc9fe02ae57f48162899693fd53b5ba553ac8699dae7b55fce9df7131a5981313b19b495d6fbfa98a9d6bd243e7485591364d9b5b3
+  languageName: node
+  linkType: hard
+
+"remark-stringify@npm:^11.0.0":
+  version: 11.0.0
+  resolution: "remark-stringify@npm:11.0.0"
+  dependencies:
+    "@types/mdast": ^4.0.0
+    mdast-util-to-markdown: ^2.0.0
+    unified: ^11.0.0
+  checksum: 59e07460eb629d6c3b3c0f438b0b236e7e6858fd5ab770303078f5a556ec00354d9c7fb9ef6d5f745a4617ac7da1ab618b170fbb4dac120e183fecd9cc86bce6
   languageName: node
   linkType: hard
 
@@ -38633,6 +39503,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"space-separated-tokens@npm:^2.0.0":
+  version: 2.0.2
+  resolution: "space-separated-tokens@npm:2.0.2"
+  checksum: 202e97d7ca1ba0758a0aa4fe226ff98142073bcceeff2da3aad037968878552c3bbce3b3231970025375bbba5aee00c5b8206eda408da837ab2dc9c0f26be990
+  languageName: node
+  linkType: hard
+
 "sparse-bitfield@npm:^3.0.3":
   version: 3.0.3
   resolution: "sparse-bitfield@npm:3.0.3"
@@ -38992,7 +39869,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"steedos-cli@3.0.0-beta.119, steedos-cli@workspace:packages/cli":
+"steedos-cli@3.0.0-beta.120, steedos-cli@workspace:packages/cli":
   version: 0.0.0-use.local
   resolution: "steedos-cli@workspace:packages/cli"
   dependencies:
@@ -39002,8 +39879,8 @@ __metadata:
     "@oclif/dev-cli": ^1.26.10
     "@oclif/plugin-help": ^5.1.12
     "@oclif/test": ^2.1.0
-    "@steedos/metadata-core": 3.0.0-beta.119
-    "@steedos/metadata-registrar": 3.0.0-beta.119
+    "@steedos/metadata-core": 3.0.0-beta.120
+    "@steedos/metadata-registrar": 3.0.0-beta.120
     archiver: ^5.0.2
     chalk: 2.4.2
     change-case: ^3.1.0
@@ -39347,6 +40224,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"stringify-entities@npm:^4.0.0":
+  version: 4.0.4
+  resolution: "stringify-entities@npm:4.0.4"
+  dependencies:
+    character-entities-html4: ^2.0.0
+    character-entities-legacy: ^3.0.0
+  checksum: ac1344ef211eacf6cf0a0a8feaf96f9c36083835b406560d2c6ff5a87406a41b13f2f0b4c570a3b391f465121c4fd6822b863ffb197e8c0601a64097862cc5b5
+  languageName: node
+  linkType: hard
+
 "stringify-object@npm:^3.3.0":
   version: 3.3.0
   resolution: "stringify-object@npm:3.3.0"
@@ -39544,6 +40431,24 @@ __metadata:
   peerDependencies:
     webpack: ^5.0.0
   checksum: caac3f2fe2c3c89e49b7a2a9329e1cfa515ecf5f36b9c4885f9b218019fda207a9029939b2c35821dec177a264a007e7c391ccdd3ff7401881ce6287b9c8f38b
+  languageName: node
+  linkType: hard
+
+"style-to-js@npm:^1.0.0":
+  version: 1.1.18
+  resolution: "style-to-js@npm:1.1.18"
+  dependencies:
+    style-to-object: 1.0.11
+  checksum: df544489fac603c2800685e27ea4efca0d4c3973f108b384ff98dc4093a5da00b7f89888178d7d25fb306c9efe62b2502c58fde2a00daddb14f9b72b6ae452ae
+  languageName: node
+  linkType: hard
+
+"style-to-object@npm:1.0.11":
+  version: 1.0.11
+  resolution: "style-to-object@npm:1.0.11"
+  dependencies:
+    inline-style-parser: 0.2.4
+  checksum: 4a00ada833b6f23dda3948e1d603f4ab4257c7c4a197dc6b74a085cfe05b07a2167a44883c45569907eec2630116f5008180cbbf62bc301c131f138e90c575fc
   languageName: node
   linkType: hard
 
@@ -40564,6 +41469,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"trim-lines@npm:^3.0.0":
+  version: 3.0.1
+  resolution: "trim-lines@npm:3.0.1"
+  checksum: e241da104682a0e0d807222cc1496b92e716af4db7a002f4aeff33ae6a0024fef93165d49eab11aa07c71e1347c42d46563f91dfaa4d3fb945aa535cdead53ed
+  languageName: node
+  linkType: hard
+
 "trim-newlines@npm:^3.0.0":
   version: 3.0.1
   resolution: "trim-newlines@npm:3.0.1"
@@ -40577,6 +41489,13 @@ __metadata:
   dependencies:
     escape-string-regexp: ^1.0.2
   checksum: e25c235305b82c43f1d64a67a71226c406b00281755e4c2c4f3b1d0b09c687a535dd3c4483327f949f28bb89dc400a0bc5e5b749054f4b99f49ebfe48ba36496
+  languageName: node
+  linkType: hard
+
+"trough@npm:^2.0.0":
+  version: 2.2.0
+  resolution: "trough@npm:2.2.0"
+  checksum: 6097df63169aca1f9b08c263b1b501a9b878387f46e161dde93f6d0bba7febba93c95f876a293c5ea370f6cb03bcb687b2488c8955c3cfb66c2c0161ea8c00f6
   languageName: node
   linkType: hard
 
@@ -41383,6 +42302,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"unified@npm:^11.0.0":
+  version: 11.0.5
+  resolution: "unified@npm:11.0.5"
+  dependencies:
+    "@types/unist": ^3.0.0
+    bail: ^2.0.0
+    devlop: ^1.0.0
+    extend: ^3.0.0
+    is-plain-obj: ^4.0.0
+    trough: ^2.0.0
+    vfile: ^6.0.0
+  checksum: b3bf7fd6f568cc261e074dae21188483b0f2a8ab858d62e6e85b75b96cc655f59532906ae3c64d56a9b257408722d71f1d4135292b3d7ee02907c8b592fb3cf0
+  languageName: node
+  linkType: hard
+
 "union-value@npm:^1.0.0":
   version: 1.0.1
   resolution: "union-value@npm:1.0.1"
@@ -41482,6 +42416,54 @@ __metadata:
   dependencies:
     crypto-random-string: ^2.0.0
   checksum: ef68f639136bcfe040cf7e3cd7a8dff076a665288122855148a6f7134092e6ed33bf83a7f3a9185e46c98dddc445a0da6ac25612afa1a7c38b8b654d6c02498e
+  languageName: node
+  linkType: hard
+
+"unist-util-is@npm:^6.0.0":
+  version: 6.0.1
+  resolution: "unist-util-is@npm:6.0.1"
+  dependencies:
+    "@types/unist": ^3.0.0
+  checksum: e57733e1766b55c9a873a42d2f34daa211580788b1bba26af2fc22e48e147bdcff0f9a752ed2a19238864823735fbbe27a1804d6a5a22b182c23aa0191e41c12
+  languageName: node
+  linkType: hard
+
+"unist-util-position@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "unist-util-position@npm:5.0.0"
+  dependencies:
+    "@types/unist": ^3.0.0
+  checksum: f89b27989b19f07878de9579cd8db2aa0194c8360db69e2c99bd2124a480d79c08f04b73a64daf01a8fb3af7cba65ff4b45a0b978ca243226084ad5f5d441dde
+  languageName: node
+  linkType: hard
+
+"unist-util-stringify-position@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "unist-util-stringify-position@npm:4.0.0"
+  dependencies:
+    "@types/unist": ^3.0.0
+  checksum: e2e7aee4b92ddb64d314b4ac89eef7a46e4c829cbd3ee4aee516d100772b490eb6b4974f653ba0717a0071ca6ea0770bf22b0a2ea62c65fcba1d071285e96324
+  languageName: node
+  linkType: hard
+
+"unist-util-visit-parents@npm:^6.0.0":
+  version: 6.0.2
+  resolution: "unist-util-visit-parents@npm:6.0.2"
+  dependencies:
+    "@types/unist": ^3.0.0
+    unist-util-is: ^6.0.0
+  checksum: cf28578a6f0b81877965e261fe82460f83b8c3a9cab3b2080c046b215f3223c6195b01064256619ca3411a1930face93a1a2a72d34d8716e684d6cd59f53cd9a
+  languageName: node
+  linkType: hard
+
+"unist-util-visit@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "unist-util-visit@npm:5.0.0"
+  dependencies:
+    "@types/unist": ^3.0.0
+    unist-util-is: ^6.0.0
+    unist-util-visit-parents: ^6.0.0
+  checksum: 9ec42e618e7e5d0202f3c191cd30791b51641285732767ee2e6bcd035931032e3c1b29093f4d7fd0c79175bbc1f26f24f26ee49770d32be76f8730a652a857e6
   languageName: node
   linkType: hard
 
@@ -41982,6 +42964,26 @@ __metadata:
     core-util-is: 1.0.2
     extsprintf: ^1.2.0
   checksum: c431df0bedf2088b227a4e051e0ff4ca54df2c114096b0c01e1cbaadb021c30a04d7dd5b41ab277bcd51246ca135bf931d4c4c796ecae7a4fef6d744ecef36ea
+  languageName: node
+  linkType: hard
+
+"vfile-message@npm:^4.0.0":
+  version: 4.0.3
+  resolution: "vfile-message@npm:4.0.3"
+  dependencies:
+    "@types/unist": ^3.0.0
+    unist-util-stringify-position: ^4.0.0
+  checksum: f5e8516f2aa0feb4c866d507543d4e90f9ab309e2c988577dbf4ebd268d495f72f2b48149849d14300164d5d60b5f74b5641cd285bb4408a3942b758683d9276
+  languageName: node
+  linkType: hard
+
+"vfile@npm:^6.0.0":
+  version: 6.0.3
+  resolution: "vfile@npm:6.0.3"
+  dependencies:
+    "@types/unist": ^3.0.0
+    vfile-message: ^4.0.0
+  checksum: 152b6729be1af70df723efb65c1a1170fd483d41086557da3651eea69a1dd1f0c22ea4344834d56d30734b9185bcab63e22edc81d3f0e9bed8aa4660d61080af
   languageName: node
   linkType: hard
 
@@ -43677,5 +44679,12 @@ __metadata:
   version: 4.1.12
   resolution: "zod@npm:4.1.12"
   checksum: 91174acc7d2ca5572ad522643474ddd60640cf6877b5d76e5d583eb25e3c4072c6f5eb92ab94f231ec5ce61c6acdfc3e0166de45fb1005b1ea54986b026b765f
+  languageName: node
+  linkType: hard
+
+"zwitch@npm:^2.0.0":
+  version: 2.0.4
+  resolution: "zwitch@npm:2.0.4"
+  checksum: f22ec5fc2d5f02c423c93d35cdfa83573a3a3bd98c66b927c368ea4d0e7252a500df2a90a6b45522be536a96a73404393c958e945fdba95e6832c200791702b6
   languageName: node
   linkType: hard

@@ -3,6 +3,8 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import { useChat } from '@ai-sdk/react';
 import { DefaultChatTransport } from 'ai';
 import { useEffect, useState } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 export const ChatbotView = () => {
   const { chatbotId } = useParams();
@@ -54,16 +56,24 @@ export const ChatbotView = () => {
         <div
           className={
             message.role === 'user'
-              ? 'bg-blue-100 rounded-lg p-3 max-w-sm text-gray-800'
-              : 'bg-gray-100 rounded-lg p-3 max-w-sm text-gray-800'
+              ? 'bg-blue-100 rounded-lg p-3 max-w-full ml-10 text-gray-800 prose'
+              : 'bg-gray-100 rounded-lg p-3 max-w-full text-gray-800 prose'
           }
         >
-          <span className="font-semibold mr-1">
-            {message.role === 'user' ? 'You:' : 'AI:'}
-          </span>
-          {message.parts.map((part, index) =>
-            part.type === 'text' ? <span key={index}>{part.text}</span> : null,
-          )}
+          {message.parts.map((part, index) => {
+            if (part.type === 'text') {
+              // 使用 react-markdown 来解析和渲染 Markdown 文本
+              return (
+                <ReactMarkdown 
+                  key={index} 
+                  remarkPlugins={[remarkGfm]}
+                >
+                  {part.text}
+                </ReactMarkdown>
+              );
+            }
+            return null;
+          })}
         </div>
       </div>
     ))}
