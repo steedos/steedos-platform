@@ -34,7 +34,7 @@ If you need to deploy the development environment locally, you can refer to the 
 
 - Run `yarn start` on the command line to start
 
-- Use your browser to access `http://localhost:5000`.
+- Use your browser to access `http://localhost:5100`.
 
 ## Run The Source Code Of Meteor Bundle
 

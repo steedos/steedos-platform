@@ -22,7 +22,7 @@ export const ChatbotView = () => {
     const fetchChatbot = async () => {
       try {
         const res = await fetch(
-          `${import.meta.env.VITE_B6_ROOT_URL}/api/v6/data/chatbots/${chatbotId}`
+          `${import.meta.env.VITE_B6_ROOT_URL}/api/v6/data/ai_chatbots/${chatbotId}`
         );
         const data = await res.json();
         // 假设服务端返回的 JSON 中包含 name 字段

@@ -253,7 +253,7 @@ module.exports = {
                         rootUrl = process.env.ROOT_URL
                     }
                     if (!rootUrl) {
-                        rootUrl = 'http://localhost:5000'
+                        rootUrl = 'http://localhost:5100'
                     }
                     const server = rootUrl
                     if (!server.startsWith('http')) {

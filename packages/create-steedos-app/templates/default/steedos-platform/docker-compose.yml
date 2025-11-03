@@ -5,7 +5,7 @@ services:
   steedos:
     image: steedos/steedos-enterprise:3.0.0-beta.63
     ports:
-      - "5000:80"    # Steedos
+      - "5100:80"    # Steedos
       - "27017:27017"  # MongoDB
       - "9001:9001"    # Supervisor
       - "6379:6379"    # Redis
