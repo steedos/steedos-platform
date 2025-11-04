@@ -58,9 +58,8 @@ module.exports = {
 		loadUnpkgRoutes: function() {
 			try {
 				const router = require('@steedos/router').staticRouter()
-				if (process.env.STEEDOS_LICENSE) {
-					 // unpkg
-					process.env.STEEDOS_UNPKG_URL = "/unpkg";
+				if (process.env.STEEDOS_LICENSE && process.env.STEEDOS_UNPKG_URL === '/unpkg') {
+					// 启动内置 unpkg 服务
 					process.env.UNPKG_BASE_URL = "/unpkg";
 					process.env.NPM_CACHE_FOLDER = path.join(
 						process.env.B6_STORAGE_DIR,
