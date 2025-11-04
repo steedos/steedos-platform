@@ -21,6 +21,7 @@ import project from "../package.json";
 import { ScheduleModule } from "@nestjs/schedule";
 import { OnlyOfficeModule } from "@builder6/onlyoffice";
 import { DocsModule } from "@builder6/docs";
+import { AiModule } from "@steedos/ai";
 
 import { pinoConfig } from "@builder6/core";
 
@@ -32,7 +33,6 @@ import { AppGateway } from "./app.gateway";
 import { getMoleculerConfigs, getSteedosConfigs } from "./config";
 import { ApiModule } from "./api/api.module";
 import { ObjectsModule } from "./objects/objects.module";
-import { AiModule } from "./ai/ai.module";
 
 const startModules = [];
 if (process.env.B6_ONLYOFFICE_ENABLED === "true") {
