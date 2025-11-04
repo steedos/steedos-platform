@@ -16,7 +16,7 @@ export const getHeaderSchema = (props) => {
                 body: [
                     {
                         "type": "wrapper",
-                        "className": 'flex w-full px-4 py-0 h-[50px] justify-between items-center steedos-header-container-line-one border-b bg-slate-100',
+                        "className": 'flex w-full px-4 py-0 h-[50px] justify-between items-center steedos-header-container-line-one bg-white shadow-sm',
                         "body": [
                             {
                                 type: "service",
