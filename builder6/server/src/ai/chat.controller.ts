@@ -53,14 +53,14 @@ export class ChatController {
     if (!chatbot) {
       throw new Error(`Chatbot with ID ${chatbotId} not found`);
     }
-    if (!chatbot.model || !chatbot.model.startsWith("openai/")) {
-      throw new Error(`Only OpenAI models are supported for now.`);
-    }
-    const model = chatbot.model.replace("openai/", "");
+    const model = process.env.AI_GATEWAY_API_KEY
+      ? chatbot.model
+      : openai.chat(chatbot.model);
+    const modelMessages = convertToModelMessages(messages);
     const result = await streamText({
-      model: openai(model),
+      model,
       system: chatbot.directive || "You are a helpful assistant.",
-      messages: convertToModelMessages(messages),
+      messages: modelMessages,
       tools: {
         getObjectSchema: this.aiService.getObjectSchemaTool(),
         getObjectSchemaWithRelated:

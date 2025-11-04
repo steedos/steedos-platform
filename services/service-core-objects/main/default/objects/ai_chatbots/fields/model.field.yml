@@ -8,4 +8,4 @@ required: true
 searchable: true
 sort_no: 20
 type: text
-defaultValue: openai/gpt-4o
+defaultValue: openai/gpt-5
