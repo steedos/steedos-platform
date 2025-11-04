@@ -8,8 +8,8 @@
   ],
   "scripts": {
     "format": "prettier --write \"src/**/*.ts\"",
-    "build": "rimraf dist && tsc",
-    "build:watch": "rimraf dist && tsc --watch"
+    "build": "npx rimraf dist && tsc",
+    "build:watch": "npx rimraf dist && tsc --watch"
   },
   "dependencies": {
     "@ai-sdk/openai": "^2.0.52",
@@ -27,6 +27,7 @@
   },
   "gitHead": "20c72bac27c070df77f99c62d0d97cc96e5eed36",
   "devDependencies": {
-    "@types/bluebird": "^3.5.42"
+    "@types/node": "^18.0.3",
+    "typescript": "5.7.3"
   }
 }

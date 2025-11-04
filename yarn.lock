@@ -9720,8 +9720,9 @@ __metadata:
   resolution: "@steedos/ai@workspace:builder6/ai"
   dependencies:
     "@ai-sdk/openai": ^2.0.52
-    "@types/bluebird": ^3.5.42
+    "@types/node": ^18.0.3
     ai: ^5.0.71
+    typescript: 5.7.3
   peerDependencies:
     "@builder6/core": ^3.0.10
     "@builder6/moleculer": ^3.0.10
@@ -11255,13 +11256,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/bluebird@npm:^3.5.42":
-  version: 3.5.42
-  resolution: "@types/bluebird@npm:3.5.42"
-  checksum: bab9c7ee7cf05f241f119a1401d230def75981a71c2f4ea4d4ef7297bb10f2ae8b6ce7b249532faf994492d7e36e1f1f21f7a9895e466bf7b31b298b0537d8d0
-  languageName: node
-  linkType: hard
-
 "@types/body-parser@npm:*":
   version: 1.19.6
   resolution: "@types/body-parser@npm:1.19.6"
@@ -11923,7 +11917,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^18.0.0":
+"@types/node@npm:^18.0.0, @types/node@npm:^18.0.3":
   version: 18.19.130
   resolution: "@types/node@npm:18.19.130"
   dependencies:
