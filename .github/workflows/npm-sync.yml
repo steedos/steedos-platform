@@ -15,12 +15,6 @@ jobs:
         with: 
           ref: '3.0'
 
-      - run: yarn --frozen-lockfile
-
-      - name: Bootstrap platform
-        run: |
-          yarn bootstrap
-
       - name: Sync cnpm
         env:
           CI: true
