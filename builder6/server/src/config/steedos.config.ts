@@ -57,7 +57,7 @@ if (isEmpty(process.env.STEEDOS_AMIS_URL)) {
 process.env.STEEDOS_AMIS_URL = process.env.STEEDOS_AMIS_URL.replace(/\/+$/, "");
 
 if (isEmpty(process.env.STEEDOS_WIDGETS_VERSION)) {
-  process.env.STEEDOS_WIDGETS_VERSION = "6.10.3";
+  process.env.STEEDOS_WIDGETS_VERSION = "6.10.4";
 }
 
 if (isEmpty(process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS)) {
@@ -87,7 +87,7 @@ if (isEmpty(process.env.SERIALIZER)) {
 
 if (isEmpty(process.env.ROOT_URL)) {
   console.error("ERROR: Environment variable ROOT_URL is not defined.");
-  process.env.ROOT_URL = `http://127.0.0.1:${process.env.B6_PORT}`
+  process.env.ROOT_URL = `http://127.0.0.1:${process.env.B6_PORT}`;
 }
 
 process.env.ROOT_URL = process.env.ROOT_URL.replace(/\/+$/, "");
