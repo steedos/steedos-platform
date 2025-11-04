@@ -30,6 +30,7 @@ import { PageView } from '../pages/page';
 import { IframeView } from '../pages/iframe';
 import { ObjectRelatedListView } from '../pages/object/objectRelatedListView';
 import { ChatbotView } from '../pages/ai/chatbot';
+import { ChatView } from '../pages/ai/chat';
 
 const routes = [
   {
@@ -191,6 +192,22 @@ const routes = [
     element: (
       <LoggedIn>
         <ChatbotView/>
+      </LoggedIn>
+    ),
+  },
+  {
+    path: '/ai/chat/:chatId',
+    element: (
+      <LoggedIn>
+        <ChatView/>
+      </LoggedIn>
+    ),
+  },
+  {
+    path: '/ai/chat',
+    element: (
+      <LoggedIn>
+        <ChatView/>
       </LoggedIn>
     ),
   }

@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Query } from "@nestjs/common";
+import { openai } from "@ai-sdk/openai";
+import { Body, Controller, Param, Post, Res } from "@nestjs/common";
 import {
   ApiBearerAuth,
   ApiBody,
@@ -8,47 +9,80 @@ import {
   ApiQuery,
   ApiTags,
 } from "@nestjs/swagger";
+import {
+  generateText,
+  streamText,
+  stepCountIs,
+  convertToModelMessages,
+  UIMessage,
+} from "ai";
+import { Response } from "express";
 import { AiService } from "./ai.service";
+import { MongodbService } from "@builder6/core";
+import { getObjectSchema } from "./tools/getObjectSchema";
 
 @ApiTags("AI")
 @Controller("/api/v6/ai")
 export class AiController {
-  constructor(private readonly aiService: AiService) {}
+  constructor(
+    private readonly aiService: AiService,
+    private readonly mongodbService: MongodbService,
+  ) {}
 
-  @ApiQuery({
-    name: "objects",
-    required: false,
-    type: String,
-    description:
-      "Related objects, will generate metadata in prompt, separated by commas. For example: accounts,contacts",
-    example: "space_users",
-  })
-  @ApiQuery({
-    name: "includeRelated",
-    required: false,
-    type: Boolean,
-  })
-  @Get("prompt/objects")
-  async getObjectsPrompt(
-    @Query("objects") objects?: any,
-    @Query("includeRelated") includeRelated: string = "false",
+  @Post("chatbot/:chatbotId/stream")
+  async streamText(
+    @Param("chatbotId") chatbotId: string,
+    @Body("messages") messages: UIMessage[],
+    @Res() res: Response,
   ) {
-    let objectApiNames: string[] = [];
-    if (objects && typeof objects === "string") {
-      try {
-        objectApiNames = JSON.parse(objects);
-      } catch {
-        objectApiNames = objects.split(",").map((field) => field.trim());
-      }
+    const chatbot = await this.mongodbService.findOne("ai_chatbots", {
+      _id: chatbotId,
+    });
+    if (!chatbot) {
+      throw new Error(`Chatbot with ID ${chatbotId} not found`);
     }
+    const model = process.env.AI_GATEWAY_API_KEY
+      ? chatbot.model
+      : openai.chat(chatbot.model);
+    const modelMessages = convertToModelMessages(messages);
+    const result = await streamText({
+      model,
+      system: chatbot.directive || "You are a helpful assistant.",
+      messages: modelMessages,
+      tools: {
+        getObjectSchema: getObjectSchema,
+      },
+      stopWhen: stepCountIs(5), // stop after a maximum of 5 steps if tools were called
+    });
 
-    // Explicitly convert string to boolean
-    const includeRelatedBoolean = includeRelated.toLowerCase() === "true";
+    return result.pipeUIMessageStreamToResponse(res);
+  }
 
-    const results = await this.aiService.getObjectSchemaWithRelated(
-      objectApiNames,
-      includeRelatedBoolean,
-    );
-    return results;
+  @Post("chat/:chatId/stream")
+  async chatStreamText(
+    @Param("chatId") chatId: string,
+    @Body("messages") messages: UIMessage[],
+    @Res() res: Response,
+  ) {
+    const chat = await this.mongodbService.findOne("ai_chats", {
+      _id: chatId,
+    });
+    if (!chat) {
+      throw new Error(`Chat with ID ${chatId} not found`);
+    }
+    const model = process.env.AI_GATEWAY_API_KEY
+      ? chat.model
+      : openai.chat(chat.model);
+    const modelMessages = convertToModelMessages(messages);
+    const result = await streamText({
+      model,
+      messages: modelMessages,
+      tools: {
+        getObjectSchema: getObjectSchema,
+      },
+      stopWhen: stepCountIs(5), // stop after a maximum of 5 steps if tools were called
+    });
+
+    return result.pipeUIMessageStreamToResponse(res);
   }
 }
