@@ -2,7 +2,7 @@
 healthy=true
 
 
-if [[ $(curl -Lfk -s -w "%{http_code}\n" http://localhost:3000/ -o /dev/null) -ne 200 ]]; then
+if [[ $(curl -Lfk -s -w "%{http_code}\n" http://localhost:5100/ -o /dev/null) -ne 200 ]]; then
   echo 'ERROR: Steedos is not running';
   healthy=false
 fi
