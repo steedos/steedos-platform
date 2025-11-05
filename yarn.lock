@@ -9676,7 +9676,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos/accounts@3.0.0-beta.128, @steedos/accounts@workspace:packages/accounts":
+"@steedos/accounts@3.0.0-beta.131, @steedos/accounts@workspace:packages/accounts":
   version: 0.0.0-use.local
   resolution: "@steedos/accounts@workspace:packages/accounts"
   dependencies:
@@ -9685,9 +9685,9 @@ __metadata:
     "@accounts/two-factor": ^0.20.1
     "@accounts/types": 0.20.1
     "@babel/runtime": ^7.12.18
-    "@steedos/auth": 3.0.0-beta.128
-    "@steedos/objectql": 3.0.0-beta.128
-    "@steedos/utils": 3.0.0-beta.128
+    "@steedos/auth": 3.0.0-beta.131
+    "@steedos/objectql": 3.0.0-beta.131
+    "@steedos/utils": 3.0.0-beta.131
     app-root-path: ^2.2.1
     bcryptjs: ^2.4.3
     body-parser: 1.19.0
@@ -9715,12 +9715,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/ai@3.0.0-beta.128, @steedos/ai@workspace:builder6/ai":
+"@steedos/ai@3.0.0-beta.131, @steedos/ai@workspace:builder6/ai":
   version: 0.0.0-use.local
   resolution: "@steedos/ai@workspace:builder6/ai"
   dependencies:
     "@ai-sdk/openai": ^2.0.52
-    "@steedos/objectql": 3.0.0-beta.128
+    "@steedos/objectql": 3.0.0-beta.131
     "@types/node": ^18.0.3
     ai: ^5.0.71
     typescript: 5.7.3
@@ -9733,13 +9733,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/auth@3.0.0-beta.128, @steedos/auth@workspace:packages/auth":
+"@steedos/auth@3.0.0-beta.131, @steedos/auth@workspace:packages/auth":
   version: 0.0.0-use.local
   resolution: "@steedos/auth@workspace:packages/auth"
   dependencies:
-    "@steedos/cachers": 3.0.0-beta.128
-    "@steedos/objectql": 3.0.0-beta.128
-    "@steedos/utils": 3.0.0-beta.128
+    "@steedos/cachers": 3.0.0-beta.131
+    "@steedos/objectql": 3.0.0-beta.131
+    "@steedos/utils": 3.0.0-beta.131
     bcryptjs: ^2.4.3
     cookies: ^0.8.0
     express: ^4.16.4
@@ -9751,7 +9751,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/cachers@3.0.0-beta.128, @steedos/cachers@workspace:packages/cachers":
+"@steedos/cachers@3.0.0-beta.131, @steedos/cachers@workspace:packages/cachers":
   version: 0.0.0-use.local
   resolution: "@steedos/cachers@workspace:packages/cachers"
   dependencies:
@@ -9761,23 +9761,37 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/client@3.0.0-beta.128, @steedos/client@workspace:packages/client":
+"@steedos/client@3.0.0-beta.131, @steedos/client@workspace:packages/client":
   version: 0.0.0-use.local
   resolution: "@steedos/client@workspace:packages/client"
   dependencies:
-    "@steedos/filters": 3.0.0-beta.128
+    "@steedos/filters": 3.0.0-beta.131
     node-fetch: ^2.6.7
     typescript: 5.7.3
   languageName: unknown
   linkType: soft
 
-"@steedos/data-import@3.0.0-beta.128, @steedos/data-import@workspace:packages/data-import":
+"@steedos/create-steedos-package@workspace:packages/create-steedos-package":
+  version: 0.0.0-use.local
+  resolution: "@steedos/create-steedos-package@workspace:packages/create-steedos-package"
+  dependencies:
+    "@geek/spinner": 1.0.0
+    chalk: 3.0.0
+    commander: 4.1.0
+    cpy: 7.3.0
+    fs-extra: 8.1.0
+  bin:
+    create-steedos-package: ./index.js
+  languageName: unknown
+  linkType: soft
+
+"@steedos/data-import@3.0.0-beta.131, @steedos/data-import@workspace:packages/data-import":
   version: 0.0.0-use.local
   resolution: "@steedos/data-import@workspace:packages/data-import"
   dependencies:
-    "@steedos/metadata-api": 3.0.0-beta.128
-    "@steedos/metadata-core": 3.0.0-beta.128
-    "@steedos/objectql": 3.0.0-beta.128
+    "@steedos/metadata-api": 3.0.0-beta.131
+    "@steedos/metadata-core": 3.0.0-beta.131
+    "@steedos/objectql": 3.0.0-beta.131
     bson: 4.6.4
     csvtojson: ~2.0.10
     dotenv-flow: ^3.1.0
@@ -9787,7 +9801,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/ee_branding@3.0.0-beta.128, @steedos/ee_branding@workspace:ee/branding":
+"@steedos/ee_branding@3.0.0-beta.131, @steedos/ee_branding@workspace:ee/branding":
   version: 0.0.0-use.local
   resolution: "@steedos/ee_branding@workspace:ee/branding"
   languageName: unknown
@@ -9839,7 +9853,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos/filters@3.0.0-beta.128, @steedos/filters@workspace:packages/filters":
+"@steedos/filters@3.0.0-beta.131, @steedos/filters@workspace:packages/filters":
   version: 0.0.0-use.local
   resolution: "@steedos/filters@workspace:packages/filters"
   dependencies:
@@ -9872,7 +9886,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos/formula@3.0.0-beta.128, @steedos/formula@workspace:packages/formula":
+"@steedos/formula@3.0.0-beta.131, @steedos/formula@workspace:packages/formula":
   version: 0.0.0-use.local
   resolution: "@steedos/formula@workspace:packages/formula"
   dependencies:
@@ -9890,11 +9904,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/i18n@3.0.0-beta.128, @steedos/i18n@workspace:packages/i18n":
+"@steedos/i18n@3.0.0-beta.131, @steedos/i18n@workspace:packages/i18n":
   version: 0.0.0-use.local
   resolution: "@steedos/i18n@workspace:packages/i18n"
   dependencies:
-    "@steedos/cachers": 3.0.0-beta.128
+    "@steedos/cachers": 3.0.0-beta.131
     i18next: ^19.3.4
     i18next-sprintf-postprocessor: ^0.2.2
     typescript: 5.7.3
@@ -9914,13 +9928,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos/metadata-api@3.0.0-beta.128, @steedos/metadata-api@workspace:packages/metadata-api":
+"@steedos/metadata-api@3.0.0-beta.131, @steedos/metadata-api@workspace:packages/metadata-api":
   version: 0.0.0-use.local
   resolution: "@steedos/metadata-api@workspace:packages/metadata-api"
   dependencies:
-    "@steedos/auth": 3.0.0-beta.128
-    "@steedos/metadata-core": 3.0.0-beta.128
-    "@steedos/objectql": 3.0.0-beta.128
+    "@steedos/auth": 3.0.0-beta.131
+    "@steedos/metadata-core": 3.0.0-beta.131
+    "@steedos/objectql": 3.0.0-beta.131
     chalk: ^4.1.0
     clone: 2.1.2
     compressing: ^1.5.1
@@ -9934,11 +9948,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/metadata-core@3.0.0-beta.128, @steedos/metadata-core@workspace:packages/metadata-core":
+"@steedos/metadata-core@3.0.0-beta.131, @steedos/metadata-core@workspace:packages/metadata-core":
   version: 0.0.0-use.local
   resolution: "@steedos/metadata-core@workspace:packages/metadata-core"
   dependencies:
-    "@steedos/client": 3.0.0-beta.128
+    "@steedos/client": 3.0.0-beta.131
     "@types/glob": ^7.1.3
     "@types/node": ^14.14.10
     archiver: ^5.1.0
@@ -9959,13 +9973,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/metadata-registrar@3.0.0-beta.128, @steedos/metadata-registrar@workspace:packages/metadata-registrar":
+"@steedos/metadata-registrar@3.0.0-beta.131, @steedos/metadata-registrar@workspace:packages/metadata-registrar":
   version: 0.0.0-use.local
   resolution: "@steedos/metadata-registrar@workspace:packages/metadata-registrar"
   dependencies:
     "@salesforce/ts-types": 1.1.2
-    "@steedos/client": 3.0.0-beta.128
-    "@steedos/metadata-core": 3.0.0-beta.128
+    "@steedos/client": 3.0.0-beta.131
+    "@steedos/metadata-core": 3.0.0-beta.131
     "@types/glob": ^7.1.3
     "@types/node": ^14.14.10
     archiver: ^5.1.0
@@ -9989,13 +10003,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@steedos/migrate@workspace:packages/migrate"
   dependencies:
-    "@steedos/service-package-registry": 3.0.0-beta.128
+    "@steedos/service-package-registry": 3.0.0-beta.131
     migrate: ^1.6.2
     mongodb: ^3.7.3
   languageName: unknown
   linkType: soft
 
-"@steedos/moleculer-apollo-server@3.0.0-beta.128, @steedos/moleculer-apollo-server@workspace:packages/moleculer-apollo-server":
+"@steedos/moleculer-apollo-server@3.0.0-beta.131, @steedos/moleculer-apollo-server@workspace:packages/moleculer-apollo-server":
   version: 0.0.0-use.local
   resolution: "@steedos/moleculer-apollo-server@workspace:packages/moleculer-apollo-server"
   dependencies:
@@ -10012,7 +10026,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/moleculer-bullmq@3.0.0-beta.128, @steedos/moleculer-bullmq@workspace:services/moleculer-bullmq":
+"@steedos/moleculer-bullmq@3.0.0-beta.131, @steedos/moleculer-bullmq@workspace:services/moleculer-bullmq":
   version: 0.0.0-use.local
   resolution: "@steedos/moleculer-bullmq@workspace:services/moleculer-bullmq"
   dependencies:
@@ -10029,22 +10043,22 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/objectql@3.0.0-beta.128, @steedos/objectql@workspace:packages/objectql":
+"@steedos/objectql@3.0.0-beta.131, @steedos/objectql@workspace:packages/objectql":
   version: 0.0.0-use.local
   resolution: "@steedos/objectql@workspace:packages/objectql"
   dependencies:
     "@salesforce/kit": 1.0.4
     "@salesforce/ts-types": 1.1.1
-    "@steedos/cachers": 3.0.0-beta.128
-    "@steedos/filters": 3.0.0-beta.128
-    "@steedos/formula": 3.0.0-beta.128
-    "@steedos/i18n": 3.0.0-beta.128
-    "@steedos/metadata-core": 3.0.0-beta.128
-    "@steedos/metadata-registrar": 3.0.0-beta.128
-    "@steedos/odata-v4-mongodb": 3.0.0-beta.128
-    "@steedos/odata-v4-sql": 3.0.0-beta.128
-    "@steedos/odata-v4-typeorm": 3.0.0-beta.128
-    "@steedos/schemas": 3.0.0-beta.128
+    "@steedos/cachers": 3.0.0-beta.131
+    "@steedos/filters": 3.0.0-beta.131
+    "@steedos/formula": 3.0.0-beta.131
+    "@steedos/i18n": 3.0.0-beta.131
+    "@steedos/metadata-core": 3.0.0-beta.131
+    "@steedos/metadata-registrar": 3.0.0-beta.131
+    "@steedos/odata-v4-mongodb": 3.0.0-beta.131
+    "@steedos/odata-v4-sql": 3.0.0-beta.131
+    "@steedos/odata-v4-typeorm": 3.0.0-beta.131
+    "@steedos/schemas": 3.0.0-beta.131
     "@types/express": ^4.16.1
     "@types/node": ^11.10.4
     "@types/underscore": ^1.8.13
@@ -10079,11 +10093,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/odata-v4-mongodb@3.0.0-beta.128, @steedos/odata-v4-mongodb@workspace:packages/odata-v4-mongodb":
+"@steedos/odata-v4-mongodb@3.0.0-beta.131, @steedos/odata-v4-mongodb@workspace:packages/odata-v4-mongodb":
   version: 0.0.0-use.local
   resolution: "@steedos/odata-v4-mongodb@workspace:packages/odata-v4-mongodb"
   dependencies:
-    "@steedos/odata-v4-parser": 3.0.0-beta.128
+    "@steedos/odata-v4-parser": 3.0.0-beta.131
     odata-v4-literal: ^0.1.0
   languageName: unknown
   linkType: soft
@@ -10098,7 +10112,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos/odata-v4-parser@3.0.0-beta.128, @steedos/odata-v4-parser@workspace:packages/odata-v4-parser":
+"@steedos/odata-v4-parser@3.0.0-beta.131, @steedos/odata-v4-parser@workspace:packages/odata-v4-parser":
   version: 0.0.0-use.local
   resolution: "@steedos/odata-v4-parser@workspace:packages/odata-v4-parser"
   languageName: unknown
@@ -10111,38 +10125,38 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos/odata-v4-sql@3.0.0-beta.128, @steedos/odata-v4-sql@workspace:packages/odata-v4-sql":
+"@steedos/odata-v4-sql@3.0.0-beta.131, @steedos/odata-v4-sql@workspace:packages/odata-v4-sql":
   version: 0.0.0-use.local
   resolution: "@steedos/odata-v4-sql@workspace:packages/odata-v4-sql"
   dependencies:
-    "@steedos/odata-v4-parser": 3.0.0-beta.128
+    "@steedos/odata-v4-parser": 3.0.0-beta.131
     odata-v4-literal: ^0.1.0
     typescript: 5.7.3
   languageName: unknown
   linkType: soft
 
-"@steedos/odata-v4-typeorm@3.0.0-beta.128, @steedos/odata-v4-typeorm@workspace:packages/odata-v4-typeorm":
+"@steedos/odata-v4-typeorm@3.0.0-beta.131, @steedos/odata-v4-typeorm@workspace:packages/odata-v4-typeorm":
   version: 0.0.0-use.local
   resolution: "@steedos/odata-v4-typeorm@workspace:packages/odata-v4-typeorm"
   dependencies:
-    "@steedos/odata-v4-parser": 3.0.0-beta.128
-    "@steedos/odata-v4-sql": 3.0.0-beta.128
+    "@steedos/odata-v4-parser": 3.0.0-beta.131
+    "@steedos/odata-v4-sql": 3.0.0-beta.131
     odata-v4-literal: ^0.1.0
   languageName: unknown
   linkType: soft
 
-"@steedos/process@3.0.0-beta.128, @steedos/process@workspace:packages/process":
+"@steedos/process@3.0.0-beta.131, @steedos/process@workspace:packages/process":
   version: 0.0.0-use.local
   resolution: "@steedos/process@workspace:packages/process"
   dependencies:
-    "@steedos/auth": 3.0.0-beta.128
-    "@steedos/objectql": 3.0.0-beta.128
+    "@steedos/auth": 3.0.0-beta.131
+    "@steedos/objectql": 3.0.0-beta.131
     express: 4.18.1
     typescript: 5.7.3
   languageName: unknown
   linkType: soft
 
-"@steedos/router@3.0.0-beta.128, @steedos/router@workspace:packages/router":
+"@steedos/router@3.0.0-beta.131, @steedos/router@workspace:packages/router":
   version: 0.0.0-use.local
   resolution: "@steedos/router@workspace:packages/router"
   dependencies:
@@ -10151,13 +10165,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/schemas@3.0.0-beta.128, @steedos/schemas@workspace:packages/schemas":
+"@steedos/schemas@3.0.0-beta.131, @steedos/schemas@workspace:packages/schemas":
   version: 0.0.0-use.local
   resolution: "@steedos/schemas@workspace:packages/schemas"
   languageName: unknown
   linkType: soft
 
-"@steedos/server@3.0.0-beta.128, @steedos/server@workspace:builder6/server":
+"@steedos/server@3.0.0-beta.131, @steedos/server@workspace:builder6/server":
   version: 0.0.0-use.local
   resolution: "@steedos/server@workspace:builder6/server"
   dependencies:
@@ -10194,13 +10208,13 @@ __metadata:
     "@nestjs/swagger": ^11.0.0
     "@nestjs/testing": ^11.0.0
     "@nestjs/websockets": ^11.0.0
-    "@steedos/ai": 3.0.0-beta.128
-    "@steedos/auth": 3.0.0-beta.128
+    "@steedos/ai": 3.0.0-beta.131
+    "@steedos/auth": 3.0.0-beta.131
     "@steedos/ee_unpkg": 1.1.0
-    "@steedos/objectql": 3.0.0-beta.128
-    "@steedos/service-community": 3.0.0-beta.128
-    "@steedos/service-enterprise": 3.0.0-beta.128
-    "@steedos/webapp": 3.0.0-beta.128
+    "@steedos/objectql": 3.0.0-beta.131
+    "@steedos/service-community": 3.0.0-beta.131
+    "@steedos/service-enterprise": 3.0.0-beta.131
+    "@steedos/webapp": 3.0.0-beta.131
     "@types/express": ^5.0.0
     "@types/jest": ^29.5.2
     "@types/multer": ^1.4.12
@@ -10259,35 +10273,35 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-accounts@3.0.0-beta.128, @steedos/service-accounts@workspace:services/service-accounts":
+"@steedos/service-accounts@3.0.0-beta.131, @steedos/service-accounts@workspace:services/service-accounts":
   version: 0.0.0-use.local
   resolution: "@steedos/service-accounts@workspace:services/service-accounts"
   dependencies:
-    "@steedos/auth": 3.0.0-beta.128
+    "@steedos/auth": 3.0.0-beta.131
     node-schedule: ^2.0.0
   languageName: unknown
   linkType: soft
 
-"@steedos/service-ancillary@3.0.0-beta.128, @steedos/service-ancillary@workspace:services/service-ancillary":
+"@steedos/service-ancillary@3.0.0-beta.131, @steedos/service-ancillary@workspace:services/service-ancillary":
   version: 0.0.0-use.local
   resolution: "@steedos/service-ancillary@workspace:services/service-ancillary"
   dependencies:
-    "@steedos/utils": 3.0.0-beta.128
+    "@steedos/utils": 3.0.0-beta.131
     express: ^4.17.1
     express-xml-bodyparser: 0.3.0
     xml2js: 0.4.23
   languageName: unknown
   linkType: soft
 
-"@steedos/service-api@3.0.0-beta.128, @steedos/service-api@workspace:services/service-api":
+"@steedos/service-api@3.0.0-beta.131, @steedos/service-api@workspace:services/service-api":
   version: 0.0.0-use.local
   resolution: "@steedos/service-api@workspace:services/service-api"
   dependencies:
-    "@steedos/auth": 3.0.0-beta.128
-    "@steedos/moleculer-apollo-server": 3.0.0-beta.128
-    "@steedos/router": 3.0.0-beta.128
-    "@steedos/service-object-graphql": 3.0.0-beta.128
-    "@steedos/service-ui": 3.0.0-beta.128
+    "@steedos/auth": 3.0.0-beta.131
+    "@steedos/moleculer-apollo-server": 3.0.0-beta.131
+    "@steedos/router": 3.0.0-beta.131
+    "@steedos/service-object-graphql": 3.0.0-beta.131
+    "@steedos/service-ui": 3.0.0-beta.131
     "@types/graphql-iso-date": ^3.4.0
     "@types/react-dev-utils": ^9.0.11
     graphql: ^15.8.0
@@ -10301,61 +10315,61 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-bull-dashboard@3.0.0-beta.128, @steedos/service-bull-dashboard@workspace:services/service-bull-dashboard":
+"@steedos/service-bull-dashboard@3.0.0-beta.131, @steedos/service-bull-dashboard@workspace:services/service-bull-dashboard":
   version: 0.0.0-use.local
   resolution: "@steedos/service-bull-dashboard@workspace:services/service-bull-dashboard"
   dependencies:
     "@bull-board/express": ^6.14.0
-    "@steedos/auth": 3.0.0-beta.128
-    "@steedos/router": 3.0.0-beta.128
-    "@steedos/service-package-loader": 3.0.0-beta.128
+    "@steedos/auth": 3.0.0-beta.131
+    "@steedos/router": 3.0.0-beta.131
+    "@steedos/service-package-loader": 3.0.0-beta.131
     bullmq: ^5.62.0
   languageName: unknown
   linkType: soft
 
-"@steedos/service-cachers-manager@3.0.0-beta.128, @steedos/service-cachers-manager@workspace:services/service-cachers-manager":
+"@steedos/service-cachers-manager@3.0.0-beta.131, @steedos/service-cachers-manager@workspace:services/service-cachers-manager":
   version: 0.0.0-use.local
   resolution: "@steedos/service-cachers-manager@workspace:services/service-cachers-manager"
   dependencies:
-    "@steedos/cachers": 3.0.0-beta.128
-    "@steedos/metadata-registrar": 3.0.0-beta.128
-    "@steedos/utils": 3.0.0-beta.128
+    "@steedos/cachers": 3.0.0-beta.131
+    "@steedos/metadata-registrar": 3.0.0-beta.131
+    "@steedos/utils": 3.0.0-beta.131
   languageName: unknown
   linkType: soft
 
-"@steedos/service-community@3.0.0-beta.128, @steedos/service-community@workspace:services/service-community":
+"@steedos/service-community@3.0.0-beta.131, @steedos/service-community@workspace:services/service-community":
   version: 0.0.0-use.local
   resolution: "@steedos/service-community@workspace:services/service-community"
   dependencies:
     "@steedos-builder/amis-editor": 6.3.0-beta.16
     "@steedos-labs/plugin-package-store": ^1.0.9
-    "@steedos/data-import": 3.0.0-beta.128
-    "@steedos/server": 3.0.0-beta.128
-    "@steedos/service-accounts": 3.0.0-beta.128
-    "@steedos/service-ancillary": 3.0.0-beta.128
-    "@steedos/service-api": 3.0.0-beta.128
-    "@steedos/service-bull-dashboard": 3.0.0-beta.128
-    "@steedos/service-cachers-manager": 3.0.0-beta.128
-    "@steedos/service-core-objects": 3.0.0-beta.128
-    "@steedos/service-i18n": 3.0.0-beta.128
-    "@steedos/service-identity-jwt": 3.0.0-beta.128
-    "@steedos/service-metadata-database": 3.0.0-beta.128
-    "@steedos/service-metadata-server": 3.0.0-beta.128
-    "@steedos/service-objectql": 3.0.0-beta.128
-    "@steedos/service-package-loader": 3.0.0-beta.128
-    "@steedos/service-package-registry": 3.0.0-beta.128
-    "@steedos/service-pages": 3.0.0-beta.128
-    "@steedos/service-plugin-amis": 3.0.0-beta.128
-    "@steedos/service-rest": 3.0.0-beta.128
-    "@steedos/service-saas": 3.0.0-beta.128
+    "@steedos/data-import": 3.0.0-beta.131
+    "@steedos/server": 3.0.0-beta.131
+    "@steedos/service-accounts": 3.0.0-beta.131
+    "@steedos/service-ancillary": 3.0.0-beta.131
+    "@steedos/service-api": 3.0.0-beta.131
+    "@steedos/service-bull-dashboard": 3.0.0-beta.131
+    "@steedos/service-cachers-manager": 3.0.0-beta.131
+    "@steedos/service-core-objects": 3.0.0-beta.131
+    "@steedos/service-i18n": 3.0.0-beta.131
+    "@steedos/service-identity-jwt": 3.0.0-beta.131
+    "@steedos/service-metadata-database": 3.0.0-beta.131
+    "@steedos/service-metadata-server": 3.0.0-beta.131
+    "@steedos/service-objectql": 3.0.0-beta.131
+    "@steedos/service-package-loader": 3.0.0-beta.131
+    "@steedos/service-package-registry": 3.0.0-beta.131
+    "@steedos/service-pages": 3.0.0-beta.131
+    "@steedos/service-plugin-amis": 3.0.0-beta.131
+    "@steedos/service-rest": 3.0.0-beta.131
+    "@steedos/service-saas": 3.0.0-beta.131
     "@steedos/standard-accounts": 3.0.0-beta.103
-    "@steedos/standard-object-database": 3.0.0-beta.128
-    "@steedos/standard-permission": 3.0.0-beta.128
-    "@steedos/standard-process-approval": 3.0.0-beta.128
-    "@steedos/standard-ui": 3.0.0-beta.128
-    "@steedos/steedos-plugin-schema-builder": 3.0.0-beta.128
-    "@steedos/unpkg": 3.0.0-beta.128
-    "@steedos/workflow_time_trigger": 3.0.0-beta.128
+    "@steedos/standard-object-database": 3.0.0-beta.131
+    "@steedos/standard-permission": 3.0.0-beta.131
+    "@steedos/standard-process-approval": 3.0.0-beta.131
+    "@steedos/standard-ui": 3.0.0-beta.131
+    "@steedos/steedos-plugin-schema-builder": 3.0.0-beta.131
+    "@steedos/unpkg": 3.0.0-beta.131
+    "@steedos/workflow_time_trigger": 3.0.0-beta.131
     aliyun-sdk: 1.12.3
     async-retry: ^1.3.1
     axios: ^0.21.1
@@ -10388,30 +10402,30 @@ __metadata:
     randomcolor: ^0.6.2
     randomstring: ^1.2.1
     redlock: ^4.2.0
-    steedos-cli: 3.0.0-beta.128
+    steedos-cli: 3.0.0-beta.131
     tslib: ^2.4.0
     validator: ^13.6.0
   languageName: unknown
   linkType: soft
 
-"@steedos/service-core-objects@3.0.0-beta.128, @steedos/service-core-objects@workspace:services/service-core-objects":
+"@steedos/service-core-objects@3.0.0-beta.131, @steedos/service-core-objects@workspace:services/service-core-objects":
   version: 0.0.0-use.local
   resolution: "@steedos/service-core-objects@workspace:services/service-core-objects"
   dependencies:
-    "@steedos/service-package-loader": 3.0.0-beta.128
+    "@steedos/service-package-loader": 3.0.0-beta.131
     json2xls: ^0.1.2
     lodash: ^4.17.21
   languageName: unknown
   linkType: soft
 
-"@steedos/service-enterprise@3.0.0-beta.128, @steedos/service-enterprise@workspace:ee/service-enterprise":
+"@steedos/service-enterprise@3.0.0-beta.131, @steedos/service-enterprise@workspace:ee/service-enterprise":
   version: 0.0.0-use.local
   resolution: "@steedos/service-enterprise@workspace:ee/service-enterprise"
   dependencies:
     "@steedos-labs/analytics": ^3.0.11
     "@steedos-labs/plugin-print-template": ^3.0.0
     "@steedos-labs/plugin-workflow": ^3.0.0
-    "@steedos/ee_branding": 3.0.0-beta.128
+    "@steedos/ee_branding": 3.0.0-beta.131
     "@steedos/service-license": 3.0.0
     mssql: ^11.0.1
     oracledb: ^6.8.0
@@ -10426,17 +10440,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-i18n@3.0.0-beta.128, @steedos/service-i18n@workspace:services/service-i18n":
+"@steedos/service-i18n@3.0.0-beta.131, @steedos/service-i18n@workspace:services/service-i18n":
   version: 0.0.0-use.local
   resolution: "@steedos/service-i18n@workspace:services/service-i18n"
   languageName: unknown
   linkType: soft
 
-"@steedos/service-identity-jwt@3.0.0-beta.128, @steedos/service-identity-jwt@workspace:services/service-identity-jwt":
+"@steedos/service-identity-jwt@3.0.0-beta.131, @steedos/service-identity-jwt@workspace:services/service-identity-jwt":
   version: 0.0.0-use.local
   resolution: "@steedos/service-identity-jwt@workspace:services/service-identity-jwt"
   dependencies:
-    "@steedos/accounts": 3.0.0-beta.128
+    "@steedos/accounts": 3.0.0-beta.131
     express: 4.18.1
     jsonwebtoken: 8.5.1
     passport: ^0.6.0
@@ -10454,13 +10468,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos/service-metadata-apps@3.0.0-beta.128, @steedos/service-metadata-apps@workspace:services/service-metadata-apps":
+"@steedos/service-metadata-apps@3.0.0-beta.131, @steedos/service-metadata-apps@workspace:services/service-metadata-apps":
   version: 0.0.0-use.local
   resolution: "@steedos/service-metadata-apps@workspace:services/service-metadata-apps"
   dependencies:
-    "@steedos/i18n": 3.0.0-beta.128
-    "@steedos/objectql": 3.0.0-beta.128
-    "@steedos/utils": 3.0.0-beta.128
+    "@steedos/i18n": 3.0.0-beta.131
+    "@steedos/objectql": 3.0.0-beta.131
+    "@steedos/utils": 3.0.0-beta.131
     dotenv-flow: ^3.1.0
     ioredis: ^4.22.0
     lodash: ^4.17.21
@@ -10470,17 +10484,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-metadata-database@3.0.0-beta.128, @steedos/service-metadata-database@workspace:services/service-metadata-database":
+"@steedos/service-metadata-database@3.0.0-beta.131, @steedos/service-metadata-database@workspace:services/service-metadata-database":
   version: 0.0.0-use.local
   resolution: "@steedos/service-metadata-database@workspace:services/service-metadata-database"
   dependencies:
-    "@steedos/metadata-registrar": 3.0.0-beta.128
-    "@steedos/objectql": 3.0.0-beta.128
+    "@steedos/metadata-registrar": 3.0.0-beta.131
+    "@steedos/objectql": 3.0.0-beta.131
     lodash: ^4.17.21
   languageName: unknown
   linkType: soft
 
-"@steedos/service-metadata-layouts@3.0.0-beta.128, @steedos/service-metadata-layouts@workspace:services/service-metadata-layouts":
+"@steedos/service-metadata-layouts@3.0.0-beta.131, @steedos/service-metadata-layouts@workspace:services/service-metadata-layouts":
   version: 0.0.0-use.local
   resolution: "@steedos/service-metadata-layouts@workspace:services/service-metadata-layouts"
   dependencies:
@@ -10494,14 +10508,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-metadata-objects@3.0.0-beta.128, @steedos/service-metadata-objects@workspace:services/service-metadata-objects":
+"@steedos/service-metadata-objects@3.0.0-beta.131, @steedos/service-metadata-objects@workspace:services/service-metadata-objects":
   version: 0.0.0-use.local
   resolution: "@steedos/service-metadata-objects@workspace:services/service-metadata-objects"
   dependencies:
     "@salesforce/ts-types": 1.1.2
-    "@steedos/formula": 3.0.0-beta.128
-    "@steedos/i18n": 3.0.0-beta.128
-    "@steedos/metadata-registrar": 3.0.0-beta.128
+    "@steedos/formula": 3.0.0-beta.131
+    "@steedos/i18n": 3.0.0-beta.131
+    "@steedos/metadata-registrar": 3.0.0-beta.131
     dotenv-flow: ^3.1.0
     ioredis: ^4.22.0
     lodash: ^4.17.21
@@ -10512,7 +10526,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-metadata-permissionsets@3.0.0-beta.128, @steedos/service-metadata-permissionsets@workspace:services/service-metadata-permissionsets":
+"@steedos/service-metadata-permissionsets@3.0.0-beta.131, @steedos/service-metadata-permissionsets@workspace:services/service-metadata-permissionsets":
   version: 0.0.0-use.local
   resolution: "@steedos/service-metadata-permissionsets@workspace:services/service-metadata-permissionsets"
   dependencies:
@@ -10525,27 +10539,27 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-metadata-server@3.0.0-beta.128, @steedos/service-metadata-server@workspace:services/service-metadata-server":
+"@steedos/service-metadata-server@3.0.0-beta.131, @steedos/service-metadata-server@workspace:services/service-metadata-server":
   version: 0.0.0-use.local
   resolution: "@steedos/service-metadata-server@workspace:services/service-metadata-server"
   dependencies:
-    "@steedos/objectql": 3.0.0-beta.128
-    "@steedos/service-metadata": 3.0.0-beta.128
-    "@steedos/service-metadata-apps": 3.0.0-beta.128
-    "@steedos/service-metadata-layouts": 3.0.0-beta.128
-    "@steedos/service-metadata-objects": 3.0.0-beta.128
-    "@steedos/service-metadata-permissionsets": 3.0.0-beta.128
-    "@steedos/service-metadata-tabs": 3.0.0-beta.128
-    "@steedos/service-metadata-translations": 3.0.0-beta.128
-    "@steedos/service-metadata-triggers": 3.0.0-beta.128
-    "@steedos/service-packages": 3.0.0-beta.128
+    "@steedos/objectql": 3.0.0-beta.131
+    "@steedos/service-metadata": 3.0.0-beta.131
+    "@steedos/service-metadata-apps": 3.0.0-beta.131
+    "@steedos/service-metadata-layouts": 3.0.0-beta.131
+    "@steedos/service-metadata-objects": 3.0.0-beta.131
+    "@steedos/service-metadata-permissionsets": 3.0.0-beta.131
+    "@steedos/service-metadata-tabs": 3.0.0-beta.131
+    "@steedos/service-metadata-translations": 3.0.0-beta.131
+    "@steedos/service-metadata-triggers": 3.0.0-beta.131
+    "@steedos/service-packages": 3.0.0-beta.131
     lodash: ^4.17.21
     typescript: 5.7.3
     underscore: 1.13.4
   languageName: unknown
   linkType: soft
 
-"@steedos/service-metadata-tabs@3.0.0-beta.128, @steedos/service-metadata-tabs@workspace:services/service-metadata-tabs":
+"@steedos/service-metadata-tabs@3.0.0-beta.131, @steedos/service-metadata-tabs@workspace:services/service-metadata-tabs":
   version: 0.0.0-use.local
   resolution: "@steedos/service-metadata-tabs@workspace:services/service-metadata-tabs"
   dependencies:
@@ -10558,11 +10572,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-metadata-translations@3.0.0-beta.128, @steedos/service-metadata-translations@workspace:services/service-metadata-translations":
+"@steedos/service-metadata-translations@3.0.0-beta.131, @steedos/service-metadata-translations@workspace:services/service-metadata-translations":
   version: 0.0.0-use.local
   resolution: "@steedos/service-metadata-translations@workspace:services/service-metadata-translations"
   dependencies:
-    "@steedos/metadata-registrar": 3.0.0-beta.128
+    "@steedos/metadata-registrar": 3.0.0-beta.131
     dotenv-flow: ^3.1.0
     ioredis: ^4.22.0
     lodash: ^4.17.21
@@ -10572,7 +10586,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-metadata-triggers@3.0.0-beta.128, @steedos/service-metadata-triggers@workspace:services/service-metadata-triggers":
+"@steedos/service-metadata-triggers@3.0.0-beta.131, @steedos/service-metadata-triggers@workspace:services/service-metadata-triggers":
   version: 0.0.0-use.local
   resolution: "@steedos/service-metadata-triggers@workspace:services/service-metadata-triggers"
   dependencies:
@@ -10586,11 +10600,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-metadata@3.0.0-beta.128, @steedos/service-metadata@workspace:services/service-metadata":
+"@steedos/service-metadata@3.0.0-beta.131, @steedos/service-metadata@workspace:services/service-metadata":
   version: 0.0.0-use.local
   resolution: "@steedos/service-metadata@workspace:services/service-metadata"
   dependencies:
-    "@steedos/metadata-registrar": 3.0.0-beta.128
+    "@steedos/metadata-registrar": 3.0.0-beta.131
     dotenv-flow: ^3.1.0
     ioredis: ^4.22.0
     lodash: ^4.17.21
@@ -10601,14 +10615,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-object-graphql@3.0.0-beta.128, @steedos/service-object-graphql@workspace:services/service-object-graphql":
+"@steedos/service-object-graphql@3.0.0-beta.131, @steedos/service-object-graphql@workspace:services/service-object-graphql":
   version: 0.0.0-use.local
   resolution: "@steedos/service-object-graphql@workspace:services/service-object-graphql"
   dependencies:
-    "@steedos/filters": 3.0.0-beta.128
-    "@steedos/i18n": 3.0.0-beta.128
-    "@steedos/objectql": 3.0.0-beta.128
-    "@steedos/service-object-mixin": 3.0.0-beta.128
+    "@steedos/filters": 3.0.0-beta.131
+    "@steedos/i18n": 3.0.0-beta.131
+    "@steedos/objectql": 3.0.0-beta.131
+    "@steedos/service-object-mixin": 3.0.0-beta.131
     graphql: ^15.8.0
     graphql-parse-resolve-info: ^4.12.3
     moleculer: ^0.14.35
@@ -10618,30 +10632,30 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-object-mixin@3.0.0-beta.128, @steedos/service-object-mixin@workspace:services/service-object-mixin":
+"@steedos/service-object-mixin@3.0.0-beta.131, @steedos/service-object-mixin@workspace:services/service-object-mixin":
   version: 0.0.0-use.local
   resolution: "@steedos/service-object-mixin@workspace:services/service-object-mixin"
   dependencies:
-    "@steedos/utils": 3.0.0-beta.128
+    "@steedos/utils": 3.0.0-beta.131
   languageName: unknown
   linkType: soft
 
-"@steedos/service-objectql@3.0.0-beta.128, @steedos/service-objectql@workspace:services/service-objectql":
+"@steedos/service-objectql@3.0.0-beta.131, @steedos/service-objectql@workspace:services/service-objectql":
   version: 0.0.0-use.local
   resolution: "@steedos/service-objectql@workspace:services/service-objectql"
   dependencies:
-    "@steedos/objectql": 3.0.0-beta.128
+    "@steedos/objectql": 3.0.0-beta.131
   languageName: unknown
   linkType: soft
 
-"@steedos/service-package-loader@3.0.0-beta.128, @steedos/service-package-loader@workspace:services/service-package-loader":
+"@steedos/service-package-loader@3.0.0-beta.131, @steedos/service-package-loader@workspace:services/service-package-loader":
   version: 0.0.0-use.local
   resolution: "@steedos/service-package-loader@workspace:services/service-package-loader"
   dependencies:
-    "@steedos/metadata-core": 3.0.0-beta.128
-    "@steedos/metadata-registrar": 3.0.0-beta.128
-    "@steedos/router": 3.0.0-beta.128
-    "@steedos/service-object-mixin": 3.0.0-beta.128
+    "@steedos/metadata-core": 3.0.0-beta.131
+    "@steedos/metadata-registrar": 3.0.0-beta.131
+    "@steedos/router": 3.0.0-beta.131
+    "@steedos/service-object-mixin": 3.0.0-beta.131
     clone: ^2.1.2
     csvtojson: ~2.0.10
     moleculer: ^0.14.35
@@ -10652,14 +10666,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-package-registry@3.0.0-beta.128, @steedos/service-package-registry@workspace:services/service-package-registry":
+"@steedos/service-package-registry@3.0.0-beta.131, @steedos/service-package-registry@workspace:services/service-package-registry":
   version: 0.0.0-use.local
   resolution: "@steedos/service-package-registry@workspace:services/service-package-registry"
   dependencies:
-    "@steedos/auth": 3.0.0-beta.128
-    "@steedos/metadata-core": 3.0.0-beta.128
-    "@steedos/objectql": 3.0.0-beta.128
-    "@steedos/service-package-loader": 3.0.0-beta.128
+    "@steedos/auth": 3.0.0-beta.131
+    "@steedos/metadata-core": 3.0.0-beta.131
+    "@steedos/objectql": 3.0.0-beta.131
+    "@steedos/service-package-loader": 3.0.0-beta.131
     clone: ^2.1.2
     fs-extra: 8.1.0
     i18next: 20.3.2
@@ -10676,13 +10690,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-packages@3.0.0-beta.128, @steedos/service-packages@workspace:services/service-packages":
+"@steedos/service-packages@3.0.0-beta.131, @steedos/service-packages@workspace:services/service-packages":
   version: 0.0.0-use.local
   resolution: "@steedos/service-packages@workspace:services/service-packages"
   languageName: unknown
   linkType: soft
 
-"@steedos/service-pages@3.0.0-beta.128, @steedos/service-pages@workspace:services/service-pages":
+"@steedos/service-pages@3.0.0-beta.131, @steedos/service-pages@workspace:services/service-pages":
   version: 0.0.0-use.local
   resolution: "@steedos/service-pages@workspace:services/service-pages"
   dependencies:
@@ -10691,7 +10705,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-plugin-amis@3.0.0-beta.128, @steedos/service-plugin-amis@workspace:services/service-plugin-amis":
+"@steedos/service-plugin-amis@3.0.0-beta.131, @steedos/service-plugin-amis@workspace:services/service-plugin-amis":
   version: 0.0.0-use.local
   resolution: "@steedos/service-plugin-amis@workspace:services/service-plugin-amis"
   dependencies:
@@ -10699,29 +10713,29 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-rest@3.0.0-beta.128, @steedos/service-rest@workspace:services/service-rest":
+"@steedos/service-rest@3.0.0-beta.131, @steedos/service-rest@workspace:services/service-rest":
   version: 0.0.0-use.local
   resolution: "@steedos/service-rest@workspace:services/service-rest"
   dependencies:
-    "@steedos/objectql": 3.0.0-beta.128
-    "@steedos/service-object-mixin": 3.0.0-beta.128
+    "@steedos/objectql": 3.0.0-beta.131
+    "@steedos/service-object-mixin": 3.0.0-beta.131
     lodash: ^4.17.21
   languageName: unknown
   linkType: soft
 
-"@steedos/service-saas@3.0.0-beta.128, @steedos/service-saas@workspace:services/service-saas":
+"@steedos/service-saas@3.0.0-beta.131, @steedos/service-saas@workspace:services/service-saas":
   version: 0.0.0-use.local
   resolution: "@steedos/service-saas@workspace:services/service-saas"
   languageName: unknown
   linkType: soft
 
-"@steedos/service-ui@3.0.0-beta.128, @steedos/service-ui@workspace:services/service-ui":
+"@steedos/service-ui@3.0.0-beta.131, @steedos/service-ui@workspace:services/service-ui":
   version: 0.0.0-use.local
   resolution: "@steedos/service-ui@workspace:services/service-ui"
   dependencies:
-    "@steedos/auth": 3.0.0-beta.128
-    "@steedos/i18n": 3.0.0-beta.128
-    "@steedos/objectql": 3.0.0-beta.128
+    "@steedos/auth": 3.0.0-beta.131
+    "@steedos/i18n": 3.0.0-beta.131
+    "@steedos/objectql": 3.0.0-beta.131
     express: 4.18.1
   languageName: unknown
   linkType: soft
@@ -10739,19 +10753,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/standard-object-database@3.0.0-beta.128, @steedos/standard-object-database@workspace:services/standard-object-database":
+"@steedos/standard-object-database@3.0.0-beta.131, @steedos/standard-object-database@workspace:services/standard-object-database":
   version: 0.0.0-use.local
   resolution: "@steedos/standard-object-database@workspace:services/standard-object-database"
   dependencies:
-    "@steedos/metadata-core": 3.0.0-beta.128
-    "@steedos/moleculer-bullmq": 3.0.0-beta.128
-    "@steedos/service-object-mixin": 3.0.0-beta.128
+    "@steedos/metadata-core": 3.0.0-beta.131
+    "@steedos/moleculer-bullmq": 3.0.0-beta.131
+    "@steedos/service-object-mixin": 3.0.0-beta.131
     amis-formula: ~6.3.0
     clone: ^2.1.2
   languageName: unknown
   linkType: soft
 
-"@steedos/standard-permission@3.0.0-beta.128, @steedos/standard-permission@workspace:services/standard-permission":
+"@steedos/standard-permission@3.0.0-beta.131, @steedos/standard-permission@workspace:services/standard-permission":
   version: 0.0.0-use.local
   resolution: "@steedos/standard-permission@workspace:services/standard-permission"
   dependencies:
@@ -10759,16 +10773,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/standard-process-approval@3.0.0-beta.128, @steedos/standard-process-approval@workspace:services/standard-process-approval":
+"@steedos/standard-process-approval@3.0.0-beta.131, @steedos/standard-process-approval@workspace:services/standard-process-approval":
   version: 0.0.0-use.local
   resolution: "@steedos/standard-process-approval@workspace:services/standard-process-approval"
   dependencies:
-    "@steedos/process": 3.0.0-beta.128
+    "@steedos/process": 3.0.0-beta.131
     nanoid: ^3.3.4
   languageName: unknown
   linkType: soft
 
-"@steedos/standard-ui@3.0.0-beta.128, @steedos/standard-ui@workspace:services/standard-ui":
+"@steedos/standard-ui@3.0.0-beta.131, @steedos/standard-ui@workspace:services/standard-ui":
   version: 0.0.0-use.local
   resolution: "@steedos/standard-ui@workspace:services/standard-ui"
   dependencies:
@@ -10776,24 +10790,24 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/steedos-plugin-schema-builder@3.0.0-beta.128, @steedos/steedos-plugin-schema-builder@workspace:packages/steedos-plugin-schema-builder":
+"@steedos/steedos-plugin-schema-builder@3.0.0-beta.131, @steedos/steedos-plugin-schema-builder@workspace:packages/steedos-plugin-schema-builder":
   version: 0.0.0-use.local
   resolution: "@steedos/steedos-plugin-schema-builder@workspace:packages/steedos-plugin-schema-builder"
   languageName: unknown
   linkType: soft
 
-"@steedos/unpkg@3.0.0-beta.128, @steedos/unpkg@workspace:services/unpkg":
+"@steedos/unpkg@3.0.0-beta.131, @steedos/unpkg@workspace:services/unpkg":
   version: 0.0.0-use.local
   resolution: "@steedos/unpkg@workspace:services/unpkg"
   languageName: unknown
   linkType: soft
 
-"@steedos/utils@3.0.0-beta.128, @steedos/utils@workspace:packages/utils":
+"@steedos/utils@3.0.0-beta.131, @steedos/utils@workspace:packages/utils":
   version: 0.0.0-use.local
   resolution: "@steedos/utils@workspace:packages/utils"
   dependencies:
-    "@steedos/filters": 3.0.0-beta.128
-    "@steedos/odata-v4-mongodb": 3.0.0-beta.128
+    "@steedos/filters": 3.0.0-beta.131
+    "@steedos/odata-v4-mongodb": 3.0.0-beta.131
     clone: ^2.1.2
     cookies: ^0.8.0
     mingo: ^6.0.5
@@ -10817,7 +10831,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos/webapp@3.0.0-beta.128, @steedos/webapp@workspace:builder6/webapp":
+"@steedos/webapp@3.0.0-beta.131, @steedos/webapp@workspace:builder6/webapp":
   version: 0.0.0-use.local
   resolution: "@steedos/webapp@workspace:builder6/webapp"
   dependencies:
@@ -10881,11 +10895,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/workflow_time_trigger@3.0.0-beta.128, @steedos/workflow_time_trigger@workspace:services/workflow_time_trigger":
+"@steedos/workflow_time_trigger@3.0.0-beta.131, @steedos/workflow_time_trigger@workspace:services/workflow_time_trigger":
   version: 0.0.0-use.local
   resolution: "@steedos/workflow_time_trigger@workspace:services/workflow_time_trigger"
   dependencies:
-    "@steedos/objectql": 3.0.0-beta.128
+    "@steedos/objectql": 3.0.0-beta.131
     eval: 0.1.8
     node-schedule: 2.1.0
   languageName: unknown
@@ -17875,20 +17889,6 @@ __metadata:
     validate-npm-package-name: 3.0.0
   bin:
     create-steedos-app: ./dist/index.js
-  languageName: unknown
-  linkType: soft
-
-"create-steedos-package@workspace:packages/create-steedos-package":
-  version: 0.0.0-use.local
-  resolution: "create-steedos-package@workspace:packages/create-steedos-package"
-  dependencies:
-    "@geek/spinner": 1.0.0
-    chalk: 3.0.0
-    commander: 4.1.0
-    cpy: 7.3.0
-    fs-extra: 8.1.0
-  bin:
-    create-steedos-package: ./index.js
   languageName: unknown
   linkType: soft
 
@@ -39886,7 +39886,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"steedos-cli@3.0.0-beta.128, steedos-cli@workspace:packages/cli":
+"steedos-cli@3.0.0-beta.131, steedos-cli@workspace:packages/cli":
   version: 0.0.0-use.local
   resolution: "steedos-cli@workspace:packages/cli"
   dependencies:
@@ -39896,8 +39896,8 @@ __metadata:
     "@oclif/dev-cli": ^1.26.10
     "@oclif/plugin-help": ^5.1.12
     "@oclif/test": ^2.1.0
-    "@steedos/metadata-core": 3.0.0-beta.128
-    "@steedos/metadata-registrar": 3.0.0-beta.128
+    "@steedos/metadata-core": 3.0.0-beta.131
+    "@steedos/metadata-registrar": 3.0.0-beta.131
     archiver: ^5.0.2
     chalk: 2.4.2
     change-case: ^3.1.0
