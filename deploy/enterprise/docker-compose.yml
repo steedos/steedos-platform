@@ -10,47 +10,10 @@ services:
       context: ./
       dockerfile: ./Dockerfile
     environment:
-      - TRANSPORTER=redis://redis:6379
-      - CACHER=redis://redis:6379/1
-      - MONGO_URL=mongodb://mongodb:27017/steedos
       - NPM_CONFIG_REGISTRY=https://registry.npmmirror.com
-      # - STEEDOS_NODERED_ENABLED=false
     volumes:
       - "./steedos-storage:/steedos-storage"
   
-  redis:
-    image: redis:6.2.10
-    command: "redis-server --save \"\" --appendonly no --loglevel warning"
-    ports:
-      - "6379:6379"
- 
-  mongodb:
-    image: mongo:3.4
-    ports:
-      - 27017:27017
-    command: "mongod --smallfiles --oplogSize 128 --replSet steedos"
-    healthcheck:
-      test: echo 'db.runCommand("ping").ok' | mongo --quiet | grep 1
-      interval: 10s
-      timeout: 10s
-      retries: 5
-    volumes:
-      - 'steedos-mongodb:/data/db'
-
-  mongo-init-replica:
-    image: mongo:3.4
-    depends_on:
-      mongodb:
-        condition: service_healthy
-    entrypoint:
-      - /bin/bash
-      - -c
-      - |
-        echo "=> Waiting for MongoDB to be available ...";
-        sleep 2
-        mongo --host mongodb:27017 --eval "rs.initiate({ _id: 'steedos', members: [{_id: 0, host: 'mongodb:27017'}]})" 
-        echo "=> Replica set initiated."
-
 volumes:
   steedos-mongodb:
     driver: local
