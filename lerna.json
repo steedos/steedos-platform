@@ -6,7 +6,6 @@
     "ee/**",
     "builder6/*"
   ],
-  "useWorkspaces": true,
   "npmClient": "yarn",
   "version": "3.0.0-beta.131"
 }
