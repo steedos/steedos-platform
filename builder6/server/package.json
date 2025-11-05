@@ -53,6 +53,7 @@
     "@nestjs/serve-static": "^5.0.0",
     "@nestjs/swagger": "^11.0.0",
     "@nestjs/websockets": "^11.0.0",
+    "@steedos/ai": "3.0.0-beta.128",
     "@steedos/auth": "3.0.0-beta.128",
     "@steedos/ee_unpkg": "1.1.0",
     "@steedos/objectql": "3.0.0-beta.128",
