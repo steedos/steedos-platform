@@ -18,6 +18,8 @@
     "repl": "moleculer-runner  --config steedos.config.js --repl",
     "sync": "lerna exec --no-private  -- cnpm sync \\$LERNA_PACKAGE_NAME",
     "prepare": "husky install",
+    "release:beta": "yarn lerna publish --force-publish --exact --dist-tag beta --registry https://registry.npmjs.org",
+    "release:again": "lerna publish from-package",
     "depcheck:services": "depcheck services/* --json > depcheck-services-result.json",
     "depcheck:packages": "depcheck packages/* --json > depcheck-packages-result.json"
   },
