@@ -15,14 +15,14 @@ export class AiMoleculer extends Service {
     super(broker);
 
     this.parseServiceSchema({
-      name: "@builder6/ai",
+      name: "@steedos/ai",
       mixins: [packageLoader],
       dependencies: ["@steedos/service-core-objects"],
       settings: {
         packageInfo: {
           path: path.join(__dirname, "..", ".."),
-          name: "@builder6/ai",
-          isPackage: false,
+          name: "@steedos/ai",
+          isPackage: true,
         },
       },
       actions: {},
