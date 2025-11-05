@@ -10,6 +10,11 @@ jobs:
       matrix:
         node-version: [14.x]
     steps:
+      # checkout branch 3.0
+      - name: Checkout branch 3.0
+        uses: actions/checkout@v2
+        with: 
+          ref: '3.0'
 
       - name: Set Current Version
         run: |
