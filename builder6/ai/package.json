@@ -4,6 +4,7 @@
   "main": "dist/index.js",
   "license": "MIT",
   "files": [
+    "package.service.yml",
     "dist",
     "main"
   ],

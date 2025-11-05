@@ -5,6 +5,7 @@ import packageLoader from "@steedos/service-package-loader";
 
 import { AiService } from "./ai.service";
 import path from "path";
+import project from "../../package.json";
 
 @Injectable()
 export class AiMoleculer extends Service {
@@ -18,13 +19,15 @@ export class AiMoleculer extends Service {
       name: "@steedos/ai",
       mixins: [packageLoader],
       dependencies: ["@steedos/service-core-objects"],
-      settings: {
-        packageInfo: {
+      metadata: {
+        $package: {
+          name: project.name,
+          version: project.version,
           path: path.join(__dirname, "..", ".."),
-          name: "@steedos/ai",
           isPackage: true,
         },
       },
+      settings: {},
       actions: {},
       created: this.serviceCreated,
       started: this.serviceStarted,
