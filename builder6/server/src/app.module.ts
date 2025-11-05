@@ -33,17 +33,7 @@ import { AppGateway } from "./app.gateway";
 import { getMoleculerConfigs, getSteedosConfigs } from "./config";
 import { ApiModule } from "./api/api.module";
 import { ObjectsModule } from "./objects/objects.module";
-
-const startModules = [];
-if (process.env.B6_ONLYOFFICE_ENABLED === "true") {
-  startModules.push(OnlyOfficeModule);
-  startModules.push(DocsModule);
-}
-if (process.env.B6_OIDC_PROVIDER_ENABLED === "true") {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const oidcProvider = require("@builder6/oidc-provider");
-  startModules.push(oidcProvider.OidcProviderModule);
-}
+import { OidcProviderModule } from "@builder6/oidc-provider";
 
 // 合并配置函数
 const getMoleculerConfig = () => {
@@ -61,45 +51,39 @@ const getMoleculerConfig = () => {
 };
 
 @Module({
-  imports: [ApiModule, ObjectsModule, AiModule],
+  imports: [
+    ConfigModule.forRoot({
+      load: [getConfigs],
+      isGlobal: true, // 使配置在整个应用中可用
+    }),
+    LoggerModule.forRoot(pinoConfig),
+    MoleculerModule.forRoot(getMoleculerConfig()),
+    AuthModule,
+    MongodbModule,
+    ScheduleModule.forRoot(),
+    SteedosModule,
+    FilesModule,
+    EmailModule,
+    ServicesModule,
+    TablesModule,
+    PagesModule,
+    RoomsModule,
+    SharepointModule,
+    OidcModule,
+    OidcProviderModule,
+    OnlyOfficeModule,
+    DocsModule,
+    PluginModule.forRootAsync(),
+    MicroserviceModule,
+    WorkflowModule,
+    ApiModule,
+    ObjectsModule,
+    AiModule,
+  ],
+  controllers: [AppController],
+  providers: [AppMoleculer, AppGateway],
 })
-export class AppModule {
-  private readonly logger = new Logger(AppModule.name);
-
-  onModuleInit() {}
-
-  static forRoot(): DynamicModule {
-    return {
-      module: AppModule,
-      imports: [
-        ConfigModule.forRoot({
-          load: [getConfigs],
-          isGlobal: true, // 使配置在整个应用中可用
-        }),
-        LoggerModule.forRoot(pinoConfig),
-        MoleculerModule.forRoot(getMoleculerConfig()),
-        AuthModule,
-        MongodbModule,
-        ScheduleModule.forRoot(),
-        SteedosModule,
-        FilesModule,
-        EmailModule,
-        ServicesModule,
-        TablesModule,
-        PagesModule,
-        RoomsModule,
-        SharepointModule,
-        OidcModule,
-        ...startModules,
-        PluginModule.forRootAsync(),
-        MicroserviceModule,
-        WorkflowModule,
-      ],
-      controllers: [AppController],
-      providers: [AppMoleculer, AppGateway],
-    };
-  }
-}
+export class AppModule {}
 
 const configs = getConfigs();
 console.log(

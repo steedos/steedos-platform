@@ -28,12 +28,9 @@ import express from "express";
 import { readFileSync } from "fs";
 
 export async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(
-    AppModule.forRoot(),
-    {
-      bufferLogs: true,
-    },
-  );
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    bufferLogs: true,
+  });
 
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.REDIS,
