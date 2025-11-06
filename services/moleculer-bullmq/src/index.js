@@ -30,8 +30,8 @@ module.exports = {
         const { params, meta, parentSpan } = job.data
         meta.job = { id: job.id, queue: this.$queueName() }
         return this.broker.call(`${this.$queueName()}.${job.name}`, params, { meta, timeout: 0, parentSpan })
-      }, { ...this.settings.bullmq.worker, connection: this.$connection })
-      this.$events = new QueueEvents(this.$queueName(), { connection: this.$connection })
+      }, { ...this.settings.bullmq.worker, connection: {url: this.$connection} })
+      this.$events = new QueueEvents(this.$queueName(), { connection: {url: this.$connection} })
       this.$events.on('active', ({ jobId }) => this.$transformEvent(jobId, 'active'))
       this.$events.on('removed', ({ jobId }) => this.$transformEvent(jobId, 'removed'))
       this.$events.on('progress', ({ jobId, data }) => this.$transformEvent(jobId, 'progress', { progress: data }))

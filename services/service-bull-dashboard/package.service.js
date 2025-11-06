@@ -78,7 +78,7 @@ module.exports = {
 	async started() {
 		let client = process.env.B6_CLUSTER_TRANSPORTER;
 	
-		const queueMQ = new QueueMQ('object_webhooks', {connection: client});
+		const queueMQ = new QueueMQ('object_webhooks', {connection: {url: client}});
 		const serverAdapter = new ExpressAdapter();
 		serverAdapter.setBasePath(basePath)
 		
