@@ -7,5 +7,22 @@ label: Model
 required: true
 searchable: true
 sort_no: 20
-type: text
-defaultValue: openai/gpt-5
+type: select
+amis:
+  multiple: false
+  source:
+    url: ${context.rootUrl}/api/v6/ai/models
+    method: get
+    requestAdaptor: ""
+    adaptor: |
+      return {
+        status: 0,
+        msg: '',
+        data: {
+          options: payload.map(item => ({
+            label: item.id,
+            value: item.id
+          }))
+        }
+      }
+    messages: {}

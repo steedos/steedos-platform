@@ -9472,6 +9472,7 @@ __metadata:
     "@steedos/objectql": 3.0.0-beta.133
     "@types/node": ^18.0.3
     ai: ^5.0.71
+    openai: ^6.8.1
     typescript: 5.7.3
   peerDependencies:
     "@builder6/core": ^3.1.0-alpha.0
@@ -33097,6 +33098,23 @@ __metadata:
     is-docker: ^2.1.1
     is-wsl: ^2.2.0
   checksum: 6388bfff21b40cb9bd8f913f9130d107f2ed4724ea81a8fd29798ee322b361ca31fa2cdfb491a5c31e43a3996cfe9566741238c7a741ada8d7af1cb78d85cf26
+  languageName: node
+  linkType: hard
+
+"openai@npm:^6.8.1":
+  version: 6.8.1
+  resolution: "openai@npm:6.8.1"
+  peerDependencies:
+    ws: ^8.18.0
+    zod: ^3.25 || ^4.0
+  peerDependenciesMeta:
+    ws:
+      optional: true
+    zod:
+      optional: true
+  bin:
+    openai: bin/cli
+  checksum: 6ec2b67a51bcc4e7a4746b7a58442699659ad75d7adbfa4862a82bf8ea4587dafc127b4c4553a029f9d0c76b3d2414c75c1a8a7095343c347dcb070c43094ae2
   languageName: node
   linkType: hard
 

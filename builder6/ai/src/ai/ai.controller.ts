@@ -1,5 +1,5 @@
 import { openai } from "@ai-sdk/openai";
-import { Body, Controller, Param, Post, Res } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Res } from "@nestjs/common";
 import {
   ApiBearerAuth,
   ApiBody,
@@ -84,5 +84,10 @@ export class AiController {
     });
 
     return result.pipeUIMessageStreamToResponse(res);
+  }
+
+  @Get("models")
+  async getModels() {
+    return this.aiService.getAvailableModels();
   }
 }
