@@ -9,6 +9,7 @@ searchable: true
 sort_no: 20
 type: select
 amis:
+  searchable: true,
   multiple: false
   source:
     url: ${context.rootUrl}/api/v6/ai/models
