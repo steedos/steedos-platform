@@ -1,6 +1,6 @@
 {
   "name": "@steedos/moleculer-bullmq",
-  "version": "3.0.0-beta.132",
+  "version": "3.0.0-beta.133",
   "description": "Moleculer service for bullmq",
   "main": "src/index.js",
   "directories": {
