@@ -1,4 +1,4 @@
-name: Release NPM
+name: NPM Release
 
 on:
   push:
