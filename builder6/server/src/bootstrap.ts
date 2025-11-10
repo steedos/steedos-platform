@@ -222,15 +222,27 @@ export async function bootstrap() {
         unpkgUrl: process.env.STEEDOS_UNPKG_URL || "https://unpkg.com",
         rootUrl: process.env.STEEDOS_ROOT_URL || "",
       };
-      const scriptTag = `
+      const jsPlugins = process.env.STEEDOS_PUBLIC_SCRIPT_PLUGINS || "";
+      const cssPlugins = process.env.STEEDOS_PUBLIC_STYLE_PLUGINS || "";
+      let injectedScripts = `
         <script>
           console.log("Server side script injected!");
           window.BUILDER6_PUBLIC_SETTINGS = ${JSON.stringify(BUILDER6_PUBLIC_SETTINGS)};
         </script>
       `;
+      if (jsPlugins) {
+        jsPlugins.split(",").forEach((pluginUrl) => {
+          injectedScripts += `<script src="${pluginUrl.trim()}"></script>\n`;
+        });
+      }
+      if (cssPlugins) {
+        cssPlugins.split(",").forEach((pluginUrl) => {
+          injectedScripts += `<link rel="stylesheet" href="${pluginUrl.trim()}" />\n`;
+        });
+      }
 
       // 将脚本插入到 <head> 标签后面
-      indexHtml = indexHtml.replace("<head>", `<head>\n  ${scriptTag}\n`);
+      indexHtml = indexHtml.replace("<head>", `<head>\n  ${injectedScripts}\n`);
       res.send(indexHtml);
     });
   }
