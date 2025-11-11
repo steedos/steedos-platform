@@ -3,6 +3,7 @@ label: Role
 icon: job_family
 hidden: true
 version: 2
+isMetadata: true
 fields:
   name:
     label: Name

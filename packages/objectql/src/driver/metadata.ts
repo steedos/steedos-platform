@@ -21,6 +21,7 @@ import {
   registerImport,
   registerRestrictionRules,
   registerShareRules,
+  getSourceRoles,
 } from "@steedos/metadata-registrar";
 
 const PERMISSIONS = {
@@ -294,6 +295,10 @@ export class MetadataDriver extends SteedosMongoDriver {
           }
         });
         return dataList;
+      }
+      case "roles": {
+        const configs = await getSourceRoles();
+        return configs;
       }
       default:
         break;
