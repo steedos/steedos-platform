@@ -48,6 +48,7 @@ const FIELDTYPES = [
   "formula",
   "summary",
   "percent",
+  "approval_comments",
 ];
 
 abstract class SteedosFieldProperties {
@@ -385,6 +386,8 @@ export class SteedosFieldType
       case "percent":
         //百分比字段按数值类型处理
         return this.getDBType("number");
+      case "approval_comments":
+        return SteedosFieldDBType.varchar;
       default:
         throw new Error(
           `${this._object.name}.${this.name} invalid field type ${type}`,
