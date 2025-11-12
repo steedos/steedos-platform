@@ -4,16 +4,6 @@ icon: webcart
 hidden: true
 enable_audit: false
 fields:
-  edition:
-    type: text
-    label: Edition
-    hidden: true
-  edition_label:
-    type: text
-    label: Edition
-    is_name: true
-    filterable: true
-    searchable: true
   license:
     type: textarea
     rows: 8
@@ -26,11 +16,20 @@ fields:
     hidden: true
   product:
     type: text
-    label: Product
-    hidden: true
+    label: Product ID
   product_label:
     type: text
     label: Product
+    filterable: true
+    searchable: true
+  edition:
+    type: text
+    label: Edition
+    hidden: true
+  edition_label:
+    type: text
+    label: Edition
+    is_name: true
     filterable: true
     searchable: true
   is_trial:
@@ -75,34 +74,15 @@ fields:
   is_local:
     type: boolean
     hidden: true
-actions:
-  apply:
-    label: Apply
-    on: list
-    visible: false
-  changeSpaceLicense:
-    label: 更新许可证
-    on: list
-    visible: true
-  copySpaceId:
-    label: Copy space id
-    on: list
-    visible: false
-  upgrade:
-    label: Upgrade
-    on: list
-    visible: true
 list_views:
   all:
-    label: Al
+    label: All
     columns:
-      - edition_label
       - product_label
+      - product
       - user_number
       - verify_status
       - end_date
-    filters:
-      - [['lid', '<>', 'None'], ['invalid','!=',true]]
 permission_set:
   user:
     allowCreate: false
