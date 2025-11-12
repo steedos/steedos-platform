@@ -11,7 +11,5 @@
   "temperature": 0.7,
   "label": "Steedos Functions Agent",
   "name": "functions_agent",
-  "model": "openai/gpt-5",
-  "listViewId": null,
-  "displayAs": null
+  "model": "openai/gpt-5"
 }]
