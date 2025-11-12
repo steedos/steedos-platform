@@ -68,7 +68,7 @@ const packageJson = async (packageName, options) => {
     try {
         data = await got(packageUrl, gotOptions).json();
     } catch (error) {
-        if (error.response.statusCode === 404) {
+        if (error?.response?.statusCode === 404) {
             throw new PackageNotFoundError(packageName);
         }
 
