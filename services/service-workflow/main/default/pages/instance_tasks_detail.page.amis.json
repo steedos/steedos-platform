@@ -13,6 +13,13 @@
             "@data.changed.steedos_keyvalues": {
               "actions": [
                 {
+                  "actionType": "setValue",
+                  "componentId": "u:workflow_nav_service",
+                  "args": {
+                    "workflowNavApiCacheKey": "${_|now}"
+                  }
+                },
+                {
                   "actionType": "reload"
                 }
               ]
@@ -76,10 +83,11 @@
               "source": "${options}"
             }
           ],
-          "id": "u:aa4f4dc5f439",
+          "id": "u:workflow_nav_service",
           "api": {
             "method": "get",
-            "url": "${context.rootUrl}/api/${appId}/workflow/nav",
+            "url": "${context.rootUrl}/api/${appId}/workflow/nav?cacheKey=${workflowNavApiCacheKey}",
+            "cache": 300000,
             "headers": {
               "Authorization": "Bearer ${context.tenantId},${context.authToken}"
             }
