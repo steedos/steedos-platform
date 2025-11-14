@@ -18,7 +18,7 @@ init_env_file() {
 
   check_mongodb_uri
 
-  if [[ $isUriLocal -eq 0 ]]; then
+  if [[ $isUriLocal -eq 1 ]]; then
     export STEEDOS_MONGODB_ENABLED=true
   else
     export STEEDOS_MONGODB_ENABLED=false
