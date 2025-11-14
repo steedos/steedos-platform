@@ -165,7 +165,7 @@
                   "api": {
                     "method": "get",
                     "url": "${context.rootUrl}/api/${appId}/workflow/nav?cacheKey=${workflowNavApiCacheKey}",
-                    "cache": 300000,
+                    "cache": 1800000,
                     "headers": {
                       "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                     },
