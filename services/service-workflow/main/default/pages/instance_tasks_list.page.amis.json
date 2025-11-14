@@ -64,7 +64,12 @@
                     "@data.changed.instance_tasks": {
                       "actions": [
                         {
-                          "actionType": "reload"
+                          "actionType": "setValue",
+                          "args": {
+                            "value": {
+                              "workflowNavApiCacheKey": "${_|now|date:'x'}"
+                            }
+                          }
                         }
                       ]
                     }
@@ -193,13 +198,6 @@
       "onEvent": {
         "@data.changed.steedos_keyvalues": {
           "actions": [
-            {
-              "actionType": "setValue",
-              "componentId": "u:workflow_nav_service",
-              "args": {
-                "workflowNavApiCacheKey": "${_|now}"
-              }
-            },
             {
               "actionType": "broadcast",
               "args": {

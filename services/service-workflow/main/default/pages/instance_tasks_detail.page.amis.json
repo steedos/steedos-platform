@@ -14,13 +14,11 @@
               "actions": [
                 {
                   "actionType": "setValue",
-                  "componentId": "u:workflow_nav_service",
                   "args": {
-                    "workflowNavApiCacheKey": "${_|now}"
+                      "value": {
+                        "workflowNavApiCacheKey": "${_|now|date:'x'}"
+                      }
                   }
-                },
-                {
-                  "actionType": "reload"
                 }
               ]
             }
