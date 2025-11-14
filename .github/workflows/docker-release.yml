@@ -1,15 +1,34 @@
 name: Docker Release
 
 on:
+  workflow_run:
+    workflows: [NPM Release]
+    types:
+      - completed
+
   workflow_dispatch:
+    # inputs:
+    #   version:
+    #     description: 'version to build, e.g. 3.0.25'
+    #     required: true
+
 
 jobs:
   docker-enterprise:
     runs-on: ubuntu-latest
+    # env:
+    #   STEEDOS_VERSION: ${{ github.event.inputs.version }}
+      
     strategy:
       matrix:
         node-version: [14.x]
     steps:
+
+      - uses: nowsprinting/check-version-format-action@v3
+        id: version
+        with:
+          prefix: 'v'
+
       # checkout branch 3.0
       - name: Checkout branch 3.0
         uses: actions/checkout@v2
@@ -39,41 +58,17 @@ jobs:
         with:
           images: |
             steedos/steedos-community
-            registry.cn-shanghai.aliyuncs.com/steedos/steedos-community
-            252208178451.dkr.ecr.cn-northwest-1.amazonaws.com.cn/dockerhub/steedos/steedos-community
             steedos/steedos-enterprise
-            registry.cn-shanghai.aliyuncs.com/steedos/steedos-enterprise
-            252208178451.dkr.ecr.cn-northwest-1.amazonaws.com.cn/dockerhub/steedos/steedos-enterprise
           tags: |
             type=semver,pattern={{version}},value=${{ env.STEEDOS_VERSION }}
             type=semver,pattern={{major}}.{{minor}},value=${{ env.STEEDOS_VERSION }}
             type=semver,pattern={{major}},value=${{ env.STEEDOS_VERSION }}
-
-      - name: Login to Aliyun Docker
-        uses: docker/login-action@v2
-        with:
-          registry: registry.cn-shanghai.aliyuncs.com
-          username: ${{ secrets.ALIYUN_DOCKER_USERNAME }}
-          password: ${{ secrets.ALIYUN_DOCKER_PASSWORD }}
 
       - uses: docker/login-action@v1
         name: Login Docker Hub
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_NINGXIA }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_NINGXIA }}
-          aws-region: cn-northwest-1
-
-      -
-        name: Login to ECR
-        uses: docker/login-action@v2
-        with:
-          registry: 252208178451.dkr.ecr.cn-northwest-1.amazonaws.com.cn
 
       - name: Replace Version ~3.0 to Tag
         uses: jacobtomlinson/gha-find-replace@v2

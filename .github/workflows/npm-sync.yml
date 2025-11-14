@@ -2,7 +2,7 @@ name: NPM Sync
 
 on:
   workflow_run:
-    workflows: [Release NPM]
+    workflows: [NPM Release]
     types:
       - completed
 
