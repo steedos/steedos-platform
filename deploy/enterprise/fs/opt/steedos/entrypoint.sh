@@ -16,14 +16,6 @@ init_env_file() {
 
   mkdir -p "$CONF_PATH"
 
-  check_mongodb_uri
-
-  if [[ $isUriLocal -eq 1 ]]; then
-    export STEEDOS_MONGODB_ENABLED=true
-  else
-    export STEEDOS_MONGODB_ENABLED=false
-  fi
-
   if [[ "${STEEDOS_UNPKG_URL}" == /unpkg* ]]; then
     export STEEDOS_UNPKG_ENABLED=true
   else
