@@ -1,4 +1,4 @@
-name: Docker Release
+name: Docker Sync
 
 on:
   workflow_run:
