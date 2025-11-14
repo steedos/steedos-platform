@@ -36,6 +36,9 @@
     "pg": "8.10.0",
     "figlet": "1.5.2"
   },
+  "engines": {
+    "node": ">=14.0.0 <15.0.0"
+  },
   "devDependencies": {
     "cnpm": "9.0.1",
     "tslib": "^2.4.0",

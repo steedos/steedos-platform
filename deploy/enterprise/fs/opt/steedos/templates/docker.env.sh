@@ -36,6 +36,5 @@ UNPKG_BASE_URL=/unpkg
 
 NPM_CACHE_ENABLED=true
 NPM_CACHE_FOLDER=/steedos-storage/unpkg
-NPM_CACHE_PACKAGE_CONTENT=true
 
 EOF

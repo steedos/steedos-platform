@@ -16,9 +16,6 @@ services:
       - MONGO_URL=mongodb://root:${MONGODB_PASSWORD:-steedos}@${MONGODB_ADVERTISED_HOSTNAME:-mongodb}:${MONGODB_INITIAL_PRIMARY_PORT_NUMBER:-27017}/${MONGODB_DATABASE:-steedos}?authSource=admin
       - MONGO_OPLOG_URL=mongodb://root:${MONGODB_PASSWORD:-steedos}@${MONGODB_ADVERTISED_HOSTNAME:-mongodb}:${MONGODB_INITIAL_PRIMARY_PORT_NUMBER:-27017}/local?authSource=admin
       - STEEDOS_LICENSE=trial
-      - NPM_CACHE_ENABLED=true
-      - NPM_CACHE_PACKAGE_CONTENT=true
-      - NPM_REGISTRY_URL=https://registry.npmmirror.com
       - STEEDOS_CFS_STORE=S3
       - STEEDOS_CFS_AWS_S3_ENDPOINT=http://minio:9000
       - STEEDOS_CFS_AWS_S3_FORCE_PATH_STYLE=true
