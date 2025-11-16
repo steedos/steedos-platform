@@ -31,6 +31,7 @@ services:
       - traefik.http.services.steedos.loadbalancer.server.port=80
     environment:
       - MONGO_URL=mongodb://mongodb:27017/steedos
+      - MONGO_OPLOG_URL=mongodb://mongodb:27017/local
       - STEEDOS_LICENSE=
       - STEEDOS_UNPKG_URL=/unpkg
       - NPM_CACHE_ENABLED=true
@@ -67,8 +68,4 @@ services:
       timeout: 10s
       retries: 5
     volumes:
-      - 'steedos-mongodb:/data/db'
-
-volumes:
-  steedos-mongodb:
-    driver: local
+      - './steedos-mongodb:/data/db'

@@ -3,3 +3,5 @@ storage
 mongo-data
 info.json
 yarn.lock
+
+steedos-mongodb
