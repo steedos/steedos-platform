@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-analytics",
-  "version": "2.7.22",
+  "version": "2.7.23",
   "main": "package.service.js",
   "description": "Analytics for product",
   "scripts": {},
