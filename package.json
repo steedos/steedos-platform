@@ -15,7 +15,10 @@
     "docker:db": "docker-compose up mongodb mongodb-init redis nats",
     "i18n": "lerna run i18n",
     "start": "steedos start --config steedos.config.js",
-    "sync": "lerna exec --no-private  -- cnpm sync \\$LERNA_PACKAGE_NAME"
+    "sync": "lerna exec --no-private  -- cnpm sync \\$LERNA_PACKAGE_NAME",
+    "release:beta": "yarn lerna publish --force-publish --exact --dist-tag beta --registry https://registry.npmjs.org",
+    "release:again": "lerna publish from-package --registry https://registry.npmjs.org"
+
   },
   "resolutions": {
     "@salesforce/ts-types": "1.1.2",
