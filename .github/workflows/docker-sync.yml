@@ -16,7 +16,7 @@ jobs:
   docker-sync:
     runs-on: ubuntu-latest
     env:
-      STEEDOS_VERSION: ${{ github.event.inputs.version }}
+      STEEDOS_VERSION: ${{ github.event.inputs.version || github.event.workflow_run.head_branch }}
       
     steps:
       - name: Determine version from tag
