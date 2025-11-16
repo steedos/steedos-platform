@@ -1,6 +1,6 @@
 on:
   workflow_run:
-    workflows: [Release NPM]
+    workflows: [NPM Release]
     types:
       - completed
 
@@ -25,10 +25,6 @@ jobs:
           cache: "yarn"
 
       - run: yarn --frozen-lockfile
-
-      - name: Bootstrap platform
-        run: |
-          yarn bootstrap
 
       - name: Sync cnpm
         env:
