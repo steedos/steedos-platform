@@ -9814,7 +9814,7 @@ __metadata:
     "@types/underscore": ^1.8.13
     amis-formula: ~6.3.0
     app-root-path: ^2.2.1
-    axios: ^0.21.1
+    axios: ^1.13.2
     body-parser: ^1.18.1
     bunyan-sfdx-no-dtrace: ^1.8.2
     clone: ^2.1.2
@@ -9971,7 +9971,7 @@ __metadata:
     "@types/node": ^20.3.1
     "@types/supertest": ^6.0.0
     aws-sdk: ^2.1692.0
-    axios: ^1.7.9
+    axios: ^1.13.2
     bcrypt: ^5.1.1
     class-validator: ^0.14.1
     compression: ^1.7.5
@@ -10122,7 +10122,7 @@ __metadata:
     "@steedos/workflow_time_trigger": 3.0.0-beta.137
     aliyun-sdk: 1.12.3
     async-retry: ^1.3.1
-    axios: ^0.21.1
+    axios: ^1.13.2
     bcrypt: ^5.1.0
     bignumber.js: ^9.0.1
     cbor-x: ^1.5.3
@@ -14258,12 +14258,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^0.21.1, axios@npm:^0.21.4":
+"axios@npm:^0.21.4":
   version: 0.21.4
   resolution: "axios@npm:0.21.4"
   dependencies:
     follow-redirects: ^1.14.0
   checksum: 44245f24ac971e7458f3120c92f9d66d1fc695e8b97019139de5b0cc65d9b8104647db01e5f46917728edfc0cfd88eb30fc4c55e6053eef4ace76768ce95ff3c
+  languageName: node
+  linkType: hard
+
+"axios@npm:^1.13.2, axios@npm:^1.8.3":
+  version: 1.13.2
+  resolution: "axios@npm:1.13.2"
+  dependencies:
+    follow-redirects: ^1.15.6
+    form-data: ^4.0.4
+    proxy-from-env: ^1.1.0
+  checksum: 057d0204d5930e2969f0bccb9f0752745b1524a36994667833195e7e1a82f245d660752ba8517b2dbea17e9e4ed0479f10b80c5fe45edd0b5a0df645c0060386
   languageName: node
   linkType: hard
 
@@ -14275,17 +14286,6 @@ __metadata:
     form-data: ^4.0.4
     proxy-from-env: ^1.1.0
   checksum: f0331594fe053a4bbff04104edb073973a3aabfad2e56b0aa18de82428aa63f6f0839ca3d837258ec739cb4528014121793b1649a21e5115ffb2bf8237eadca3
-  languageName: node
-  linkType: hard
-
-"axios@npm:^1.8.3":
-  version: 1.13.2
-  resolution: "axios@npm:1.13.2"
-  dependencies:
-    follow-redirects: ^1.15.6
-    form-data: ^4.0.4
-    proxy-from-env: ^1.1.0
-  checksum: 057d0204d5930e2969f0bccb9f0752745b1524a36994667833195e7e1a82f245d660752ba8517b2dbea17e9e4ed0479f10b80c5fe45edd0b5a0df645c0060386
   languageName: node
   linkType: hard
 

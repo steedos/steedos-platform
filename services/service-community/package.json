@@ -41,7 +41,7 @@
     "@steedos/workflow_time_trigger": "3.0.0-beta.137",
     "aliyun-sdk": "1.12.3",
     "async-retry": "^1.3.1",
-    "axios": "^0.21.1",
+    "axios": "^1.13.2",
     "bcrypt": "^5.1.0",
     "bignumber.js": "^9.0.1",
     "cbor-x": "^1.5.3",
