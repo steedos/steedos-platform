@@ -5,6 +5,8 @@ on:
     workflows: [Docker Release]
     types:
       - completed
+    # Ensure the previous workflow run was successful
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
   workflow_dispatch:
     inputs:
