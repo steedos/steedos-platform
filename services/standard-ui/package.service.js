@@ -30,7 +30,7 @@ module.exports = {
 	/**
 	 * Dependencies
 	 */
-	dependencies: ['standard-objects'],
+	dependencies: ['@steedos/standard-objects'],
 
 	/**
 	 * Actions

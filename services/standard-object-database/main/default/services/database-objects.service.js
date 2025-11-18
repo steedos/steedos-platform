@@ -35,7 +35,7 @@ module.exports = {
     name: packageServiceName,
     namespace: "steedos",
 
-    dependencies: ['standard-objects'],
+    dependencies: ['@steedos/standard-objects'],
     
     /**
 	 * Actions

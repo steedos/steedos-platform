@@ -97,7 +97,7 @@ module.exports = {
 	async started() {
 		// 创建一个空的standard-objects 服务
 		this.broker.createService({
-			name: "standard-objects",
+			name: "@steedos/standard-objects",
 			mixins: [],
 			settings: {
 			  packageInfo: {
