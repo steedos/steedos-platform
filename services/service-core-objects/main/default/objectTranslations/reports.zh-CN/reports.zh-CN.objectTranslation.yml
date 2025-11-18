@@ -9,7 +9,13 @@ fields:
   report_type:
     label: 报表类型
     help: 
-    options: []
+    options: 
+      - label: 表格
+        value: tabular
+      - label: 摘要
+        value: summary
+      - label: 矩阵
+        value: matrix
     description: 
   data_source:
     label: 报表数据来源

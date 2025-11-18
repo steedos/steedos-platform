@@ -16,50 +16,26 @@ fields:
     label: Report Type
     type: select
     defaultValue: tabular
-    options: !<tag:yaml.org,2002:js/function> |-
-      function () {
-        var types = [
-          {
-            "label": t("reports_field_report_type_options_tabular"),
-            "value": "tabular"
-          },
-          {
-            "label": t("reports_field_report_type_options_summary"),
-            "value": "summary"
-          },
-          {
-            "label": t("reports_field_report_type_options_matrix"),
-            "value": "matrix"
-          }
-        ];
-        var plugins = Creator.Plugins;
-        if(plugins["@steedos/plugin-jsreport"]){
-          types.push({
-            "label": "JsReport",
-            "value": "jsreport"
-          });
-        }
-        if(plugins["@steedos/plugin-stimulsoft-report"]){
-          types.push({
-            "label": "StimulsoftReport",
-            "value": "stimulsoft-report"
-          });
-        }
-        return types;
-      }
+    options: 
+      - label: Tabular
+        value: tabular
+      - label: Summary
+        value: summary
+      - label: Matrix
+        value: matrix
     name: report_type
     filterable: true
-  data_source:
-    label: Data Source
-    type: select
-    defaultValue: odata
-    options:
-      - label: OData
-        value: odata
-      - label: Graphql
-        value: graphql
-    name: data_source
-    filterable: true
+  # data_source:
+  #   label: Data Source
+  #   type: select
+  #   defaultValue: odata
+  #   options:
+  #     - label: OData
+  #       value: odata
+  #     - label: Graphql
+  #       value: graphql
+  #   name: data_source
+  #   filterable: true
   object_name:
     label: Object
     type: lookup
@@ -68,52 +44,52 @@ fields:
     required: true
     name: object_name
     filterable: true
-  filter_scope:
-    label: Filter Scope
-    type: select
-    defaultValue: '"space"'
-    hidden: true
-    options:
-      - label: All
-        value: space
-      - label: Mine
-        value: mine
-    name: filter_scope
-    filterable: true
-  filters:
-    label: Filters
-    type: '[Object]'
-    omit: true
-    name: filters
-  filters.$:
-    label: Filter
-    blackbox: true
-    omit: true
-    hidden: true
-    name: filters.$
-  filters.$.field:
-    label: Field
-    type: text
-    name: filters.$.field
-  filters.$.operation:
-    label: Operator
-    type: select
-    defaultValue: =
-    options: !<tag:yaml.org,2002:js/function> |- 
-      function () {
-              return Creator.getFieldOperation();
-          }
-    name: filters.$.operation
-    filterable: true
-  filters.$.value:
-    label: Value
-    blackbox: true
-    name: filters.$.value
-  filter_logic:
-    label: Filter Logic
-    type: text
-    omit: true
-    name: filter_logic
+  # filter_scope:
+  #   label: Filter Scope
+  #   type: select
+  #   defaultValue: '"space"'
+  #   hidden: true
+  #   options:
+  #     - label: All
+  #       value: space
+  #     - label: Mine
+  #       value: mine
+  #   name: filter_scope
+  #   filterable: true
+  # filters:
+  #   label: Filters
+  #   type: '[Object]'
+  #   omit: true
+  #   name: filters
+  # filters.$:
+  #   label: Filter
+  #   blackbox: true
+  #   omit: true
+  #   hidden: true
+  #   name: filters.$
+  # filters.$.field:
+  #   label: Field
+  #   type: text
+  #   name: filters.$.field
+  # filters.$.operation:
+  #   label: Operator
+  #   type: select
+  #   defaultValue: =
+  #   options: !<tag:yaml.org,2002:js/function> |- 
+  #     function () {
+  #             return Creator.getFieldOperation();
+  #         }
+  #   name: filters.$.operation
+  #   filterable: true
+  # filters.$.value:
+  #   label: Value
+  #   blackbox: true
+  #   name: filters.$.value
+  # filter_logic:
+  #   label: Filter Logic
+  #   type: text
+  #   omit: true
+  #   name: filter_logic
   fields:
     label: Fields
     type: lookup
@@ -122,10 +98,14 @@ fields:
     depend_on:
       - object_name
     defaultIcon: service_contract
-    optionsFunction: !<tag:yaml.org,2002:js/function> |- 
-      function (values) {
-                return Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true, true);
-            }
+    reference_to: object_fields
+    reference_to_field: name
+    enable_enhanced_lookup: false
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(filters,values
+      ) {
+        return ['object', '=', values.object_name]
+      }
     name: fields
     filterable: true
   rows:
@@ -136,10 +116,14 @@ fields:
     depend_on:
       - object_name
     defaultIcon: service_contract
-    optionsFunction: !<tag:yaml.org,2002:js/function> |- 
-      function (values) {
-                return Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true, true);
-            }
+    reference_to: object_fields
+    reference_to_field: name
+    enable_enhanced_lookup: false
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(filters,values
+      ) {
+        return ['object', '=', values.object_name]
+      }
     name: rows
     filterable: true
   columns:
@@ -150,10 +134,14 @@ fields:
     depend_on:
       - object_name
     defaultIcon: service_contract
-    optionsFunction: !<tag:yaml.org,2002:js/function> |- 
-      function (values) {
-                return Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true, true);
-            }
+    reference_to: object_fields
+    reference_to_field: name
+    enable_enhanced_lookup: false
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(filters,values
+      ) {
+        return ['object', '=', values.object_name]
+      }
     name: columns
     filterable: true
   values:
@@ -164,37 +152,41 @@ fields:
     depend_on:
       - object_name
     defaultIcon: service_contract
-    optionsFunction: !<tag:yaml.org,2002:js/function> |- 
-      function (values) {
-                return Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true, true);
-            }
+    reference_to: object_fields
+    reference_to_field: name
+    enable_enhanced_lookup: false
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(filters,values
+      ) {
+        return ['object', '=', values.object_name]
+      }
     name: values
     filterable: true
-  filter_fields:
-    label: Filter Fields
-    type: grid
-    is_wide: true
-    name: filter_fields
-    depend_on:
-      - object_name
-  filter_fields.$:
-    label: Filter Field
-    blackbox: true
-    type: object
-    name: filter_fields.$
-  filter_fields.$.field:
-    label: Field
-    type: lookup
-    optionsFunction: !<tag:yaml.org,2002:js/function> |- 
-      function (values) {
-                return Creator.getObjectFilterFieldOptions(values != null ? values.object_name : void 0);
-            }
-    name: filter_fields.$.field
-    filterable: true
-  filter_fields.$.required:
-    label: Required
-    type: boolean
-    name: filter_fields.$.required
+  # filter_fields:
+  #   label: Filter Fields
+  #   type: grid
+  #   is_wide: true
+  #   name: filter_fields
+  #   depend_on:
+  #     - object_name
+  # filter_fields.$:
+  #   label: Filter Field
+  #   blackbox: true
+  #   type: object
+  #   name: filter_fields.$
+  # filter_fields.$.field:
+  #   label: Field
+  #   type: lookup
+  #   optionsFunction: !<tag:yaml.org,2002:js/function> |- 
+  #     function (values) {
+  #               return Creator.getObjectFilterFieldOptions(values != null ? values.object_name : void 0);
+  #           }
+  #   name: filter_fields.$.field
+  #   filterable: true
+  # filter_fields.$.required:
+  #   label: Required
+  #   type: boolean
+  #   name: filter_fields.$.required
   options:
     label: Options
     omit: true
@@ -225,39 +217,6 @@ fields:
     type: boolean
     defaultValue: true
     name: counting
-  graphql:
-    label: Graphql
-    type: textarea
-    is_wide: true
-    hidden: false
-    group: JsReport
-    name: graphql
-  html:
-    label: Html
-    type: textarea
-    is_wide: true
-    hidden: false
-    group: JsReport
-    name: html
-  helper:
-    label: Helper
-    type: textarea
-    is_wide: true
-    hidden: false
-    group: JsReport
-    name: helper
-  script:
-    label: Script
-    type: textarea
-    is_wide: true
-    hidden: false
-    group: JsReport
-    name: script
-  mrt:
-    label: Mrt
-    type: textarea
-    is_wide: true
-    hidden: true
   is_system:
     type: boolean
     label: System
@@ -278,18 +237,18 @@ list_views:
     filter_fields:
       - report_type
       - created
-  application:
-    label: Application Reports
-    filter_scope: space
-    filters: !<tag:yaml.org,2002:js/function> |- 
-      function () {
-              var object_names;
-              object_names = Creator.getAppObjectNames();
-              return [["object_name", "=", object_names]];
-            }
-    filter_fields:
-      - report_type
-      - created
+  # application:
+  #   label: Application Reports
+  #   filter_scope: space
+  #   filters: !<tag:yaml.org,2002:js/function> |- 
+  #     function () {
+  #             var object_names;
+  #             object_names = Creator.getAppObjectNames();
+  #             return [["object_name", "=", object_names]];
+  #           }
+  #   filter_fields:
+  #     - report_type
+  #     - created
   mine:
     label: My Reports
     filter_scope: mine
@@ -309,14 +268,15 @@ list_views:
 actions:
   standard_new_by_template:
     label: Pull from Library
-    visible: !<tag:yaml.org,2002:js/function> |-
-      function () {
-              var permissions;
-              permissions = Creator.getPermissions();
-              if (Creator.getTemplateSpaceId() && permissions) {
-                return permissions["allowCreate"];
-              }
-            }
+    visible: false
+    # visible: !<tag:yaml.org,2002:js/function> |-
+    #   function () {
+    #           var permissions;
+    #           permissions = Creator.getPermissions();
+    #           if (Creator.getTemplateSpaceId() && permissions) {
+    #             return permissions["allowCreate"];
+    #           }
+    #         }
     'on': list
     todo: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, fields) {
