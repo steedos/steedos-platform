@@ -37,7 +37,7 @@ export const getHeaderSchema = (props) => {
                                     {
                                         "type": "button",
                                         "className": "toggle-sidebar flex items-center pr-4",
-                                        "visibleOn": "${window:innerWidth < 768}",
+                                        "visibleOn": "${window:innerWidth < 768 && !!app && app.showSidebar}",
                                         "onEvent": {
                                             "click": {
                                                 "actions": [
@@ -129,7 +129,7 @@ export const getHeaderSchema = (props) => {
             {
                 "type": "button",
                 "className": 'p-0 absolute inset-0 mt-[50px]',
-                visibleOn: '${!!appId}',
+                visibleOn: '${!!app && app.showSidebar}',
                 body: [
                     {
                         type: "wrapper",
@@ -216,7 +216,10 @@ export const AppHeader = () => {
             },
             "adaptor": `
                 const app = payload;
-                document.body.classList.add('sidebar')
+                if (app.showSidebar)
+                    document.body.classList.add('sidebar')
+                else 
+                    document.body.classList.remove('sidebar')
 
                 if (window.innerWidth >= 768) {
                     document.body.classList.add('sidebar-open')
