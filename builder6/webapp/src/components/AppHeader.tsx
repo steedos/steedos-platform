@@ -18,7 +18,7 @@ export const getHeaderSchema = (props) => {
                 body: [
                     {
                         "type": "wrapper",
-                        "className": 'flex w-full px-4 py-0 h-[50px] justify-between items-center steedos-header-container-line-one bg-white shadow-sm',
+                        "className": 'flex w-full px-4 py-0 h-[50px] justify-between items-center steedos-header-container-line-one bg-white border-b',
                         "body": [
                             {
                                 type: "service",
@@ -136,7 +136,7 @@ export const getHeaderSchema = (props) => {
                 body: [
                     {
                         type: "wrapper",
-                        className: 'sidebar-wrapper px-0 pt-2 pb-16 fixed z-20 h-full h-fill ease-in-out duration-300 flex flex-col overflow-y-auto block -translate-x-0 sm:w-[220px] w-64',
+                        className: 'sidebar-wrapper  bg-white border-r px-0 pt-2 pb-16 fixed z-20 h-full h-fill ease-in-out duration-300 flex flex-col overflow-y-auto block -translate-x-0 sm:w-[220px] w-64',
                         visibleOn: '${!!app}',
                         body: [
                             {
@@ -178,7 +178,7 @@ export const AppHeader = () => {
     let [ app, setApp ] = useState(null);
     useEffect(() => {
         const fetchApp = async () => {
-            if (appId === '-') {
+            if (!appId || appId === '-') {
                 setApp({
                     id: '-',
                     name: '',
