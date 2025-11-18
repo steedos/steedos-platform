@@ -9,7 +9,13 @@ fields:
   report_type:
     label: Report Type
     help: 
-    options: []
+    options: 
+      - label: Tabular
+        value: tabular
+      - label: Summary
+        value: summary
+      - label: Matrix
+        value: matrix
     description: 
   data_source:
     label: Data Source
