@@ -1,100 +1,133 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 // 监听到debug模式修改密码字段的type时自动清空密码框
 const mutationObserver = (() => {
-    try {
-        return new MutationObserver(function (mutations) {
-            mutations.forEach(function (mutation) {
-                if (mutation.type === 'attributes' && mutation.attributeName === 'type') {
-                    (mutation.target as any).remove();
-                }
-            });
-        });
-    }
-    catch (ex) {
-        console.warn("MutationObserver Not Found:", ex);
-        return;
-    }
+  try {
+    return new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'type') {
+          (mutation.target as any).removeAttribute("value");
+        }
+      });
+    });
+  } catch (ex) {
+    console.warn("MutationObserver Not Found:", ex);
+    return;
+  }
 })();
 
 const InputPassword = React.forwardRef((props: any, ref?: React.Ref<HTMLInputElement>) => {
 
-    const selfInputRef = useRef<HTMLInputElement>();
-    const inputRef = ref || selfInputRef;
+  const selfInputRef = useRef<HTMLInputElement>(null);
+  const inputRef = (ref || selfInputRef) as React.RefObject<HTMLInputElement>;
 
-    const clearPasswordValueAttribute = () => {
-        return setTimeout(() => {
-            const input = (inputRef as any).current;
-            if (
-                input &&
-                input.getAttribute('type') === 'password' &&
-                input.hasAttribute('value')
-            ) {
-                input.removeAttribute('value');
-            }
-          }, 50);
-    };
+  const [showPassword, setShowPassword] = useState(false);
 
-    const handlePasswordFocus = (e: any) => {
-        const { onFocus } = props;
-        clearPasswordValueAttribute();
-        if (onFocus)
-            onFocus(e)
-
-    }
-
-    const handlePasswordBlur = (e: any) => {
-        const { onBlur } = props;
-        clearPasswordValueAttribute();
-        if (onBlur)
-            onBlur(e)
-
-    }
-
-    const handlePasswordKeyDown = (e: any) => {
-        // 禁用ctrlKey/metaKey+c/v/a，复制、剪切、粘贴、全选，其中metaKey是mac系统中相关操作的辅助键
-        if ((e.ctrlKey || e.metaKey) && [67, 88, 86, 65].indexOf(e.keyCode) > -1) {
-            e.preventDefault();
-            return false;
-        }
-        return true;
-    }
-
-    const handlePasswordContextMenu = (e: any) => {
-        // 禁用鼠标右键菜单
-        e.preventDefault();
-        return false;
-    }
-
-    useEffect(() => {
-      const timer = clearPasswordValueAttribute();
-      return () => {
-        clearTimeout(timer)
+  const clearPasswordValueAttribute = () => {
+    return setTimeout(() => {
+      const input = inputRef.current;
+      if (
+        input &&
+        input.getAttribute('type') === 'password' &&
+        input.hasAttribute('value')
+      ) {
+        input.removeAttribute('value');
       }
-    }, [props.value, props.type]);
+    }, 50);
+  };
 
+  const handlePasswordFocus = (e: any) => {
     clearPasswordValueAttribute();
+    props.onFocus && props.onFocus(e);
+  };
 
-    useEffect(() => {
-        const input = (inputRef as any).current;
-        if (input) {
-            mutationObserver?.observe(input, { attributes: true });
-        }
-        return () => {
-            mutationObserver?.disconnect();
-        }
-      }, []);
+  const handlePasswordBlur = (e: any) => {
+    clearPasswordValueAttribute();
+    props.onBlur && props.onBlur(e);
+  };
 
-    return (
-        <input 
-            {...props}
-            ref={inputRef}
-            onFocus={handlePasswordFocus}
-            onBlur={handlePasswordBlur}
-            onKeyDown={handlePasswordKeyDown}
-            onContextMenu={handlePasswordContextMenu}
-        />
-    );
+  // 禁复制剪切粘贴
+  const handlePasswordKeyDown = (e: any) => {
+    if ((e.ctrlKey || e.metaKey) && [67, 88, 86, 65].includes(e.keyCode)) {
+      e.preventDefault();
+      return false;
+    }
+    return true;
+  };
+
+  const handlePasswordContextMenu = (e: any) => {
+    e.preventDefault();
+    return false;
+  };
+
+  // 监听 value 或 type 变化
+  useEffect(() => {
+    const timer = clearPasswordValueAttribute();
+    return () => clearTimeout(timer);
+  }, [props.value, props.type]);
+
+  // 初始化执行一次
+  useEffect(() => {
+    clearPasswordValueAttribute();
+  }, []);
+
+  // MutationObserver
+  useEffect(() => {
+    const input = inputRef.current;
+    if (input) {
+      mutationObserver?.observe(input, { attributes: true });
+    }
+    return () => {
+      mutationObserver?.disconnect();
+    };
+  }, []);
+
+  return (
+    <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+      <input
+        {...props}
+        ref={inputRef}
+        type={showPassword ? "text" : "password"}
+        onFocus={handlePasswordFocus}
+        onBlur={handlePasswordBlur}
+        // onKeyDown={handlePasswordKeyDown}
+        // onContextMenu={handlePasswordContextMenu}
+        style={{ flex: 1, paddingRight: 40, ...props.style }}
+      />
+
+      {/* 小眼睛按钮 */}
+      <InputAdornment
+        position="end"
+        style={{
+            position: 'absolute',
+            right: '1rem',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            padding: 0,
+        }}
+        >
+        <IconButton
+            onClick={() => setShowPassword(prev => !prev)}
+            edge="end"
+            tabIndex={-1}
+            style={{
+            padding: 4,
+            }}
+        >
+            {showPassword ? (
+            <Visibility fontSize="small" color='disabled' />
+            ) : (
+            <VisibilityOff fontSize="small" color='disabled' />
+            )}
+        </IconButton>
+        </InputAdornment>
+
+    </div>
+  );
 });
 
 InputPassword.displayName = 'InputPassword';

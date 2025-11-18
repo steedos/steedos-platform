@@ -41,3 +41,7 @@
         height: 100%;
     }
 }
+
+.MuiSvgIcon-fontSizeSmall{
+    font-size: 1rem !important;
+}

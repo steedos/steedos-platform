@@ -70,18 +70,18 @@ module.exports = {
             autoComplete: "new-password",
             className: "ant-input",
             ref: inputRef,
-            onKeyDown: (event) => {
-                // 禁用ctrlKey/metaKey+c/v/a，复制、剪切、粘贴、全选，其中metaKey是mac系统中相关操作的辅助键
-                if ((event.ctrlKey || event.metaKey) && [67, 88, 86, 65].indexOf(event.keyCode) > -1) {
-                    event.preventDefault();
-                    return false;
-                }
-            },
-            onContextMenu: (event) => {
-                // 禁用鼠标右键菜单
-                event.preventDefault();
-                return false;
-            }
+            // onKeyDown: (event) => {
+            //     // 禁用ctrlKey/metaKey+c/v/a，复制、剪切、粘贴、全选，其中metaKey是mac系统中相关操作的辅助键
+            //     if ((event.ctrlKey || event.metaKey) && [67, 88, 86, 65].indexOf(event.keyCode) > -1) {
+            //         event.preventDefault();
+            //         return false;
+            //     }
+            // },
+            // onContextMenu: (event) => {
+            //     // 禁用鼠标右键菜单
+            //     event.preventDefault();
+            //     return false;
+            // }
         });
         let observered = false;
         const modalName = "modal-setPassword";
