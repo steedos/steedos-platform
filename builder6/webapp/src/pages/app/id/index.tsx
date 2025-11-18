@@ -11,7 +11,8 @@ export const AppView = () => {
       try {
         // Using axios to make the request
         const response = await axios.get(
-          `/service/api/apps/${appId}/menus`
+          `${import.meta.env.VITE_B6_ROOT_URL}/service/api/apps/${appId}/menus`,
+          { withCredentials: true } // Include credentials if needed
         );
         
         const data = response.data; // Axios stores response data in .data property
