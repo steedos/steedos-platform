@@ -1,5 +1,7 @@
 import { AmisRender } from "./AmisRender"
 import { Builder } from '@builder6/react';
+import { use } from "i18next";
+import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 
 export const getHeaderSchema = (props) => {
@@ -171,7 +173,50 @@ export const AppHeader = () => {
 
     const params = useParams();
     let { appId = null, objectName } = params;
-    // console.log('AppHeader params:', params)
+    console.log('AppHeader params:', params)
+
+    let [ app, setApp ] = useState(null);
+    useEffect(() => {
+        const fetchApp = async () => {
+            if (appId === '-') {
+                setApp({
+                    id: '-',
+                    name: '',
+                    showSidebar: false
+                });
+                document.body.classList.remove('sidebar');
+                return;
+            }
+            
+            if(appId){
+                try{
+                    const response = await fetch(`${import.meta.env.VITE_B6_ROOT_URL}/service/api/apps/${appId}/menus?mobile=${isMobile}`, {
+                        method: 'GET',
+                        credentials: 'include',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    });
+                    if(response.ok){
+                        const appData = await response.json();
+                        setApp(appData);
+                        // 设置侧边栏折叠状态
+                        if (appData.showSidebar)
+                            document.body.classList.add('sidebar')
+                        else 
+                            document.body.classList.remove('sidebar')
+
+                        if (window.innerWidth >= 768) {
+                            document.body.classList.add('sidebar-open')
+                        }
+                    }
+                }catch(err){
+                    console.error('Failed to fetch app data:', err);
+                }
+            }
+        };
+        fetchApp();
+    }, [appId]);
 
     if(!appId){
         document.body.classList.remove('sidebar-open');
@@ -207,32 +252,32 @@ export const AppHeader = () => {
         "id": "u:global-header",
         name: "globalHeader",
         body: headerSchema,
-        "api": {
-            "method": "get",
-            "cache": "10000",
-            "url": "/service/api/apps/${appId}/menus?mobile=" + isMobile,
-            "sendOn": "!!appId",
-            "headers": {
-                "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-            },
-            "adaptor": `
-                const app = payload;
-                if (app.showSidebar)
-                    document.body.classList.add('sidebar')
-                else 
-                    document.body.classList.remove('sidebar')
+        // "api": {
+        //     "method": "get",
+        //     "cache": "10000",
+        //     "url": "/service/api/apps/${appId}/menus?mobile=" + isMobile,
+        //     "sendOn": "!!appId",
+        //     "headers": {
+        //         "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+        //     },
+        //     "adaptor": `
+        //         const app = payload;
+        //         if (app.showSidebar)
+        //             document.body.classList.add('sidebar')
+        //         else 
+        //             document.body.classList.remove('sidebar')
 
-                if (window.innerWidth >= 768) {
-                    document.body.classList.add('sidebar-open')
-                }
+        //         if (window.innerWidth >= 768) {
+        //             document.body.classList.add('sidebar-open')
+        //         }
 
-                return {
-                    app: app
-                }
-            `,
-            "messages": {
-            }
-        },
+        //         return {
+        //             app: app
+        //         }
+        //     `,
+        //     "messages": {
+        //     }
+        // },
         dataProvider: function(data, setData){
             window.addEventListener('message', function (event) {
                 const { data } = event;
@@ -244,15 +289,17 @@ export const AppHeader = () => {
         }
     }
 
-    return <div id="header" className="steedos-global-header-root flex-none"><AmisRender schema={schema} data={{
+    return app && (<div id="header" className="steedos-global-header-root flex-none"><AmisRender schema={schema} data={{
         context: {
             ...Builder.settings.context,
+            app,
             appId: appId,
             showSidebar: true,
             stacked: true
         },
+        app, 
         appId: appId,
         showSidebar: true,
         stacked: true
-    }} env={{}}></AmisRender></div>
+    }} env={{}}></AmisRender></div>)
 }

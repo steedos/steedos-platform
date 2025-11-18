@@ -13,7 +13,7 @@ module.exports = {
             return toastr.warning("请先启动对象");
         }
 
-        window.open(Steedos.getRelativeUrl("/app/__preview/" + (record.name || this.record.name)));
+        window.open(Steedos.getRelativeUrl("/app/-/" + (record.name || this.record.name)));
     },
     show_objectVisible: function(object_name, record_id, record_permissions, data) {
         var record = data && data.record;
