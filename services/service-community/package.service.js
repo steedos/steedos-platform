@@ -95,9 +95,9 @@ module.exports = {
 	 * Service started lifecycle event handler
 	 */
 	async started() {
-		// 创建一个空的~packages-standard-objects 服务
+		// 创建一个空的standard-objects 服务
 		this.broker.createService({
-			name: "~packages-standard-objects",
+			name: "standard-objects",
 			mixins: [],
 			settings: {
 			  packageInfo: {
@@ -108,7 +108,7 @@ module.exports = {
 			created: function () {},
 		  });
 		this.broker.createService({
-			name: "~packages-@steedos/standard-space",
+			name: "@steedos/standard-space",
 			mixins: [],
 			settings: {
 			  packageInfo: {

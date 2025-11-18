@@ -1,6 +1,6 @@
 # @steedos/standard-space
 
-### 服务名称 `~packages-@steedos/standard-space`
+### 服务名称 `@steedos/standard-space`
 
 ## actions
 
@@ -16,7 +16,7 @@
 
 示例
 ```
-this.broker.call('~packages-@steedos/standard-space.upsetOrganizations', {
+this.broker.call('@steedos/standard-space.upsetOrganizations', {
     organizations: [{
         qywx_id: "1",
         name: "组织1"
@@ -46,7 +46,7 @@ this.broker.call('~packages-@steedos/standard-space.upsetOrganizations', {
 
 示例
 ```
-this.broker.call('~packages-@steedos/standard-space.upsetSpaceUsers', {
+this.broker.call('@steedos/standard-space.upsetSpaceUsers', {
     spaceUsers: [{
         name: "user1",
         organizations: ['1']

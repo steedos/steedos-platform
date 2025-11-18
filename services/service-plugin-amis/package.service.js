@@ -36,7 +36,7 @@ module.exports = {
 	/**
 	 * Dependencies
 	 */
-	dependencies: ['~packages-@steedos/service-pages'],
+	dependencies: ['@steedos/service-pages'],
 
 	/**
 	 * Actions

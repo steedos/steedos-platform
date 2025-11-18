@@ -121,7 +121,7 @@ module.exports = {
 		},
 		getPackageMetadata: {
 			async handler(ctx) {
-				const serviceName = `~packages-${ctx.params.packageName}`
+				const serviceName = `${ctx.params.packageName}`
                 const configs = await ctx.broker.call(`metadata.getServiceMetadatas`, {
 					serviceName,
 					metadataType: "*",

@@ -28,7 +28,7 @@ module.exports = {
 	/**
 	 * Dependencies
 	 */
-	dependencies: ['~packages-@steedos/standard-process-approval'],
+	dependencies: ['@steedos/standard-process-approval'],
 
 	/**
 	 * Actions

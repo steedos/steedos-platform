@@ -62,7 +62,7 @@ const getAllPackages = async ()=>{
         }
     })
     _.map(_.map(onlinePackages, 'metadata'), (packageInfo)=>{
-        const packageName = packageInfo.name.replace(`~packages-`, '');
+        const packageName = packageInfo.name.replace(``, '');
         const _package = _.find(packages, (_p)=>{return _p.name == packageName})
         if(_package){
             _package.status = 'enable'

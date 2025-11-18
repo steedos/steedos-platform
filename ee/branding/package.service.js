@@ -31,7 +31,7 @@ module.exports = {
     /**
      * Dependencies
      */
-    dependencies: ['~packages-standard-objects', '~packages-@steedos/standard-space', '@steedos/service-license'],
+    dependencies: ['standard-objects', '@steedos/standard-space', '@steedos/service-license'],
     /**
      * Actions
      */

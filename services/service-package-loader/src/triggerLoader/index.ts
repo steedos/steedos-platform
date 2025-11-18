@@ -10,8 +10,6 @@ import * as path from "path";
 // import { JSONStringify, getMD5 } from "@steedos/metadata-core";
 import { loadObjectTriggers } from "@steedos/metadata-registrar";
 
-
-
 // const TRIGGERKEYS = ['beforeFind', 'beforeInsert', 'beforeUpdate', 'beforeDelete', 'afterFind', 'afterInsert', 'afterUpdate', 'afterDelete', 'afterFindOne', 'afterCount']
 
 // function getObject(objectName: string) {
@@ -23,15 +21,19 @@ import { loadObjectTriggers } from "@steedos/metadata-registrar";
 //     }
 // }
 
-export async function load(broker: any, packagePath: string, packageServiceName: string) {
-    // let actions = {};
-    // let serviceName = `~triggers-${packageServiceName}`;
-    let filePath = path.join(packagePath, "**");
-    let objTriggers = loadObjectTriggers(filePath, packageServiceName);
-    if (_.isEmpty(objTriggers)) {
-        return;
-    }
-    /** objTriggers格式
+export async function load(
+  broker: any,
+  packagePath: string,
+  packageServiceName: string,
+) {
+  // let actions = {};
+  // let serviceName = `~triggers-${packageServiceName}`;
+  let filePath = path.join(packagePath, "**");
+  let objTriggers = loadObjectTriggers(filePath, packageServiceName);
+  if (_.isEmpty(objTriggers)) {
+    return;
+  }
+  /** objTriggers格式
     [
         {
             beforeInsert: [AsyncFunction: beforeInsert],
@@ -40,14 +42,14 @@ export async function load(broker: any, packagePath: string, packageServiceName:
             afterInsert: [AsyncFunction: afterInsert],
             afterUpdate: [AsyncFunction: afterUpdate],
             afterDelete: [AsyncFunction: afterDelete],
-            metadataServiceName: '~packages-my-steedos-package',
+            metadataServiceName: 'my-steedos-package',
             listenTo: 'company'
         }
     ]
      */
-    for (const trigger of objTriggers) {
-        // 转换为action trigger
-        /** action trigger 格式
+  for (const trigger of objTriggers) {
+    // 转换为action trigger
+    /** action trigger 格式
         spaceUsersBeforeUpdate: {
             trigger: { 
                 listenTo: 'space_users', 
@@ -58,23 +60,22 @@ export async function load(broker: any, packagePath: string, packageServiceName:
             }   
         }
          */
-        // const actionTriggerName = getMD5(JSONStringify(trigger));
-        // actions[actionTriggerName] = generateActionTrigger(trigger)
-    
-        broker.emit('trigger.loaded', {
-            objectName: trigger['listenTo']
-        })
-    }
+    // const actionTriggerName = getMD5(JSONStringify(trigger));
+    // actions[actionTriggerName] = generateActionTrigger(trigger)
 
-    // let serviceConfig = {
-    //     name: serviceName,
-    //     actions: actions
-    // };
-    // let service = broker.createService(serviceConfig);
-    // if (!broker.started) {
-    //     await broker._restartService(service)
-    // }
+    broker.emit("trigger.loaded", {
+      objectName: trigger["listenTo"],
+    });
+  }
 
+  // let serviceConfig = {
+  //     name: serviceName,
+  //     actions: actions
+  // };
+  // let service = broker.createService(serviceConfig);
+  // if (!broker.started) {
+  //     await broker._restartService(service)
+  // }
 }
 
 // 生成action trigger
@@ -97,7 +98,7 @@ export async function load(broker: any, packagePath: string, packageServiceName:
 //             const {
 //                 isInsert, isUpdate, isDelete, isFind, isBefore, isAfter, isFindOne, isCount,
 //                 id, doc, previousDoc,
-//                 // size, 
+//                 // size,
 //                 userId, spaceId, objectName, query, data }: any = ctx.params;
 
 //             const context: any = {

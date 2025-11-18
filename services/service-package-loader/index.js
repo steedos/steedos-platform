@@ -317,7 +317,7 @@ module.exports = {
                     return ;
                 }
                 compressFiles(sourcePath, sourcePath, tempDir, option, async (base64, zipDir) => {
-                    const result = await this.broker.call('~packages-@steedos/metadata-api.deploy', {
+                    const result = await this.broker.call('@steedos/metadata-api.deploy', {
                         fileBase64: base64,
                         packageInfo
                     }, {
@@ -358,7 +358,7 @@ module.exports = {
     merged(schema) {
         schema.packageName = schema.name;
         if(!schema.metadata || !schema.metadata.$package){
-            schema.name = `~packages-${schema.name}`;
+            schema.name = `${schema.name}`;
         }
 
         schema.settings.packageInfo = {

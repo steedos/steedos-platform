@@ -1090,7 +1090,7 @@ module.exports = {
 		// 	});
 		// }
 
-		this.broker.waitForServices('~packages-@steedos/service-ui').then(() => {
+		this.broker.waitForServices('@steedos/service-ui').then(() => {
 			this.app.use("/", this.express());
 		})
 		global.SteedosApi = {

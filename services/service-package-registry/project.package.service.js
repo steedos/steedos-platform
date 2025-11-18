@@ -91,7 +91,7 @@ module.exports = {
 					}
 				})
 				if(packageConfig?.isUnmanaged){
-					await ctx.broker.call(`~packages-@steedos/metadata-api.remove`, {
+					await ctx.broker.call(`@steedos/metadata-api.remove`, {
 						name: module
 					}, {
                         timeout: 0,
