@@ -1,8 +1,8 @@
-name: Docker Release 2.7
+name: Docker Release
 
 on:
   workflow_run:
-    workflows: [NPM Release 2.7]
+    workflows: [NPM Release]
     types:
       - completed
 

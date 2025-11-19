@@ -1,8 +1,8 @@
-name: Docker Sync 2.7
+name: Docker Sync
 
 on:
   workflow_run:
-    workflows: [Docker Release 2.7]
+    workflows: [Docker Release]
     types:
       - completed
 

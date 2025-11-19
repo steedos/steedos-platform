@@ -1,8 +1,8 @@
-name: NPM Sync 2.7
+name: NPM Sync
 
 on:
   workflow_run:
-    workflows: [NPM Release 2.7]
+    workflows: [NPM Release]
     types:
       - completed
 
