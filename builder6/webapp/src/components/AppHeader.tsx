@@ -136,7 +136,7 @@ export const getHeaderSchema = (props) => {
                 body: [
                     {
                         type: "wrapper",
-                        className: 'sidebar-wrapper  bg-white border-r px-0 pt-2 pb-16 fixed z-20 h-full h-fill ease-in-out duration-300 flex flex-col overflow-y-auto block -translate-x-0 sm:w-[220px] w-64',
+                        className: 'sidebar-wrapper px-1 pt-4 pb-16 fixed z-20 h-full h-fill ease-in-out duration-300 flex flex-col overflow-y-auto block -translate-x-0 sm:w-[220px] w-64',
                         visibleOn: '${!!app}',
                         body: [
                             {
@@ -178,15 +178,15 @@ export const AppHeader = () => {
     let [ app, setApp ] = useState(null);
     useEffect(() => {
         const fetchApp = async () => {
-            if (!appId || appId === '-') {
-                setApp({
-                    id: '-',
-                    name: '',
-                    showSidebar: false
-                });
-                document.body.classList.remove('sidebar');
-                return;
-            }
+            // if (appId === '-') {
+            //     setApp({
+            //         id: '-',
+            //         name: '',
+            //         showSidebar: false
+            //     });
+            //     document.body.classList.remove('sidebar');
+            //     return;
+            // }
             
             if(appId){
                 try{
