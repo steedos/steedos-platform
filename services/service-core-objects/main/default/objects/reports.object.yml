@@ -225,18 +225,17 @@ fields:
     visible_on: "{{global.mode ==='read' ? true : false}}"
     disabled: true
 list_views:
-  default:
-    columns:
-      - name
-      - report_type
-      - object_name
-      - is_system
   all:
     label: All Reports
     filter_scope: space
     filter_fields:
       - report_type
       - created
+    columns:
+      - name
+      - report_type
+      - object_name
+      - is_system
   # application:
   #   label: Application Reports
   #   filter_scope: space
