@@ -8,6 +8,8 @@ on:
 jobs:
   npm-release:
     runs-on: ubuntu-latest
+    outputs: 
+      release_branch: ${{ github.ref_name }}
     strategy:
       matrix:
         node-version: [14.x]

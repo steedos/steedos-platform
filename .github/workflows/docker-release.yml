@@ -16,6 +16,8 @@ on:
 jobs:
   docker-enterprise:
     runs-on: ubuntu-latest
+    outputs: 
+      release_branch: ${{ github.ref_name }}
     # env:
     #   STEEDOS_VERSION: ${{ github.event.inputs.version }}
       
