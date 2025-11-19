@@ -1,4 +1,4 @@
-name: NPM Release
+name: NPM Release 2.7
 
 on:
   push:
