@@ -136,7 +136,7 @@ export const getHeaderSchema = (props) => {
                 body: [
                     {
                         type: "wrapper",
-                        className: 'sidebar-wrapper px-2 pt-4 pb-16 fixed z-20 h-full h-fill ease-in-out duration-300 flex flex-col overflow-y-auto block -translate-x-0 sm:w-[220px] w-64',
+                        className: 'sidebar-wrapper px-1 pt-4 pb-16 fixed z-20 h-full h-fill ease-in-out duration-300 flex flex-col overflow-y-auto block -translate-x-0 sm:w-[220px] w-64',
                         visibleOn: '${!!app}',
                         body: [
                             {
