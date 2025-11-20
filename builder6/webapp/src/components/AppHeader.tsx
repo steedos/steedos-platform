@@ -178,15 +178,15 @@ export const AppHeader = () => {
     let [ app, setApp ] = useState(null);
     useEffect(() => {
         const fetchApp = async () => {
-            // if (appId === '-') {
-            //     setApp({
-            //         id: '-',
-            //         name: '',
-            //         showSidebar: false
-            //     });
-            //     document.body.classList.remove('sidebar');
-            //     return;
-            // }
+            if (appId === '-' || appId == null) {
+                setApp({
+                    id: '-',
+                    name: '',
+                    showSidebar: false
+                });
+                document.body.classList.remove('sidebar');
+                return;
+            }
             
             if(appId){
                 try{
