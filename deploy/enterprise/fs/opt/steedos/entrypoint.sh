@@ -135,19 +135,19 @@ init_replica_set() {
     mongod --dbpath "$MONGO_DB_PATH" --shutdown || true
   fi
 
-  if [[ $isUriLocal -gt 0 ]]; then
-    echo "Checking Replica Set of external MongoDB"
+  # if [[ $isUriLocal -gt 0 ]]; then
+  #   echo "Checking Replica Set of external MongoDB"
 
-    if steedosctl check-replica-set; then
-      echo "MongoDB ReplicaSet is enabled"
-    else
-      echo -e "\033[0;31m***************************************************************************************\033[0m"
-      echo -e "\033[0;31m*      MongoDB Replica Set is not enabled                                             *\033[0m"
-      echo -e "\033[0;31m*      Please ensure the credentials provided for MongoDB, has 'readWrite' role.      *\033[0m"
-      echo -e "\033[0;31m***************************************************************************************\033[0m"
-      exit 1
-    fi
-  fi
+  #   if steedosctl check-replica-set; then
+  #     echo "MongoDB ReplicaSet is enabled"
+  #   else
+  #     echo -e "\033[0;31m***************************************************************************************\033[0m"
+  #     echo -e "\033[0;31m*      MongoDB Replica Set is not enabled                                             *\033[0m"
+  #     echo -e "\033[0;31m*      Please ensure the credentials provided for MongoDB, has 'readWrite' role.      *\033[0m"
+  #     echo -e "\033[0;31m***************************************************************************************\033[0m"
+  #     exit 1
+  #   fi
+  # fi
 }
 
 use-mongodb-key() {
