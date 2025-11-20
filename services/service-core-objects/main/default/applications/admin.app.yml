@@ -161,12 +161,12 @@ tab_items:
   admin_bull_dashboard:
     group: development
     index: 43
+  admin_logs:
+    group: development
+    index: 52
   admin_settings:
     group: advanced_settings
     index: 50
-  admin_logs:
-    group: advanced_settings
-    index: 52
   admin_audit_records:
     group: advanced_settings
     index: 36
