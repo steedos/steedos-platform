@@ -4,8 +4,8 @@ columns:
   - field: name
     amis:
       copyable: true
-  - group
   - type
+  - group
   - object
   - sort_no
   - modified
