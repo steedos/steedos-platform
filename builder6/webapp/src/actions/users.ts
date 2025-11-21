@@ -128,6 +128,7 @@ export function loadMe(): ActionFunc {
     Builder.settings.context.user = user;
     if (user) {
       Builder.settings.context.authToken = user.authToken;
+      Builder.settings.context.userId = user.userId;
       Steedos.Connection(
         Builder.settings.context.rootUrl,
         `${user.spaceId},${user.authToken}`,

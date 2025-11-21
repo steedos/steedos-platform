@@ -7,6 +7,7 @@ import {
 } from "./utilities";
 
 export type UserProfile = {
+  userId: any;
   authToken: any;
   spaceId: any;
   _id: string;
