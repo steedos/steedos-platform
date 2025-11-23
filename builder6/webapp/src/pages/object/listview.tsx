@@ -21,6 +21,10 @@ export const ObjectListView = () => {
     listName = first(values(uiSchema.list_views))?.name
   }
 
+  if(Steedos.Page.getDisplay(objectName) === 'split'){
+    (window as any).navigate(`/app/${appId}/${objectName}/view/none?side_object=${objectName}&side_listview_id=${listName}&additionalFilters=`)
+  }
+
   return (
     <AmisRender schema = {{
       type: 'page',
