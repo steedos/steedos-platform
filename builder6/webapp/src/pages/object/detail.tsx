@@ -5,11 +5,13 @@ import { Builder } from "@builder6/react";
 export const ObjectDetail = () => {
   const { appId, objectName, recordId } = useParams();
   let location = useLocation();
+  const urlParams = new URLSearchParams(location.search);
+  const sideListViewId = urlParams.get('side_listview_id');
   // console.log(`ObjectDetail====>`, appId, objectName, recordId)
   return (
     <AmisRender schema = {{
         type: 'page',
-        bodyClassName: 'p-0',
+        bodyClassName: 'p-0 overflow-hidden',
         body: {
           "type": "steedos-page-object-control",
           "name": "steedosPageObjectControl",
@@ -18,6 +20,7 @@ export const ObjectDetail = () => {
             object_name: objectName,
             pageType: 'record',
             recordId: recordId,
+            listName: sideListViewId || '',
             display: Steedos.Page.getDisplay(objectName),
             _reloadKey: location.state?.reloadKey || new Date().getTime()
           }
