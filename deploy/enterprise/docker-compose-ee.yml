@@ -1,0 +1,70 @@
+version: "3.9"
+
+services:
+
+  traefik:
+    image: traefik:v2.10
+    command:
+      - "--api.dashboard=true"
+      - "--entrypoints.web.address=:80"
+      - "--providers.docker=true"
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+  steedos-enterprise:
+    image: steedos/steedos-enterprise:latest
+    ports:
+      - "9080:80"
+      - "9001:9001"
+    build: 
+      context: ./
+      dockerfile: ./Dockerfile
+    deploy:
+      replicas: 1
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.steedos.rule=PathPrefix(`/`)
+      - traefik.http.routers.steedos.entrypoints=web
+      - traefik.http.services.steedos.loadbalancer.server.port=80
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/steedos
+      - STEEDOS_LICENSE=
+      - STEEDOS_UNPKG_URL=/unpkg
+      - NPM_CACHE_ENABLED=true
+      # - NPM_CONFIG_REGISTRY=https://registry.npmmirror.com
+
+    tty: true
+    volumes:
+      - "./steedos-storage:/steedos-storage"
+
+  redis:
+    image: redis:6.2.10
+    command: "redis-server --save \"\" --appendonly no --loglevel warning"
+    ports:
+      - "6379:6379"
+ 
+  mongodb:
+    image: mongo:7.0
+    ports:
+      - 27017:27017
+    command: >
+      bash -c "
+        mongod --replSet steedos --bind_ip_all --quiet --logpath /var/log/mongodb/mongodb.log --logappend &
+        echo '=> Waiting for MongoDB to start ...';
+        until mongosh --eval 'db.runCommand(\"ping\").ok' --quiet | grep 1; do
+          sleep 2;
+        done;
+        echo '=> Initiating replica set ...';
+        mongosh --eval 'rs.initiate({_id: \"steedos\", members: [{_id: 0, host: \"mongodb:27017\"}]})';
+        wait
+      "
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh --quiet | grep 1
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - './steedos-mongodb:/data/db'
