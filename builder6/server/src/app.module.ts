@@ -70,7 +70,7 @@ const getMoleculerConfig = () => {
     RoomsModule,
     SharepointModule,
     OidcModule,
-    OidcProviderModule,
+    // OidcProviderModule,
     OnlyOfficeModule,
     DocsModule,
     PluginModule.forRootAsync(),
