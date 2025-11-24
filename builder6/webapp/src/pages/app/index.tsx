@@ -10,28 +10,22 @@ const on_click_script = `
       console.error(e.message + "\\r\\n" + e.stack);
     }
   `;
-  const convertAppVisibleOnScript = `
-    var currentAmis = amisRequire('amis');
-    app_items.forEach((item) => {
-      let visible_on = item.visible_on && item.visible_on.trim();
-      if(visible_on){
-        // amis visibleOn属性中的表达式来自作用域中变量时,amis不认,所以这里把公式表达式提前运行下
-        try{
-          visible_on = currentAmis.evaluate(visible_on, BuilderAmisObject.AmisLib.createObject(context, item));
-          item.visible_on = visible_on;
-        }
-        catch(ex){
-          console.error("运行应用“" + item.name + "”的显示公式表达式时出现错误:",ex);
-          item.visible_on = false;
-        }
-      }
-      else{
-        item.visible_on = true;
-      }
-    });
-  `;
 
-  const pcInitApiAdaptorScript = `
+  const pcInitJumtoFirstAppFirstTabScript = (payload, response, api, context) => {
+    let app_items = payload;
+    if(app_items && app_items.length > 0){
+      let firstApp = app_items[0];
+      if(firstApp && firstApp.children && firstApp.children.length > 0){
+        let firstTab = firstApp.children[0];
+        if(firstTab){
+          window.location.href = firstTab.path;
+        }
+      }
+    }
+    return payload;
+  }
+
+  const pcInitApiAdaptorScript = (payload, response, api, context) => {
     let app_items = payload;
     let object_items = [];
     let objects = [];
@@ -43,7 +37,25 @@ const on_click_script = `
         }
       })
     })
-    ${convertAppVisibleOnScript}
+    
+    var currentAmis = (window as any).amisRequire('amis');
+    app_items.forEach((item) => {
+      let visible_on = item.visible_on && item.visible_on.trim();
+      if(visible_on){
+        // amis visibleOn属性中的表达式来自作用域中变量时,amis不认,所以这里把公式表达式提前运行下
+        try{
+          visible_on = currentAmis.evaluate(visible_on, (window as any).BuilderAmisObject.AmisLib.createObject(context, item));
+          item.visible_on = visible_on;
+        }
+        catch(ex){
+          console.error("运行应用“" + item.name + "”的显示公式表达式时出现错误:",ex);
+          item.visible_on = false;
+        }
+      }
+      else{
+        item.visible_on = true;
+      }
+    });
     
     payload = {
       app_items,
@@ -51,7 +63,7 @@ const on_click_script = `
     }
 
     return payload;
-  `;
+  };
 
 export const AppDashboard = () => {
   const isMobile = false;
@@ -284,7 +296,8 @@ export const AppDashboard = () => {
         "headers": {
           "Authorization": "Bearer ${context.tenantId},${context.authToken}"
         },
-        "adaptor": pcInitApiAdaptorScript
+        // "adaptor": pcInitApiAdaptorScript
+        adaptor: pcInitJumtoFirstAppFirstTabScript,
       },
       data: {
         objectName: '',
