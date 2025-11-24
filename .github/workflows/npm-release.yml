@@ -66,15 +66,17 @@ jobs:
 
       - run: yarn --frozen-lockfile
 
-      - name: Bootstrap platform
+      - name: Build platform 2.7
         if: ${{ startsWith(steps.branch-name.outputs.tag, '2.7') }} 
         run: |
+          yarn --frozen-lockfile
           yarn bootstrap
+          yarn build
 
-      - name: Build platform
-        env:
-          CI: false
+      - name: Build platform 3.0
+        if: ${{ startsWith(steps.branch-name.outputs.tag, '3.0') }} 
         run: |
+          yarn install --immutable
           yarn build
 
       - name: Lerna publish 2.7
@@ -324,7 +326,7 @@ jobs:
         with:
           node-version: 14
           cache: "yarn"
-          
+
       - name: Sync cnpm
         env:
           CI: true
