@@ -16,7 +16,7 @@ export const ObjectListView = () => {
   const uiSchema = (window as any).getUISchemaSync(objectName)
   const [searchParams] = useSearchParams();
   const allParams = Object.fromEntries(searchParams.entries());
-  console.log(`ObjectListView`, appId, objectName, listName, location, allParams)
+  // console.log(`ObjectListView`, appId, objectName, listName, location, allParams)
   if(!listName){
     listName = first(values(uiSchema.list_views))?.name
   }
