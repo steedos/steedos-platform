@@ -5,6 +5,8 @@ on:
     workflows: [Docker Release]
     types:
       - completed
+    branches:
+      - "2.7"
 
   workflow_dispatch:
     # inputs:

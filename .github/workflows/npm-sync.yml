@@ -5,6 +5,8 @@ on:
     workflows: [NPM Release]
     types:
       - completed
+    branches:
+      - "2.7"
 
 jobs:
   sync:
