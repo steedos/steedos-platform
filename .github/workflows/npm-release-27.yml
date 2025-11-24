@@ -1,9 +1,9 @@
-name: NPM Release
+name: NPM Release 2.7
 
 on:
   push:
     tags:
-     - 'v**'
+     - 'v2.7.**'
 
 jobs:
   npm-release:

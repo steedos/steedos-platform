@@ -1,13 +1,10 @@
-name: Docker Release
+name: Docker Release 2.7
 
 on:
   workflow_run:
-    workflows: [NPM Release]
+    workflows: [NPM Release 2.7]
     types:
       - completed
-    branches:
-      - "2.7"
-      - "3.0"
       
   workflow_dispatch:
     # inputs:
@@ -18,11 +15,6 @@ on:
 
 jobs:
   docker-enterprise:
-    if: |
-      github.event.workflow_run.conclusion == 'success' && 
-      (
-        github.event.workflow_run.head_branch == '2.7' 
-      )
     runs-on: ubuntu-latest
     # env:
     #   STEEDOS_VERSION: ${{ github.event.inputs.version }}

@@ -1,13 +1,11 @@
-name: Docker Sync
+name: Docker Sync 2.7
 
 on:
   workflow_run:
-    workflows: [Docker Release]
+    workflows: [Docker Release 2.7]
     types:
       - completed
-    branches:
-      - "2.7"
-
+      
   workflow_dispatch:
     # inputs:
     #   version:
