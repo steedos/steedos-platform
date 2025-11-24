@@ -311,6 +311,20 @@ jobs:
         with: 
           ref: '3.0'
           
+      - name: 3.0 Use Node.js 22
+        uses: actions/setup-node@v4
+        if: ${{ startsWith(steps.branch-name.outputs.tag, '3.0') }} 
+        with:
+          node-version: 22
+          cache: "yarn"
+
+      - name: 2.7 Use Node.js 14
+        uses: actions/setup-node@v4
+        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.7') }} 
+        with:
+          node-version: 14
+          cache: "yarn"
+          
       - name: Sync cnpm
         env:
           CI: true
