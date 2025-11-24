@@ -7,7 +7,7 @@
  */
 import { AmisRender } from "../../components/AmisRender";
 import { Builder } from "@builder6/react";
-import { useParams, useLocation, useSearchParams } from 'react-router-dom';
+import { useParams, useLocation, useSearchParams, useNavigate } from 'react-router-dom';
 import {values, first} from 'lodash';
 
 export const ObjectListView = () => {
@@ -22,7 +22,11 @@ export const ObjectListView = () => {
   }
 
   if(Steedos.Page.getDisplay(objectName) === 'split'){
-    (window as any).navigate(`/app/${appId}/${objectName}/view/none?side_object=${objectName}&side_listview_id=${listName}&additionalFilters=`)
+    const navigate = useNavigate();
+    setTimeout(()=>{
+      navigate(`/app/${appId}/${objectName}/view/none?side_object=${objectName}&side_listview_id=${listName}&additionalFilters=`);
+    }, 1)
+    return ;
   }
 
   return (

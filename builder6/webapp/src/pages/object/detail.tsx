@@ -1,5 +1,5 @@
 import { AmisRender } from "../../components/AmisRender";
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { Builder } from "@builder6/react";
 
 export const ObjectDetail = () => {
@@ -7,7 +7,15 @@ export const ObjectDetail = () => {
   let location = useLocation();
   const urlParams = new URLSearchParams(location.search);
   const sideListViewId = urlParams.get('side_listview_id');
-  // console.log(`ObjectDetail====>`, appId, objectName, recordId)
+
+  if(recordId === 'none' && Steedos.Page.getDisplay(objectName) === 'grid'){
+    const navigate = useNavigate();
+    setTimeout(()=>{
+      navigate(`/app/${appId}/${objectName}/grid/${sideListViewId}?display=grid`)
+    }, 1)
+    return;
+  }
+
   return (
     <AmisRender schema = {{
         type: 'page',
