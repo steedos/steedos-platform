@@ -46,7 +46,7 @@ export const AppLayout = (props) => {
       <RouteChangeHandler></RouteChangeHandler>
       <GlobalLinkInterceptor></GlobalLinkInterceptor>
       <AppHeader />
-      <div className="creator-content-wrapper" id="main">
+      <div className="creator-content-wrapper transition-all duration-300" id="main">
         {children}
       </div>
     </>
