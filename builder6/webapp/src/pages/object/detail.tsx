@@ -7,9 +7,8 @@ export const ObjectDetail = () => {
   let location = useLocation();
   const urlParams = new URLSearchParams(location.search);
   const sideListViewId = urlParams.get('side_listview_id');
-
+  const navigate = useNavigate();
   if(recordId === 'none' && Steedos.Page.getDisplay(objectName) === 'grid'){
-    const navigate = useNavigate();
     setTimeout(()=>{
       navigate(`/app/${appId}/${objectName}/grid/${sideListViewId}?display=grid`)
     }, 1)
