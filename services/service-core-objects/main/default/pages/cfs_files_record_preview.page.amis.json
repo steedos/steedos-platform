@@ -30,7 +30,7 @@
                                         "bulletUseFont": true,
                                         "enableVar": false
                                     },
-                                    "src": "/api/v6/files/download/cfs.files.filerecord/${_id}/${original.name}",
+                                    "src": "/api/v6/files/cfs.files.filerecord/${_id}/${original.name}",
                                     "visibleOn": "${ARRAYINCLUDES(['application/vnd.openxmlformats-officedocument.wordprocessingml.document'],record.original.type)}",
                                     "className": "flex justify-center items-center h-full",
                                     "loading": true
@@ -43,7 +43,7 @@
                                         "bulletUseFont": true,
                                         "enableVar": false
                                     },
-                                    "src": "/api/v6/files/download/cfs.files.filerecord/${_id}/${original.name}",
+                                    "src": "/api/v6/files/cfs.files.filerecord/${_id}/${original.name}",
                                     "visibleOn": "${ARRAYINCLUDES(['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],record.original.type)}",
                                     "className": "office-viewer-excel",
                                     "id": "u:07ef4d92d664",
@@ -54,7 +54,7 @@
                                     "id": "pdf-viewer",
                                     "name": "file",
                                     "source": "src",
-                                    "src": "/api/v6/files/download/cfs.files.filerecord/${_id}/${original.name}",
+                                    "src": "/api/v6/files/cfs.files.filerecord/${_id}/${original.name}",
                                     "visibleOn": "${ARRAYINCLUDES(['application/pdf'],record.original.type)}",
                                     "className": "pdf-viewer w-full"
                                 },
@@ -62,7 +62,7 @@
                                     "type": "image",
                                     "id": "u:4d9071791016",
                                     "visibleOn": "${ARRAYINCLUDES(['image/png','image/jpeg','image/bmp','image/gif','image/webp','image/psd','image/svg','image/tiff'],record.original.type)}",
-                                    "src": "/api/v6/files/download/cfs.files.filerecord/${_id}/${original.name}",
+                                    "src": "/api/v6/files/cfs.files.filerecord/${_id}/${original.name}",
                                     "imageMode": "original",
                                     "enlargeAble": false,
                                     "maxScale": 200,
