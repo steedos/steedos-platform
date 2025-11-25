@@ -16,13 +16,13 @@ export const ObjectListView = () => {
   const uiSchema = (window as any).getUISchemaSync(objectName)
   const [searchParams] = useSearchParams();
   const allParams = Object.fromEntries(searchParams.entries());
+  const navigate = useNavigate();
   // console.log(`ObjectListView`, appId, objectName, listName, location, allParams)
   if(!listName){
     listName = first(values(uiSchema.list_views))?.name
   }
 
   if(Steedos.Page.getDisplay(objectName) === 'split'){
-    const navigate = useNavigate();
     setTimeout(()=>{
       navigate(`/app/${appId}/${objectName}/view/none?side_object=${objectName}&side_listview_id=${listName}&additionalFilters=`);
     }, 1)
