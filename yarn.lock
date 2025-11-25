@@ -2837,7 +2837,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@builder6/cli@npm:3.1.0-alpha.1, @builder6/cli@npm:^3.1.0-alpha.1":
+"@builder6/cli@npm:3.1.0-alpha.1, @builder6/cli@npm:^3.1.0":
   version: 3.1.0-alpha.1
   resolution: "@builder6/cli@npm:3.1.0-alpha.1"
   dependencies:
@@ -2851,7 +2851,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@builder6/core@npm:3.1.0-alpha.1, @builder6/core@npm:^3.1.0-alpha.1":
+"@builder6/core@npm:3.1.0-alpha.1, @builder6/core@npm:^3.1.0":
   version: 3.1.0-alpha.1
   resolution: "@builder6/core@npm:3.1.0-alpha.1"
   dependencies:
@@ -2882,7 +2882,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@builder6/docs@npm:3.1.0-alpha.1, @builder6/docs@npm:^3.1.0-alpha.1":
+"@builder6/docs@npm:3.1.0-alpha.1, @builder6/docs@npm:^3.1.0":
   version: 3.1.0-alpha.1
   resolution: "@builder6/docs@npm:3.1.0-alpha.1"
   dependencies:
@@ -2917,7 +2917,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@builder6/email@npm:3.1.0-alpha.1, @builder6/email@npm:^3.1.0-alpha.1":
+"@builder6/email@npm:3.1.0-alpha.1, @builder6/email@npm:^3.1.0":
   version: 3.1.0-alpha.1
   resolution: "@builder6/email@npm:3.1.0-alpha.1"
   dependencies:
@@ -2935,7 +2935,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@builder6/files@npm:3.1.0-alpha.1, @builder6/files@npm:^3.1.0-alpha.1":
+"@builder6/files@npm:3.1.0-alpha.1, @builder6/files@npm:^3.1.0":
   version: 3.1.0-alpha.1
   resolution: "@builder6/files@npm:3.1.0-alpha.1"
   dependencies:
@@ -2950,14 +2950,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@builder6/microservices@npm:3.1.0-alpha.1, @builder6/microservices@npm:^3.1.0-alpha.1":
+"@builder6/microservices@npm:3.1.0-alpha.1, @builder6/microservices@npm:^3.1.0":
   version: 3.1.0-alpha.1
   resolution: "@builder6/microservices@npm:3.1.0-alpha.1"
   checksum: e1a37336eac365a3f6e26327e217a657b21ae23d1a93be4dbbfa73e079626c88f78d9c2ff01d1278d63183a8f079fc84c28a5fd5c70553964cc2d0b6a1e82540
   languageName: node
   linkType: hard
 
-"@builder6/moleculer@npm:3.1.0-alpha.1, @builder6/moleculer@npm:^3.1.0-alpha.1":
+"@builder6/moleculer@npm:3.1.0-alpha.1, @builder6/moleculer@npm:^3.1.0":
   version: 3.1.0-alpha.1
   resolution: "@builder6/moleculer@npm:3.1.0-alpha.1"
   peerDependencies:
@@ -2966,7 +2966,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@builder6/oidc-provider@npm:3.1.0-alpha.1, @builder6/oidc-provider@npm:^3.1.0-alpha.1":
+"@builder6/oidc-provider@npm:3.1.0-alpha.1, @builder6/oidc-provider@npm:^3.1.0":
   version: 3.1.0-alpha.1
   resolution: "@builder6/oidc-provider@npm:3.1.0-alpha.1"
   dependencies:
@@ -2982,7 +2982,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@builder6/oidc@npm:3.1.0-alpha.1, @builder6/oidc@npm:^3.1.0-alpha.1":
+"@builder6/oidc@npm:3.1.0-alpha.1, @builder6/oidc@npm:^3.1.0":
   version: 3.1.0-alpha.1
   resolution: "@builder6/oidc@npm:3.1.0-alpha.1"
   dependencies:
@@ -3000,7 +3000,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@builder6/onlyoffice@npm:3.1.0-alpha.1, @builder6/onlyoffice@npm:^3.1.0-alpha.1":
+"@builder6/onlyoffice@npm:3.1.0-alpha.1, @builder6/onlyoffice@npm:^3.1.0":
   version: 3.1.0-alpha.1
   resolution: "@builder6/onlyoffice@npm:3.1.0-alpha.1"
   dependencies:
@@ -3017,7 +3017,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@builder6/pages@npm:3.1.0-alpha.1, @builder6/pages@npm:^3.1.0-alpha.1":
+"@builder6/pages@npm:3.1.0-alpha.1, @builder6/pages@npm:^3.1.0":
   version: 3.1.0-alpha.1
   resolution: "@builder6/pages@npm:3.1.0-alpha.1"
   dependencies:
@@ -3033,7 +3033,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@builder6/query-mongodb@npm:3.1.0-alpha.1, @builder6/query-mongodb@npm:^3.1.0-alpha.1":
+"@builder6/query-mongodb@npm:3.1.0-alpha.1, @builder6/query-mongodb@npm:^3.1.0":
   version: 3.1.0-alpha.1
   resolution: "@builder6/query-mongodb@npm:3.1.0-alpha.1"
   dependencies:
@@ -3065,7 +3065,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@builder6/rooms@npm:3.1.0-alpha.1, @builder6/rooms@npm:^3.1.0-alpha.1":
+"@builder6/rooms@npm:3.1.0-alpha.1, @builder6/rooms@npm:^3.1.0":
   version: 3.1.0-alpha.1
   resolution: "@builder6/rooms@npm:3.1.0-alpha.1"
   dependencies:
@@ -3105,7 +3105,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@builder6/server@npm:^3.1.0-alpha.1":
+"@builder6/server@npm:^3.1.0":
   version: 3.1.0-alpha.1
   resolution: "@builder6/server@npm:3.1.0-alpha.1"
   dependencies:
@@ -3179,7 +3179,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@builder6/services@npm:3.1.0-alpha.1, @builder6/services@npm:^3.1.0-alpha.1":
+"@builder6/services@npm:3.1.0-alpha.1, @builder6/services@npm:^3.1.0":
   version: 3.1.0-alpha.1
   resolution: "@builder6/services@npm:3.1.0-alpha.1"
   peerDependencies:
@@ -3192,7 +3192,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@builder6/sharepoint@npm:3.1.0-alpha.1, @builder6/sharepoint@npm:^3.1.0-alpha.1":
+"@builder6/sharepoint@npm:3.1.0-alpha.1, @builder6/sharepoint@npm:^3.1.0":
   version: 3.1.0-alpha.1
   resolution: "@builder6/sharepoint@npm:3.1.0-alpha.1"
   dependencies:
@@ -3210,7 +3210,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@builder6/steedos@npm:3.1.0-alpha.1, @builder6/steedos@npm:^3.1.0-alpha.1":
+"@builder6/steedos@npm:3.1.0-alpha.1, @builder6/steedos@npm:^3.1.0":
   version: 3.1.0-alpha.1
   resolution: "@builder6/steedos@npm:3.1.0-alpha.1"
   peerDependencies:
@@ -3224,7 +3224,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@builder6/tables@npm:3.1.0-alpha.1, @builder6/tables@npm:^3.1.0-alpha.1":
+"@builder6/tables@npm:3.1.0-alpha.1, @builder6/tables@npm:^3.1.0":
   version: 3.1.0-alpha.1
   resolution: "@builder6/tables@npm:3.1.0-alpha.1"
   dependencies:
@@ -9708,8 +9708,8 @@ __metadata:
     openai: ^6.8.1
     typescript: 5.7.3
   peerDependencies:
-    "@builder6/core": ^3.1.0-alpha.1
-    "@builder6/moleculer": ^3.1.0-alpha.1
+    "@builder6/core": ^3.1.0
+    "@builder6/moleculer": ^3.1.0
     "@nestjs/common": ^11.0.0
     "@nestjs/core": ^11.0.0
     "@nestjs/swagger": ^11.0.7
@@ -10158,24 +10158,24 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@steedos/server@workspace:builder6/server"
   dependencies:
-    "@builder6/cli": ^3.1.0-alpha.1
-    "@builder6/core": ^3.1.0-alpha.1
-    "@builder6/docs": ^3.1.0-alpha.1
-    "@builder6/email": ^3.1.0-alpha.1
-    "@builder6/files": ^3.1.0-alpha.1
-    "@builder6/microservices": ^3.1.0-alpha.1
-    "@builder6/moleculer": ^3.1.0-alpha.1
-    "@builder6/oidc": ^3.1.0-alpha.1
-    "@builder6/oidc-provider": ^3.1.0-alpha.1
-    "@builder6/onlyoffice": ^3.1.0-alpha.1
-    "@builder6/pages": ^3.1.0-alpha.1
-    "@builder6/query-mongodb": ^3.1.0-alpha.1
-    "@builder6/rooms": ^3.1.0-alpha.1
-    "@builder6/server": ^3.1.0-alpha.1
-    "@builder6/services": ^3.1.0-alpha.1
-    "@builder6/sharepoint": ^3.1.0-alpha.1
-    "@builder6/steedos": ^3.1.0-alpha.1
-    "@builder6/tables": ^3.1.0-alpha.1
+    "@builder6/cli": ^3.1.0
+    "@builder6/core": ^3.1.0
+    "@builder6/docs": ^3.1.0
+    "@builder6/email": ^3.1.0
+    "@builder6/files": ^3.1.0
+    "@builder6/microservices": ^3.1.0
+    "@builder6/moleculer": ^3.1.0
+    "@builder6/oidc": ^3.1.0
+    "@builder6/oidc-provider": ^3.1.0
+    "@builder6/onlyoffice": ^3.1.0
+    "@builder6/pages": ^3.1.0
+    "@builder6/query-mongodb": ^3.1.0
+    "@builder6/rooms": ^3.1.0
+    "@builder6/server": ^3.1.0
+    "@builder6/services": ^3.1.0
+    "@builder6/sharepoint": ^3.1.0
+    "@builder6/steedos": ^3.1.0
+    "@builder6/tables": ^3.1.0
     "@nestjs/cli": ^11.0.0
     "@nestjs/common": ^11.1.8
     "@nestjs/config": ^4.0.1
