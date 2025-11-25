@@ -18,7 +18,7 @@ export const ObjectDetail = () => {
   return (
     <AmisRender schema = {{
         type: 'page',
-        bodyClassName: 'p-0 overflow-hidden',
+        bodyClassName: 'p-0',
         body: {
           "type": "steedos-page-object-control",
           "name": "steedosPageObjectControl",
