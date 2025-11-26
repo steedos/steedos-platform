@@ -12,6 +12,7 @@ const project = require('./package.json');
 const serviceName = project.name;
 const validator = require('validator');
 const objectql = require('@steedos/objectql');
+const migrate = require('@steedos/migrate');
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * 软件包服务启动后也需要抛出事件。
@@ -181,6 +182,8 @@ module.exports = {
 		  // 启动时间触发器服务
 		  this.broker.createService(require("@steedos/workflow_time_trigger"));
 
+		// 启动 migrate
+		await migrate.init();
 	},
 
 	/**
