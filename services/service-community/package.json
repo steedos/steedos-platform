@@ -13,6 +13,7 @@
     "@steedos-builder/amis-editor": "6.3.0-beta.16",
     "@steedos-labs/plugin-package-store": "^1.0.10",
     "@steedos/data-import": "3.0.0-beta.151",
+    "@steedos/migrate": "3.0.0-beta.151",
     "@steedos/server": "3.0.0-beta.151",
     "@steedos/service-accounts": "3.0.0-beta.151",
     "@steedos/service-ancillary": "3.0.0-beta.151",

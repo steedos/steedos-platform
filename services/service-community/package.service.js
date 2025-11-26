@@ -4,7 +4,7 @@
  * @Author: yinlianghui@steedos.com
  * @Date: 2022-07-20 21:31:37
  * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2025-08-09 12:12:34
+ * @LastEditTime: 2025-11-26 09:52:22
  * @Description: 
  */
 "use strict";
@@ -12,6 +12,7 @@ const project = require('./package.json');
 const serviceName = project.name;
 const validator = require('validator');
 const objectql = require('@steedos/objectql');
+const migrate = require('@steedos/migrate');
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * 软件包服务启动后也需要抛出事件。
@@ -180,6 +181,9 @@ module.exports = {
 
 		  // 启动时间触发器服务
 		  this.broker.createService(require("@steedos/workflow_time_trigger"));
+
+		// 启动 migrate
+		await migrate.init();
 	},
 
 	/**

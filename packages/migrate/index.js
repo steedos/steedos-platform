@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2021-05-24 12:32:57
  * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2024-01-08 16:55:47
+ * @LastEditTime: 2025-11-26 09:59:26
  * @Description: 
  */
 const migrate = require('migrate')
@@ -32,13 +32,7 @@ const up = async function () {
 }
 
 const init = async function () {
-    if (process.env.STEEDOS_DB_AUTO_MIGRATE !== false && process.env.STEEDOS_DB_AUTO_MIGRATE !== 'false') {
-        // 如果未设置为不自动执行，则默认自动执行
-        process.env.STEEDOS_DB_AUTO_MIGRATE = 'true'
-    }
     const autoMigrate = validator.toBoolean(process.env.STEEDOS_DB_AUTO_MIGRATE || '', true);
-    // console.log('process.env.STEEDOS_DB_AUTO_MIGRATE:', process.env.STEEDOS_DB_AUTO_MIGRATE)
-    // console.log('autoMigrate:', autoMigrate)
     if (autoMigrate) {
         up();
     }
