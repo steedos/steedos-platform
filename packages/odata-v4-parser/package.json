@@ -1,6 +1,6 @@
 {
   "name": "@steedos/odata-v4-parser",
-  "version": "3.0.0-beta.151",
+  "version": "3.0.0-beta.152",
   "description": "OData v4 Parser",
   "main": "lib/parser.js",
   "repository": {

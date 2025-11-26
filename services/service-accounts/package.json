@@ -1,10 +1,10 @@
 {
   "name": "@steedos/service-accounts",
-  "version": "3.0.0-beta.151",
+  "version": "3.0.0-beta.152",
   "main": "package.service.js",
   "license": "MIT",
   "dependencies": {
-    "@steedos/auth": "3.0.0-beta.151",
+    "@steedos/auth": "3.0.0-beta.152",
     "node-schedule": "^2.0.0"
   },
   "publishConfig": {
