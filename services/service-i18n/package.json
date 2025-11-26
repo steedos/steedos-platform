@@ -1,7 +1,7 @@
 {
   "name": "@steedos/service-i18n",
   "main": "package.service.js",
-  "version": "3.0.0-beta.155",
+  "version": "3.0.0-beta.156",
   "repository": "https://github.com/steedos/steedos-platform.git",
   "description": "",
   "engines": {
@@ -13,5 +13,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "6ce8e95099bbab785c6febc10722e418fc979e39"
+  "gitHead": "6ad1049e94f4d3653dd6229b76937c73855c2574"
 }
