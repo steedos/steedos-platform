@@ -14,5 +14,5 @@
         "@steedos/service-package-loader": "3.0.0-beta.153",
         "bullmq": "^5.62.0"
     },
-    "gitHead": "c8c35d3ad4121ed6b207c43d63d23b18bb504d1f"
+    "gitHead": "ce56245aaa69111129bd84348f4ce4defa7ddd9f"
 }
