@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-01-10 17:18:23
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-05-17 10:42:47
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2025-11-26 15:22:18
  * @Description: 
  */
 'use strict'
@@ -19,72 +19,79 @@ module.exports.up = async function (next) {
     // 若已有instance_tasks则不执行
     const tasksCount = await tasksColl.find({}).count()
     if (tasksCount > 0) {
-        // console.log('[migration]', '库中已有instance_tasks，终止执行。')
+        console.log('[migration]', '库中已有instance_tasks，终止执行。')
         return;
     }
     console.log('[migration] add-instance-tasks is running...')
-    await instanceColl.find({}).forEach(async function (insDoc) {
-        var docs = [];
-        var latestApproveIndexMap = {}
-        const formDoc = await formColl.findOne({ _id: insDoc.form })
-        const extras = caculateExtras(insDoc.values, formDoc, insDoc.form_version)
-        insDoc.traces.forEach(function (tDoc, tIdx) {
-            if (tIdx == 0 && (!insDoc.distribute_from_instance && !insDoc.forward_from_instance)) {
-                // 只有分发或转发的申请单，开始节点生成instance_tasks
-                return
-            }
-            if (tDoc.approves) {
-                tDoc.approves.forEach(function (aDoc) {
-                    if (aDoc.type == 'distribute' || aDoc.judge == 'relocated' || aDoc.judge == 'terminated' || aDoc.judge == 'reassigned') {
-                        return;
-                    }
-                    aDoc['space'] = insDoc.space;
-                    aDoc['instance_name'] = insDoc.name;
-                    aDoc['submitter'] = insDoc.submitter;
-                    aDoc['submitter_name'] = insDoc.submitter_name;
-                    aDoc['applicant'] = insDoc.applicant;
-                    aDoc['applicant_name'] = insDoc.applicant_name;
-                    aDoc['applicant_organization_name'] = insDoc.applicant_organization_name;
-                    aDoc['submit_date'] = insDoc.submit_date;
-                    aDoc['flow'] = insDoc.flow;
-                    aDoc['flow_name'] = insDoc.flow_name;
-                    aDoc['form'] = insDoc.form;
-                    aDoc['step'] = tDoc.step;
-                    aDoc['step_name'] = tDoc.name;
-                    aDoc['category_name'] = insDoc.category_name;
-                    aDoc['instance_state'] = insDoc.state;
-                    aDoc['distribute_from_instance'] = insDoc.distribute_from_instance;
-                    aDoc['forward_from_instance'] = insDoc.forward_from_instance;
-                    aDoc['keywords'] = insDoc.keywords;
-                    aDoc['is_archived'] = insDoc.is_archived;
-                    aDoc['category'] = insDoc.category;
-                    aDoc['extras'] = extras;
-                    docs.push(aDoc)
-                    if (aDoc.is_finished) { //记录下需要设置is_latest_approve的游标，如有重复审批则更新为最新的
-                        latestApproveIndexMap[aDoc.handler] = docs.length - 1
-                    }
-                })
-            }
-        })
-
-        for (const handler in latestApproveIndexMap) {
-            if (Object.hasOwnProperty.call(latestApproveIndexMap, handler)) {
-                docs[latestApproveIndexMap[handler]].is_latest_approve = true
-            }
-        }
-
-        if (docs.length > 0) {
-            try {
-                await tasksColl.insertMany(docs);
-                if (extras) {
-                    await instanceColl.updateOne({ _id: insDoc._id }, { $set: { extras: extras } })
-                }
-            } catch (e) {
-                console.error(e);
-            }
-        }
-    })
     const insCount = await instanceColl.find({}).count()
+    const loopCount = 1000;
+    const totalLoops = Math.ceil(insCount / loopCount);
+    for (let loopIdx = 0; loopIdx < totalLoops; loopIdx++) {
+        console.log(`[migration] add-instance-tasks processing ${loopIdx + 1}/${totalLoops} ...`)
+        const insDocs = await instanceColl.find({}).skip(loopIdx * loopCount).limit(loopCount).toArray()
+        for (const insDoc of insDocs) {
+            var docs = [];
+            var latestApproveIndexMap = {}
+            const formDoc = await formColl.findOne({ _id: insDoc.form })
+            const extras = caculateExtras(insDoc.values, formDoc, insDoc.form_version)
+            insDoc.traces.forEach(function (tDoc, tIdx) {
+                if (tIdx == 0 && (!insDoc.distribute_from_instance && !insDoc.forward_from_instance)) {
+                    // 只有分发或转发的申请单，开始节点生成instance_tasks
+                    return
+                }
+                if (tDoc.approves) {
+                    tDoc.approves.forEach(function (aDoc) {
+                        if (aDoc.type == 'distribute' || aDoc.judge == 'relocated' || aDoc.judge == 'terminated' || aDoc.judge == 'reassigned') {
+                            return;
+                        }
+                        aDoc['space'] = insDoc.space;
+                        aDoc['instance_name'] = insDoc.name;
+                        aDoc['submitter'] = insDoc.submitter;
+                        aDoc['submitter_name'] = insDoc.submitter_name;
+                        aDoc['applicant'] = insDoc.applicant;
+                        aDoc['applicant_name'] = insDoc.applicant_name;
+                        aDoc['applicant_organization_name'] = insDoc.applicant_organization_name;
+                        aDoc['submit_date'] = insDoc.submit_date;
+                        aDoc['flow'] = insDoc.flow;
+                        aDoc['flow_name'] = insDoc.flow_name;
+                        aDoc['form'] = insDoc.form;
+                        aDoc['step'] = tDoc.step;
+                        aDoc['step_name'] = tDoc.name;
+                        aDoc['category_name'] = insDoc.category_name;
+                        aDoc['instance_state'] = insDoc.state;
+                        aDoc['distribute_from_instance'] = insDoc.distribute_from_instance;
+                        aDoc['forward_from_instance'] = insDoc.forward_from_instance;
+                        aDoc['keywords'] = insDoc.keywords;
+                        aDoc['is_archived'] = insDoc.is_archived;
+                        aDoc['category'] = insDoc.category;
+                        aDoc['extras'] = extras;
+                        docs.push(aDoc)
+                        if (aDoc.is_finished) { //记录下需要设置is_latest_approve的游标，如有重复审批则更新为最新的
+                            latestApproveIndexMap[aDoc.handler] = docs.length - 1
+                        }
+                    })
+                }
+            })
+
+            for (const handler in latestApproveIndexMap) {
+                if (Object.hasOwnProperty.call(latestApproveIndexMap, handler)) {
+                    docs[latestApproveIndexMap[handler]].is_latest_approve = true
+                }
+            }
+
+            if (docs.length > 0) {
+                try {
+                    await tasksColl.insertMany(docs);
+                    if (extras) {
+                        await instanceColl.updateOne({ _id: insDoc._id }, { $set: { extras: extras } })
+                    }
+                } catch (e) {
+                    console.error(e);
+                }
+            }
+        }
+    }
+
     const insTasksCount = await tasksColl.find({}).count()
     console.log('[migration] add-instance-tasks successfully ran.', 'instances:', insCount, ', instance_tasks:', insTasksCount)
 }
