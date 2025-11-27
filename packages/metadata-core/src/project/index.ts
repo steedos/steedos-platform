@@ -35,12 +35,15 @@ function traverseForFileSync(dir: string, file: string, file2: string) {
 export function resolveProjectPathSync(
   dir: string = process.cwd(),
 ): string | null {
-  // let projectPath = traverseForFileSync(dir, STEEDOS_PROJECT_JSON, STEEDOS_PROJECT_JS);
-  // if (!projectPath) {
-  //   throw new Error('InvalidProjectWorkspace');
-  // }
-  // return projectPath;
-  return dir;
+  let projectPath = traverseForFileSync(
+    dir,
+    STEEDOS_PROJECT_JSON,
+    STEEDOS_PROJECT_JS,
+  );
+  if (!projectPath) {
+    throw new Error("InvalidProjectWorkspace");
+  }
+  return projectPath;
 }
 
 function traverseForAppSync(dir: string, file: string, file2: string) {
