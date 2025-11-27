@@ -17,10 +17,6 @@ if (isEmpty(process.env.STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN)) {
   process.env.STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN = "true";
 }
 
-if (isEmpty(process.env.STEEDOS_WIDGETS_ADDITIONAL)) {
-  process.env.STEEDOS_WIDGETS_ADDITIONAL = "@steedos-widgets/liveblocks";
-}
-
 if (isEmpty(process.env.STEEDOS_UNPKG_URL)) {
   process.env.STEEDOS_UNPKG_URL = "https://unpkg.steedos.cn";
 }
@@ -57,7 +53,12 @@ if (isEmpty(process.env.STEEDOS_AMIS_URL)) {
 process.env.STEEDOS_AMIS_URL = process.env.STEEDOS_AMIS_URL.replace(/\/+$/, "");
 
 if (isEmpty(process.env.STEEDOS_WIDGETS_VERSION)) {
-  process.env.STEEDOS_WIDGETS_VERSION = "6.10.17";
+  process.env.STEEDOS_WIDGETS_VERSION = "6.10.18";
+}
+
+if (isEmpty(process.env.STEEDOS_WIDGETS_ADDITIONAL)) {
+  process.env.STEEDOS_WIDGETS_ADDITIONAL =
+    "@steedos-widgets/liveblocks,@steedos-widgets/fullcalendar";
 }
 
 if (isEmpty(process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS)) {
