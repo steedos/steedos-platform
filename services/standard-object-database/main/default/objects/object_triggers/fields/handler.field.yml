@@ -5,10 +5,11 @@ language: javascript
 is_wide: true
 required: true
 defaultValue: |-
-  // global: {_:lodash, moment, validator, filters}
   // ctx
-  // objects
+  // objects: all steedos objects
+  // db: mongodb client instance
   // services
+  // npm: {_, moment, validator, filters}
 editorDidMount: >-
   if(window._registerCompletionItemProviderTrigger){
     return ;
