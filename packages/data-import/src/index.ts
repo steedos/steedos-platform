@@ -173,7 +173,7 @@ export async function importData(
         }
       }
     } catch (error) {
-      console.info(error.message);
+      // console.info(error.message);
       return;
     } finally {
       await dbManager.endSession();
