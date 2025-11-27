@@ -13,18 +13,20 @@ const clone = require("clone");
 const validator = require("validator");
 const yaml = require("js-yaml");
 
-if (process.env.STEEDOS_LICENSE) {
-  process.env.B6_LOG_MONGO_ENABLED = "true";
-  process.env.STEEDOS_UNPKG_URL = "/unpkg";
-}
+process.env.B6_LOG_MONGO_ENABLED = process.env.STEEDOS_LICENSE
+  ? "true"
+  : "false";
 
 if (isEmpty(process.env.STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN)) {
   process.env.STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN = "true";
 }
 
 if (isEmpty(process.env.STEEDOS_UNPKG_URL)) {
-  process.env.STEEDOS_UNPKG_URL = "https://unpkg.steedos.cn";
+  process.env.STEEDOS_UNPKG_URL = process.env.STEEDOS_LICENSE
+    ? "/unpkg"
+    : "https://unpkg.steedos.cn";
 }
+
 process.env.STEEDOS_UNPKG_URL = process.env.STEEDOS_UNPKG_URL.replace(
   /\/+$/,
   "",

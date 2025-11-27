@@ -10868,7 +10868,6 @@ __metadata:
     redux: ^4.0.4
     redux-devtools-extension: ^2.13.8
     redux-thunk: ^2.4.1
-    remark-breaks: ^4.0.0
     remark-gfm: ^4.0.1
     serialize-error: ^7.0.1
     socket.io-client: ^4.8.1
@@ -29788,16 +29787,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mdast-util-newline-to-break@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "mdast-util-newline-to-break@npm:2.0.0"
-  dependencies:
-    "@types/mdast": ^4.0.0
-    mdast-util-find-and-replace: ^3.0.0
-  checksum: 91e235e3629a83d6b7f1d713297da9f7fc394b1c88f2859f775bee78cd8de6a84d8657edac5f7b1fecfc07e4b5d06233f64f61e895b76642f1612530b2d7d88a
-  languageName: node
-  linkType: hard
-
 "mdast-util-phrasing@npm:^4.0.0":
   version: 4.1.0
   resolution: "mdast-util-phrasing@npm:4.1.0"
@@ -37690,17 +37679,6 @@ __metadata:
   version: 0.2.7
   resolution: "relateurl@npm:0.2.7"
   checksum: 5891e792eae1dfc3da91c6fda76d6c3de0333a60aa5ad848982ebb6dccaa06e86385fb1235a1582c680a3d445d31be01c6bfc0804ebbcab5aaf53fa856fde6b6
-  languageName: node
-  linkType: hard
-
-"remark-breaks@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "remark-breaks@npm:4.0.0"
-  dependencies:
-    "@types/mdast": ^4.0.0
-    mdast-util-newline-to-break: ^2.0.0
-    unified: ^11.0.0
-  checksum: 222883db314a2842fa0a5f59a571b66df722c6bdf284938a7463e892228820b72d6827b38b55de8f87577a50a1c4b7502573b0e6a403003815c210a18fd04a51
   languageName: node
   linkType: hard
 
