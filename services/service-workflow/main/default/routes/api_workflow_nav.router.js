@@ -1,11 +1,3 @@
-/*
- * @Author: 殷亮辉 yinlianghui@hotoa.com
- * @Date: 2023-02-27 15:51:42
- * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2025-05-06 19:28:14
- * @FilePath: /project-ee/Users/yinlianghui/Documents/GitHub/steedos-platform2-4/services/service-workflow/main/default/routes/api_workflow_nav.router.js
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
 'use strict';
 // @ts-check
 const objectql = require('@steedos/objectql');
@@ -130,32 +122,38 @@ const getCategoriesMonitor = async (userSession, req, currentUrl) => {
   let output = [];
   let data = {};
   let monitorIsUnfolded = false;
-  let categoriesData = await objectql.broker.call('api.graphql', {
-    query: `
-      query {
-        categories(filters:[["space", "=", "${userSession.spaceId}"]],sort:"sort_no desc"){
-          _id,
-          app__expand{
-            code
-          }
-        }
-      }
-    `}
-  )
+  // const sa = new Date().getTime();
+  const apps = await objectql.getObject('apps').find({filters: ['space', '=', userSession.spaceId], fields: ['_id', 'code']});
+  // console.log(`find apps`, new Date().getTime() - sa)
+  const appsMap = new Map(Object.entries(lodash.keyBy(apps, '_id')));
+  // const sc = new Date().getTime();
+  const categories = await objectql.getObject('categories').find({filters: ["space", "=", `${userSession.spaceId}`], sort: "sort_no desc"})
+  // console.log(`find categories`, new Date().getTime() - sc)
+  for (const item of categories) {
+    if(item.app){
+      item.app__expand = appsMap.get(item.app)
+    }else{
+      item.app__expand = {}
+    }
+  }
+
   let currentAppCategories = [];
   if(appId == "approve_workflow"){
-    currentAppCategories = categoriesData.data.categories;
+    currentAppCategories = categories;
   }else{
-    currentAppCategories = lodash.filter(categoriesData.data.categories, (category) => {
+    currentAppCategories = lodash.filter(categories, (category) => {
       if(category.app__expand?.code == appId) return true;
       else return false;
     })
     if(currentAppCategories.length == 0) {
       //如果没有任何分类绑定该app，则该app显示所有分类（该规则为审批王规则）
-      currentAppCategories = categoriesData.data.categories;
+      currentAppCategories = categories;
     }
   }
   let categoriesIds = lodash.map(currentAppCategories, '_id');
+  // console.log(`getCategoriesMonitor categoriesIds`, categoriesIds)
+  // console.log(`getCategoriesMonitor hasFlowsPer`, hasFlowsPer)
+  let flows = [];
   if (!hasFlowsPer) {
     const flowIds = await new Promise(function (resolve, reject) {
       Fiber(function () {
@@ -168,34 +166,33 @@ const getCategoriesMonitor = async (userSession, req, currentUrl) => {
     });
     hasFlowsPer = flowIds && flowIds.length > 0;
     if (hasFlowsPer) {
-      let query = `
-        query {
-          flows(filters:[["_id","in",${JSON.stringify(flowIds)}],"and",["category","in",${JSON.stringify(categoriesIds)}], "and", ["state", "=", "enabled"]],sort:"sort_no desc,name"){
-            _id,
-            name,
-            category__expand{_id,name}
-          }
-        }
-      `
-      data = await objectql.broker.call('api.graphql', {
-        query }
-      )
+      flows = await objectql.getObject('flows').find({
+        filters: [["_id","in", flowIds],"and",["category","in", categoriesIds], "and", ["state", "=", "enabled"]],
+        fields: ['_id', 'name', 'category', 'sort_no'],
+        sort:"sort_no desc"
+      });
     }
   } else {
-    data = await objectql.broker.call('api.graphql', {
-      query: `
-        query {
-          flows(filters:[["space", "=", "${userSession.spaceId}"],["category","in",${JSON.stringify(categoriesIds)}],["state", "=", "enabled"]],sort:"sort_no desc"){
-            _id,
-            name,
-            category__expand{_id,name}
-          }
-        }
-      `}
-    )
+    // const s1 = new Date().getTime();
+    flows = await objectql.getObject('flows').find({
+      filters:[["space", "=", userSession.spaceId],["category","in", categoriesIds],["state", "=", "enabled"]],
+      fields: ['_id', 'name', 'category', 'sort_no'],
+      sort:"sort_no desc"
+    })
+    // console.log(`find flows`, new Date().getTime() - s1)
   }
-  if (data.data && data.data.flows && data.data.flows.length > 0) {
-    const categoryGroups = lodash.groupBy(data.data.flows, 'category__expand.name');
+  if (flows.length > 0) {
+    const categoriesMap = new Map(Object.entries(lodash.keyBy(categories, '_id')));
+
+    for (const item of flows) {
+      if(item.category){
+        item.category__expand = categoriesMap.get(item.category)
+      }else{
+        item.category__expand = {}
+      }
+    }
+
+    const categoryGroups = lodash.groupBy(flows, 'category__expand.name');
     lodash.each(categoryGroups, (v, k) => {
       const flowGroups = lodash.groupBy(v, 'name');
       const flows = [];
@@ -241,7 +238,7 @@ const getCategoriesMonitor = async (userSession, req, currentUrl) => {
       })
     })
     output = lodash.sortBy(output, [function (o) {
-      return lodash.findIndex(categoriesData.data.categories, (e) => {
+      return lodash.findIndex(categories, (e) => {
         return e._id == o.options.value;
       });
     }]);
@@ -259,9 +256,15 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
     currentUrl = currentUrl.substring(currentUrl.indexOf("/app"));
     let userSession = req.user;
     const { appId } = req.params;
+    // const s1 = new Date().getTime();
     let inboxResult = await getCategoriesInbox(userSession, req, currentUrl);
+    // console.log(`inboxResult time`, new Date().getTime() - s1);
+    // const s2 = new Date().getTime();
     let monitorResult = await getCategoriesMonitor(userSession, req, currentUrl)
+    // console.log(`monitorResult time`, new Date().getTime() - s2);
+    // const s3 = new Date().getTime();
     let draftCount = await getDraftCount(userSession,req);
+    // console.log(`getDraftCount time`, new Date().getTime() - s3);
     
     var options = [
       {
