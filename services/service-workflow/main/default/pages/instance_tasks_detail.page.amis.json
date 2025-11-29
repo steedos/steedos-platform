@@ -36,6 +36,7 @@
               "hideRoot": true,
               "showIcon": true,
               "initiallyOpen": false,
+              "virtualThreshold": 100000,
               "value":"/app/${appId}/${objectName}/grid/${listName}",
               "size": "md",
               "onEvent": {
