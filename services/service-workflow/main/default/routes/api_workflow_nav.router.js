@@ -120,128 +120,131 @@ const getCategoriesMonitor = async (userSession, req, currentUrl) => {
   let hasFlowsPer = userSession.is_space_admin;
   const { appId } = req.params;
   let output = [];
-  let data = {};
   let monitorIsUnfolded = false;
-  // const sa = new Date().getTime();
-  const apps = await objectql.getObject('apps').find({filters: ['space', '=', userSession.spaceId], fields: ['_id', 'code']});
-  // console.log(`find apps`, new Date().getTime() - sa)
-  const appsMap = new Map(Object.entries(lodash.keyBy(apps, '_id')));
-  // const sc = new Date().getTime();
-  const categories = await objectql.getObject('categories').find({filters: ["space", "=", `${userSession.spaceId}`], sort: "sort_no desc"})
-  // console.log(`find categories`, new Date().getTime() - sc)
-  for (const item of categories) {
-    if(item.app){
-      item.app__expand = appsMap.get(item.app)
-    }else{
-      item.app__expand = {}
-    }
-  }
-
-  let currentAppCategories = [];
-  if(appId == "approve_workflow"){
-    currentAppCategories = categories;
-  }else{
-    currentAppCategories = lodash.filter(categories, (category) => {
-      if(category.app__expand?.code == appId) return true;
-      else return false;
-    })
-    if(currentAppCategories.length == 0) {
-      //如果没有任何分类绑定该app，则该app显示所有分类（该规则为审批王规则）
-      currentAppCategories = categories;
-    }
-  }
-  let categoriesIds = lodash.map(currentAppCategories, '_id');
-  // console.log(`getCategoriesMonitor categoriesIds`, categoriesIds)
-  // console.log(`getCategoriesMonitor hasFlowsPer`, hasFlowsPer)
-  let flows = [];
-  if (!hasFlowsPer) {
-    const flowIds = await new Promise(function (resolve, reject) {
-      Fiber(function () {
-        try {
-          resolve(WorkflowManager.getMyAdminOrMonitorFlows(userSession.spaceId, userSession.userId));
-        } catch (error) {
-          reject(error);
-        }
-      }).run();
-    });
-    hasFlowsPer = flowIds && flowIds.length > 0;
-    if (hasFlowsPer) {
-      flows = await objectql.getObject('flows').find({
-        filters: [["_id","in", flowIds],"and",["category","in", categoriesIds], "and", ["state", "=", "enabled"]],
-        fields: ['_id', 'name', 'category', 'sort_no'],
-        sort:"sort_no desc"
-      });
-    }
-  } else {
-    // const s1 = new Date().getTime();
-    flows = await objectql.getObject('flows').find({
-      filters:[["space", "=", userSession.spaceId],["category","in", categoriesIds],["state", "=", "enabled"]],
-      fields: ['_id', 'name', 'category', 'sort_no'],
-      sort:"sort_no desc"
-    })
-    // console.log(`find flows`, new Date().getTime() - s1)
-  }
-  if (flows.length > 0) {
-    const categoriesMap = new Map(Object.entries(lodash.keyBy(categories, '_id')));
-
-    for (const item of flows) {
-      if(item.category){
-        item.category__expand = categoriesMap.get(item.category)
+  try {
+    // const sa = new Date().getTime();
+    const apps = await objectql.getObject('apps').find({filters: ['space', '=', userSession.spaceId], fields: ['_id', 'code']});
+    // console.log(`find apps`, new Date().getTime() - sa)
+    const appsMap = new Map(Object.entries(lodash.keyBy(apps, '_id')));
+    // const sc = new Date().getTime();
+    const categories = await objectql.getObject('categories').find({filters: ["space", "=", `${userSession.spaceId}`], sort: "sort_no desc"})
+    // console.log(`find categories`, new Date().getTime() - sc)
+    for (const item of categories) {
+      if(item.app){
+        item.app__expand = appsMap.get(item.app)
       }else{
-        item.category__expand = {}
+        item.app__expand = {}
       }
     }
 
-    const categoryGroups = lodash.groupBy(flows, 'category__expand.name');
-    lodash.each(categoryGroups, (v, k) => {
-      const flowGroups = lodash.groupBy(v, 'name');
-      const flows = [];
-      const categoryValue = `/app/${appId}/instances/grid/monitor?additionalFilters=['category','=',${v[0].category__expand?"'" + v[0].category__expand._id + "'":null}]&flowId=&categoryId=${v[0].category__expand && v[0].category__expand._id}`;
-      let categoryIsUnfolded = false;
-      lodash.each(flowGroups, (v2, k2) => {
-        const flowValue = `/app/${appId}/instances/grid/monitor?additionalFilters=['flow','=','${v2[0]._id}']&flowId=${v2[0]._id}&categoryId=${v[0].category__expand && v[0].category__expand._id}`;
-        let flowIsUnfolded = false;
-        if(currentUrl == flowValue){
-          flowIsUnfolded = true;
+    let currentAppCategories = [];
+    if(appId == "approve_workflow"){
+      currentAppCategories = categories;
+    }else{
+      currentAppCategories = lodash.filter(categories, (category) => {
+        if(category.app__expand?.code == appId) return true;
+        else return false;
+      })
+      if(currentAppCategories.length == 0) {
+        //如果没有任何分类绑定该app，则该app显示所有分类（该规则为审批王规则）
+        currentAppCategories = categories;
+      }
+    }
+    let categoriesIds = lodash.map(currentAppCategories, '_id');
+    // console.log(`getCategoriesMonitor categoriesIds`, categoriesIds)
+    // console.log(`getCategoriesMonitor hasFlowsPer`, hasFlowsPer)
+    let flows = [];
+    if (!hasFlowsPer) {
+      const flowIds = await new Promise(function (resolve, reject) {
+        Fiber(function () {
+          try {
+            resolve(WorkflowManager.getMyAdminOrMonitorFlows(userSession.spaceId, userSession.userId));
+          } catch (error) {
+            reject(error);
+          }
+        }).run();
+      });
+      hasFlowsPer = flowIds && flowIds.length > 0;
+      if (hasFlowsPer) {
+        flows = await objectql.getObject('flows').find({
+          filters: [["_id","in", flowIds],"and",["category","in", categoriesIds], "and", ["state", "=", "enabled"]],
+          fields: ['_id', 'name', 'category', 'sort_no'],
+          sort:"sort_no desc"
+        });
+      }
+    } else {
+      // const s1 = new Date().getTime();
+      flows = await objectql.getObject('flows').find({
+        filters:[["space", "=", userSession.spaceId],["category","in", categoriesIds],["state", "=", "enabled"]],
+        fields: ['_id', 'name', 'category', 'sort_no'],
+        sort:"sort_no desc"
+      })
+      // console.log(`find flows`, new Date().getTime() - s1)
+    }
+    if (flows.length > 0) {
+      const categoriesMap = new Map(Object.entries(lodash.keyBy(categories, '_id')));
+
+      for (const item of flows) {
+        if(item.category){
+          item.category__expand = categoriesMap.get(item.category)
+        }else{
+          item.category__expand = {}
+        }
+      }
+
+      const categoryGroups = lodash.groupBy(flows, 'category__expand.name');
+      lodash.each(categoryGroups, (v, k) => {
+        const flowGroups = lodash.groupBy(v, 'name');
+        const flows = [];
+        const categoryValue = `/app/${appId}/instances/grid/monitor?additionalFilters=['category','=',${v[0].category__expand?"'" + v[0].category__expand._id + "'":null}]&flowId=&categoryId=${v[0].category__expand && v[0].category__expand._id}`;
+        let categoryIsUnfolded = false;
+        lodash.each(flowGroups, (v2, k2) => {
+          const flowValue = `/app/${appId}/instances/grid/monitor?additionalFilters=['flow','=','${v2[0]._id}']&flowId=${v2[0]._id}&categoryId=${v[0].category__expand && v[0].category__expand._id}`;
+          let flowIsUnfolded = false;
+          if(currentUrl == flowValue){
+            flowIsUnfolded = true;
+            categoryIsUnfolded = true;
+            monitorIsUnfolded = true;
+          }
+          flows.push({
+            label: k2,
+            flow_name: k2,
+            options: {
+              level: 3,
+              value: v2[0]._id,
+              name: 'flow',
+              to: flowValue,
+            },
+            value: flowValue,
+            unfolded: flowIsUnfolded
+          })
+        })
+        if(currentUrl == categoryValue){
           categoryIsUnfolded = true;
           monitorIsUnfolded = true;
         }
-        flows.push({
-          label: k2,
-          flow_name: k2,
+        output.push({
+          label: k == 'null' || k == 'undefined' || !k? "未分类" : k,
+          children: flows,
+          category_name: k == 'null' || k == 'undefined' || !k ? "未分类" : k,
           options: {
-            level: 3,
-            value: v2[0]._id,
-            name: 'flow',
-            to: flowValue,
+            level: 2,
+            value: v[0].category__expand && v[0].category__expand._id,
+            name: 'category',
+            to: categoryValue,
           },
-          value: flowValue,
-          unfolded: flowIsUnfolded
+          value: categoryValue,
+          unfolded: categoryIsUnfolded
         })
       })
-      if(currentUrl == categoryValue){
-        categoryIsUnfolded = true;
-        monitorIsUnfolded = true;
-      }
-      output.push({
-        label: k == 'null' || k == 'undefined' || !k? "未分类" : k,
-        children: flows,
-        category_name: k == 'null' || k == 'undefined' || !k ? "未分类" : k,
-        options: {
-          level: 2,
-          value: v[0].category__expand && v[0].category__expand._id,
-          name: 'category',
-          to: categoryValue,
-        },
-        value: categoryValue,
-        unfolded: categoryIsUnfolded
-      })
-    })
-    output = lodash.sortBy(output, [function (o) {
-      return lodash.findIndex(categories, (e) => {
-        return e._id == o.options.value;
-      });
-    }]);
+      output = lodash.sortBy(output, [function (o) {
+        return lodash.findIndex(categories, (e) => {
+          return e._id == o.options.value;
+        });
+      }]);
+    }
+  } catch (error) {
+    console.log(error)
   }
   return {
     schema: output,
