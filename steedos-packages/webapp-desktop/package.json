@@ -1,6 +1,6 @@
 {
   "name": "@steedos/webapp-desktop",
-  "version": "2.7.28",
+  "version": "2.7.29",
   "description": "A Steedos App",
   "main": "package.service.js",
   "license": "MIT",
@@ -9,5 +9,5 @@
     "access": "public"
   },
   "scripts": {},
-  "gitHead": "2f263f4d7e63e53ee5abe7cc0c9b5653d5558b89"
+  "gitHead": "27789f5e26f6243c722370e9e2d6ea2ad07d8daf"
 }
