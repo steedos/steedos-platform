@@ -10265,17 +10265,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-ancillary@3.0.0-beta.159, @steedos/service-ancillary@workspace:services/service-ancillary":
-  version: 0.0.0-use.local
-  resolution: "@steedos/service-ancillary@workspace:services/service-ancillary"
-  dependencies:
-    "@steedos/utils": 3.0.0-beta.159
-    express: ^4.17.1
-    express-xml-bodyparser: 0.3.0
-    xml2js: 0.4.23
-  languageName: unknown
-  linkType: soft
-
 "@steedos/service-api@3.0.0-beta.159, @steedos/service-api@workspace:services/service-api":
   version: 0.0.0-use.local
   resolution: "@steedos/service-api@workspace:services/service-api"
@@ -10330,7 +10319,6 @@ __metadata:
     "@steedos/migrate": 3.0.0-beta.159
     "@steedos/server": 3.0.0-beta.159
     "@steedos/service-accounts": 3.0.0-beta.159
-    "@steedos/service-ancillary": 3.0.0-beta.159
     "@steedos/service-api": 3.0.0-beta.159
     "@steedos/service-bull-dashboard": 3.0.0-beta.159
     "@steedos/service-cachers-manager": 3.0.0-beta.159
@@ -21225,15 +21213,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"express-xml-bodyparser@npm:0.3.0":
-  version: 0.3.0
-  resolution: "express-xml-bodyparser@npm:0.3.0"
-  dependencies:
-    xml2js: ^0.4.11
-  checksum: 37c2d2f9bc5bd748f7481423a26a334d82c352be1d58694dbc0b149e54bdcb3fc7aa70800c3bbbbbbede29c868680f2e4d4fc6990459191b5de615e263d28fec
-  languageName: node
-  linkType: hard
-
 "express@npm:4.17.1":
   version: 4.17.1
   resolution: "express@npm:4.17.1"
@@ -21346,7 +21325,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"express@npm:^4.15.4, express@npm:^4.16.4, express@npm:^4.17.1, express@npm:^4.17.3":
+"express@npm:^4.15.4, express@npm:^4.16.4, express@npm:^4.17.3":
   version: 4.21.2
   resolution: "express@npm:4.21.2"
   dependencies:
@@ -44593,16 +44572,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xml2js@npm:0.4.23, xml2js@npm:^0.4.11, xml2js@npm:^0.4.23":
-  version: 0.4.23
-  resolution: "xml2js@npm:0.4.23"
-  dependencies:
-    sax: ">=0.6.0"
-    xmlbuilder: ~11.0.0
-  checksum: ca0cf2dfbf6deeaae878a891c8fbc0db6fd04398087084edf143cdc83d0509ad0fe199b890f62f39c4415cf60268a27a6aed0d343f0658f8779bd7add690fa98
-  languageName: node
-  linkType: hard
-
 "xml2js@npm:0.4.4":
   version: 0.4.4
   resolution: "xml2js@npm:0.4.4"
@@ -44620,6 +44589,16 @@ __metadata:
     sax: ">=0.6.0"
     xmlbuilder: ~11.0.0
   checksum: 458a83806193008edff44562c0bdb982801d61ee7867ae58fd35fab781e69e17f40dfeb8fc05391a4648c9c54012066d3955fe5d993ffbe4dc63399023f32ac2
+  languageName: node
+  linkType: hard
+
+"xml2js@npm:^0.4.23":
+  version: 0.4.23
+  resolution: "xml2js@npm:0.4.23"
+  dependencies:
+    sax: ">=0.6.0"
+    xmlbuilder: ~11.0.0
+  checksum: ca0cf2dfbf6deeaae878a891c8fbc0db6fd04398087084edf143cdc83d0509ad0fe199b890f62f39c4415cf60268a27a6aed0d343f0658f8779bd7add690fa98
   languageName: node
   linkType: hard
 
