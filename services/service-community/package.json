@@ -16,7 +16,6 @@
     "@steedos/migrate": "3.0.0-beta.159",
     "@steedos/server": "3.0.0-beta.159",
     "@steedos/service-accounts": "3.0.0-beta.159",
-    "@steedos/service-ancillary": "3.0.0-beta.159",
     "@steedos/service-api": "3.0.0-beta.159",
     "@steedos/service-bull-dashboard": "3.0.0-beta.159",
     "@steedos/service-cachers-manager": "3.0.0-beta.159",

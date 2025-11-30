@@ -153,8 +153,6 @@ module.exports = {
 	  
 		  this.broker.createService(require("@steedos/service-plugin-amis"));
 	  
-		  // this.broker.createService(require("@steedos/service-ancillary"));
-	  
 		  // 启动 加载软件包服务
 		  this.broker.createService(require("@steedos/service-package-registry"));
 	  
