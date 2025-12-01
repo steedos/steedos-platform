@@ -4,8 +4,8 @@ const serviceName = project.name;
 const objectql = require("@steedos/objectql");
 const schedule = require('node-schedule');
 const path = require('path');
-const Fiber = require("fibers");
 const metaDataCore = require('@steedos/metadata-core');
+const _ = require('lodash');
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * 软件包服务启动后也需要抛出事件。
@@ -26,14 +26,14 @@ module.exports = {
 	/**
 	 * Dependencies
 	 */
-	dependencies: [],
+	dependencies: ['@steedos/server'],
 	/**
 	 * Actions
 	 */
 	actions: {
 		refreshIndexes: {
 			async handler(ctx) {
-				this.logger.debug(`refreshIndexes start`);
+				console.log(`refreshIndexes start`);
 				const objects = await ctx.call(`objects.getAll`, {});
 				for await (const object of objects) {
 					const objectAPIName = object.metadata.name;
@@ -41,24 +41,6 @@ module.exports = {
 						await objectql.getObject(objectAPIName).refreshIndexes()
 					}
 				}
-
-				const filePatten = [
-					path.join(__dirname, 'meteor-collection-indexs', "*.object.js")
-				];
-				const matchedPaths = metaDataCore.syncMatchFiles(filePatten);
-				_.each(matchedPaths, (matchedPath) => {
-					try {
-						Fiber(function () {
-							try {
-								require(matchedPath);
-							} catch (error) {
-								console.error(`refresh indexe error: ${matchedPath}`, error);
-							}
-						}).run();
-					} catch (error) {
-						console.error(`refresh indexe error: ${matchedPath}`, error);
-					}
-				});
 
 				const indexFilePatten = [
 					path.join(__dirname, 'collection-indexes', "*.index.js")
@@ -106,7 +88,7 @@ module.exports = {
 			let indexScheduleCron = "0 0 2 * * *"; // 默认每天凌晨2点
 			const steedosConfig = objectql.getSteedosConfig() || {};
 			const cron = steedosConfig.cron;
-			if (cron && cron.build_index) {
+			if (process.env.STEEDOS_CRON_ENABLED === 'true' && cron && cron.build_index) {
 				indexScheduleCron = cron.build_index;
 			}
 			if (indexScheduleCron) {

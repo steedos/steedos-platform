@@ -31,7 +31,7 @@ module.exports = {
 		jwt: {
 			enable: validator.toBoolean(process.env.STEEDOS_IDENTITY_JWT_ENABLED || 'false', true),
 		},
-		unpkg:{
+		unpkg: {
 			enable: validator.toBoolean(process.env.STEEDOS_UNPKG_ENABLE_LOCAL || 'false', true)
 		},
 		saas: {
@@ -59,24 +59,24 @@ module.exports = {
 	 * Events
 	 */
 	events: {
-        "@steedos/server.started": {
-            async handler() {
-                if (this.settings.oidc.enable ) {
-                    objectql.getSteedosConfig().setTenant({
-                        disabled_account_register: true,
-                        sso_providers: {
-                            oidc: {
-                                name: this.settings.oidc.name,
-                                label: this.settings.oidc.label,
-                                logo: this.settings.oidc.logo,
-                                url: '/api/v6/oidc/default/login'
-                            }
-                        }
-                    });
-                }
+		"@steedos/server.started": {
+			async handler() {
+				if (this.settings.oidc.enable) {
+					objectql.getSteedosConfig().setTenant({
+						disabled_account_register: true,
+						sso_providers: {
+							oidc: {
+								name: this.settings.oidc.name,
+								label: this.settings.oidc.label,
+								logo: this.settings.oidc.logo,
+								url: '/api/v6/oidc/default/login'
+							}
+						}
+					});
+				}
 
-            }
-        },
+			}
+		},
 	},
 
 	/**
@@ -101,84 +101,86 @@ module.exports = {
 			name: "@steedos/standard-objects",
 			mixins: [],
 			settings: {
-			  packageInfo: {
-				path: "./",
-			  },
+				packageInfo: {
+					path: "./",
+				},
 			},
-			started: function () {},
-			created: function () {},
-		  });
+			started: function () { },
+			created: function () { },
+		});
 		this.broker.createService({
 			name: "@steedos/standard-space",
 			mixins: [],
 			settings: {
-			  packageInfo: {
-				path: "./",
-			  },
+				packageInfo: {
+					path: "./",
+				},
 			},
-			started: function () {},
-			created: function () {},
-		  });
-		  
-		  // 国际化
-		  this.broker.createService(require("@steedos/service-i18n"));
-		  // 启动 元数据服务
-		  this.broker.createService(require("@steedos/service-metadata-server"));
-	  
-		  this.broker.createService(require("@steedos/service-cachers-manager"));
-	  
-		  this.broker.createService(require("@steedos/data-import"));
-	  
-		  this.broker.createService(require("@steedos/service-core-objects"));
-	  
-		  if ("true" == process.env.STEEDOS_ENABLE_STANDARD_ACCOUNTS) {
-				this.broker.createService(require("@steedos/standard-accounts"));
-		  }
-	  
-		  this.broker.createService(require("@steedos/service-objectql"));
-		  // rest api
-		  this.broker.createService(require("@steedos/service-rest"));
-		  //ApiGateway
-		  this.broker.createService(require("@steedos/service-api"));
-	  
-		  // TODO: 作为插件, 是否启动可选择
-		  this.broker.createService(
+			started: function () { },
+			created: function () { },
+		});
+
+		// 国际化
+		this.broker.createService(require("@steedos/service-i18n"));
+		// 启动 元数据服务
+		this.broker.createService(require("@steedos/service-metadata-server"));
+
+		this.broker.createService(require("@steedos/service-cachers-manager"));
+
+		this.broker.createService(require("@steedos/data-import"));
+
+		this.broker.createService(require("@steedos/service-core-objects"));
+
+		if ("true" == process.env.STEEDOS_ENABLE_STANDARD_ACCOUNTS) {
+			this.broker.createService(require("@steedos/standard-accounts"));
+		}
+
+		this.broker.createService(require("@steedos/service-objectql"));
+		// rest api
+		this.broker.createService(require("@steedos/service-rest"));
+		//ApiGateway
+		this.broker.createService(require("@steedos/service-api"));
+
+		// TODO: 作为插件, 是否启动可选择
+		this.broker.createService(
 			require("@steedos/metadata-api/package.service.js"),
-		  );
-	  
-		  this.broker.createService(require("@steedos/accounts/package.service"));
-	  
-		  this.broker.createService(require("@steedos/service-accounts"));
-		  this.broker.createService(require("@steedos/service-pages"));
-	  
-		  this.broker.createService(require("@steedos/service-plugin-amis"));
-	  
-		  // 启动 加载软件包服务
-		  this.broker.createService(require("@steedos/service-package-registry"));
-	  
-		  this.broker.createService(require("@steedos/standard-permission"));
-		  this.broker.createService(require("@steedos/standard-ui"));
-		  this.broker.createService(require("@steedos/standard-object-database"));
-	  
-		  // if(this.settings.jwt.enable){
-		  // 	this.broker.createService(require("@steedos/service-identity-jwt"));
-		  // }
-	  
-		  // 启动 本地 CDN
-		  this.broker.createService(require("@steedos/unpkg"));
-	  
-		  this.broker.createService(require("@steedos-builder/amis-editor"));
+		);
 
-		  this.broker.createService(require("@steedos/standard-process-approval"));
+		this.broker.createService(require("@steedos/accounts/package.service"));
 
-		  this.broker.createService(require("@steedos/service-metadata-database"));
+		this.broker.createService(require("@steedos/service-accounts"));
+		this.broker.createService(require("@steedos/service-pages"));
 
-		  this.broker.createService(require("@steedos-labs/plugin-package-store"));
+		this.broker.createService(require("@steedos/service-plugin-amis"));
 
-      this.broker.createService(require("@steedos/service-bull-dashboard"));
+		// 启动 加载软件包服务
+		this.broker.createService(require("@steedos/service-package-registry"));
 
-		  // 启动时间触发器服务
-		  this.broker.createService(require("@steedos/workflow_time_trigger"));
+		this.broker.createService(require("@steedos/standard-permission"));
+		this.broker.createService(require("@steedos/standard-ui"));
+		this.broker.createService(require("@steedos/standard-object-database"));
+
+		// if(this.settings.jwt.enable){
+		// 	this.broker.createService(require("@steedos/service-identity-jwt"));
+		// }
+
+		// 启动 本地 CDN
+		this.broker.createService(require("@steedos/unpkg"));
+
+		this.broker.createService(require("@steedos-builder/amis-editor"));
+
+		this.broker.createService(require("@steedos/standard-process-approval"));
+
+		this.broker.createService(require("@steedos/service-metadata-database"));
+
+		this.broker.createService(require("@steedos-labs/plugin-package-store"));
+
+		this.broker.createService(require("@steedos/service-bull-dashboard"));
+
+		// 启动时间触发器服务
+		this.broker.createService(require("@steedos/workflow_time_trigger"));
+
+		this.broker.createService(require("@steedos/service-fields-indexs"));
 
 		// 启动 migrate
 		await migrate.init();
@@ -188,6 +190,6 @@ module.exports = {
 	 * Service stopped lifecycle event handler
 	 */
 	async stopped() {
-		
+
 	}
 };
