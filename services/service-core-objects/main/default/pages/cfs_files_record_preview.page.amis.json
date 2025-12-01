@@ -30,7 +30,7 @@
                                         "bulletUseFont": true,
                                         "enableVar": false
                                     },
-                                    "src": "/api/v6/files/cfs.files.filerecord/${_id}/${original.name}",
+                                    "src": "/api/v6/files/cfs.files.filerecord/${_id}/${original.name}?redirect=false",
                                     "visibleOn": "${ARRAYINCLUDES(['application/vnd.openxmlformats-officedocument.wordprocessingml.document'],record.original.type)}",
                                     "className": "flex justify-center items-center h-full",
                                     "loading": true
@@ -43,7 +43,7 @@
                                         "bulletUseFont": true,
                                         "enableVar": false
                                     },
-                                    "src": "/api/v6/files/cfs.files.filerecord/${_id}/${original.name}",
+                                    "src": "/api/v6/files/cfs.files.filerecord/${_id}/${original.name}?redirect=false",
                                     "visibleOn": "${ARRAYINCLUDES(['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],record.original.type)}",
                                     "className": "office-viewer-excel",
                                     "id": "u:07ef4d92d664",
