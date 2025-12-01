@@ -64,8 +64,6 @@ jobs:
           node-version: 14
           cache: "yarn"
 
-      - run: yarn --frozen-lockfile
-
       - name: Build platform 2.7
         if: ${{ startsWith(steps.branch-name.outputs.tag, '2.7') }} 
         run: |
