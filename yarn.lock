@@ -10323,6 +10323,7 @@ __metadata:
     "@steedos/service-bull-dashboard": 3.0.0-beta.160
     "@steedos/service-cachers-manager": 3.0.0-beta.160
     "@steedos/service-core-objects": 3.0.0-beta.160
+    "@steedos/service-fields-indexs": 3.0.0-beta.160
     "@steedos/service-i18n": 3.0.0-beta.160
     "@steedos/service-identity-jwt": 3.0.0-beta.160
     "@steedos/service-metadata-database": 3.0.0-beta.160
@@ -10404,7 +10405,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-fields-indexs@workspace:services/service-fields-indexs":
+"@steedos/service-fields-indexs@3.0.0-beta.160, @steedos/service-fields-indexs@workspace:services/service-fields-indexs":
   version: 0.0.0-use.local
   resolution: "@steedos/service-fields-indexs@workspace:services/service-fields-indexs"
   dependencies:
