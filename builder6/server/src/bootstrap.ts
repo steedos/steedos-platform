@@ -124,7 +124,7 @@ export async function bootstrap() {
     },
   });
 
-  app.useStaticAssets(join(__dirname, "..", "public"));
+  // app.useStaticAssets(join(__dirname, "..", "public"));
   app.setViewEngine("hbs");
 
   app.use(cookieParser());
@@ -191,8 +191,6 @@ export async function bootstrap() {
 
   // Use express.static to serve files from the 'dist' directory
   if (webappPackagePath) {
-    expressApp.use("/", express.static(webappDistPath));
-
     const frontendRoutes = [
       "/",
       "/app",
@@ -245,6 +243,8 @@ export async function bootstrap() {
       indexHtml = indexHtml.replace("<head>", `<head>\n  ${injectedScripts}\n`);
       res.send(indexHtml);
     });
+
+    expressApp.use("/", express.static(webappDistPath));
   }
 
   await app.listen(process.env.B6_PORT ?? 5100);
