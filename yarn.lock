@@ -2837,9 +2837,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@builder6/cli@npm:3.1.0-alpha.1, @builder6/cli@npm:^3.1.0":
-  version: 3.1.0-alpha.1
-  resolution: "@builder6/cli@npm:3.1.0-alpha.1"
+"@builder6/cli@npm:3.1.1, @builder6/cli@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "@builder6/cli@npm:3.1.1"
   dependencies:
     "@oclif/core": ^4
     "@oclif/plugin-help": ^6
@@ -2847,16 +2847,16 @@ __metadata:
     fs-extra: ^11.2.0
   bin:
     b6: ./bin/run.js
-  checksum: 504a641f66068a3fc577c2f4932337e17632ef9c82ab4e793b5cb3b0cfd93f55eb777e6ae9b1a5a8d8eef581e7f3ab75e72f292a5c8eeb925ca4cd6b749221c2
+  checksum: 79b6c747c4003cea2c93cdddf01d475eeed24cca9be10702d18309b70a243fbc946cb052c4fd2d8fce74f2f26438dcc699d87a9a57907c7b9a8fd1fe7b1354cc
   languageName: node
   linkType: hard
 
-"@builder6/core@npm:3.1.0-alpha.1, @builder6/core@npm:^3.1.0":
-  version: 3.1.0-alpha.1
-  resolution: "@builder6/core@npm:3.1.0-alpha.1"
+"@builder6/core@npm:3.1.1, @builder6/core@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "@builder6/core@npm:3.1.1"
   dependencies:
     "@aws-sdk/client-cloudwatch-logs": ^3.721.0
-    "@builder6/query-mongodb": 3.1.0-alpha.1
+    "@builder6/query-mongodb": 3.1.1
     "@socket.io/redis-adapter": ^8.3.0
     socket.io-adapter: ^2.5.5
   peerDependencies:
@@ -2871,7 +2871,7 @@ __metadata:
     nestjs-pino: ^4.4.1
     pino-http: ^11.0.0
     pino-pretty: ^13.0.0
-  checksum: 07b5788cabf6ec1ca9dad5b1ae80a2d58ddec054e16a452daf9167a66d1df7abecd0f7370a73604d3da3c88e7bbef2806fedd939996414599cc2364414e2618b
+  checksum: 3abc560c651c13b4d62088cf93a6699b90a13ce9ad10d2b864f37256e7d1b4cf778e4cfa10583719e4d94aae811c09d2bb5abcf7ecd5cb803f4c9c1d3a2d668c
   languageName: node
   linkType: hard
 
@@ -2882,9 +2882,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@builder6/docs@npm:3.1.0-alpha.1, @builder6/docs@npm:^3.1.0":
-  version: 3.1.0-alpha.1
-  resolution: "@builder6/docs@npm:3.1.0-alpha.1"
+"@builder6/docs@npm:3.1.1, @builder6/docs@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "@builder6/docs@npm:3.1.1"
   dependencies:
     "@builder6/docs-client": ^3.0.4-beta.8
     aws-sdk: ^2.1692.0
@@ -2913,13 +2913,13 @@ __metadata:
     "@nestjs/platform-express": ^11.0.0
     "@nestjs/serve-static": ^5.0.3
     "@nestjs/swagger": ^11.0.7
-  checksum: dc2a05ce9f152fdb7e962f69d8057fcc9690baab5353c6e76c87624f5344ea1f6439561cd2f2d2ad1237802e973d1a6bbbba5334e661f019f0d7822dcf5d9e1f
+  checksum: cc7632629c63928c47add223d61e631a4e05f1588d6d04e16d3bea6bef8ceddcd0f1045b3887bd3a469936f23dc093a51d9b36a7730443bffd4c8cc7d11b4299
   languageName: node
   linkType: hard
 
-"@builder6/email@npm:3.1.0-alpha.1, @builder6/email@npm:^3.1.0":
-  version: 3.1.0-alpha.1
-  resolution: "@builder6/email@npm:3.1.0-alpha.1"
+"@builder6/email@npm:3.1.1, @builder6/email@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "@builder6/email@npm:3.1.1"
   dependencies:
     bluebird: ^3.7.2
     email-addresses: ^5.0.0
@@ -2931,13 +2931,13 @@ __metadata:
     "@nestjs/common": ^11.0.0
     "@nestjs/core": ^11.0.0
     "@nestjs/swagger": ^11.0.7
-  checksum: 3680dd49be672bfeef806751253db2f709f61ad29f3afe8c0170d42b9d5d897306a2745e2c2e82261ba0da5137c6f39b837fd0a0ce92c27d141421c1fdc774e7
+  checksum: fe33a1603e20ba99e5482572035cd0aa19172ec35a99b9da04558fe7cf70504ed33f42a84c5e5c756b3a9077bae9582fbdd73ad9b617a600b9dd6de1a9ece5c3
   languageName: node
   linkType: hard
 
-"@builder6/files@npm:3.1.0-alpha.1, @builder6/files@npm:^3.1.0":
-  version: 3.1.0-alpha.1
-  resolution: "@builder6/files@npm:3.1.0-alpha.1"
+"@builder6/files@npm:3.1.1, @builder6/files@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "@builder6/files@npm:3.1.1"
   dependencies:
     nodemailer: ^6.9.16
   peerDependencies:
@@ -2946,29 +2946,29 @@ __metadata:
     "@nestjs/common": ^11.0.0
     "@nestjs/core": ^11.0.0
     "@nestjs/swagger": ^11.0.7
-  checksum: 76a7dd0b882e44e3b62ab8632a70a8e587853a13bac39630b4d78bfc656eb804f8b354100c6b7b1970fe0bf47faad1020f5a6a068d3c2c8c6b2df38dffd47a3d
+  checksum: 0c04543da27f7da156cf4763883df51f31f9eae1dd7eaeb2b45c897f1af89f15c622c5631def69810feb4667520c88204e2d7e2da639a39ce557c852038ac7b3
   languageName: node
   linkType: hard
 
-"@builder6/microservices@npm:3.1.0-alpha.1, @builder6/microservices@npm:^3.1.0":
-  version: 3.1.0-alpha.1
-  resolution: "@builder6/microservices@npm:3.1.0-alpha.1"
-  checksum: e1a37336eac365a3f6e26327e217a657b21ae23d1a93be4dbbfa73e079626c88f78d9c2ff01d1278d63183a8f079fc84c28a5fd5c70553964cc2d0b6a1e82540
+"@builder6/microservices@npm:3.1.1, @builder6/microservices@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "@builder6/microservices@npm:3.1.1"
+  checksum: 3cf6de58877c6ec32288492fb66bf88a4fef2251f213e1ac1119b189e326d90105dfd43330af02c39991540085e361e2a402c0b5903a0607a9c8475be6f7b077
   languageName: node
   linkType: hard
 
-"@builder6/moleculer@npm:3.1.0-alpha.1, @builder6/moleculer@npm:^3.1.0":
-  version: 3.1.0-alpha.1
-  resolution: "@builder6/moleculer@npm:3.1.0-alpha.1"
+"@builder6/moleculer@npm:3.1.1, @builder6/moleculer@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "@builder6/moleculer@npm:3.1.1"
   peerDependencies:
     moleculer: ^0.14.35
-  checksum: 171def0589197acba434bf8d85bcc57af7c898cd8c3c4a29a003be3b8095eaa36473703594495592b6114870748370ffeb044b51df83e27e3228c253677a7e7a
+  checksum: d0c182fb994be3e969ac0e11a272800f0e8bb6022ed515eeee91acf5ee20bb11bcdc2384cb77b2d8fb7bc26b3d7056e88d110454b3b93f0962f39f7e7617c004
   languageName: node
   linkType: hard
 
-"@builder6/oidc-provider@npm:3.1.0-alpha.1, @builder6/oidc-provider@npm:^3.1.0":
-  version: 3.1.0-alpha.1
-  resolution: "@builder6/oidc-provider@npm:3.1.0-alpha.1"
+"@builder6/oidc-provider@npm:3.1.1, @builder6/oidc-provider@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "@builder6/oidc-provider@npm:3.1.1"
   dependencies:
     lodash: ^4.17.5
     oidc-provider: ^8.8.1
@@ -2978,13 +2978,13 @@ __metadata:
     "@nestjs/common": ^11.0.0
     "@nestjs/core": ^11.0.0
     "@nestjs/swagger": ^11.0.7
-  checksum: 9b1dce0b0e12d6954d17e41c8fe88874229703418b1f9b93a7f912df287d95228c06d8c0c1be1331bafb9bd42d4120ee882056df06bb378aef535e7e23c4baa9
+  checksum: 6a780a5822d80764aa44c074685a5d687476e379676e6dec3a5859528535d36a3404d5532199e3a462fe1cfdfe1370c437d6413b4843024fa61008ab145bd05b
   languageName: node
   linkType: hard
 
-"@builder6/oidc@npm:3.1.0-alpha.1, @builder6/oidc@npm:^3.1.0":
-  version: 3.1.0-alpha.1
-  resolution: "@builder6/oidc@npm:3.1.0-alpha.1"
+"@builder6/oidc@npm:3.1.1, @builder6/oidc@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "@builder6/oidc@npm:3.1.1"
   dependencies:
     ejs: ^3.1.10
     ismobilejs: ^1.1.1
@@ -2996,13 +2996,13 @@ __metadata:
     "@nestjs/common": ^11.0.0
     "@nestjs/core": ^11.0.0
     "@nestjs/swagger": ^11.0.7
-  checksum: d712ed7f933dc93ac0d1713bda3391ab4348bad8c10d32d25a0787fb9296921e70986d0903a771d5e6aa282c6918a3c8b3807a29c50ba50b5e3f048c2ae071fe
+  checksum: 94313f8d687393e74e02043f39e14de625e219c552a1aca51d6566de202be6af2eff4a10431b4b7549f12d49400f04a849fec6ca819a88f95fb8d844e85e03f2
   languageName: node
   linkType: hard
 
-"@builder6/onlyoffice@npm:3.1.0-alpha.1, @builder6/onlyoffice@npm:^3.1.0":
-  version: 3.1.0-alpha.1
-  resolution: "@builder6/onlyoffice@npm:3.1.0-alpha.1"
+"@builder6/onlyoffice@npm:3.1.1, @builder6/onlyoffice@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "@builder6/onlyoffice@npm:3.1.1"
   dependencies:
     url: ~0.11.4
   peerDependencies:
@@ -3013,13 +3013,13 @@ __metadata:
     "@nestjs/common": ^11.0.0
     "@nestjs/core": ^11.0.0
     "@nestjs/swagger": ^11.0.7
-  checksum: d72ee6c0e2f7eb94f2cd8d371e7a8da902c95d0ed015d0095b293e9dc8b772a91c0a0f4a94b4cd102eaa46850b2975f81c19840d53f093db3416b963c386df18
+  checksum: fcc77a53542e29a8ddec403960d4f3b9750d73d0e01f7fbca29cc7a6b747cb8634a2463c45a894755a66a13b0cafa578edc423f29277b29f4c148723911e2335
   languageName: node
   linkType: hard
 
-"@builder6/pages@npm:3.1.0-alpha.1, @builder6/pages@npm:^3.1.0":
-  version: 3.1.0-alpha.1
-  resolution: "@builder6/pages@npm:3.1.0-alpha.1"
+"@builder6/pages@npm:3.1.1, @builder6/pages@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "@builder6/pages@npm:3.1.1"
   dependencies:
     dataloader: ^2.2.3
     liquidjs: ^10.19.0
@@ -3029,16 +3029,16 @@ __metadata:
     "@nestjs/common": ^11.0.0
     "@nestjs/core": ^11.0.0
     "@nestjs/swagger": ^11.0.7
-  checksum: a096a51706f0fdb7b8d2a799de0f7e0b7ea5aae233eb3661dc8e5c94c470fa96d116ef6aacae2a7728ac0f0bde6692027cd7f1a8f8ba6f1dd829bf51a9ebd6ec
+  checksum: a3efff3cf88837b2439821178b380e569a68dfa93912c544b4f0b7cbe82994253aa362293ffa5ab4d7e3b8ef0cee7ff325d75d71d74f096906be0a5b7a45966a
   languageName: node
   linkType: hard
 
-"@builder6/query-mongodb@npm:3.1.0-alpha.1, @builder6/query-mongodb@npm:^3.1.0":
-  version: 3.1.0-alpha.1
-  resolution: "@builder6/query-mongodb@npm:3.1.0-alpha.1"
+"@builder6/query-mongodb@npm:3.1.1, @builder6/query-mongodb@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "@builder6/query-mongodb@npm:3.1.1"
   dependencies:
     yup: ^1.1.0
-  checksum: 00b51a871a091c1d658ed130b6106b199593d4757f52e3390c09f417aa52e01171b50e5941d274833c3a0c559817213783b9d232b9f994e4e0217ee915a569ac
+  checksum: 71670ae7f3c468906718ccbf6a6c64d94524d8973f71e0958a6992b4b77a188d489f91a06a89b67092e297d20ed9e2a1dcfbe920a7d57bed7ed869ef6441b79b
   languageName: node
   linkType: hard
 
@@ -3065,9 +3065,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@builder6/rooms@npm:3.1.0-alpha.1, @builder6/rooms@npm:^3.1.0":
-  version: 3.1.0-alpha.1
-  resolution: "@builder6/rooms@npm:3.1.0-alpha.1"
+"@builder6/rooms@npm:3.1.1, @builder6/rooms@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "@builder6/rooms@npm:3.1.1"
   dependencies:
     "@liveblocks/emails": 2.12.0
     "@liveblocks/node": 2.12.0
@@ -3090,7 +3090,7 @@ __metadata:
     "@nestjs/core": ^11.0.0
     "@nestjs/swagger": ^11.0.7
     moleculer: ^0.14.35
-  checksum: 191e13346db00de730d4890d74de001beeba64998c4c5d0404a164fe03e3e733e0e4d0ca5bcf8d93d2b9703a3f1a0a726c03ed3cfa34df804a6739d5c5eb45bd
+  checksum: 74459d26997dae8cce95338d70baf43b7e0ba7c28fef8dc15f5e2dd1f68c59ca27121fc80f0b945bc8f4fc0c78033fa8b86e635bdbc6991af7db26205f8ee634
   languageName: node
   linkType: hard
 
@@ -3105,27 +3105,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@builder6/server@npm:^3.1.0":
-  version: 3.1.0-alpha.1
-  resolution: "@builder6/server@npm:3.1.0-alpha.1"
+"@builder6/server@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "@builder6/server@npm:3.1.1"
   dependencies:
-    "@builder6/cli": 3.1.0-alpha.1
-    "@builder6/core": 3.1.0-alpha.1
-    "@builder6/docs": 3.1.0-alpha.1
-    "@builder6/email": 3.1.0-alpha.1
-    "@builder6/files": 3.1.0-alpha.1
-    "@builder6/microservices": 3.1.0-alpha.1
-    "@builder6/moleculer": 3.1.0-alpha.1
-    "@builder6/oidc": 3.1.0-alpha.1
-    "@builder6/oidc-provider": 3.1.0-alpha.1
-    "@builder6/onlyoffice": 3.1.0-alpha.1
-    "@builder6/pages": 3.1.0-alpha.1
-    "@builder6/query-mongodb": 3.1.0-alpha.1
-    "@builder6/rooms": 3.1.0-alpha.1
-    "@builder6/services": 3.1.0-alpha.1
-    "@builder6/sharepoint": 3.1.0-alpha.1
-    "@builder6/steedos": 3.1.0-alpha.1
-    "@builder6/tables": 3.1.0-alpha.1
+    "@builder6/cli": 3.1.1
+    "@builder6/core": 3.1.1
+    "@builder6/docs": 3.1.1
+    "@builder6/email": 3.1.1
+    "@builder6/files": 3.1.1
+    "@builder6/microservices": 3.1.1
+    "@builder6/moleculer": 3.1.1
+    "@builder6/oidc": 3.1.1
+    "@builder6/oidc-provider": 3.1.1
+    "@builder6/onlyoffice": 3.1.1
+    "@builder6/pages": 3.1.1
+    "@builder6/query-mongodb": 3.1.1
+    "@builder6/rooms": 3.1.1
+    "@builder6/services": 3.1.1
+    "@builder6/sharepoint": 3.1.1
+    "@builder6/steedos": 3.1.1
+    "@builder6/tables": 3.1.1
     "@nestjs/common": ^11.1.8
     "@nestjs/config": ^4.0.1
     "@nestjs/core": ^11.1.8
@@ -3175,26 +3175,26 @@ __metadata:
     sha256: ^0.2.0
     uuid: ^9.0.0
     ws: 8.13.0
-  checksum: 770b75332f1f5e405c47a96ce6b85e6be12f7c153b17d3c507879b318e3e322d51c4e32b424c63c2e2ebf59a02529f76bc18536b0bd4c3275e1753d857939a0b
+  checksum: b1e4bea0ad3e95aa181acce9e2ef0e8f62bd207606bde0f1390743f688133f5a5e469306c831b606b8c9ef58fa07e98bc23248e0fedceaf107f78a23f426e7ed
   languageName: node
   linkType: hard
 
-"@builder6/services@npm:3.1.0-alpha.1, @builder6/services@npm:^3.1.0":
-  version: 3.1.0-alpha.1
-  resolution: "@builder6/services@npm:3.1.0-alpha.1"
+"@builder6/services@npm:3.1.1, @builder6/services@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "@builder6/services@npm:3.1.1"
   peerDependencies:
     "@builder6/core": ^3.0.10
     "@builder6/moleculer": ^3.0.10
     "@nestjs/common": ^11.0.0
     "@nestjs/core": ^11.0.0
     "@nestjs/swagger": ^11.0.7
-  checksum: 6442174c7781dfcd9bfe30673eeebe210b362ff8503a9d7ee94ba642cf6cd7353276cfe25244c9bfd1ec48858966e0db80d9a975422fae24ee69ba7a46bec1f1
+  checksum: 5e6100a2834b6a208400b7308b9add17be6a72da638c2bf49347178d86dc2062bf022bf2c2f7a26afd575bfc2c9db2d90e896ceb57ad890b1d6080f11a4056bc
   languageName: node
   linkType: hard
 
-"@builder6/sharepoint@npm:3.1.0-alpha.1, @builder6/sharepoint@npm:^3.1.0":
-  version: 3.1.0-alpha.1
-  resolution: "@builder6/sharepoint@npm:3.1.0-alpha.1"
+"@builder6/sharepoint@npm:3.1.1, @builder6/sharepoint@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "@builder6/sharepoint@npm:3.1.1"
   dependencies:
     form-data: ^4.0.1
     line-reader: ^0.4.0
@@ -3206,13 +3206,13 @@ __metadata:
     "@nestjs/common": ^11.0.0
     "@nestjs/core": ^11.0.0
     "@nestjs/swagger": ^11.0.7
-  checksum: 285894132937dc4ca7d04b28a681bec635079f7178815a34b0c9f5c1eba5030e457c8bbfc5f817a032accb94ef1abd46bf93b217872491a9a60f71931b2ca0bb
+  checksum: eb6a1ec5a25a6f2b37618293571c480debf8f7294a918ed06fd55fbcf276d86013d4aad54a42a5b332e52eafbf7dda749cb0cd127a69e6742380576b75f9f661
   languageName: node
   linkType: hard
 
-"@builder6/steedos@npm:3.1.0-alpha.1, @builder6/steedos@npm:^3.1.0":
-  version: 3.1.0-alpha.1
-  resolution: "@builder6/steedos@npm:3.1.0-alpha.1"
+"@builder6/steedos@npm:3.1.1, @builder6/steedos@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "@builder6/steedos@npm:3.1.1"
   peerDependencies:
     "@builder6/core": ^3.0.10
     "@builder6/files": ^3.0.10
@@ -3220,13 +3220,13 @@ __metadata:
     "@nestjs/common": ^11.0.0
     "@nestjs/core": ^11.0.0
     "@nestjs/swagger": ^11.0.7
-  checksum: 072b14a644c5ed70a169f442c316b134a00430c99192b2db705961a8d47bb06e99fdc8e339ebc27f92d66345d15ee015069ae043b937fbd327fbfc741e290b4b
+  checksum: d998f9387c9f78a6a3b64bc7df8d7dbec80737c7fa16a4962b063b5f40bb19ce12b95615912e6843089bfa57c290e00c4feb75cef7219ea39d64fd2ee15fdd16
   languageName: node
   linkType: hard
 
-"@builder6/tables@npm:3.1.0-alpha.1, @builder6/tables@npm:^3.1.0":
-  version: 3.1.0-alpha.1
-  resolution: "@builder6/tables@npm:3.1.0-alpha.1"
+"@builder6/tables@npm:3.1.1, @builder6/tables@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "@builder6/tables@npm:3.1.1"
   dependencies:
     dataloader: ^2.2.3
   peerDependencies:
@@ -3237,7 +3237,7 @@ __metadata:
     "@nestjs/common": ^11.0.0
     "@nestjs/core": ^11.0.0
     "@nestjs/swagger": ^11.0.7
-  checksum: 0ff2fa914ee7b04b7596ac944e1fb1b4eca7931bd9ce327791c24f229b00f315a372a0e5a8766c2c8f36702f4313b6c2847a7dc276e998630353934bad851191
+  checksum: a89f1e898a09b97578c27cd84e71e94423f14fbcc25eb4242bdf8554ac61433362b6dda7abaa8b7c8ac3a59b26e2061e69dddf47ab0653e8f79f3c4f1f6670b9
   languageName: node
   linkType: hard
 
@@ -9708,8 +9708,8 @@ __metadata:
     openai: ^6.8.1
     typescript: 5.7.3
   peerDependencies:
-    "@builder6/core": ^3.1.0
-    "@builder6/moleculer": ^3.1.0
+    "@builder6/core": ^3.1.1
+    "@builder6/moleculer": ^3.1.1
     "@nestjs/common": ^11.0.0
     "@nestjs/core": ^11.0.0
     "@nestjs/swagger": ^11.0.7
@@ -10158,24 +10158,24 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@steedos/server@workspace:builder6/server"
   dependencies:
-    "@builder6/cli": ^3.1.0
-    "@builder6/core": ^3.1.0
-    "@builder6/docs": ^3.1.0
-    "@builder6/email": ^3.1.0
-    "@builder6/files": ^3.1.0
-    "@builder6/microservices": ^3.1.0
-    "@builder6/moleculer": ^3.1.0
-    "@builder6/oidc": ^3.1.0
-    "@builder6/oidc-provider": ^3.1.0
-    "@builder6/onlyoffice": ^3.1.0
-    "@builder6/pages": ^3.1.0
-    "@builder6/query-mongodb": ^3.1.0
-    "@builder6/rooms": ^3.1.0
-    "@builder6/server": ^3.1.0
-    "@builder6/services": ^3.1.0
-    "@builder6/sharepoint": ^3.1.0
-    "@builder6/steedos": ^3.1.0
-    "@builder6/tables": ^3.1.0
+    "@builder6/cli": ^3.1.1
+    "@builder6/core": ^3.1.1
+    "@builder6/docs": ^3.1.1
+    "@builder6/email": ^3.1.1
+    "@builder6/files": ^3.1.1
+    "@builder6/microservices": ^3.1.1
+    "@builder6/moleculer": ^3.1.1
+    "@builder6/oidc": ^3.1.1
+    "@builder6/oidc-provider": ^3.1.1
+    "@builder6/onlyoffice": ^3.1.1
+    "@builder6/pages": ^3.1.1
+    "@builder6/query-mongodb": ^3.1.1
+    "@builder6/rooms": ^3.1.1
+    "@builder6/server": ^3.1.1
+    "@builder6/services": ^3.1.1
+    "@builder6/sharepoint": ^3.1.1
+    "@builder6/steedos": ^3.1.1
+    "@builder6/tables": ^3.1.1
     "@nestjs/cli": ^11.0.0
     "@nestjs/common": ^11.1.8
     "@nestjs/config": ^4.0.1

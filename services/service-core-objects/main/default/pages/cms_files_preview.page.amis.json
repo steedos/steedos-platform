@@ -29,7 +29,7 @@
                                         "bulletUseFont": true,
                                         "enableVar": false
                                     },
-                                    "src": "/api/v6/files/cfs.files.filerecord/${versions[0].value}/${name}",
+                                    "src": "/api/v6/files/cfs.files.filerecord/${versions[0].value}/${name}?redirect=false",
                                     "visibleOn": "${ARRAYINCLUDES(['docx'],extention)}",
                                     "className": "flex justify-center items-center h-full",
                                     "loading": true
@@ -42,7 +42,7 @@
                                         "bulletUseFont": true,
                                         "enableVar": false
                                     },
-                                    "src": "/api/v6/files/cfs.files.filerecord/${versions[0].value}/${name}",
+                                    "src": "/api/v6/files/cfs.files.filerecord/${versions[0].value}/${name}?redirect=false",
                                     "visibleOn": "${ARRAYINCLUDES(['xlsx'],extention)}",
                                     "className": "office-viewer-excel",
                                     "id": "u:07ef4d92d664",
