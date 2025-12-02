@@ -9612,16 +9612,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos-labs/analytics@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "@steedos-labs/analytics@npm:3.1.0"
+"@steedos-labs/analytics@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "@steedos-labs/analytics@npm:3.1.1"
   dependencies:
     "@steedos/utils": ^2.5.11-beta.10
     date-fns: ^3.3.1
     luxon: ^3.4.4
     moment-timezone: ^0.5.43
     ttag: ^1.7.29
-  checksum: a3c57a44cdef63778748d07104adf565ebce79ea8d8b7c4052883ae516c0036267d29474e5dd0e9016829217d6b25f1c22889273921e93c2887229fe32464bfd
+  checksum: 3a2d11146cfef7e70031a4508ae42db66a54a84dfcc8f5450751928f94d66924fa9646657ce5f30d5756c3908de9b40189b558b617ff5e0b8515402041cec5ed
   languageName: node
   linkType: hard
 
@@ -10390,7 +10390,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@steedos/service-enterprise@workspace:ee/service-enterprise"
   dependencies:
-    "@steedos-labs/analytics": ^3.1.0
+    "@steedos-labs/analytics": ^3.1.1
     "@steedos-labs/plugin-print-template": ^3.0.2
     "@steedos-labs/plugin-workflow": ^3.0.1-beta.5
     "@steedos/ee_branding": 3.0.0-beta.163
