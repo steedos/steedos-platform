@@ -52,8 +52,10 @@ fields:
     options:
       - label: 列表
         value: grid
-      - label: ' 日历视图'
+      - label: 日历
         value: calendar
+      - label: 时间线
+        value: timeline
     description: 
   scrolling_mode:
     label: 滚动条样式

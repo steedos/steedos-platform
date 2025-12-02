@@ -1,0 +1,25 @@
+name: calendar_current_view
+filterable: true
+index: false
+is_wide: false
+label: 默认视图
+required: false
+sortable: false
+type: select
+options:
+  - label: 月视图
+    value: dayGridMonth
+  - label: 周视图
+    value: timeGridWeek
+  - label: 日视图
+    value: timeGridDay
+  - label: 月时间线视图
+    value: resourceTimelineMonth
+  - label: 周时间线视图
+    value: resourceTimelineWeek
+  - label: 日时间线视图
+    value: resourceTimelineDay
+group: 日历
+sort_no: 830
+# visible_on: ${type == 'calendar' || type == 'timeline'}
+visible_on: ${false}

@@ -6,6 +6,8 @@ options:
     value: grid
   - label: Calendar
     value: calendar
-defaultValue: '"grid"'
-hidden: true
-sort_no: 180
+  - label: Timeline
+    value: timeline
+defaultValue: grid
+hidden: false
+sort_no: 230

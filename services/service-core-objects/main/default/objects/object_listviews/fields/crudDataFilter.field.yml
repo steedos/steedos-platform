@@ -6,5 +6,5 @@ is_wide: true
 inlineHelpText: |
   重写列表crud配置，函数签名：(crud, env, data) => crud 
 group: advanced
-sort_no: 420
+sort_no: 920
 

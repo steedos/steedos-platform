@@ -3,5 +3,5 @@ label: Enable amis_schema
 type: boolean
 group: advanced
 required: false
-sort_no: 420
+sort_no: 920
 hidden: true
