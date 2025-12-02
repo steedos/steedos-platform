@@ -23,7 +23,6 @@
     "ioredis": "^4.22.0",
     "lodash": "^4.17.21",
     "moleculer": "^0.14.35",
-    "moleculer-web": "^0.10.4",
     "tslib": "^2.4.0"
   },
   "devDependencies": {

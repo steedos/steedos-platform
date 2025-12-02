@@ -55,7 +55,6 @@
     "@nestjs/websockets": "^11.1.8",
     "@steedos/ai": "3.0.0-beta.162",
     "@steedos/auth": "3.0.0-beta.162",
-    "@steedos/ee_unpkg": "1.1.0",
     "@steedos/objectql": "3.0.0-beta.162",
     "@steedos/service-community": "3.0.0-beta.162",
     "@steedos/service-enterprise": "3.0.0-beta.162",
@@ -101,7 +100,6 @@
   "devDependencies": {
     "@nestjs/cli": "^11.0.0",
     "@nestjs/testing": "^11.0.0",
-    "@types/express": "^5.0.0",
     "@types/jest": "^29.5.2",
     "@types/multer": "^1.4.12",
     "@types/node": "^20.3.1",

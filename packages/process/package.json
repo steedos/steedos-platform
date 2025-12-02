@@ -17,7 +17,7 @@
   "dependencies": {
     "@steedos/auth": "3.0.0-beta.162",
     "@steedos/objectql": "3.0.0-beta.162",
-    "express": "4.18.1"
+    "express": "^5.1.0"
   },
   "gitHead": "824214cba3a8290604d98fb43ca1dc900abf3dd3"
 }

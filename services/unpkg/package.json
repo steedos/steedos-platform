@@ -6,5 +6,8 @@
   "publishConfig": {
     "access": "public"
   },
+  "dependencies": {
+    "@steedos/ee_unpkg": "3.0.0"
+  },
   "gitHead": "824214cba3a8290604d98fb43ca1dc900abf3dd3"
 }

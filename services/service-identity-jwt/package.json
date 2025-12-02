@@ -12,7 +12,7 @@
     "repository": {},
     "dependencies": {
         "@steedos/accounts": "3.0.0-beta.162",
-        "express": "4.18.1",
+        "express": "^5.1.0",
         "jsonwebtoken": "8.5.1",
         "passport": "^0.6.0",
         "passport-jwt": "^4.0.0"
