@@ -1,0 +1,19 @@
+name: object_listviews_check_license
+hidden: true
+listenTo: object_listviews
+when:
+  - beforeInsert
+  - beforeUpdate
+isEnabled: true
+handler: >-
+  
+  const { doc, spaceId } = ctx.params;
+
+  let needToCheck = doc.type === "calendar" || doc.type === "timeline";
+
+  if (needToCheck) {
+      const allow = await ctx.broker.call(`@steedos/service-license.isPlatformProfessional`, { spaceId });
+      if (!allow) {
+        throw new Error('object_listviews__error_type_need_platform_enterprise');
+      }
+  }
