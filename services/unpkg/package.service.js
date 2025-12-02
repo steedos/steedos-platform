@@ -7,7 +7,6 @@
 const project = require('./package.json');
 const packageName = project.name;
 const packageLoader = require('@steedos/service-package-loader');
-const express = require('express');
 const fs = require('fs')
 const path = require('path')
 
@@ -71,7 +70,7 @@ module.exports = {
 					router.use("/", unpkgApp);
 				}
 
-				router.get('/unpkg.com/*', (req, res) => {
+				router.get('/unpkg.com/*unpkg', (req, res) => {
 					const packageUrl = req.path.split('/unpkg.com')[1]
 					res.redirect(process.env.STEEDOS_UNPKG_URL + packageUrl);
 					return

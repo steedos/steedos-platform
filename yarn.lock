@@ -9605,23 +9605,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos-builder/amis-editor@npm:6.3.0-beta.16":
-  version: 6.3.0-beta.16
-  resolution: "@steedos-builder/amis-editor@npm:6.3.0-beta.16"
-  checksum: c5a26c96a33aa33cdb2480a5ff231d9583f263a8fb50e164ac8ae56118102559b11563c146e95f45fd2ac9c97466578a4dd3aa08840474c61e9e54fca893afa0
+"@steedos-builder/amis-editor@npm:6.10.0-beta.1":
+  version: 6.10.0-beta.1
+  resolution: "@steedos-builder/amis-editor@npm:6.10.0-beta.1"
+  checksum: 7b42db01a933e843eff4c0d90a0bdc9ded995f422facbbbb6f701f7f0deb598b10e3a5588cb6b7c0aaa55e126972a178dd712a59bfe295ae2e2429471f3245a1
   languageName: node
   linkType: hard
 
-"@steedos-labs/analytics@npm:^3.0.12":
-  version: 3.0.12
-  resolution: "@steedos-labs/analytics@npm:3.0.12"
+"@steedos-labs/analytics@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "@steedos-labs/analytics@npm:3.1.0"
   dependencies:
     "@steedos/utils": ^2.5.11-beta.10
     date-fns: ^3.3.1
     luxon: ^3.4.4
     moment-timezone: ^0.5.43
     ttag: ^1.7.29
-  checksum: 6c852f891bd994c1b27badae76da374af8d512a18c65ceb0a533181bc90ff031b0f5a0c01b011aa211efbcff489d8d79a8f03d32ddee116868b18394cb093407
+  checksum: a3c57a44cdef63778748d07104adf565ebce79ea8d8b7c4052883ae516c0036267d29474e5dd0e9016829217d6b25f1c22889273921e93c2887229fe32464bfd
   languageName: node
   linkType: hard
 
@@ -10308,7 +10308,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@steedos/service-community@workspace:services/service-community"
   dependencies:
-    "@steedos-builder/amis-editor": 6.3.0-beta.16
+    "@steedos-builder/amis-editor": 6.10.0-beta.1
     "@steedos-labs/plugin-package-store": ^1.0.10
     "@steedos/data-import": 3.0.0-beta.162
     "@steedos/migrate": 3.0.0-beta.162
@@ -10390,7 +10390,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@steedos/service-enterprise@workspace:ee/service-enterprise"
   dependencies:
-    "@steedos-labs/analytics": ^3.0.12
+    "@steedos-labs/analytics": ^3.1.0
     "@steedos-labs/plugin-print-template": ^3.0.2
     "@steedos-labs/plugin-workflow": ^3.0.1-beta.5
     "@steedos/ee_branding": 3.0.0-beta.162
