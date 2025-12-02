@@ -10,9 +10,10 @@ fields:
     label: Client
     reference_to: users
     index: true
-    readonly: true
-    defaultValue: "{{ global.userId }}"
-    visible_on: "{{global.mode ==='read' ? true : false}}"
+    readonly: false
+    defaultValue: "${global.userId}"
+    amis:
+       "staticOn": "${!(global.user.is_space_admin|| ARRAYINCLUDES(global.user.roles,'organization_admin'))}"
     name: from
     is_name: true
     filterable: true
@@ -39,7 +40,7 @@ fields:
   enabled:
     type: boolean
     label: Enabled
-    defaultValue: false
+    defaultValue: true
     name: enabled
 list_views:
   all:
