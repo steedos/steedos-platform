@@ -13,9 +13,11 @@ const clone = require("clone");
 const validator = require("validator");
 const yaml = require("js-yaml");
 
-process.env.B6_LOG_MONGO_ENABLED = process.env.STEEDOS_LICENSE
-  ? "true"
-  : "false";
+if (isEmpty(process.env.B6_LOG_MONGO_ENABLED)) {
+  process.env.B6_LOG_MONGO_ENABLED = process.env.STEEDOS_LICENSE
+    ? "true"
+    : "false";
+}
 
 if (isEmpty(process.env.STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN)) {
   process.env.STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN = "true";
