@@ -45,8 +45,14 @@ Steedos.StandardObjects = {
                 }
             },
             standard_delete_many:{
-                visible: function (object_name, record_id, permissions) {
+                visible: function (object_name, record_id, permissions, props) {
                     if(Steedos.isMobile()){
+                        return false;
+                    }
+                    var listviews = props && props.uiSchema && props.uiSchema.list_views;
+                    var listName = props && props.listName;
+                    var listviewType = listviews && listName && listviews[listName] && listviews[listName].type;
+                    if (listviewType == "calendar" || listviewType == "timeline") {
                         return false;
                     }
                     return permissions && permissions["allowDelete"];
@@ -206,6 +212,12 @@ Steedos.StandardObjects = {
             },
             standard_export_excel:{
                 visible: function(objectName,  record_id, record_permissions, props){
+                    var listviews = props && props.uiSchema && props.uiSchema.list_views;
+                    var listName = props && props.listName;
+                    var listviewType = listviews && listName && listviews[listName] && listviews[listName].type;
+                    if (listviewType == "calendar" || listviewType == "timeline") {
+                        return false;
+                    }
                     return !props._isRelated && record_permissions.allowExport;
                 }
             }
