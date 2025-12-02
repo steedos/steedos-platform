@@ -55,6 +55,8 @@ fields:
     options:
       - label: Grid
         value: grid
+      - label: Cards
+        value: cards
       - label: Calendar
         value: calendar
       - label: Timeline

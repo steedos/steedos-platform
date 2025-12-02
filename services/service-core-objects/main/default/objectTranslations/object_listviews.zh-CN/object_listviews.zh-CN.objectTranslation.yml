@@ -52,6 +52,8 @@ fields:
     options:
       - label: 列表
         value: grid
+      - label: 卡片
+        value: cards
       - label: 日历
         value: calendar
       - label: 时间线

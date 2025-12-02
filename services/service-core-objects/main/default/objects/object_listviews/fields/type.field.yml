@@ -4,6 +4,8 @@ type: select
 options:
   - label: Grid
     value: grid
+  - label: Cards
+    value: cards
   - label: Calendar
     value: calendar
   - label: Timeline
@@ -11,3 +13,4 @@ options:
 defaultValue: grid
 hidden: false
 sort_no: 230
+required: true
