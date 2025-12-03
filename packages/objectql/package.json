@@ -1,6 +1,6 @@
 {
   "name": "@steedos/objectql",
-  "version": "3.0.0-beta.163",
+  "version": "3.0.1",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -15,16 +15,16 @@
   "dependencies": {
     "@salesforce/kit": "1.0.4",
     "@salesforce/ts-types": "1.1.1",
-    "@steedos/cachers": "3.0.0-beta.163",
-    "@steedos/filters": "3.0.0-beta.163",
-    "@steedos/formula": "3.0.0-beta.163",
-    "@steedos/i18n": "3.0.0-beta.163",
-    "@steedos/metadata-core": "3.0.0-beta.163",
-    "@steedos/metadata-registrar": "3.0.0-beta.163",
-    "@steedos/odata-v4-mongodb": "3.0.0-beta.163",
-    "@steedos/odata-v4-sql": "3.0.0-beta.163",
-    "@steedos/odata-v4-typeorm": "3.0.0-beta.163",
-    "@steedos/schemas": "3.0.0-beta.163",
+    "@steedos/cachers": "3.0.1",
+    "@steedos/filters": "3.0.1",
+    "@steedos/formula": "3.0.1",
+    "@steedos/i18n": "3.0.1",
+    "@steedos/metadata-core": "3.0.1",
+    "@steedos/metadata-registrar": "3.0.1",
+    "@steedos/odata-v4-mongodb": "3.0.1",
+    "@steedos/odata-v4-sql": "3.0.1",
+    "@steedos/odata-v4-typeorm": "3.0.1",
+    "@steedos/schemas": "3.0.1",
     "amis-formula": "~6.3.0",
     "app-root-path": "^2.2.1",
     "axios": "^1.13.2",
@@ -38,19 +38,18 @@
     "graphql": "^15.8.0",
     "graphql-parse-resolve-info": "^4.12.3",
     "jsen": "^0.6.6",
-    "jsonwebtoken": "8.5.1",
+    "jsonwebtoken": "9.0.1",
     "lodash": "^4.17.21",
     "mingo": "^6.0.5",
     "moment": "^2.29.1",
     "mongodb": "^3.7.3",
     "mongodb-uri": "^0.9.7",
-    "node-fetch": "2",
+    "node-fetch": "3",
     "reflect-metadata": "^0.2.0",
-    "routing-controllers": "^0.7.7",
     "sequelize": "6.37.7",
     "tslib": "^2.4.0",
-    "typeorm": "0.2.28",
-    "underscore": "1.5.2",
+    "typeorm": "0.3.26",
+    "underscore": "1.13.7",
     "vm2": "^3.9.17"
   },
   "devDependencies": {
@@ -62,5 +61,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "41c1872174acf9e2114eb57463cd7e70c217a51b"
+  "gitHead": "4bbcc1f1ba098d299f5c363e67679f001f715575"
 }

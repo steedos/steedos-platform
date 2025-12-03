@@ -16,7 +16,7 @@
     "dotenv": "10.0.0",
     "mongodb": "^3.7.4",
     "mongodb-connection-string-url": "^3.0.2",
-    "nodemailer": "6.7.5",
+    "nodemailer": "7.0.11",
     "readline-sync": "1.4.10",
     "shelljs": "0.8.5"
   },

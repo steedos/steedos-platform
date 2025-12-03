@@ -1,6 +1,6 @@
 {
   "name": "@steedos/server",
-  "version": "3.0.0-beta.163",
+  "version": "3.0.1",
   "description": "",
   "author": "",
   "license": "AGPL-3.0-only",
@@ -53,12 +53,12 @@
     "@nestjs/serve-static": "^5.0.0",
     "@nestjs/swagger": "^11.1.8",
     "@nestjs/websockets": "^11.1.8",
-    "@steedos/ai": "3.0.0-beta.163",
-    "@steedos/auth": "3.0.0-beta.163",
-    "@steedos/objectql": "3.0.0-beta.163",
-    "@steedos/service-community": "3.0.0-beta.163",
-    "@steedos/service-enterprise": "3.0.0-beta.163",
-    "@steedos/webapp": "3.0.0-beta.163",
+    "@steedos/ai": "3.0.1",
+    "@steedos/auth": "3.0.1",
+    "@steedos/objectql": "3.0.1",
+    "@steedos/service-community": "3.0.1",
+    "@steedos/service-enterprise": "3.0.1",
+    "@steedos/webapp": "3.0.1",
     "@types/multer": "^1.4.12",
     "aws-sdk": "^2.1692.0",
     "axios": "^1.13.2",
@@ -78,7 +78,7 @@
     "mime-types": "^2.1.35",
     "moleculer": "^0.14.35",
     "mongodb": "^3.7.3",
-    "multer": "^1.4.5-lts.1",
+    "multer": "^2.0.2",
     "nestjs-pino": "^4.4.1",
     "nopt": "5.0.0",
     "passport": "^0.7.0",
@@ -94,7 +94,7 @@
     "rxjs": "^7.8.1",
     "sha256": "^0.2.0",
     "uuid": "^9.0.0",
-    "ws": "8.13.0",
+    "ws": "8.18.0",
     "zod": "^4.1.12"
   },
   "devDependencies": {
@@ -139,5 +139,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "41c1872174acf9e2114eb57463cd7e70c217a51b"
+  "gitHead": "4bbcc1f1ba098d299f5c363e67679f001f715575"
 }

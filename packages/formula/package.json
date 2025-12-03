@@ -1,6 +1,6 @@
 {
   "name": "@steedos/formula",
-  "version": "3.0.0-beta.163",
+  "version": "3.0.1",
   "description": "Salesforce Formula Parser",
   "main": "lib/formulon.js",
   "files": [
@@ -36,14 +36,14 @@
     "@babel/register": "^7.8.3",
     "@commitlint/config-conventional": "^11.0.0",
     "commitlint": "^11.0.0",
-    "glob": "^7.1.6",
+    "glob": "^13.0.0",
     "pegjs": "^0.10.0",
     "rollup": "^2.26.5",
     "rollup-plugin-terser": "^7.0.0",
-    "semantic-release": "^17.0.4"
+    "semantic-release": "^25.0.2"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "41c1872174acf9e2114eb57463cd7e70c217a51b"
+  "gitHead": "4bbcc1f1ba098d299f5c363e67679f001f715575"
 }
