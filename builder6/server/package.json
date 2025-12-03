@@ -94,7 +94,7 @@
     "rxjs": "^7.8.1",
     "sha256": "^0.2.0",
     "uuid": "^9.0.0",
-    "ws": "8.18.0",
+    "ws": "^8.18.3",
     "zod": "^4.1.12"
   },
   "devDependencies": {
@@ -117,7 +117,7 @@
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
     "typescript": "5.7.3",
-    "webpack": "^5.97.1"
+    "webpack": "^5.103.0"
   },
   "jest": {
     "moduleFileExtensions": [
