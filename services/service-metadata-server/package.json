@@ -18,7 +18,7 @@
     "@steedos/service-metadata-triggers": "3.0.0-beta.163",
     "@steedos/service-packages": "3.0.0-beta.163",
     "lodash": "^4.17.21",
-    "underscore": "1.13.4"
+    "underscore": "1.13.7"
   },
   "devDependencies": {
     "typescript": "5.7.3"

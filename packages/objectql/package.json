@@ -38,7 +38,7 @@
     "graphql": "^15.8.0",
     "graphql-parse-resolve-info": "^4.12.3",
     "jsen": "^0.6.6",
-    "jsonwebtoken": "8.5.1",
+    "jsonwebtoken": "9.0.0",
     "lodash": "^4.17.21",
     "mingo": "^6.0.5",
     "moment": "^2.29.1",
@@ -49,8 +49,8 @@
     "routing-controllers": "^0.7.7",
     "sequelize": "6.37.7",
     "tslib": "^2.4.0",
-    "typeorm": "0.2.28",
-    "underscore": "1.5.2",
+    "typeorm": "0.3.26",
+    "underscore": "1.13.7",
     "vm2": "^3.9.17"
   },
   "devDependencies": {
