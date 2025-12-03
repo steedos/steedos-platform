@@ -25,7 +25,7 @@
     "core-js": "^3.33.3",
     "faker": "^5.5.3",
     "k6": "^0.0.0",
-    "webpack": "^5.89.0"
+    "webpack": "^5.94.0"
   },
   "devDependencies": {
     "webpack-cli": "^5.1.4",

@@ -17,7 +17,7 @@
     "build-assets": "cp src/assets.json dist"
   },
   "dependencies": {
-    "@babel/runtime": "7.12.18",
+    "@babel/runtime": "7.28.4",
     "lodash": "4.17.21",
     "moment": "^2.24.0"
   },
