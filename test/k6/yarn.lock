@@ -1506,7 +1506,7 @@ dd-trace@3.7.1:
     koalas "^1.0.2"
     limiter "^1.1.4"
     lodash.kebabcase "^4.1.1"
-    lodash.pick "^4.4.0"
+    lodash.pick "^4.17.19"
     lodash.sortby "^4.7.0"
     lodash.uniq "^4.5.0"
     lru-cache "^7.14.0"
