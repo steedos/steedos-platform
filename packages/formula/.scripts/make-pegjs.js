@@ -4,6 +4,7 @@ const { basename } = require('path');
 const { readFileSync, writeFileSync } = require('fs');
 
 glob('grammars/**/*.pegjs', {},(err, files) => {
+  console.log('Generating PEG.js parsers...', files);
   if(err) {
     console.error(err);
     process.exit(1);
