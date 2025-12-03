@@ -2726,12 +2726,12 @@ export class SteedosObjectType extends SteedosObjectProperties {
     );
     let userObjectUnreadableFields = userObjectPermission.unreadable_fields;
     if (userObjectUnreadableFields.length > 0) {
-      let queryFields = [];
+      let queryFields = [] as any;
 
       if (_.isArray(query.fields)) {
         queryFields = query.fields;
       } else if (_.isString(query.fields)) {
-        queryFields = query.fields.split(",");
+        queryFields = (query.fields as string).split(",");
       }
 
       if (!(query.fields && query.fields.length)) {
