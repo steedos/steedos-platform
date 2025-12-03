@@ -27,7 +27,7 @@ async function createIndexIfNotExists(collection, indexName, indexFields, option
             await collection.createIndex(indexFields, indexOptions)
             console.log(`索引 ${indexName} 创建成功`)
         } else {
-            console.log(`索引 ${indexName} 已存在`)
+            // console.log(`索引 ${indexName} 已存在`)
         }
     } catch (error) {
         console.error(`创建索引 ${indexName} 时出错:`, error)
