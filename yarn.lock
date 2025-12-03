@@ -9685,7 +9685,7 @@ __metadata:
     lodash: ^4.17.21
     mem: ^5.1.1
     mongodb: ^3.7.3
-    nodemailer: ^6.3.0
+    nodemailer: ^7.0.11
     pug: ^3.0.2
     request-ip: ^2.2.0
     string-random: ^0.1.3
@@ -31666,10 +31666,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nodemailer@npm:^6.3.0, nodemailer@npm:^6.9.16":
+"nodemailer@npm:^6.9.16":
   version: 6.10.1
   resolution: "nodemailer@npm:6.10.1"
   checksum: 39e9208e13c40b58c59242205bce855e74def25d953070ab6a5b1c23b0bf37df0725b3c6dea52d4220e2e60dd1fffcd486a697dece79afdf98842aae6395d393
+  languageName: node
+  linkType: hard
+
+"nodemailer@npm:^7.0.11":
+  version: 7.0.11
+  resolution: "nodemailer@npm:7.0.11"
+  checksum: 02940a5a620e219522c049f54f69af7abdc99c2ec168f592d3c67e26980a9857d7c45c65989cbd835af2c0ffabc66c20198aff484197566385594b2653069cb8
   languageName: node
   linkType: hard
 
