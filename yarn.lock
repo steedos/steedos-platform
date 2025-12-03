@@ -10026,7 +10026,7 @@ __metadata:
     "@babel/register": ^7.8.3
     "@commitlint/config-conventional": ^11.0.0
     commitlint: ^11.0.0
-    glob: ^13.0.0
+    glob: ^9.3.5
     pegjs: ^0.10.0
     rollup: ^2.26.5
     rollup-plugin-terser: ^7.0.0
@@ -10090,7 +10090,7 @@ __metadata:
     compressing: ^1.5.1
     dotenv-flow: ^3.2.0
     eval: ^0.1.4
-    glob: ^10.0.0
+    glob: ^10.5.0
     globby: ^11.1.0
     graceful-fs: 4.2.10
     ini: ^2.0.0
@@ -10117,7 +10117,7 @@ __metadata:
     compressing: ^1.5.1
     dotenv-flow: ^3.2.0
     eval: ^0.1.4
-    glob: ^10.0.0
+    glob: ^10.5.0
     ini: ^2.0.0
     ioredis: ^5.3.2
     js-yaml: ^3.14.2
@@ -23035,22 +23035,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:^10.0.0":
-  version: 10.5.0
-  resolution: "glob@npm:10.5.0"
-  dependencies:
-    foreground-child: ^3.1.0
-    jackspeak: ^3.1.2
-    minimatch: ^9.0.4
-    minipass: ^7.1.2
-    package-json-from-dist: ^1.0.0
-    path-scurry: ^1.11.1
-  bin:
-    glob: dist/esm/bin.mjs
-  checksum: cda96c074878abca9657bd984d2396945cf0d64283f6feeb40d738fe2da642be0010ad5210a1646244a5fc3511b0cab5a374569b3de5a12b8a63d392f18c6043
-  languageName: node
-  linkType: hard
-
 "glob@npm:^10.2.2, glob@npm:^10.3.10, glob@npm:^10.4.5":
   version: 10.4.5
   resolution: "glob@npm:10.4.5"
@@ -23064,6 +23048,22 @@ __metadata:
   bin:
     glob: dist/esm/bin.mjs
   checksum: 0bc725de5e4862f9f387fd0f2b274baf16850dcd2714502ccf471ee401803997983e2c05590cb65f9675a3c6f2a58e7a53f9e365704108c6ad3cbf1d60934c4a
+  languageName: node
+  linkType: hard
+
+"glob@npm:^10.5.0":
+  version: 10.5.0
+  resolution: "glob@npm:10.5.0"
+  dependencies:
+    foreground-child: ^3.1.0
+    jackspeak: ^3.1.2
+    minimatch: ^9.0.4
+    minipass: ^7.1.2
+    package-json-from-dist: ^1.0.0
+    path-scurry: ^1.11.1
+  bin:
+    glob: dist/esm/bin.mjs
+  checksum: cda96c074878abca9657bd984d2396945cf0d64283f6feeb40d738fe2da642be0010ad5210a1646244a5fc3511b0cab5a374569b3de5a12b8a63d392f18c6043
   languageName: node
   linkType: hard
 
@@ -23118,7 +23118,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:^9.2.0":
+"glob@npm:^9.2.0, glob@npm:^9.3.5":
   version: 9.3.5
   resolution: "glob@npm:9.3.5"
   dependencies:
@@ -40546,7 +40546,7 @@ __metadata:
     dotenv: ^8.2.0
     dotenv-flow: ^3.2.0
     fs-extra: ^7.0.1
-    glob: ^10.0.0
+    glob: ^10.5.0
     inquirer: ^6.2.2
     js-yaml: ^3.14.2
     kleur: ^4.1.3
