@@ -223,4 +223,3 @@ CustomLabels:
   object_listviews_field_filters.$: 
   object_listviews_field_sort.$: 
   object_listviews__error_name_invalid_format: API 名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符
-  object_listviews__error_type_need_platform_enterprise: 只有企业版才支持日历和时间线视图

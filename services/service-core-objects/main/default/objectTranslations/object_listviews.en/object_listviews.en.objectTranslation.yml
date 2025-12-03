@@ -229,5 +229,4 @@ actions:
 CustomLabels:
   object_listviews_field_filters.$: 
   object_listviews_field_sort.$: 
-  object_listviews__error_name_invalid_format: API name must contain only lowercase letters and numbers, must begin with a letter, and cannot end with an underscore or contain two consecutive underscore characters.
-  object_listviews__error_type_need_platform_enterprise: Only Calendar and Timeline views are supported in the Enterprise edition.
+  object_listviews__error_name_invalid_format: 
