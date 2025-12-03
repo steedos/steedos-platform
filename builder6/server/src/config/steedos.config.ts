@@ -68,10 +68,10 @@ if (isEmpty(process.env.STEEDOS_WIDGETS_VERSION)) {
 if (isEmpty(process.env.STEEDOS_WIDGETS_ADDITIONAL)) {
   if (process.env.STEEDOS_LICENSE) {
     process.env.STEEDOS_WIDGETS_ADDITIONAL =
-      "@steedos-widgets/liveblocks,@steedos-widgets/fullcalendar";
+      "@steedos-widgets/liveblocks,@steedos-widgets/fullcalendar-scheduler";
   } else {
     process.env.STEEDOS_WIDGETS_ADDITIONAL =
-      "@steedos-widgets/liveblocks,@steedos-widgets/fullcalendar-scheduler";
+      "@steedos-widgets/liveblocks,@steedos-widgets/fullcalendar";
   }
 }
 
