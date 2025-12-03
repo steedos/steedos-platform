@@ -55,8 +55,12 @@ fields:
     options:
       - label: Grid
         value: grid
+      - label: Cards
+        value: cards
       - label: Calendar
         value: calendar
+      - label: Timeline
+        value: timeline
     description: 
   scrolling_mode:
     label: Scrolling Mode
@@ -192,6 +196,19 @@ fields:
   extra_columns:
     label: Extra Columns
     description: Query only through the interface, not displayed in the list.
+  calendar_start_field:
+    label: Start Time Field
+  calendar_end_field:
+    label: End Time Field
+  calendar_all_day_field:
+    label: All-Day Event Field
+    description: Select a boolean field to mark whether the event is an all-day event.
+  calendar_group_field:
+    label: Resource Field
+    description: Select a lookup field to mark the resource an event belongs to; the calendar view will group events by this field.
+  calendar_current_view:
+    label: Default View
+    description:
 groups:
   advanced: Advanced
   share_rules: Share Rules

@@ -127,6 +127,26 @@
     "crud": {
       "type": "object",
       "description": "重写列表crud配置，请使用json格式配置。"
+    },
+    "calendar_start_field": {
+      "type": "string",
+      "description": "日程开始时间字段"
+    },
+    "calendar_end_field": {
+      "type": "string",
+      "description": "日程结束时间字段"
+    },
+    "calendar_all_day_field": {
+      "type": "string",
+      "description": "日程是否全天字段，选择一个布尔字段来标记日程是否为全天事件。"
+    },
+    "calendar_group_field": {
+      "type": "string",
+      "description": "日程资源字段，选择一个相关表字段来标记日程所属资源，日历视图将按此字段进行分组显示。"
+    },
+    "calendar_current_view": {
+      "type": "string",
+      "description": "日程默认视图，默认为week"
     }
   }
 }

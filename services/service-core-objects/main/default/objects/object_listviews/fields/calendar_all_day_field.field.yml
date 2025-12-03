@@ -1,0 +1,21 @@
+name: calendar_all_day_field
+filterable: true
+index: false
+is_wide: false
+label: 是否全天字段
+required: false
+reference_to: object_fields
+reference_to_field: name
+enable_enhanced_lookup: false
+filtersFunction: !<tag:yaml.org,2002:js/function> |-
+  function anonymous(filters,values
+  ) {
+
+    return [['object', '=', values.object_name],[['type', '=', 'boolean'],'or',['type', '=', 'toggle']]];
+
+  }
+sortable: false
+type: lookup
+group: 日历
+sort_no: 840
+visible_on: ${type == 'calendar' || type == 'timeline'}

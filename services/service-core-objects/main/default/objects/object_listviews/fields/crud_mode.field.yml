@@ -8,3 +8,6 @@ options:
     value: cards
 defaultValue: table
 sort_no: 220
+visible_on: ${false}
+amis: 
+  visibleOn: ${false}

@@ -1,0 +1,22 @@
+name: calendar_resource_color_field
+filterable: true
+index: false
+is_wide: false
+label: 资源颜色字段
+required: false
+reference_to: object_fields
+reference_to_field: name
+enable_enhanced_lookup: false
+filtersFunction: !<tag:yaml.org,2002:js/function> |-
+  function anonymous(filters,values
+  ) {
+
+    return [['object', '=', values.object_name],['type', '=', 'color']];
+
+  }
+sortable: false
+type: lookup
+group: 日历
+sort_no: 860
+# visible_on: ${type == 'timeline'}
+visible_on: ${false}

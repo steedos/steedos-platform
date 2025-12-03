@@ -52,8 +52,12 @@ fields:
     options:
       - label: 列表
         value: grid
-      - label: ' 日历视图'
+      - label: 卡片
+        value: cards
+      - label: 日历
         value: calendar
+      - label: 时间线
+        value: timeline
     description: 
   scrolling_mode:
     label: 滚动条样式
@@ -187,6 +191,19 @@ fields:
   extra_columns:
     label: 其他字段
     description: 仅通过接口查询, 在列表中不显示
+  calendar_start_field:
+    label: 开始时间字段
+  calendar_end_field:
+    label: 结束时间字段
+  calendar_all_day_field:
+    label: 是否全天字段
+    description: 选择一个布尔字段来标记日程是否为全天事件。
+  calendar_group_field:
+    label: 资源字段
+    description: 选择一个相关表字段来标记日程所属资源，日历视图将按此字段进行分组显示。
+  calendar_current_view:
+    label: 默认视图
+    description: 
 groups:
   advanced: 高级
   share_rules: 共享
