@@ -10230,7 +10230,6 @@ __metadata:
     mongodb-uri: ^0.9.7
     node-fetch: 3
     reflect-metadata: ^0.2.0
-    routing-controllers: ^0.7.7
     sequelize: 6.37.7
     tslib: ^2.4.0
     typeorm: 0.3.26
@@ -16564,13 +16563,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"class-transformer@npm:^0.1.9":
-  version: 0.1.10
-  resolution: "class-transformer@npm:0.1.10"
-  checksum: cc5e42403713f17d5a3a9ecb8fe917a77683c7fcccf5eaa87b0f87e794327741da608f4107085e1cb101127066e4d98fda7bf3a346095ff3a5f18fd4626cda2c
-  languageName: node
-  linkType: hard
-
 "class-utils@npm:^0.3.5":
   version: 0.3.6
   resolution: "class-utils@npm:0.3.6"
@@ -16591,15 +16583,6 @@ __metadata:
     libphonenumber-js: ^1.11.1
     validator: ^13.15.20
   checksum: 5fe1725737666226c3faef435ad864ae8600bcc5e8361ed28cf26b39ecc4fa5cdd3d1fe3de337148385a8b5477cf0a3173e26e823f3039ca3649e7430896ae9b
-  languageName: node
-  linkType: hard
-
-"class-validator@npm:^0.8.1":
-  version: 0.8.5
-  resolution: "class-validator@npm:0.8.5"
-  dependencies:
-    validator: 9.2.0
-  checksum: 00ffa1e0d4dbf7eeb199253fda14141bd1427aa7a380f0d6ee93af239719f201bc34752868d269ffbdfb4b77d6a0f3402bf86c41cac7fff4bcd92e96570b3857
   languageName: node
   linkType: hard
 
@@ -17805,7 +17788,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cookie@npm:0.3.1, cookie@npm:^0.3.1":
+"cookie@npm:0.3.1":
   version: 0.3.1
   resolution: "cookie@npm:0.3.1"
   checksum: 5309937344947a049283573861c24bed054fac3334ce5a0fa74b9bc6bf39bd387d3a0fca7f3ed6f4a09f112de82c00b541a0e7d6ce7a8de0f5d1301eec799730
@@ -23227,7 +23210,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:^7.0.5, glob@npm:^7.1.1, glob@npm:^7.1.2, glob@npm:^7.1.3, glob@npm:^7.1.4, glob@npm:^7.1.6, glob@npm:^7.1.7, glob@npm:^7.2.0, glob@npm:^7.2.3":
+"glob@npm:^7.1.1, glob@npm:^7.1.2, glob@npm:^7.1.3, glob@npm:^7.1.4, glob@npm:^7.1.6, glob@npm:^7.1.7, glob@npm:^7.2.0, glob@npm:^7.2.3":
   version: 7.2.3
   resolution: "glob@npm:7.2.3"
   dependencies:
@@ -38009,13 +37992,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reflect-metadata@npm:^0.1.12":
-  version: 0.1.14
-  resolution: "reflect-metadata@npm:0.1.14"
-  checksum: 155ad339319cec3c2d9d84719f730f8b6a6cd2a074733ec29dbae6c89d48a2914c7d07a2350212594f3aae160fa4da4f903e6512f27ceaf968443a7c692bcad0
-  languageName: node
-  linkType: hard
-
 "reflect-metadata@npm:^0.2.0":
   version: 0.2.2
   resolution: "reflect-metadata@npm:0.2.2"
@@ -38923,20 +38899,6 @@ __metadata:
     parseurl: ^1.3.3
     path-to-regexp: ^8.0.0
   checksum: 4c3bec8011ed10bb07d1ee860bc715f245fff0fdff991d8319741d2932d89c3fe0a56766b4fa78e95444bc323fd2538e09c8e43bfbd442c2a7fab67456df7fa5
-  languageName: node
-  linkType: hard
-
-"routing-controllers@npm:^0.7.7":
-  version: 0.7.7
-  resolution: "routing-controllers@npm:0.7.7"
-  dependencies:
-    class-transformer: ^0.1.9
-    class-validator: ^0.8.1
-    cookie: ^0.3.1
-    glob: ^7.0.5
-    reflect-metadata: ^0.1.12
-    template-url: ^1.0.0
-  checksum: 76438ea1552c84571e938a3603e9e6817bcc1d8061c21ed925347d8a787135dedf6092e1eef0193fc57a0c592e35efd7c9fb2998ef0dd47851a82356d0421cf5
   languageName: node
   linkType: hard
 
@@ -41760,13 +41722,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"template-url@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "template-url@npm:1.0.0"
-  checksum: cf68e4b2b53aca008d2b1fe73a5c65d1099c9f68966580fb6844aae61599e45d56f4d36f16cc9a8495f538266845c946853b33e28bce07bf8c72db640f92c170
-  languageName: node
-  linkType: hard
-
 "tempy@npm:^0.3.0":
   version: 0.3.0
   resolution: "tempy@npm:0.3.0"
@@ -43865,13 +43820,6 @@ __metadata:
   version: 7.0.0
   resolution: "validate-npm-package-name@npm:7.0.0"
   checksum: e0c686bb57cd574928d696d6b784cff51999bf3a0db194658616e3e7dc4d0a2ad2c89a13f74b715322b6355dafd68453e6ac6ad0d64a5fb26fbfb9e1ca607fc5
-  languageName: node
-  linkType: hard
-
-"validator@npm:9.2.0":
-  version: 9.2.0
-  resolution: "validator@npm:9.2.0"
-  checksum: c1000d205d1518c36895340f0bf560c2e8bb985d42065c84351fdaf8312b065db0778bdb68ba9f8b048c5cb49a6622a8d7b9b476c96ad58b2cd05757d1919654
   languageName: node
   linkType: hard
 

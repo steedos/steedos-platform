@@ -46,7 +46,6 @@
     "mongodb-uri": "^0.9.7",
     "node-fetch": "3",
     "reflect-metadata": "^0.2.0",
-    "routing-controllers": "^0.7.7",
     "sequelize": "6.37.7",
     "tslib": "^2.4.0",
     "typeorm": "0.3.26",
