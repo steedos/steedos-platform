@@ -9556,7 +9556,7 @@ __metadata:
     emittery: 0.11.0
     express: ^5.1.0
     ismobilejs: ^1.1.1
-    js-yaml: ^3.14.2
+    js-yaml: ^4.1.1
     jsonwebtoken: ^9.0.1
     lodash: ^4.17.21
     mem: ^5.1.1
@@ -9785,7 +9785,7 @@ __metadata:
     compressing: ^1.5.1
     dotenv-flow: ^3.1.0
     form-data: ^4.0.4
-    js-yaml: ^3.14.2
+    js-yaml: ^4.1.1
     mongodb: ^3.7.3
     node-fetch: ^3.2.10
     typescript: 5.7.3
@@ -9811,7 +9811,7 @@ __metadata:
     graceful-fs: 4.2.10
     ini: ^2.0.0
     js-beautify: 1.14.7
-    js-yaml: ^3.14.2
+    js-yaml: ^4.1.1
     mkdirp: ^1.0.4
     typescript: 5.7.3
     underscore: ^1.13.7
@@ -9836,7 +9836,7 @@ __metadata:
     glob: ^10.5.0
     ini: ^2.0.0
     ioredis: ^5.3.2
-    js-yaml: ^3.14.2
+    js-yaml: ^4.1.1
     lodash: ^4.17.21
     tslib: ^2.4.0
     typescript: 5.7.3
@@ -9917,7 +9917,7 @@ __metadata:
     graphql: ^15.8.0
     graphql-parse-resolve-info: ^4.12.3
     jsen: ^0.6.6
-    jsonwebtoken: 9.0.1
+    jsonwebtoken: 9.0.2
     lodash: ^4.17.21
     mingo: ^6.0.5
     moment: ^2.29.1
@@ -10263,7 +10263,7 @@ __metadata:
   dependencies:
     "@steedos/accounts": 3.0.1
     express: ^5.1.0
-    jsonwebtoken: 9.0.1
+    jsonwebtoken: 9.0.2
     passport: ^0.6.0
     passport-jwt: ^4.0.0
   languageName: unknown
@@ -17535,7 +17535,7 @@ __metadata:
     commander: 2.20.0
     cpy: 7.3.0
     cross-spawn: 6.0.6
-    got: 11.8.5
+    got: 11.8.6
     prompts: 2.1.0
     rimraf: 3.0.2
     tar: 7.5.2
@@ -22744,26 +22744,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"got@npm:11.8.5":
-  version: 11.8.5
-  resolution: "got@npm:11.8.5"
-  dependencies:
-    "@sindresorhus/is": ^4.0.0
-    "@szmarczak/http-timer": ^4.0.5
-    "@types/cacheable-request": ^6.0.1
-    "@types/responselike": ^1.0.0
-    cacheable-lookup: ^5.0.3
-    cacheable-request: ^7.0.2
-    decompress-response: ^6.0.0
-    http2-wrapper: ^1.0.0-beta.5.2
-    lowercase-keys: ^2.0.0
-    p-cancelable: ^2.0.0
-    responselike: ^2.0.0
-  checksum: 2de8a1bbda4e9b6b2b72b2d2100bc055a59adc1740529e631f61feb44a8b9a1f9f8590941ed9da9df0090b6d6d0ed8ffee94cd9ac086ec3409b392b33440f7d2
-  languageName: node
-  linkType: hard
-
-"got@npm:^11.8.2":
+"got@npm:11.8.6, got@npm:^11.8.2":
   version: 11.8.6
   resolution: "got@npm:11.8.6"
   dependencies:
@@ -26856,7 +26837,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-yaml@npm:^3.10.0, js-yaml@npm:^3.13.1, js-yaml@npm:^3.14.1, js-yaml@npm:^3.14.2":
+"js-yaml@npm:^3.10.0, js-yaml@npm:^3.13.1, js-yaml@npm:^3.14.1":
   version: 3.14.2
   resolution: "js-yaml@npm:3.14.2"
   dependencies:
@@ -27178,18 +27159,6 @@ __metadata:
     ms: ^2.1.1
     semver: ^5.6.0
   checksum: 93c9e3f23c59b758ac88ba15f4e4753b3749dfce7a6f7c40fb86663128a1e282db085eec852d4e0cbca4cefdcd3a8275ee255dbd08fcad0df26ad9f6e4cc853a
-  languageName: node
-  linkType: hard
-
-"jsonwebtoken@npm:9.0.1":
-  version: 9.0.1
-  resolution: "jsonwebtoken@npm:9.0.1"
-  dependencies:
-    jws: ^3.2.2
-    lodash: ^4.17.21
-    ms: ^2.1.1
-    semver: ^7.3.8
-  checksum: 0eafe268896f4e8f9ab1f0f20e8c645721b7a9cddc41c0aba1e58da5c34564e8c9990817c1a5b646d795bcbb1339350826fe57c4569b5379ba9eea4a9aa5bbd0
   languageName: node
   linkType: hard
 
@@ -39567,7 +39536,7 @@ __metadata:
     fs-extra: ^7.0.1
     glob: ^10.5.0
     inquirer: ^6.2.2
-    js-yaml: ^3.14.2
+    js-yaml: ^4.1.1
     kleur: ^4.1.3
     latest-version: ^5.1.0
     lodash: ^4.17.21
