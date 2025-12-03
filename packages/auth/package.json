@@ -21,7 +21,7 @@
     "ismobilejs": "^1.1.1",
     "jsonwebtoken": "^9.0.1",
     "sha256": "^0.2.0",
-    "underscore": "^1.9.1"
+    "underscore": "^1.13.7"
   },
   "devDependencies": {
     "typescript": "5.7.3"

@@ -1,45 +1,6 @@
-var RegClient = require('npm-registry-client');
-function noop() { }
-var client = new RegClient({
-    log: {
-        error: noop,
-        warn: noop,
-        info: noop,
-        verbose: noop,
-        silly: noop,
-        http: noop,
-        pause: noop,
-        resume: noop
-    }
-});
-
-var fs = require('fs');
-var path = require('path');
-
-// jshint freeze:false
-if (!Array.prototype.findIndex) {
-    Array.prototype.findIndex = function (predicate) {
-        if (this === null) {
-            throw new TypeError('Array.prototype.findIndex called on null or undefined');
-        }
-        if (typeof predicate !== 'function') {
-            throw new TypeError('predicate must be a function');
-        }
-        var list = Object(this);
-        var length = list.length >>> 0;
-        var thisArg = arguments[1];
-        var value;
-
-        for (var i = 0; i < length; i++) {
-            value = list[i];
-            if (predicate.call(thisArg, value, i, list)) {
-                return i;
-            }
-        }
-        return -1;
-    };
-}
-// jshint freeze:true
+const fetch = require('npm-registry-fetch');
+const fs = require('fs');
+const path = require('path');
 
 function removeSuffix(pattern, suffix) {
     if (pattern.endsWith(suffix)) {
@@ -68,75 +29,73 @@ module.exports = {
         return args;
     },
 
-    login: function (args, callback) {
-        client.adduser(args.registry, {
-            auth: {
-                username: args.user,
+    /**
+     * 使用 npm-registry-fetch 自行实现 adduser
+     */
+    login: async function (args, callback) {
+        try {
+            const url = `${args.registry}/-/user/org.couchdb.user:${args.user}`;
+            const body = {
+                name: args.user,
                 password: args.pass,
                 email: args.email
-            }
-        }, function (err, data) {
-            if (err) {
-                return callback(err);
-            }
+            };
+
+            const res = await fetch(url, {
+                method: 'PUT',
+                body,
+                headers: { 'content-type': 'application/json' },
+                // 保证兼容私库需要 basic auth
+                auth: {
+                    username: args.user,
+                    password: args.pass
+                }
+            });
+
+            const data = await res.json();
             return callback(null, data);
-        });
+        } catch (err) {
+            return callback(err);
+        }
     },
 
     readFile: function (args, callback) {
         fs.readFile(args.configPath, 'utf-8', function (err, contents) {
-            if (err) {
-                contents = '';
-            }
+            if (err) contents = '';
             return callback(null, contents);
         });
     },
 
     generateFileContents: function (args, contents, response) {
-        // `contents` holds the initial content of the NPMRC file
-        // Convert the file contents into an array
         var lines = contents ? contents.split('\n') : [];
-        // Regex pattern to detect end of registry
+
         const registryEndRegexPattern = /\:\//;
+
         if (args.scope !== undefined) {
-            var scopeWrite = lines.findIndex(function (element) {
-                if (element.indexOf(args.scope + ':registry=' + args.registry) !== -1) {
-                    // If an entry for the scope is found, replace it
-                    element = args.scope + ':registry=' + args.registry;
-                    return true;
-                }
-            });
-
-            // If no entry for the scope is found, add one
-            if (scopeWrite === -1) {
-                lines.push(args.scope + ':registry=' + args.registry);
+            const scopeLine = `${args.scope}:registry=${args.registry}`;
+            const index = lines.findIndex(l => l.startsWith(`${args.scope}:registry=`));
+            if (index === -1) {
+                lines.push(scopeLine);
+            } else {
+                lines[index] = scopeLine;
             }
         }
 
-        var authWrite = lines.findIndex(function (element, index, array) {
-            if (element.indexOf(args.registry.slice(args.registry.search(registryEndRegexPattern, '') + 1) +
-                '/:_authToken=') !== -1) {
-                // If an entry for the auth token is found, replace it
-                array[index] = element.replace(/authToken\=.*/, 'authToken=' + (args.quotes ? '"' : '') +
-                    response.token + (args.quotes ? '"' : ''));
-                return true;
-            }
-        });
+        const regPath = args.registry.slice(args.registry.search(registryEndRegexPattern, '') + 1);
+        const tokenLinePattern = `${regPath}/:_authToken=`;
 
-        // If no entry for the auth token is found, add one
-        if (authWrite === -1) {
-            lines.push(args.registry.slice(args.registry.search(registryEndRegexPattern, '') +
-                1) + '/:_authToken=' + (args.quotes ? '"' : '') + response.token + (args.quotes ? '"' : ''));
+        const tokenLine = tokenLinePattern + (args.quotes ? '"' : '') +
+            response.token + (args.quotes ? '"' : '');
+
+        const tokenIndex = lines.findIndex(l => l.includes(tokenLinePattern));
+        if (tokenIndex === -1) {
+            lines.push(tokenLine);
+        } else {
+            lines[tokenIndex] = tokenLine;
         }
 
-        var toWrite = lines.filter(function (element) {
-            if (element === '') {
-                return false;
-            }
-            return true;
-        });
-
-        return toWrite;
+        // 清理空行
+        return lines.filter(l => l.trim() !== '');
     },
 
     writeFile: function (args, lines, callback) {

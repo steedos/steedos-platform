@@ -1,6 +1,6 @@
 import { Dictionary, JsonMap } from "@salesforce/ts-types";
 import { SteedosObjectType } from ".";
-import _ = require("underscore");
+import * as _ from "lodash";
 import { SteedosFieldDBType } from "../driver";
 import { SteedosDataSourceType } from "./datasource";
 import { SteedosQueryFilters } from "./query";
@@ -412,7 +412,7 @@ export class SteedosFieldType
 
   public set type(value: any) {
     let valueStr = String(value);
-    if (!_.contains(FIELDTYPES, valueStr)) {
+    if (!_.includes(FIELDTYPES, valueStr)) {
       throw new Error(`not find field type ${valueStr}`);
     }
     this._type = value;

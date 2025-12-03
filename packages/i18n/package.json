@@ -13,7 +13,7 @@
     "@steedos/cachers": "3.0.1",
     "i18next": "^19.3.4",
     "i18next-sprintf-postprocessor": "^0.2.2",
-    "underscore": "1.13.7"
+    "underscore": "^1.13.7"
   },
   "devDependencies": {
     "typescript": "5.7.3"
