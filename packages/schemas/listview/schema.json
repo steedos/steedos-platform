@@ -34,7 +34,7 @@
     "type": {
       "type": "string",
       "description": "列表显示类型，默认为grid",
-      "enum": ["grid", "calendar", "timeline"]
+      "enum": ["grid", "cards", "calendar", "timeline"]
     },
     "filter_scope": {
       "type": "string",
