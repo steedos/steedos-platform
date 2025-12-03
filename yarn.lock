@@ -10046,15 +10046,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/license@npm:3.0.0":
-  version: 3.0.0
-  resolution: "@steedos/license@npm:3.0.0"
+"@steedos/license@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@steedos/license@npm:3.0.2"
   dependencies:
     abort-controller: ^3.0.0
-    crypto: ^1.0.1
-    node-fetch: ^2.6.0
-    systeminformation: 5.9.17
-  checksum: db8ac54f7b4945ba5db3c153c1b237c03b633f4419969356bb93a2f4e66aa05a3211d31f28e8c05b13bd07e079de9e5d76020cb65805ab41ce8999fc17b345ae
+    node-fetch: ^3.2.2
+    systeminformation: ^5.27.11
+  checksum: 693a5906775da3e56168506c445a9a9b8395d1ee6045e44e770d85be942f787800a21a1d7ef911f93b0f6c7006a43c62af2447a334b05de81650faecc1dd3848
   languageName: node
   linkType: hard
 
@@ -10523,7 +10522,7 @@ __metadata:
     "@steedos-labs/plugin-print-template": ^3.0.2
     "@steedos-labs/plugin-workflow": ^3.0.1-beta.6
     "@steedos/ee_branding": 3.0.1
-    "@steedos/service-license": 3.0.0
+    "@steedos/service-license": ^3.0.2
     mssql: ^11.0.1
     oracledb: ^6.8.0
   languageName: unknown
@@ -10555,13 +10554,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-license@npm:3.0.0":
-  version: 3.0.0
-  resolution: "@steedos/service-license@npm:3.0.0"
+"@steedos/service-license@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@steedos/service-license@npm:3.0.2"
   dependencies:
-    "@steedos/license": 3.0.0
-    axios: ^0.21.4
-  checksum: 5e9bf53caa5f7aa629d1c06969e2ed4eb79315ee13f7461b7c4af010da3896e122dd9741c2afd20f57c84d5dbc0aa97649ac32a198f2e00f1b62cba3f9aa7b6b
+    "@steedos/license": ^3.0.2
+    axios: ^1.13.2
+  checksum: 76de182bbda6197bff95fcddf9ad0af5c497e9ab083c9c9d72158adf6bf5a8b558457896a4157d3aa0e3f37f1b67608d206069e2a596c3aa264c97704cd1f1b5
   languageName: node
   linkType: hard
 
@@ -14576,15 +14575,6 @@ __metadata:
   version: 4.11.0
   resolution: "axe-core@npm:4.11.0"
   checksum: 57b0d7206d4dd63a1127b8ad6e173417857a3de43717cbb03561e75e2ff85765a228a7588fde4c828dbf179ef25f263ad98535656701e78def8f29a9524be866
-  languageName: node
-  linkType: hard
-
-"axios@npm:^0.21.4":
-  version: 0.21.4
-  resolution: "axios@npm:0.21.4"
-  dependencies:
-    follow-redirects: ^1.14.0
-  checksum: 44245f24ac971e7458f3120c92f9d66d1fc695e8b97019139de5b0cc65d9b8104647db01e5f46917728edfc0cfd88eb30fc4c55e6053eef4ace76768ce95ff3c
   languageName: node
   linkType: hard
 
@@ -22060,7 +22050,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.0.0, follow-redirects@npm:^1.14.0, follow-redirects@npm:^1.15.6":
+"follow-redirects@npm:^1.0.0, follow-redirects@npm:^1.15.6":
   version: 1.15.11
   resolution: "follow-redirects@npm:1.15.11"
   peerDependenciesMeta:
@@ -31732,7 +31722,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:3, node-fetch@npm:^3.2.10":
+"node-fetch@npm:3, node-fetch@npm:^3.2.10, node-fetch@npm:^3.2.2":
   version: 3.3.2
   resolution: "node-fetch@npm:3.3.2"
   dependencies:
@@ -31753,7 +31743,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:^2.3.0, node-fetch@npm:^2.6.0, node-fetch@npm:^2.6.1, node-fetch@npm:^2.6.12, node-fetch@npm:^2.6.7":
+"node-fetch@npm:^2.3.0, node-fetch@npm:^2.6.1, node-fetch@npm:^2.6.12, node-fetch@npm:^2.6.7":
   version: 2.7.0
   resolution: "node-fetch@npm:2.7.0"
   dependencies:
@@ -41369,13 +41359,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"systeminformation@npm:5.9.17":
-  version: 5.9.17
-  resolution: "systeminformation@npm:5.9.17"
+"systeminformation@npm:^5.27.11":
+  version: 5.27.11
+  resolution: "systeminformation@npm:5.27.11"
   bin:
     systeminformation: lib/cli.js
-  checksum: b1d8adfba9e9db70d83e331eea69b3975e9bc6de23d676e4b0d4a5508a00df2e6828331349389ecfe7c3d5a367c309e0322511c1c8820fc72fd18cfe6d32409e
-  conditions: (os=darwin | os=linux | os=win32 | os=freebsd | os=openbsd | os=netbsd | os=sunos)
+  checksum: b0263b49865250221fac13779c81a7a7eebeca22a3b31e791f862662f5fcf4efc465f7941e39b31490db43cb499f08431c3fa304c2004f991506999289f89a89
+  conditions: (os=darwin | os=linux | os=win32 | os=freebsd | os=openbsd | os=netbsd | os=sunos | os=android)
   languageName: node
   linkType: hard
 
