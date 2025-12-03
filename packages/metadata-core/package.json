@@ -24,7 +24,7 @@
     "graceful-fs": "4.2.10",
     "ini": "^2.0.0",
     "js-beautify": "1.14.7",
-    "js-yaml": "^4.1.1",
+    "js-yaml": "^3.14.2",
     "mkdirp": "^1.0.4",
     "underscore": "^1.11.0"
   },
