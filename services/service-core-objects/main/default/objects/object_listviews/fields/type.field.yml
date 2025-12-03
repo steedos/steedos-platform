@@ -1,15 +1,29 @@
 name: type
 label: Type
-type: select
-options:
-  - label: Grid
-    value: grid
-  - label: Cards
-    value: cards
-  - label: Calendar
-    value: calendar
-  - label: Timeline
-    value: timeline
+type: lookup
+optionsFunction: !<tag:yaml.org,2002:js/function> |-
+  function(
+  ) {
+    var options;
+    options = [{
+      value: 'grid',
+      label: t("CustomField.object_listviews.type.options.grid")
+    },{
+      value: 'cards',
+      label: t("CustomField.object_listviews.type.options.cards")
+    }];
+    var isEnterprise = Builder.settings.platform && ["platform-standard", "platform-enterprise", "platform-professional"].includes(Builder.settings.platform.product);
+    if (isEnterprise) {
+      return _.union(options, [{
+        value: 'calendar',
+        label: t("CustomField.object_listviews.type.options.calendar")
+      },{
+        value: 'timeline',
+        label: t("CustomField.object_listviews.type.options.timeline")
+      }])
+    }
+    return options;
+  }
 defaultValue: grid
 hidden: false
 sort_no: 230
