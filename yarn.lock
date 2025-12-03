@@ -2782,15 +2782,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:7.12.18":
-  version: 7.12.18
-  resolution: "@babel/runtime@npm:7.12.18"
-  dependencies:
-    regenerator-runtime: ^0.13.4
-  checksum: 0ba38dc8d478584b0b5fb15fc2b7855f9f20561917bd434a66429d55d1165199d6161bc5fb087b87254712827f63561ff5196df66701e5647d67c7d0f557569a
-  languageName: node
-  linkType: hard
-
 "@babel/runtime@npm:7.28.4, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.0, @babel/runtime@npm:^7.12.18, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.14.6, @babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.21.0, @babel/runtime@npm:^7.23.2, @babel/runtime@npm:^7.25.0, @babel/runtime@npm:^7.26.10, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.4.4, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.3, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
   version: 7.28.4
   resolution: "@babel/runtime@npm:7.28.4"
@@ -9779,16 +9770,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos-labs/analytics@npm:^3.1.1":
-  version: 3.1.1
-  resolution: "@steedos-labs/analytics@npm:3.1.1"
+"@steedos-labs/analytics@npm:^3.1.2":
+  version: 3.1.2
+  resolution: "@steedos-labs/analytics@npm:3.1.2"
   dependencies:
-    "@steedos/utils": ^2.5.11-beta.10
     date-fns: ^3.3.1
     luxon: ^3.4.4
     moment-timezone: ^0.5.43
     ttag: ^1.7.29
-  checksum: 3a2d11146cfef7e70031a4508ae42db66a54a84dfcc8f5450751928f94d66924fa9646657ce5f30d5756c3908de9b40189b558b617ff5e0b8515402041cec5ed
+    underscore: ^1.13.7
+  peerDependencies:
+    "@steedos/utils": ^3.0.1
+  checksum: 6b2e205c928a92f67a8bcf2408df478ca167963ce1d94211ee265b883d3d6d373919feca44117da753954e9bdaae63a0655b4c2e537f79f0bc31faea21faca5d
   languageName: node
   linkType: hard
 
@@ -10023,17 +10016,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/filters@npm:2.5.11-beta.10":
-  version: 2.5.11-beta.10
-  resolution: "@steedos/filters@npm:2.5.11-beta.10"
-  dependencies:
-    "@babel/runtime": 7.12.18
-    lodash: 4.17.21
-    moment: ^2.24.0
-  checksum: ff41553c9d0de7d3dff990211b42401c2e3918a6542da5a38b757a8c6f19b30e83518d2e742bc19aa3a6fca7cba27b9752ecd29601b05770f5959f3fbbb90c66
-  languageName: node
-  linkType: hard
-
 "@steedos/formula@3.0.1, @steedos/formula@workspace:packages/formula":
   version: 0.0.0-use.local
   resolution: "@steedos/formula@workspace:packages/formula"
@@ -10248,28 +10230,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/odata-v4-mongodb@npm:2.5.11-beta.10":
-  version: 2.5.11-beta.10
-  resolution: "@steedos/odata-v4-mongodb@npm:2.5.11-beta.10"
-  dependencies:
-    "@steedos/odata-v4-parser": 2.5.11-beta.10
-    odata-v4-literal: ^0.1.0
-  checksum: 41562ab21836c15fe5be95737d9fede600078c309b1b6523e710cf704753c7abda1821b690d0283b738a304cdd34e167e9205cdccaed137e55e8ee9fb4db0222
-  languageName: node
-  linkType: hard
-
 "@steedos/odata-v4-parser@3.0.1, @steedos/odata-v4-parser@workspace:packages/odata-v4-parser":
   version: 0.0.0-use.local
   resolution: "@steedos/odata-v4-parser@workspace:packages/odata-v4-parser"
   languageName: unknown
   linkType: soft
-
-"@steedos/odata-v4-parser@npm:2.5.11-beta.10":
-  version: 2.5.11-beta.10
-  resolution: "@steedos/odata-v4-parser@npm:2.5.11-beta.10"
-  checksum: 48d3f19538be081ba5ab90c22091c2b34f3bc577ccb71af44e97f976940074e111de8563bafa8d232f863a511fab8757c35b615788b1cfe7b5fa16391736dc25
-  languageName: node
-  linkType: hard
 
 "@steedos/odata-v4-sql@3.0.1, @steedos/odata-v4-sql@workspace:packages/odata-v4-sql":
   version: 0.0.0-use.local
@@ -10556,7 +10521,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@steedos/service-enterprise@workspace:ee/service-enterprise"
   dependencies:
-    "@steedos-labs/analytics": ^3.1.1
+    "@steedos-labs/analytics": ^3.1.2
     "@steedos-labs/plugin-print-template": ^3.0.2
     "@steedos-labs/plugin-workflow": ^3.0.1-beta.5
     "@steedos/ee_branding": 3.0.1
@@ -10943,21 +10908,6 @@ __metadata:
     underscore: 1.13.7
   languageName: unknown
   linkType: soft
-
-"@steedos/utils@npm:^2.5.11-beta.10":
-  version: 2.7.21
-  resolution: "@steedos/utils@npm:2.7.21"
-  dependencies:
-    "@steedos/filters": 2.5.11-beta.10
-    "@steedos/odata-v4-mongodb": 2.5.11-beta.10
-    clone: ^2.1.2
-    cookies: ^0.8.0
-    mingo: 6.1.2
-    psl: 1.9.0
-    underscore: 1.5.2
-  checksum: 062ec14519c0f0725a5ed592cd9955d9fcef337a15dbc4b68e0132484688635995ccb5121cc05de1f97a1c5501843bab2d30df147f231fcc9a97df8e73c13afa
-  languageName: node
-  linkType: hard
 
 "@steedos/webapp@3.0.1, @steedos/webapp@workspace:builder6/webapp":
   version: 0.0.0-use.local
@@ -30717,13 +30667,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mingo@npm:6.1.2":
-  version: 6.1.2
-  resolution: "mingo@npm:6.1.2"
-  checksum: a640fb686a74b883b13a98453fdc07cee0fe3f6a3af07e7e9d90682e91bc6c6ef9c76da7854985264488cd1985d4fe6c3538391ee7b5dc66a7af2e16e6c2001d
-  languageName: node
-  linkType: hard
-
 "mingo@npm:^6.0.5":
   version: 6.7.1
   resolution: "mingo@npm:6.7.1"
@@ -38031,7 +37974,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"regenerator-runtime@npm:^0.13.4, regenerator-runtime@npm:^0.13.7, regenerator-runtime@npm:^0.13.9":
+"regenerator-runtime@npm:^0.13.7, regenerator-runtime@npm:^0.13.9":
   version: 0.13.11
   resolution: "regenerator-runtime@npm:0.13.11"
   checksum: 27481628d22a1c4e3ff551096a683b424242a216fee44685467307f14d58020af1e19660bf2e26064de946bad7eff28950eae9f8209d55723e2d9351e632bbb4
@@ -43055,17 +42998,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"underscore@npm:1.13.7, underscore@npm:^1.11.0, underscore@npm:^1.12.0, underscore@npm:^1.9.1":
+"underscore@npm:1.13.7, underscore@npm:^1.11.0, underscore@npm:^1.12.0, underscore@npm:^1.13.7, underscore@npm:^1.9.1":
   version: 1.13.7
   resolution: "underscore@npm:1.13.7"
   checksum: 174b011af29e4fbe2c70eb2baa8bfab0d0336cf2f5654f364484967bc6264a86224d0134b9176e4235c8cceae00d11839f0fd4824268de04b11c78aca1241684
-  languageName: node
-  linkType: hard
-
-"underscore@npm:1.5.2":
-  version: 1.5.2
-  resolution: "underscore@npm:1.5.2"
-  checksum: 216e4ca76d0fdde167b7c37a3a1c6d801595caa5b1df4a43370fdcef53e2c66dd14888b172061f55287b88b428418431166d52d13ee935a3ee406bf2bafb9265
   languageName: node
   linkType: hard
 
