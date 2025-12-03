@@ -85,7 +85,7 @@ jobs:
           npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
           yarn lerna publish ${{ steps.branch-name.outputs.tag }}  --no-git-tag-version --no-git-reset --force-publish --exact --yes --registry https://registry.npmjs.org
           git add . 
-          git commit -m "action: release ${{ steps.branch-name.outputs.tag }}"
+          git commit -m "build: release ${{ steps.branch-name.outputs.tag }}"
           git push
         env:
           CI: false
@@ -99,7 +99,7 @@ jobs:
           npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
           yarn lerna publish ${{ steps.branch-name.outputs.tag }}  --no-git-tag-version --no-git-reset --force-publish --exact --yes --registry https://registry.npmjs.org
           git add . 
-          git commit -m "action: release ${{ steps.branch-name.outputs.tag }}"
+          git commit -m "build: release ${{ steps.branch-name.outputs.tag }}"
           git push
         env:
           CI: false
