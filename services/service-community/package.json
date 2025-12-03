@@ -63,7 +63,6 @@
     "mysql": "^2.18.1",
     "nats": "^2.13.1",
     "node-schedule": "^2.0.0",
-    "node-xlsx": "^0.16.1",
     "notepack.io": "^3.0.1",
     "pg": "^8.10.0",
     "promise-queue": "^2.2.5",
