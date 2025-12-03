@@ -6,7 +6,7 @@
  */
 
 import { isJsonMap, JsonMap } from "@salesforce/ts-types";
-import { loadCoreValidators } from "../validators";
+// import { loadCoreValidators } from "../validators";
 const odataMongodb = require("@steedos/odata-v4-mongodb");
 const crypto = require("crypto");
 const yaml = require("js-yaml");
@@ -38,7 +38,7 @@ exports.loadYmlFile = (filePath: string) => {
   return yaml.load(fs.readFileSync(filePath, "utf8"));
 };
 
-let loadFile = (filePath: string) => {
+export function loadFile2(filePath: string) {
   let json: JsonMap = {};
   try {
     let extname = path.extname(filePath);
@@ -52,8 +52,7 @@ let loadFile = (filePath: string) => {
     console.error("loadFile error", filePath, error);
   }
   return json;
-};
-exports.loadFile = loadFile;
+}
 
 exports.isObjectFile = (filePath: string) => {
   return (
@@ -168,7 +167,7 @@ export function getSteedosConfig() {
   let config: any;
   let configPath = path.join(getBaseDirectory(), configName);
   if (fs.existsSync(configPath) && !fs.statSync(configPath).isDirectory()) {
-    config = loadFile(configPath);
+    config = loadFile2(configPath);
     if (config.env) {
       _.each(config.env, function (item, key) {
         process.env[key] = calcString(item);
@@ -497,7 +496,7 @@ export function loadService(broker, filename) {
   return broker.loadService(filename);
 }
 
-loadCoreValidators();
+// loadCoreValidators();
 
 const isAPIName = function (apiName) {
   const reg = new RegExp("^[a-z]([a-z0-9]|_(?!_))*[a-z0-9]$");

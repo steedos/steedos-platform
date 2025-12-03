@@ -9904,6 +9904,7 @@ __metadata:
     "@steedos/odata-v4-typeorm": 3.0.1
     "@steedos/schemas": 3.0.1
     "@types/node": ^11.10.4
+    ajv: ^8.17.1
     amis-formula: ~6.3.0
     app-root-path: ^2.2.1
     axios: ^1.13.2
@@ -9916,7 +9917,6 @@ __metadata:
     express: ^5.1.0
     graphql: ^15.8.0
     graphql-parse-resolve-info: ^4.12.3
-    jsen: ^0.6.6
     jsonwebtoken: 9.0.1
     lodash: ^4.17.21
     mingo: ^6.0.5
@@ -9924,6 +9924,7 @@ __metadata:
     mongodb: ^3.7.3
     mongodb-uri: ^0.9.7
     node-fetch: 3
+    path: ^0.12.7
     reflect-metadata: ^0.2.0
     sequelize: 6.37.7
     tslib: ^2.4.0
@@ -13254,7 +13255,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ajv@npm:8.17.1, ajv@npm:^8.0.0, ajv@npm:^8.0.1, ajv@npm:^8.11.0, ajv@npm:^8.6.0, ajv@npm:^8.9.0":
+"ajv@npm:8.17.1, ajv@npm:^8.0.0, ajv@npm:^8.0.1, ajv@npm:^8.11.0, ajv@npm:^8.17.1, ajv@npm:^8.6.0, ajv@npm:^8.9.0":
   version: 8.17.1
   resolution: "ajv@npm:8.17.1"
   dependencies:
@@ -26947,13 +26948,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsen@npm:^0.6.6":
-  version: 0.6.6
-  resolution: "jsen@npm:0.6.6"
-  checksum: 05eed39972836432cf6a7eaa8a2803497fe8e8bb036ca219f84b15476a551b75e5c61e957f2015393ea0ad99bd1fe12431a006424eb466b347a1293eea3ae103
-  languageName: node
-  linkType: hard
-
 "jsesc@npm:^2.5.2":
   version: 2.5.2
   resolution: "jsesc@npm:2.5.2"
@@ -33988,6 +33982,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"path@npm:^0.12.7":
+  version: 0.12.7
+  resolution: "path@npm:0.12.7"
+  dependencies:
+    process: ^0.11.1
+    util: ^0.10.3
+  checksum: 5dedb71e78fc008fcba797defc0b4e1cf06c1f18e0a631e03ba5bb505136f587ff017afc14f9a3d481cbe77aeedff7dc0c1d2ce4d820c1ebf3c4281ca49423a1
+  languageName: node
+  linkType: hard
+
 "pause-stream@npm:~0.0.11":
   version: 0.0.11
   resolution: "pause-stream@npm:0.0.11"
@@ -35486,7 +35490,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"process@npm:^0.11.10":
+"process@npm:^0.11.1, process@npm:^0.11.10":
   version: 0.11.10
   resolution: "process@npm:0.11.10"
   checksum: bfcce49814f7d172a6e6a14d5fa3ac92cc3d0c3b9feb1279774708a719e19acd673995226351a082a9ae99978254e320ccda4240ddc474ba31a76c79491ca7c3
@@ -42435,6 +42439,15 @@ __metadata:
     has-symbols: ^1.0.1
     object.getownpropertydescriptors: ^2.1.0
   checksum: d823c75b3fc66510018596f128a6592c98991df38bc0464a633bdf9134e2de0a1a33199c5c21cc261048a3982d7a19e032ecff8835b3c587f843deba96063e37
+  languageName: node
+  linkType: hard
+
+"util@npm:^0.10.3":
+  version: 0.10.4
+  resolution: "util@npm:0.10.4"
+  dependencies:
+    inherits: 2.0.3
+  checksum: 913f9a90d05a60e91f91af01b8bd37e06bca4cc02d7b49e01089f9d5b78be2fffd61fb1a41b517de7238c5fc7337fa939c62d1fb4eb82e014894c7bee6637aaf
   languageName: node
   linkType: hard
 
