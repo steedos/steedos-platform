@@ -49,12 +49,11 @@
     "sequelize": "6.37.7",
     "tslib": "^2.4.0",
     "typeorm": "0.3.26",
-    "underscore": "1.13.7",
+    "underscore": "^1.13.7",
     "vm2": "^3.9.17"
   },
   "devDependencies": {
     "@types/node": "^11.10.4",
-    "@types/underscore": "^1.8.13",
     "typescript": "5.7.3"
   },
   "types": "lib/index.d.ts",

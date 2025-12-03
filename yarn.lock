@@ -9888,7 +9888,7 @@ __metadata:
     jsonwebtoken: ^9.0.1
     sha256: ^0.2.0
     typescript: 5.7.3
-    underscore: ^1.9.1
+    underscore: ^1.13.7
   languageName: unknown
   linkType: soft
 
@@ -10042,7 +10042,7 @@ __metadata:
     i18next: ^19.3.4
     i18next-sprintf-postprocessor: ^0.2.2
     typescript: 5.7.3
-    underscore: 1.13.7
+    underscore: ^1.13.7
   languageName: unknown
   linkType: soft
 
@@ -10074,7 +10074,7 @@ __metadata:
     mongodb: ^3.7.3
     node-fetch: ^3.2.10
     typescript: 5.7.3
-    underscore: ^1.11.0
+    underscore: ^1.13.7
   languageName: unknown
   linkType: soft
 
@@ -10099,7 +10099,7 @@ __metadata:
     js-yaml: ^3.14.2
     mkdirp: ^1.0.4
     typescript: 5.7.3
-    underscore: ^1.11.0
+    underscore: ^1.13.7
   languageName: unknown
   linkType: soft
 
@@ -10125,7 +10125,7 @@ __metadata:
     lodash: ^4.17.21
     tslib: ^2.4.0
     typescript: 5.7.3
-    underscore: ^1.11.0
+    underscore: ^1.13.7
   languageName: unknown
   linkType: soft
 
@@ -10190,7 +10190,6 @@ __metadata:
     "@steedos/odata-v4-typeorm": 3.0.1
     "@steedos/schemas": 3.0.1
     "@types/node": ^11.10.4
-    "@types/underscore": ^1.8.13
     amis-formula: ~6.3.0
     app-root-path: ^2.2.1
     axios: ^1.13.2
@@ -10216,7 +10215,7 @@ __metadata:
     tslib: ^2.4.0
     typeorm: 0.3.26
     typescript: 5.7.3
-    underscore: 1.13.7
+    underscore: ^1.13.7
     vm2: ^3.9.17
   languageName: unknown
   linkType: soft
@@ -10649,7 +10648,7 @@ __metadata:
     "@steedos/service-packages": 3.0.1
     lodash: ^4.17.21
     typescript: 5.7.3
-    underscore: 1.13.7
+    underscore: ^1.13.7
   languageName: unknown
   linkType: soft
 
@@ -10687,7 +10686,7 @@ __metadata:
     lodash: ^4.17.21
     moleculer: ^0.14.35
     typescript: 5.7.3
-    underscore: 1.13.7
+    underscore: ^1.13.7
   languageName: unknown
   linkType: soft
 
@@ -10701,7 +10700,7 @@ __metadata:
     lodash: ^4.17.21
     moleculer: ^0.14.35
     typescript: 5.7.3
-    underscore: 1.13.7
+    underscore: ^1.13.7
   languageName: unknown
   linkType: soft
 
@@ -10718,7 +10717,7 @@ __metadata:
     moleculer: ^0.14.35
     moment: ^2.29.1
     open: ^7.3.0
-    underscore: 1.13.7
+    underscore: ^1.13.7
   languageName: unknown
   linkType: soft
 
@@ -10752,7 +10751,7 @@ __metadata:
     moment: ^2.24.0
     node-xlsx: ^0.24.0
     typescript: 5.7.3
-    underscore: ^1.12.0
+    underscore: ^1.13.7
   languageName: unknown
   linkType: soft
 
@@ -10904,7 +10903,7 @@ __metadata:
     cookies: ^0.8.0
     mingo: ^6.0.5
     psl: 1.9.0
-    underscore: 1.13.7
+    underscore: ^1.13.7
   languageName: unknown
   linkType: soft
 
@@ -12405,13 +12404,6 @@ __metadata:
   dependencies:
     source-map: ^0.6.1
   checksum: ffed5d63637c6ea5c155469121ee40d9b652e677e6d9eb07b72ff72bb4029ffad19049a0af6e91a5021bad6c481cff2572fbf6367e319c6885cf1537c20d861d
-  languageName: node
-  linkType: hard
-
-"@types/underscore@npm:^1.8.13":
-  version: 1.13.0
-  resolution: "@types/underscore@npm:1.13.0"
-  checksum: 1411cbeb1b743629d504fcb2037b393d11eb207459b9d560f71304183115e30ba145f83b819ffcc8a0d5d4eccfb76bebb0ef7aab8f96a04d88d99ff9dfe503c6
   languageName: node
   linkType: hard
 
@@ -40578,7 +40570,7 @@ __metadata:
     request-promise: ^4.2.5
     rimraf: 3.0.2
     ts-node: 10.9.2
-    underscore: ^1.11.0
+    underscore: ^1.13.7
     validator: ^13.5.2
     yargs: ^13.2.1
     yn: ^2.0.0
@@ -42929,7 +42921,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"underscore@npm:1.13.7, underscore@npm:^1.11.0, underscore@npm:^1.12.0, underscore@npm:^1.13.7, underscore@npm:^1.9.1":
+"underscore@npm:^1.13.7":
   version: 1.13.7
   resolution: "underscore@npm:1.13.7"
   checksum: 174b011af29e4fbe2c70eb2baa8bfab0d0336cf2f5654f364484967bc6264a86224d0134b9176e4235c8cceae00d11839f0fd4824268de04b11c78aca1241684
