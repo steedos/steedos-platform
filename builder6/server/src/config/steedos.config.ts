@@ -62,12 +62,17 @@ if (isEmpty(process.env.STEEDOS_AMIS_URL)) {
 process.env.STEEDOS_AMIS_URL = process.env.STEEDOS_AMIS_URL.replace(/\/+$/, "");
 
 if (isEmpty(process.env.STEEDOS_WIDGETS_VERSION)) {
-  process.env.STEEDOS_WIDGETS_VERSION = "6.10.23";
+  process.env.STEEDOS_WIDGETS_VERSION = "6.10.25";
 }
 
 if (isEmpty(process.env.STEEDOS_WIDGETS_ADDITIONAL)) {
-  process.env.STEEDOS_WIDGETS_ADDITIONAL =
-    "@steedos-widgets/liveblocks,@steedos-widgets/fullcalendar";
+  if (process.env.STEEDOS_LICENSE) {
+    process.env.STEEDOS_WIDGETS_ADDITIONAL =
+      "@steedos-widgets/liveblocks,@steedos-widgets/fullcalendar";
+  } else {
+    process.env.STEEDOS_WIDGETS_ADDITIONAL =
+      "@steedos-widgets/liveblocks,@steedos-widgets/fullcalendar-scheduler";
+  }
 }
 
 if (isEmpty(process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS)) {
