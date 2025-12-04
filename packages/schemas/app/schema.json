@@ -1,159 +1,151 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "name": "steedos-schema_app",
-    "type": "object",
-    "additionalProperties": false,
-    "oneOf": [
-        {
-            "properties": {
-                "type": {
-                    "enum": [
-                        "library"
-                    ]
-                }
-            },
-            "required": [
-                "type",
-                "name",
-                "description"
-            ]
-        },
-        {
-            "properties": {
-                "type": {
-                    "not": {
-                        "enum": [
-                            "library"
-                        ]
-                    }
-                }
-            }
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "name": "steedos-schema_app",
+  "type": "object",
+  "additionalProperties": false,
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "enum": ["library"]
         }
-    ],
-    "properties": {
-        "_id": {
-            "type": "string",
-            "description": "应用的唯一标识。"
-        },
-        "url": {
-            "type": "string",
-            "description": "应用地址"
-        },
-        "name": {
-            "description": "应用显示名称。",
-            "type": "string"
-        },
-        "code": {
-            "description": "应用的唯一标识。",
-            "type": "string"
-        },
-        "description": {
-            "type": "string",
-            "description": "应用描述。"
-        },
-        "icon": {
-            "type": "string",
-            "description": "应用图标。"
-        },
-        "icon_slds": {
-            "type": "string",
-            "description": "应用图标。"
-        },
-        "is_creator": {
-            "type": "boolean",
-            "description": ""
-        },
-        "sort": {
-            "type": "number",
-            "description": "排序"
-        },
-        "tabs": {
-            "type": "array",
-            "description": "用于指定此应用下的选项卡",
-            "items": {
-                "type": "string",
-                "description": "选项卡唯一标识。"
-            }
-        },
-        "tab_items": {
-            "type": "object",
-            "description": "选项卡"
-        },
-        "tab_groups": {
-            "type": "array",
-            "description": "选项卡分组",
-            "items": {
-                "type": "object",
-                "description": "选项卡分组详情"
-            }
-        },
-        "objects": {
-            "type": "array",
-            "description": "用于指定此应用下有多少对象。",
-            "items": {
-                "type": "string",
-                "description": "对象唯一标识。"
-            }
-        },
-        "mobile_objects": {
-            "type": "array",
-            "description": "用于指定此应用在手机上显示的对象。",
-            "items": {
-                "type": "string",
-                "description": "对象唯一标识。"
-            }
-        },
-        "admin_menus": {
-            "type": "array",
-            "description": "管理员菜单",
-            "items": {
-                "type": "object",
-                "description": "菜单详情"
-            }
-        },
-        "visible": {
-            "type": "boolean",
-            "description": "启用"
-        },
-        "is_new_window": {
-            "type": "boolean",
-            "description": "新窗口打开"
-        },
-        "mobile": {
-            "type": "boolean",
-            "description": "在手机端显示"
-        },
-        "showSidebar": {
-            "type": "boolean",
-            "description": "显示左侧导航"
-        },
-        "oauth2_enabled": {
-            "type": "boolean",
-            "description": "启用OAuth2认证"
-        },
-        "oauth2_logout_enabled": {
-            "type": "boolean",
-            "description": "启用OAuth2单点注销"
-        },
-        "saml_enabled": {
-            "type": "boolean",
-            "description": "启用SAML"
-        },
-        "saml_logout_enabled": {
-            "type": "boolean",
-            "description": "启用SAML单点注销"
-        },
-        "is_use_iframe": {
-            "type": "boolean",
-            "description": "使用iframe打开"
-        },
-        "is_use_ie": {
-            "type": "boolean",
-            "description": "使用IE打开(需使用Steedos桌面客户端)"
-        },
-        "is_hide_mobile_menu": {
-            "type": "boolean",
-            "description": "始终隐藏手机端菜单选项卡"
+      },
+      "required": ["type", "name", "description"]
+    },
+    {
+      "properties": {
+        "type": {
+          "not": {
+            "enum": ["library"]
+          }
         }
+      }
     }
+  ],
+  "properties": {
+    "_id": {
+      "type": "string",
+      "description": "应用的唯一标识。"
+    },
+    "url": {
+      "type": "string",
+      "description": "应用地址"
+    },
+    "name": {
+      "description": "应用显示名称。",
+      "type": "string"
+    },
+    "code": {
+      "description": "应用的唯一标识。",
+      "type": "string"
+    },
+    "description": {
+      "type": "string",
+      "description": "应用描述。"
+    },
+    "icon": {
+      "type": "string",
+      "description": "应用图标。"
+    },
+    "icon_slds": {
+      "type": "string",
+      "description": "应用图标。"
+    },
+    "is_creator": {
+      "type": "boolean",
+      "description": ""
+    },
+    "sort": {
+      "type": "number",
+      "description": "排序"
+    },
+    "tabs": {
+      "type": "array",
+      "description": "用于指定此应用下的选项卡",
+      "items": {
+        "type": "string",
+        "description": "选项卡唯一标识。"
+      }
+    },
+    "tab_items": {
+      "type": "object",
+      "description": "选项卡"
+    },
+    "tab_groups": {
+      "type": "array",
+      "description": "选项卡分组",
+      "items": {
+        "type": "object",
+        "description": "选项卡分组详情"
+      }
+    },
+    "objects": {
+      "type": "array",
+      "description": "用于指定此应用下有多少对象。",
+      "items": {
+        "type": "string",
+        "description": "对象唯一标识。"
+      }
+    },
+    "mobile_objects": {
+      "type": "array",
+      "description": "用于指定此应用在手机上显示的对象。",
+      "items": {
+        "type": "string",
+        "description": "对象唯一标识。"
+      }
+    },
+    "admin_menus": {
+      "type": "array",
+      "description": "管理员菜单",
+      "items": {
+        "type": "object",
+        "description": "菜单详情"
+      }
+    },
+    "visible": {
+      "type": "boolean",
+      "description": "启用"
+    },
+    "is_new_window": {
+      "type": "boolean",
+      "description": "新窗口打开"
+    },
+    "mobile": {
+      "type": "boolean",
+      "description": "在手机端显示"
+    },
+    "showSidebar": {
+      "type": "boolean",
+      "description": "显示左侧导航"
+    },
+    "oauth2_enabled": {
+      "type": "boolean",
+      "description": "启用OAuth2认证"
+    },
+    "oauth2_logout_enabled": {
+      "type": "boolean",
+      "description": "启用OAuth2单点注销"
+    },
+    "saml_enabled": {
+      "type": "boolean",
+      "description": "启用SAML"
+    },
+    "saml_logout_enabled": {
+      "type": "boolean",
+      "description": "启用SAML单点注销"
+    },
+    "is_use_iframe": {
+      "type": "boolean",
+      "description": "使用iframe打开"
+    },
+    "is_use_ie": {
+      "type": "boolean",
+      "description": "使用IE打开(需使用Steedos桌面客户端)"
+    },
+    "is_hide_mobile_menu": {
+      "type": "boolean",
+      "description": "始终隐藏手机端菜单选项卡"
+    }
+  }
 }

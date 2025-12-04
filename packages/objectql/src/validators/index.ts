@@ -10,6 +10,7 @@ import { Dictionary, JsonMap, getString } from "@salesforce/ts-types";
 // 实例化 Ajv
 const ajv = new Ajv({
   allErrors: true, // 收集所有错误，而不是在第一个错误时停止
+  strict: false,
   // 其他 ajv 配置，例如：
   // removeAdditional: true,
   // useDefaults: true,

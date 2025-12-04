@@ -9933,6 +9933,7 @@ __metadata:
     "@steedos/schemas": 3.0.2-beta.2
     "@types/node": ^11.10.4
     ajv: ^8.17.1
+    ajv-draft-04: ^1.0.0
     amis-formula: ~6.3.0
     app-root-path: ^2.2.1
     axios: ^1.13.2
@@ -13231,6 +13232,18 @@ __metadata:
   peerDependencies:
     zod: ^3.25.76 || ^4.1.8
   checksum: 31606a1b9f54fd14951ca4d9b0229fb3f0f3e86f295b15180efbe735c356b42313f38a124e9805244f0f75d0ff94fa506395893253ba79e1e6b79dcad5a91a75
+  languageName: node
+  linkType: hard
+
+"ajv-draft-04@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "ajv-draft-04@npm:1.0.0"
+  peerDependencies:
+    ajv: ^8.5.0
+  peerDependenciesMeta:
+    ajv:
+      optional: true
+  checksum: 3f11fa0e7f7359bef6608657f02ab78e9cc62b1fb7bdd860db0d00351b3863a1189c1a23b72466d2d82726cab4eb20725c76f5e7c134a89865e2bfd0e6828137
   languageName: node
   linkType: hard
 
