@@ -10,8 +10,8 @@
     ],
     "dependencies": {
         "@steedos/service-package-loader": "3.0.2-beta.2",
-        "json2xls": "^0.1.2",
         "bcryptjs": "^3.0.3",
+        "json2xls": "^0.1.2",
         "lodash": "^4.17.21"
     },
     "description": "steedos package",
