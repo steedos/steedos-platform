@@ -194,7 +194,7 @@ fields:
     help: "Function signature: (payload, response, api)=>payload"
     description: 
   extra_columns:
-    label: Extra Columns
+    label: Grid Extra Columns
     description: Query only through the interface, not displayed in the list.
   calendar_start_field:
     label: Start Time Field

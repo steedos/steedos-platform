@@ -83,7 +83,7 @@ fields:
     description: 
   enable_enhanced_lookup:
     label: 弹出选择
-    help: 被其他字段引用时，使用弹出框选择记录。
+    help: 被其它字段引用时，使用弹出框选择记录。
     description: 
   enable_thousands:
     label: 显示千分符

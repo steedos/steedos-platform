@@ -14,5 +14,6 @@ filtersFunction: !<tag:yaml.org,2002:js/function> |-
   ) {
     return ['object', '=', values.object_name]
   }
-sort_no: 355
-group: show_columns
+sort_no: 900
+group: advanced
+visible_on: ${type != 'calendar' && type != 'timeline'}

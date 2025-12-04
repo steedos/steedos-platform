@@ -189,7 +189,7 @@ fields:
     help: "函数签名: (payload, response, api) => payload"
     description: 
   extra_columns:
-    label: 其他字段
+    label: 列表其它字段
     description: 仅通过接口查询, 在列表中不显示
   calendar_start_field:
     label: 开始时间字段
