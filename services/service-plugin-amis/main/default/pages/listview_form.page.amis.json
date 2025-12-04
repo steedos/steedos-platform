@@ -71,6 +71,8 @@
               ],
               "addable": false,
               "draggable": false,
+              "requiredOn": "${type != 'calendar' && type != 'timeline'}",
+              "visibleOn": "${type != 'calendar' && type != 'timeline'}",
               "columns": [
                 {
                   "name": "field",
@@ -108,7 +110,7 @@
                 "adaptor": "",
                 "sendOn": "!!this.object_name"
               },
-              "visibleOn": "!!this.object_name",
+              "visibleOn": "${type != 'calendar' && type != 'timeline'}",
               "sortable": true,
               "className": "col-span-2 m-0",
               "searchable": true,
@@ -187,6 +189,7 @@
           "mobile_columns": {
             "amis": {
               "showIndex": true,
+              "visibleOn": "${type != 'calendar' && type != 'timeline'}",
               "footerToolbar": [
                 {
                   "type": "button",
@@ -275,7 +278,7 @@
                 "adaptor": "",
                 "sendOn": "!!this.object_name"
               },
-              "visibleOn": "!!this.object_name",
+              "visibleOn": "${type != 'calendar' && type != 'timeline'}",
               "className": "col-span-2 m-0",
               "multiple": true,
               "id": "u:adb91066539e"

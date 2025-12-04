@@ -2,7 +2,7 @@ name: columns
 label: Columns
 type: table
 is_wide: true
-required: true
+required: false
 group: show_columns
 amis:
   columns:
@@ -12,3 +12,4 @@ amis:
     - name: wrap
       width: 100
 sort_no: 230
+visible_on: ${type != 'calendar' && type != 'timeline'}

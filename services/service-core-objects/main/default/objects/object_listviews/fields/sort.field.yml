@@ -6,3 +6,4 @@ depend_on:
   - object_name
 group: sort
 sort_no: 290
+visible_on: ${type != 'calendar' && type != 'timeline'}
