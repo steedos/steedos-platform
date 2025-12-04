@@ -11,7 +11,7 @@ filtersFunction: !<tag:yaml.org,2002:js/function> |-
   function anonymous(filters,values
   ) {
 
-    return [['object', '=', values.object_name],[['type', '=', 'lookup'],'or',['type', '=', 'master_detail']]];
+    return [['object', '=', values.object_name],['multiple', '!=', true],[['type', '=', 'lookup'],'or',['type', '=', 'master_detail']]];
 
   }
 sortable: false
