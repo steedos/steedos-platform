@@ -19,7 +19,7 @@
     "json-stringify-safe": "5.0.1",
     "jsonata": "1.8.7",
     "lodash": "^4.17.21",
-    "lodash.clonedeep": "^4.5.0",
+    "lodash.clonedeep": "^4.17.21",
     "moment-timezone": "0.5.35",
     "npm-package-arg": "~9.1.0",
     "npm-registry-fetch": "^19.1.1",

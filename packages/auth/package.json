@@ -15,7 +15,7 @@
     "@steedos/cachers": "3.0.1",
     "@steedos/objectql": "3.0.1",
     "@steedos/utils": "3.0.1",
-    "bcryptjs": "^2.4.3",
+    "bcryptjs": "^3.0.3",
     "cookies": "^0.8.0",
     "express": "^5.1.0",
     "ismobilejs": "^1.1.1",
