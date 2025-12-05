@@ -306,10 +306,19 @@ export class MetadataDriver extends SteedosMongoDriver {
   }
 
   async mixinSources(metaName, dbSources = [], codeSources = []) {
-    const key = metaName === "apps" ? "_id" : "name";
+    let key = metaName === "apps" ? "_id" : "name";
+    if (metaName === "roles") {
+      key = "api_name";
+    }
     const dbSIDMap = new Map(
       dbSources.map((item) => {
-        const idValue = `${item.object || item.object_name}.${item[key]}`;
+        let idValue = null;
+        if (item.object || item.object_name) {
+          idValue = `${item.object || item.object_name}.${item[key]}`;
+        } else {
+          idValue = item[key];
+        }
+
         return [idValue, item];
       }),
     );
@@ -346,6 +355,7 @@ export class MetadataDriver extends SteedosMongoDriver {
     const sources = await this.mixinSources(
       tableName,
       result,
+
       this.addDefaultProps(cachedSources),
     );
     // console.log(`s3: `, new Date().getTime() - s);
@@ -370,7 +380,10 @@ export class MetadataDriver extends SteedosMongoDriver {
   }
 
   async insert(tableName: string, doc: any) {
-    const nameValue = tableName === "apps" ? doc.code : doc.name;
+    let nameValue = tableName === "apps" ? doc.code : doc.name;
+    if (tableName === "roles") {
+      nameValue = doc.api_name;
+    }
     if (nameValue && tableName != "permission_objects") {
       isAPIName(nameValue, tableName);
     }
@@ -388,7 +401,10 @@ export class MetadataDriver extends SteedosMongoDriver {
     id: SteedosIDType | SteedosQueryOptions,
     data: Dictionary<any>,
   ): Promise<any> {
-    const nameValue = tableName === "apps" ? data.code : data.name;
+    let nameValue = tableName === "apps" ? data.code : data.name;
+    if (tableName === "roles") {
+      nameValue = data.api_name;
+    }
     if (nameValue && tableName != "permission_objects") {
       isAPIName(nameValue, tableName);
     }
