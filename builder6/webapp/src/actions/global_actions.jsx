@@ -93,8 +93,12 @@ export function finishSignin(currentUser, tenant, location, navigate){
     //   }else{
     //     hashHistory.push('/home');
     //   }
-    navigate('/home');
-    // let redirect_uri = new URLSearchParams(location?location.search:"").get('redirect_uri')
+    let redirect_uri = new URLSearchParams(location?location.search:"").get('redirect_uri')
+    if(redirect_uri){
+      navigate('/home?redirect_uri=' + redirect_uri);
+    }else{
+      navigate('/home');
+    }
     // if (!redirect_uri)
     //   redirect_uri = '/'
     // redirectTo(redirect_uri, location);
