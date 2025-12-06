@@ -16,7 +16,7 @@
 
 <p align="center">
   <a href="https://www.npmjs.com/package/@steedos/server"><img src="https://img.shields.io/npm/v/@steedos/server.svg" alt="NPM Version"></a>
-  <a href="https://hub.docker.com/r/steedos/steedos-platform"><img src="https://img.shields.io/docker/pulls/steedos/steedos-platform.svg" alt="Docker Pulls"></a>
+  <a href="https://hub.docker.com/r/steedos/steedos-community"><img src="https://img.shields.io/docker/pulls/steedos/steedos-community.svg" alt="Docker Pulls"></a>
   <a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
 </p>
 
@@ -24,7 +24,7 @@
   <a href="./README.md">English</a> •
   <a href="https://www.steedos.com/" target="_blank">官网</a> •
   <a href="https://docs.steedos.com/" target="_blank">文档</a> •
-  <a href="https://github.com/steedos/steedos-examples">示例</a> •
+  <a href="https://github.com/steedos/steedos-templates">示例</a> •
   <a href="https://github.com/steedos/steedos-platform/discussions">社区</a>
 </p>
 
