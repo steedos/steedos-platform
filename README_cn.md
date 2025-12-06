@@ -116,7 +116,6 @@ npm start
 
 访问 `http://localhost:5100` 即可开始使用。
 
------
 
 ## 🤝 贡献与社区 | Community
 
@@ -126,8 +125,6 @@ npm start
   * 💬 **讨论交流**: [GitHub Discussions](https://github.com/steedos/steedos-platform/discussions)
   * 🛠️ **贡献代码**: 请阅读 [CONTRIBUTING.md](https://www.google.com/search?q=./CONTRIBUTING.md)
 
-### 联系我们
+## 联系我们
 
-![contact us](https://www.steedos.com/img/QR_contact1.png)
-
-```
+<img src="https://www.steedos.com/img/QR_contact1.png" width="500" /> 
