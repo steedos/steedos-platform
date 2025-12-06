@@ -1,16 +1,4 @@
-这是一个为您精心翻译和润色的英文版 `README.md`。
 
-为了适应国际化（GitHub）受众，我做了一些微调：
-
-1.  **地道的术语**：将“中国式审批”翻译为更通用的 "Complex Enterprise Approval Scenarios"（复杂企业审批场景）。
-2.  **导航栏调整**：将导航栏中的 `English` 改为了指向中文版的链接 `中文 (Chinese)`，符合 GitHub 多语言 README 的标准做法。
-3.  **语气调整**：使用了更具“硅谷风”的技术叙事风格，强调 "Open Source Salesforce Alternative"（开源 Salesforce 替代方案）这一核心价值。
-
-您可以直接复制以下内容保存为 `README.md`（如果您打算做双语，建议将中文版保存为 `README_zh-CN.md`，英文版保存为 `README.md`）。
-
------
-
-````markdown
 <p align="center">
   <a href="https://docs.steedos.com/en/">
     <img alt="Steedos Logo" src="https://docs.steedos.com/img/logo.png" width="100" />
