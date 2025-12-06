@@ -98,7 +98,7 @@
 ### 核心架构分层：
 
 1.  **基础设施层 (Infrastructure):** 支持 Docker/K8s 容器化部署，兼容 AWS, Azure, 阿里云及私有云环境。
-2.  **数据持久层 (Persistence):** 支持 MongoDB (文档型) 和主流 SQL 数据库（通过 Moleculer 适配），保证海量数据的高性能读写。
+2.  **数据持久层 (Persistence):** 支持 MongoDB (文档型) 和主流 SQL 数据库（通过 TypeORM 适配），保证海量数据的高性能读写。
 3.  **元数据引擎 (Metadata Kernel):** 平台的核心大脑。
       * **对象模型 (Object Modeling):** 定义字段、关系、验证规则。
       * **权限引擎 (Security):** 字段级、记录级的精细化权限控制。
@@ -159,4 +159,4 @@ yarn start
 
 ## 联系我们
 
-<img src="https://www.steedos.com/img/QR_contact1.png" width="500" /> 
+<img src="https://www.steedos.com/img/QR_contact1.png" width="600" /> 
