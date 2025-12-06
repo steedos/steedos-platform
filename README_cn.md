@@ -108,10 +108,10 @@ npx create-steedos-app my-project
 
 # 进入目录并安装依赖
 cd my-project
-npm install
+yarn install
 
 # 启动服务
-npm start
+yarn start
 ```
 
 访问 `http://localhost:5100` 即可开始使用。
