@@ -38,7 +38,7 @@
 
 无论是构建 CRM、ERP、OA，还是复杂的行业业务系统，Steedos 都能助您实现 **10倍** 的开发效率提升，同时确保代码与数据的完全自主可控。
 
-![Steedos Overview](./docs/cn/diagrams/steedos-overview.svg)
+![Steedos Overview](docs/cn/diagrams/steedos-overview.svg)
 
 ## ⚡ 为什么选择华炎魔方？
 
