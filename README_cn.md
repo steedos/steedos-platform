@@ -65,7 +65,7 @@
 * **审批流 (Approval)**: 支持会签、加签、回退、子流程等复杂业务场景。
 * **逻辑编排**: 可视化配置业务规则，无需编写代码。
 
-### 3. 🛡️ 银行级权限体系 (Security)
+### 3. 🛡️ 企业级权限体系 (Security)
 提供颗粒度极细的权限管理体系，确保数据安全。
 * **多维控制**: 支持对象级、字段级、记录级 (Sharing Rules) 权限控制。
 * **组织架构**: 完善的部门、用户、角色 (Role)、简档 (Profile) 与权限集 (Permission Set) 管理。
@@ -86,16 +86,6 @@
 * **后端核心**: Node.js, Moleculer (Microservices), TypeScript
 * **数据存储**: MongoDB (Metadata Repository), SQL Databases (Business Data)
 * **前端框架**: React, Amis (Baidu Open Source)
-
-
-## 🧩 生态集成 | Ecosystem
-
-拒绝数据孤岛，华炎魔方通过插件架构与顶级开源项目无缝融合：
-
-* 🔐 **身份认证**: 集成 [KeyCloak](https://github.com/keycloak/keycloak)，实现企业级 SSO 单点登录。
-* 📊 **数据分析**: 集成 [Metabase](https://github.com/metabase/metabase)，提供强大的 BI 报表能力。
-* 🔌 **物联网/ETL**: 集成 [Node-RED](https://github.com/node-red/node-red)，实现设备连接与数据编排。
-* 📱 **微应用**: 集成 [ToolJet](https://github.com/ToolJet/ToolJet/)，快速构建轻量级业务应用。
 
 
 ## 🚀 快速开始 | Quick Start
@@ -138,14 +128,6 @@ npm start
 
 ### 联系我们
 
-| 开发者微信群 | 商务咨询 | 微信公众号 |
-| :---: | :---: | :---: |
-| \<img src="https://steedos.github.io/assets/github/platform/cn/QR\_wechat\_developers.jpg" width="120" /\> | \<img src="https://steedos.github.io/assets/github/platform/cn/business\_consulting.jpg" width="120" /\> | \<img src="https://steedos.github.io/assets/github/platform/cn/public\_number.jpg" width="120" /\> |
-
------
-
-\<p align="center"\>
-Copyright © 2001-2025 Steedos Inc.
-\</p\>
+![contact us](https://www.steedos.com/img/QR_contact1.png)
 
 ```
