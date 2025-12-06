@@ -22,7 +22,7 @@
 </p>
 
 <p align="center">
-  <a href="./README_zh-CN.md">中文 (Chinese)</a> •
+  <a href="./README_cn.md">中文 (Chinese)</a> •
   <a href="https://www.steedos.com/" target="_blank">Website</a> •
   <a href="https://docs.steedos.com/" target="_blank">Documentation</a> •
   <a href="https://github.com/steedos/steedos-templates">Examples</a> •
