@@ -1,133 +1,151 @@
-
 <p align="center">
   <a href="https://docs.steedos.com">
-    <img alt="Steedos" src="https://docs.steedos.com/img/logo.png" width="80" />
+    <img alt="Steedos Logo" src="https://docs.steedos.com/img/logo.png" width="100" />
   </a>
 </p>
-<h1 align="center">
-  Steedos 低代码平台
-</h1>
+
+<h1 align="center">Steedos Platform (华炎魔方)</h1>
 
 <p align="center">
-<a href="./README.md">English</a>
-<a href="https://docs.steedos.com/" target="_blank"> · 文档</a>
-<a href="https://www.steedos.com/" target="_blank"> · Steedos 官网</a>
+  <strong>企业级开源低代码开发平台 | The Open Source Low-Code Platform for Enterprise</strong>
 </p>
 
-
-<p align="center" style="border-top: solid 1px #cccccc">
-  华炎魔方低代码PaaS平台是一款基于 Salesforce Platform 的开源替代方案，旨在为企业提供高效、灵活、易于使用的低代码开发平台。
+<p align="center">
+  <em>以元数据为核心，融合低代码的高效与 Pro-Code 的灵活，连接企业数据，重塑业务创新。</em>
 </p>
 
-<h3 align="center">
- 🤖 🎨 🚀
-</h3>
+<p align="center">
+  <a href="https://www.npmjs.com/package/@steedos/server"><img src="https://img.shields.io/npm/v/@steedos/server.svg" alt="NPM Version"></a>
+  <a href="https://hub.docker.com/r/steedos/steedos-platform"><img src="https://img.shields.io/docker/pulls/steedos/steedos-platform.svg" alt="Docker Pulls"></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
+</p>
 
-## 点击鼠标，就能编程
+<p align="center">
+  <a href="./README.md">English</a> •
+  <a href="https://www.steedos.com/" target="_blank">官网</a> •
+  <a href="https://docs.steedos.com/" target="_blank">文档</a> •
+  <a href="https://github.com/steedos/steedos-examples">示例</a> •
+  <a href="https://github.com/steedos/steedos-platform/discussions">社区</a>
+</p>
 
-华炎魔方可以支持多种企业应用场景，包括但不限于CRM、ERP、OA、BI、IoT、大数据等。无论是传统企业还是新兴企业，都可以使用华炎魔方快速构建自己的应用程序和流程。
+<br/>
 
-![微页面](https://console.steedos.cn/api/files/images/642166bd671028003e75f910)
+## 📖 简介 | Introduction
 
-- **可视化构建应用**：使用简单易懂的拖放式界面，用户可以快速创建自定义的企业级应用程序。
-  - [x] 应用 [文档](https://docs.steedos.cn/zh-CN/no-code/application/app)
-  - [x] 选项卡 [文档](https://docs.steedos.cn/zh-CN/no-code/application/tab)
-  - [x] 微页面 [文档](https://docs.steedos.cn/zh-CN/no-code/amis/) 可视化页面设计引擎，替代 [Salesforce Lightning App Builder](https://help.salesforce.com/s/articleView?id=sf.lightning_app_builder_overview.htm&type=5)
-  - [x] 列表视图 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/listview/)
-  - [x] 页面布局 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/page-layout)
-- **可视化数据建模**：华炎魔方提供了强大的数据管理功能，包括数据建模、数据存储、数据分析等，可以帮助企业轻松管理和分析大量的数据。
-  - [x] 对象 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/object) 
-  - [x] 字段 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/fields/) 
-  - [x] 验证规则 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/validation-rules) 
-- **自动化业务流程**：内置可视化的流程开发引擎，可以帮助用户快速实现业务流程自动化。
-  - [x] 自动化操作 [文档](https://docs.steedos.cn/zh-CN/automation/automated-actions)
-  - [x] 工作流规则 [文档](https://docs.steedos.cn/zh-CN/automation/workflow-rules)
-  - [x] 批准过程 [文档](https://docs.steedos.cn/zh-CN/automation/approval-process)
-  - [x] 审批王 [文档](https://docs.steedos.cn/zh-CN/automation/approval-king/)
+**华炎魔方 (Steedos)** 是一款基于 **元数据驱动 (Metadata Driven)** 架构的开源低代码平台。
 
-## 管理数据访问权限
+我们致力于打造低代码领域的“Linux”——既拥有 **Salesforce** 般强大的企业级内核（对象模型、权限引擎、自动化流程），又具备开源软件的灵活性与现代技术栈（**Node.js**, **MongoDB**, **React**, **Amis**）。
 
-平台提供了完善的安全和权限控制机制，可以确保企业数据的安全性和隐私性。[Steedos](https://docs.steedos.com/admin/permissions/)🚀[Salesforce](https://developer.salesforce.com/docs/atlas.en-us.securityImplGuide.meta/securityImplGuide/security_data_access.htm)
+无论是构建 CRM、ERP、OA，还是复杂的行业业务系统，Steedos 都能助您实现 **10倍** 的开发效率提升，同时确保代码与数据的完全自主可控。
 
-![Steedos Permissions Overview](./docs/diagrams/Steedos%20Permissions.drawio.svg)
+![Steedos Overview](./docs/cn/diagrams/steedos-overview.svg)
 
-  - [x] 对象权限 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/object-permissions)
-  - [x] 字段权限 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/field-permissions)
-  - [x] 应用权限 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/app-permissions)
-  - [x] 分部级权限 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/division)
-  - [x] 共享规则 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/sharing-rules)
-  - [x] 限制规则 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/restriction-rules)
-  - [x] 简档 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/profile)
-  - [x] 权限集 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/permission-set)
+## ⚡ 为什么选择华炎魔方？
 
-## 使用代码扩展Steedos
+| 特性 | 华炎魔方 (Steedos) | Salesforce | 传统代码开发 |
+| :--- | :--- | :--- | :--- |
+| **核心架构** | 🧠 **元数据驱动 (Metadata)** | 🧠 元数据驱动 | 📄 硬编码 |
+| **开发模式** | 🚀 **可视化 + 代码 (双模)** | ⚠️ 仅限专有语言 (Apex) | 🐢 纯代码 |
+| **部署方式** | ☁️ **私有部署 / 混合云** | 🔒 仅限公有云 | ☁️ 任意 |
+| **前端技术** | ⚛️ **React + 百度 Amis** | ⚠️ Aura / LWC | ⚛️ 任意 |
+| **数据主权** | 🛡️ **100% 自主可控** | ❌ 厂商锁定 | 🛡️ 100% |
+| **使用成本** | 💰 **开源免费 / 商业授权** | 💰💰💰 昂贵的订阅费 | 💰💰 人力成本高 |
 
-使用 Steedos DX，您可以将元数据导入到 Steedos 中，在可视化界面中进行修改，并将其同步回项目源代码。Steedos DX 引入了一种新的方式来组织您的元数据和分发您的应用程序。
-  
-![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
+## 🌟 核心能力 | Core Capabilities
 
-您可以用Git工具管理您的所有内容 - 您的代码、配置和元数据，并从人工智能技术（如 Github Copilot）中受益。
+### 1. 🎨 可视化建模与页面设计 (Visual Builder)
+告别繁琐的数据库脚本，点击鼠标即可定义企业级数据模型。
+* **对象建模**: 支持 20+ 种字段类型，轻松处理 Lookup、Master-Detail 复杂关系。
+* **页面引擎**: 深度集成百度 **Amis** 框架，拖拽式设计表单、列表、看板及微页面。
+* **对标功能**: 完美替代 Salesforce Object Manager 与 Lightning App Builder。
 
-  - [x] create-steedos-app [文档](https://docs.steedos.com/zh-CN/developer/create-steedos-app)
-  - [x] 软件包 [文档](https://docs.steedos.com/zh-CN/developer/package)
-  - [x] VS Code 插件 ([文档](https://docs.steedos.com/zh-CN/developer/sync-metadata))，支持元数据与代码双向同步， 替代 [Salesforce DX](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-  - [x] API [文档](https://docs.steedos.com/zh-CN/api/rest-api/)
-  - [x] 触发器 [文档](https://docs.steedos.com/zh-CN/developer/action-trigger)
-  - [x] 自定义API [文档](https://docs.steedos.com/zh-CN/developer/action-api)
-  
-## 企业级插件
+### 2. 🤖 智能流程引擎 (Automation Engine)
+内置符合 BPMN 2.0 标准的流程引擎，满足中国特色的复杂审批需求。
+* **工作流 (Workflow)**: 自动化字段更新、邮件通知、Webhook 触发。
+* **审批流 (Approval)**: 支持会签、加签、回退、子流程等复杂业务场景。
+* **逻辑编排**: 可视化配置业务规则，无需编写代码。
 
-华炎魔方支持以插件的方式与第三方开源项目无缝融合，包括统一身份认证、数据分析、微应用、流程自动化，为客户构建一体化的企业PaaS平台。
+### 3. 🛡️ 银行级权限体系 (Security)
+提供颗粒度极细的权限管理体系，确保数据安全。
+* **多维控制**: 支持对象级、字段级、记录级 (Sharing Rules) 权限控制。
+* **组织架构**: 完善的部门、用户、角色 (Role)、简档 (Profile) 与权限集 (Permission Set) 管理。
 
-  - [x] [KeyCloak](https://github.com/keycloak/keycloak) 企业级统一身份认证平台, **vs** [Salesfore Identity](https://help.salesforce.com/s/articleView?id=sf.identity_overview.htm&type=5)
-  - [x] [Node-RED](https://github.com/node-red/node-red) 可视化编程、物联网开发。 [文档](https://docs.steedos.cn/zh-CN/plugins/node-red)
-  - [x] [ToolJet](https://github.com/ToolJet/ToolJet/) 连接任意数据源，使用amis构建微应用。
-  - [x] [Metabase](https://github.com/metabase/metabase) 数据分析引擎, **vs** [Salesforce Reports and Dashboards](https://help.salesforce.com/s/articleView?id=sf.analytics_overview.htm&type=5)
-  - [ ] [n8n](https://github.com/n8n-io/n8n) 业务流程编排, **vs** [Salesforce Flow Builder](https://help.salesforce.com/s/articleView?id=sf.flow.htm&language=en_US&type=5)
-  
-# 快速向导
+### 4. 💻 开发者优先 (Steedos DX)
+低代码不代表“黑盒”。我们为开发者提供了专业的工程化工具链。
+* **代码即配置**: 所有元数据均以 YAML/JSON 格式存储。
+* **GitOps**: 完美支持 Git 版本控制，融入 CI/CD 流水线。
+* **VS Code 插件**: 提供语法高亮、自动补全、元数据双向同步。
+* **API First**: 自动生成 GraphQL 与 RESTful API。
 
-## 运行平台源码
 
-```
-docker-compose build
-docker-compose up
-```
+## 🏗️ 技术架构 | Architecture
 
-## 运行项目模版
+华炎魔方采用前后端分离的响应式微服务架构，基于 Moleculer 框架构建。
 
-- 项目模版: https://github.com/steedos/steedos-project-template
 
-## 创建一个空项目
+* **后端核心**: Node.js, Moleculer (Microservices), TypeScript
+* **数据存储**: MongoDB (Metadata Repository), SQL Databases (Business Data)
+* **前端框架**: React, Amis (Baidu Open Source)
 
-```
+
+## 🧩 生态集成 | Ecosystem
+
+拒绝数据孤岛，华炎魔方通过插件架构与顶级开源项目无缝融合：
+
+* 🔐 **身份认证**: 集成 [KeyCloak](https://github.com/keycloak/keycloak)，实现企业级 SSO 单点登录。
+* 📊 **数据分析**: 集成 [Metabase](https://github.com/metabase/metabase)，提供强大的 BI 报表能力。
+* 🔌 **物联网/ETL**: 集成 [Node-RED](https://github.com/node-red/node-red)，实现设备连接与数据编排。
+* 📱 **微应用**: 集成 [ToolJet](https://github.com/ToolJet/ToolJet/)，快速构建轻量级业务应用。
+
+
+## 🚀 快速开始 | Quick Start
+
+### 方式一：Docker 一键启动 (推荐)
+
+最快体验华炎魔方的方式：
+
+```bash
+docker run -d -p 80:80 steedos/steedos-community:latest
+````
+
+### 方式二：创建新项目 (开发者)
+
+使用脚手架创建标准的工程化项目：
+
+```bash
+# 创建项目
 npx create-steedos-app my-project
+
+# 进入目录并安装依赖
+cd my-project
+npm install
+
+# 启动服务
+npm start
 ```
 
-## 示例
+访问 `http://localhost:5100` 即可开始使用。
 
-- [Examples](https://github.com/steedos/steedos-examples)
-- [Steedos Labs 开源项目](https://github.com/steedos-labs/)
+-----
 
-## 技术框架
+## 🤝 贡献与社区 | Community
 
-华炎魔方服务端使用nodejs开发，您定义的元数据，和系统中录入的业务数据均保存在mongodb中。
+华炎魔方是完全开源的项目，我们欢迎任何形式的贡献！
 
-- [MongoDB](https://www.mongodb.com/) : 华炎魔方使用 MongoDB 作为元数据仓库和默认数据源.
-- [Node.js](https://nodejs.org/): 华炎魔方平台源码运行于 nodejs 环境。
-- [Moleculer](https://moleculer.services/zh/): 基于 Node.js 的响应式微服务框架。
-- [Amis](https://aisuda.bce.baidu.com/amis/zh-CN/components): 百度 Amis 前端低代码框架。
+  * 🐛 **报告问题**: [GitHub Issues](https://github.com/steedos/steedos-platform/issues)
+  * 💬 **讨论交流**: [GitHub Discussions](https://github.com/steedos/steedos-platform/discussions)
+  * 🛠️ **贡献代码**: 请阅读 [CONTRIBUTING.md](https://www.google.com/search?q=./CONTRIBUTING.md)
 
-## 为华炎魔方做贡献
+### 联系我们
 
-从上报BUG到提出改善建议，每一个贡献都非常欢迎。如果您打算动手修改代码来修正BUG或实现某个新功能，请先创建一个 [ISSUE](https://github.com/steedos/steedos-platform/issues)。
+| 开发者微信群 | 商务咨询 | 微信公众号 |
+| :---: | :---: | :---: |
+| \<img src="https://steedos.github.io/assets/github/platform/cn/QR\_wechat\_developers.jpg" width="120" /\> | \<img src="https://steedos.github.io/assets/github/platform/cn/business\_consulting.jpg" width="120" /\> | \<img src="https://steedos.github.io/assets/github/platform/cn/public\_number.jpg" width="120" /\> |
 
+-----
 
-如果您有任何疑问或想与其他华炎魔方用户交谈，请扫码添加以下联系方式与我们联系。
+\<p align="center"\>
+Copyright © 2001-2025 Steedos Inc.
+\</p\>
 
-| ![开发者微信交流群](https://steedos.github.io/assets/github/platform/cn/QR_wechat_developers.jpg) | ![商务咨询](https://steedos.github.io/assets/github/platform/cn/business_consulting.jpg)        | ![微信公众号](https://steedos.github.io/assets/github/platform/cn/public_number.jpg)|
-| :-----: | :-----: | :-----: |
-| 开发人员微信群  | 商务咨询  | 微信公众号 |
-
-
-
+```
