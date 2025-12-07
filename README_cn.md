@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://docs.steedos.com">
-    <img alt="Steedos Logo" src="https://docs.steedos.com/img/logo.png" width="100" />
+    <img alt="Steedos Logo" src="./docs/images/logo.svg" width="100" />
   </a>
 </p>
 
