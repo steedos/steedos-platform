@@ -65,7 +65,7 @@ Say goodbye to tedious SQL scripts. Define enterprise-grade data models with jus
 * **Benchmark**: A perfect alternative to Salesforce Object Manager and Lightning App Builder.
 
 ### 2. 🤖 Intelligent Automation Engine
-Built-in BPMN 2.0 standard process engine to meet complex enterprise approval scenarios.
+Built-in \process engine to meet complex enterprise approval scenarios.
 * **Workflow**: Automate field updates, email notifications, and Webhook triggers.
 * **Approval Processes**: Supports countersignatures, add-approvers, kickbacks, sub-processes, and other complex logic.
 * **Logic Orchestration**: Visually configure business rules without writing code.
