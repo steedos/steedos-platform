@@ -37,16 +37,16 @@
 
     <g transform="translate(50, 35)">
       <rect x="0" y="0" width="130" height="40" rx="5" fill="white" stroke="#bbdefb" stroke-width="1"/>
-      <text x="65" y="25" text-anchor="middle" fill="#333" font-size="13">💻 Web Portal</text>
+      <text x="65" y="25" text-anchor="middle" fill="#333" font-size="13">💻 Web</text>
       
-      <rect x="155" y="0" width="130" height="40" rx="5" fill="white" stroke="#bbdefb" stroke-width="1"/>
-      <text x="220" y="25" text-anchor="middle" fill="#333" font-size="13">📱 Mobile / Mini App</text>
+      <rect x="155" y="0" width="130" height="40" rx="5" fill="white" stroke="#1c2022ff" stroke-width="1"/>
+      <text x="220" y="25" text-anchor="middle" fill="#333" font-size="13">📱 Mobile</text>
       
       <rect x="310" y="0" width="130" height="40" rx="5" fill="white" stroke="#bbdefb" stroke-width="1"/>
-      <text x="375" y="25" text-anchor="middle" fill="#333" font-size="13">💬 WeChat Work / DingTalk</text>
+      <text x="375" y="25" text-anchor="middle" fill="#333" font-size="13">💬 WeChat / DingTalk</text>
       
       <rect x="465" y="0" width="130" height="40" rx="5" fill="white" stroke="#bbdefb" stroke-width="1"/>
-      <text x="530" y="25" text-anchor="middle" fill="#333" font-size="13">📺 Large Screen / IoT</text>
+      <text x="530" y="25" text-anchor="middle" fill="#333" font-size="13">📺 IoT</text>
     </g>
   </g>
 
@@ -82,7 +82,7 @@
       
       <text x="110" y="130" text-anchor="middle" fill="white" font-size="13">Copilot Assistant</text>
       <text x="110" y="160" text-anchor="middle" fill="white" font-size="13">NL2App (Natural Language to App)</text>
-      <text x="110" y="190" text-anchor="middle" fill="white" font-size="13">Enterprise Knowledge Base QA (RAG)</text>
+      <text x="110" y="190" text-anchor="middle" fill="white" font-size="13">Enterprise Knowledge Base QA</text>
       <text x="110" y="220" text-anchor="middle" fill="white" font-size="13">Intelligent Process Prediction</text>
     </g>
 
