@@ -100,7 +100,7 @@
     "accounts.copyright": "© 2025 Steedos.com, Inc.",
     "accounts.privacy": "Privacy",
     "accounts.privacyURL": "https://docs.steedos.com/company/privacy/",
-    "accounts.logoURL":"/images/logo_platform.en-us.png",
+    "accounts.logoURL":"/images/logo.svg",
     "accounts.invalidVerifyParam": "Invalid validation parameter",
     "accounts.passwordLogin": "Login with password",
     "accounts.codeLogin": "Login with Verify code",

@@ -224,7 +224,7 @@ export const AppHeader = () => {
 
     const isMobile = window.innerWidth < 1024;
 
-    let logoSrc = `/images/logo.png`
+    let logoSrc = `/images/logo.svg`
 
     if(Builder.settings?.context?.user?.space?.avatar){
         logoSrc = '/api/v6/files/cfs.avatars.filerecord/' + Builder.settings.context.user.space.avatar
@@ -232,7 +232,7 @@ export const AppHeader = () => {
 
     const faviconLink: any = document.querySelector('link[rel*="icon"], link[rel*="shortcut"]');
 
-    let favicon = '/favicon.ico';
+    let favicon = '/images/logo.svg';
     if(Builder.settings?.context?.user?.space?.favicon){
         favicon = "/api/v6/files/cfs.avatars.filerecord/" + Builder.settings.context.user.space.favicon;
     }

@@ -123,7 +123,7 @@
     "accounts.copyright": "© 2025 华炎软件",
     "accounts.privacy": "隐私",
     "accounts.privacyURL": "https://docs.steedos.cn/company/privacy/",
-    "accounts.logoURL":"/images/logo_platform.png",
+    "accounts.logoURL":"/images/logo.svg",
     "accounts.passwordLogin": "密码登录",
     "accounts.codeLogin": "验证码登录",
     "accounts.accept_invitation": "接受邀请",
