@@ -43,7 +43,7 @@
       <text x="220" y="25" text-anchor="middle" fill="#333" font-size="13">📱 移动/小程序</text>
       
       <rect x="310" y="0" width="130" height="40" rx="5" fill="white" stroke="#bbdefb" stroke-width="1"/>
-      <text x="375" y="25" text-anchor="middle" fill="#333" font-size="13">💬 企微/钉钉</text>
+      <text x="375" y="25" text-anchor="middle" fill="#333" font-size="13">💬 AI 智能体</text>
       
       <rect x="465" y="0" width="130" height="40" rx="5" fill="white" stroke="#bbdefb" stroke-width="1"/>
       <text x="530" y="25" text-anchor="middle" fill="#333" font-size="13">📺 大屏/IoT</text>

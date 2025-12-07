@@ -43,7 +43,7 @@
       <text x="220" y="25" text-anchor="middle" fill="#333" font-size="13">📱 Mobile</text>
       
       <rect x="310" y="0" width="130" height="40" rx="5" fill="white" stroke="#bbdefb" stroke-width="1"/>
-      <text x="375" y="25" text-anchor="middle" fill="#333" font-size="13">💬 WeChat / DingTalk</text>
+      <text x="375" y="25" text-anchor="middle" fill="#333" font-size="13">💬 AI Chatbot</text>
       
       <rect x="465" y="0" width="130" height="40" rx="5" fill="white" stroke="#bbdefb" stroke-width="1"/>
       <text x="530" y="25" text-anchor="middle" fill="#333" font-size="13">📺 IoT</text>
