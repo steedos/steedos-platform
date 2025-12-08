@@ -1,6 +1,6 @@
 {
   "name": "@steedos/standard-process",
-  "version": "2.7.30",
+  "version": "2.7.31",
   "main": "package.service.js",
   "scripts": {},
   "license": "MIT",
@@ -12,5 +12,5 @@
     "clone": "^2.1.2",
     "lodash": "^4.17.21"
   },
-  "gitHead": "aed4a5fdd71171d123c6eddc0736bf70f3d7e64b"
+  "gitHead": "a01edb1e8ea697f2ab71be89e4cd352e438e0ea4"
 }
