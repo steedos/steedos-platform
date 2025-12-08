@@ -3,22 +3,22 @@
     "name": "standard-minifier-js",
     "version": "2.6.0"
   },
-  "totalMinifiedBytes": 4306808,
-  "totalMinifiedGzipBytes": 1085070,
+  "totalMinifiedBytes": 4490579,
+  "totalMinifiedGzipBytes": 1137082,
   "minifiedBytesByPackage": {
     "packages/meteor.js": 9504,
     "packages/coffeescript.js": 32,
     "packages/blaze-html-templates.js": 40,
     "packages/modules-runtime.js": 4269,
     "packages/modules.js": [
-      928390,
+      928477,
       {
         "node_modules": {
           "meteor": {
             "modules": {
               "client.js": 126,
               "css.js": 263,
-              "install-packages.js": 5718,
+              "install-packages.js": 5805,
               "process.js": 415,
               "reify.js": 73,
               "stubs.js": 99,
@@ -1989,6 +1989,21 @@
         }
       }
     ],
+    "packages/twbs_bootstrap.js": [
+      404,
+      {
+        "node_modules": {
+          "meteor": {
+            "twbs:bootstrap": {
+              "bootstrap.js": 56
+            }
+          }
+        }
+      }
+    ],
+    "packages/summernote_summernote.js": 89128,
+    "packages/summernote_standalone.js": 89085,
+    "packages/mpowaga_autoform-summernote.js": 1443,
     "packages/gwendall_simple-schema-i18n.js": 1207,
     "packages/steedos_toastr.js": 6065,
     "packages/kadira_flow-router.js": [
@@ -2060,18 +2075,6 @@
                 "helpers.coffee": 45,
                 "navigation_controller.coffee": 289
               }
-            }
-          }
-        }
-      }
-    ],
-    "packages/twbs_bootstrap.js": [
-      404,
-      {
-        "node_modules": {
-          "meteor": {
-            "twbs:bootstrap": {
-              "bootstrap.js": 56
             }
           }
         }
@@ -2430,7 +2433,7 @@
     "packages/chuangbo_cookie.js": 1229,
     "packages/steedos_sso.js": 1557,
     "packages/steedos_autoform.js": [
-      163485,
+      166855,
       {
         "node_modules": {
           "meteor": {
@@ -2514,8 +2517,11 @@
                       "template.date.js": 349,
                       "date.js": 896
                     },
+                    "coreform-summernote": {
+                      "summernote-zh-CN.js": 3145
+                    },
                     "coreform-html": {
-                      "template.html.js": 1006,
+                      "template.html.js": 1074,
                       "html.js": 392
                     }
                   },
@@ -2663,7 +2669,7 @@
     "packages/steedos_autoform-modals.js": 20485,
     "packages/steedos_slipjs.js": 15081,
     "packages/steedos_workflow.js": [
-      717828,
+      718480,
       {
         "node_modules": {
           "meteor": {
@@ -2700,7 +2706,7 @@
                   "traces_manager.coffee": 1192,
                   "instance_event.js": 1260,
                   "1_form_formula.js": 7787,
-                  "2_steedos_data_format.js": 6179,
+                  "2_steedos_data_format.js": 6655,
                   "approve_manager.js": 14090,
                   "instance_manager.js": 31032,
                   "uuflow_api.js": 14170,
@@ -2751,7 +2757,7 @@
                     "template.instance_suggestion.js": 13122,
                     "instance_suggestion.coffee": 11911,
                     "template.instance_view.js": 4887,
-                    "instance_view.coffee": 8204,
+                    "instance_view.coffee": 8380,
                     "template.instance_amis_view.js": 264,
                     "instance_amis_view.coffee": 401,
                     "template.reassign_modal.js": 2500,

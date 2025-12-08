@@ -174,6 +174,8 @@ install("steedos:autoform-lookup");
 install("steedos:autoform-tags");
 install("steedos:autoform-dx-date-box");
 install("vazco:universe-autoform-select");
+install("summernote:summernote");
+install("mpowaga:autoform-summernote");
 install("gwendall:simple-schema-i18n");
 install("steedos:toastr");
 install("kadira:flow-router");
