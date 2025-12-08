@@ -126,7 +126,6 @@ Steedos is a fully open-source project, and we welcome all forms of contribution
 
   * 🐛 **Report Issues**: [GitHub Issues](https://github.com/steedos/steedos-platform/issues)
   * 💬 **Discussions**: [GitHub Discussions](https://github.com/steedos/steedos-platform/discussions)
-  * 🛠️ **Contribute**: Please read [CONTRIBUTING.md](https://www.google.com/search?q=./CONTRIBUTING.md)
 
 ## Contact Us
 
