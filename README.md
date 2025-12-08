@@ -99,7 +99,7 @@ Steedos adopts a responsive microservices architecture with separated frontend a
 The fastest way to experience Steedos:
 
 ```bash
-docker run -d -p 80:80 steedos/steedos-community:latest
+docker run -d -p 80:80 steedos/steedos-community:3.0
 ````
 
 ### Option 2: Create New Project (For Developers)

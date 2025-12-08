@@ -118,7 +118,7 @@
 最快体验华炎魔方的方式：
 
 ```bash
-docker run -d -p 80:80 steedos/steedos-community:latest
+docker run -d -p 80:80 steedos/steedos-community:3.0
 ````
 
 ### 方式二：创建新项目 (开发者)
