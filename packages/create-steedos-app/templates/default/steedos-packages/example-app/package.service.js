@@ -2,7 +2,7 @@ const project = require('./package.json');
 const packageLoader = require('@steedos/service-package-loader');
 
 module.exports = {
-  name: "example-service",
+  name: project.name,
 
 	mixins: [packageLoader],
 

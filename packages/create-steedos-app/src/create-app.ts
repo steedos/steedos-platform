@@ -112,19 +112,37 @@ export async function createApp({
   // 6. [核心优化] 自动启动项目 (yarn start)
   console.log(`Running ${chalk.cyan(`${packageManager} start`)}...`);
 
-  // 使用 spawn 继承 stdio，这样用户可以直接看到 start 命令的输出日志
-  // shell: true 用于兼容 Windows
   const child = spawn(packageManager, ["start"], {
     stdio: "inherit",
     cwd: root,
-    shell: true,
+    shell: true, // 兼容 Windows
   });
 
-  // 监听子进程退出（通常 yarn start 是常驻进程，除非用户手动 Ctrl+C）
+  // 定义清理函数：确保子进程被关闭
+  const cleanup = () => {
+    if (child) {
+      // 向子进程发送 SIGINT 信号（模拟 Ctrl+C）
+      // 如果无效，可以使用 child.kill() 发送 SIGTERM
+      child.kill("SIGINT");
+    }
+    process.exit();
+  };
+
+  // 监听父进程的退出信号
+  process.on("SIGINT", cleanup); // 监听 Ctrl+C
+  process.on("SIGTERM", cleanup); // 监听 kill 命令
+
+  // 监听子进程退出
   child.on("close", (code) => {
+    // 子进程正常退出后，移除父进程的监听器，防止内存泄漏或重复调用
+    process.removeListener("SIGINT", cleanup);
+    process.removeListener("SIGTERM", cleanup);
+
     if (code !== 0) {
       console.log();
       console.log(chalk.red("The application exited with an error."));
     }
+    // 子进程结束，父进程也无需继续运行
+    process.exit(code || 0);
   });
 }
