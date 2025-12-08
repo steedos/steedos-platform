@@ -14,10 +14,10 @@ router.get('/api/workflow/v2/:box/filter', core.requireAuthentication, async fun
     const userSession = req.user;
     const { userId, is_space_admin, spaceId } = userSession;
     // TODO 按应用分类显示
-    const { app, flowId } = req.query;
+    const { app, flowId, additionalFilters } = req.query;
     const { box } = req.params;
     const filter = await objectql.getSteedosSchema().broker.call("instance.getBoxFilters", {
-        box, appId: app, flowId, userId, is_space_admin, spaceId
+        box, appId: app, flowId, userId, is_space_admin, spaceId, additionalFilters
     })
     return res.send({
         filter
