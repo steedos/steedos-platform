@@ -8,7 +8,6 @@
 **/yarn-error.log
 **/lerna-debug.log
 
-storage
 dist
 logs
 
@@ -16,7 +15,6 @@ logs
 
 yarn.lock
 package-lock.json
-steedos-platform
 steedos-storage
 
 .steedos

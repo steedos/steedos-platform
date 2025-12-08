@@ -38,7 +38,7 @@ steedos-storage
 .steedos
 steedos-app/**
 
-steedos-packages
+/steedos-packages
 depcheck-result.json
 depcheck-services-result.json
 depcheck-packages-result.json
