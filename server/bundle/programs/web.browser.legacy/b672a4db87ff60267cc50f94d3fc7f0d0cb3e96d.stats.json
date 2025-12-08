@@ -3,15 +3,15 @@
     "name": "standard-minifier-js",
     "version": "2.6.0"
   },
-  "totalMinifiedBytes": 4306822,
-  "totalMinifiedGzipBytes": 1085086,
+  "totalMinifiedBytes": 4306808,
+  "totalMinifiedGzipBytes": 1085070,
   "minifiedBytesByPackage": {
     "packages/meteor.js": 9504,
     "packages/coffeescript.js": 32,
     "packages/blaze-html-templates.js": 40,
     "packages/modules-runtime.js": 4269,
     "packages/modules.js": [
-      928404,
+      928390,
       {
         "node_modules": {
           "meteor": {
@@ -741,7 +741,7 @@
           },
           "@steedos": {
             "i18n": {
-              "package.json": 95,
+              "package.json": 88,
               "lib": {
                 "index.js": 2137,
                 "i18n": {
@@ -936,7 +936,7 @@
               }
             },
             "cachers": {
-              "package.json": 98,
+              "package.json": 91,
               "lib": {
                 "index.js": 412,
                 "memory.js": 501,
