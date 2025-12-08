@@ -5,6 +5,7 @@ import cpy from "cpy";
 import fs from "fs";
 import os from "os";
 import path from "path";
+import { spawn } from "child_process"; // [新增] 用于执行命令
 import {
   downloadAndExtractExample,
   downloadAndExtractRepo,
@@ -26,82 +27,14 @@ export class DownloadError extends Error {}
 export async function createApp({
   appPath,
   packageManager,
-  example,
-  examplePath,
-  typescript,
 }: {
   appPath: string;
   packageManager: PackageManager;
-  example?: string;
-  examplePath?: string;
-  typescript?: boolean;
 }): Promise<void> {
-  let repoInfo: RepoInfo | undefined;
-  const template = "default"; //typescript ? 'typescript' : 'default'
-
-  if (example) {
-    let repoUrl: URL | undefined;
-
-    try {
-      repoUrl = new URL(example);
-    } catch (error: any) {
-      if (error.code !== "ERR_INVALID_URL") {
-        console.error(error);
-        process.exit(1);
-      }
-    }
-
-    if (repoUrl) {
-      if (repoUrl.origin !== "https://github.com") {
-        console.error(
-          `Invalid URL: ${chalk.red(
-            `"${example}"`,
-          )}. Only GitHub repositories are supported. Please use a GitHub URL and try again.`,
-        );
-        process.exit(1);
-      }
-
-      repoInfo = await getRepoInfo(repoUrl, examplePath);
-
-      if (!repoInfo) {
-        console.error(
-          `Found invalid GitHub URL: ${chalk.red(
-            `"${example}"`,
-          )}. Please fix the URL and try again.`,
-        );
-        process.exit(1);
-      }
-
-      const found = await hasRepo(repoInfo);
-
-      if (!found) {
-        console.error(
-          `Could not locate the repository for ${chalk.red(
-            `"${example}"`,
-          )}. Please check that the repository exists and try again.`,
-        );
-        process.exit(1);
-      }
-    } else if (example !== "__internal-testing-retry") {
-      const found = await existsInRepo(example);
-
-      if (!found) {
-        console.error(
-          `Could not locate an example named ${chalk.red(
-            `"${example}"`,
-          )}. It could be due to the following:\n`,
-          `1. Your spelling of example ${chalk.red(
-            `"${example}"`,
-          )} might be incorrect.\n`,
-          `2. You might not be connected to the internet or you are behind a proxy.`,
-        );
-        process.exit(1);
-      }
-    }
-  }
-
+  const template = "default"; // typescript ? 'typescript' : 'default'
   const root = path.resolve(appPath);
 
+  // 1. 检查写入权限
   if (!(await isWriteable(path.dirname(root)))) {
     console.error(
       "The application path is not writable, please check folder permissions and try again.",
@@ -114,6 +47,7 @@ export async function createApp({
 
   const appName = path.basename(root);
 
+  // 2. 创建目录并检查是否为空
   await makeDir(root);
   if (!isFolderEmpty(root, appName)) {
     process.exit(1);
@@ -126,204 +60,71 @@ export async function createApp({
   console.log(`Creating a new steedos app in ${chalk.green(root)}.`);
   console.log();
 
+  // 切换工作目录到项目根目录
   process.chdir(root);
 
+  console.log(chalk.bold(`Using ${packageManager}.`));
+
+  // 3. 复制模版文件
+  await cpy(["**"], root, {
+    dot: true,
+    parents: true,
+    cwd: path.join(__dirname, "..", "templates", template),
+    rename: (name) => {
+      switch (name) {
+        case "gitignore": {
+          return ".".concat(name);
+        }
+        default: {
+          return name;
+        }
+      }
+    },
+  });
+
+  // [优化] 更新 package.json 的 name 为项目名称
   const packageJsonPath = path.join(root, "package.json");
-  let hasPackageJson = false;
-
-  if (example) {
-    /**
-     * If an example repository is provided, clone it.
-     */
-    try {
-      if (repoInfo) {
-        const repoInfo2 = repoInfo;
-        console.log(
-          `Downloading files from repo ${chalk.cyan(
-            example,
-          )}. This might take a moment.`,
-        );
-        console.log();
-        await retry(() => downloadAndExtractRepo(root, repoInfo2), {
-          retries: 3,
-        } as any);
-      } else {
-        console.log(
-          `Downloading files for example ${chalk.cyan(
-            example,
-          )}. This might take a moment.`,
-        );
-        console.log();
-        await retry(() => downloadAndExtractExample(root, example), {
-          retries: 3,
-        } as any);
-      }
-    } catch (reason) {
-      function isErrorLike(err: unknown): err is { message: string } {
-        return (
-          typeof err === "object" &&
-          err !== null &&
-          typeof (err as { message?: unknown }).message === "string"
-        );
-      }
-      throw new DownloadError(
-        isErrorLike(reason) ? reason.message : reason + "",
-      );
-    }
-    // Copy our default `.gitignore` if the application did not provide one
-    const ignorePath = path.join(root, ".gitignore");
-    if (!fs.existsSync(ignorePath)) {
-      fs.copyFileSync(
-        path.join(__dirname, "..", "templates", template, "gitignore"),
-        ignorePath,
-      );
-    }
-
-    // Copy default `next-env.d.ts` to any example that is typescript
-    const tsconfigPath = path.join(root, "tsconfig.json");
-    if (fs.existsSync(tsconfigPath)) {
-      fs.copyFileSync(
-        path.join(__dirname, "..", "templates", "typescript", "next-env.d.ts"),
-        path.join(root, "next-env.d.ts"),
-      );
-    }
-
-    hasPackageJson = fs.existsSync(packageJsonPath);
-    if (hasPackageJson) {
-      console.log("Installing packages. This might take a couple of minutes.");
-      console.log();
-
-      await install(root, null, { packageManager, isOnline });
-      console.log();
-    }
-  } else {
-    /**
-     * Otherwise, if an example repository is not provided for cloning, proceed
-     * by installing from a template.
-     */
-    console.log(chalk.bold(`Using ${packageManager}.`));
-    /**
-     * Create a package.json for the new project.
-     */
-    const packageJson = {
-      name: appName,
-      version: "0.1.0",
-      private: true,
-      scripts: {
-        start: "moleculer-runner services/*/package.service.js --hot --repl",
-        repl: "moleculer-runner --repl",
-      },
-    };
-    /**
-     * Write it to disk.
-     */
+  if (fs.existsSync(packageJsonPath)) {
+    const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
+    packageJson.name = appName;
     fs.writeFileSync(
-      path.join(root, "package.json"),
+      packageJsonPath,
       JSON.stringify(packageJson, null, 2) + os.EOL,
     );
-    /**
-     * These flags will be passed to `install()`.
-     */
-    const installFlags = { packageManager, isOnline };
-    /**
-     * Default dependencies.
-     */
-    const dependencies = ["@steedos/server"];
-    /**
-     * Default devDependencies.
-     */
-    const devDependencies = ["moleculer-repl"];
-    /**
-     * TypeScript projects will have type definitions and other devDependencies.
-     */
-    if (typescript) {
-      devDependencies.push(
-        "typescript",
-        // '@types/react',
-        // '@types/node',
-        // '@types/react-dom'
-      );
-    }
-    /**
-     * Install package.json dependencies if they exist.
-     */
-    if (dependencies.length) {
-      console.log();
-      console.log("Installing dependencies:");
-      for (const dependency of dependencies) {
-        console.log(`- ${chalk.cyan(dependency)}`);
-      }
-      console.log();
-
-      await install(root, dependencies, installFlags);
-    }
-    /**
-     * Install package.json devDependencies if they exist.
-     */
-    if (devDependencies.length) {
-      console.log();
-      console.log("Installing devDependencies:");
-      for (const devDependency of devDependencies) {
-        console.log(`- ${chalk.cyan(devDependency)}`);
-      }
-      console.log();
-
-      const devInstallFlags = { devDependencies: true, ...installFlags };
-      await install(root, devDependencies, devInstallFlags);
-    }
-    console.log();
-    /**
-     * Copy the template files to the target directory.
-     */
-    await cpy(["**"], root, {
-      dot: true,
-      parents: true,
-      cwd: path.join(__dirname, "..", "templates", template),
-      rename: (name) => {
-        switch (name) {
-          case "gitignore": {
-            return ".".concat(name);
-          }
-          default: {
-            return name;
-          }
-        }
-      },
-    });
   }
 
+  // 4. Git 初始化
   if (tryGitInit(root)) {
     console.log("Initialized a git repository.");
     console.log();
   }
 
-  let cdpath: string;
-  if (path.join(originalDirectory, appName) === appPath) {
-    cdpath = appName;
-  } else {
-    cdpath = appPath;
-  }
-
-  console.log(`${chalk.green("Success!")} Created ${appName} at ${appPath}`);
-
-  // if (hasPackageJson) {
-  //   console.log('Inside that directory, you can run several commands:')
-  //   console.log()
-  //   console.log(chalk.cyan(`  ${packageManager} ${useYarn ? '' : 'run '}dev`))
-  //   console.log('    Starts the development server.')
-  //   console.log()
-  //   console.log(chalk.cyan(`  ${packageManager} ${useYarn ? '' : 'run '}build`))
-  //   console.log('    Builds the app for production.')
-  //   console.log()
-  //   console.log(chalk.cyan(`  ${packageManager} start`))
-  //   console.log('    Runs the built app in production mode.')
-  //   console.log()
-  //   console.log('We suggest that you begin by typing:')
-  //   console.log()
-  //   console.log(chalk.cyan('  cd'), cdpath)
-  //   console.log(
-  //     `  ${chalk.cyan(`${packageManager} ${useYarn ? '' : 'run '}dev`)}`
-  //   )
-  // }
+  // 5. [核心优化] 安装依赖 (yarn / npm install)
+  console.log("Installing packages. This might take a couple of minutes.");
   console.log();
+
+  await install(root, null, { packageManager, isOnline });
+
+  console.log();
+  console.log(`${chalk.green("Success!")} Created ${appName} at ${appPath}`);
+  console.log();
+
+  // 6. [核心优化] 自动启动项目 (yarn start)
+  console.log(`Running ${chalk.cyan(`${packageManager} start`)}...`);
+
+  // 使用 spawn 继承 stdio，这样用户可以直接看到 start 命令的输出日志
+  // shell: true 用于兼容 Windows
+  const child = spawn(packageManager, ["start"], {
+    stdio: "inherit",
+    cwd: root,
+    shell: true,
+  });
+
+  // 监听子进程退出（通常 yarn start 是常驻进程，除非用户手动 Ctrl+C）
+  child.on("close", (code) => {
+    if (code !== 0) {
+      console.log();
+      console.log(chalk.red("The application exited with an error."));
+    }
+  });
 }
