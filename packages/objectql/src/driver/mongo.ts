@@ -10,6 +10,68 @@ import _ = require("underscore");
 import { getMongoFieldEncryptionConsts } from "./field-encrytion";
 import { formatRecord } from "./format";
 
+let monitor_enabled = false;
+let SLOW_QUERY_THRESHOLD_MS = 0;
+if (process.env.STEEDOS_MONGODB_SLOW_QUERY_THRESHOLD) {
+  monitor_enabled = true;
+  SLOW_QUERY_THRESHOLD_MS = Number(
+    process.env.STEEDOS_MONGODB_SLOW_QUERY_THRESHOLD,
+  );
+}
+
+// 存储进行中的命令，用于计算耗时
+const runningCommands = new Map();
+
+function connectAndMonitor(client) {
+  // 1. 监听 Command Started 事件
+  client.on("commandStarted", (event) => {
+    // 记录命令开始时间
+    runningCommands.set(event.requestId, {
+      startTime: Date.now(),
+      commandName: event.commandName,
+      databaseName: event.databaseName,
+      command: event.command,
+      // 可以在这里记录 event.command 等信息
+    });
+  });
+
+  // 2. 监听 Command Succeeded 事件
+  client.on("commandSucceeded", (event) => {
+    const commandInfo = runningCommands.get(event.requestId);
+    if (!commandInfo) return;
+
+    const duration = Date.now() - commandInfo.startTime;
+    runningCommands.delete(event.requestId);
+
+    if (duration >= SLOW_QUERY_THRESHOLD_MS) {
+      console.warn(`🚨 慢查询检测到 (成功):`);
+      console.warn(`   命令: ${commandInfo.commandName}`);
+      console.warn(`   耗时: ${duration} ms`);
+      console.warn(`   数据库: ${commandInfo.databaseName}`);
+      console.warn(`   command: ${JSON.stringify(commandInfo.command)}`);
+      // 可以在这里执行您自己的日志记录逻辑 (如写入文件或 ELK/Splunk)
+    }
+  });
+
+  // 3. 监听 Command Failed 事件
+  client.on("commandFailed", (event) => {
+    const commandInfo = runningCommands.get(event.requestId);
+    if (!commandInfo) return;
+
+    const duration = Date.now() - commandInfo.startTime;
+    runningCommands.delete(event.requestId);
+
+    // 失败的命令也可能是慢操作
+    if (duration >= SLOW_QUERY_THRESHOLD_MS) {
+      console.error(`❌ 慢操作检测到 (失败):`);
+      console.error(`   命令: ${commandInfo.commandName}`);
+      console.error(`   耗时: ${duration} ms`);
+      console.error(`   错误: ${event.failure.message}`);
+      console.error(`   command: ${JSON.stringify(commandInfo.command)}`);
+    }
+  });
+}
+
 export class SteedosMongoDriver implements SteedosDriver {
   _url: string;
   _client: any;
@@ -98,7 +160,11 @@ export class SteedosMongoDriver implements SteedosDriver {
         this._client = await MongoClient.connect(this._url, {
           useNewUrlParser: true,
           useUnifiedTopology: true,
+          monitorCommands: monitor_enabled,
         });
+      }
+      if (monitor_enabled) {
+        connectAndMonitor(this._client);
       }
       return true;
     }
