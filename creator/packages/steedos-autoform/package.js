@@ -116,7 +116,7 @@ Package.onUse(function(api) {
 	api.addFiles('client/coreform/inputTypes/coreform-date-mobile/date.html', 'client');
 	api.addFiles('client/coreform/inputTypes/coreform-date-mobile/date.js', 'client');
 	
-	// api.addFiles('client/coreform/inputTypes/coreform-summernote/summernote-zh-CN.js', 'client');
+	api.addFiles('client/coreform/inputTypes/coreform-summernote/summernote-zh-CN.js', 'client');
 
 	api.addFiles('client/coreform/inputTypes/coreform-html/html.html', 'client');
 	api.addFiles('client/coreform/inputTypes/coreform-html/html.js', 'client');

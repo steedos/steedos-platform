@@ -125,6 +125,91 @@ var replaceTypes = function (document, atomTransformer) {
   });
   return ret;
 };
+let STEEDOS_MONGODB_MONITOR_COMMANDS = false;
+let SLOW_QUERY_THRESHOLD_MS = 300;
+if(process.env.STEEDOS_MONGODB_SLOW_QUERY_THRESHOLD){
+  STEEDOS_MONGODB_MONITOR_COMMANDS = true;
+  SLOW_QUERY_THRESHOLD_MS = Number(process.env.STEEDOS_MONGODB_SLOW_QUERY_THRESHOLD);
+}
+
+let STEEDOS_MONGODB_OPLOG_MONITOR_COMMANDS = false;
+let OPLOG_SLOW_QUERY_THRESHOLD_MS = 300;
+if(process.env.STEEDOS_MONGODB_SLOW_QUERY_THRESHOLD){
+  STEEDOS_MONGODB_OPLOG_MONITOR_COMMANDS = true;
+  OPLOG_SLOW_QUERY_THRESHOLD_MS = Number(process.env.STEEDOS_MONGODB_OPLOG_SLOW_QUERY_THRESHOLD);
+}
+
+// 存储进行中的命令，用于计算耗时
+const runningCommands = new Map();
+
+function connectAndMonitor(client) {
+    // 1. 监听 Command Started 事件
+    client.on('commandStarted', (event) => {
+        // 记录命令开始时间
+        runningCommands.set(event.requestId, { 
+            startTime: Date.now(),
+            commandName: event.commandName,
+            databaseName: event.databaseName,
+            command: event.command
+            // 可以在这里记录 event.command 等信息
+        });
+    });
+
+    // 2. 监听 Command Succeeded 事件
+    client.on('commandSucceeded', (event) => {
+        const commandInfo = runningCommands.get(event.requestId);
+        if (!commandInfo) return;
+
+        const duration = Date.now() - commandInfo.startTime;
+        runningCommands.delete(event.requestId);
+        if(commandInfo.databaseName === 'local'){
+          if (STEEDOS_MONGODB_OPLOG_MONITOR_COMMANDS && duration >= OPLOG_SLOW_QUERY_THRESHOLD_MS) {
+            console.warn(`🚨 Meteor Mongodb 慢查询检测到 (成功):`);
+            console.warn(`   命令: ${commandInfo.commandName}`);
+            console.warn(`   耗时: ${duration} ms`);
+            console.warn(`   数据库: ${commandInfo.databaseName}`);
+            console.warn(`   command: ${JSON.stringify(commandInfo.command)}`);
+          }
+        }else{
+          if (duration >= SLOW_QUERY_THRESHOLD_MS) {
+            console.warn(`🚨 Meteor Mongodb 慢查询检测到 (成功):`);
+            console.warn(`   命令: ${commandInfo.commandName}`);
+            console.warn(`   耗时: ${duration} ms`);
+            console.warn(`   数据库: ${commandInfo.databaseName}`);
+            console.warn(`   command: ${JSON.stringify(commandInfo.command)}`);
+          }
+        }
+        
+    });
+
+    // 3. 监听 Command Failed 事件
+    client.on('commandFailed', (event) => {
+        const commandInfo = runningCommands.get(event.requestId);
+        if (!commandInfo) return;
+
+        const duration = Date.now() - commandInfo.startTime;
+        runningCommands.delete(event.requestId);
+        
+        // 失败的命令也可能是慢操作
+        if(commandInfo.databaseName === 'local'){
+          if (STEEDOS_MONGODB_OPLOG_MONITOR_COMMANDS && duration >= OPLOG_SLOW_QUERY_THRESHOLD_MS) {
+            console.error(`❌ 慢操作检测到 (失败):`);
+            console.error(`   命令: ${commandInfo.commandName}`);
+            console.error(`   耗时: ${duration} ms`);
+            console.error(`   错误: ${event.failure.message}`);
+            console.error(`   command: ${commandInfo.command}`);
+          }
+        }else{
+          if (duration >= SLOW_QUERY_THRESHOLD_MS) {
+              console.error(`❌ 慢操作检测到 (失败):`);
+              console.error(`   命令: ${commandInfo.commandName}`);
+              console.error(`   耗时: ${duration} ms`);
+              console.error(`   错误: ${event.failure.message}`);
+              console.error(`   command: ${commandInfo.command}`);
+          }
+        }
+    });
+}
 
 
 MongoConnection = function (url, options) {
@@ -156,6 +241,10 @@ MongoConnection = function (url, options) {
     mongoOptions.native_parser = false;
   }
 
+  if (STEEDOS_MONGODB_MONITOR_COMMANDS){
+    mongoOptions.monitorCommands = true
+  }
+
   // Internally the oplog connections specify their own poolSize
   // which we don't want to overwrite with any user defined value
   if (_.has(options, 'poolSize')) {
@@ -181,6 +270,10 @@ MongoConnection = function (url, options) {
       function (err, client) {
         if (err) {
           throw err;
+        }
+
+        if (STEEDOS_MONGODB_MONITOR_COMMANDS){
+          connectAndMonitor(client)
         }
 
         var db = client.db();

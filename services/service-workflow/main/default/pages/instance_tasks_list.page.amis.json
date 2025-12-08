@@ -87,6 +87,7 @@
                       "hideRoot": true,
                       "showIcon": true,
                       "initiallyOpen": false,
+                      "virtualThreshold": 100000,
                       "value": "${CONCATENATE('/app/', appId, '/', objectName, '/grid/', listViewId, '?additionalFilters=', additionalFilters,'&flowId=',flowId,'&categoryId=',categoryId)}",
                       "size": "md",
                       "onEvent": {

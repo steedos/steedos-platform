@@ -174,6 +174,8 @@ install("steedos:autoform-lookup");
 install("steedos:autoform-tags");
 install("steedos:autoform-dx-date-box");
 install("vazco:universe-autoform-select");
+install("summernote:summernote");
+install("mpowaga:autoform-summernote");
 install("gwendall:simple-schema-i18n");
 install("steedos:toastr");
 install("kadira:flow-router");
@@ -463,7 +465,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/objectql",
-  "version": "2.7.12-beta.4",
+  "version": "2.7.30",
   "main": "lib/index.js"
 };
 
@@ -490,7 +492,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/i18n",
-  "version": "2.7.12-beta.4",
+  "version": "2.7.30",
   "main": "lib/index.js"
 };
 
@@ -517,7 +519,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/core",
-  "version": "2.7.12-beta.4",
+  "version": "2.7.30",
   "main": "lib/index.js"
 };
 
@@ -544,7 +546,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-meteor-package-loader",
-  "version": "2.7.12-beta.4",
+  "version": "2.7.30",
   "main": "index.js"
 };
 
@@ -571,7 +573,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-api",
-  "version": "2.7.12-beta.4",
+  "version": "2.7.30",
   "main": "index.js"
 };
 
@@ -598,7 +600,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-metadata-server",
-  "version": "2.7.12-beta.4",
+  "version": "2.7.30",
   "main": "index.js"
 };
 
@@ -625,7 +627,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-package-registry",
-  "version": "2.7.12-beta.4",
+  "version": "2.7.30",
   "main": "package.service.js"
 };
 
@@ -652,7 +654,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-objectql",
-  "version": "2.7.12-beta.4",
+  "version": "2.7.30",
   "main": "package.service.js"
 };
 
@@ -679,7 +681,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-ui",
-  "version": "2.7.12-beta.4",
+  "version": "2.7.30",
   "main": "package.service.js"
 };
 
@@ -706,7 +708,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-pages",
-  "version": "2.7.12-beta.4",
+  "version": "2.7.30",
   "main": "package.service.js"
 };
 
@@ -733,7 +735,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/router",
-  "version": "2.7.12-beta.4",
+  "version": "2.7.30",
   "main": "lib/index.js"
 };
 
@@ -760,7 +762,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "2.7.12-beta.4",
+  "version": "2.7.30",
   "main": "lib/index.js"
 };
 
@@ -787,7 +789,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/workflow",
-  "version": "2.7.12-beta.4",
+  "version": "2.7.30",
   "main": "index.js"
 };
 

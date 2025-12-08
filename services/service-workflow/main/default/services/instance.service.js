@@ -83,8 +83,7 @@ module.exports = {
     },
     getBoxFilters: {
         async handler(ctx){
-            const { appId, box, flowId, userId, is_space_admin, spaceId } = ctx.params;
-            const categoriesIds = await this.getAppCategoriesIds(appId);
+            const { appId, box, flowId, userId, is_space_admin, spaceId, additionalFilters} = ctx.params;
             const filter = [];
             switch (box) {
                 case 'inbox':
@@ -139,8 +138,11 @@ module.exports = {
                     break;
             }
 
-            if(categoriesIds && categoriesIds.length > 0){
-                filter.push(['category', 'in', categoriesIds])
+            if(!additionalFilters || additionalFilters.indexOf('category') < 0 ){
+                const categoriesIds = await this.getAppCategoriesIds(appId);
+                if(categoriesIds && categoriesIds.length > 0){
+                    filter.push(['category', 'in', categoriesIds])
+                }
             }
 
             return filter;

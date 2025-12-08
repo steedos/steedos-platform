@@ -417,6 +417,12 @@
       "path": "packages/vazco_universe-autoform-select.js"
     },
     {
+      "path": "packages/summernote_summernote.js"
+    },
+    {
+      "path": "packages/mpowaga_autoform-summernote.js"
+    },
+    {
       "path": "packages/gwendall_simple-schema-i18n.js"
     },
     {

@@ -3,22 +3,23 @@
     "name": "standard-minifier-js",
     "version": "2.6.0"
   },
-  "totalMinifiedBytes": 4306822,
-  "totalMinifiedGzipBytes": 1085086,
+  "totalMinifiedBytes": 4666806,
+  "totalMinifiedGzipBytes": 1196332,
   "minifiedBytesByPackage": {
-    "packages/meteor.js": 9504,
+    "packages/meteor.js": 9639,
     "packages/coffeescript.js": 32,
     "packages/blaze-html-templates.js": 40,
     "packages/modules-runtime.js": 4269,
     "packages/modules.js": [
-      928404,
+      1027555,
       {
         "node_modules": {
           "meteor": {
             "modules": {
               "client.js": 126,
+              "legacy.js": 59,
               "css.js": 263,
-              "install-packages.js": 5718,
+              "install-packages.js": 5866,
               "process.js": 415,
               "reify.js": 73,
               "stubs.js": 99,
@@ -31,6 +32,10 @@
                       "entry.js": 3047
                     }
                   }
+                },
+                "meteor-babel-helpers": {
+                  "package.json": 90,
+                  "index.js": 408
                 }
               }
             }
@@ -51,197 +56,44 @@
           },
           "underscore": {
             "package.json": 120,
-            "modules": {
-              "index-all.js": 102,
-              "index-default.js": 138,
-              "index.js": 6002,
-              "_setup.js": 994,
-              "restArguments.js": 404,
-              "isObject.js": 113,
-              "isNull.js": 74,
-              "isUndefined.js": 76,
-              "isBoolean.js": 160,
-              "isElement.js": 86,
-              "isString.js": 99,
-              "_tagTester.js": 171,
-              "isNumber.js": 99,
-              "isDate.js": 97,
-              "isRegExp.js": 99,
-              "isError.js": 98,
-              "isSymbol.js": 99,
-              "isArrayBuffer.js": 104,
-              "isDataView.js": 327,
-              "isFunction.js": 307,
-              "_stringTagBug.js": 256,
-              "_hasObjectTag.js": 99,
-              "isArray.js": 151,
-              "isArguments.js": 219,
-              "_has.js": 143,
-              "isFinite.js": 195,
-              "isNaN.js": 169,
-              "isTypedArray.js": 435,
-              "constant.js": 86,
-              "_isBufferLike.js": 158,
-              "_createSizePropertyCheck.js": 182,
-              "_getByteLength.js": 109,
-              "_shallowProperty.js": 105,
-              "isEmpty.js": 386,
-              "_getLength.js": 105,
-              "keys.js": 372,
-              "_collectNonEnumProps.js": 547,
-              "isMatch.js": 236,
-              "isEqual.js": 1936,
-              "underscore.js": 361,
-              "_toBufferView.js": 170,
-              "isMap.js": 238,
-              "_methodFingerprint.js": 537,
-              "allKeys.js": 284,
-              "isWeakMap.js": 246,
-              "isSet.js": 238,
-              "isWeakSet.js": 100,
-              "values.js": 175,
-              "pairs.js": 182,
-              "invert.js": 172,
-              "functions.js": 169,
-              "extend.js": 142,
-              "_createAssigner.js": 269,
-              "extendOwn.js": 139,
-              "defaults.js": 145,
-              "create.js": 190,
-              "_baseCreate.js": 296,
-              "clone.js": 234,
-              "tap.js": 74,
-              "get.js": 238,
-              "_toPath.js": 151,
-              "toPath.js": 184,
-              "_deepGet.js": 138,
-              "has.js": 238,
-              "mapObject.js": 239,
-              "_cb.js": 258,
-              "_baseIteratee.js": 444,
-              "identity.js": 67,
-              "matcher.js": 198,
-              "property.js": 194,
-              "_optimizeCb.js": 310,
-              "iteratee.js": 194,
-              "noop.js": 58,
-              "propertyOf.js": 189,
-              "times.js": 192,
-              "random.js": 122,
-              "now.js": 84,
-              "escape.js": 144,
-              "_createEscaper.js": 262,
-              "_escapeMap.js": 110,
-              "unescape.js": 146,
-              "_unescapeMap.js": 136,
-              "templateSettings.js": 192,
-              "template.js": 1144,
-              "result.js": 311,
-              "uniqueId.js": 95,
-              "chain.js": 142,
-              "partial.js": 430,
-              "_executeBound.js": 258,
-              "bind.js": 343,
-              "bindAll.js": 336,
-              "_flatten.js": 497,
-              "_isArrayLike.js": 154,
-              "memoize.js": 245,
-              "delay.js": 170,
-              "defer.js": 184,
-              "throttle.js": 475,
-              "debounce.js": 411,
-              "wrap.js": 123,
-              "negate.js": 108,
-              "compose.js": 180,
-              "after.js": 119,
-              "before.js": 143,
-              "once.js": 135,
-              "findKey.js": 227,
-              "findIndex.js": 109,
-              "_createPredicateIndexFinder.js": 259,
-              "findLastIndex.js": 110,
-              "sortedIndex.js": 255,
-              "indexOf.js": 200,
-              "_createIndexFinder.js": 470,
-              "lastIndexOf.js": 154,
-              "find.js": 268,
-              "findWhere.js": 168,
-              "each.js": 341,
-              "map.js": 311,
-              "reduce.js": 95,
-              "_createReduce.js": 435,
-              "reduceRight.js": 96,
-              "filter.js": 220,
-              "reject.js": 217,
-              "every.js": 308,
-              "some.js": 307,
-              "contains.js": 272,
-              "invoke.js": 471,
-              "pluck.js": 168,
-              "where.js": 170,
-              "max.js": 495,
-              "min.js": 491,
-              "shuffle.js": 122,
-              "sample.js": 488,
-              "sortBy.js": 436,
-              "groupBy.js": 176,
-              "_group.js": 254,
-              "indexBy.js": 112,
-              "countBy.js": 168,
-              "partition.js": 125,
-              "toArray.js": 510,
-              "size.js": 197,
-              "pick.js": 530,
-              "_keyInObj.js": 76,
-              "omit.js": 497,
-              "first.js": 191,
-              "initial.js": 165,
-              "last.js": 209,
-              "rest.js": 140,
-              "compact.js": 126,
-              "flatten.js": 127,
-              "without.js": 172,
-              "difference.js": 300,
-              "uniq.js": 446,
-              "union.js": 217,
-              "intersection.js": 300,
-              "unzip.js": 268,
-              "zip.js": 138,
-              "object.js": 187,
-              "range.js": 185,
-              "chunk.js": 198,
-              "mixin.js": 436,
-              "_chainResult.js": 143,
-              "underscore-array-methods.js": 618
-            }
+            "underscore-umd.js": 19548
           },
           "detect-browser": {
             "package.json": 105,
-            "es": {
-              "index.js": 4124
-            }
+            "index.js": 4175
           },
           "@babel": {
             "runtime": {
               "helpers": {
+                "typeof.js": 285,
                 "objectSpread2.js": 633,
                 "defineProperty.js": 150,
+                "slicedToArray.js": 198,
+                "arrayWithHoles.js": 73,
+                "iterableToArrayLimit.js": 330,
+                "unsupportedIterableToArray.js": 346,
+                "arrayLikeToArray.js": 136,
+                "nonIterableRest.js": 204,
+                "toConsumableArray.js": 192,
+                "arrayWithoutHoles.js": 106,
+                "iterableToArray.js": 125,
+                "nonIterableSpread.js": 199,
+                "inheritsLoose.js": 125,
                 "objectWithoutProperties.js": 313,
                 "objectWithoutPropertiesLoose.js": 164,
-                "esm": {
-                  "typeof.js": 277,
-                  "objectSpread.js": 433,
-                  "defineProperty.js": 164,
-                  "classCallCheck.js": 138,
-                  "createClass.js": 267,
-                  "possibleConstructorReturn.js": 232,
-                  "assertThisInitialized.js": 167,
-                  "getPrototypeOf.js": 175,
-                  "inherits.js": 325,
-                  "setPrototypeOf.js": 138
-                }
+                "objectSpread.js": 394,
+                "classCallCheck.js": 124,
+                "createClass.js": 253,
+                "possibleConstructorReturn.js": 161,
+                "assertThisInitialized.js": 153,
+                "getPrototypeOf.js": 172,
+                "inherits.js": 286,
+                "setPrototypeOf.js": 135
               },
-              "package.json": 482
+              "package.json": 482,
+              "regenerator": {
+                "index.js": 53
+              }
             }
           },
           "meteor-node-stubs": {
@@ -741,7 +593,7 @@
           },
           "@steedos": {
             "i18n": {
-              "package.json": 95,
+              "package.json": 88,
               "lib": {
                 "index.js": 2137,
                 "i18n": {
@@ -762,181 +614,19 @@
                 "i18next": {
                   "package.json": 122,
                   "dist": {
-                    "esm": {
-                      "i18next.js": 41449
+                    "cjs": {
+                      "i18next.js": 41817
                     }
                   }
                 },
                 "underscore": {
                   "package.json": 120,
-                  "modules": {
-                    "index-all.js": 102,
-                    "index-default.js": 138,
-                    "index.js": 6002,
-                    "_setup.js": 994,
-                    "restArguments.js": 404,
-                    "isObject.js": 113,
-                    "isNull.js": 74,
-                    "isUndefined.js": 76,
-                    "isBoolean.js": 160,
-                    "isElement.js": 86,
-                    "isString.js": 99,
-                    "_tagTester.js": 171,
-                    "isNumber.js": 99,
-                    "isDate.js": 97,
-                    "isRegExp.js": 99,
-                    "isError.js": 98,
-                    "isSymbol.js": 99,
-                    "isArrayBuffer.js": 104,
-                    "isDataView.js": 327,
-                    "isFunction.js": 307,
-                    "_stringTagBug.js": 256,
-                    "_hasObjectTag.js": 99,
-                    "isArray.js": 151,
-                    "isArguments.js": 219,
-                    "_has.js": 143,
-                    "isFinite.js": 195,
-                    "isNaN.js": 169,
-                    "isTypedArray.js": 435,
-                    "constant.js": 86,
-                    "_isBufferLike.js": 158,
-                    "_createSizePropertyCheck.js": 182,
-                    "_getByteLength.js": 109,
-                    "_shallowProperty.js": 105,
-                    "isEmpty.js": 386,
-                    "_getLength.js": 105,
-                    "keys.js": 372,
-                    "_collectNonEnumProps.js": 551,
-                    "isMatch.js": 236,
-                    "isEqual.js": 1936,
-                    "underscore.js": 361,
-                    "_toBufferView.js": 170,
-                    "isMap.js": 238,
-                    "_methodFingerprint.js": 537,
-                    "allKeys.js": 284,
-                    "isWeakMap.js": 246,
-                    "isSet.js": 238,
-                    "isWeakSet.js": 100,
-                    "values.js": 175,
-                    "pairs.js": 182,
-                    "invert.js": 172,
-                    "functions.js": 169,
-                    "extend.js": 142,
-                    "_createAssigner.js": 269,
-                    "extendOwn.js": 139,
-                    "defaults.js": 145,
-                    "create.js": 190,
-                    "_baseCreate.js": 296,
-                    "clone.js": 234,
-                    "tap.js": 74,
-                    "get.js": 238,
-                    "_toPath.js": 151,
-                    "toPath.js": 184,
-                    "_deepGet.js": 138,
-                    "has.js": 238,
-                    "mapObject.js": 239,
-                    "_cb.js": 258,
-                    "_baseIteratee.js": 444,
-                    "identity.js": 67,
-                    "matcher.js": 198,
-                    "property.js": 194,
-                    "_optimizeCb.js": 310,
-                    "iteratee.js": 194,
-                    "noop.js": 58,
-                    "propertyOf.js": 189,
-                    "times.js": 192,
-                    "random.js": 122,
-                    "now.js": 84,
-                    "escape.js": 144,
-                    "_createEscaper.js": 262,
-                    "_escapeMap.js": 110,
-                    "unescape.js": 146,
-                    "_unescapeMap.js": 136,
-                    "templateSettings.js": 192,
-                    "template.js": 1144,
-                    "result.js": 311,
-                    "uniqueId.js": 95,
-                    "chain.js": 142,
-                    "partial.js": 430,
-                    "_executeBound.js": 258,
-                    "bind.js": 343,
-                    "bindAll.js": 336,
-                    "_flatten.js": 497,
-                    "_isArrayLike.js": 154,
-                    "memoize.js": 245,
-                    "delay.js": 170,
-                    "defer.js": 184,
-                    "throttle.js": 475,
-                    "debounce.js": 411,
-                    "wrap.js": 123,
-                    "negate.js": 108,
-                    "compose.js": 180,
-                    "after.js": 119,
-                    "before.js": 143,
-                    "once.js": 135,
-                    "findKey.js": 227,
-                    "findIndex.js": 109,
-                    "_createPredicateIndexFinder.js": 259,
-                    "findLastIndex.js": 110,
-                    "sortedIndex.js": 255,
-                    "indexOf.js": 200,
-                    "_createIndexFinder.js": 470,
-                    "lastIndexOf.js": 154,
-                    "find.js": 268,
-                    "findWhere.js": 168,
-                    "each.js": 341,
-                    "map.js": 311,
-                    "reduce.js": 95,
-                    "_createReduce.js": 435,
-                    "reduceRight.js": 96,
-                    "filter.js": 220,
-                    "reject.js": 217,
-                    "every.js": 308,
-                    "some.js": 307,
-                    "contains.js": 272,
-                    "invoke.js": 471,
-                    "pluck.js": 168,
-                    "where.js": 170,
-                    "max.js": 495,
-                    "min.js": 491,
-                    "shuffle.js": 122,
-                    "sample.js": 480,
-                    "toArray.js": 510,
-                    "sortBy.js": 436,
-                    "groupBy.js": 176,
-                    "_group.js": 254,
-                    "indexBy.js": 112,
-                    "countBy.js": 168,
-                    "partition.js": 125,
-                    "size.js": 197,
-                    "pick.js": 530,
-                    "_keyInObj.js": 76,
-                    "omit.js": 497,
-                    "first.js": 191,
-                    "initial.js": 165,
-                    "last.js": 209,
-                    "rest.js": 140,
-                    "compact.js": 126,
-                    "flatten.js": 127,
-                    "without.js": 172,
-                    "difference.js": 300,
-                    "uniq.js": 446,
-                    "union.js": 217,
-                    "intersection.js": 300,
-                    "unzip.js": 268,
-                    "zip.js": 138,
-                    "object.js": 187,
-                    "range.js": 185,
-                    "chunk.js": 198,
-                    "mixin.js": 436,
-                    "_chainResult.js": 143,
-                    "underscore-array-methods.js": 618
-                  }
+                  "underscore-umd.js": 19544
                 }
               }
             },
             "cachers": {
-              "package.json": 98,
+              "package.json": 91,
               "lib": {
                 "index.js": 412,
                 "memory.js": 501,
@@ -952,13 +642,13 @@
             "form-builder": {
               "package.json": 3919,
               "dist": {
-                "form-builder.min.js": 2
+                "form-builder.min.js": 145190
               }
             }
           },
           "tslib": {
             "package.json": 97,
-            "tslib.es6.js": 7888
+            "tslib.js": 8336
           },
           "i18next-sprintf-postprocessor": {
             "package.json": 101,
@@ -1018,6 +708,10 @@
             "package.json": 96,
             "index.js": 3089
           },
+          "regenerator-runtime": {
+            "package.json": 92,
+            "runtime.js": 6452
+          },
           "marked": {
             "package.json": 144,
             "lib": {
@@ -1038,7 +732,7 @@
     "packages/ecmascript.js": 30,
     "packages/ecmascript-runtime.js": 38,
     "packages/babel-runtime.js": [
-      949,
+      984,
       {
         "node_modules": {
           "meteor": {
@@ -1050,15 +744,27 @@
       }
     ],
     "packages/promise.js": [
-      1339,
+      5677,
       {
         "node_modules": {
           "meteor": {
             "promise": {
               "modern.js": 25,
+              "legacy.js": 97,
               "client.js": 73,
               "extensions.js": 403,
               "node_modules": {
+                "promise": {
+                  "lib": {
+                    "es6-extensions.js": 1227,
+                    "core.js": 1838
+                  }
+                },
+                "asap": {
+                  "package.json": 249,
+                  "raw.js": 63,
+                  "browser-raw.js": 673
+                },
                 "meteor-promise": {
                   "package.json": 121,
                   "promise_client.js": 268
@@ -1070,19 +776,25 @@
       }
     ],
     "packages/fetch.js": [
-      408,
+      7902,
       {
         "node_modules": {
           "meteor": {
             "fetch": {
-              "modern.js": 94
+              "legacy.js": 112,
+              "node_modules": {
+                "whatwg-fetch": {
+                  "package.json": 82,
+                  "fetch.js": 7297
+                }
+              }
             }
           }
         }
       }
     ],
     "packages/dynamic-import.js": [
-      4878,
+      4735,
       {
         "node_modules": {
           "meteor": {
@@ -1090,15 +802,35 @@
               "client.js": 1631,
               "cache.js": 1952,
               "common.js": 62,
-              "dynamic-versions.js": 832
+              "dynamic-versions.js": 652
             }
           }
         }
       }
     ],
-    "packages/es5-shim.js": 28,
+    "packages/es5-shim.js": [
+      28488,
+      {
+        "node_modules": {
+          "meteor": {
+            "es5-shim": {
+              "client.js": 134,
+              "console.js": 291,
+              "export_globals.js": 154,
+              "import_globals.js": 77,
+              "node_modules": {
+                "es5-shim": {
+                  "es5-shim.js": 22551,
+                  "es5-sham.js": 4835
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
     "packages/ecmascript-runtime-client.js": [
-      22389,
+      22426,
       {
         "node_modules": {
           "meteor": {
@@ -1203,39 +935,39 @@
       }
     ],
     "packages/base64.js": [
-      1803,
+      1870,
       {
         "node_modules": {
           "meteor": {
             "base64": {
-              "base64.js": 1480
+              "base64.js": 1510
             }
           }
         }
       }
     ],
     "packages/ejson.js": [
-      6718,
+      7943,
       {
         "node_modules": {
           "meteor": {
             "ejson": {
-              "ejson.js": 4724,
-              "stringify.js": 905,
-              "utils.js": 725
+              "ejson.js": 5359,
+              "stringify.js": 974,
+              "utils.js": 1209
             }
           }
         }
       }
     ],
     "packages/check.js": [
-      6100,
+      6509,
       {
         "node_modules": {
           "meteor": {
             "check": {
-              "match.js": 5426,
-              "isPlainObject.js": 310
+              "match.js": 5779,
+              "isPlainObject.js": 329
             }
           }
         }
@@ -1243,7 +975,7 @@
     ],
     "packages/ddp-rate-limiter.js": 36,
     "packages/random.js": [
-      3532,
+      3569,
       {
         "node_modules": {
           "meteor": {
@@ -1255,40 +987,40 @@
       }
     ],
     "packages/tracker.js": [
-      4472,
+      5125,
       {
         "node_modules": {
           "meteor": {
             "tracker": {
-              "tracker.js": 4141
+              "tracker.js": 4759
             }
           }
         }
       }
     ],
     "packages/retry.js": [
-      1046,
+      1345,
       {
         "node_modules": {
           "meteor": {
             "retry": {
-              "retry.js": 710
+              "retry.js": 972
             }
           }
         }
       }
     ],
     "packages/ddp-common.js": [
-      4561,
+      5366,
       {
         "node_modules": {
           "meteor": {
             "ddp-common": {
               "namespace.js": 18,
-              "heartbeat.js": 1289,
-              "utils.js": 1350,
-              "method_invocation.js": 487,
-              "random_stream.js": 637
+              "heartbeat.js": 1693,
+              "utils.js": 1548,
+              "method_invocation.js": 589,
+              "random_stream.js": 701
             }
           }
         }
@@ -1297,7 +1029,7 @@
     "packages/email.js": 25,
     "packages/underscore.js": 14427,
     "packages/url.js": [
-      1068,
+      1103,
       {
         "node_modules": {
           "meteor": {
@@ -1310,7 +1042,7 @@
       }
     ],
     "packages/http.js": [
-      3400,
+      3435,
       {
         "node_modules": {
           "meteor": {
@@ -1323,7 +1055,7 @@
       }
     ],
     "packages/jquery.js": [
-      98052,
+      98087,
       {
         "node_modules": {
           "meteor": {
@@ -1336,12 +1068,13 @@
       }
     ],
     "packages/logging.js": [
-      28017,
+      28770,
       {
         "node_modules": {
           "meteor": {
             "logging": {
-              "logging.js": 3234,
+              "logging.js": 3668,
+              "logging_cordova.js": 201,
               "node_modules": {
                 "cli-color": {
                   "package.json": 74,
@@ -1445,19 +1178,19 @@
     "packages/meteor-base.js": 31,
     "packages/mobile-experience.js": 37,
     "packages/diff-sequence.js": [
-      2858,
+      2955,
       {
         "node_modules": {
           "meteor": {
             "diff-sequence": {
-              "diff.js": 2488
+              "diff.js": 2548
             }
           }
         }
       }
     ],
     "packages/geojson-utils.js": [
-      5183,
+      5218,
       {
         "node_modules": {
           "meteor": {
@@ -1470,113 +1203,113 @@
       }
     ],
     "packages/id-map.js": [
-      1231,
+      1696,
       {
         "node_modules": {
           "meteor": {
             "id-map": {
-              "id-map.js": 890
+              "id-map.js": 1318
             }
           }
         }
       }
     ],
     "packages/mongo-id.js": [
-      1725,
+      2215,
       {
         "node_modules": {
           "meteor": {
             "mongo-id": {
-              "id.js": 1327
+              "id.js": 1782
             }
           }
         }
       }
     ],
     "packages/ordered-dict.js": [
-      2985,
+      3842,
       {
         "node_modules": {
           "meteor": {
             "ordered-dict": {
-              "ordered_dict.js": 2625
+              "ordered_dict.js": 3445
             }
           }
         }
       }
     ],
     "packages/minimongo.js": [
-      43142,
+      47471,
       {
         "node_modules": {
           "meteor": {
             "minimongo": {
               "minimongo_client.js": 50,
-              "common.js": 12169,
-              "cursor.js": 4590,
-              "local_collection.js": 19597,
-              "matcher.js": 2514,
-              "minimongo_common.js": 210,
-              "observe_handle.js": 54,
-              "sorter.js": 3149
+              "common.js": 13450,
+              "cursor.js": 5144,
+              "local_collection.js": 21025,
+              "matcher.js": 2936,
+              "minimongo_common.js": 237,
+              "observe_handle.js": 102,
+              "sorter.js": 3699
             }
           }
         }
       }
     ],
     "packages/callback-hook.js": [
-      1487,
+      1650,
       {
         "node_modules": {
           "meteor": {
             "callback-hook": {
-              "hook.js": 1150
+              "hook.js": 1278
             }
           }
         }
       }
     ],
     "packages/reload.js": [
-      1933,
+      2057,
       {
         "node_modules": {
           "meteor": {
             "reload": {
-              "reload.js": 1610
+              "reload.js": 1697
             }
           }
         }
       }
     ],
     "packages/socket-stream-client.js": [
-      37131,
+      38512,
       {
         "node_modules": {
           "meteor": {
             "socket-stream-client": {
-              "browser.js": 2978,
-              "common.js": 2468,
-              "sockjs-0.3.4.js": 30629,
-              "urls.js": 696
+              "sockjs-0.3.4.js": 30810,
+              "browser.js": 3601,
+              "common.js": 2902,
+              "urls.js": 743
             }
           }
         }
       }
     ],
     "packages/ddp-client.js": [
-      22362,
+      25491,
       {
         "node_modules": {
           "meteor": {
             "ddp-client": {
               "client": {
                 "client.js": 136,
-                "client_convenience.js": 862
+                "client_convenience.js": 920
               },
               "common": {
-                "MethodInvoker.js": 1146,
-                "livedata_connection.js": 18501,
-                "namespace.js": 927
+                "MethodInvoker.js": 1381,
+                "livedata_connection.js": 21161,
+                "namespace.js": 1068
               }
             }
           }
@@ -1586,32 +1319,32 @@
     "packages/ddp.js": 78,
     "packages/ddp-server.js": 30,
     "packages/allow-deny.js": [
-      5767,
+      6029,
       {
         "node_modules": {
           "meteor": {
             "allow-deny": {
-              "allow-deny.js": 5268
+              "allow-deny.js": 5493
             }
           }
         }
       }
     ],
     "packages/mongo.js": [
-      9028,
+      9373,
       {
         "node_modules": {
           "meteor": {
             "mongo": {
-              "local_collection_driver.js": 362,
-              "collection.js": 7914
+              "local_collection_driver.js": 440,
+              "collection.js": 8150
             }
           }
         }
       }
     ],
     "packages/steedos_meteor-fix.js": [
-      435,
+      470,
       {
         "node_modules": {
           "meteor": {
@@ -1625,25 +1358,25 @@
       }
     ],
     "packages/rate-limit.js": [
-      2625,
+      3290,
       {
         "node_modules": {
           "meteor": {
             "rate-limit": {
-              "rate-limit.js": 2251
+              "rate-limit.js": 2879
             }
           }
         }
       }
     ],
     "packages/reactive-dict.js": [
-      3880,
+      4540,
       {
         "node_modules": {
           "meteor": {
             "reactive-dict": {
-              "migration.js": 778,
-              "reactive-dict.js": 2651
+              "migration.js": 821,
+              "reactive-dict.js": 3233
             }
           }
         }
@@ -1655,7 +1388,7 @@
     "packages/deps.js": 111,
     "packages/htmljs.js": 10030,
     "packages/blaze.js": [
-      39870,
+      40376,
       {
         "node_modules": {
           "meteor": {
@@ -1664,13 +1397,13 @@
               "dombackend.js": 1766,
               "domrange.js": 6005,
               "events.js": 1960,
-              "attrs.js": 4036,
-              "materializer.js": 2023,
+              "attrs.js": 4104,
+              "materializer.js": 2142,
               "exceptions.js": 481,
-              "view.js": 9936,
+              "view.js": 10098,
               "builtins.js": 3896,
               "lookup.js": 2522,
-              "template.js": 5245,
+              "template.js": 5365,
               "backcompat.js": 246
             }
           }
@@ -1678,14 +1411,14 @@
       }
     ],
     "packages/accounts-base.js": [
-      12079,
+      14367,
       {
         "node_modules": {
           "meteor": {
             "accounts-base": {
-              "client_main.js": 224,
-              "accounts_client.js": 7775,
-              "accounts_common.js": 3486
+              "client_main.js": 302,
+              "accounts_client.js": 9360,
+              "accounts_common.js": 4078
             }
           }
         }
@@ -1693,12 +1426,12 @@
     ],
     "packages/service-configuration.js": 711,
     "packages/session.js": [
-      522,
+      581,
       {
         "node_modules": {
           "meteor": {
             "session": {
-              "session.js": 131
+              "session.js": 153
             }
           }
         }
@@ -1717,46 +1450,46 @@
     "packages/templating.js": 103,
     "packages/sha.js": 2521,
     "packages/srp.js": [
-      19215,
+      19261,
       {
         "node_modules": {
           "meteor": {
             "srp": {
               "biginteger.js": 17598,
-              "srp.js": 1167
+              "srp.js": 1176
             }
           }
         }
       }
     ],
     "packages/accounts-password.js": [
-      2817,
+      2943,
       {
         "node_modules": {
           "meteor": {
             "accounts-password": {
-              "password_client.js": 2338
+              "password_client.js": 2427
             }
           }
         }
       }
     ],
     "packages/accounts-ui-unstyled.js": [
-      44006,
+      45436,
       {
         "node_modules": {
           "meteor": {
             "accounts-ui-unstyled": {
-              "accounts_ui.js": 2293,
+              "accounts_ui.js": 2309,
               "template.login_buttons.js": 4119,
               "template.login_buttons_single.js": 2295,
               "template.login_buttons_dropdown.js": 8654,
               "template.login_buttons_dialogs.js": 8274,
-              "login_buttons_session.js": 1504,
-              "login_buttons.js": 1691,
-              "login_buttons_single.js": 1546,
-              "login_buttons_dropdown.js": 7774,
-              "login_buttons_dialogs.js": 4213
+              "login_buttons_session.js": 1595,
+              "login_buttons.js": 1993,
+              "login_buttons_single.js": 1580,
+              "login_buttons_dropdown.js": 8357,
+              "login_buttons_dialogs.js": 4580
             }
           }
         }
@@ -1764,12 +1497,12 @@
     ],
     "packages/accounts-ui.js": 31,
     "packages/tmeasday_check-npm-versions.js": [
-      14367,
+      14345,
       {
         "node_modules": {
           "meteor": {
             "tmeasday:check-npm-versions": {
-              "check-npm-versions.js": 999,
+              "check-npm-versions.js": 940,
               "node_modules": {
                 "semver": {
                   "package.json": 77,
@@ -1787,19 +1520,18 @@
     "packages/tap_i18n.js": 725,
     "packages/raix_eventstate.js": 1009,
     "packages/raix_push.js": [
-      7764,
+      7000,
       {
         "node_modules": {
           "meteor": {
             "raix:push": {
               "lib": {
-                "common": {
-                  "main.js": 538,
-                  "notifications.js": 2201
-                },
                 "client": {
-                  "browser.js": 2884,
+                  "cordova.js": 2682,
                   "client.js": 1230
+                },
+                "common": {
+                  "notifications.js": 2201
                 }
               }
             }
@@ -1826,13 +1558,13 @@
     "packages/steedos_autoform-bs-minicolors.js": 17623,
     "packages/fortawesome_fontawesome.js": 43,
     "packages/steedos_cfs-base-package.js": [
-      5884,
+      6305,
       {
         "node_modules": {
           "meteor": {
             "steedos:cfs-base-package": {
               "polyfill.base64.js": 1706,
-              "base-common.js": 3023,
+              "base-common.js": 3407,
               "base-client.js": 494
             }
           }
@@ -1841,7 +1573,7 @@
     ],
     "packages/mongo-livedata.js": 34,
     "packages/steedos_cfs-storage-adapter.js": [
-      937,
+      974,
       {
         "node_modules": {
           "meteor": {
@@ -1853,14 +1585,14 @@
       }
     ],
     "packages/steedos_cfs-data-man.js": [
-      6364,
+      6695,
       {
         "node_modules": {
           "meteor": {
             "steedos:cfs-data-man": {
               "client": {
-                "Blob.js": 2436,
-                "data-man-api.js": 3444
+                "Blob.js": 2576,
+                "data-man-api.js": 3598
               }
             }
           }
@@ -1868,12 +1600,12 @@
       }
     ],
     "packages/steedos_cfs-file.js": [
-      7707,
+      7873,
       {
         "node_modules": {
           "meteor": {
             "steedos:cfs-file": {
-              "fsFile-common.js": 7070
+              "fsFile-common.js": 7199
             }
           }
         }
@@ -1883,30 +1615,30 @@
     "packages/mpowaga_jquery-ui-widget.js": 8242,
     "packages/mpowaga_jquery-fileupload.js": 18258,
     "packages/webapp.js": [
-      650,
+      473,
       {
         "node_modules": {
           "meteor": {
             "webapp": {
-              "webapp_client.js": 313
+              "webapp_cordova.js": 97
             }
           }
         }
       }
     ],
     "packages/universe_i18n.js": [
-      45680,
+      47855,
       {
         "node_modules": {
           "meteor": {
             "universe:i18n": {
               "lib": {
-                "i18n.js": 7450,
-                "locales.js": 32535,
-                "utilities.js": 3746
+                "i18n.js": 8636,
+                "locales.js": 32576,
+                "utilities.js": 4501
               },
               "client": {
-                "api.js": 1310
+                "api.js": 1474
               }
             }
           }
@@ -1918,7 +1650,7 @@
     "packages/dburles_mongo-collection-instances.js": 615,
     "packages/rubaxa_sortable.js": 16471,
     "packages/steedos_autoform-lookup.js": [
-      35992,
+      36029,
       {
         "node_modules": {
           "meteor": {
@@ -1933,12 +1665,12 @@
       }
     ],
     "packages/steedos_autoform-tags.js": [
-      2364,
+      2410,
       {
         "node_modules": {
           "meteor": {
             "steedos:autoform-tags": {
-              "checkNpm.js": 158,
+              "checkNpm.js": 167,
               "lib": {
                 "client": {
                   "template.autoform-tags.js": 340,
@@ -1951,20 +1683,20 @@
       }
     ],
     "packages/steedos_autoform-dx-date-box.js": [
-      3542,
+      3601,
       {
         "node_modules": {
           "meteor": {
             "steedos:autoform-dx-date-box": {
               "template.autoform-dx-date-box.js": 182,
-              "autoform-dx-date-box.js": 2531
+              "autoform-dx-date-box.js": 2553
             }
           }
         }
       }
     ],
     "packages/vazco_universe-selectize.js": [
-      16036,
+      16073,
       {
         "node_modules": {
           "meteor": {
@@ -1977,22 +1709,37 @@
       }
     ],
     "packages/vazco_universe-autoform-select.js": [
-      2683,
+      2744,
       {
         "node_modules": {
           "meteor": {
             "vazco:universe-autoform-select": {
               "template.universe-autoform-select.js": 1107,
-              "universe-autoform-select.js": 655
+              "universe-autoform-select.js": 679
             }
           }
         }
       }
     ],
+    "packages/twbs_bootstrap.js": [
+      441,
+      {
+        "node_modules": {
+          "meteor": {
+            "twbs:bootstrap": {
+              "bootstrap.js": 56
+            }
+          }
+        }
+      }
+    ],
+    "packages/summernote_summernote.js": 89128,
+    "packages/summernote_standalone.js": 89085,
+    "packages/mpowaga_autoform-summernote.js": 1443,
     "packages/gwendall_simple-schema-i18n.js": 1207,
     "packages/steedos_toastr.js": 6065,
     "packages/kadira_flow-router.js": [
-      25926,
+      25961,
       {
         "node_modules": {
           "meteor": {
@@ -2048,30 +1795,18 @@
     "packages/steedos_smsqueue.js": 36,
     "packages/flemay_less-autoprefixer.js": 44,
     "packages/steedos_ui.js": [
-      11359,
+      11677,
       {
         "node_modules": {
           "meteor": {
             "steedos:ui": {
               "lib": {
-                "Modernizr.js": 9144,
+                "Modernizr.js": 9425,
                 "steedos.coffee": 684,
                 "fireGlobalEvent.coffee": 142,
                 "helpers.coffee": 45,
                 "navigation_controller.coffee": 289
               }
-            }
-          }
-        }
-      }
-    ],
-    "packages/twbs_bootstrap.js": [
-      404,
-      {
-        "node_modules": {
-          "meteor": {
-            "twbs:bootstrap": {
-              "bootstrap.js": 56
             }
           }
         }
@@ -2083,7 +1818,7 @@
     "packages/reywood_publish-composite.js": 165,
     "packages/percolate_migrations.js": 40,
     "packages/steedos_cfs-filesystem.js": [
-      639,
+      676,
       {
         "node_modules": {
           "meteor": {
@@ -2096,7 +1831,7 @@
     ],
     "packages/steedos_cfs-standard-packages.js": 49,
     "packages/steedos_cfs-aliyun.js": [
-      702,
+      739,
       {
         "node_modules": {
           "meteor": {
@@ -2108,7 +1843,7 @@
       }
     ],
     "packages/steedos_cfs-s3.js": [
-      677,
+      714,
       {
         "node_modules": {
           "meteor": {
@@ -2124,13 +1859,13 @@
     "packages/steedos_theme.js": 33,
     "packages/steedos_e164-phones-countries.js": 10179,
     "packages/steedos_i18n-iso-countries.js": [
-      20003,
+      20099,
       {
         "node_modules": {
           "meteor": {
             "steedos:i18n-iso-countries": {
-              "index.js": 1798,
-              "entry-node.js": 197,
+              "index.js": 1830,
+              "entry-node.js": 224,
               "codes.js": 8784,
               "langs": {
                 "en.js": 4325,
@@ -2143,13 +1878,13 @@
     ],
     "packages/nimble_restivus.js": 35,
     "packages/steedos_logger.js": [
-      7219,
+      7222,
       {
         "node_modules": {
           "meteor": {
             "steedos:logger": {
               "ansispan.js": 635,
-              "logger.coffee": 1727,
+              "logger.coffee": 1693,
               "client": {
                 "viewLogs.coffee": 84,
                 "views": {
@@ -2164,7 +1899,7 @@
       }
     ],
     "packages/steedos_objects.js": [
-      93530,
+      93584,
       {
         "node_modules": {
           "meteor": {
@@ -2199,7 +1934,7 @@
       }
     ],
     "packages/steedos_cfs-steedos-cloud.js": [
-      750,
+      787,
       {
         "node_modules": {
           "meteor": {
@@ -2212,7 +1947,7 @@
     ],
     "packages/steedos_cfs-tempstore.js": 41,
     "packages/steedos_cfs-http-methods.js": [
-      559,
+      596,
       {
         "node_modules": {
           "meteor": {
@@ -2233,7 +1968,7 @@
     "packages/steedos_cfs-collection-filters.js": 2446,
     "packages/steedos_cfs-worker.js": 38,
     "packages/steedos_objects-core.js": [
-      8354,
+      8391,
       {
         "node_modules": {
           "meteor": {
@@ -2250,7 +1985,7 @@
       }
     ],
     "packages/steedos_objects-billing.js": [
-      4167,
+      4204,
       {
         "node_modules": {
           "meteor": {
@@ -2269,7 +2004,7 @@
       }
     ],
     "packages/steedos_base.js": [
-      104695,
+      105467,
       {
         "node_modules": {
           "meteor": {
@@ -2303,7 +2038,7 @@
                     "printThis.js": 3740
                   },
                   "jquery-touch-events": {
-                    "jquery.mobile-events.js": 16473
+                    "jquery.mobile-events.js": 16733
                   }
                 },
                 "core.coffee": 935,
@@ -2329,7 +2064,7 @@
                 "my_contacts_limit.coffee": 626,
                 "company.coffee": 853,
                 "momentjs": {
-                  "zh-cn.js": 2185
+                  "zh-cn.js": 2277
                 },
                 "bootstrap_3_modal.js": 527,
                 "steedos": {
@@ -2343,7 +2078,8 @@
                   "template.master.js": 590,
                   "master.coffee": 376
                 },
-                "loading.coffee": 861
+                "loading.coffee": 861,
+                "autoupdate_cordova.coffee": 259
               },
               "tabular.coffee": 514
             }
@@ -2357,7 +2093,7 @@
     "packages/smoral_sweetalert.js": 16953,
     "packages/peppelg_bootstrap-3-modal.js": 792,
     "packages/steedos_odata.js": [
-      1362,
+      1399,
       {
         "node_modules": {
           "meteor": {
@@ -2369,7 +2105,7 @@
       }
     ],
     "packages/steedos_object-database.js": [
-      4569,
+      4606,
       {
         "node_modules": {
           "meteor": {
@@ -2389,7 +2125,7 @@
     "packages/npm-bcrypt.js": 30,
     "packages/steedos_huaweipush.js": 79,
     "packages/steedos_api.js": [
-      1276,
+      1313,
       {
         "node_modules": {
           "meteor": {
@@ -2402,7 +2138,7 @@
     ],
     "packages/meteorhacks_ssr.js": 35,
     "packages/steedos_autoform-filesize.js": [
-      1617,
+      1654,
       {
         "node_modules": {
           "meteor": {
@@ -2415,7 +2151,7 @@
       }
     ],
     "packages/steedos_autoform-location.js": [
-      1882,
+      1919,
       {
         "node_modules": {
           "meteor": {
@@ -2430,7 +2166,7 @@
     "packages/chuangbo_cookie.js": 1229,
     "packages/steedos_sso.js": 1557,
     "packages/steedos_autoform.js": [
-      163485,
+      175096,
       {
         "node_modules": {
           "meteor": {
@@ -2449,7 +2185,7 @@
                     },
                     "coreform-org-localdata": {
                       "template.select-orgs.js": 339,
-                      "select-orgs.js": 2228
+                      "select-orgs.js": 2300
                     },
                     "coreform-org": {
                       "lib": {
@@ -2459,11 +2195,11 @@
                         "cf_organization_modal.coffee": 1038
                       },
                       "template.select-orgs.js": 701,
-                      "select-orgs.js": 2617
+                      "select-orgs.js": 2689
                     },
                     "coreform-user-localdata": {
                       "template.select-users.js": 342,
-                      "select-users.js": 2639
+                      "select-users.js": 2734
                     },
                     "coreform-user": {
                       "lib": {
@@ -2479,11 +2215,11 @@
                         "cf_organization_modal.coffee": 385
                       },
                       "template.select-users.js": 865,
-                      "select-users.js": 3378
+                      "select-users.js": 3473
                     },
                     "coreform-tree": {
                       "template.select-tree.js": 379,
-                      "select-tree.js": 629
+                      "select-tree.js": 700
                     },
                     "coreform-email": {
                       "template.email.js": 1083,
@@ -2499,9 +2235,9 @@
                     },
                     "coreform-typeahead": {
                       "typeahead.js": {
-                        "bloodhound.js": 13117,
-                        "typeahead.bundle.js": 40159,
-                        "typeahead.jquery.js": 27213
+                        "bloodhound.js": 14157,
+                        "typeahead.bundle.js": 44035,
+                        "typeahead.jquery.js": 30120
                       },
                       "template.af-typeahead.js": 352,
                       "af-typeahead.coffee": 1062
@@ -2512,10 +2248,13 @@
                     },
                     "coreform-date-mobile": {
                       "template.date.js": 349,
-                      "date.js": 896
+                      "date.js": 872
+                    },
+                    "coreform-summernote": {
+                      "summernote-zh-CN.js": 3145
                     },
                     "coreform-html": {
-                      "template.html.js": 1006,
+                      "template.html.js": 1074,
                       "html.js": 392
                     }
                   },
@@ -2533,7 +2272,7 @@
       }
     ],
     "packages/steedos_creator.js": [
-      103083,
+      103308,
       {
         "node_modules": {
           "meteor": {
@@ -2565,11 +2304,11 @@
                   "template.app_iframe.js": 392,
                   "app_iframe.coffee": 978,
                   "template.page_iframe.js": 361,
-                  "page_iframe.js": 1150,
+                  "page_iframe.js": 1174,
                   "template.initiate_approval.js": 1746,
                   "initiate_approval.coffee": 1352,
                   "template.amis_action.js": 350,
-                  "amis_action.js": 3827
+                  "amis_action.js": 3894
                 },
                 "layout": {
                   "template.layout.js": 1400,
@@ -2588,8 +2327,8 @@
                 "temp_navs.coffee": 3922,
                 "router.coffee": 6216,
                 "tenant.coffee": 283,
-                "animate.js": 405,
-                "colResizable-1.6.js": 5920,
+                "animate.js": 445,
+                "colResizable-1.6.js": 5960,
                 "jquery.ba-resize.js": 1102,
                 "title.coffee": 99,
                 "i18n.coffee": 99
@@ -2601,12 +2340,12 @@
     ],
     "packages/steedos_instance-record-queue.js": 49,
     "packages/steedos_formbuilder.js": [
-      90163,
+      90209,
       {
         "node_modules": {
           "meteor": {
             "steedos:formbuilder": {
-              "checkNpmClient.js": 206,
+              "checkNpmClient.js": 215,
               "formbuilder": {
                 "jquery-ui.min.js": 65909
               },
@@ -2627,7 +2366,7 @@
       }
     ],
     "packages/steedos_app-workflow.js": [
-      25739,
+      25776,
       {
         "node_modules": {
           "meteor": {
@@ -2663,14 +2402,14 @@
     "packages/steedos_autoform-modals.js": 20485,
     "packages/steedos_slipjs.js": 15081,
     "packages/steedos_workflow.js": [
-      717828,
+      720295,
       {
         "node_modules": {
           "meteor": {
             "steedos:workflow": {
               "perfect-scrollbar.js": 33,
               "lib": {
-                "URI.js": 28398,
+                "URI.js": 28857,
                 "collection_helpers.js": 14,
                 "tapi18n.coffee": 99,
                 "core.coffee": 1215,
@@ -2699,10 +2438,10 @@
                 "lib": {
                   "traces_manager.coffee": 1192,
                   "instance_event.js": 1260,
-                  "1_form_formula.js": 7787,
-                  "2_steedos_data_format.js": 6179,
-                  "approve_manager.js": 14090,
-                  "instance_manager.js": 31032,
+                  "1_form_formula.js": 7827,
+                  "2_steedos_data_format.js": 6653,
+                  "approve_manager.js": 14646,
+                  "instance_manager.js": 31461,
                   "uuflow_api.js": 14170,
                   "workflow_manager.js": 13054,
                   "node_manager.js": 5745,
@@ -2751,7 +2490,7 @@
                     "template.instance_suggestion.js": 13122,
                     "instance_suggestion.coffee": 11911,
                     "template.instance_view.js": 4887,
-                    "instance_view.coffee": 8204,
+                    "instance_view.coffee": 8380,
                     "template.instance_amis_view.js": 264,
                     "instance_amis_view.coffee": 401,
                     "template.reassign_modal.js": 2500,
@@ -2828,7 +2567,7 @@
                   },
                   "search": {
                     "template.instance_more_search_modal.js": 8660,
-                    "instance_more_search_modal.js": 3900
+                    "instance_more_search_modal.js": 3906
                   },
                   "template.home.js": 641,
                   "home.coffee": 160,
@@ -2845,14 +2584,14 @@
                   "inputTypes": {
                     "coreform-checkbox": {
                       "template.boolean-checkbox.js": 1825,
-                      "boolean-checkbox.js": 663
+                      "boolean-checkbox.js": 685
                     },
                     "coreform-datepicker": {
                       "coreform-datepicker.js": 1215
                     },
                     "coreform-multiSelect": {
                       "template.select-checkbox-inline.js": 1923,
-                      "select-checkbox-inline.js": 1047
+                      "select-checkbox-inline.js": 1135
                     },
                     "coreform-number": {
                       "template.coreform-number.js": 711,
@@ -2860,7 +2599,7 @@
                     },
                     "coreform-radio": {
                       "template.select-radio-inline.js": 1681,
-                      "select-radio-inline.js": 758
+                      "select-radio-inline.js": 824
                     },
                     "coreform-section": {
                       "template.steedos-section.js": 500,
@@ -2870,7 +2609,7 @@
                       "template.steedos-table-modal.js": 3361,
                       "steedos-table-modal.js": 1772,
                       "template.steedos-table.js": 2115,
-                      "steedos-table.js": 9585
+                      "steedos-table.js": 9657
                     },
                     "coreform-textarea": {
                       "template.coreform-textarea.js": 869,
@@ -2883,7 +2622,7 @@
                     },
                     "steedos-field": {
                       "template.steedos-field.js": 291,
-                      "steedos-field.js": 2733
+                      "steedos-field.js": 2758
                     }
                   }
                 },
@@ -2903,14 +2642,14 @@
     ],
     "packages/steedos_workflow-chart.js": 638,
     "packages/keepnox_perfect-scrollbar.js": [
-      49881,
+      50273,
       {
         "node_modules": {
           "meteor": {
             "keepnox:perfect-scrollbar": {
               "js": {
-                "perfect-scrollbar.js": 24521,
-                "perfect-scrollbar.jquery.js": 24847
+                "perfect-scrollbar.js": 24700,
+                "perfect-scrollbar.jquery.js": 25023
               }
             }
           }
@@ -2920,19 +2659,19 @@
     "packages/jeremy_selectize.js": 46300,
     "packages/comerc_autoform-selectize.js": 6034,
     "packages/react-template-helper.js": [
-      1527,
+      1571,
       {
         "node_modules": {
           "meteor": {
             "react-template-helper": {
-              "react-template-helper.js": 957
+              "react-template-helper.js": 964
             }
           }
         }
       }
     ],
     "packages/steedos_webkit-notification.js": [
-      3939,
+      3974,
       {
         "node_modules": {
           "meteor": {
@@ -2956,25 +2695,26 @@
     "packages/steedos_api-authenticate-user.js": 49,
     "packages/steedos_records-qhd.js": 12948,
     "packages/hot-code-push.js": 33,
+    "packages/mobile-status-bar.js": 37,
     "packages/launch-screen.js": 795,
     "packages/autoupdate.js": [
-      2372,
+      1745,
       {
         "node_modules": {
           "meteor": {
             "autoupdate": {
-              "autoupdate_client.js": 1890
+              "autoupdate_cordova.js": 1227
             }
           }
         }
       }
     ],
     "app/global-imports.js": [
-      3303,
+      3357,
       {}
     ],
     "app/app.js": [
-      111971,
+      112178,
       {
         "imports": {
           "ui": {
@@ -2987,30 +2727,30 @@
             "illustration.html": 66,
             "template.illustration.js": 9901,
             "404.js": 324,
-            "button.js": 837,
-            "icon.js": 1081,
+            "button.js": 846,
+            "icon.js": 1094,
             "illustration.js": 169,
             "index.js": 143
           }
         },
         "client": {
-          "main.html": 22,
+          "main.html": 58,
           "template.main.js": 4452,
           "builder": {
-            "builder.js": 100
+            "builder.js": 98
           },
-          "browser.js": 399,
-          "jquery-dateFormat.js": 4665,
-          "layout.js": 124,
+          "browser.js": 384,
+          "jquery-dateFormat.js": 4741,
+          "layout.js": 139,
           "router.coffee": 1309,
           "tailwind.css": 14,
           "theme.less": 14,
-          "main.js": 709
+          "main.js": 735
         },
         "app": {
           "cordova": {
             "client": {
-              "index.js": 1106
+              "index.js": 1155
             }
           }
         },
@@ -3018,12 +2758,12 @@
       }
     ],
     "packages/mdg_validation-error.js": [
-      804,
+      1078,
       {
         "node_modules": {
           "meteor": {
             "mdg:validation-error": {
-              "validation-error.js": 373
+              "validation-error.js": 610
             }
           }
         }

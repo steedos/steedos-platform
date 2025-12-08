@@ -105,7 +105,8 @@
     "lodash.memoize": "^4.1.2",
     "moleculer": "^0.14.25",
     "push.js": "^1.0.12",
-    "react-highlighter": "^0.4.3"
+    "react-highlighter": "^0.4.3",
+    "summernote": "^0.8.11"
   },
   "resolutions": {
     "**/hoek": "^5.0.3",
