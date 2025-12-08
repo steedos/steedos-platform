@@ -51,7 +51,7 @@
 
 ## 🌟 核心功能 | Core Features
 
-### 1\. 可视化数据建模 (Visual Data Modeling)
+### 1\. 可视化数据建模
 
 无需编写 SQL，通过图形化界面即可定义复杂的业务对象及其关系（Lookup, Master-Detail）。
 
@@ -59,7 +59,7 @@
   * 内置公式字段与汇总字段（Roll-up Summary）。
   * **亮点：** 代码即配置，所有模型均以 `.yml` 或 `.json` 格式存储，完美支持 Git 版本控制。
 
-### 2\. 强大的流程引擎 (BPMN 2.0 Workflow)
+### 2\. 强大的流程引擎
 
 内置企业级工作流引擎，支持复杂的中国式审批场景。
 
@@ -67,7 +67,7 @@
   * 支持会签、加签、回退、子流程。
   * 流程与业务数据无缝绑定。
 
-### 3\. 自动生成 API (Auto-generated API)
+### 3\. 自动生成 API
 
 定义好对象模型后，平台自动为您生成生产环境可用的 API。
 
@@ -75,7 +75,7 @@
   * **REST API:** 标准化接口，易于第三方集成。
   * 内置 Swagger 文档。
 
-### 4\. 页面设计器 (Page Designer)
+### 4\. 页面设计器
 
 基于百度 Amis 框架，提供拖拽式的页面布局设计能力。
 
@@ -83,7 +83,7 @@
   * 灵活配置列表视图、看板视图、日历视图。
   * 支持自定义组件扩展。
 
-### 5\. 开发者优先 (Developer First)
+### 5\. 开发者优先
 
 低代码不代表无代码。华炎魔方专为开发者设计了极其友好的扩展机制。
 
@@ -91,23 +91,22 @@
   * **客户端扩展:** 使用 React 开发自定义组件。
   * **Steedos DX:** 提供 VS Code 插件和 CLI 工具，支持元数据同步与 DevOps 流水线。
 
-## 🏗️ 技术架构 | Technical Architecture
-
+## 🏗️ 技术架构
 华炎魔方采用分层架构设计，实现了 UI、业务逻辑与数据存储的完全解耦，支持微服务部署与无限水平扩展。
 
 ### 核心架构分层：
 
-1.  **基础设施层 (Infrastructure):** 支持 Docker/K8s 容器化部署，兼容 AWS, Azure, 阿里云及私有云环境。
-2.  **数据持久层 (Persistence):** 支持 MongoDB (文档型) 和主流 SQL 数据库（通过 TypeORM 适配），保证海量数据的高性能读写。
-3.  **元数据引擎 (Metadata Kernel):** 平台的核心大脑。
-      * **对象模型 (Object Modeling):** 定义字段、关系、验证规则。
-      * **权限引擎 (Security):** 字段级、记录级的精细化权限控制。
-      * **OQL 引擎:** 强大的对象查询语言。
+1.  **基础设施层:** 支持 Docker/K8s 容器化部署，兼容 AWS, Azure, 阿里云及私有云环境。
+2.  **数据持久层 :** 支持 MongoDB (文档型) 和主流 SQL 数据库（通过 TypeORM 适配），保证海量数据的高性能读写。
+3.  **元数据引擎:** 平台的核心大脑。
+      * **对象模型:** 定义字段、关系、验证规则。
+      * **权限引擎:** 字段级、记录级的精细化权限控制。
+      * **ObjectQL 引擎:** 强大的对象查询语言。
 4.  **服务层 (Service Layer):**
       * **流程引擎:** 可视化设计业务流程。
       * **API 网关:** 自动生成 GraphQL 和 RESTful API。
       * **自动化规则:** Workflow Rules, Approval Processes.
-5.  **交互层 (Presentation):**
+5.  **交互层:**
       * 内置基于 React 的管理后台。
       * 无缝集成 Amis 百度开源低代码前端框架。
       * 支持移动端 (Mobile) 及微前端架构。
@@ -155,7 +154,6 @@ yarn start
 
   * 🐛 **报告问题**: [GitHub Issues](https://github.com/steedos/steedos-platform/issues)
   * 💬 **讨论交流**: [GitHub Discussions](https://github.com/steedos/steedos-platform/discussions)
-  * 🛠️ **贡献代码**: 请阅读 [CONTRIBUTING.md](https://www.google.com/search?q=./CONTRIBUTING.md)
 
 ## 联系我们
 
