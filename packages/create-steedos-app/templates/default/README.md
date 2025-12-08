@@ -1,87 +1,31 @@
+# Steedos 项目模板
 
-# Steedos DX Project Template
+华炎魔方提供了超越传统无代码平台的深度定制和开发能力，不仅允许没有编程背景的用户快速创建应用，还为有经验的开发人员提供了强大的工具和框架，使他们能够进行更复杂的自定义和集成。
 
-Steedos Developer Experience (DX) is a new way to manage and develop apps on the Steedos Low-Code Platform across their entire lifecycle. It brings together the best of the Low-Code Platform to enable source-driven development, team collaboration with governance, and new levels of agility for custom app development on Steedos.
+- [文档](https://docs.steedos.com)
 
-- [What is Steedos DX](https://docs.steedos.com/developer/setup/steedos-dx)
-- [What is Steedos Package](https://docs.steedos.com/developer/package/overview)
+# 快速向导
 
-# Getting Started
+## 运行数据库
 
-## Run Steedos Platform
-
-First, you must run Steedos Platform. You can follow the [Self Hosting Tutorial](/deploy/deploy-docker) to deploy Steedos on a server, or launch a local Steedos Platform.
+您可以在本地安装 mongodb 和 redis，或者使用 docker 快速启动。
 
 ```bash
-cd steedos-platform
-docker-compose up
+docker-compose up mongodb redis
 ```
 
-You can also refer to the instructions in the `./steedos-platform` dir to run Steedos Platform with Node.js.
 
-### Register Admin Account
+## 运行 Steedos
 
-Upon its first launch, the system will prompt you to register an account and create an organization. This account will also become the administrator account for the organization.
-
-### Create an API Key
-
-You can log in to the Steedos server with administrator credentials, go to the settings app, select the API Key menu, and create a new API Key.
-
-## Setup Environment Variable
-
-### Setup TRANSPORTER
-
-The Steedos package operates using the [Moleculer](https://moleculer.services/docs) microservices framework, connecting microservices through the configuration of a unified Transporter.
-
-[Moleculer Transporter](https://moleculer.services/docs/0.14/networking) is an important module if you are running services on multiple nodes. Transporter communicates with other nodes. It transfers events, calls requests and processes responses …etc. If multiple instances of a service are running on different nodes then the requests will be load-balanced among them.
-
-```bash
-TRANSPORTER=redis://127.0.0.1:6379
-```
-:::tip
-Please make sure the TRANSPORTER you configured matches the Steedos server you wish to connect to and that the network is interconnected. 
-:::
-
-:::danger
-For running in a production environment, be sure to configure the Redis password.
-:::
-
-### Setup Metadata Server
-
-Setup environment variables required for metadata synchronization.
-
-```bash
-steedos source:config
-```
-
-- Metadata Server: METADATA_SERVER is the ROOT_URL of the Steedos server you wish to connect to.
-- Metadata API Key: METADATA_APIKEY is used to authenticate your identity. 
-
-This command writes environment variables into the .env.local file, 
-
-```bash
-METADATA_SERVER=
-METADATA_APIKEY=
-```
-
-You can also set the above environment variables directly without running the command.
-
-## Run Steedos Packages
-
-### Install Dependences
+### 安装依赖
 
 ```bash
 yarn
+yarn build
 ```
 
-### Run Packages
-
-You can use the [moleculer-runner](https://moleculer.services/docs/0.14/runner) command to launch the steedos packages.
+### 运行 Steedos
 
 ```bash
-yarn moleculer-runner steedos-packages/*/package.service.js --hot --repl
+yarn start
 ```
-
-:::tip
-Please note that the Steedos DX project supports multi-package development, and the above command simultaneously launches all packages under the steedos-packages folder.
-:::
