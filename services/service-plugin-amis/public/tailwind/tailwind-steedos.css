@@ -102,11 +102,6 @@
   margin-bottom: 0.5rem
 }
 
-.my-4 {
-  margin-top: 1rem;
-  margin-bottom: 1rem
-}
-
 .-mt-3 {
   margin-top: -0.75rem
 }
@@ -125,14 +120,6 @@
 
 .ml-2 {
   margin-left: 0.5rem
-}
-
-.ml-4 {
-  margin-left: 1rem
-}
-
-.mr-1 {
-  margin-right: 0.25rem
 }
 
 .mr-4 {
@@ -207,8 +194,8 @@
   width: 100%
 }
 
-.min-w-\[220px\] {
-  min-width: 220px
+.min-w-\[260px\] {
+  min-width: 260px
 }
 
 .max-w-4xl {
@@ -281,6 +268,10 @@
 
 .border-b {
   border-bottom-width: 1px
+}
+
+.border-r {
+  border-right-width: 1px
 }
 
 .border-none {
