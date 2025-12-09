@@ -136,7 +136,7 @@
                         {
                             "type": "wrapper",
                             "size": "none",
-                            "className": "flex-1 focus:outline-none lg:order-last w-96",
+                            "className": "flex-1 focus:outline-none lg:order-last",
                             "body": [
                                 {
                                     "type": "steedos-object-listview",
