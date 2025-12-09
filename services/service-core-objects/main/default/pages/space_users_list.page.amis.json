@@ -13,7 +13,7 @@
                         {
                             "type": "wrapper",
                             "size": "none",
-                            "className": "space-users-list-sidebar-wrapper flex-shrink-0 min-w-[220px] overflow-y-auto sm:rounded shadow bg-white my-4 ml-4 mr-1 lg:order-first lg:flex lg:flex-col ",
+                            "className": "space-users-list-sidebar-wrapper flex-shrink-0 min-w-[260px] overflow-y-auto bg-white border-r lg:order-first lg:flex lg:flex-col ",
                             "body": [
                                 {
                                     "type": "input-tree",
@@ -275,7 +275,7 @@
             "width": "0px"
         },
         ".space-users-list-custom-page.space-users-list-pc.space-users-list-sidebar-open .space-users-list-sidebar-wrapper": {
-            "min-width": "220px"
+            "min-width": "260px"
         },
         ".space-users-list-custom-page.space-users-list-pc .space-users-list-sidebar-wrapper .antd-Form-item .antd-Tree": {
             "max-height": "none"
