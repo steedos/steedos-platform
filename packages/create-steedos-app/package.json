@@ -1,6 +1,6 @@
 {
   "name": "create-steedos-app",
-  "version": "3.0.3-beta.2",
+  "version": "3.0.3-beta.3",
   "keywords": [
     "react",
     "steedos"
@@ -49,5 +49,5 @@
   "engines": {
     "node": ">=14"
   },
-  "gitHead": "64d52d0dff9fcb5af87835d2bd5b0e2c7a74e272"
+  "gitHead": "061cba3e7e089d51f6408c95633a4e1fb9d8fd0f"
 }
