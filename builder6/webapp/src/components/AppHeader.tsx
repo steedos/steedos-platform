@@ -102,7 +102,7 @@ export const getHeaderSchema = (props) => {
                                         "className": 'w-auto ml-4 inline-block align-middle',
                                         "type": "tpl",
                                         "tpl": `<a href='/app' class='flex items-center '><img class='block h-6 w-auto' src='${logoSrc}'></a>`,
-                                        "hiddenOn": "${window:innerWidth < 768}"
+                                        "visibleOn": `${!isMobile && !!logoSrc}`
                                     },
                                     // {
                                     //     "className": 'bg-gray-300 w-[1px] h-6 inline-block align-middle mr-4',
@@ -110,7 +110,7 @@ export const getHeaderSchema = (props) => {
                                     //     "tpl": '',
                                     // },
                                     {
-                                        "className": 'w-auto ml-4 font-bold text-lg inline-block align-middle',
+                                        "className": 'w-auto ml-4 font-bold text-lg text-gray-700 inline-block align-middle',
                                         "type": "tpl",                                        
                                         "hiddenOn": "${window:innerWidth < 768}",
                                         "tpl": '${app.name}',
@@ -224,7 +224,7 @@ export const AppHeader = () => {
 
     const isMobile = window.innerWidth < 1024;
 
-    let logoSrc = `/images/logo.svg`
+    let logoSrc = '/images/logo.svg';
 
     if(Builder.settings?.context?.user?.space?.avatar){
         logoSrc = '/api/v6/files/cfs.avatars.filerecord/' + Builder.settings.context.user.space.avatar
@@ -232,7 +232,7 @@ export const AppHeader = () => {
 
     const faviconLink: any = document.querySelector('link[rel*="icon"], link[rel*="shortcut"]');
 
-    let favicon = '/images/logo.svg';
+    let favicon = '/images/logo.png';
     if(Builder.settings?.context?.user?.space?.favicon){
         favicon = "/api/v6/files/cfs.avatars.filerecord/" + Builder.settings.context.user.space.favicon;
     }
