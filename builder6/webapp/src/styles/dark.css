@@ -1,0 +1,17 @@
+
+.dark {
+    .steedos-header-container {
+        background-color: var(--color-gray-900);
+        color: var(--color-gray-100);
+        --steedos-logo-color-default: var(--color-gray-300);
+        .slds-icon-text-default {
+            --slds-c-icon-color-foreground: var(--color-gray-300);
+        }
+        .slds-button_icon {
+            --slds-g-color-neutral-base-50: var(--color-gray-300);
+        }
+        .lb-inbox-button {
+            color: var(--color-gray-300);
+        }
+    }
+}

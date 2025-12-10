@@ -1,0 +1,31 @@
+:root {
+    --color-gray-50: #f9fafb;
+    --color-gray-100: #f2f4f7;
+    --color-gray-200: #e4e7ec;
+    --color-gray-300: #d0d5dd;
+    --color-gray-400: #98a2b3;
+    --color-gray-500: #667085;
+    --color-gray-600: #475467;
+    --color-gray-700: #344054;
+    --color-gray-800: #1d2939;
+    --color-gray-900: #101828;
+    --color-gray-950: #0c111d;
+    --color-black: #101828;
+    --color-white: #ffffff;
+}
+
+
+.steedos-header-container {
+    background-color: var(--color-white);
+    color: var(--color-gray-700);
+    --steedos-logo-color-default: var(--color-gray-500);
+    .slds-icon-text-default {
+        --slds-c-icon-color-foreground: var(--color-gray-500);
+    }
+    .slds-button_icon {
+        --slds-g-color-neutral-base-50: var(--color-gray-500);
+    }
+    .lb-inbox-button {
+        color: var(--color-gray-500);
+    }
+}

@@ -14,11 +14,11 @@ export const getHeaderSchema = (props) => {
         body: [
             {
                 "type": "wrapper",
-                "className": "sticky p-0 top-0 z-40 w-full flex-none backdrop-blur transition-colors duration-500 lg:z-[1000] steedos-header-container",
+                "className": "sticky p-0 top-0 z-40 w-full flex-none backdrop-blur transition-colors duration-500 lg:z-[1000] steedos-header-container shadow",
                 body: [
                     {
                         "type": "wrapper",
-                        "className": 'flex w-full px-4 py-0 h-[50px] justify-between items-center steedos-header-container-line-one bg-white shadow',
+                        "className": 'flex w-full px-4 py-0 h-[50px] justify-between items-center steedos-header-container-line-one ',
                         "body": [
                             {
                                 type: "service",
@@ -110,7 +110,7 @@ export const getHeaderSchema = (props) => {
                                     //     "tpl": '',
                                     // },
                                     {
-                                        "className": 'w-auto ml-4 font-bold text-lg text-gray-800 dark:text-white inline-block align-middle',
+                                        "className": 'w-auto ml-4 font-bold text-lg inline-block align-middle',
                                         "type": "tpl",                                        
                                         "hiddenOn": "${window:innerWidth < 768}",
                                         "tpl": '${app.name}',

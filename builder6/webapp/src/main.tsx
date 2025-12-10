@@ -14,6 +14,8 @@ import IntlProvider from './components/intl_provider';
 import store from './stores/redux_store';
 
 import './i18n';
+import './styles/root.css';
+import './styles/dark.css';
 import './index.css'
 
 
