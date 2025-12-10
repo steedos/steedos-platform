@@ -173,7 +173,6 @@ export const AppHeader = () => {
 
     const params = useParams();
     let { appId = null, objectName } = params;
-    console.log('AppHeader params:', params)
 
     let [ app, setApp ] = useState(null);
     useEffect(() => {
