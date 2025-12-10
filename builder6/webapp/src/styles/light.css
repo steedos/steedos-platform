@@ -1,18 +1,6 @@
 
 .steedos {
 
-    --colors-brand-main: var(--color-brand-600);
-    --colors-brand-1: var(--color-brand-900);
-    --colors-brand-2: var(--color-brand-800);
-    --colors-brand-3: var(--color-brand-700);
-    --colors-brand-4: var(--color-brand-600);
-    --colors-brand-5: var(--color-brand-500);
-    --colors-brand-6: var(--color-brand-400);
-    --colors-brand-7: var(--color-brand-300);
-    --colors-brand-8: var(--color-brand-200);
-    --colors-brand-9: var(--color-brand-100);
-    --colors-brand-10: var(--color-brand-50);
-    
     --body-bg: var(--color-gray-50);
     --body-color: var(--color-gray-900);
     --body-size: 14px;
@@ -74,12 +62,12 @@
     --button-default-default-left-border-color: rgb(224, 224, 224);
     --button-default-default-right-border-color: rgb(224, 224, 224);
 
-    --button-primary-default-bg-color: var(--color-brand-600);
+    /* --button-primary-default-bg-color: var(--color-brand-600);
     --button-primary-hover-bg-color: var(--color-brand-500);
     --button-primary-default-top-border-color: var(--color-brand-600);
     --button-primary-default-bottom-border-color: var(--color-brand-600);
     --button-primary-default-left-border-color: var(--color-brand-600);
-    --button-primary-default-right-border-color: var(--color-brand-600);
+    --button-primary-default-right-border-color: var(--color-brand-600); */
 
     /* --button-default-default-font-color: rgb(1, 118, 211); */
     --button-enhance-default-bg-color: white;
@@ -88,18 +76,11 @@
     --Tabs--vertical-width: 180px;
     --Tabs--vertical-bg: white;
     --Tabs-link-maxWidth: 180px;
-    --Tabs--line-active-color: var(--color-brand-600);
-    --Tabs--line-onHover-borderColor: var(--color-brand-600);
-    --Tabs--vertical-onActive-color: var(--color-brand-600);
-    --Tabs--vertical-onActive-border: var(--color-brand-600);
-    --Tabs--vertical-onHover-borderColor: var(--color-brand-600);
     --Tabs-content-bg: unset;
     --drawer-content-paddingTop: 0;
     --fieldSet-legend-fontWeight: 600;
     --fieldSet-legend-marginTop: 1rem;
     --fieldSet-legend-marginBottom: 1rem;
-    --fieldSet-legend-border-color: var(--color-brand-600);
-
     --DropDown-caret-marginLeft: 0.25rem;
     --DropDown-menu-boxShadow: rgba(0, 0, 0, 0.12) 0px 0px 2px, rgba(0, 0, 0, 0.14) 0px 4px 8px;
     --boxShadow: rgba(0, 0, 0, 0.12) 0px 0px 2px, rgba(0, 0, 0, 0.14) 0px 4px 8px;

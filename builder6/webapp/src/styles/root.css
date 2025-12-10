@@ -6,7 +6,6 @@
   --color-black: #000000;
   --color-white: #ffffff;
 
-
   --color-brand-50: #f0f9ff;
   --color-brand-100: #e0f2fe;
   --color-brand-200: #bae6fd;
@@ -18,6 +17,18 @@
   --color-brand-800: #075985;
   --color-brand-900: #0c4a6e;
   --color-brand-950: #082f49;
+
+  --colors-brand-main: var(--color-brand-600);
+  --colors-brand-1: var(--color-brand-900);
+  --colors-brand-2: var(--color-brand-800);
+  --colors-brand-3: var(--color-brand-700);
+  --colors-brand-4: var(--color-brand-600);
+  --colors-brand-5: var(--color-brand-500);
+  --colors-brand-6: var(--color-brand-400);
+  --colors-brand-7: var(--color-brand-300);
+  --colors-brand-8: var(--color-brand-200);
+  --colors-brand-9: var(--color-brand-100);
+  --colors-brand-10: var(--color-brand-50);
 
   --color-gray-25: #fcfcfd;
   --color-gray-50: #f9fafb;
