@@ -22,7 +22,7 @@ export default defineConfig({
     minify: false,
     rollupOptions: {
       output: {
-        format: "iife",
+        // format: "iife",
       },
     },
   },

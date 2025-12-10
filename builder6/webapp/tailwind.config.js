@@ -2,8 +2,10 @@ module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
     "./index.html",
+    '../../services/**/*.{json,client.js}',
+    '../../packages/**/*.{json,client.js}'
   ],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: 'selector',
   theme: {
     extend: {},
   },

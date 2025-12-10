@@ -110,7 +110,7 @@ export const getHeaderSchema = (props) => {
                                     //     "tpl": '',
                                     // },
                                     {
-                                        "className": 'w-auto ml-4 font-bold text-lg text-gray-700 inline-block align-middle',
+                                        "className": 'w-auto ml-4 font-bold text-lg text-gray-800 dark:text-white inline-block align-middle',
                                         "type": "tpl",                                        
                                         "hiddenOn": "${window:innerWidth < 768}",
                                         "tpl": '${app.name}',
