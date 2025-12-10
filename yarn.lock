@@ -9700,7 +9700,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos-widgets/amis-object@npm:6.10.33":
+"@steedos-widgets/amis-object@npm:^6.10.33":
   version: 6.10.33
   resolution: "@steedos-widgets/amis-object@npm:6.10.33"
   dependencies:
@@ -10852,7 +10852,7 @@ __metadata:
     "@material-ui/core": ^4.4.1
     "@material-ui/icons": ^4.4.1
     "@material-ui/styles": ^4.4.1
-    "@steedos-widgets/amis-object": 6.10.33
+    "@steedos-widgets/amis-object": ^6.10.33
     "@tailwindcss/typography": ^0.5.19
     "@tailwindui/react": ^0.1.1
     "@types/node": ^14.14.19
