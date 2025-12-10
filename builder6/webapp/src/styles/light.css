@@ -90,6 +90,9 @@
     --Tabs-link-maxWidth: 180px;
     --Tabs--line-active-color: var(--color-brand-600);
     --Tabs--line-onHover-borderColor: var(--color-brand-600);
+    --Tabs--vertical-onActive-color: var(--color-brand-600);
+    --Tabs--vertical-onActive-border: var(--color-brand-600);
+    --Tabs--vertical-onHover-borderColor: var(--color-brand-600);
     --Tabs-content-bg: unset;
     --drawer-content-paddingTop: 0;
     --fieldSet-legend-fontWeight: 600;
