@@ -1,0 +1,148 @@
+
+.steedos {
+
+    --colors-brand-main: var(--color-brand-600);
+    --colors-brand-1: var(--color-brand-900);
+    --colors-brand-2: var(--color-brand-800);
+    --colors-brand-3: var(--color-brand-700);
+    --colors-brand-4: var(--color-brand-600);
+    --colors-brand-5: var(--color-brand-500);
+    --colors-brand-6: var(--color-brand-400);
+    --colors-brand-7: var(--color-brand-300);
+    --colors-brand-8: var(--color-brand-200);
+    --colors-brand-9: var(--color-brand-100);
+    --colors-brand-10: var(--color-brand-50);
+    
+    --body-bg: var(--color-gray-50);
+    --body-color: var(--color-gray-900);
+    --body-size: 14px;
+    --link-color: var(--color-brand-600);
+    --Page-main-bg: transparent;
+    --Form-mode-default-labelGap: 2px;
+    --Form-item-fontSize: 12px;
+    --Form-item-fontColor: rgb(68, 68, 68);
+    --Form-fontSize: 14px;
+    --Form-selectValue-fontSize: 14px;
+    --Form-item-gap: 0.75rem;
+    --Form-select-outer-boxShadow: rgba(0, 0, 0, 0.12) 0px 0px 2px, rgba(0, 0, 0, 0.14) 0px 4px 8px;
+    --Form-select-outer-borderWidth: 0;
+    /* --Table-color: #303030; */
+    /* --Table-thead-color: #303030; */
+    --Table-borderColor: #e5e7eb;
+    --Table-borderWidth: 1px;
+    --Table-fontSize: 13px;
+    --Table-fixedRight-boxShadow: none;
+    --Table-thead-borderColor: rgb(209 213 219);
+    --Table-thead-fontSize: 13px;
+    --Table-thead-bg: white;
+    --Table-thead-borderColor: var(--Table-borderColor);
+    --Table-toolbar-marginY: 0;
+    --Table-thead-borderWidth: 1px;
+    --Table-bg: white;
+    --TableCell--edge-paddingX: 1rem;
+    --TableCell-paddingY: 0.4rem;
+    --TableCell-paddingX: 0.5rem;
+    --TableCell--edge-paddingX: 0.5rem;
+    --text--muted-color: #d9dcde;
+    --Collapse-header-padding: 0px;
+    --Collapse-content-fontSize: 14px;
+    --Collapse-border: 0;
+    --Collapse-header-fontSize: 16px;
+    --Collapse-header-fontWeight: 400;
+    --Collapse-header-onHover-bg: #EEEEEE;
+    --Collapse-header-padding: 4px;
+    --Collapse-content-padding: 4px;
+    --collapse-default-bg-color: unset;
+    --Button-height: 2rem;
+    --Button-paddingX: 16px;
+    --button-size-default-top-right-border-radius: 0.25rem;
+    --button-size-default-top-left-border-radius: 0.25rem;
+    --button-size-default-bottom-right-border-radius: 0.25rem;
+    --button-size-default-bottom-left-border-radius: 0.25rem;
+    --button-size-default-marginRight: 4px;
+
+    --button-light-default-bg-color: transparent;
+    --button-light-default-top-border-color: transparent;
+    --button-light-default-bottom-border-color: transparent;
+    --button-light-default-left-border-color: transparent;
+    --button-light-default-right-border-color: transparent;
+    
+    --button-default-default-bg-color: white;
+    /* --button-default-hover-bg-color: rgb(245, 245, 245); */
+    --button-default-default-top-border-color: rgb(224, 224, 224);
+    --button-default-default-bottom-border-color: rgb(224, 224, 224);
+    --button-default-default-left-border-color: rgb(224, 224, 224);
+    --button-default-default-right-border-color: rgb(224, 224, 224);
+
+    --button-primary-default-bg-color: var(--color-brand-600);
+    --button-primary-hover-bg-color: var(--color-brand-500);
+    --button-primary-default-top-border-color: var(--color-brand-600);
+    --button-primary-default-bottom-border-color: var(--color-brand-600);
+    --button-primary-default-left-border-color: var(--color-brand-600);
+    --button-primary-default-right-border-color: var(--color-brand-600);
+
+    /* --button-default-default-font-color: rgb(1, 118, 211); */
+    --button-enhance-default-bg-color: white;
+    --Crud-toolbar-gap: 2px;
+    /* --DropDown-caret-marginLeft: 0; */
+    --Tabs--vertical-width: 180px;
+    --Tabs--vertical-bg: white;
+    --Tabs-link-maxWidth: 180px;
+    --Tabs--line-active-color: var(--color-brand-600);
+    --Tabs--line-onHover-borderColor: var(--color-brand-600);
+    --Tabs-content-bg: unset;
+    --drawer-content-paddingTop: 0;
+    --fieldSet-legend-fontWeight: 600;
+    --fieldSet-legend-marginTop: 1rem;
+    --fieldSet-legend-marginBottom: 1rem;
+    --fieldSet-legend-border-color: var(--color-brand-600);
+
+    --DropDown-caret-marginLeft: 0.25rem;
+    --DropDown-menu-boxShadow: rgba(0, 0, 0, 0.12) 0px 0px 2px, rgba(0, 0, 0, 0.14) 0px 4px 8px;
+    --boxShadow: rgba(0, 0, 0, 0.12) 0px 0px 2px, rgba(0, 0, 0, 0.14) 0px 4px 8px;
+    --common-popover-border: none;
+
+    /* --SearchBox-search-icon-color: var(--color-gray-400); */
+}
+
+a {
+    color: var(--link-color);
+}
+
+
+
+/* 修正手机端字体小的问题 */
+@media (max-width: 767px) {
+
+    :root {
+        --button-size-default-fontSize: var(--fontSizeLg);
+        --link-fontSize: var(--fontSizeLg);
+        --Table-fontSize: var(--fontSizeLg);
+        --Tabs--line-fontSize: var(--fontSizeLg);
+        --Tabs--line-active-fontSize: var(--fontSizeLg);
+        --Tabs--line-hover-fontSize: var(--fontSizeLg);
+        --fieldSet-legend-fontSize: var(--fontSizeLg);
+        --Pick-base-value-fontSize: var(--fontSizeLg);
+        --dialog-header-fontSize: var(--fontSizeLg);
+        --input-default-default-fontSize: var(--fontSizeLg);
+    }
+    .antd-Form .antd-Form-item input {
+        font-size: var(--fontSizeLg);
+        padding: 0 0.625rem 0 0.625rem;
+    }
+}
+
+.steedos-header-container {
+    background-color: var(--color-white);
+    color: var(--color-gray-700);
+    --steedos-logo-color-default: var(--color-gray-500);
+    .slds-icon-text-default {
+        --slds-c-icon-color-foreground: var(--color-gray-500);
+    }
+    .slds-button_icon {
+        --slds-g-color-neutral-base-50: var(--color-gray-500);
+    }
+    .lb-inbox-button {
+        color: var(--color-gray-500);
+    }
+}

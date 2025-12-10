@@ -15,6 +15,7 @@ import store from './stores/redux_store';
 
 import './i18n';
 import './styles/root.css';
+import './styles/light.css';
 import './styles/dark.css';
 import './index.css'
 
