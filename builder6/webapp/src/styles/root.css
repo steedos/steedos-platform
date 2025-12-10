@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   /* --color-- 基础色 Base --color-- */
   --color-inherit: inherit;
