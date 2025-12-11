@@ -47,7 +47,6 @@
 		"node": ">= 10.x.x"
 	},
 	"dependencies": {
-		"@apollographql/graphql-playground-html": "^1.6.29",
 		"@hapi/accept": "^3.2.4",
 		"@types/graphql-upload": "^8.0.11",
 		"apollo-server-core": "^2.22.2",

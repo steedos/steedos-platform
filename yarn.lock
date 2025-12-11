@@ -332,15 +332,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollographql/graphql-playground-html@npm:^1.6.29":
-  version: 1.6.29
-  resolution: "@apollographql/graphql-playground-html@npm:1.6.29"
-  dependencies:
-    xss: ^1.0.8
-  checksum: 32984ae225de572f3fe286409553884e4d252a35019abfd5bd6ef40f52173ba810fd0a4d23915e727425cd993fd178115e6a2557315789085e235114228dfe4a
-  languageName: node
-  linkType: hard
-
 "@apollographql/graphql-upload-8-fork@npm:^8.1.4":
   version: 8.1.4
   resolution: "@apollographql/graphql-upload-8-fork@npm:8.1.4"
@@ -10040,7 +10031,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@steedos/moleculer-apollo-server@workspace:packages/moleculer-apollo-server"
   dependencies:
-    "@apollographql/graphql-playground-html": ^1.6.29
     "@hapi/accept": ^3.2.4
     "@types/graphql-upload": ^8.0.11
     apollo-server-core: ^2.22.2

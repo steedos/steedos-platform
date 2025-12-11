@@ -6,8 +6,8 @@ const { ApolloServerBase } = require("apollo-server-core");
 jest.mock("graphql-upload");
 const GraphqlUpload = require("graphql-upload");
 
-jest.mock("@apollographql/graphql-playground-html");
-const Playground = require("@apollographql/graphql-playground-html");
+// jest.mock("@apollographql/graphql-playground-html");
+// const Playground = require("@apollographql/graphql-playground-html");
 
 jest.mock("../../src/moleculerApollo");
 const moleculerApollo = require("../../src/moleculerApollo");
