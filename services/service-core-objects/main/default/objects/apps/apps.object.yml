@@ -24,25 +24,13 @@ fields:
     searchable: true
     filterable: true
   icon_slds:
-    label: SLDS Icon
-    type: lookup
+    label: Icon
+    type: select
     required: true
-    optionsFunction: !!js/function |
-      function () {
-        var options;
-        options = [];
-
-        _.forEach(Steedos.resources.sldsIcons.standard, function (svg) {
-          return options.push({
-            value: svg,
-            label: svg,
-            icon: svg
-          });
-        });
-
-        return options;
-      }
-    filterable: true
+    amis:
+      "source": "${window:Steedos.resources.sldsIcons.standard}"
+      "menuTpl": "<div style=\"display: flex; align-items: center;\"><span class=\"slds-icon_container slds-icon-standard-${REPLACE(value, '_', '-')} slds-m-right_x-small\"><svg class=\"slds-icon w-7 h-7\" aria-hidden=\"true\"><use xlink:href=\"/assets/icons/standard-sprite/svg/symbols.svg#${value}\"></use></svg></span><span>${label}</span></div>"
+      searchable: true
   sort:
     label: Sort Number
     type: number
@@ -73,6 +61,8 @@ fields:
         value: purple
       - label: Gray
         value: gray
+    amis:
+      menuTpl: "<div style=\"display: flex; align-items: center;\"><span style=\"display: inline-block; width: 12px; height: 12px; border-radius: 2px; background-color: ${value}; margin-right: 8px;\"></span><span>${label}</span></div>"
   dark:
     label: Dark Mode
     type: boolean
