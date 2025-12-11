@@ -9920,7 +9920,7 @@ __metadata:
     mongodb: ^3.7.3
     nodemailer: ^7.0.11
     pug: ^3.0.2
-    request-ip: ^2.2.0
+    request-ip: ^3.3.0
     string-random: ^0.1.3
     tslib: ^2.4.0
     url-join: ^4.0.1
@@ -26030,13 +26030,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is_js@npm:^0.9.0":
-  version: 0.9.0
-  resolution: "is_js@npm:0.9.0"
-  checksum: bf7f0fc52187eda1ca597da0a20b85c4828b9bca5f08c5f2f6dd64d437384bdc9628674c78cee510f9600050871f7d783738d35dc6f5fe80e2a8848be5fbdce9
-  languageName: node
-  linkType: hard
-
 "isarray@npm:0.0.1":
   version: 0.0.1
   resolution: "isarray@npm:0.0.1"
@@ -38228,15 +38221,6 @@ __metadata:
   version: 2.0.0
   resolution: "replace-ext@npm:2.0.0"
   checksum: ed640ac90d24cce4be977642847d138908d430049cc097633be33b072143515cc7d29699675a0c35f6dc3c3c73cb529ed352d59649cf15931740eb31ae083c1e
-  languageName: node
-  linkType: hard
-
-"request-ip@npm:^2.2.0":
-  version: 2.2.0
-  resolution: "request-ip@npm:2.2.0"
-  dependencies:
-    is_js: ^0.9.0
-  checksum: 44012e753954e0f117cb706c72b2e7d8663dde5835d66e9c27c5d34f353000f29e593b5e950a87db3c8db9f1a20bf80d966267e00ca0d5ab92e08eb03b61f82e
   languageName: node
   linkType: hard
 
