@@ -15,7 +15,6 @@
     "lru_map": "^0.4.1",
     "moleculer": "^0.14.35",
     "moleculer-web": "^0.11.0-beta3",
-    "react-dev-utils": "12.0.1",
     "validator": "^13.15.23"
   },
   "publishConfig": {
@@ -23,7 +22,6 @@
   },
   "gitHead": "196040f2f6f8ebd851c1bf108151b6d52609e62e",
   "devDependencies": {
-    "@types/graphql-iso-date": "^3.4.0",
-    "@types/react-dev-utils": "^9.0.11"
+    "@types/graphql-iso-date": "^3.4.0"
   }
 }

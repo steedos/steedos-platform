@@ -19,7 +19,6 @@ const DataLoader = require("dataloader");
 const { LRUMap } = require('lru_map');
 const validator = require('validator');
 const enablePlayground = validator.toBoolean(process.env.STEEDOS_GRAPHQL_ENABLE_CONSOLE || 'true', true);
-const openBrowser = require('react-dev-utils/openBrowser');
 const requestIp = require('request-ip');
 const mixinOptions = {
 
