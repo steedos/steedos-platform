@@ -9914,9 +9914,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/ee_unpkg@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "@steedos/ee_unpkg@npm:3.0.1"
+"@steedos/ee_unpkg@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@steedos/ee_unpkg@npm:3.0.2"
   dependencies:
     "@babel/core": ^7.2.2
     "@babel/plugin-proposal-class-properties": ^7.2.3
@@ -9949,14 +9949,13 @@ __metadata:
     react-dom: ^16.8.6
     react-icons: ^3.7.0
     semver: ^5.6.0
-    sort-by: ^1.2.0
     sri-toolbox: ^0.2.0
     tar-stream: ^1.6.2
     tempy: ^0.3.0
     validate-npm-package-name: ^3.0.0
     warning: ^4.0.2
     whatwg-url: ^7.0.0
-  checksum: 3d9e1d4f92da00850681e83d1503766013684c00e3eccfe79e54a7b18747c92c971b67f3afff31e3366eaee7c053dd722ff26d93ef88a8f84b91de983e2e9971
+  checksum: 1e1f006d4673deb6ba6ec83c8ed17e56e905ac4ee4308d0e3d31fa3c272198a885ec50dc7a4bafe8ac940d61e44541faca3de2029a081c9963851dcee2d97289
   languageName: node
   linkType: hard
 
@@ -10845,7 +10844,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@steedos/unpkg@workspace:services/unpkg"
   dependencies:
-    "@steedos/ee_unpkg": ^3.0.1
+    "@steedos/ee_unpkg": ^3.0.2
   languageName: unknown
   linkType: soft
 
@@ -33061,13 +33060,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"object-path@npm:0.6.0":
-  version: 0.6.0
-  resolution: "object-path@npm:0.6.0"
-  checksum: e9d7a901bcfcfe39b195cdac5bb2b8c1f030abdf86f45ed6d0385c5d0c38a8c5e4b4a30c88bf483d6b3b37b5a8d620d004dbfc6db6be8565f88e9cf0b078e945
-  languageName: node
-  linkType: hard
-
 "object-path@npm:^0.11.8":
   version: 0.11.8
   resolution: "object-path@npm:0.11.8"
@@ -39910,15 +39902,6 @@ __metadata:
   dependencies:
     atomic-sleep: ^1.0.0
   checksum: e5e1ffdd3bcb0dee3bf6f7b2ff50dd3ffa2df864dc9d53463f33e225021a28601e91d0ec7e932739824bafd6f4ff3b7090939ac3e34ab1022e01692b41f7e8a3
-  languageName: node
-  linkType: hard
-
-"sort-by@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "sort-by@npm:1.2.0"
-  dependencies:
-    object-path: 0.6.0
-  checksum: 82c9812aa318eff68669fe25cc0168d172ccbff9d34d52449c345631118b5e29608e3524e9028b23dc4959c8a7601b19a40ddbe3eb05234c0a54792912c5ad2f
   languageName: node
   linkType: hard
 
