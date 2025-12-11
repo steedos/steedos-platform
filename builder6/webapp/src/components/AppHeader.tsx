@@ -216,7 +216,21 @@ export const AppHeader = () => {
                         }
 
                         if (appData.color) {
-                            document.body.style.setProperty('--colors-brand-main', appData.color);
+                            if (appData.dark) {
+                                document.body.style.setProperty('--colors-brand-main', `var(--color-${appData.color}-900)`);
+                            } else {
+                                document.body.style.setProperty('--colors-brand-main', `var(--color-${appData.color}-50)`);
+                            }
+                            document.body.style.setProperty('--colors-brand-1', `var(--color-${appData.color}-900)`);
+                            document.body.style.setProperty('--colors-brand-2', `var(--color-${appData.color}-800)`);
+                            document.body.style.setProperty('--colors-brand-3', `var(--color-${appData.color}-700)`);
+                            document.body.style.setProperty('--colors-brand-4', `var(--color-${appData.color}-600)`);
+                            document.body.style.setProperty('--colors-brand-5', `var(--color-${appData.color}-500)`);
+                            document.body.style.setProperty('--colors-brand-6', `var(--color-${appData.color}-400)`);
+                            document.body.style.setProperty('--colors-brand-7', `var(--color-${appData.color}-300)`);
+                            document.body.style.setProperty('--colors-brand-8', `var(--color-${appData.color}-200)`);
+                            document.body.style.setProperty('--colors-brand-9', `var(--color-${appData.color}-100)`);
+                            document.body.style.setProperty('--colors-brand-10', `var(--color-${appData.color}-50)`);
                         }
                     }
                 }catch(err){

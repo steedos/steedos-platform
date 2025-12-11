@@ -50,12 +50,29 @@ fields:
     sortable: true
   color:
     label: Color
-    type: color
-    defaultValue: '#0c4a6e'
-    amis:
-      mode: horizontal
-      name: fawsdb
-      format: hex
+    type: select
+    defaultValue: 'sky'
+    options:
+      - label: Red
+        value: red
+      - label: Orange
+        value: orange
+      - label: Yellow
+        value: yellow
+      - label: Green
+        value: green
+      - label: Teal
+        value: teal
+      - label: Cyan
+        value: cyan
+      - label: Blue
+        value: blue
+      - label: Pink
+        value: pink
+      - label: Purple
+        value: purple
+      - label: Gray
+        value: gray
   dark:
     label: Dark Mode
     type: boolean

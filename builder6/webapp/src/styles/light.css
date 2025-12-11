@@ -4,7 +4,8 @@
     --body-bg: var(--color-gray-50);
     --body-color: var(--color-gray-900);
     --body-size: 14px;
-    --link-color: var(--color-brand-600);
+    --link-color: var(--colors-brand-4);
+    --link-onHover-color: var(--colors-brand-7);
     --Page-main-bg: transparent;
     --Form-mode-default-labelGap: 2px;
     --Form-item-fontSize: 12px;
@@ -62,12 +63,12 @@
     --button-default-default-left-border-color: rgb(224, 224, 224);
     --button-default-default-right-border-color: rgb(224, 224, 224);
 
-    /* --button-primary-default-bg-color: var(--color-brand-600);
-    --button-primary-hover-bg-color: var(--color-brand-500);
-    --button-primary-default-top-border-color: var(--color-brand-600);
-    --button-primary-default-bottom-border-color: var(--color-brand-600);
-    --button-primary-default-left-border-color: var(--color-brand-600);
-    --button-primary-default-right-border-color: var(--color-brand-600); */
+    --button-primary-default-bg-color: var(--colors-brand-4);
+    --button-primary-hover-bg-color: var(--colors-brand-5);
+    --button-primary-default-top-border-color: var(--colors-brand-4);
+    --button-primary-default-bottom-border-color: var(--colors-brand-4);
+    --button-primary-default-left-border-color: var(--colors-brand-4);
+    --button-primary-default-right-border-color: var(--colors-brand-4);
 
     /* --button-default-default-font-color: rgb(1, 118, 211); */
     --button-enhance-default-bg-color: white;
