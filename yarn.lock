@@ -9810,17 +9810,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos-labs/plugin-workflow@npm:3.0.2":
-  version: 3.0.2
-  resolution: "@steedos-labs/plugin-workflow@npm:3.0.2"
+"@steedos-labs/plugin-workflow@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "@steedos-labs/plugin-workflow@npm:3.0.3"
   dependencies:
-    formidable: 2.0.1
+    formidable: ^2.1.5
     graphql-parse-resolve-info: ^4.12.3
-    he: 1.2.0
-    jszip: 3.10.1
+    he: ^1.2.0
+    jszip: ^3.10.1
     lodash: ^4.17.21
     node-schedule: ^2.0.0
-  checksum: 06cdfa69bf020641fca6f9695c39cd6ac5ff49b3eb1fbc462e9d295aa6b35070304e57f6361f1fc8e94dc7d2ecd6a0695efcc6c8b9836daa70e048c9c9227470
+  checksum: 518a58831557be6d82ff6ac4c245b087a48ae498c07f12115a58d2adbe0e21d993414142dbee0dcee589418b0726df83176732afd44c39222f37e4771668e343
   languageName: node
   linkType: hard
 
@@ -10591,7 +10591,7 @@ __metadata:
   dependencies:
     "@steedos-labs/analytics": ^3.1.2
     "@steedos-labs/plugin-print-template": ^3.0.2
-    "@steedos-labs/plugin-workflow": 3.0.2
+    "@steedos-labs/plugin-workflow": ^3.0.3
     "@steedos/ee_branding": 3.0.4-beta.3
     "@steedos/service-license": ^3.0.2
     mssql: ^11.0.1
@@ -19228,16 +19228,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dezalgo@npm:1.0.3":
-  version: 1.0.3
-  resolution: "dezalgo@npm:1.0.3"
-  dependencies:
-    asap: ^2.0.0
-    wrappy: 1
-  checksum: 8b26238db91423b2702a7a6d9629d0019c37c415e7b6e75d4b3e8d27e9464e21cac3618dd145f4d4ee96c70cc6ff034227b5b8a0e9c09015a8bdbe6dace3cfb9
-  languageName: node
-  linkType: hard
-
 "dezalgo@npm:^1.0.0, dezalgo@npm:^1.0.4":
   version: 1.0.4
   resolution: "dezalgo@npm:1.0.4"
@@ -22281,15 +22271,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"formidable@npm:2.0.1":
-  version: 2.0.1
-  resolution: "formidable@npm:2.0.1"
+"formidable@npm:^2.1.5":
+  version: 2.1.5
+  resolution: "formidable@npm:2.1.5"
   dependencies:
-    dezalgo: 1.0.3
-    hexoid: 1.0.0
-    once: 1.4.0
-    qs: 6.9.3
-  checksum: b35445444e7b6f6f3cacbadd5e6fadd6b5b2e83162e7c41fa22586df584cc515bbd1ee0dc2b701ce031fcb000d71769bc77bd0958db8a89a0ceb8b2227bdc695
+    "@paralleldrive/cuid2": ^2.2.2
+    dezalgo: ^1.0.4
+    once: ^1.4.0
+    qs: ^6.11.0
+  checksum: b7a38dbf3f2d32858e9199f9e1597038d22854dc7f3120e30a05097fd538c3a5ebdfcb1b14ed3d68139f592176e64a3544aa14b5be624e26fe5b383a5c096a74
   languageName: node
   linkType: hard
 
@@ -23823,7 +23813,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"he@npm:1.2.0, he@npm:^1.2.0":
+"he@npm:^1.2.0":
   version: 1.2.0
   resolution: "he@npm:1.2.0"
   bin:
@@ -23865,13 +23855,6 @@ __metadata:
   version: 5.0.0
   resolution: "help-me@npm:5.0.0"
   checksum: 474436627b6c7d2f406a2768453895889eb2712c8ded4c47658d5c6dd46c2ff3f742be4e4e8dedd57b7f1ac6b28803896a2e026a32a977f507222c16f23ab2e1
-  languageName: node
-  linkType: hard
-
-"hexoid@npm:1.0.0":
-  version: 1.0.0
-  resolution: "hexoid@npm:1.0.0"
-  checksum: 27a148ca76a2358287f40445870116baaff4a0ed0acc99900bf167f0f708ffd82e044ff55e9949c71963852b580fc024146d3ac6d5d76b508b78d927fa48ae2d
   languageName: node
   linkType: hard
 
@@ -27957,7 +27940,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jszip@npm:3.10.1, jszip@npm:^3.1.5":
+"jszip@npm:^3.1.5, jszip@npm:^3.10.1":
   version: 3.10.1
   resolution: "jszip@npm:3.10.1"
   dependencies:
@@ -33558,7 +33541,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"once@npm:1.4.0, once@npm:^1.3.0, once@npm:^1.3.1, once@npm:^1.4.0":
+"once@npm:^1.3.0, once@npm:^1.3.1, once@npm:^1.4.0":
   version: 1.4.0
   resolution: "once@npm:1.4.0"
   dependencies:
@@ -36923,14 +36906,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"qs@npm:6.9.3":
-  version: 6.9.3
-  resolution: "qs@npm:6.9.3"
-  checksum: 89cd1b5e521c19a7e0a7a056ddc261c5c30889664608cf9ce6085f9f25606fc48568cf6a6249e641b4b5c04dac7889e3b82133142523abf397228eb4f488fc38
-  languageName: node
-  linkType: hard
-
-"qs@npm:^6.11.2, qs@npm:^6.12.3, qs@npm:^6.14.0, qs@npm:^6.4.0, qs@npm:~6.14.0":
+"qs@npm:^6.11.0, qs@npm:^6.11.2, qs@npm:^6.12.3, qs@npm:^6.14.0, qs@npm:^6.4.0, qs@npm:~6.14.0":
   version: 6.14.0
   resolution: "qs@npm:6.14.0"
   dependencies:
