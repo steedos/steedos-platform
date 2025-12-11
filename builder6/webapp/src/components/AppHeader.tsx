@@ -216,11 +216,7 @@ export const AppHeader = () => {
                         }
 
                         if (appData.color) {
-                            if (appData.dark) {
-                                document.body.style.setProperty('--colors-brand-main', `var(--color-${appData.color}-900)`);
-                            } else {
-                                document.body.style.setProperty('--colors-brand-main', `var(--color-${appData.color}-50)`);
-                            }
+                            document.body.style.setProperty('--colors-brand-main', `var(--color-${appData.color}-600)`);
                             document.body.style.setProperty('--colors-brand-1', `var(--color-${appData.color}-900)`);
                             document.body.style.setProperty('--colors-brand-2', `var(--color-${appData.color}-800)`);
                             document.body.style.setProperty('--colors-brand-3', `var(--color-${appData.color}-700)`);

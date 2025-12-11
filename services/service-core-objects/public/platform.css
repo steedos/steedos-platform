@@ -1,7 +1,5 @@
 :root {
     --tw-border-opacity: 1;
-    --private: rgb(14 165 233 / var(--tw-border-opacity));
-    --primary-onHover: var(--colors-brand-9);
 }
 
 .ant-modal-mask{

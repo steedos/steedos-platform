@@ -10,29 +10,18 @@
   --color-black: #000000;
   --color-white: #ffffff;
 
-  --color-brand-50: #f0f9ff;
-  --color-brand-100: #e0f2fe;
-  --color-brand-200: #bae6fd;
-  --color-brand-300: #7dd3fc;
-  --color-brand-400: #38bdf8;
-  --color-brand-500: #0ea5e9;
-  --color-brand-600: #0284c7;
-  --color-brand-700: #0369a1;
-  --color-brand-800: #075985;
-  --color-brand-900: #0c4a6e;
-  --color-brand-950: #082f49;
 
-  --colors-brand-main: var(--color-brand-900);
-  --colors-brand-1: var(--color-brand-900);
-  --colors-brand-2: var(--color-brand-800);
-  --colors-brand-3: var(--color-brand-700);
-  --colors-brand-4: var(--color-brand-600);
-  --colors-brand-5: var(--color-brand-500);
-  --colors-brand-6: var(--color-brand-400);
-  --colors-brand-7: var(--color-brand-300);
-  --colors-brand-8: var(--color-brand-200);
-  --colors-brand-9: var(--color-brand-100);
-  --colors-brand-10: var(--color-brand-50);
+  --colors-brand-main: var(--color-sky-900);
+  --colors-brand-1: var(--color-sky-900);
+  --colors-brand-2: var(--color-sky-800);
+  --colors-brand-3: var(--color-sky-700);
+  --colors-brand-4: var(--color-sky-600);
+  --colors-brand-5: var(--color-sky-500);
+  --colors-brand-6: var(--color-sky-400);
+  --colors-brand-7: var(--color-sky-300);
+  --colors-brand-8: var(--color-sky-200);
+  --colors-brand-9: var(--color-sky-100);
+  --colors-brand-10: var(--color-sky-50);
 
   --color-gray-25: #fcfcfd;
   --color-gray-50: #f9fafb;
@@ -125,7 +114,7 @@
   --color-green-800: #166534;
   --color-green-900: #14532d;
   --color-green-950: #052e16;
-  
+
 /* --color-- 紫色系 (Purple) --color-- */
   --color-purple-50: #faf5ff;
   --color-purple-100: #f3e8ff;
