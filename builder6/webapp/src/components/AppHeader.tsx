@@ -214,6 +214,10 @@ export const AppHeader = () => {
                         } else {
                             document.body.classList.remove('dark');
                         }
+
+                        if (appData.color) {
+                            document.body.style.setProperty('--colors-brand-main', appData.color);
+                        }
                     }
                 }catch(err){
                     console.error('Failed to fetch app data:', err);
