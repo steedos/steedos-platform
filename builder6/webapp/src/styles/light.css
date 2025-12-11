@@ -5,7 +5,7 @@
     --body-color: var(--color-gray-900);
     --body-size: 14px;
     --link-color: var(--colors-brand-4);
-    --link-onHover-color: var(--colors-brand-7);
+    --link-onHover-color: var(--colors-brand-6);
     --Page-main-bg: transparent;
     --Form-mode-default-labelGap: 2px;
     --Form-item-fontSize: 12px;
@@ -63,12 +63,21 @@
     --button-default-default-left-border-color: rgb(224, 224, 224);
     --button-default-default-right-border-color: rgb(224, 224, 224);
 
-    --button-primary-default-bg-color: var(--colors-brand-4);
+    --button-primary-default-bg-color: var(--colors-brand-3);
+    --button-primary-default-top-border-color: var(--colors-brand-3);
+    --button-primary-default-bottom-border-color: var(--colors-brand-3);
+    --button-primary-default-left-border-color: var(--colors-brand-3);
+    --button-primary-default-right-border-color: var(--colors-brand-3);
     --button-primary-hover-bg-color: var(--colors-brand-5);
-    --button-primary-default-top-border-color: var(--colors-brand-4);
-    --button-primary-default-bottom-border-color: var(--colors-brand-4);
-    --button-primary-default-left-border-color: var(--colors-brand-4);
-    --button-primary-default-right-border-color: var(--colors-brand-4);
+    --button-primary-hover-top-border-color: var(--colors-brand-5);
+    --button-primary-hover-bottom-border-color: var(--colors-brand-5);
+    --button-primary-hover-left-border-color: var(--colors-brand-5);
+    --button-primary-hover-right-border-color: var(--colors-brand-5);
+    --button-primary-active-bg-color: var(--colors-brand-5);
+    --button-primary-active-top-border-color: var(--colors-brand-5);
+    --button-primary-active-bottom-border-color: var(--colors-brand-5);
+    --button-primary-active-left-border-color: var(--colors-brand-5);
+    --button-primary-active-right-border-color: var(--colors-brand-5);
 
     /* --button-default-default-font-color: rgb(1, 118, 211); */
     --button-enhance-default-bg-color: white;
