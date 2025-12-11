@@ -1,4 +1,13 @@
-import { trim, isEmpty, pick, isString, isPlainObject, find, includes, defer } from 'lodash';
+import {
+  trim,
+  isEmpty,
+  pick,
+  isString,
+  isPlainObject,
+  find,
+  includes,
+  defer,
+} from "lodash";
 import {
   User,
   LoginUserIdentity,
@@ -9,9 +18,13 @@ import {
   HashAlgorithm,
   ConnectionInformations,
   LoginResult,
-} from '../types';
-import { TwoFactor, AccountsTwoFactorOptions, getUserTwoFactorService } from '@accounts/two-factor';
-import { AccountsServer, ServerHooks, generateRandomToken, generateRandomCode } from '../server';
+} from "../types";
+import {
+  AccountsServer,
+  ServerHooks,
+  generateRandomToken,
+  generateRandomCode,
+} from "../server";
 import {
   getUserResetTokens,
   getUserVerificationTokens,
@@ -19,20 +32,24 @@ import {
   bcryptPassword,
   verifyPassword,
   isEmail,
-} from './utils';
-import { PasswordCreateUserType, PasswordLoginType, PasswordType, ErrorMessages } from './types';
-import { errors } from './errors';
-import { getSteedosConfig, getObject } from '@steedos/objectql';
+} from "./utils";
+import {
+  PasswordCreateUserType,
+  PasswordLoginType,
+  PasswordType,
+  ErrorMessages,
+} from "./types";
+import { errors } from "./errors";
+import { getSteedosConfig, getObject } from "@steedos/objectql";
 const EFFECTIVE_TIME = 10; //10分钟
 const CODE_LENGTH = 6;
 const MAX_FAILURE_COUNT = 10;
-const _ = require('underscore');
-const moment = require('moment');
+const _ = require("underscore");
+const moment = require("moment");
 export interface AccountsPasswordOptions {
   /**
    * Two factor options passed down to the @accounts/two-factor service.
    */
-  twoFactor?: AccountsTwoFactorOptions;
   passwordHashAlgorithm?: HashAlgorithm;
   /**
    * The number of milliseconds from when a link to verify the user email is sent until token expires and user can't verify his email with the link anymore.
@@ -84,7 +101,7 @@ export interface AccountsPasswordOptions {
    * By default we only allow `username`, `email` and `password` fields.
    */
   validateNewUser?: (
-    user: PasswordCreateUserType
+    user: PasswordCreateUserType,
   ) => Promise<PasswordCreateUserType> | PasswordCreateUserType;
   /**
    * Function that check if the email is a valid email.
@@ -122,36 +139,38 @@ const defaultOptions = {
   },
   validateUsername(username?: string): boolean {
     const usernameRegex = /^[a-zA-Z][a-zA-Z0-9]*$/;
-    const isValid = username && !isEmpty(trim(username)) && usernameRegex.test(username);
+    const isValid =
+      username && !isEmpty(trim(username)) && usernameRegex.test(username);
     return Boolean(isValid);
   },
   errors,
   sendVerificationEmailAfterSignup: false,
 };
 
-const getPathFragmentPrefix = function(){
+const getPathFragmentPrefix = function () {
   const config = getSteedosConfig().email;
-  const defaultPathPrefix = 'accounts/a/#';
-  let pathFragmentPrefix = config && config.pathFragmentPrefix ? config.pathFragmentPrefix : defaultPathPrefix;
-  if(pathFragmentPrefix && !/\/$/.test(pathFragmentPrefix)){
+  const defaultPathPrefix = "accounts/a/#";
+  let pathFragmentPrefix =
+    config && config.pathFragmentPrefix
+      ? config.pathFragmentPrefix
+      : defaultPathPrefix;
+  if (pathFragmentPrefix && !/\/$/.test(pathFragmentPrefix)) {
     pathFragmentPrefix += "/";
   }
   return pathFragmentPrefix;
-}
+};
 
 // interface MyDatabaseInterface extends DatabaseInterface{
 //   updateUser?(userId: string, options: any): Promise<void>;
 // }
 export default class AccountsPassword implements AuthenticationService {
-  public serviceName = 'password';
+  public serviceName = "password";
   public server!: AccountsServer;
-  public twoFactor: TwoFactor;
   private options: AccountsPasswordOptions & typeof defaultOptions;
   private db!: DatabaseInterface;
 
   constructor(options: AccountsPasswordOptions = {}) {
     this.options = { ...defaultOptions, ...options };
-    this.twoFactor = new TwoFactor(options.twoFactor);
   }
 
   public setStore(store: DatabaseInterface) {
@@ -162,14 +181,14 @@ export default class AccountsPassword implements AuthenticationService {
   public async authenticate(params: any): Promise<User> {
     let { user, password, token, locale } = params;
 
-    const passwordUnencrypted = params['password-unencrypted'];
+    const passwordUnencrypted = params["password-unencrypted"];
     let isHashPassword = true;
-    if(passwordUnencrypted && !password ){
+    if (passwordUnencrypted && !password) {
       password = passwordUnencrypted;
       isHashPassword = false;
     }
 
-    if(user && token){
+    if (user && token) {
       return await this.codeAuthenticator(user, token, locale);
     }
 
@@ -181,7 +200,11 @@ export default class AccountsPassword implements AuthenticationService {
       throw new Error(this.options.errors.matchFailed);
     }
 
-    const foundUser = await this.passwordAuthenticator(user, password, isHashPassword);
+    const foundUser = await this.passwordAuthenticator(
+      user,
+      password,
+      isHashPassword,
+    );
 
     // // If user activated two factor authentication try with the code
     // if (getUserTwoFactorService(foundUser)) {
@@ -232,7 +255,11 @@ export default class AccountsPassword implements AuthenticationService {
    * Defaults to false.
    * @returns {Promise<void>} - Return a Promise.
    */
-  public addEmail(userId: string, newEmail: string, verified: boolean): Promise<void> {
+  public addEmail(
+    userId: string,
+    newEmail: string,
+    verified: boolean,
+  ): Promise<void> {
     if (!this.options.validateEmail(newEmail)) {
       throw new Error(this.options.errors.invalidEmail);
     }
@@ -266,12 +293,21 @@ export default class AccountsPassword implements AuthenticationService {
     }
 
     const verificationTokens = getUserVerificationTokens(user);
-    const tokenRecord = find(verificationTokens, (t: TokenRecord) => t.token === token);
-    if (!tokenRecord || this.isTokenExpired(tokenRecord, this.options.verifyEmailTokenExpiration)) {
+    const tokenRecord = find(
+      verificationTokens,
+      (t: TokenRecord) => t.token === token,
+    );
+    if (
+      !tokenRecord ||
+      this.isTokenExpired(tokenRecord, this.options.verifyEmailTokenExpiration)
+    ) {
       throw new Error(this.options.errors.verifyEmailLinkExpired);
     }
 
-    const emailRecord = find(user.emails, (e: EmailRecord) => e.address === tokenRecord.address);
+    const emailRecord = find(
+      user.emails,
+      (e: EmailRecord) => e.address === tokenRecord.address,
+    );
     if (!emailRecord) {
       throw new Error(this.options.errors.verifyEmailLinkUnknownAddress);
     }
@@ -287,7 +323,7 @@ export default class AccountsPassword implements AuthenticationService {
   public async resetPassword(
     token: string,
     newPassword: PasswordType,
-    infos: ConnectionInformations
+    infos: ConnectionInformations,
   ): Promise<LoginResult | null> {
     if (!token || !isString(token)) {
       throw new Error(this.options.errors.invalidToken);
@@ -302,15 +338,15 @@ export default class AccountsPassword implements AuthenticationService {
     }
 
     const resetTokens = getUserResetTokens(user);
-    const resetTokenRecord = find(resetTokens, t => t.token === token);
+    const resetTokenRecord = find(resetTokens, (t) => t.token === token);
 
     if (
       !resetTokenRecord ||
       this.isTokenExpired(
         resetTokenRecord,
-        resetTokenRecord.reason === 'enroll'
+        resetTokenRecord.reason === "enroll"
           ? this.options.passwordEnrollTokenExpiration
-          : this.options.passwordResetTokenExpiration
+          : this.options.passwordResetTokenExpiration,
       )
     ) {
       throw new Error(this.options.errors.resetPasswordLinkExpired);
@@ -320,7 +356,7 @@ export default class AccountsPassword implements AuthenticationService {
     if (
       !includes(
         emails.map((email: EmailRecord) => email.address),
-        resetTokenRecord.address
+        resetTokenRecord.address,
       )
     ) {
       throw new Error(this.options.errors.resetPasswordLinkUnknownAddress);
@@ -328,12 +364,17 @@ export default class AccountsPassword implements AuthenticationService {
 
     const password = await this.hashAndBcryptPassword(newPassword);
     // Change the user password and remove the old token
-    await this.db.setResetPassword(user.id, resetTokenRecord.address, password, token);
+    await this.db.setResetPassword(
+      user.id,
+      resetTokenRecord.address,
+      password,
+      token,
+    );
 
     this.server.getHooks().emit(ServerHooks.ResetPasswordSuccess, user);
 
     // If user clicked on an enrollment link we can verify his email
-    if (resetTokenRecord.reason === 'enroll') {
+    if (resetTokenRecord.reason === "enroll") {
       await this.db.verifyEmail(user.id, resetTokenRecord.address);
     }
 
@@ -347,11 +388,11 @@ export default class AccountsPassword implements AuthenticationService {
       if (address) {
         const passwordChangedMail = this.server.prepareMail(
           address,
-          '',
+          "",
           this.server.sanitizeUser(user),
-          '',
+          "",
           this.server.options.emailTemplates.passwordChanged,
-          this.server.options.emailTemplates.from
+          this.server.options.emailTemplates.from,
         );
         await this.server.options.sendMail(passwordChangedMail);
       }
@@ -363,7 +404,7 @@ export default class AccountsPassword implements AuthenticationService {
     return null;
   }
 
-  public async getUserProfile(userId){
+  public async getUserProfile(userId) {
     const spaceId = getSteedosConfig().tenant._id;
     let password_history = 3;
     let max_login_attempts = 10;
@@ -445,24 +486,32 @@ export default class AccountsPassword implements AuthenticationService {
   public async changePassword(
     userId: string,
     oldPassword: string,
-    newPassword: string
+    newPassword: string,
   ): Promise<void> {
     if (!this.options.validatePassword(newPassword)) {
       throw new Error(this.options.errors.invalidPassword);
     }
 
-    const user: any = await this.passwordAuthenticator({ id: userId }, oldPassword);
+    const user: any = await this.passwordAuthenticator(
+      { id: userId },
+      oldPassword,
+    );
     const saas = getSteedosConfig().tenant.saas;
-    if(!saas){
-      const passwordHistory = user.services.password_history || []
+    if (!saas) {
+      const passwordHistory = user.services.password_history || [];
 
       const userProfile = await this.getUserProfile(userId);
-      
-      const validPasswordHistory = _.last(passwordHistory, userProfile.password_history);
+
+      const validPasswordHistory = _.last(
+        passwordHistory,
+        userProfile.password_history,
+      );
       for (const item of validPasswordHistory) {
-        var verify = await verifyPassword(newPassword, item)
-        if(verify){
-          throw new Error('最近 ' + userProfile.password_history + ' 次密码不能相同');
+        var verify = await verifyPassword(newPassword, item);
+        if (verify) {
+          throw new Error(
+            "最近 " + userProfile.password_history + " 次密码不能相同",
+          );
         }
       }
     }
@@ -481,11 +530,11 @@ export default class AccountsPassword implements AuthenticationService {
       if (address) {
         const passwordChangedMail = this.server.prepareMail(
           address,
-          '',
+          "",
           this.server.sanitizeUser(user),
-          '',
+          "",
           this.server.options.emailTemplates.passwordChanged,
-          this.server.options.emailTemplates.from
+          this.server.options.emailTemplates.from,
         );
         await this.server.options.sendMail(passwordChangedMail);
       }
@@ -515,8 +564,7 @@ export default class AccountsPassword implements AuthenticationService {
     }
 
     //Do not send an email if the address is already verified
-    if (user.email_verified)
-      return
+    if (user.email_verified) return;
 
     const code = generateRandomCode();
     const token = generateRandomToken();
@@ -526,9 +574,9 @@ export default class AccountsPassword implements AuthenticationService {
       address,
       code,
       this.server.sanitizeUser(user),
-      getPathFragmentPrefix() + 'verify-email',
+      getPathFragmentPrefix() + "verify-email",
       this.server.options.emailTemplates.verifyEmail,
-      this.server.options.emailTemplates.from
+      this.server.options.emailTemplates.from,
     );
 
     await this.server.options.sendMail(resetPasswordMail);
@@ -555,15 +603,15 @@ export default class AccountsPassword implements AuthenticationService {
       throw new Error(this.options.errors.userNotFound);
     }
     const token = generateRandomToken();
-    await this.db.addResetPasswordToken(user.id, address, token, 'reset');
+    await this.db.addResetPasswordToken(user.id, address, token, "reset");
 
     const resetPasswordMail = this.server.prepareMail(
       address,
       token,
       this.server.sanitizeUser(user),
-      getPathFragmentPrefix() + 'reset-password',
+      getPathFragmentPrefix() + "reset-password",
       this.server.options.emailTemplates.resetPassword,
-      this.server.options.emailTemplates.from
+      this.server.options.emailTemplates.from,
     );
 
     await this.server.options.sendMail(resetPasswordMail);
@@ -587,15 +635,15 @@ export default class AccountsPassword implements AuthenticationService {
       throw new Error(this.options.errors.userNotFound);
     }
     const token = generateRandomToken();
-    await this.db.addResetPasswordToken(user.id, address, token, 'enroll');
+    await this.db.addResetPasswordToken(user.id, address, token, "enroll");
 
     const enrollmentMail = this.server.prepareMail(
       address,
       token,
       this.server.sanitizeUser(user),
-      getPathFragmentPrefix() + 'enroll-account',
+      getPathFragmentPrefix() + "enroll-account",
       this.server.options.emailTemplates.enrollAccount,
-      this.server.options.emailTemplates.from
+      this.server.options.emailTemplates.from,
     );
 
     await this.server.options.sendMail(enrollmentMail);
@@ -631,7 +679,7 @@ export default class AccountsPassword implements AuthenticationService {
       throw new Error(this.options.errors.emailAlreadyExists);
     }
 
-    if(!user.password && !user.verifyCode){
+    if (!user.password && !user.verifyCode) {
       throw new Error(this.options.errors.invalidVerifyParam);
     }
 
@@ -640,7 +688,7 @@ export default class AccountsPassword implements AuthenticationService {
         throw new Error(this.options.errors.invalidPassword);
       }
       // user.password = await this.hashAndBcryptPassword(user.password);
-      user.password = await await bcryptPassword((user.password as any));
+      user.password = await await bcryptPassword(user.password as any);
     }
 
     if (user.verifyCode) {
@@ -649,12 +697,10 @@ export default class AccountsPassword implements AuthenticationService {
         throw new Error(this.options.errors.invalidVerifyCode);
       }
       delete user.verifyCode;
-      if (user.email)
-        user.email_verified = true
-      if (user.mobile)
-        user.mobile_verified = true
+      if (user.email) user.email_verified = true;
+      if (user.mobile) user.mobile_verified = true;
     }
-    
+
     // // If user does not provide the validate function only allow some fields
     // user = this.options.validateNewUser
     //   ? await this.options.validateNewUser(user)
@@ -669,7 +715,11 @@ export default class AccountsPassword implements AuthenticationService {
     try {
       const userId = await this.db.createUser(user);
       defer(async () => {
-        if (this.options.sendVerificationEmailAfterSignup && user.email && !user.email_verified)
+        if (
+          this.options.sendVerificationEmailAfterSignup &&
+          user.email &&
+          !user.email_verified
+        )
           this.sendVerificationEmail(user.email);
 
         const userRecord = (await this.db.findUserById(userId)) as User;
@@ -687,14 +737,15 @@ export default class AccountsPassword implements AuthenticationService {
     return Number(tokenRecord.when) + expiryDate < Date.now();
   }
 
-  public async verifyUserPasswordByEmail(email, password){
-    return await this.passwordAuthenticator({email: email}, password);
+  public async verifyUserPasswordByEmail(email, password) {
+    return await this.passwordAuthenticator({ email: email }, password);
   }
 
-  public async foundUser(user: string | LoginUserIdentity,){
-    const { username, email, id, mobile } = typeof user == 'string'
-    ? this.toMobileAndEmail({ user })
-    : this.toMobileAndEmail({ ...user });
+  public async foundUser(user: string | LoginUserIdentity) {
+    const { username, email, id, mobile } =
+      typeof user == "string"
+        ? this.toMobileAndEmail({ user })
+        : this.toMobileAndEmail({ ...user });
 
     let foundUser: any | null = null;
 
@@ -717,11 +768,12 @@ export default class AccountsPassword implements AuthenticationService {
   public async passwordAuthenticator(
     user: string | LoginUserIdentity,
     password: PasswordType,
-    isHashPassword = true
+    isHashPassword = true,
   ): Promise<User> {
-    const { username, email, id, mobile } = typeof user == 'string'
-      ? this.toMobileAndEmail({ user })
-      : this.toMobileAndEmail({ ...user });
+    const { username, email, id, mobile } =
+      typeof user == "string"
+        ? this.toMobileAndEmail({ user })
+        : this.toMobileAndEmail({ ...user });
 
     let foundUser: any | null = null;
 
@@ -743,7 +795,7 @@ export default class AccountsPassword implements AuthenticationService {
       throw new Error(
         this.server.options.ambiguousErrorMessages
           ? this.options.errors.invalidCredentials
-          : this.options.errors.userNotFound
+          : this.options.errors.userNotFound,
       );
     }
 
@@ -752,76 +804,94 @@ export default class AccountsPassword implements AuthenticationService {
       throw new Error(this.options.errors.noPasswordSet);
     }
     const saas = getSteedosConfig().tenant.saas;
-    if(!saas){
+    if (!saas) {
       const locked = foundUser.lockout;
       const login_failed_lockout_time = foundUser.login_failed_lockout_time;
-      if(locked){
-        if(!login_failed_lockout_time){
-          throw new Error('账户已锁定，请联系管理员');
-        }else{
-          if(moment(login_failed_lockout_time).isAfter(new Date())){
-            throw new Error('账户已锁定，请联系管理员');
+      if (locked) {
+        if (!login_failed_lockout_time) {
+          throw new Error("账户已锁定，请联系管理员");
+        } else {
+          if (moment(login_failed_lockout_time).isAfter(new Date())) {
+            throw new Error("账户已锁定，请联系管理员");
           }
         }
       }
     }
     const hashAlgorithm = this.options.passwordHashAlgorithm;
     let pass = null;
-    if(isHashPassword){
+    if (isHashPassword) {
       pass = password;
-    }else{
+    } else {
       pass = hashAlgorithm ? hashPassword(password, hashAlgorithm) : password;
     }
     const isPasswordValid = await verifyPassword(pass, hash);
 
     if (!isPasswordValid) {
-      if(!saas){
+      if (!saas) {
         const userProfile = await this.getUserProfile(foundUser.id);
         const login_failed_lockout_time = foundUser.login_failed_lockout_time;
         // 重置密码错误次数
-        if(userProfile.lockout_interval !=0 && moment(login_failed_lockout_time).isBefore(new Date())){
-          await this.db.updateUser(foundUser.id, {$set: {login_failed_number: 1}});
-        }else{
-          await this.db.updateUser(foundUser.id, {$inc: {login_failed_number: 1}});
+        if (
+          userProfile.lockout_interval != 0 &&
+          moment(login_failed_lockout_time).isBefore(new Date())
+        ) {
+          await this.db.updateUser(foundUser.id, {
+            $set: { login_failed_number: 1 },
+          });
+        } else {
+          await this.db.updateUser(foundUser.id, {
+            $inc: { login_failed_number: 1 },
+          });
         }
 
         const user: any = await this.db.findUserById(foundUser.id);
-        if(user.login_failed_number >= userProfile.max_login_attempts){
+        if (user.login_failed_number >= userProfile.max_login_attempts) {
           let lockout_interval = userProfile.lockout_interval;
           let login_failed_lockout_time = null;
-          if(lockout_interval === 0){
+          if (lockout_interval === 0) {
             login_failed_lockout_time = null;
-          }else{
-            login_failed_lockout_time = new Date(moment().add(userProfile.lockout_interval, 'm'))
+          } else {
+            login_failed_lockout_time = new Date(
+              moment().add(userProfile.lockout_interval, "m"),
+            );
           }
-          await this.db.updateUser(foundUser.id, {$set: {lockout: true, login_failed_lockout_time: login_failed_lockout_time}});
+          await this.db.updateUser(foundUser.id, {
+            $set: {
+              lockout: true,
+              login_failed_lockout_time: login_failed_lockout_time,
+            },
+          });
         }
       }
       throw new Error(
         this.server.options.ambiguousErrorMessages
           ? this.options.errors.invalidCredentials
-          : this.options.errors.incorrectPassword
+          : this.options.errors.incorrectPassword,
       );
-    }else{
-      await this.db.updateUser(foundUser.id, {$set: {lockout: false, login_failed_number: 0}, $unset: {login_failed_lockout_time: 1}});
+    } else {
+      await this.db.updateUser(foundUser.id, {
+        $set: { lockout: false, login_failed_number: 0 },
+        $unset: { login_failed_lockout_time: 1 },
+      });
     }
 
     return foundUser;
   }
 
-  private async codeAuthenticator(
-    user, token, locale
-  ): Promise<User> {
+  private async codeAuthenticator(user, token, locale): Promise<User> {
     const { username, email, mobile, id } = isString(user)
       ? this.toMobileAndEmail({ user })
       : this.toMobileAndEmail({ ...user });
-    
-    let foundUser = await this.db.findUserByVerificationCode({email: email, mobile: mobile}, token);
+
+    let foundUser = await this.db.findUserByVerificationCode(
+      { email: email, mobile: mobile },
+      token,
+    );
     if (!foundUser) {
       throw new Error(
         this.server.options.ambiguousErrorMessages
           ? this.options.errors.invalidCode
-          : this.options.errors.userNotFound
+          : this.options.errors.userNotFound,
       );
     }
     return foundUser;
@@ -829,7 +899,9 @@ export default class AccountsPassword implements AuthenticationService {
 
   private async hashAndBcryptPassword(password: PasswordType): Promise<string> {
     const hashAlgorithm = this.options.passwordHashAlgorithm;
-    const hashedPassword: any = hashAlgorithm ? hashPassword(password, hashAlgorithm) : password;
+    const hashedPassword: any = hashAlgorithm
+      ? hashPassword(password, hashAlgorithm)
+      : password;
     return bcryptPassword(hashedPassword);
   }
 
@@ -850,7 +922,6 @@ export default class AccountsPassword implements AuthenticationService {
     return { username, email, mobile, id };
   }
 
-
   /**
    * @description Send an email with a link the user can use verify their email address.
    * @param {string} [address] - Which address of the user's to send the email to.
@@ -860,31 +931,34 @@ export default class AccountsPassword implements AuthenticationService {
    * @returns {Promise<void>} - Return a Promise.
    */
   public async sendVerificationCode(user: any): Promise<void> {
-
-
     const code = generateRandomCode();
 
     if (user.email) {
-      const result: any = await this.db.addVerificationCode(user, code, {MAX_FAILURE_COUNT, EFFECTIVE_TIME});
+      const result: any = await this.db.addVerificationCode(user, code, {
+        MAX_FAILURE_COUNT,
+        EFFECTIVE_TIME,
+      });
       const verificationCodeMail = this.server.prepareMail(
         user.email,
         result.code,
         null,
-        getPathFragmentPrefix() + 'verify-email',
+        getPathFragmentPrefix() + "verify-email",
         this.server.options.emailTemplates.verificationCode,
-        this.server.options.emailTemplates.from
+        this.server.options.emailTemplates.from,
       );
       await this.server.options.sendMail(verificationCodeMail);
-      return result.owner
+      return result.owner;
     } else if (user.mobile) {
-      const result: any = await this.db.addVerificationCode(user, code, {MAX_FAILURE_COUNT, EFFECTIVE_TIME});
+      const result: any = await this.db.addVerificationCode(user, code, {
+        MAX_FAILURE_COUNT,
+        EFFECTIVE_TIME,
+      });
       const sms = {
         mobile: user.mobile,
-        message: `您的验证码为：${result.code}，该验证码${EFFECTIVE_TIME}分钟内有效，请勿泄漏于他人！`
-      }
+        message: `您的验证码为：${result.code}，该验证码${EFFECTIVE_TIME}分钟内有效，请勿泄漏于他人！`,
+      };
       await this.server.options.sendSMS(sms);
-      return result.owner
+      return result.owner;
     }
-
   }
 }

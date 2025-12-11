@@ -23,9 +23,6 @@
     "pubNext": "npm publish --tag next --registry https://registry.npmjs.org"
   },
   "dependencies": {
-    "@accounts/mongo": "^0.19.0",
-    "@accounts/server": "^0.19.0",
-    "@accounts/two-factor": "^0.20.1",
     "@accounts/types": "0.20.1",
     "@babel/runtime": "^7.12.18",
     "@steedos/auth": "3.0.4-beta.2",

@@ -27,18 +27,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@accounts/mongo@npm:^0.19.0":
-  version: 0.19.0
-  resolution: "@accounts/mongo@npm:0.19.0"
-  dependencies:
-    "@accounts/types": ^0.19.0
-    lodash: ^4.17.15
-    mongodb: ^3.3.1
-    tslib: 1.10.0
-  checksum: 38808cf46c4366d23a560f8be448af1175b00d9442da4abc3adb15db16e11d95e67422ef180a75af4986131626deefbf7da0e6c0438961264ca047099ffdfcba
-  languageName: node
-  linkType: hard
-
 "@accounts/rest-client@npm:^0.19.0":
   version: 0.19.0
   resolution: "@accounts/rest-client@npm:0.19.0"
@@ -52,36 +40,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@accounts/server@npm:^0.19.0":
-  version: 0.19.0
-  resolution: "@accounts/server@npm:0.19.0"
-  dependencies:
-    "@accounts/types": ^0.19.0
-    "@types/jsonwebtoken": 8.3.3
-    emittery: 0.4.1
-    jsonwebtoken: 8.5.1
-    jwt-decode: 2.2.0
-    lodash: 4.17.15
-    tslib: 1.10.0
-  checksum: 9601366bb14e354c0f63681b2837b5151040a11f8e31d92bbeb38320b529df7e6265c33cedcd6b96bb9ee3eb3891bbda71fee2ffbbf628e833a1fa5ba8217f57
-  languageName: node
-  linkType: hard
-
-"@accounts/two-factor@npm:^0.20.1":
-  version: 0.20.1
-  resolution: "@accounts/two-factor@npm:0.20.1"
-  dependencies:
-    "@accounts/types": ^0.20.1
-    "@types/lodash": ^4.14.138
-    "@types/speakeasy": 2.0.2
-    lodash: ^4.17.15
-    speakeasy: ^2.0.0
-    tslib: 1.10.0
-  checksum: 01a842a184a621669326dc9147cc9211f732116833fb026b11d15c2f41065a3057d9196d0f09c4244a1e7ef28f2ccac4f596afcb1fee17048e83514e6be1751e
-  languageName: node
-  linkType: hard
-
-"@accounts/types@npm:0.20.1, @accounts/types@npm:^0.20.1":
+"@accounts/types@npm:0.20.1":
   version: 0.20.1
   resolution: "@accounts/types@npm:0.20.1"
   dependencies:
@@ -9762,9 +9721,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@steedos/accounts@workspace:packages/accounts"
   dependencies:
-    "@accounts/mongo": ^0.19.0
-    "@accounts/server": ^0.19.0
-    "@accounts/two-factor": ^0.20.1
     "@accounts/types": 0.20.1
     "@babel/runtime": ^7.12.18
     "@steedos/auth": 3.0.4-beta.2
@@ -11770,15 +11726,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jsonwebtoken@npm:8.3.3":
-  version: 8.3.3
-  resolution: "@types/jsonwebtoken@npm:8.3.3"
-  dependencies:
-    "@types/node": "*"
-  checksum: e7f62cbe69ea6939d62f51851c0ae8494e87648fd0fce8aceb6c89b114241daa1e2725ff335939e5206f939729b7a37025f98df5795a9fa1565b171ba6b12281
-  languageName: node
-  linkType: hard
-
 "@types/jsonwebtoken@npm:9.0.10":
   version: 9.0.10
   resolution: "@types/jsonwebtoken@npm:9.0.10"
@@ -11830,7 +11777,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash@npm:*, @types/lodash@npm:^4.14.138":
+"@types/lodash@npm:*":
   version: 4.17.21
   resolution: "@types/lodash@npm:4.17.21"
   checksum: e09e3eaf29b18b6c8e130fcbafd8e3c4ecc2110f35255079245e7d1bd310a5a8f93e4e70266533dce672f253bba899c721bc6870097e0a8c5448e0b628136d39
@@ -12288,13 +12235,6 @@ __metadata:
   version: 0.1.6
   resolution: "@types/source-list-map@npm:0.1.6"
   checksum: 9cd294c121f1562062de5d241fe4d10780b1131b01c57434845fe50968e9dcf67ede444591c2b1ad6d3f9b6bc646ac02cc8f51a3577c795f9c64cf4573dcc6b1
-  languageName: node
-  linkType: hard
-
-"@types/speakeasy@npm:2.0.2":
-  version: 2.0.2
-  resolution: "@types/speakeasy@npm:2.0.2"
-  checksum: 0e921f07235f65cec4efa94dc0cac7c0229f2bebb48d931bb542497d556107f9c5e7c84425f403af2b046c058270e7b045a21e0f27bdc7b59d4b7b349dd248f8
   languageName: node
   linkType: hard
 
@@ -14861,13 +14801,6 @@ __metadata:
     bare-abort-controller:
       optional: true
   checksum: 97e6fc825bc984363a1f695c9a962b1b9f0ea467baa95d7059565a0aa31f4b5fc0f5eb71c087456ae3a436f39fce14a6147a12dd63aac0ff1d20cc5ad64cd780
-  languageName: node
-  linkType: hard
-
-"base32.js@npm:0.0.1":
-  version: 0.0.1
-  resolution: "base32.js@npm:0.0.1"
-  checksum: 74e520ca832b034c43c0996f52ffa29792fa2f2bb2b75fc8415fb6cd42194a486cac8a68531d73e401ae836194093e2746f7c4325e860ff0a6de8d05a54af132
   languageName: node
   linkType: hard
 
@@ -19828,13 +19761,6 @@ __metadata:
   version: 0.11.0
   resolution: "emittery@npm:0.11.0"
   checksum: fba43607e6184a9e318541c1613b742e4d4753bab4fd27f17b93127172f62aa34da8096c78c290dd1a65f12a63abe5ae6765a1d555194d60e5f42eed8548c23d
-  languageName: node
-  linkType: hard
-
-"emittery@npm:0.4.1":
-  version: 0.4.1
-  resolution: "emittery@npm:0.4.1"
-  checksum: dcd9f3dec59182583c2e4fd3dac642196811286d943e3d279e2bf8d3ee7b6dcc936cfc744224a543d7dd75176a8251d66a6d27bd13ce6acda3cca7b6e8bf29e0
   languageName: node
   linkType: hard
 
@@ -27875,24 +27801,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsonwebtoken@npm:8.5.1":
-  version: 8.5.1
-  resolution: "jsonwebtoken@npm:8.5.1"
-  dependencies:
-    jws: ^3.2.2
-    lodash.includes: ^4.3.0
-    lodash.isboolean: ^3.0.3
-    lodash.isinteger: ^4.0.4
-    lodash.isnumber: ^3.0.3
-    lodash.isplainobject: ^4.0.6
-    lodash.isstring: ^4.0.1
-    lodash.once: ^4.0.0
-    ms: ^2.1.1
-    semver: ^5.6.0
-  checksum: 93c9e3f23c59b758ac88ba15f4e4753b3749dfce7a6f7c40fb86663128a1e282db085eec852d4e0cbca4cefdcd3a8275ee255dbd08fcad0df26ad9f6e4cc853a
-  languageName: node
-  linkType: hard
-
 "jsonwebtoken@npm:9.0.1":
   version: 9.0.1
   resolution: "jsonwebtoken@npm:9.0.1"
@@ -29388,13 +29296,6 @@ __metadata:
   version: 4.3.1
   resolution: "lodash.upperfirst@npm:4.3.1"
   checksum: cadec6955900afe1928cc60cdc4923a79c2ef991e42665419cc81630ed9b4f952a1093b222e0141ab31cbc4dba549f97ec28ff67929d71e01861c97188a5fa83
-  languageName: node
-  linkType: hard
-
-"lodash@npm:4.17.15":
-  version: 4.17.15
-  resolution: "lodash@npm:4.17.15"
-  checksum: bb689bc88c0645b7002a045cdbe32292ae51d5d2a6f6a5272cb5a5ace9b06700bb3d30c6be6ecfae9a70f9c943f60e90765033fc7ff706cf9219374eeda314ad
   languageName: node
   linkType: hard
 
@@ -31412,7 +31313,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mongodb@npm:^3.3.1, mongodb@npm:^3.7.3, mongodb@npm:^3.7.4":
+"mongodb@npm:^3.7.3, mongodb@npm:^3.7.4":
   version: 3.7.4
   resolution: "mongodb@npm:3.7.4"
   dependencies:
@@ -40594,15 +40495,6 @@ __metadata:
     select-hose: ^2.0.0
     spdy-transport: ^3.0.0
   checksum: 2c739d0ff6f56ad36d2d754d0261d5ec358457bea7cbf77b1b05b0c6464f2ce65b85f196305f50b7bd9120723eb94bae9933466f28e67e5cd8cde4e27f1d75f8
-  languageName: node
-  linkType: hard
-
-"speakeasy@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "speakeasy@npm:2.0.0"
-  dependencies:
-    base32.js: 0.0.1
-  checksum: 2a44aa4336cd39a0dcdc051c7adcd3fc76fdba239dc1ded50052164c9d80d773183827934a62850a5fb7a7a19f13bf5561ec88bd23777c6d228c4aaa175bea1a
   languageName: node
   linkType: hard
 
