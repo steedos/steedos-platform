@@ -47,7 +47,7 @@
     "node-fetch": "3",
     "path": "^0.12.7",
     "reflect-metadata": "^0.2.0",
-    "sequelize": "6.37.7",
+    "sequelize": "^6.37.7",
     "tslib": "^2.4.0",
     "typeorm": "0.3.26",
     "underscore": "^1.13.7",

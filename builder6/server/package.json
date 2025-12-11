@@ -62,7 +62,7 @@
     "@types/multer": "^1.4.12",
     "aws-sdk": "^2.1692.0",
     "axios": "^1.13.2",
-    "class-validator": "^0.14.1",
+    "class-validator": "^0.14.3",
     "compression": "^1.7.5",
     "connect-redis": "8.0.2",
     "cookie-parser": "^1.4.7",
