@@ -1,6 +1,6 @@
 {
     "name": "@steedos/standard-accounts",
-    "version": "3.0.4-beta.3",
+    "version": "3.0.4-beta.4",
     "main": "package.service.js",
     "publishConfig": {
         "access": "public"
@@ -11,5 +11,5 @@
     "description": "steedos package",
     "repository": {},
     "license": "MIT",
-    "gitHead": "196040f2f6f8ebd851c1bf108151b6d52609e62e"
+    "gitHead": "7d70c1a7edd59204b3413bbcfd462a17e6c34faf"
 }
