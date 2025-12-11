@@ -62,7 +62,7 @@ if (isEmpty(process.env.STEEDOS_AMIS_URL)) {
 process.env.STEEDOS_AMIS_URL = process.env.STEEDOS_AMIS_URL.replace(/\/+$/, "");
 
 if (isEmpty(process.env.STEEDOS_WIDGETS_VERSION)) {
-  process.env.STEEDOS_WIDGETS_VERSION = "6.10.34-beta.3";
+  process.env.STEEDOS_WIDGETS_VERSION = "6.10.34-beta.4";
 }
 
 if (isEmpty(process.env.STEEDOS_WIDGETS_ADDITIONAL)) {
