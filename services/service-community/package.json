@@ -72,7 +72,7 @@
     "redlock": "^4.2.0",
     "steedos-cli": "3.0.4-beta.2",
     "tslib": "^2.4.0",
-    "validator": "^13.6.0"
+    "validator": "^13.15.23"
   },
   "homepage": "https://www.steedos.com",
   "publishConfig": {

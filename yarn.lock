@@ -9793,7 +9793,7 @@ __metadata:
     string-random: ^0.1.3
     tslib: ^2.4.0
     url-join: ^4.0.1
-    validator: ^13.6.0
+    validator: ^13.15.23
   languageName: unknown
   linkType: soft
 
@@ -10157,7 +10157,7 @@ __metadata:
     typeorm: 0.3.26
     typescript: 5.7.3
     underscore: ^1.13.7
-    vm2: ^3.9.17
+    vm2: ^3.9.19
   languageName: unknown
   linkType: soft
 
@@ -10348,7 +10348,7 @@ __metadata:
     moleculer: ^0.14.35
     moleculer-web: ^0.11.0-beta3
     react-dev-utils: 12.0.1
-    validator: ^13.6.0
+    validator: ^13.15.23
   languageName: unknown
   linkType: soft
 
@@ -10440,7 +10440,7 @@ __metadata:
     redlock: ^4.2.0
     steedos-cli: 3.0.4-beta.2
     tslib: ^2.4.0
-    validator: ^13.6.0
+    validator: ^13.15.23
   languageName: unknown
   linkType: soft
 
@@ -10715,7 +10715,7 @@ __metadata:
     npm-registry-fetch: ^19.1.1
     package-json: ^7.0.0
     radwag-mass: ~1.0.5
-    validator: ^13.5.2
+    validator: ^13.15.23
   languageName: unknown
   linkType: soft
 
@@ -40837,7 +40837,7 @@ __metadata:
     rimraf: 3.0.2
     ts-node: 10.9.2
     underscore: ^1.13.7
-    validator: ^13.5.2
+    validator: ^13.15.23
     yargs: ^13.2.1
     yn: ^2.0.0
   bin:
@@ -43992,7 +43992,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"validator@npm:^13.15.20, validator@npm:^13.5.2, validator@npm:^13.6.0, validator@npm:^13.9.0":
+"validator@npm:^13.15.20, validator@npm:^13.15.23, validator@npm:^13.9.0":
   version: 13.15.23
   resolution: "validator@npm:13.15.23"
   checksum: 7ac57d4c56de04cd831c997f2e06ded4862a4cf8541ac982c7d2a6a6aa10b833af20b64f1b0c6a92bae21698db44b1044f32eb2f2ce50823138ab95d4c4886e9
@@ -44164,7 +44164,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vm2@npm:^3.9.17":
+"vm2@npm:^3.9.19":
   version: 3.10.0
   resolution: "vm2@npm:3.10.0"
   dependencies:

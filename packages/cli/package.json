@@ -57,7 +57,7 @@
     "rimraf": "3.0.2",
     "ts-node": "10.9.2",
     "underscore": "^1.13.7",
-    "validator": "^13.5.2",
+    "validator": "^13.15.23",
     "yargs": "^13.2.1",
     "yn": "^2.0.0"
   },
