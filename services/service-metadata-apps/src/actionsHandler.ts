@@ -426,6 +426,8 @@ async function transformAppToMenus(ctx, app, mobile, userSession, context) {
     path: appPath,
     name: `${app.label || app.name}`,
     icon: app.icon_slds,
+    color: app.color,
+    dark: app.dark,
     showSidebar: app.showSidebar,
     description: app.description,
     children: [],

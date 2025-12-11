@@ -208,6 +208,12 @@ export const AppHeader = () => {
                         if (window.innerWidth >= 768) {
                             document.body.classList.add('sidebar-open')
                         }
+
+                        if (appData.dark) {
+                            document.body.classList.add('dark');
+                        } else {
+                            document.body.classList.remove('dark');
+                        }
                     }
                 }catch(err){
                     console.error('Failed to fetch app data:', err);

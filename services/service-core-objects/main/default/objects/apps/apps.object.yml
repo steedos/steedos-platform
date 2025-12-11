@@ -48,6 +48,18 @@ fields:
     type: number
     defaultValue: 9100
     sortable: true
+  color:
+    label: Color
+    type: color
+    defaultValue: '#0c4a6e'
+    amis:
+      mode: horizontal
+      name: fawsdb
+      format: hex
+  dark:
+    label: Dark Mode
+    type: boolean
+    defaultValue: false
   description:
     label: Description
     type: textarea
