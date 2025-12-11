@@ -1,6 +1,6 @@
 {
   "name": "@steedos/server",
-  "version": "3.0.4-beta.2",
+  "version": "3.0.4-beta.3",
   "description": "",
   "author": "",
   "license": "AGPL-3.0-only",
@@ -53,12 +53,12 @@
     "@nestjs/serve-static": "^5.0.0",
     "@nestjs/swagger": "^11.1.9",
     "@nestjs/websockets": "^11.1.9",
-    "@steedos/ai": "3.0.4-beta.2",
-    "@steedos/auth": "3.0.4-beta.2",
-    "@steedos/objectql": "3.0.4-beta.2",
-    "@steedos/service-community": "3.0.4-beta.2",
-    "@steedos/service-enterprise": "3.0.4-beta.2",
-    "@steedos/webapp": "3.0.4-beta.2",
+    "@steedos/ai": "3.0.4-beta.3",
+    "@steedos/auth": "3.0.4-beta.3",
+    "@steedos/objectql": "3.0.4-beta.3",
+    "@steedos/service-community": "3.0.4-beta.3",
+    "@steedos/service-enterprise": "3.0.4-beta.3",
+    "@steedos/webapp": "3.0.4-beta.3",
     "@types/multer": "^1.4.12",
     "aws-sdk": "^2.1692.0",
     "axios": "^1.13.2",
@@ -138,5 +138,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "4e3a235078fdb5a531de35dbc45c549c56c61715"
+  "gitHead": "196040f2f6f8ebd851c1bf108151b6d52609e62e"
 }
