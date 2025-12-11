@@ -7,7 +7,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@steedos/ee_unpkg": "3.0.0"
+    "@steedos/ee_unpkg": "^3.0.1"
   },
   "gitHead": "196040f2f6f8ebd851c1bf108151b6d52609e62e"
 }

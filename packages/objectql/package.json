@@ -44,7 +44,7 @@
     "moment": "^2.29.1",
     "mongodb": "^3.7.3",
     "mongodb-uri": "^0.9.7",
-    "node-fetch": "3",
+    "node-fetch": "^3.2.10",
     "path": "^0.12.7",
     "reflect-metadata": "^0.2.0",
     "sequelize": "^6.37.7",
