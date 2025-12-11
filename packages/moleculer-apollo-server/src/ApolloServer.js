@@ -1,19 +1,17 @@
 "use strict";
 
 const { ApolloServerBase } = require("apollo-server-core");
-const { processRequest } = require("graphql-upload");
 const accept = require("@hapi/accept");
 const moleculerApollo = require("./moleculerApollo");
 
-// --- 新增：本地定义的 Playground 渲染函数 ---
-// 这替代了已废弃的 @apollographql/graphql-playground-html 包
+// ... [Keep your renderPlaygroundPage function exactly as is] ...
 function renderPlaygroundPage({ endpoint, subscriptionEndpoint, ...options }) {
   const settings = JSON.stringify({
     endpoint,
     subscriptionEndpoint,
     ...options,
   });
-	const unpkgUrl = process.env.STEEDOS_UNPKG_URL || "https://unpkg.com";
+  const unpkgUrl = process.env.STEEDOS_UNPKG_URL || "https://unpkg.com";
 
   return `
     <!DOCTYPE html>
@@ -49,8 +47,8 @@ function renderPlaygroundPage({ endpoint, subscriptionEndpoint, ...options }) {
     </html>
   `;
 }
-// ------------------------------------------
 
+// ... [Keep your send function as is] ...
 async function send(req, res, statusCode, data, responseType = "application/json") {
   res.statusCode = statusCode;
 
@@ -69,38 +67,66 @@ async function send(req, res, statusCode, data, responseType = "application/json
 }
 
 class ApolloServer extends ApolloServerBase {
-  // Extract Apollo Server options from the request.
+  // --- ADDED: Constructor to handle playground options manually ---
+  constructor(config) {
+    super(config);
+    // Apollo Server v3 removes the playground option from the instance.
+    // We must manually capture it.
+    // We default to {} (enabled) if it is not explicitly set to false.
+    this.playgroundOptions = config.playground !== false ? (config.playground || {}) : false;
+    
+    // Also capture uploads config manually if needed, though v3 usually preserves it in other ways,
+    // it's safer to ensure it exists for your handler logic below.
+    this.uploadsConfig = config.uploads !== false ? (config.uploads || {}) : false;
+  }
+  // ---------------------------------------------------------------
+
   createGraphQLServerOptions(req, res) {
     return super.graphQLServerOptions({ req, res });
   }
 
-  // Prepares and returns an async function that can be used to handle
-  // GraphQL requests.
   createHandler({ path, disableHealthCheck, onHealthCheck } = {}) {
-    const promiseWillStart = this.willStart();
+    // FIX: Support Apollo Server v3 (.start) and v2 (.willStart)
+    let promiseWillStart;
+    if (typeof this.start === 'function') {
+      promiseWillStart = this.start();
+    } else if (typeof this.willStart === 'function') {
+      promiseWillStart = this.willStart();
+    } else {
+      promiseWillStart = Promise.resolve();
+    }
 
     return async (req, res) => {
       this.graphqlPath = path || "/graphql";
 
       await promiseWillStart;
 
-      // If file uploads are detected, prepare them for easier handling with
-      // the help of `graphql-upload`.
+      // Handle File Uploads (graphql-upload v17)
       if (this.uploadsConfig) {
         const contentType = req.headers["content-type"];
         if (contentType && contentType.startsWith("multipart/form-data")) {
-          req.filePayload = await processRequest(req, res, this.uploadsConfig);
+            try {
+                const { processRequest } = await import("graphql-upload/processRequest.mjs");
+                // Note: processRequest no longer takes options in v17, 
+                // but we pass this.uploadsConfig just in case you wrap/shim it, 
+                // typically it just takes (req, res).
+                // If you need to configure limits, you usually do it via middleware before this 
+                // or ensure processRequest respects the limits you want.
+                req.filePayload = await processRequest(req, res, this.uploadsConfig);
+            } catch (error) {
+                if (error.status && error.expose) {
+                    return send(req, res, error.status, error.message);
+                }
+                return send(req, res, 500, "File upload processing failed.");
+            }
         }
       }
 
-      // If health checking is enabled, trigger the `onHealthCheck`
-      // function when the health check URL is requested.
       if (!disableHealthCheck && req.url === "/.well-known/apollo/server-health")
         return await this.handleHealthCheck({ req, res, onHealthCheck });
 
-      // If the `playgroundOptions` are set, register a `graphql-playground` instance
-      // (not available in production) that is then used to handle all
-      // incoming GraphQL requests.
+      // Handle Playground (GET requests requiring HTML)
+      // This will now work because this.playgroundOptions is set in the constructor
       if (this.playgroundOptions && req.method === "GET") {
         const { mediaTypes } = accept.parseAll(req.headers);
         const prefersHTML =
@@ -115,7 +141,6 @@ class ApolloServer extends ApolloServerBase {
             },
             this.playgroundOptions
           );
-          // 这里直接调用上面定义的本地函数
           return send(
             req,
             res,
@@ -126,19 +151,16 @@ class ApolloServer extends ApolloServerBase {
         }
       }
 
-      // Handle incoming GraphQL requests using Apollo Server.
       const graphqlHandler = moleculerApollo(() => this.createGraphQLServerOptions(req, res));
       const responseData = await graphqlHandler(req, res);
       return send(req, res, 200, responseData);
     };
   }
 
-  // This integration supports file uploads.
   supportsUploads() {
     return true;
   }
 
-  // This integration supports subscriptions.
   supportsSubscriptions() {
     return true;
   }

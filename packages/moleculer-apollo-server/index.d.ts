@@ -17,7 +17,6 @@ declare module "moleculer-apollo-server" {
 		defaultPlaygroundOptions,
 	} from "apollo-server-core";
 
-	export { GraphQLUpload } from "graphql-upload";
 
 	export * from "graphql-tools";
 
