@@ -1,6 +1,6 @@
 {
   "name": "@steedos/accounts",
-  "version": "3.0.4-beta.6",
+  "version": "3.0.4-beta.7",
   "main": "lib/index.js",
   "files": [
     "/package.json",
@@ -25,9 +25,9 @@
   "dependencies": {
     "@accounts/types": "0.20.1",
     "@babel/runtime": "^7.12.18",
-    "@steedos/auth": "3.0.4-beta.6",
-    "@steedos/objectql": "3.0.4-beta.6",
-    "@steedos/utils": "3.0.4-beta.6",
+    "@steedos/auth": "3.0.4-beta.7",
+    "@steedos/objectql": "3.0.4-beta.7",
+    "@steedos/utils": "3.0.4-beta.7",
     "app-root-path": "^2.2.1",
     "bcryptjs": "^3.0.3",
     "body-parser": "^2.2.1",
@@ -56,5 +56,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "52eef6f846d05f8762c7d885f58cc110ab2feda2"
+  "gitHead": "48b2cda08bacb32bb1d096fae5ad63c192dacefb"
 }
