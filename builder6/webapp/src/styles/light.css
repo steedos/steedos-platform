@@ -118,15 +118,16 @@ a {
 
 .steedos-header-container {
     background-color: var(--color-white);
-    color: var(--color-gray-700);
-    --steedos-logo-color-default: var(--color-gray-500);
+    color: var(--color-gray-900);
+    border-bottom: 1px solid var(--color-gray-200);
+    --steedos-logo-color-default: var(--color-gray-600);
     .slds-icon-text-default {
-        --slds-c-icon-color-foreground: var(--color-gray-500);
+        --slds-c-icon-color-foreground: var(--color-gray-600);
     }
     .slds-button_icon {
-        --slds-g-color-neutral-base-50: var(--color-gray-500);
+        --slds-g-color-neutral-base-50: var(--color-gray-600);
     }
     .lb-inbox-button {
-        color: var(--color-gray-500);
+        color: var(--color-gray-600);
     }
 }

@@ -2,16 +2,17 @@
 .steedos.dark {
     .steedos-header-container {
         background-color: var(--color-brand-900);
-        color: var(--color-gray-100);
-        --steedos-logo-color-default: var(--color-gray-300);
+        color: var(--color-white);
+        border-bottom: none;
+        --steedos-logo-color-default: var(--color-gray-200);
         .slds-icon-text-default {
-            --slds-c-icon-color-foreground: var(--color-gray-300);
+            --slds-c-icon-color-foreground: var(--color-gray-200);
         }
         .slds-button_icon {
-            --slds-g-color-neutral-base-50: var(--color-gray-300);
+            --slds-g-color-neutral-base-50: var(--color-gray-200);
         }
         .lb-inbox-button {
-            color: var(--color-gray-300);
+            color: var(--color-gray-200);
         }
     }
 }

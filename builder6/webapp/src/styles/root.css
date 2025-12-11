@@ -230,3 +230,8 @@
   --color-pink-900: #831843;
   --color-pink-950: #500724;
 }
+
+/* fix amis */
+.bg-white {
+  color: var(--color-gray-800);
+}

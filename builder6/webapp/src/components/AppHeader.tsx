@@ -14,7 +14,7 @@ export const getHeaderSchema = (props) => {
         body: [
             {
                 "type": "wrapper",
-                "className": "sticky p-0 top-0 z-40 w-full flex-none backdrop-blur transition-colors duration-500 lg:z-[1000] steedos-header-container shadow",
+                "className": "sticky p-0 top-0 z-40 w-full flex-none backdrop-blur transition-colors duration-500 lg:z-[1000] steedos-header-container",
                 body: [
                     {
                         "type": "wrapper",
