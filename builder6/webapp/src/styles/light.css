@@ -90,6 +90,10 @@ a {
     color: var(--link-color);
 }
 
+.slds-page-header__icon {
+    background-color: var(--colors-brand-5);
+    color: var(--color-white);
+}
 
 
 /* 修正手机端字体小的问题 */
