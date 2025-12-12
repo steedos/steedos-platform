@@ -4,7 +4,7 @@ import { use } from "i18next";
 import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 
-export const getHeaderSchema = (props) => {
+const getHeaderSchema = (props) => {
     const { logoSrc, customButtons, className } = props
     const isMobile = window.innerWidth <= 768
 
@@ -218,15 +218,22 @@ export const AppHeader = () => {
                         if (appData.color) {
                             document.documentElement.style.setProperty('--colors-brand-main', `var(--color-${appData.color}-600)`);
                             document.documentElement.style.setProperty('--colors-brand-1', `var(--color-${appData.color}-900)`);
-                            document.documentElement.style.setProperty('--colors-brand-2', `var(--color-${appData.color}-800)`);
-                            document.documentElement.style.setProperty('--colors-brand-3', `var(--color-${appData.color}-700)`);
-                            document.documentElement.style.setProperty('--colors-brand-4', `var(--color-${appData.color}-600)`);
-                            document.documentElement.style.setProperty('--colors-brand-5', `var(--color-${appData.color}-500)`);
-                            document.documentElement.style.setProperty('--colors-brand-6', `var(--color-${appData.color}-400)`);
-                            document.documentElement.style.setProperty('--colors-brand-7', `var(--color-${appData.color}-300)`);
-                            document.documentElement.style.setProperty('--colors-brand-8', `var(--color-${appData.color}-200)`);
+                            document.documentElement.style.setProperty('--colors-brand-2', `var(--color-${appData.color}-900)`);
+                            document.documentElement.style.setProperty('--colors-brand-3', `var(--color-${appData.color}-800)`);
+                            document.documentElement.style.setProperty('--colors-brand-4', `var(--color-${appData.color}-700)`);
+                            document.documentElement.style.setProperty('--colors-brand-5', `var(--color-${appData.color}-600)`);
+                            document.documentElement.style.setProperty('--colors-brand-6', `var(--color-${appData.color}-500)`);
+                            document.documentElement.style.setProperty('--colors-brand-7', `var(--color-${appData.color}-400)`);
+                            document.documentElement.style.setProperty('--colors-brand-8', `var(--color-${appData.color}-300)`);
                             document.documentElement.style.setProperty('--colors-brand-9', `var(--color-${appData.color}-100)`);
                             document.documentElement.style.setProperty('--colors-brand-10', `var(--color-${appData.color}-50)`);
+                            document.documentElement.style.setProperty('--colors-other-5', `var(--color-${appData.color}-600)`);
+                            document.documentElement.style.setProperty('--colors-other-6', `var(--color-${appData.color}-500)`);
+                            document.documentElement.style.setProperty('--colors-other-7', `var(--color-${appData.color}-400)`);
+                            document.documentElement.style.setProperty('--colors-link-4', `var(--color-${appData.color}-700)`);
+                            document.documentElement.style.setProperty('--colors-link-5', `var(--color-${appData.color}-600)`);
+                            document.documentElement.style.setProperty('--colors-link-6', `var(--color-${appData.color}-500)`);
+                            document.documentElement.style.setProperty('--colors-link-7', `var(--color-${appData.color}-400)`);
                         }
                     }
                 }catch(err){

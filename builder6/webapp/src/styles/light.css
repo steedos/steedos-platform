@@ -6,6 +6,7 @@
     --body-size: 14px;
     --link-color: var(--colors-brand-4);
     --link-onHover-color: var(--colors-brand-6);
+    --link-onClick-color: var(--colors-brand-5);
     --Page-main-bg: transparent;
     --Form-mode-default-labelGap: 2px;
     --Form-item-fontSize: 12px;
@@ -81,6 +82,8 @@
     --common-popover-border: none;
 
     /* --SearchBox-search-icon-color: var(--color-gray-400); */
+    --Pick-base-value-bgColor: var(--colors-brand-10);
+    --Form-selectValue-onHover-bg: var(--colors-brand-9);
 }
 
 a {
