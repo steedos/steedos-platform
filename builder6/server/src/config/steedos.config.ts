@@ -62,7 +62,7 @@ if (isEmpty(process.env.STEEDOS_AMIS_URL)) {
 process.env.STEEDOS_AMIS_URL = process.env.STEEDOS_AMIS_URL.replace(/\/+$/, "");
 
 if (isEmpty(process.env.STEEDOS_WIDGETS_VERSION)) {
-  process.env.STEEDOS_WIDGETS_VERSION = "6.10.34-beta.8";
+  process.env.STEEDOS_WIDGETS_VERSION = "6.10.34-beta.11";
 }
 
 if (isEmpty(process.env.STEEDOS_WIDGETS_ADDITIONAL)) {
@@ -78,7 +78,7 @@ if (isEmpty(process.env.STEEDOS_WIDGETS_ADDITIONAL)) {
 if (isEmpty(process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS)) {
   const widgetsVersion = process.env.STEEDOS_WIDGETS_VERSION;
   const unpkgUrl = process.env.STEEDOS_UNPKG_URL;
-  let steedosPublicPageAsseturls = `${unpkgUrl}/@steedos-widgets/amis-object@${widgetsVersion}/dist/assets.json`;
+  let steedosPublicPageAsseturls = `${unpkgUrl}/@steedos-widgets/antd@${widgetsVersion}/dist/assets.json,${unpkgUrl}/@steedos-widgets/amis-object@${widgetsVersion}/dist/assets.json`;
   if (!isEmpty(process.env.STEEDOS_WIDGETS_ADDITIONAL)) {
     process.env.STEEDOS_WIDGETS_ADDITIONAL.split(",").forEach((additional) => {
       const lastAtIndex = additional.lastIndexOf("@");
