@@ -24,9 +24,7 @@ if (isEmpty(process.env.STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN)) {
 }
 
 if (isEmpty(process.env.STEEDOS_UNPKG_URL)) {
-  process.env.STEEDOS_UNPKG_URL = process.env.STEEDOS_LICENSE
-    ? "/unpkg"
-    : "https://unpkg.steedos.cn";
+  process.env.STEEDOS_UNPKG_URL = "/unpkg"
 }
 
 process.env.STEEDOS_UNPKG_URL = process.env.STEEDOS_UNPKG_URL.replace(
