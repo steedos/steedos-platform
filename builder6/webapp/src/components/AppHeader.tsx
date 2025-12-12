@@ -215,26 +215,25 @@ export const AppHeader = () => {
                             document.body.classList.remove('dark');
                         }
 
-                        if (appData.color) {
-                            document.documentElement.style.setProperty('--colors-brand-main', `var(--color-${appData.color}-600)`);
-                            document.documentElement.style.setProperty('--colors-brand-1', `var(--color-${appData.color}-900)`);
-                            document.documentElement.style.setProperty('--colors-brand-2', `var(--color-${appData.color}-900)`);
-                            document.documentElement.style.setProperty('--colors-brand-3', `var(--color-${appData.color}-800)`);
-                            document.documentElement.style.setProperty('--colors-brand-4', `var(--color-${appData.color}-700)`);
-                            document.documentElement.style.setProperty('--colors-brand-5', `var(--color-${appData.color}-600)`);
-                            document.documentElement.style.setProperty('--colors-brand-6', `var(--color-${appData.color}-500)`);
-                            document.documentElement.style.setProperty('--colors-brand-7', `var(--color-${appData.color}-400)`);
-                            document.documentElement.style.setProperty('--colors-brand-8', `var(--color-${appData.color}-300)`);
-                            document.documentElement.style.setProperty('--colors-brand-9', `var(--color-${appData.color}-100)`);
-                            document.documentElement.style.setProperty('--colors-brand-10', `var(--color-${appData.color}-50)`);
-                            document.documentElement.style.setProperty('--colors-other-5', `var(--color-${appData.color}-600)`);
-                            document.documentElement.style.setProperty('--colors-other-6', `var(--color-${appData.color}-500)`);
-                            document.documentElement.style.setProperty('--colors-other-7', `var(--color-${appData.color}-400)`);
-                            document.documentElement.style.setProperty('--colors-link-4', `var(--color-${appData.color}-700)`);
-                            document.documentElement.style.setProperty('--colors-link-5', `var(--color-${appData.color}-600)`);
-                            document.documentElement.style.setProperty('--colors-link-6', `var(--color-${appData.color}-500)`);
-                            document.documentElement.style.setProperty('--colors-link-7', `var(--color-${appData.color}-400)`);
-                        }
+                        const themeColor = appData.color || 'sky';
+                        document.documentElement.style.setProperty('--colors-brand-main', `var(--color-${themeColor}-600)`);
+                        document.documentElement.style.setProperty('--colors-brand-1', `var(--color-${themeColor}-900)`);
+                        document.documentElement.style.setProperty('--colors-brand-2', `var(--color-${themeColor}-900)`);
+                        document.documentElement.style.setProperty('--colors-brand-3', `var(--color-${themeColor}-800)`);
+                        document.documentElement.style.setProperty('--colors-brand-4', `var(--color-${themeColor}-700)`);
+                        document.documentElement.style.setProperty('--colors-brand-5', `var(--color-${themeColor}-600)`);
+                        document.documentElement.style.setProperty('--colors-brand-6', `var(--color-${themeColor}-500)`);
+                        document.documentElement.style.setProperty('--colors-brand-7', `var(--color-${themeColor}-400)`);
+                        document.documentElement.style.setProperty('--colors-brand-8', `var(--color-${themeColor}-300)`);
+                        document.documentElement.style.setProperty('--colors-brand-9', `var(--color-${themeColor}-100)`);
+                        document.documentElement.style.setProperty('--colors-brand-10', `var(--color-${themeColor}-50)`);
+                        document.documentElement.style.setProperty('--colors-other-5', `var(--color-${themeColor}-600)`);
+                        document.documentElement.style.setProperty('--colors-other-6', `var(--color-${themeColor}-500)`);
+                        document.documentElement.style.setProperty('--colors-other-7', `var(--color-${themeColor}-400)`);
+                        document.documentElement.style.setProperty('--colors-link-4', `var(--color-${themeColor}-700)`);
+                        document.documentElement.style.setProperty('--colors-link-5', `var(--color-${themeColor}-600)`);
+                        document.documentElement.style.setProperty('--colors-link-6', `var(--color-${themeColor}-500)`);
+                        document.documentElement.style.setProperty('--colors-link-7', `var(--color-${themeColor}-400)`);
                     }
                 }catch(err){
                     console.error('Failed to fetch app data:', err);
