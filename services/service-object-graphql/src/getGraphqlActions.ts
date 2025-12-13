@@ -890,6 +890,7 @@ export async function translateToUI(
                     ),
                     size: fileRecord.original?.size,
                     type: fileRecord.original?.type,
+                    value: fileRecord._id,
                   };
                 });
               } else {
@@ -913,6 +914,7 @@ export async function translateToUI(
                     ),
                     size: fileRecord.original?.size,
                     type: fileRecord.original?.type,
+                    value: fileRecord._id,
                   };
                 } else {
                   fileValue = {
