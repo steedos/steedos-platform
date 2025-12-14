@@ -368,7 +368,7 @@ class Signup extends React.Component {
     }
 
     const query = new URLSearchParams(this.props.location.search);
-    const redirectTo = query.get('redirect_to');
+    const redirectTo = query.get('redirect_uri');
 
     // Utils.setCSRFFromCookie();
 
