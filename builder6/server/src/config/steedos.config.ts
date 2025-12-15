@@ -24,7 +24,7 @@ if (isEmpty(process.env.STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN)) {
 }
 
 if (isEmpty(process.env.STEEDOS_UNPKG_URL)) {
-  process.env.STEEDOS_UNPKG_URL = "/unpkg"
+  process.env.STEEDOS_UNPKG_URL = "/unpkg";
 }
 
 process.env.STEEDOS_UNPKG_URL = process.env.STEEDOS_UNPKG_URL.replace(
@@ -60,7 +60,7 @@ if (isEmpty(process.env.STEEDOS_AMIS_URL)) {
 process.env.STEEDOS_AMIS_URL = process.env.STEEDOS_AMIS_URL.replace(/\/+$/, "");
 
 if (isEmpty(process.env.STEEDOS_WIDGETS_VERSION)) {
-  process.env.STEEDOS_WIDGETS_VERSION = "6.10.34-beta.11";
+  process.env.STEEDOS_WIDGETS_VERSION = "6.10.34";
 }
 
 if (isEmpty(process.env.STEEDOS_WIDGETS_ADDITIONAL)) {
