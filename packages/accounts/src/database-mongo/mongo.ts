@@ -5,15 +5,15 @@ import {
   DatabaseInterface,
   Session,
   User,
-} from '../types';
-import { get, merge, trim, map, find } from 'lodash';
-import { Collection, Db, ObjectId } from 'mongodb';
+} from "../types";
+import { get, merge, trim, map, find } from "lodash";
+import { Collection, Db, ObjectId } from "mongodb";
 
-import { AccountsMongoOptions, MongoUser } from './types';
-import { getSessionByUserId, hashStampedToken } from '@steedos/auth';
+import { AccountsMongoOptions, MongoUser } from "./types";
+import { getSessionByUserId, hashStampedToken } from "@steedos/auth";
 import { isNumber, isString } from "lodash";
 
-import { getDataSource } from '@steedos/objectql';
+import { getDataSource } from "@steedos/objectql";
 
 const moment = require("moment");
 
@@ -64,19 +64,19 @@ export class Mongo implements DatabaseInterface {
     this.db = db;
     this.collection = this.db.collection(this.options.collectionName);
     this.sessionCollection = this.db.collection(
-      this.options.sessionCollectionName
+      this.options.sessionCollectionName,
     );
     this.codeCollection = this.db.collection(this.options.codeCollectionName);
     this.inviteCollection = this.db.collection(
-      this.options.inviteCollectionName
+      this.options.inviteCollectionName,
     );
     this.spaceUserCollection = this.db.collection(
-      this.options.spaceUserCollectionName
+      this.options.spaceUserCollectionName,
     );
   }
   public async findValidSessionsByUserId(
     userId: string,
-    is_phone: boolean
+    is_phone: boolean,
   ): Promise<Array<Session>> {
     let query: any = {
       userId,
@@ -92,7 +92,7 @@ export class Mongo implements DatabaseInterface {
       .project({ _id: 1 })
       .toArray();
     if (sessions) {
-      sessions.forEach(function(session) {
+      sessions.forEach(function (session) {
         session.id = session._id.toString();
       });
     }
@@ -145,7 +145,10 @@ export class Mongo implements DatabaseInterface {
 
     if (mobile) {
       user.mobile = mobile;
-      const encryptedMobile = await this.getEncryptedSpaceUserFieldValue(mobile, 'mobile');
+      const encryptedMobile = await this.getEncryptedSpaceUserFieldValue(
+        mobile,
+        "mobile",
+      );
       if (encryptedMobile) {
         user.mobile = encryptedMobile;
       }
@@ -153,7 +156,10 @@ export class Mongo implements DatabaseInterface {
     }
 
     if (user.name) {
-      const encryptedName = await this.getEncryptedSpaceUserFieldValue(user.name, 'name');
+      const encryptedName = await this.getEncryptedSpaceUserFieldValue(
+        user.name,
+        "name",
+      );
       if (encryptedName) {
         user.name = encryptedName;
       }
@@ -172,7 +178,7 @@ export class Mongo implements DatabaseInterface {
     const id = this.options.convertUserIdToMongoObjectId
       ? toMongoID(userId)
       : userId;
-    const user:any = await this.collection.findOne({ _id: id });
+    const user: any = await this.collection.findOne({ _id: id });
     if (user) {
       user.id = user._id.toString();
     }
@@ -180,10 +186,10 @@ export class Mongo implements DatabaseInterface {
   }
 
   public async findUserByEmail(email: string): Promise<User | null> {
-    if(!isString(email)){
-      return null
+    if (!isString(email)) {
+      return null;
     }
-    const user:any = await this.collection.findOne({
+    const user: any = await this.collection.findOne({
       email: email.toLowerCase(),
     });
     if (user) {
@@ -193,17 +199,20 @@ export class Mongo implements DatabaseInterface {
   }
 
   public async findUserByMobile(mobile: string): Promise<User | null> {
-    if(!isString(mobile)){
-      return null
+    if (!isString(mobile)) {
+      return null;
     }
     const selector = {
       mobile,
-    }
-    const encryptedMobile = await this.getEncryptedSpaceUserFieldValue(mobile, 'mobile');
+    };
+    const encryptedMobile = await this.getEncryptedSpaceUserFieldValue(
+      mobile,
+      "mobile",
+    );
     if (encryptedMobile) {
       selector.mobile = encryptedMobile;
     }
-    const user:any = await this.collection.findOne(selector);
+    const user: any = await this.collection.findOne(selector);
     if (user) {
       user.id = user._id.toString();
     }
@@ -211,15 +220,15 @@ export class Mongo implements DatabaseInterface {
   }
 
   public async findUserByUsername(username: string): Promise<User | null> {
-    if(!isString(username)){
-      return null
+    if (!isString(username)) {
+      return null;
     }
     const filter = this.options.caseSensitiveUserName
       ? { username }
       : {
           $where: `obj.username && (obj.username.toLowerCase() === "${username.toLowerCase()}")`,
         };
-    const user:any = await this.collection.findOne(filter);
+    const user: any = await this.collection.findOne(filter);
     if (user) {
       user.id = user._id.toString();
     }
@@ -235,12 +244,12 @@ export class Mongo implements DatabaseInterface {
   }
 
   public async findUserByEmailVerificationToken(
-    token: string
+    token: string,
   ): Promise<User | null> {
-    if(!isString(token)){
-      return null
+    if (!isString(token)) {
+      return null;
     }
-    const user:any = await this.collection.findOne({
+    const user: any = await this.collection.findOne({
       "services.email.verificationTokens.token": token,
     });
     if (user) {
@@ -250,12 +259,12 @@ export class Mongo implements DatabaseInterface {
   }
 
   public async findUserByResetPasswordToken(
-    token: string
+    token: string,
   ): Promise<User | null> {
-    if(!isString(token)){
-      return null
+    if (!isString(token)) {
+      return null;
     }
-    const user:any = await this.collection.findOne({
+    const user: any = await this.collection.findOne({
       "services.password.reset.token": token,
     });
     if (user) {
@@ -266,12 +275,12 @@ export class Mongo implements DatabaseInterface {
 
   public async findUserByServiceId(
     serviceName: string,
-    serviceId: string
+    serviceId: string,
   ): Promise<User | null> {
-    if(!isString(serviceId)){
-      return null
+    if (!isString(serviceId)) {
+      return null;
     }
-    const user:any = await this.collection.findOne({
+    const user: any = await this.collection.findOne({
       [`services.${serviceName}.id`]: serviceId,
     });
     if (user) {
@@ -298,7 +307,7 @@ export class Mongo implements DatabaseInterface {
   public async addEmail(
     userId: string,
     newEmail: string,
-    verified: boolean
+    verified: boolean,
   ): Promise<void> {
     const id = this.options.convertUserIdToMongoObjectId
       ? toMongoID(userId)
@@ -315,7 +324,7 @@ export class Mongo implements DatabaseInterface {
         $set: {
           [this.options.timestamps.updatedAt]: this.options.dateProvider(),
         },
-      }
+      },
     );
     if (ret.matchedCount === 0) {
       throw new Error("User not found");
@@ -333,7 +342,7 @@ export class Mongo implements DatabaseInterface {
         $set: {
           [this.options.timestamps.updatedAt]: this.options.dateProvider(),
         },
-      }
+      },
     );
     if (ret.matchedCount === 0) {
       throw new Error("User not found");
@@ -354,7 +363,7 @@ export class Mongo implements DatabaseInterface {
         $pull: {
           "services.email.verificationTokens": { address: email },
         },
-      }
+      },
     );
     await this.spaceUserCollection.updateMany(
       { user: id },
@@ -364,7 +373,7 @@ export class Mongo implements DatabaseInterface {
           modified: this.options.dateProvider(),
           modified_by: id,
         },
-      }
+      },
     );
     if (ret.matchedCount === 0) {
       throw new Error("User not found");
@@ -372,26 +381,32 @@ export class Mongo implements DatabaseInterface {
   }
 
   // 如果开启了加密功能，则获取加密后的字段值
-  public async getEncryptedSpaceUserFieldValue(value: string, fieldName: string): Promise<any | null> {
-    const objectql = require('@steedos/objectql');
-    const objFields = await objectql.getObject('space_users').getFields();
+  public async getEncryptedSpaceUserFieldValue(
+    value: string,
+    fieldName: string,
+  ): Promise<any | null> {
+    const objectql = require("@steedos/objectql");
+    const objFields = await objectql.getObject("space_users").getFields();
     if (objFields[fieldName].enable_encryption) {
-      const datasource = getDataSource('default');
-      const encryptedValue = await datasource.adapter.encryptValue(value)
+      const datasource = getDataSource("default");
+      const encryptedValue = await datasource.adapter.encryptValue(value);
       if (encryptedValue) {
-        return encryptedValue
+        return encryptedValue;
       }
     }
   }
 
   public async verifyMobile(userId: string, mobile: string): Promise<void> {
-    if(!isString(mobile)){
-      return null
+    if (!isString(mobile)) {
+      return null;
     }
     const id = this.options.convertUserIdToMongoObjectId
       ? toMongoID(userId)
       : userId;
-    const encryptedMobile = await this.getEncryptedSpaceUserFieldValue(mobile, 'mobile');
+    const encryptedMobile = await this.getEncryptedSpaceUserFieldValue(
+      mobile,
+      "mobile",
+    );
     const ret = await this.collection.updateOne(
       { _id: id, mobile: encryptedMobile || mobile },
       {
@@ -400,9 +415,11 @@ export class Mongo implements DatabaseInterface {
           [this.options.timestamps.updatedAt]: this.options.dateProvider(),
         },
         $pull: {
-          "services.mobile.verificationTokens": { mobile: encryptedMobile || mobile },
+          "services.mobile.verificationTokens": {
+            mobile: encryptedMobile || mobile,
+          },
         },
-      }
+      },
     );
     await this.spaceUserCollection.updateMany(
       { user: id },
@@ -412,7 +429,7 @@ export class Mongo implements DatabaseInterface {
           modified: this.options.dateProvider(),
           modified_by: id,
         },
-      }
+      },
     );
     if (ret.matchedCount === 0) {
       throw new Error("User not found");
@@ -420,22 +437,24 @@ export class Mongo implements DatabaseInterface {
   }
 
   public async setMobile(userId: string, newMobile: string): Promise<void> {
-    if(!isString(newMobile)){
-      return null
+    if (!isString(newMobile)) {
+      return null;
     }
     const id = this.options.convertUserIdToMongoObjectId
       ? toMongoID(userId)
       : userId;
-    const encryptedMobile = (await this.getEncryptedSpaceUserFieldValue(newMobile, 'mobile')) || newMobile;
+    const encryptedMobile =
+      (await this.getEncryptedSpaceUserFieldValue(newMobile, "mobile")) ||
+      newMobile;
     let existed = await this.collection
       .find({ _id: { $ne: id }, mobile: encryptedMobile })
       .count();
     if (existed > 0) {
       throw new Error("该手机号已被其他用户注册");
     }
-    let user:any = await this.collection.findOne(
+    let user: any = await this.collection.findOne(
       { _id: id },
-      { projection: { mobile: 1 } }
+      { projection: { mobile: 1 } },
     );
     if (user && user.mobile != newMobile) {
       const ret = await this.collection.updateOne(
@@ -448,7 +467,7 @@ export class Mongo implements DatabaseInterface {
           $pull: {
             "services.mobile.verificationTokens": { mobile: encryptedMobile },
           },
-        }
+        },
       );
       await this.spaceUserCollection.updateMany(
         { user: id },
@@ -458,7 +477,7 @@ export class Mongo implements DatabaseInterface {
             modified: this.options.dateProvider(),
             modified_by: id,
           },
-        }
+        },
       );
     }
     if (!user) {
@@ -467,8 +486,8 @@ export class Mongo implements DatabaseInterface {
   }
 
   public async setEmail(userId: string, newEmail: string): Promise<void> {
-    if(!isString(newEmail)){
-      return null
+    if (!isString(newEmail)) {
+      return null;
     }
     const id = this.options.convertUserIdToMongoObjectId
       ? toMongoID(userId)
@@ -481,7 +500,7 @@ export class Mongo implements DatabaseInterface {
     }
     let user = await this.collection.findOne(
       { _id: id },
-      { projection: { email: 1 } }
+      { projection: { email: 1 } },
     );
     if (user && user.email != newEmail) {
       const ret = await this.collection.updateOne(
@@ -494,7 +513,7 @@ export class Mongo implements DatabaseInterface {
           $pull: {
             "services.email.verificationTokens": { address: newEmail },
           },
-        }
+        },
       );
       await this.spaceUserCollection.updateMany(
         { user: id },
@@ -504,7 +523,7 @@ export class Mongo implements DatabaseInterface {
             modified: this.options.dateProvider(),
             modified_by: id,
           },
-        }
+        },
       );
     }
     if (!user) {
@@ -523,7 +542,7 @@ export class Mongo implements DatabaseInterface {
           username: newUsername,
           [this.options.timestamps.updatedAt]: this.options.dateProvider(),
         },
-      }
+      },
     );
     if (ret.matchedCount === 0) {
       throw new Error("User not found");
@@ -547,7 +566,7 @@ export class Mongo implements DatabaseInterface {
         $unset: {
           "services.password.reset": "",
         },
-      }
+      },
     );
     if (ret.matchedCount === 0) {
       throw new Error("User not found");
@@ -557,7 +576,7 @@ export class Mongo implements DatabaseInterface {
   public async setService(
     userId: string,
     serviceName: string,
-    service: object
+    service: object,
   ): Promise<void> {
     const id = this.options.convertUserIdToMongoObjectId
       ? toMongoID(userId)
@@ -569,13 +588,13 @@ export class Mongo implements DatabaseInterface {
           [`services.${serviceName}`]: service,
           [this.options.timestamps.updatedAt]: this.options.dateProvider(),
         },
-      }
+      },
     );
   }
 
   public async unsetService(
     userId: string,
-    serviceName: string
+    serviceName: string,
   ): Promise<void> {
     const id = this.options.convertUserIdToMongoObjectId
       ? toMongoID(userId)
@@ -589,13 +608,13 @@ export class Mongo implements DatabaseInterface {
         $unset: {
           [`services.${serviceName}`]: "",
         },
-      }
+      },
     );
   }
 
   public async setUserDeactivated(
     userId: string,
-    deactivated: boolean
+    deactivated: boolean,
   ): Promise<void> {
     const id = this.options.convertUserIdToMongoObjectId
       ? toMongoID(userId)
@@ -607,7 +626,7 @@ export class Mongo implements DatabaseInterface {
           deactivated,
           [this.options.timestamps.updatedAt]: this.options.dateProvider(),
         },
-      }
+      },
     );
   }
 
@@ -641,7 +660,7 @@ export class Mongo implements DatabaseInterface {
         is_phone,
         is_tablet,
         login_expiration_in_days,
-        user_provider: provider
+        user_provider: provider,
       };
     }
 
@@ -651,7 +670,7 @@ export class Mongo implements DatabaseInterface {
       is_phone,
       is_tablet,
       login_expiration_in_days,
-      user_provider: provider
+      user_provider: provider,
     };
   }
 
@@ -659,7 +678,7 @@ export class Mongo implements DatabaseInterface {
     userId: string,
     token: string,
     connection: ConnectionInformations = {},
-    extraData?: object
+    extraData?: object,
   ): Promise<string> {
     const infos = this.resolveInfo(connection);
     const session: any = {
@@ -683,7 +702,7 @@ export class Mongo implements DatabaseInterface {
 
   public async updateSession(
     sessionId: string,
-    connection: ConnectionInformations
+    connection: ConnectionInformations,
   ): Promise<void> {
     const _id = this.options.convertSessionIdToMongoObjectId
       ? toMongoID(sessionId)
@@ -702,7 +721,7 @@ export class Mongo implements DatabaseInterface {
       { _id },
       {
         $set: _set,
-      }
+      },
     );
   }
 
@@ -717,7 +736,7 @@ export class Mongo implements DatabaseInterface {
           valid: false,
           [this.options.timestamps.updatedAt]: this.options.dateProvider(),
         },
-      }
+      },
     );
     const session: any = await this.sessionCollection.findOne({
       _id: _id,
@@ -733,12 +752,12 @@ export class Mongo implements DatabaseInterface {
           valid: false,
           [this.options.timestamps.updatedAt]: this.options.dateProvider(),
         },
-      }
+      },
     );
   }
 
   public async findSessionByToken(token: string): Promise<Session | null> {
-    const session:any = await this.sessionCollection.findOne({ token });
+    const session: any = await this.sessionCollection.findOne({ token });
     if (session) {
       session.id = session._id.toString();
     }
@@ -749,7 +768,7 @@ export class Mongo implements DatabaseInterface {
     const _id = this.options.convertSessionIdToMongoObjectId
       ? toMongoID(sessionId)
       : sessionId;
-    const session:any = await this.sessionCollection.findOne({ _id });
+    const session: any = await this.sessionCollection.findOne({ _id });
     if (session) {
       session.id = session._id.toString();
     }
@@ -759,7 +778,7 @@ export class Mongo implements DatabaseInterface {
   public async addEmailVerificationToken(
     userId: string,
     email: string,
-    token: string
+    token: string,
   ): Promise<void> {
     const _id = this.options.convertUserIdToMongoObjectId
       ? toMongoID(userId)
@@ -774,7 +793,7 @@ export class Mongo implements DatabaseInterface {
             when: this.options.dateProvider(),
           },
         },
-      }
+      },
     );
   }
 
@@ -782,7 +801,7 @@ export class Mongo implements DatabaseInterface {
     userId: string,
     email: string,
     token: string,
-    reason: string
+    reason: string,
   ): Promise<void> {
     const _id = this.options.convertUserIdToMongoObjectId
       ? toMongoID(userId)
@@ -798,14 +817,14 @@ export class Mongo implements DatabaseInterface {
             reason,
           },
         },
-      }
+      },
     );
   }
 
   public async setResetPassword(
     userId: string,
     email: string,
-    newPassword: string
+    newPassword: string,
   ): Promise<void> {
     await this.setPassword(userId, newPassword);
   }
@@ -815,11 +834,11 @@ export class Mongo implements DatabaseInterface {
     owner,
     nextCode,
     MAX_FAILURE_COUNT,
-    EFFECTIVE_TIME
+    EFFECTIVE_TIME,
   ) {
     const now: any = new Date();
-    if(!isString(name)){
-      throw new Error('accounts.invalidCode')
+    if (!isString(name)) {
+      throw new Error("accounts.invalidCode");
     }
     const query: any = {
       name: name,
@@ -829,7 +848,7 @@ export class Mongo implements DatabaseInterface {
     if (owner) {
       query.owner = owner;
     }
-    let record:any = await this.codeCollection.findOne(query);
+    let record: any = await this.codeCollection.findOne(query);
     if (record) {
       // if(record.failureCount >= MAX_FAILURE_COUNT){
       //   throw new Error('accounts.tooManyFailures');
@@ -848,7 +867,7 @@ export class Mongo implements DatabaseInterface {
       }
 
       let result = await this.codeCollection.insertOne(doc);
-      record = result.ops[0];;
+      record = result.ops[0];
     }
     return record;
   }
@@ -856,7 +875,7 @@ export class Mongo implements DatabaseInterface {
   public async addVerificationCode(
     user: any,
     code: string,
-    options: any
+    options: any,
   ): Promise<void> {
     let foundedUser = null;
     if (user.email) foundedUser = await this.findUserByEmail(user.email);
@@ -869,17 +888,17 @@ export class Mongo implements DatabaseInterface {
       owner,
       code,
       options.MAX_FAILURE_COUNT,
-      options.EFFECTIVE_TIME
+      options.EFFECTIVE_TIME,
     );
     return ret;
   }
 
   private async verifyCodeByName(name, code) {
-    if(!isString(code)){
-      throw new Error('accounts.invalidCode')
+    if (!isString(code)) {
+      throw new Error("accounts.invalidCode");
     }
-    if(!isString(name)){
-      throw new Error('accounts.invalidCode')
+    if (!isString(name)) {
+      throw new Error("accounts.invalidCode");
     }
     const now: any = new Date();
     let query = {
@@ -892,7 +911,7 @@ export class Mongo implements DatabaseInterface {
     if (result) {
       await this.codeCollection.updateOne(
         { _id: result._id },
-        { $set: { verifiedAt: now } }
+        { $set: { verifiedAt: now } },
       );
       return result;
     } else {
@@ -901,11 +920,11 @@ export class Mongo implements DatabaseInterface {
   }
 
   private async verifyCodeByOwner(owner, code) {
-    if(!isString(code)){
-      throw new Error('accounts.invalidCode')
+    if (!isString(code)) {
+      throw new Error("accounts.invalidCode");
     }
-    if(!isString(owner)){
-      throw new Error('accounts.invalidCode')
+    if (!isString(owner)) {
+      throw new Error("accounts.invalidCode");
     }
     const now: any = new Date();
     let query = {
@@ -919,7 +938,7 @@ export class Mongo implements DatabaseInterface {
     if (result) {
       await this.codeCollection.updateOne(
         { _id: result._id },
-        { $set: { verifiedAt: now } }
+        { $set: { verifiedAt: now } },
       );
       return result;
     } else {
@@ -930,7 +949,7 @@ export class Mongo implements DatabaseInterface {
 
   public async checkVerificationCode(
     user: any,
-    code: string
+    code: string,
   ): Promise<boolean> {
     let name = null;
     if (user.email) name = user.email;
@@ -946,7 +965,7 @@ export class Mongo implements DatabaseInterface {
 
   public async findUserByVerificationCode(
     user: any,
-    code: string
+    code: string,
   ): Promise<User | null> {
     let foundedUser = null;
     if (user.email) foundedUser = await this.findUserByEmail(user.email);
@@ -973,40 +992,45 @@ export class Mongo implements DatabaseInterface {
   public async getMySpaces(userId: string): Promise<any | null> {
     const userSpaces: any = await this.db
       .collection("space_users")
-      .find({ user: userId, invite_state: {$ne: "refused"} })
+      .find({ user: userId, invite_state: { $ne: "refused" } })
       .project({ space: 1, user_accepted: 1, invite_state: 1 })
       .toArray();
     const spaceIds = map(userSpaces, "space");
     const spaces = await this.db
       .collection("spaces")
       .find({ _id: { $in: spaceIds } })
-      .project({ name: 1, favicon: 1, account_logo: 1,  avatar_square: 1, avatar: 1, background: 1, enable_register: 1 })
+      .project({
+        name: 1,
+        favicon: 1,
+        account_logo: 1,
+        avatar_square: 1,
+        avatar: 1,
+        background: 1,
+        enable_register: 1,
+      })
       .toArray();
 
-    return map(spaces, function(space) {
-      const spaceUser = find(userSpaces, (item)=>{
+    return map(spaces, function (space) {
+      const spaceUser = find(userSpaces, (item) => {
         return item.space == space._id;
       });
       return {
         ...space,
         user_accepted: spaceUser.user_accepted,
-        invite_state: spaceUser.invite_state
-      }
+        invite_state: spaceUser.invite_state,
+      };
     });
   }
 
-
   public async getFirstSpace(): Promise<any | null> {
-    const space = await this.db
-      .collection("spaces")
-      .findOne()
+    const space = await this.db.collection("spaces").findOne();
     return space;
   }
 
   public async updateMeteorSession(
     userId: string,
     token: string,
-    infos: ConnectionInformations
+    infos: ConnectionInformations,
   ): Promise<boolean | null> {
     let when = new Date();
     const { login_expiration_in_days, is_phone, is_tablet } = infos;
@@ -1029,15 +1053,29 @@ export class Mongo implements DatabaseInterface {
     hashedToken.created = new Date();
     hashedToken.is_phone = is_phone;
     hashedToken.is_tablet = is_tablet;
-    await this.collection.updateOne({ _id: userId }, { $push: {
-      "services.resume.loginTokens": hashedToken
-    } });
+    await this.collection.updateOne(
+      { _id: userId },
+      {
+        $push: {
+          "services.resume.loginTokens": hashedToken,
+        },
+      },
+    );
+
+    await this.spaceUserCollection.updateMany(
+      { user: userId },
+      {
+        $set: {
+          last_logon: new Date(),
+        },
+      },
+    );
     return true;
   }
 
   public async destroyMeteorToken(
     userId: string,
-    token: string
+    token: string,
   ): Promise<boolean | null> {
     let stampedAuthToken = {
       token: token,
@@ -1053,7 +1091,7 @@ export class Mongo implements DatabaseInterface {
             $or: [{ hashedToken: loginToken }, { token: loginToken }],
           },
         },
-      }
+      },
     );
     return true;
   }
