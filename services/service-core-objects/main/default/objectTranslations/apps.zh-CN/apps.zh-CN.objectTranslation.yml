@@ -58,6 +58,14 @@ fields:
     label: 排序
     help: 
     description: 
+  dark:
+    label: 深色模式
+    help: 
+    description: 
+  color:
+    label: 主题颜色
+    help: 
+    description:
   is_creator:
     label: 在桌面中显示
     help: 
