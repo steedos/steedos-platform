@@ -28,7 +28,7 @@ const getAllPackages = async ()=>{
     const installPackages = await objectql.getSteedosSchema().broker.call(`@steedos/service-packages.getSteedosInstallPackages`);
     // const pI = await registry.getPackageNewVersion(`@steedos/app-project-management`);
     _.map(packages, (package)=>{
-        package._id = package.name.replace("/", '_')
+        package._id = package.name.replace("/", '_').replace("@", '_')
         package.status = '';
         package.new_version = package.version
         package.local = package.local
@@ -51,7 +51,7 @@ const getAllPackages = async ()=>{
                 homepage: package.homepage,
                 description: package.description,
                 ...(package.packageYmlData || {}),
-                _id : packageName.replace("/", '_'),
+                _id : packageName.replace("/", '_').replace("@", '_'),
                 name: packageName,
                 status : package.enable ? 'starting' : 'disable',
                 version : package.version,
@@ -78,7 +78,7 @@ const getAllPackages = async ()=>{
                 description: packageInfo.description,
                 homepage: packageInfo.homepage,
                 ...(packageInfo.packageYmlData || {}),
-                _id : packageName.replace("/", '_'),
+                _id : packageName.replace("/", '_').replace("@", '_'),
                 name: packageName,
                 service_name: packageInfo.name,
                 node_id: packageInfo.nodeID,
