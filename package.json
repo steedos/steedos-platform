@@ -45,7 +45,7 @@
     "husky": "9.1.7",
     "lerna": "^9.0.3",
     "lint-staged": "15.4.3",
-    "nodemon": "^2.0.19",
+    "nodemon": "^3.1.11",
     "rimraf": "6.0.1",
     "tslib": "^2.4.0",
     "typescript": "5.7.3",
