@@ -26,7 +26,7 @@ export class PermissionObjectsHandle extends BaseHandle {
         if (record) {
           doc.name = record.name;
         } else {
-          doc.name = last(doc.name.split(".")) || doc.permission_set_id;
+          doc.name = last(doc.name?.split(".")) || doc.permission_set_id;
         }
       }
       return doc;
