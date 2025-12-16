@@ -34,8 +34,6 @@
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
     "@babel/register": "^7.8.3",
-    "@commitlint/config-conventional": "^11.0.0",
-    "commitlint": "^11.0.0",
     "glob": "^9.3.5",
     "pegjs": "^0.10.0",
     "rollup": "^2.26.5",
