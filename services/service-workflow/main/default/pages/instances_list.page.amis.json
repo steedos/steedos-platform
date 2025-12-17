@@ -13,7 +13,8 @@
           "filterVisible": true,
           "showHeader": true,
           "id": "u:d29cef0d1007",
-          "showDisplayAs": true,
+          "showDisplayAs": false,
+          "displayAs": "split",
           "className": "h-full w-full bg-white",
           "hiddenColumnOperation": true,
           "formFactor": "LARGE",
@@ -75,7 +76,7 @@
                     {
                       "type": "input-tree",
                       "name": "tree",
-                      "treeContainerClassName": "h-full",
+                      "treeContainerClassName": "w-full h-full",
                       "className": "instance-box-tree bg-white h-full w-full p-0",
                       "id": "u:9f3dd961ca12",
                       "stacked": true,
@@ -234,7 +235,7 @@
   },
   "css": {
     ".instances-customPage.instances-sidebar.instances-sidebar-open.pc": {
-      "margin-left": "240px"
+      "margin-left": "260px"
     },
     ".instances-sidebar-wrapper": {
       "transition": "0.5s ease transform",
@@ -244,7 +245,7 @@
       "-moz-transform": "translate(-100%,0)",
       "-ms-transform": "translate(-100%,0)",
       "-o-transform": "translate(-100%,0)",
-      "width": "240px"
+      "width": "260px"
     },
     ".instances-customPage.instances-sidebar-open .instances-sidebar-wrapper": {
       "transform": "translate(0,0)",

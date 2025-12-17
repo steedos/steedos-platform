@@ -152,7 +152,7 @@ module.exports = {
         this.broker.createService(require("@steedos-builder/amis-editor"));
 
         // 产品分析
-        this.broker.createService(require("@steedos/service-analytics"));
+        // this.broker.createService(require("@steedos/service-analytics"));
 
 		this.broker.createService(require("@steedos-labs/analytics"));
 
