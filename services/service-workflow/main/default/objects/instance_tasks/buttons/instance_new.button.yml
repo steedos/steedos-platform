@@ -72,7 +72,7 @@ amis_schema: |-
                                   "closeOnEsc": true,
                                   "closeOnOutside": false,
                                   "showCloseButton": true,
-                                  "size": "lg",
+                                  "size": "md",
                                   "actions": false
                               }
                           }
