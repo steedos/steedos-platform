@@ -8622,9 +8622,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos-labs/plugin-workflow@npm:^3.0.4":
-  version: 3.0.4
-  resolution: "@steedos-labs/plugin-workflow@npm:3.0.4"
+"@steedos-labs/plugin-workflow@npm:^3.0.5":
+  version: 3.0.5
+  resolution: "@steedos-labs/plugin-workflow@npm:3.0.5"
   dependencies:
     formidable: ^2.1.5
     graphql-parse-resolve-info: ^4.12.3
@@ -8632,14 +8632,14 @@ __metadata:
     jszip: ^3.10.1
     lodash: ^4.17.21
     node-schedule: ^2.0.0
-  checksum: 2a92336b7cfa9e5d4f6bfab5a629faa268c51c25deda1899deda9fe7cde9a67277dd0a8ab58a96df3ca515f5a07c8a5e06c27dccb83ee07009a8f2e8ee0fd81f
+  checksum: cc72bd6a59933c4bfcdc034bd32aa620cc460b59442a8ff5c328c0010cf19e9bfd2c325a31b78e5f93d0f5977427e3382b19a52c591e8cbabf910e2d5c5bf4f1
   languageName: node
   linkType: hard
 
-"@steedos-widgets/amis-object@npm:^6.10.38":
-  version: 6.10.38
-  resolution: "@steedos-widgets/amis-object@npm:6.10.38"
-  checksum: 87ca5f03a4c2977a661045b964c46643dd0558f71a0d20fbecede07a894e890d2b730cbf98b12b18f76292424af9f70a8383992448b4dfbb936b2faa5565db16
+"@steedos-widgets/amis-object@npm:^6.10.39":
+  version: 6.10.39
+  resolution: "@steedos-widgets/amis-object@npm:6.10.39"
+  checksum: ad93c6164fe533e2e7e6da5c69a676ca5f10ab1a834020840c1872ed7976a00786c6d004bf1184f945b736cf2735cccac5c6cd0c032893f9f75bb2dc752b3619
   languageName: node
   linkType: hard
 
@@ -9337,7 +9337,7 @@ __metadata:
   dependencies:
     "@steedos-labs/analytics": ^3.1.2
     "@steedos-labs/plugin-print-template": ^3.0.2
-    "@steedos-labs/plugin-workflow": ^3.0.4
+    "@steedos-labs/plugin-workflow": ^3.0.5
     "@steedos/ee_branding": 3.0.5-beta.4
     "@steedos/service-license": ^3.0.2
     mssql: ^11.0.1
@@ -9728,7 +9728,7 @@ __metadata:
     "@material-ui/core": ^4.4.1
     "@material-ui/icons": ^4.4.1
     "@material-ui/styles": ^4.4.1
-    "@steedos-widgets/amis-object": ^6.10.38
+    "@steedos-widgets/amis-object": ^6.10.39
     "@tailwindcss/typography": ^0.5.19
     "@tailwindui/react": ^0.1.1
     "@types/node": ^14.14.19
