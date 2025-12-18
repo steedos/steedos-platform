@@ -2,7 +2,7 @@ import { AmisRender } from "./AmisRender"
 import { Builder } from '@builder6/react';
 import { use } from "i18next";
 import { useEffect, useState } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 
 const getHeaderSchema = (props) => {
     const { logoSrc, customButtons, className } = props
@@ -170,10 +170,11 @@ const getHeaderSchema = (props) => {
 
 
 export const AppHeader = () => {
-
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
     const params = useParams();
     let { appId = null, objectName } = params;
-
+    const isMobile = window.innerWidth < 1024;
     let [ app, setApp ] = useState(null);
     useEffect(() => {
         const fetchApp = async () => {
@@ -240,14 +241,18 @@ export const AppHeader = () => {
                 }
             }
         };
-        fetchApp();
+        if(searchParams.get('embed') != '1'){
+            fetchApp();
+        }
     }, [appId]);
 
     if(!appId){
         document.body.classList.remove('sidebar-open');
     }
 
-    const isMobile = window.innerWidth < 1024;
+    if(searchParams.get('embed') == '1'){
+        return <></>
+    }
 
     let logoSrc = '/images/logo.svg';
 
