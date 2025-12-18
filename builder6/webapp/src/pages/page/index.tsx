@@ -6,6 +6,9 @@ export const PageView = () => {
     const { appId, pageId } = useParams();
     return (
       <AmisRender schema = {{
+        type: 'page',
+        bodyClassName: 'p-0',
+        body: {
           type: 'service',
           schemaApi: {
             "method": "get",
@@ -16,7 +19,8 @@ export const PageView = () => {
                 }
             `,
           }
-        }} data ={{
+        }
+      }} data ={{
           context: {
               app: appId,
               appId: appId,
