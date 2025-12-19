@@ -236,6 +236,9 @@ function direct_remove_many_instance_tasks(approveIds) {
  * @returns 1
  */
 function count_instance_tasks(query) {
+    if(process.env.STEEDOS_WORKFLOW_DISABLE_BADGE === 'true'){
+        return 0;
+    } 
     const result = _count(query)
     return result
 }
