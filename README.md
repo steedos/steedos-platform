@@ -41,7 +41,7 @@ Whether building CRM, ERP, OA, or complex industry-specific business systems, St
 
 <br/>
 <p align="center">
-  <img src="docs/diagrams/steedos-overview.svg" width="100%" alt="Steedos Platform Architecture">
+  <img src="https://docs.steedos.com/diagrams/steedos-overview.svg" width="100%" alt="Steedos Platform Architecture">
 </p>
 <br/>
 
