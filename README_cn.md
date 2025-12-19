@@ -36,7 +36,7 @@
 
 通过可视化建模、自动化流程引擎和即由即用的 API 能力，华炎魔方帮助企业将开发效率提升 10 倍以上。无论是构建 CRM、ERP 还是复杂的行业业务系统，Steedos 都能提供坚实的底层支撑。
 
-![Steedos Overview](docs/cn/diagrams/steedos-overview.svg)
+[![Steedos Overview](docs/cn/diagrams/steedos-overview.svg)](https://docs.steedos.com/diagrams/steedos-overview-zh-CN.svg)
 
 ## ⚡ 为什么选择华炎魔方？
 
