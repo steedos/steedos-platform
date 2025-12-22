@@ -8622,9 +8622,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos-labs/plugin-workflow@npm:^3.0.5":
-  version: 3.0.5
-  resolution: "@steedos-labs/plugin-workflow@npm:3.0.5"
+"@steedos-labs/plugin-workflow@npm:^3.0.7":
+  version: 3.0.7
+  resolution: "@steedos-labs/plugin-workflow@npm:3.0.7"
   dependencies:
     formidable: ^2.1.5
     graphql-parse-resolve-info: ^4.12.3
@@ -8632,14 +8632,14 @@ __metadata:
     jszip: ^3.10.1
     lodash: ^4.17.21
     node-schedule: ^2.0.0
-  checksum: cc72bd6a59933c4bfcdc034bd32aa620cc460b59442a8ff5c328c0010cf19e9bfd2c325a31b78e5f93d0f5977427e3382b19a52c591e8cbabf910e2d5c5bf4f1
+  checksum: 4ecbe83c302e4d83dc31a5c594ed56dbef770a3a2190fee54bd910f490fcc0c471a653a9afd408f8030c1f44e5a542b55ea24a65e32e5ebd5c65126a96de27ec
   languageName: node
   linkType: hard
 
-"@steedos-widgets/amis-object@npm:^6.10.39":
-  version: 6.10.39
-  resolution: "@steedos-widgets/amis-object@npm:6.10.39"
-  checksum: ad93c6164fe533e2e7e6da5c69a676ca5f10ab1a834020840c1872ed7976a00786c6d004bf1184f945b736cf2735cccac5c6cd0c032893f9f75bb2dc752b3619
+"@steedos-widgets/amis-object@npm:^6.10.40":
+  version: 6.10.40
+  resolution: "@steedos-widgets/amis-object@npm:6.10.40"
+  checksum: f18f7ea6ef34ab867f0eac31164f9cd266c626f090e49cbdfa695741663bc7b7382526a2e23e611f16780f93d120f30abe93c29b86a60033310126687b23723f
   languageName: node
   linkType: hard
 
@@ -9337,7 +9337,7 @@ __metadata:
   dependencies:
     "@steedos-labs/analytics": ^3.1.2
     "@steedos-labs/plugin-print-template": ^3.0.2
-    "@steedos-labs/plugin-workflow": ^3.0.5
+    "@steedos-labs/plugin-workflow": ^3.0.7
     "@steedos/ee_branding": 3.0.6
     "@steedos/service-license": ^3.0.2
     mssql: ^11.0.1
@@ -9728,7 +9728,7 @@ __metadata:
     "@material-ui/core": ^4.4.1
     "@material-ui/icons": ^4.4.1
     "@material-ui/styles": ^4.4.1
-    "@steedos-widgets/amis-object": ^6.10.39
+    "@steedos-widgets/amis-object": ^6.10.40
     "@tailwindcss/typography": ^0.5.19
     "@tailwindui/react": ^0.1.1
     "@types/node": ^14.14.19
