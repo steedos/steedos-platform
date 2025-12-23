@@ -1,0 +1,16 @@
+name: lookup
+columns:
+  - name
+label: Lookup Users
+filter_scope: space
+filters:
+  - - user_accepted
+    - '='
+    - true
+sort:
+  - - sort_no
+    - desc
+  - - name
+    - asc
+extra_columns:
+  - sort_no
