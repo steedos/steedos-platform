@@ -18,6 +18,7 @@
 
 **/dist
 !**/twbs_bootstrap/dist
+!server/bundle/**/packages/summernote_summernote/dist
 **/logs
 
 /packages/**/lib
