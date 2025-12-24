@@ -9,20 +9,25 @@ const isString = (val) => typeof val === 'string';
 
 function injectServerCss(cssString) {
 
+  // 3. 挂载到 head 中
+  // 如果之前已经存在，先移除旧的（避免重复堆叠）
+  const oldStyle = document.getElementById('dynamic-page-styles');
+  if (oldStyle) {
+    oldStyle.remove();
+  }
+
+  if (cssString == null || cssString.trim() === '') {
+    return;
+  }
+  
   // 1. 创建 style 标签
   const styleTag = document.createElement('style');
-  styleTag.id = 'app-page-styles'; // 设置 ID 以便后续更新或删除
+  styleTag.id = 'dynamic-page-styles'; // 设置 ID 以便后续更新或删除
   
   // 2. 填入 CSS 内容
   styleTag.innerHTML = cssString;
   
-  // 3. 挂载到 head 中
-  // 如果之前已经存在，先移除旧的（避免重复堆叠）
-  const oldStyle = document.getElementById('app-page-styles');
-  if (oldStyle) {
-    oldStyle.remove();
-  }
-  document.head.appendChild(styleTag);
+  document.head.prepend(styleTag);
 }
 
 
@@ -58,7 +63,7 @@ export const PageView = () => {
 
                 const payload = await response.json();
 
-                if(payload && payload.css) {
+                if(payload) {
                   injectServerCss(payload.css);
                 }
                 // 3. 执行原本 Adaptor 中的逻辑
