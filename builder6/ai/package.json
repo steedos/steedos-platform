@@ -20,8 +20,8 @@
     "openai": "^6.8.1"
   },
   "peerDependencies": {
-    "@builder6/core": "^3.2.1-alpha.1",
-    "@builder6/moleculer": "^3.2.1-alpha.1",
+    "@builder6/core": "^3.2.1",
+    "@builder6/moleculer": "^3.2.1",
     "@nestjs/common": "^11.0.0",
     "@nestjs/core": "^11.0.0",
     "@nestjs/swagger": "^11.0.7"
