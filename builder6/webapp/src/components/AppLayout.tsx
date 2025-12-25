@@ -8,13 +8,36 @@
 import Navbar from "./Navbar"
 import { AppHeader } from "./AppHeader"
 import GlobalLinkInterceptor from "./GlobalLinkInterceptor";
-import { useLocation, useNavigationType } from "react-router";
+import { useBlocker, useLocation, useNavigationType } from "react-router";
 import { useEffect } from "react";
 
 // 路由监听组件
 function RouteChangeHandler() {
   const location = useLocation();
   const navigationType = useNavigationType();
+
+  const blocker = useBlocker(
+    ({ currentLocation, nextLocation }) => {
+      console.log(`blocker`, currentLocation, nextLocation)
+      return currentLocation.pathname !== nextLocation.pathname
+    }
+      
+  );
+
+  useEffect(() => {
+    if (blocker.state === "blocked") {
+      const handleNavigation = async () => {
+        const result = await (window as any).SteedosUI?.navigationGuard?.executeHandlers(blocker);
+        if (result.allowed) {
+          // 所有处理器都通过
+          blocker.proceed();
+        } else {
+          blocker.reset();
+        }
+      }
+      handleNavigation();
+    }
+  }, [blocker]);
 
   useEffect(() => {
     const routeChangeData = {
