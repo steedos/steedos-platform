@@ -19,28 +19,7 @@ _window.io = io;
 _window['axios'] = axios;
 _window['Builder'] = Builder;
 _window['builder'] = builder;
-_window['t'] = function(key: any, parameters: any, locale: string){
-  if(!key){
-      return key;
-  }
-  if (locale === "zh-cn") {
-      locale = "zh-CN";
-  }
-  if(!locale){
-    locale = Builder.settings.context?.user?.language || Builder.settings.default_language || 'zh-CN'
-  }
-  let keys;
-  if(lodash.isArray(key)){
-      keys = key;
-  }else{
-      keys = [`CustomLabels.${key}`, key];
-  }
-  if ((parameters != null) && !(lodash.isObject(parameters))) {
-      return t(keys, { lng: locale, postProcess: 'sprintf', sprintf: [parameters], keySeparator: false});
-  } else {
-      return t(keys, Object.assign({lng: locale}, {keySeparator: false}, parameters));
-  }
-};
+
 
 if(_window['Steedos']){
   _window['Steedos'] = Object.assign(_window['Steedos'], Steedos);
