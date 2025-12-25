@@ -26,9 +26,9 @@
         window['AmisUI'] = amis.require('amis-ui');
       });
 
-      window['Amis'].registerFilter('t', function (key,param) {
-          return typeof key === 'string' ? window.t(key,param) : key;
-        })
+      // window['Amis'].registerFilter('t', function (key,param) {
+      //     return typeof key === 'string' ? window.t(key,param) : key;
+      //   })
 
       // 监听窗口的 load 事件，确保所有脚本都加载完成
       window.addEventListener('load', function() {

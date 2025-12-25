@@ -14,8 +14,9 @@ i18n
   .init({
     fallbackLng: "en",
     supportedLngs: ["en", "zh-CN"],
+    ns: ["translation"],
+    defaultNS: "translation",
     debug: false,
-
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
     },
