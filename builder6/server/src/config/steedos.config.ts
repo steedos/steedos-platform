@@ -23,6 +23,10 @@ if (isEmpty(process.env.STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN)) {
   process.env.STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN = "true";
 }
 
+if (isEmpty(process.env.STEEDOS_CLOUD_URL)) {
+  process.env.STEEDOS_CLOUD_URL = "https://hub.steedos.cn";
+}
+
 if (isEmpty(process.env.STEEDOS_UNPKG_URL)) {
   process.env.STEEDOS_UNPKG_URL = "/unpkg";
 }

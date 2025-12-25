@@ -134,24 +134,14 @@ export async function bootstrap() {
   );
   app.use(compression());
 
-  if (process.env.B6_PROXY_TARGET) {
+  if (process.env.STEEDOS_CLOUD_URL) {
     // 获取 Nest 应用的请求处理器
     const server = app.getHttpAdapter().getInstance();
     // 配置代理中间件
     server.use(
-      "/",
+      "/api/cloud",
       createProxyMiddleware({
-        pathFilter: (path) => {
-          return (
-            !path.match("^/login/") &&
-            !path.match("^/docs/") &&
-            !path.match("^/api/v6") &&
-            !path.match("^/b6/") &&
-            !path.match("^/v7") &&
-            !path.match("^/v2/c/")
-          );
-        },
-        target: process.env.B6_PROXY_TARGET, // 目标 Express 应用的 URL
+        target: process.env.STEEDOS_CLOUD_URL, // 目标 Express 应用的 URL
         changeOrigin: true,
         toProxy: true,
         ws: true, // 启用 WebSocket 支持
