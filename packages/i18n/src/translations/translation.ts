@@ -251,7 +251,7 @@ export const convertTranslation = function (_translation) {
 export const addTranslations = function (translations) {
   _.each(translations, function (item) {
     let data = convertTranslation(item.data);
-    const ns = item.ns || NAMESPACE;
+    const ns = item.namespace || NAMESPACE;
     addResourceBundle(item.lng, ns, data, true, true);
   });
 };
