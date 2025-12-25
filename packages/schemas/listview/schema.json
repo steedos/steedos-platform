@@ -85,6 +85,10 @@
       "type": "array",
       "description": "可搜索字段"
     },
+    "searchable_default": {
+      "type": ["object"],
+      "description": "搜索表单默认值"
+    },
     "enable_amis_schema": {
       "type": "boolean",
       "description": "是否使用 amis自定义列表"

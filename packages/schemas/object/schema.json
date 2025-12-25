@@ -733,6 +733,10 @@
           "type": "string",
           "description": "过滤条件函数名称"
         },
+        "searchable_default": {
+          "type": ["object"],
+          "description": "搜索表单默认值"
+        },
         "relatedList": {
           "type": "boolean",
           "description": "用于表示是否在相关表的详细页面中作为子表显示"
@@ -811,6 +815,10 @@
         "filter_fields": {
           "type": "array",
           "description": "过滤的字段"
+        },
+        "searchable_default": {
+          "type": ["object"],
+          "description": "搜索表单默认值"
         },
         "sort": {
           "type": "array",
