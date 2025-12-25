@@ -8,12 +8,12 @@
 (function(){
     const filtersAmisSchema = {
         "type": "page",
-        "title": t("creator_filters"),
+        "title": i18next.t("creator_filters"),
         "name": "steedosFiltersPage",
         "body": [
           {
             "type": "form",
-            "title": t("creator_filters"),
+            "title": i18next.t("creator_filters"),
             "body": [
               {
                 "label": "",
@@ -85,7 +85,7 @@
         }, Object.assign({drawerName: pageName}, data, {
             objectName: Session.get("object_name"), // TODO 应该传入变量
             filters: window.amisConvert.filtersToConditions(Session.get("filter_items")),
-            title: t("creator_filters")
+            title: i18next.t("creator_filters")
         }), {
             props: {
                 mask: false,
@@ -99,7 +99,7 @@
                             onClick: function(){
                               SteedosUI.getRef(pageName) && SteedosUI.getRef(pageName).close();
                             }
-                        } , t('cancel')), 
+                        } , i18next.t('cancel')), 
                         React17.createElement(SteedosUI.components.Button, {
                             onClick: canSave ? function(){
 
@@ -144,7 +144,7 @@
                                 SteedosUI.getRef(pageName) && SteedosUI.getRef(pageName).close();
                             },
                             type: 'primary'
-                        } , canSave ? t('save'): t('apply'))
+                        } , canSave ? i18next.t('save'): i18next.t('apply'))
                     ]
                 )
             }
