@@ -150,7 +150,7 @@ export async function bootstrap() {
         },
         followRedirects: true,
         ejectPlugins: true,
-        logger: console,
+        // logger: console,
         plugins: [
           debugProxyErrorsPlugin,
           loggerPlugin,

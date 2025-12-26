@@ -8610,13 +8610,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos-labs/plugin-package-store@npm:^1.0.10":
-  version: 1.0.10
-  resolution: "@steedos-labs/plugin-package-store@npm:1.0.10"
-  checksum: 86bf0b3e89f3e1d50b2cc38cb728ad5146f2a74ce94ab3a6a5442a324b86239b00fefcbadbbd8b02d27ac0de853808378bcc62de63e6452c7e97366d36fc5a68
-  languageName: node
-  linkType: hard
-
 "@steedos-labs/plugin-print-template@npm:^3.0.2":
   version: 3.0.2
   resolution: "@steedos-labs/plugin-print-template@npm:3.0.2"
@@ -9260,7 +9253,6 @@ __metadata:
   resolution: "@steedos/service-community@workspace:services/service-community"
   dependencies:
     "@steedos-builder/amis-editor": 6.10.0-beta.2
-    "@steedos-labs/plugin-package-store": ^1.0.10
     "@steedos/data-import": 3.0.8
     "@steedos/migrate": 3.0.8
     "@steedos/server": 3.0.8
