@@ -91,9 +91,26 @@ module.exports = {
                     filter.push(['is_finished', '=', false]);
                     break;
                 case 'outbox':
-                    filter.push(['handler', '=', userId]);
-                    filter.push(['is_finished', '=', true]);
-                    filter.push(['is_latest_approve', '=', true]);
+                    if(process.env.STEEDOS_WORKFLOW_OUTBOX_OBJECT === 'instances'){
+                        filter.push(
+                            [
+                                ["outbox_users", "=", userId],
+                                "or",
+                                [
+                                    ["submitter", "=", userId],
+                                    "or", 
+                                    ["applicant", "=", userId]
+                                ],
+                                "and",
+                                ["state", "=", "pending"]
+                            ]
+                        );
+
+                    }else{
+                        filter.push(['handler', '=', userId]);
+                        filter.push(['is_finished', '=', true]);
+                        filter.push(['is_latest_approve', '=', true]);
+                    }
                     break;
                 case 'draft':
                     filter.push(['submitter', '=', userId]);

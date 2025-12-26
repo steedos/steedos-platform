@@ -268,7 +268,7 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
     // const s3 = new Date().getTime();
     let draftCount = await getDraftCount(userSession,req);
     // console.log(`getDraftCount time`, new Date().getTime() - s3);
-    
+    const outboxColl = process.env.STEEDOS_WORKFLOW_OUTBOX_OBJECT === 'instances' ? 'instances' : 'instance_tasks'
     var options = [
       {
         "label": t('inbox', {}, userSession.language),
@@ -285,9 +285,9 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
         "label": t('outbox', {}, userSession.language),
         "options":{
           "level":1,
-          "to": `/app/${appId}/instance_tasks/grid/outbox?additionalFilters=&flowId=&categoryId=`
+          "to": `/app/${appId}/${outboxColl}/grid/outbox?additionalFilters=&flowId=&categoryId=`
         },
-        "value": `/app/${appId}/instance_tasks/grid/outbox?additionalFilters=&flowId=&categoryId=`,
+        "value": `/app/${appId}/${outboxColl}/grid/outbox?additionalFilters=&flowId=&categoryId=`,
         "icon": "fa fa-check"
       },
       {
