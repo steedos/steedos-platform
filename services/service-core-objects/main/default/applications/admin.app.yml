@@ -50,6 +50,9 @@ tab_items:
   admin_objects:
     group: apps
     index: 10
+  page_app_store:
+    group: apps
+    index: 10.5
   admin_pages:
     group: apps
     index: 11
@@ -71,9 +74,6 @@ tab_items:
   admin_ai_chatbots:
     group: apps
     index: 19
-  page_app_store:
-    group: apps
-    index: 19.3
   admin_developer:
     group: development
     index: 19.50
