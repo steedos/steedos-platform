@@ -1,6 +1,5 @@
 name: K6 测试
 code: steedos_test
-enable_nav_schema: false
 icon_slds: account
 is_creator: true
 is_new_window: false

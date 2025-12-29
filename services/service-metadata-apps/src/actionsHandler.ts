@@ -438,11 +438,6 @@ async function transformAppToMenus(ctx, app, mobile, userSession, context) {
     is_hide_mobile_menu: app.is_hide_mobile_menu,
     visible_on: app.visible_on || "${true}",
   };
-  if (app.enable_nav_schema && app.nav_schema && !mobile) {
-    menu.nav_schema = _.isString(app.nav_schema)
-      ? JSON.parse(app.nav_schema)
-      : app.nav_schema;
-  }
 
   const hiddenTabNames = context.hiddenTabNames || [];
   if (app.tab_items) {
