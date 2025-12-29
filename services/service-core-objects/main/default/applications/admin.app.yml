@@ -2,6 +2,7 @@ name: Setup
 code: admin
 description: 管理员设置公司、人员、权限等。
 icon: ion-ios-people-outline
+dark: true
 icon_slds: settings
 is_creator: true
 showSidebar: true
