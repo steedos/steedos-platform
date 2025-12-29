@@ -1,6 +1,6 @@
 {
   "name": "@steedos/i18n",
-  "version": "3.0.9-beta.1",
+  "version": "3.0.9-beta.2",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@steedos/cachers": "3.0.9-beta.1",
+    "@steedos/cachers": "3.0.9-beta.2",
     "i18next": "^19.3.4",
     "i18next-sprintf-postprocessor": "^0.2.2",
     "underscore": "^1.13.7"
@@ -21,5 +21,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "97b7b6726f480e07a9190fdf3a780a756cfaef42"
+  "gitHead": "663d566c6486919ac0d7645e2f3003b2f38de732"
 }
