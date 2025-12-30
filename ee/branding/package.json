@@ -1,11 +1,11 @@
 {
   "name": "@steedos/ee_branding",
   "description": "自定义品牌",
-  "version": "3.0.9-beta.2",
+  "version": "3.0.9-beta.3",
   "main": "package.service.js",
   "license": "MIT",
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "663d566c6486919ac0d7645e2f3003b2f38de732"
+  "gitHead": "cca6c892f8c5523ea4e17b2e9e2d5aba7356168e"
 }
