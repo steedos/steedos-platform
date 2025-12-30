@@ -1,0 +1,106 @@
+{
+    "type": "page",
+    "title": "Welcome to Steedos",
+    "body": [
+        {
+            "type": "liquid",
+            "template": "<style>\n    /* --- 基础设置 --- */\n    .steedos-ios-launcher {\n        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;\n        -webkit-touch-callout: none;\n        -webkit-user-select: none;\n        user-select: none;\n    }\n\n    .no-scrollbar::-webkit-scrollbar {\n        display: none;\n    }\n\n    .no-scrollbar {\n        -ms-overflow-style: none;\n        scrollbar-width: none;\n    }\n\n    /* --- 动画定义 --- */\n    @keyframes blob-bounce {\n        0% {\n            transform: translate(0, 0) scale(1);\n        }\n\n        33% {\n            transform: translate(30px, -50px) scale(1.1);\n        }\n\n        66% {\n            transform: translate(-20px, 20px) scale(0.9);\n        }\n\n        100% {\n            transform: translate(0, 0) scale(1);\n        }\n    }\n\n    .animate-blob {\n        animation: blob-bounce 10s infinite ease-in-out;\n    }\n\n    @keyframes fade-in-up {\n        from {\n            opacity: 0;\n            transform: translateY(20px);\n        }\n\n        to {\n            opacity: 1;\n            transform: translateY(0);\n        }\n    }\n\n    .animate-fade-in-up {\n        animation: fade-in-up 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;\n    }\n\n    /* --- 交互样式 --- */\n    .app-icon-container {\n        transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s;\n        will-change: transform;\n        cursor: pointer;\n        display: flex;\n        align-items: center;\n        justify-content: center;\n    }\n\n    .app-item:not(.static-item):hover .app-icon-container {\n        transform: scale(1.05);\n        box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.1);\n        z-index: 10;\n    }\n\n    .app-item.static-item:hover .app-icon-container {\n        transform: scale(1.05);\n        background-color: rgba(255, 255, 255, 0.8);\n    }\n\n    .sortable-drag .app-icon-container {\n        transform: scale(1.15) !important;\n        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);\n        filter: brightness(1.02);\n        cursor: grabbing;\n    }\n\n    .sortable-ghost {\n        opacity: 0;\n    }\n\n    /* 加载状态 */\n    .loading-skeleton {\n        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;\n        background-color: rgba(255, 255, 255, 0.5);\n        border-radius: 1.6rem;\n    }\n\n    @keyframes pulse {\n\n        0%,\n        100% {\n            opacity: 1;\n        }\n\n        50% {\n            opacity: .5;\n        }\n    }\n</style>\n\n<div id=\"launcher-container\"\n    class=\"steedos-ios-launcher relative w-full h-screen bg-[#F5F7FA] text-slate-800 overflow-hidden\">\n\n     <div\n        class=\"absolute top-0 left-0 w-[500px] h-[500px] bg-blue-300/30 rounded-full mix-blend-multiply filter blur-[80px] opacity-70 animate-blob pointer-events-none\">\n    </div>\n    <div class=\"absolute top-0 right-0 w-[500px] h-[500px] bg-purple-300/30 rounded-full mix-blend-multiply filter blur-[80px] opacity-70 animate-blob pointer-events-none\"\n        style=\"animation-delay: 2s\"></div>\n    <div class=\"absolute -bottom-32 left-20 w-[500px] h-[500px] bg-pink-300/30 rounded-full mix-blend-multiply filter blur-[80px] opacity-70 animate-blob pointer-events-none\"\n        style=\"animation-delay: 4s\"></div>\n\n    <div class=\"relative z-10 w-full h-full flex flex-col items-center pt-32 pb-10 px-6 overflow-y-auto no-scrollbar\"\n        id=\"main-scroll-area\">\n        <div id=\"vibrant-grid\"\n            class=\"grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-x-6 gap-y-10 w-full max-w-6xl px-2 pb-20 animate-fade-in-up\"\n            style=\"animation-delay: 0.1s;\">\n        </div>\n    </div>\n</div>\n\n<script>\n    // ==========================================\n    // ✅ 在这里编写您的业务逻辑\n    // ==========================================\n    \n    // 1. 点击“应用市场”按钮时触发\n    window.handleAppStoreClick = function() {\n        // --- 请在此处编写代码 ---\n        console.log(\"点击了应用市场\");\n        window.location.href = \"/app/admin/page/app_store\"; \n    };\n\n    // 2. 点击列表末尾“添加应用”图标时触发\n    window.handleAddAppClick = function() {\n        // --- 请在此处编写代码 ---\n        console.log(\"点击了添加应用\");\n        data._scoped.doAction([{\n            actionType: 'click',\n            componentId: 'buttonAddApp',\n        }])\n    };\n\n\n    // ==========================================\n    // 下方为系统核心代码 (一般无需修改)\n    // ==========================================\n    \n    var STORE_KEY = 'steedos_launcher_order';\n    var COLOR_MAP = {\n        'red':    'from-red-400 to-rose-600 shadow-red-500/20',\n        'orange': 'from-orange-400 to-red-500 shadow-orange-500/20',\n        'yellow': 'from-amber-400 to-orange-500 shadow-amber-500/20',\n        'green':  'from-green-400 to-emerald-600 shadow-green-500/20',\n        'teal':   'from-teal-400 to-teal-600 shadow-teal-500/20',\n        'cyan':   'from-cyan-400 to-blue-500 shadow-cyan-500/20',\n        'sky':    'from-sky-400 to-blue-500 shadow-sky-500/20',\n        'blue':   'from-blue-400 to-indigo-600 shadow-blue-500/20',\n        'purple': 'from-violet-400 to-purple-600 shadow-violet-500/20',\n        'pink':   'from-pink-400 to-rose-600 shadow-pink-500/20',\n        'gray':   'from-slate-500 to-slate-700 shadow-slate-500/20',\n        'default':'from-sky-400 to-blue-500 shadow-sky-500/20' \n    };\n\n    function saveAppOrder(orderArray) {\n        var cleanOrder = orderArray.filter(function(id) { return id !== 'add'; });\n        localStorage.setItem(STORE_KEY, JSON.stringify(cleanOrder));\n    }\n\n    function createAppHtml(app) {\n        var colorKey = app.color;\n        if (!colorKey) colorKey = 'sky';\n        if (app.id === 'admin' && !app.color) colorKey = 'gray';\n        var bgClass = COLOR_MAP[colorKey] || COLOR_MAP['sky'];\n\n        var iconName = app.icon || 'account'; \n        var iconPath = '/assets/icons/standard-sprite/svg/symbols.svg#' + iconName;\n\n        // 使用转义的模板字符串\n        return `\n            <div class=\"app-item group flex flex-col items-center select-none\" \n                 data-id=\"\\${app.id}\" \n                 onclick=\"window.location.href='\\${app.path}'\">\n                <div class=\"app-icon-container relative w-20 h-20 md:w-24 md:h-24 rounded-[1.6rem] bg-gradient-to-br \\${bgClass} text-white\">\n                    <div class=\"absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-white/20 to-transparent rounded-t-[1.6rem] pointer-events-none\"></div>\n                    <svg class=\"w-11 h-11 md:w-14 md:h-14 drop-shadow-sm\" aria-hidden=\"true\" fill=\"currentColor\">\n                        <use xlink:href=\"\\${iconPath}\"></use>\n                    </svg>\n                </div>\n                <span class=\"mt-3 text-xs md:text-sm font-semibold text-slate-600 group-hover:text-slate-900 transition-colors text-center line-clamp-1\">\\${app.name}</span>\n            </div>\n        `;\n    }\n\n    // ✅ 2. 生成添加按钮 (已绑定 handleAddAppClick)\n    function createAddBtnHtml() {\n        return `\n            <div class=\"app-item group flex flex-col items-center select-none static-item\" data-id=\"add\" onclick=\"handleAddAppClick()\">\n                <div class=\"app-icon-container relative w-20 h-20 md:w-24 md:h-24 rounded-[1.6rem] border-2 border-dashed border-slate-300 bg-white/50 backdrop-blur-sm text-slate-400\">\n                    <svg class=\"w-11 h-11 md:w-14 md:h-14\" aria-hidden=\"true\" fill=\"currentColor\">\n                        <use xlink:href=\"/assets/icons/utility-sprite/svg/symbols.svg#add\"></use>\n                    </svg>\n                </div>\n                <span class=\"mt-3 text-xs md:text-sm font-semibold text-slate-500\">添加应用</span>\n            </div>\n        `;\n    }\n\n    (async function initLauncher() {\n        var gridElement = document.getElementById('vibrant-grid');\n        var skeletonHtml = '';\n        for(var i=0; i<6; i++) { skeletonHtml += `<div class=\"w-20 h-20 md:w-24 md:h-24 loading-skeleton mx-auto\"></div>`; }\n        gridElement.innerHTML = skeletonHtml;\n\n        try {\n            var response = await fetch('/service/api/apps/menus?mobile=false');\n            if (!response.ok) throw new Error('Failed to fetch apps');\n            var appsData = await response.json();\n\n            var savedOrderStr = localStorage.getItem(STORE_KEY);\n            var finalApps = [];\n            \n            if (savedOrderStr) {\n                var savedOrderIds = JSON.parse(savedOrderStr);\n                savedOrderIds.forEach(function(id) {\n                    var app = appsData.find(function(a) { return a.id === id; });\n                    if (app) finalApps.push(app);\n                });\n                appsData.forEach(function(app) {\n                    if (savedOrderIds.indexOf(app.id) === -1) finalApps.push(app);\n                });\n            } else {\n                finalApps = appsData;\n            }\n\n            var htmlContent = finalApps.map(function(app) { return createAppHtml(app); }).join('');\n            htmlContent += createAddBtnHtml(); \n            gridElement.innerHTML = htmlContent;\n\n            if (typeof Sortable !== 'undefined') {\n                new Sortable(gridElement, {\n                    animation: 350,\n                    easing: \"cubic-bezier(0.2, 0.8, 0.2, 1)\",\n                    delay: 0,\n                    delayOnTouchOnly: true,\n                    ghostClass: 'sortable-ghost',\n                    dragClass: 'sortable-drag',\n                    filter: \".static-item\", \n                    onMove: function (evt) { return evt.related.className.indexOf('static-item') === -1; },\n                    onEnd: function (evt) {\n                        var newOrder = [];\n                        var currentItems = gridElement.querySelectorAll('.app-item');\n                        currentItems.forEach(function(item) {\n                            var id = item.getAttribute('data-id');\n                            if (id && id !== 'add') newOrder.push(id);\n                        });\n                        saveAppOrder(newOrder);\n                    }\n                });\n            }\n        } catch (error) {\n            console.error(\"Launcher Error:\", error);\n            gridElement.innerHTML = `<div class=\"col-span-full text-center text-slate-400\">加载失败<br><span class=\"text-xs opacity-70\">\\${error.message}</span></div>`;\n        }\n    })();\n</script>",
+            "id": "u:04103f69c7d4"
+        },
+        {
+            "type": "button",
+            "label": "按钮",
+            "onEvent": {
+                "click": {
+                    "actions": [
+                        {
+                            "ignoreError": false,
+                            "actionType": "dialog",
+                            "dialog": {
+                                "type": "dialog",
+                                "title": "新建应用",
+                                "body": [
+                                    {
+                                        "type": "steedos-object-form",
+                                        "label": "对象表单",
+                                        "objectApiName": "apps",
+                                        "recordId": "${recordId}",
+                                        "mode": "edit",
+                                        "enableInitApi": false,
+                                        "className": "",
+                                        "id": "u:b81c61018eeb",
+                                        "fields": [
+                                            "name",
+                                            "code",
+                                            "color",
+                                            "icon_slds",
+                                            "dark"
+                                        ],
+                                        "enableTabs": false,
+                                        "tabsMode": "",
+                                        "onSubmitSuccess": "document.location.reload();"
+                                    }
+                                ],
+                                "id": "u:6afe7f1c03a3",
+                                "actions": [
+                                    {
+                                        "type": "button",
+                                        "actionType": "cancel",
+                                        "label": "取消",
+                                        "id": "u:7c749cf8acad"
+                                    },
+                                    {
+                                        "type": "button",
+                                        "actionType": "confirm",
+                                        "label": "确定",
+                                        "primary": true,
+                                        "id": "u:6ba48c5527ec"
+                                    }
+                                ],
+                                "showCloseButton": true,
+                                "closeOnOutside": false,
+                                "closeOnEsc": false,
+                                "showErrorMsg": true,
+                                "showLoading": true,
+                                "draggable": false,
+                                "actionType": "dialog",
+                                "size": "md"
+                            }
+                        }
+                    ]
+                }
+            },
+            "id": "buttonAddApp",
+            "editorState": "default",
+            "visible": true,
+            "hidden": false,
+            "wrapperCustomStyle": {},
+            "className": "hidden"
+        }
+    ],
+    "regions": [
+        "body"
+    ],
+    "data": {
+        "initialValues": {},
+        "appId": "builder",
+        "title": ""
+    },
+    "id": "u:d3e47da07a71",
+    "asideResizor": false,
+    "editorState": "default",
+    "pullRefresh": {
+        "disabled": true
+    },
+    "themeCss": {
+        "bodyControlClassName": {
+            "padding-and-margin:default": {
+                "paddingTop": "0",
+                "paddingRight": "0",
+                "paddingBottom": "0",
+                "paddingLeft": "0"
+            }
+        }
+    },
+    "definitions": {}
+}

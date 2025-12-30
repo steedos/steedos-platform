@@ -23,6 +23,7 @@ fields:
     required: true
     searchable: true
     filterable: true
+    defaultValue: 'app_${UUID(3)}'
   icon_slds:
     label: Icon
     type: select
@@ -66,7 +67,7 @@ fields:
   dark:
     label: Dark Mode
     type: boolean
-    defaultValue: false
+    defaultValue: true
   description:
     label: Description
     type: textarea
@@ -104,11 +105,11 @@ fields:
   is_creator:
     type: boolean
     label: Show this app for Desktop
-    # defaultValue: true
+    defaultValue: true
   mobile:
     type: boolean
     label: Show this app for Mobile
-    # defaultValue: true
+    defaultValue: true
   icon:
     label: Icon
     type: text
@@ -116,7 +117,7 @@ fields:
   visible:
     label: Visible
     type: boolean
-    # defaultValue: true
+    defaultValue: true
 
   showSidebar:
     label: 显示左侧导航

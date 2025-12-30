@@ -1,0 +1,63 @@
+name: 工作台
+code: desktop
+color: red
+dark: true
+icon_slds: agent_home
+is_creator: true
+is_new_window: false
+is_use_iframe: false
+locked: false
+mobile: true
+oauth2_enabled: false
+showSidebar: true
+sort: 5
+tab_groups:
+  - group_name: 协作
+    default_open: true
+  - group_name: 管理
+    default_open: true
+  - group_name: 开发
+    default_open: true
+tab_items:
+  page_app_launcher:
+    group: ''
+    index: 1
+  core_announcements:
+    group: 协作
+    index: 2
+  core_tasks:
+    group: 协作
+    index: 3
+  core_events:
+    group: 协作
+    index: 4
+  admin_space_users:
+    group: 管理
+    index: 1
+  admin_organizations:
+    group: 管理
+    index: 2
+  admin_objects:
+    group: 开发
+    index: 5
+  admin_pages:
+    group: 开发
+    index: 6
+  page_apps:
+    group: 开发
+    index: 7
+  page_app_store:
+    group: 开发
+    index: 8
+tabs:
+  - page_app_launcher
+  - core_announcements
+  - core_tasks
+  - core_events
+  - admin_objects
+  - admin_apps
+  - admin_pages
+  - page_app_store
+  - admin_space_users
+  - admin_organizations
+visible: true

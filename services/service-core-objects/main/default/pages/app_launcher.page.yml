@@ -1,0 +1,7 @@
+name: app_launcher
+is_active: true
+label: 应用
+pageAssignments: []
+render_engine: amis
+type: app
+widgets: []
