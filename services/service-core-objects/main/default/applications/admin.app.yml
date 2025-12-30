@@ -18,7 +18,7 @@ tab_groups:
   - group_name: process_automation
     default_open: false
   - group_name: approval_workflow
-    default_open: false
+    default_open: true
   - group_name: development    
     default_open: false
   - group_name: advanced_settings
