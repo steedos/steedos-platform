@@ -9160,7 +9160,6 @@ __metadata:
     compression: ^1.7.5
     connect-redis: 8.0.2
     cookie-parser: ^1.4.7
-    crypto-js: ^4.2.0
     dotenv: ^16.4.5
     dotenv-flow: ^4.1.0
     eslint: ^8.0.0
@@ -9297,7 +9296,6 @@ __metadata:
     cbor-x: ^1.5.3
     chalk: ^4.1.2
     cross-env: ^7.0.3
-    crypto-js: ^4.0.0
     dotenv-flow: ^3.1.0
     ioredis: ^4.22.0
     isomorphic-fetch: ^3.0.0
@@ -9754,7 +9752,7 @@ __metadata:
     babel-preset-react-app: ^10.0.1
     core-js: ^3.2.1
     cross-env: 7.0.3
-    crypto-js: ^4.1.1
+    crypto-js: ^4.2.0
     eslint: ^8.57.0
     eslint-plugin-react-hooks: ^4.6.0
     eslint-plugin-react-refresh: ^0.4.6
@@ -15590,7 +15588,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"crypto-js@npm:^4.0.0, crypto-js@npm:^4.1.1, crypto-js@npm:^4.2.0":
+"crypto-js@npm:^4.2.0":
   version: 4.2.0
   resolution: "crypto-js@npm:4.2.0"
   checksum: f051666dbc077c8324777f44fbd3aaea2986f198fe85092535130d17026c7c2ccf2d23ee5b29b36f7a4a07312db2fae23c9094b644cc35f7858b1b4fcaf27774
