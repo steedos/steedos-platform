@@ -255,7 +255,7 @@ export const AppHeader = () => {
         return <></>
     }
 
-    let logoSrc = '/images/logo.svg';
+    let logoSrc = ''; //'/images/logo.svg';
 
     if(Builder.settings?.context?.user?.space?.avatar){
         logoSrc = '/api/v6/files/cfs.avatars.filerecord/' + Builder.settings.context.user.space.avatar
@@ -263,7 +263,7 @@ export const AppHeader = () => {
 
     const faviconLink: any = document.querySelector('link[rel*="icon"], link[rel*="shortcut"]');
 
-    let favicon = '/images/logo.png';
+    let favicon = '/images/logo.svg';
     if(Builder.settings?.context?.user?.space?.favicon){
         favicon = "/api/v6/files/cfs.avatars.filerecord/" + Builder.settings.context.user.space.favicon;
     }

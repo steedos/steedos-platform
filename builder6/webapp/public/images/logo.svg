@@ -1,24 +1,24 @@
 <svg width="340" height="340" viewBox="0 0 340 340" xmlns="http://www.w3.org/2000/svg">
   <g fill="#8bc34a">
-    <rect x="10" y="10" width="100" height="100" rx="10"/>
-    <rect x="120" y="10" width="100" height="100" rx="10"/>
+    <rect x="10" y="10" width="100" height="100" rx="50"/>
+    <rect x="120" y="10" width="100" height="100" rx="50"/>
   </g>
 
   <g fill="#ffc107">
-    <rect x="230" y="10" width="100" height="100" rx="10"/>
-    <rect x="230" y="120" width="100" height="100" rx="10"/>
+    <rect x="230" y="10" width="100" height="100" rx="50"/>
+    <rect x="230" y="120" width="100" height="100" rx="50"/>
   </g>
 
   <g fill="#ff5722">
-    <rect x="10" y="120" width="100" height="100" rx="10"/>
-    <rect x="10" y="230" width="100" height="100" rx="10"/>
+    <rect x="10" y="120" width="100" height="100" rx="50"/>
+    <rect x="10" y="230" width="100" height="100" rx="50"/>
   </g>
 
-  <rect x="120" y="120" width="100" height="100" rx="10" fill="#EFEFEF"/>
+  <rect x="120" y="120" width="100" height="100" rx="50" fill="#EFEFEF"/>
 
   <g fill="#03a9f4">
-    <rect x="120" y="230" width="100" height="100" rx="10"/>
-    <rect x="230" y="230" width="100" height="100" rx="10"/>
+    <rect x="120" y="230" width="100" height="100" rx="50"/>
+    <rect x="230" y="230" width="100" height="100" rx="50"/>
   </g>
 
 </svg>
