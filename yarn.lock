@@ -8634,10 +8634,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos-widgets/amis-object@npm:^6.10.44":
-  version: 6.10.44
-  resolution: "@steedos-widgets/amis-object@npm:6.10.44"
-  checksum: de0eb88534a355780d8162c2de3bc3f7b9332bd3ba1bd26c47da7890ffc1b8e79ed87367d6aecab6fc2ba6ece6d2aaf13b5ed7ed2a590bc87d0e7c1765d87253
+"@steedos-widgets/amis-object@npm:^6.10.46":
+  version: 6.10.46
+  resolution: "@steedos-widgets/amis-object@npm:6.10.46"
+  checksum: 3a025ac96c47208cb74560f1515af9128c63ee0668c9843cfb56122a39dac7d8108c77a7d23272f010ed89ba644f8722b654461cbb95bed264ef29044f8f926e
   languageName: node
   linkType: hard
 
@@ -9725,7 +9725,7 @@ __metadata:
     "@material-ui/core": ^4.4.1
     "@material-ui/icons": ^4.4.1
     "@material-ui/styles": ^4.4.1
-    "@steedos-widgets/amis-object": ^6.10.44
+    "@steedos-widgets/amis-object": ^6.10.46
     "@tailwindcss/typography": ^0.5.19
     "@tailwindui/react": ^0.1.1
     "@types/node": ^14.14.19

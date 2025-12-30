@@ -4,9 +4,9 @@
     --body-bg: var(--color-gray-50);
     --body-color: var(--color-gray-900);
     --body-size: 14px;
-    --link-color: var(--colors-brand-4);
-    --link-onHover-color: var(--colors-brand-6);
-    --link-onClick-color: var(--colors-brand-5);
+    --link-color: var(--colors-link-4);
+    --link-onHover-color: var(--colors-link-6);
+    --link-onClick-color: var(--colors-link-5);
     --Page-main-bg: transparent;
     --Form-mode-default-labelGap: 2px;
     --Form-item-fontSize: 12px;

@@ -1,7 +1,7 @@
 
 .steedos.dark {
     .steedos-header-container {
-        background-color: var(--colors-brand-1);
+        background-color: var(--colors-brand-main);
         color: var(--color-white);
         border-bottom: none;
         --steedos-logo-color-default: var(--color-gray-200);
