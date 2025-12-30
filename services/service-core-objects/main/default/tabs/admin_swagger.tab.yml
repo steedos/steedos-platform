@@ -1,7 +1,7 @@
 name: admin_swagger
 desktop: true
 icon: data_model
-is_new_window: false
+is_new_window: true
 is_use_iframe: true
 label: OpenAPI
 mobile: true
