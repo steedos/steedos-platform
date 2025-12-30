@@ -1,6 +1,6 @@
 name: page_app_store
 desktop: true
-icon: apps
+icon: product_consumed
 is_new_window: false
 is_use_iframe: false
 label: App Store

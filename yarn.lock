@@ -7632,6 +7632,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@salesforce-ux/design-system@npm:2.28.1":
+  version: 2.28.1
+  resolution: "@salesforce-ux/design-system@npm:2.28.1"
+  peerDependencies:
+    postcss: ^8.3.5
+  checksum: 3d36ae3b2d80353331e62a13f686dea72449e5cb0c6a115426cb7b2914e53edb52f043889a6e9b1d5479cf667ab6bfc61a9abc53208b955f69d93bc7236bc9e8
+  languageName: node
+  linkType: hard
+
 "@salesforce/kit@npm:1.0.4":
   version: 1.0.4
   resolution: "@salesforce/kit@npm:1.0.4"
@@ -8634,10 +8643,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos-widgets/amis-object@npm:^6.10.46":
-  version: 6.10.46
-  resolution: "@steedos-widgets/amis-object@npm:6.10.46"
-  checksum: 3a025ac96c47208cb74560f1515af9128c63ee0668c9843cfb56122a39dac7d8108c77a7d23272f010ed89ba644f8722b654461cbb95bed264ef29044f8f926e
+"@steedos-widgets/amis-object@npm:^6.10.47":
+  version: 6.10.47
+  resolution: "@steedos-widgets/amis-object@npm:6.10.47"
+  checksum: 15e8d0fb90ef5849cad4c9fb3fef6514acaccc272d6c4ea080cc9e753931d2d4464504b8a140a0e6f521dbdeb4f9e381a7fe1c7135ff57d11833493fc78f4b70
   languageName: node
   linkType: hard
 
@@ -9725,7 +9734,8 @@ __metadata:
     "@material-ui/core": ^4.4.1
     "@material-ui/icons": ^4.4.1
     "@material-ui/styles": ^4.4.1
-    "@steedos-widgets/amis-object": ^6.10.46
+    "@salesforce-ux/design-system": 2.28.1
+    "@steedos-widgets/amis-object": ^6.10.47
     "@tailwindcss/typography": ^0.5.19
     "@tailwindui/react": ^0.1.1
     "@types/node": ^14.14.19

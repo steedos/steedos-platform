@@ -43,7 +43,7 @@ tab_items:
   admin_pages:
     group: 开发
     index: 6
-  page_apps:
+  admin_apps:
     group: 开发
     index: 7
   page_app_store:
