@@ -1,0 +1,58 @@
+name: pages_schema
+objectApiName: pages
+isEnabled: true
+script: |-
+  const pageId = ctx.input.pageId;
+
+  if (!pageId) {
+      throw new Error("pageId parameter is missing");
+  }
+
+  const pages = await ctx.getObject('pages').find({
+      filters: [['name', '=', pageId], "or", ['_id', '=', pageId]],
+      top: 1
+  });
+
+  // Fix: Check if a version was actually found to avoid "undefined" errors
+  if (!pages || pages.length === 0) {
+      // You can return null, an empty object, or throw a specific error depending on your UI needs
+      throw new Error("page not found");
+  }
+
+  const filters = [['page', '=', pages[0]._id], ['is_active', '=', true]];
+  const pageVersions = await ctx.getObject('page_versions').find({
+      filters: filters,
+      sort: 'version desc',
+      top: 1
+  });
+
+  // Fix: Check if a version was actually found to avoid "undefined" errors
+  if (!pageVersions || pageVersions.length === 0) {
+      // You can return null, an empty object, or throw a specific error depending on your UI needs
+      throw new Error("page has no active version");
+  }
+
+  const pageVersion = pageVersions[0];
+  let schema = pageVersion.schema;
+
+  if (typeof schema === 'string') {
+      try {
+          schema = JSON.parse(schema);
+      } catch (e) {
+          throw new Error("Failed to parse schema for page");
+      }
+  }
+
+  return {
+      "type": "inject",
+      "assets": [
+          {
+              "type": "css",
+              "id": "page-css",
+              "src": "/api/v6/pages/" + pageId + "/current/tailwind.css",
+              "location": "start",
+          }
+      ],
+      "body": [schema]
+  };
+locked: false
