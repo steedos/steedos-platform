@@ -32,7 +32,8 @@ const up = async function () {
 }
 
 const init = async function () {
-    const autoMigrate = validator.toBoolean(process.env.STEEDOS_DB_AUTO_MIGRATE || '', true);
+    // 默认开启自动迁移，除非显式设置 STEEDOS_DB_AUTO_MIGRATE=false
+    const autoMigrate = validator.toBoolean(process.env.STEEDOS_DB_AUTO_MIGRATE || 'true', true);
     if (autoMigrate) {
         up();
     }
