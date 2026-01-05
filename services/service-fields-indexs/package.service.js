@@ -88,10 +88,10 @@ module.exports = {
 			let indexScheduleCron = "0 0 2 * * *"; // 默认每天凌晨2点
 			const steedosConfig = objectql.getSteedosConfig() || {};
 			const cron = steedosConfig.cron;
-			if (process.env.STEEDOS_CRON_ENABLED === 'true' && cron && cron.build_index) {
+			if (cron && cron.build_index) {
 				indexScheduleCron = cron.build_index;
 			}
-			if (indexScheduleCron) {
+			if (process.env.STEEDOS_CRON_ENABLED === 'true' && indexScheduleCron) {
 				this.job = schedule.scheduleJob(indexScheduleCron, () => {
 					this.broker.call(`${serviceName}.refreshIndexes`)
 				});
