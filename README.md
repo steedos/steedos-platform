@@ -1,4 +1,3 @@
-
 <p align="center">
   <a href="https://docs.steedos.com/en/">
     <img alt="Steedos Logo" src="./docs/images/logo.svg" width="100" />
@@ -8,11 +7,13 @@
 <h1 align="center">Steedos Platform</h1>
 
 <p align="center">
-  <strong>The Open Source Low-Code Platform for Enterprise</strong>
+  <strong>The AI-Native Low-Code Platform for Enterprise</strong>
 </p>
 
 <p align="center">
-  <em>Metadata-driven core. Fusing low-code efficiency with pro-code flexibility. <br/>Connecting enterprise data to reshape business innovation.</em>
+  <em>Prompt to App. Fusing Generative AI with a Metadata-Driven Core.</em>
+  <br/>
+  <em>Build data models, UIs, and microservices in minutes—not months.</em>
 </p>
 
 <p align="center">
@@ -33,11 +34,11 @@
 
 ## 📖 Introduction
 
-**Steedos Platform** is an open-source low-code development platform powered by a **Metadata Driven** architecture.
+**Steedos Platform** represents the next evolution of low-code development. We combine the proven reliability of a **Metadata Driven Architecture** (similar to Salesforce) with the disruptive speed of **Generative AI**.
 
-We aim to be the "Linux" of the low-code world—providing the powerful enterprise core of **Salesforce** (Object Modeling, Permission Engine, Automation) combined with the flexibility of open source and a modern tech stack (**Node.js**, **MongoDB**, **React**, **Amis**).
+Instead of manually dragging and dropping components, Steedos allows you to use **Natural Language** to orchestrate the creation of enterprise-grade systems. The AI Engine automatically generates the metadata, code, and APIs, while our robust kernel ensures security, scalability, and transactional integrity.
 
-Whether building CRM, ERP, OA, or complex industry-specific business systems, Steedos helps you achieve **10x development efficiency** while ensuring complete autonomy over your code and data.
+Whether building CRM, ERP, or complex industry solutions, Steedos empowers you to achieve **10x development efficiency** while maintaining full control over your source code and data.
 
 <br/>
 <p align="center">
@@ -47,64 +48,63 @@ Whether building CRM, ERP, OA, or complex industry-specific business systems, St
 
 ## ⚡ Why Steedos?
 
-| Feature | Steedos Platform | Salesforce | Traditional Coding |
+| Feature | Steedos Platform (AI Native) | Salesforce | Traditional Low-Code |
 | :--- | :--- | :--- | :--- |
-| **Core Architecture** | 🧠 **Metadata Driven** | 🧠 Metadata Driven | 📄 Hard-coded |
-| **Dev Mode** | 🚀 **Visual + Code (Dual Mode)** | ⚠️ Proprietary (Apex) | 🐢 Code Only |
-| **Deployment** | ☁️ **On-Prem / Private Cloud** | 🔒 Public Cloud Only | ☁️ Any |
-| **Frontend Tech** | ⚛️ **React + Amis** | ⚠️ Aura / LWC | ⚛️ Any |
-| **Data Sovereignty**| 🛡️ **100% Self-Hosted** | ❌ Vendor Lock-in | 🛡️ 100% |
-| **Cost** | 💰 **Open Source / Commercial** | 💰💰💰 Expensive Subscription | 💰💰 High Labor Cost |
+| **Development Paradigm** | 🤖 **AI-First (Prompt-Driven)** | 🖱️ Click / Code | 🖱️ Drag & Drop |
+| **Core Architecture** | 🧠 **Metadata Driven** | 🧠 Metadata Driven | 📄 Hard-coded Schemas |
+| **Tech Stack** | ⚛️ **Node.js + React + Amis** | ⚠️ Proprietary (Apex/Aura) | 🐢 Vendor Specific |
+| **Microservices** | 🚀 **Auto-Generated (Standard Code)** | ❌ Difficult to extend | ❌ Black Box |
+| **Deployment** | ☁️ **On-Prem / Private Cloud** | 🔒 Public Cloud Only | ☁️ Hybrid |
+| **Cost** | 💰 **Open Source** | 💰💰💰 Expensive Subscription | 💰💰 Seat-based Pricing |
 
 ## 🌟 Core Capabilities
 
-### 1. 🎨 Visual Modeling & Page Designer
-Say goodbye to tedious SQL scripts. Define enterprise-grade data models with just a few clicks.
-* **Object Modeling**: Supports 20+ field types, easily handling complex relationships like Lookup and Master-Detail.
-* **Page Engine**: Deeply integrated with the **Baidu Amis** framework, allowing drag-and-drop design for Forms, List Views, Kanbans, and Dashboards.
-* **Benchmark**: A perfect alternative to Salesforce Object Manager and Lightning App Builder.
+### 1. 🤖 AI Data Modeling (Copilot)
+Stop manually defining database schemas. Just describe your business logic.
+* **Text-to-Schema:** Tell the AI *"I need a Project Management system with Projects, Tasks, and Milestones,"* and it instantly generates the Entity Relationship Diagram (ERD) and Metadata.
+* **Smart Relationships:** Automatically handles Lookup, Master-Detail, and Roll-up Summary relationships.
+* **API Ready:** Instantly exposes GraphQL and RESTful APIs for every generated model.
 
-### 2. 🤖 Intelligent Automation Engine
-Built-in \process engine to meet complex enterprise approval scenarios.
-* **Workflow**: Automate field updates, email notifications, and Webhook triggers.
-* **Approval Processes**: Supports countersignatures, add-approvers, kickbacks, sub-processes, and other complex logic.
-* **Logic Orchestration**: Visually configure business rules without writing code.
+### 2. 🎨 Generative UI & Page Designer
+Create complex enterprise interfaces using conversation.
+* **Text-to-UI:** Deeply integrated with the **Baidu Amis** framework. Describe a page (e.g., *"A dashboard showing sales revenue by region and a list of high-priority leads"*), and the AI generates the JSON configuration.
+* **Visual Editor:** Fine-tune the AI-generated results with our drag-and-drop designer.
+* **Responsive:** Automatically adapts to Mobile, Tablet, and Desktop.
 
-### 3. 🛡️ Enterprise-Grade Security
-Provides granular permission control to ensure data security.
-* **Multi-dimensional Control**: Supports Object-level, Field-level, and Record-level (Sharing Rules) permissions.
-* **Org Structure**: Comprehensive management of Departments, Users, Roles, Profiles, and Permission Sets.
+### 3. ⚡ AI Microservices & Logic
+Business logic shouldn't be a black box.
+* **Text-to-Code:** Describe your automation rules (e.g., *"When a contract status changes to 'Signed', calculate the commission and notify the manager"*), and Steedos generates standard **Node.js** code.
+* **Workflow Engine:** Built-in engine for Approvals, Webhooks, and time-based triggers.
+* **Sandboxed Execution:** Run AI-generated logic safely within the platform.
 
-### 4. 💻 Developer First (Steedos DX)
-Low-code doesn't mean "Black Box". We provide professional engineering tools for developers.
-* **Code as Configuration**: All metadata is stored in YAML/JSON formats.
-* **GitOps**: Full support for Git version control, easily integrating into CI/CD pipelines.
-* **VS Code Extension**: Provides syntax highlighting, auto-completion, and bi-directional metadata synchronization.
-* **API First**: Automatically generates ready-to-use GraphQL and RESTful APIs.
-
+### 4. 🛡️ Enterprise-Grade Foundation
+AI brings the speed; our Core brings the stability.
+* **Security:** Granular permission control (Object, Field, and Record-level Sharing Rules).
+* **Org Management:** Comprehensive Users, Roles, Profiles, and Permission Sets.
+* **DX (Developer Experience):** All metadata is stored as YAML/JSON files. Full GitOps support for CI/CD pipelines.
 
 ## 🏗️ Architecture
 
-Steedos adopts a responsive microservices architecture with separated frontend and backend, built on the Moleculer framework.
+Steedos is built on a modern, open-source stack designed for microservices.
 
-* **Backend Core**: Node.js, Moleculer (Microservices), TypeScript
-* **Data Storage**: MongoDB (Metadata Repository), SQL Databases (Business Data)
-* **Frontend**: React, Amis (Open Source Low-Code Framework)
-
+* **AI Engine:** LLM Integration Layer (OpenAI / Compatible Models)
+* **Backend:** Node.js, Moleculer (Microservices), MongoDB (Metadata), SQL (Data)
+* **Frontend:** React, Amis (Baidu's Low-Code Framework)
 
 ## 🚀 Quick Start
 
-### Option 1: Docker (Recommended)
+### Option 1: Docker (Fastest)
 
-The fastest way to experience Steedos:
+Run the Steedos Community Edition with a single command:
 
 ```bash
 docker run -d -p 80:80 steedos/steedos-community:3.0
-````
+
+```
 
 ### Option 2: Create New Project (For Developers)
 
-Create a standard engineering project using the scaffold:
+Initialize a standard project to start customizing:
 
 ```bash
 # Create project
@@ -116,16 +116,17 @@ yarn install
 
 # Start the server
 yarn start
+
 ```
 
-Visit `http://localhost:5100` to start building.
+Visit `http://localhost:5100` and start building with AI.
 
 ## 🤝 Community & Contributing
 
-Steedos is a fully open-source project, and we welcome all forms of contribution\!
+Steedos is a fully open-source project. We are actively exploring the frontiers of **AI x Low-Code**.
 
-  * 🐛 **Report Issues**: [GitHub Issues](https://github.com/steedos/steedos-platform/issues)
-  * 💬 **Discussions**: [GitHub Discussions](https://github.com/steedos/steedos-platform/discussions)
+* 🐛 **Report Issues**: [GitHub Issues](https://github.com/steedos/steedos-platform/issues)
+* 💬 **Discussions**: [GitHub Discussions](https://github.com/steedos/steedos-platform/discussions)
 
 ## Contact Us
 
