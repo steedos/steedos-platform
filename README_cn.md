@@ -7,11 +7,12 @@
 <h1 align="center">Steedos Platform (华炎魔方)</h1>
 
 <p align="center">
-  <strong>企业级开源低代码开发平台 | The Open Source Low-Code Platform for Enterprise</strong>
+  <strong>下一代 AI 原生低代码开发平台 | The AI-Native Low-Code Platform</strong>
 </p>
 
 <p align="center">
-  <em>以元数据为核心，融合低代码的高效与 Pro-Code 的灵活，连接企业数据，重塑业务创新。</em>
+  <em>Prompt to App. 提示词即应用。</em><br/>
+  <em>以元数据为核心，融合生成式 AI 的速度与企业级平台的稳健。</em>
 </p>
 
 <p align="center">
@@ -32,94 +33,74 @@
 
 ## 📖 简介 | Introduction
 
-华炎魔方（Steedos）是一款基于元数据驱动（Metadata Driven）架构的开源低代码平台。我们致力于为企业提供像 Salesforce 一样强大的建模能力，同时保持开源的灵活性和低成本。
+**华炎魔方 (Steedos Platform)** 代表了软件开发的下一次进化。我们将 Salesforce 级别的**元数据驱动架构 (Metadata Driven)** 与**生成式 AI** 深度融合。
 
-通过可视化建模、自动化流程引擎和即由即用的 API 能力，华炎魔方帮助企业将开发效率提升 10 倍以上。无论是构建 CRM、ERP 还是复杂的行业业务系统，Steedos 都能提供坚实的底层支撑。
+告别繁琐的拖拽和手动编码，现在，你可以使用自然语言（Prompt）来编排企业级应用。AI 引擎负责生成数据模型、界面配置和微服务逻辑，而华炎魔方的稳健内核确保这些应用具备企业级的权限控制、事务一致性和可扩展性。
 
-![Steedos Overview](https://docs.steedos.com/diagrams/steedos-overview-zh-CN.svg)
+无论是构建 CRM、ERP 还是复杂的行业业务系统，华炎魔方让你在保持 **100% 代码自主可控** 的前提下，实现 **10 倍的开发效率提升**。
+
+<br/>
+<p align="center">
+  <img src="https://docs.steedos.com/diagrams/steedos-overview-zh-CN.svg" width="100%" alt="Steedos Platform Architecture">
+</p>
+<br/>
 
 ## ⚡ 为什么选择华炎魔方？
 
-| 特性 | 华炎魔方 (Steedos) | Salesforce | 传统代码开发 |
+| 特性 | 华炎魔方 (AI Native) | Salesforce | 传统低代码平台 |
 | :--- | :--- | :--- | :--- |
-| **核心架构** | 🧠 **元数据驱动 (Metadata)** | 🧠 元数据驱动 | 📄 硬编码 |
-| **开发模式** | 🚀 **可视化 + 代码 (双模)** | ⚠️ 仅限专有语言 (Apex) | 🐢 纯代码 |
-| **部署方式** | ☁️ **私有部署 / 混合云** | 🔒 仅限公有云 | ☁️ 任意 |
-| **前端技术** | ⚛️ **React + 百度 Amis** | ⚠️ Aura / LWC | ⚛️ 任意 |
-| **数据主权** | 🛡️ **100% 自主可控** | ❌ 厂商锁定 | 🛡️ 100% |
-| **使用成本** | 💰 **开源免费 / 商业授权** | 💰💰💰 昂贵的订阅费 | 💰💰 人力成本高 |
+| **开发范式** | 🤖 **AI 优先 (Prompt-Driven)** | 🖱️ 点击配置 / 代码 | 🖱️ 拖拽式 |
+| **核心架构** | 🧠 **元数据驱动** | 🧠 元数据驱动 | 📄 硬编码 / JSON Schema |
+| **微服务逻辑** | 🚀 **AI 生成标准 Node.js 代码** | ⚠️ 专有语言 (Apex) | ❌ 黑盒，难以扩展 |
+| **前端技术** | ⚛️ **React + 百度 Amis** | ⚠️ Aura / LWC | 🐢 厂商私有协议 |
+| **部署方式** | ☁️ **私有部署 / 混合云** | 🔒 仅限公有云 | ☁️ 混合 |
+| **使用成本** | 💰 **开源免费 / 商业授权** | 💰💰💰 昂贵的订阅费 | 💰💰 按点数/人头收费 |
 
 ## 🌟 核心功能 | Core Features
 
-### 1\. 可视化数据建模
+### 1. 🤖 AI 数据建模 (Copilot)
+无需手动创建表结构。只需描述业务逻辑，AI 为您构建地基。
+* **Text-to-Schema:** 告诉 AI *“我需要一个包含项目、任务和里程碑的项目管理系统”*，它会自动生成实体关系图（ERD）和元数据。
+* **智能关系处理:** 自动处理查找（Lookup）、主从（Master-Detail）和汇总（Roll-up）关系。
+* **API Ready:** 模型生成即生效，自动透出 GraphQL 和 RESTful API。
 
-无需编写 SQL，通过图形化界面即可定义复杂的业务对象及其关系（Lookup, Master-Detail）。
+### 2. 🎨 AI 界面生成 (Generative UI)
+通过对话构建复杂的企业级界面，深度集成 **百度 Amis**。
+* **Text-to-UI:** 描述页面需求（例如：*“生成一个仪表盘，展示各地区销售额统计图，下方显示高优先级的待办事项列表”*），AI 自动生成 Amis JSON 配置。
+* **可视化微调:** AI 生成后，仍可使用可视化设计器进行精细调整。
+* **多端适配:** 自动生成适配 移动端/PC端 的响应式布局。
 
-  * 支持 20+ 种字段类型。
-  * 内置公式字段与汇总字段（Roll-up Summary）。
-  * **亮点：** 代码即配置，所有模型均以 `.yml` 或 `.json` 格式存储，完美支持 Git 版本控制。
+### 3. ⚡ AI 微服务编排
+业务逻辑不再是黑盒，AI 帮您编写标准的后端逻辑。
+* **Text-to-Code:** 描述业务规则（例如：*“当合同状态更为‘已签署’时，自动计算销售提成，并发送飞书通知给经理”*），平台自动生成标准的 **Node.js** 代码。
+* **沙箱执行:** 生成的代码在安全沙箱中运行，确保系统稳定性。
+* **流程引擎:** 内置符合 BPMN 标准的审批流引擎，支持会签、回退等中国式复杂审批。
 
-### 2\. 强大的流程引擎
-
-内置企业级工作流引擎，支持复杂的中国式审批场景。
-
-  * 可视化流程设计器。
-  * 支持会签、加签、回退、子流程。
-  * 流程与业务数据无缝绑定。
-
-### 3\. 自动生成 API
-
-定义好对象模型后，平台自动为您生成生产环境可用的 API。
-
-  * **GraphQL API:** 灵活查询，按需获取数据。
-  * **REST API:** 标准化接口，易于第三方集成。
-  * 内置 Swagger 文档。
-
-### 4\. 页面设计器
-
-基于百度 Amis 框架，提供拖拽式的页面布局设计能力。
-
-  * 所见即所得的表单设计。
-  * 灵活配置列表视图、看板视图、日历视图。
-  * 支持自定义组件扩展。
-
-### 5\. 开发者优先
-
-低代码不代表无代码。华炎魔方专为开发者设计了极其友好的扩展机制。
-
-  * **服务端扩展:** 使用 Node.js 编写 Trigger（触发器）和 函数
-  * **客户端扩展:** 使用 React 开发自定义组件。
-  * **Steedos DX:** 提供 VS Code 插件和 CLI 工具，支持元数据同步与 DevOps 流水线。
+### 4. 🛡️ 企业级内核 (The Foundation)
+AI 带来速度，内核保障稳健。
+* **权限引擎:** 支持对象级、字段级、记录级（共享规则）的精密权限控制。
+* **组织架构:** 完善的部门、人员、角色、简档（Profile）管理体系。
+* **Steedos DX:** 所有元数据均以 YAML/JSON 文件存储，完美支持 Git 版本控制和 CI/CD 流水线。
 
 ## 🏗️ 技术架构
-华炎魔方采用分层架构设计，实现了 UI、业务逻辑与数据存储的完全解耦，支持微服务部署与无限水平扩展。
 
-### 核心架构分层：
+华炎魔方采用前后端分离的微服务架构，基于现代开源技术栈构建。
 
-1.  **基础设施层:** 支持 Docker/K8s 容器化部署，兼容 AWS, Azure, 阿里云及私有云环境。
-2.  **数据持久层 :** 支持 MongoDB (文档型) 和主流 SQL 数据库（通过 TypeORM 适配），保证海量数据的高性能读写。
-3.  **元数据引擎:** 平台的核心大脑。
-      * **对象模型:** 定义字段、关系、验证规则。
-      * **权限引擎:** 字段级、记录级的精细化权限控制。
-      * **ObjectQL 引擎:** 强大的对象查询语言。
-4.  **服务层 (Service Layer):**
-      * **流程引擎:** 可视化设计业务流程。
-      * **API 网关:** 自动生成 GraphQL 和 RESTful API。
-      * **自动化规则:** Workflow Rules, Approval Processes.
-5.  **交互层:**
-      * 内置基于 React 的管理后台。
-      * 无缝集成 Amis 百度开源低代码前端框架。
-      * 支持移动端 (Mobile) 及微前端架构。
+* **AI 层:** 兼容 OpenAI / Claude / DeepSeek 及本地 LLM 模型。
+* **后端核心:** Node.js, Moleculer (微服务框架), TypeScript。
+* **数据存储:** MongoDB (元数据仓库), SQL 数据库 (业务数据，支持 MySQL/PostgreSQL/Oracle)。
+* **前端:** React, Amis (百度开源低代码框架)。
 
 ## 🚀 快速开始 | Quick Start
 
 ### 方式一：Docker 一键启动 (推荐)
 
-最快体验华炎魔方的方式：
+最快体验 AI 低代码开发：
 
 ```bash
 docker run -d -p 80:80 steedos/steedos-community:3.0
-````
+
+```
 
 ### 方式二：创建新项目 (开发者)
 
@@ -135,26 +116,26 @@ yarn install
 
 # 启动服务
 yarn start
+
 ```
 
-访问 `http://localhost:5100` 即可开始使用。
-
+访问 `http://localhost:5100` 即可开始使用 AI 构建应用。
 
 ## 🧩 生态与集成 | Ecosystem
 
-华炎魔方不仅仅是一个孤岛，它拥有强大的连接能力：
+华炎魔方拥有强大的连接能力：
 
-  * **身份认证:** 支持 OIDC, SAML, LDAP, Active Directory 集成。
-  * **第三方连接:** 预置企业微信、钉钉、飞书连接器。
-  * **数据集成:** 轻松通过 ETL 工具连接 SAP, Oracle 等传统 ERP。
+* **身份认证:** 支持 OIDC, SAML, LDAP, AD 域集成。
+* **IM 集成:** 预置企业微信、钉钉、飞书连接器。
+* **数据集成:** 轻松连接 SAP, Oracle 等传统 ERP 系统。
 
 ## 🤝 贡献与社区 | Community
 
-华炎魔方是完全开源的项目，我们欢迎任何形式的贡献！
+华炎魔方是完全开源的项目，我们正在积极探索 **AI x Low-Code** 的前沿。
 
-  * 🐛 **报告问题**: [GitHub Issues](https://github.com/steedos/steedos-platform/issues)
-  * 💬 **讨论交流**: [GitHub Discussions](https://github.com/steedos/steedos-platform/discussions)
+* 🐛 **报告问题**: [GitHub Issues](https://github.com/steedos/steedos-platform/issues)
+* 💬 **讨论交流**: [GitHub Discussions](https://github.com/steedos/steedos-platform/discussions)
 
 ## 联系我们
 
-<img src="https://www.steedos.com/img/QR_contact1.png" width="600" /> 
+<img src="https://www.steedos.com/img/QR_contact1.png" width="500" alt="Contact Steedos" />
