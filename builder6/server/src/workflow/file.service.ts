@@ -106,7 +106,22 @@ export class FileService {
         metadata.locked_by = locked_by;
         metadata.locked_by_name = locked_by_name;
       }
-      const fileRecord = await this.filesService.uploadFile(
+
+      await this.mongodbService.findOneAndUpdate(
+        COLLECTION_NAME,
+        {
+          "metadata.parent": parentId,
+          "metadata.current": true,
+        },
+        {
+          $unset: {
+            "metadata.current": "",
+          },
+        },
+        {},
+      );
+
+      fileRecord = await this.filesService.uploadFile(
         COLLECTION_NAME,
         file,
         {},
@@ -114,21 +129,7 @@ export class FileService {
           metadata: metadata,
         },
       );
-
       if (fileRecord) {
-        await this.mongodbService.findOneAndUpdate(
-          COLLECTION_NAME,
-          {
-            "metadata.parent": parentId,
-            "metadata.current": true,
-          },
-          {
-            $unset: {
-              "metadata.current": "",
-            },
-          },
-          {},
-        );
         if (overwrite?.toLowerCase() === "true") {
           await this.mongodbService.deleteMany(COLLECTION_NAME, {
             "metadata.instance": instanceId,
