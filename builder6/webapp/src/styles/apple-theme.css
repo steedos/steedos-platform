@@ -1,0 +1,357 @@
+/* Apple Style Theme - Optimized for Steedos Platform */
+
+:root {
+  --font-family-apple: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  --color-apple-bg: #f5f5f7;
+  --color-apple-card: #ffffff;
+  --color-apple-text: #1d1d1f;
+  --color-apple-link: #0071e3;
+  --apple-radius-sm: 8px;
+  --apple-radius-md: 12px;
+  --apple-radius-lg: 18px;
+  --apple-shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --apple-shadow-md: 0 4px 6px -1px rgba(0,0,0,0.06), 0 2px 4px -1px rgba(0,0,0,0.03);
+  --apple-shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -2px rgba(0,0,0,0.025);
+  --apple-glass-bg: rgba(255, 255, 255, 0.75);
+  --apple-glass-border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+body {
+  font-family: var(--font-family-apple);
+  background-color: var(--color-apple-bg);
+  color: var(--color-apple-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography Enhancements */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* Glassmorphism Headers - Background removed to allow app configuration */
+.steedos-header-container, .navbar {
+  /* background-color: var(--apple-glass-bg); */
+  /* backdrop-filter: blur(20px); */
+  /* -webkit-backdrop-filter: blur(20px); */
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  box-shadow: none;
+}
+
+/* Sidebar Glass Effect */
+.sidebar-wrapper, .steedos .skin-blue-light .main-sidebar {
+  background-color: var(--apple-glass-bg);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(0,0,0,0.05);
+}
+
+/* Card Style Modernization */
+.slds-card, .ant-card, .panel, .amis-scope .cxd-Panel, .amis-scope .cxd-Page {
+  background: var(--color-apple-card);
+  border-radius: var(--apple-radius-md);
+  border: 1px solid rgba(0,0,0,0.04);
+  box-shadow: var(--apple-shadow-sm);
+  transition: box-shadow 0.3s ease;
+}
+
+.slds-card:hover, .ant-card:hover, .panel:hover {
+  box-shadow: var(--apple-shadow-md);
+}
+
+/* Cleaner Buttons */
+.slds-button, .ant-btn, .amis-scope .cxd-Button {
+  border-radius: 999px; /* Pill shape */
+  font-weight: 500;
+  transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  box-shadow: none;
+}
+
+.slds-button_neutral, .ant-btn-default, .amis-scope .cxd-Button--default {
+  background: #ffffff;
+  border: 1px solid #d2d2d7;
+  color: #1d1d1f;
+}
+.slds-button_neutral:hover, .ant-btn-default:hover {
+  background: #f5f5f7;
+  border-color: #c7c7cc;
+}
+
+/* Action/Primary Buttons - Apple Blue */
+.slds-button_brand, .ant-btn-primary, .amis-scope .cxd-Button--primary {
+  background: var(--color-apple-link);
+  border-color: var(--color-apple-link);
+  color: #fff;
+}
+
+.slds-button_brand:hover, .ant-btn-primary:hover, .amis-scope .cxd-Button--primary:hover {
+  background: #0077ed;
+  border-color: #0077ed;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 113, 227, 0.2);
+}
+
+/* Form Inputs - Scoped to Login/Signup only to avoid breaking Amis/App layout */
+.steedos-auth-card input,
+.steedos-auth-card textarea,
+.steedos-auth-card select {
+  border-radius: var(--apple-radius-sm);
+  border: 1px solid #d2d2d7;
+  background: rgba(255,255,255,0.8);
+  box-shadow: none;
+  padding: 10px 12px;
+  min-height: 40px;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+.steedos-auth-card input:focus,
+.steedos-auth-card textarea:focus,
+.steedos-auth-card select:focus {
+  border-color: var(--color-apple-link);
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.15);
+  outline: none;
+  z-index: 10;
+}
+
+/* Fix for grouped inputs in Auth Card */
+.steedos-auth-card .rounded-md > div > input {
+    margin-bottom: 8px;
+    border-radius: var(--apple-radius-sm); 
+}
+.steedos-auth-card .rounded-md {
+    box-shadow: none;
+    background: transparent;
+}
+
+/* Material UI Overrides */
+.MuiPaper-elevation1, .MuiPaper-elevation2 {
+    box-shadow: var(--apple-shadow-sm);
+    border-radius: var(--apple-radius-md);
+}
+.MuiButton-root {
+    border-radius: 999px;
+    text-transform: none; /* Apple uses sentence case usually */
+    font-weight: 500;
+    letter-spacing: normal;
+}
+.MuiButton-containedPrimary {
+    background-color: var(--color-apple-link);
+    box-shadow: none;
+}
+.MuiButton-containedPrimary:hover {
+    background-color: #0077ed;
+    box-shadow: 0 4px 8px rgba(0, 113, 227, 0.2);
+}
+.MuiTabs-indicator {
+    background-color: var(--color-apple-link);
+}
+.MuiTab-textColorPrimary.Mui-selected {
+    color: var(--color-apple-link);
+}
+
+/* Avatars */
+.slds-avatar, .ant-avatar {
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Modals & Dialogs */
+.slds-modal__container, .ant-modal-content, .amis-scope .cxd-Modal-content {
+  border-radius: var(--apple-radius-lg);
+  box-shadow: var(--apple-shadow-lg);
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+.slds-modal__header, .ant-modal-header, .amis-scope .cxd-Modal-header {
+  background: #fff;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.slds-modal__footer, .ant-modal-footer, .amis-scope .cxd-Modal-footer {
+  background: #fbfbfd;
+  border-top: 1px solid #f0f0f0;
+}
+
+/* Navigation Items */
+.slds-nav-vertical__action {
+  border-radius: var(--apple-radius-sm);
+  transition: all 0.2s ease;
+  margin: 2px 8px;
+  padding: 8px 12px;
+}
+
+.slds-nav-vertical__item.slds-is-active .slds-nav-vertical__action {
+  background: rgba(0, 113, 227, 0.1);
+  color: var(--color-apple-link);
+  font-weight: 600;
+}
+
+.slds-nav-vertical__item.slds-is-active .slds-nav-vertical__action:before {
+  display: none; /* Remove stick on left */
+}
+
+/* Icons */
+.slds-icon {
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+}
+.fa, .fas, .fab {
+  font-size: 0.95em;
+  opacity: 0.85;
+}
+.fa:hover, .fas:hover, .fab:hover {
+  opacity: 1;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 5px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #a8a8a8;
+}
+
+/* Auth Card Overrides */
+.steedos-auth-card {
+  border-radius: var(--apple-radius-lg);
+  box-shadow: var(--apple-shadow-lg);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* Ensure Login/Auth buttons are visible and styled correctly */
+.steedos-auth-card button[type="submit"],
+.steedos-auth-card button.bg-blue-600 {
+  background: var(--color-apple-link) !important; /* Keep important only for core brand colors */
+  color: #fff !important;
+  border-radius: 999px !important;
+  box-shadow: 0 4px 6px rgba(0, 113, 227, 0.3);
+  font-weight: 500;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  height: auto;
+  opacity: 1;
+  visibility: visible;
+  border: none;
+}
+
+.steedos-auth-card button[type="submit"]:hover,
+.steedos-auth-card button.bg-blue-600:hover {
+  background: #0077ed !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 8px rgba(0, 113, 227, 0.4);
+}
+
+.steedos-auth-card button.text-blue-600 {
+    color: var(--color-apple-link) !important;
+}
+
+/* Signup Page Specifics & Verify Code Button */
+.steedos-auth-card .grid-cols-5 {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+}
+
+.steedos-auth-card .grid-cols-5 > div:first-child,
+.steedos-auth-card .grid-cols-5 > .col-span-3 {
+    flex: 1;
+    width: auto;
+}
+
+.steedos-auth-card #reApplyCodeBtn {
+    width: auto;
+    min-width: 120px;
+    margin-left: 0;
+    border-radius: var(--apple-radius-sm);
+    border: 1px solid #d2d2d7;
+    background: #f5f5f7;
+    color: var(--color-apple-link);
+    font-weight: 500;
+    box-shadow: none;
+    margin-top: 0; 
+    height: 40px; /* Match input height */
+    padding: 0 16px;
+}
+
+.steedos-auth-card #reApplyCodeBtn:hover:not(:disabled) {
+    background: #e5e5e7;
+    border-color: #c7c7cc;
+}
+
+.steedos-auth-card #reApplyCodeBtn:disabled {
+    color: #98989d;
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Fix stacked inputs in signup/login to look like separated Apple inputs */
+.steedos-auth-card .rounded-md {
+    box-shadow: none;
+    background: transparent;
+}
+.steedos-auth-card .rounded-md > div, 
+.steedos-auth-card .rounded-md > .grid-cols-5 {
+    margin-bottom: 14px;
+    margin-top: 0; 
+}
+
+/* Ensure inputs themselves have proper radius even if class says rounded-none */
+.steedos-auth-card input {
+    border-radius: var(--apple-radius-sm) !important; /* Specific override needed for rounded-none utility class */
+}
+
+/* Normalize text links for switching auth modes */
+.steedos-auth-card button.font-medium.text-blue-600 {
+    font-weight: 400;
+    font-size: 14px;
+}
+
+/* Animations found in Apple UI */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.creator-content-wrapper {
+  animation: fadeIn 0.4s ease-out;
+}
+
+/* Steedos Specific Overrides */
+.steedos-header-container .slds-context-bar {
+  /* background: transparent; */
+}
+
+.steedos .content-wrapper, .steedos .right-side {
+  background-color: var(--color-apple-bg);
+}
+
+/* Amis specific fixes */
+.amis-scope .cxd-Page-content {
+  padding: 20px;
+}
+
+.amis-scope .cxd-Panel-heading {
+  background: transparent;
+  border-bottom: 1px solid #f0f0f0;
+  padding: 16px 20px;
+}
+
+.amis-scope .cxd-Panel-title {
+  font-weight: 600;
+  font-size: 16px;
+}

@@ -14,15 +14,15 @@ const getHeaderSchema = (props) => {
         body: [
             {
                 "type": "wrapper",
-                "className": "sticky p-0 top-0 z-40 w-full flex-none backdrop-blur transition-colors duration-500 lg:z-[1000] steedos-header-container",
+                "className": "sticky p-0 top-0 z-40 w-full flex-none backdrop-blur-md backdrop-saturate-150 transition-colors duration-500 lg:z-[1000] steedos-header-container border-b border-gray-200/50 dark:border-gray-700/50",
                 body: [
                     {
                         "type": "wrapper",
-                        "className": 'flex w-full px-4 py-0 h-[50px] justify-between items-center steedos-header-container-line-one ',
+                        "className": 'flex w-full px-4 lg:px-5 py-0 h-[56px] justify-between items-center steedos-header-container-line-one',
                         "body": [
                             {
                                 type: "service",
-                                className: 'p-0 flex flex-1 items-center',
+                                className: 'p-0 flex flex-1 items-center gap-2',
                                 "onEvent": {
                                     "@history_paths.changed": {
                                         "actions": [
@@ -38,7 +38,7 @@ const getHeaderSchema = (props) => {
                                 body: [
                                     {
                                         "type": "button",
-                                        "className": "toggle-sidebar flex items-center pr-4",
+                                        "className": "toggle-sidebar flex items-center justify-center w-9 h-9 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors mr-1",
                                         "visibleOn": "${window:innerWidth < 768 && !!app && app.showSidebar}",
                                         "onEvent": {
                                             "click": {
@@ -64,14 +64,14 @@ const getHeaderSchema = (props) => {
                                                 "name": "rows",
                                                 "colorVariant": "default",
                                                 "id": "u:afc3a08e8cf3",
-                                                "className": "slds-button_icon slds-global-header__icon"
+                                                "className": "slds-button_icon slds-global-header__icon text-gray-500"
                                             }
                                         ],
                                     },
                                     {
                                         "type": "button",
                                         "visibleOn": "${window:innerWidth < 768 && (window:historyPaths.length > 1 || window:historyPaths[0].params.record_id)}",
-                                        "className":"flex",
+                                        "className":"flex items-center justify-center w-9 h-9 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors mr-1",
                                         "onEvent": {
                                             "click": {
                                                 "actions": [
@@ -88,7 +88,7 @@ const getHeaderSchema = (props) => {
                                                 "category": "utility",
                                                 "name": "chevronleft",
                                                 "colorVariant": "default",
-                                                "className": "slds-button_icon slds-global-header__icon"
+                                                "className": "slds-button_icon slds-global-header__icon text-gray-500"
                                             }
                                         ]
                                     },
@@ -97,11 +97,12 @@ const getHeaderSchema = (props) => {
                                         "showAppName": false,
                                         // "hiddenOn": "${window:innerWidth < 768}",
                                         "appId": "${app.id}",
+                                        "className": "flex items-center"
                                     },
                                     {
-                                        "className": 'w-auto ml-4 inline-block align-middle',
+                                        "className": 'w-auto ml-3 flex items-center',
                                         "type": "tpl",
-                                        "tpl": `<a href='/app' class='flex items-center '><img class='block h-6 w-auto' src='${logoSrc}'></a>`,
+                                        "tpl": `<a href='/app' class='flex items-center hover:opacity-80 transition-opacity'><img class='block h-7 w-auto' src='${logoSrc}'></a>`,
                                         "visibleOn": `${!isMobile && !!logoSrc}`
                                     },
                                     // {
@@ -110,7 +111,7 @@ const getHeaderSchema = (props) => {
                                     //     "tpl": '',
                                     // },
                                     {
-                                        "className": 'w-auto ml-4 font-bold text-lg inline-block align-middle',
+                                        "className": 'w-auto ml-3 font-semibold text-lg tracking-tight inline-block align-middle text-slate-800 dark:text-white',
                                         "type": "tpl",                                        
                                         "hiddenOn": "${window:innerWidth < 768}",
                                         "tpl": '${app.name}',
@@ -120,7 +121,7 @@ const getHeaderSchema = (props) => {
                             {
                                 "type": "steedos-global-header-toolbar",
                                 "label": "Global Header",
-                                className: 'flex flex-nowrap gap-x-4 items-center',
+                                className: 'flex flex-nowrap gap-x-2 items-center',
                                 logoutScript: "window.signOut();",
                                 customButtons: customButtons
                             }
@@ -131,7 +132,7 @@ const getHeaderSchema = (props) => {
             },
             {
                 "type": "button",
-                "className": 'p-0 absolute inset-0 mt-[50px]',
+                "className": 'p-0 absolute inset-0 mt-[56px]',
                 visibleOn: '${!!app && app.showSidebar}',
                 body: [
                     {

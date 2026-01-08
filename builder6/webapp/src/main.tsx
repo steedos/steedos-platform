@@ -17,7 +17,8 @@ import './i18n';
 import './styles/root.css';
 import './styles/light.css';
 import './styles/dark.css';
-import './index.css'
+import './index.css';
+import './styles/apple-theme.css';
 
 
 const container = document.getElementById("root") as HTMLElement;

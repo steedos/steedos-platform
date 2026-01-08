@@ -25,16 +25,16 @@ class Card extends React.Component<any> {
     const { platform = {} } = (this.props as any).settings;
     return (
 <div className="flex sm:items-center justify-center mx-auto overflow-auto md:p-10 h-full">
-  <div className="relative rounded p-10 sm:shadow-md bg-white w-screen max-w-md">
+  <div className="relative rounded p-10 sm:shadow-md bg-white w-screen max-w-md steedos-auth-card">
     {this.props.children}
   </div>
-  { platform.is_oem != true && <div className="absolute bottom-0 left-0 right-0 text-center m-2 text-gray-500 text-sm">
+  { platform.is_oem != true && <div className="absolute bottom-0 left-0 right-0 text-center pb-6 text-gray-400 text-xs tracking-wide">
     <FormattedMessage
       id='accounts.copyright'
       defaultMessage='© 2025 Steedos Inc.'
     /> 
-    <span className="ml-1 mr-1"> | </span>
-    <a className="font-medium text-blue-600 hover:text-blue-500 focus:outline-none hover:underline transition ease-in-out duration-150"
+    <span className="ml-1 mr-1 opacity-50"> | </span>
+    <a className="text-xs text-gray-400 hover:text-gray-600 hover:underline transition-colors duration-200"
       href="javascript:void(0)" onClick={this.openPrivacyPage}>
       <FormattedMessage
         id='accounts.privacy'
