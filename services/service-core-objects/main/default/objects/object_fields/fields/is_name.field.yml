@@ -1,9 +1,0 @@
-name: is_name
-amis:
-  disabledOn: '${is_system == true}'
-group: Advanced
-hidden: false
-label: Is Name
-sort_no: 650
-type: boolean
-visible_on: ${ARRAYSOME(['text', 'textarea', 'autonumber', 'date', 'datetime', 'time', 'formula', 'lookup', 'master_detail'], item => item === type) && !multiple}

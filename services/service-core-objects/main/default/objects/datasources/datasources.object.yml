@@ -5,3 +5,126 @@ hidden: true
 version: 2
 isMetadata: true
 enable_dataloader: false
+fields:
+  connectString:
+    name: connectString
+    type: textarea
+    label: connectString
+    is_wide: true
+    group: Oracle
+    sort_no: 190
+  database:
+    name: database
+    type: text
+    label: Database name
+    group: Other connection options
+    sort_no: 150
+  driver:
+    name: driver
+    type: select
+    label: Driver
+    options: 'MongoDB:mongo,SQL Server:sqlserver,PostgreSQL:postgres,Oracle:oracle,MySQL:mysql,Sqlite:sqlite'
+    required: true
+    sort_no: 100
+    filterable: true
+  enable_space:
+    name: enable_space
+    type: boolean
+    omit: true
+    hidden: true
+    label: Enable Space
+    sort_no: 220
+  host:
+    name: host
+    type: text
+    label: Database host
+    group: Other connection options
+    sort_no: 130
+  is_enable:
+    name: is_enable
+    type: boolean
+    label: Enable
+    sort_no: 250
+    filterable: true
+  is_system:
+    name: is_system
+    type: boolean
+    label: System
+    readonly: true
+    visible_on: '{{global.mode ===''read'' ? true : false}}'
+    disabled: true
+    sort_no: 270
+  label:
+    name: label
+    type: text
+    label: Label
+    required: true
+    is_name: true
+    sort_no: 110
+    filterable: true
+    searchable: true
+  locale:
+    name: locale
+    type: text
+    label: Locale
+    group: advanced
+    sort_no: 230
+  logging:
+    name: logging
+    type: boolean
+    label: Debug
+    group: advanced
+    sort_no: 240
+  mssql_options:
+    name: mssql_options
+    type: textarea
+    label: Mssql connection options
+    is_wide: true
+    group: Mssql
+    sort_no: 180
+  name:
+    name: name
+    type: text
+    label: Name
+    searchable: true
+    index: true
+    required: true
+    inlineHelpText: 'Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters'
+    sort_no: 120
+    filterable: true
+  options:
+    name: options
+    type: object
+    label: Options
+    hidden: true
+    sort_no: 210
+  password:
+    name: password
+    type: password
+    label: Database password
+    group: Other connection options
+    sort_no: 170
+  port:
+    name: port
+    type: number
+    scale: 0
+    label: Database host port
+    group: Other connection options
+    sort_no: 140
+  record_permissions:
+    name: record_permissions
+    type: object
+    visible_on: '{{global.mode ===''read'' ? true : false}}'
+    sort_no: 260
+  timezone:
+    name: timezone
+    type: text
+    label: Timezone
+    group: advanced
+    sort_no: 200
+  username:
+    name: username
+    type: text
+    label: Database username
+    group: Other connection options
+    sort_no: 160

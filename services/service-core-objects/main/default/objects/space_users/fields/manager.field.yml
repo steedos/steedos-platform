@@ -1,6 +1,0 @@
-name: manager
-type: lookup
-label: Superior
-reference_to: users
-filterable: false
-sort_no: 220

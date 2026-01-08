@@ -19,3 +19,47 @@ icon: apps
 is_enable: true
 label: steedos_keyvalues
 version: 2
+fields:
+  key:
+    name: key
+    filterable: false
+    generated: false
+    hidden: false
+    index: false
+    is_name: false
+    is_wide: false
+    label: key
+    primary: false
+    readonly: false
+    required: false
+    searchable: false
+    sort_no: 120
+    sortable: false
+    type: text
+  user:
+    name: user
+    index: true
+    label: user
+    required: true
+    searchable: true
+    sort_no: 100
+    type: text
+  value:
+    name: value
+    filterable: false
+    generated: false
+    hidden: false
+    index: false
+    is_name: false
+    is_wide: false
+    label: value
+    precision: 18
+    primary: false
+    readonly: false
+    required: false
+    scale: 0
+    searchable: false
+    sort_no: 130
+    sortable: false
+    type: object
+    blackbox: true

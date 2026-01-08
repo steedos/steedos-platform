@@ -1,5 +1,0 @@
-name: page
-label: 页面
-type: master_detail
-reference_to: pages
-readonly: true

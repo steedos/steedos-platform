@@ -11,3 +11,300 @@ compactLayouts:
   - organization
   - company_id
   - position
+fields:
+  avatar:
+    name: avatar
+    label: Avatar
+    type: avatar
+    sort_no: 370
+  company_id:
+    name: company_id
+    label: Main Division
+    type: lookup
+    visible_on: '{{global.mode ===''read'' ? true : false}}'
+    readonly: true
+    hidden: false
+    sort_no: 200
+  company_ids:
+    name: company_ids
+    label: All Divisions
+    type: lookup
+    reference_to: company
+    multiple: true
+    index: true
+    readonly: true
+    filterable: true
+    visible_on: '{{global.mode ===''read'' ? true : false}}'
+    hidden: false
+    defaultValue: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(
+      ) {
+
+
+        /* 主分部 company_id / 所属分部 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
+
+
+      }
+    sort_no: 190
+  email:
+    name: email
+    type: text
+    label: Email
+    searchable: true
+    index: true
+    sort_no: 120
+    required: true
+    filterable: true
+  email_notification:
+    name: email_notification
+    label: Recieve Email Notifications
+    type: boolean
+    sort_no: 300
+  email_verified:
+    name: email_verified
+    type: boolean
+    label: Email Verified
+    readonly: true
+    visible_on: '{{global.mode ===''read'' ? true : false}}'
+    hidden: false
+    sort_no: 130
+  hr:
+    name: hr
+    type: object
+    blackbox: true
+    omit: true
+    hidden: true
+    label: HR
+    sort_no: 380
+  invite_state:
+    name: invite_state
+    label: Invitation Status
+    type: select
+    options:
+      - label: Pending
+        value: pending
+        color: d3d3d3
+      - label: Accepted
+        value: accepted
+        color: 008000
+      - label: Refused
+        value: refused
+        color: ff0000
+    sort_no: 330
+    visible_on: '{{global.mode ===''read'' ? true : false}}'
+  is_customer:
+    name: is_customer
+    type: boolean
+    label: Customer
+    visible_on: '{{global.mode ===''read'' ? true : false}}'
+    readonly: true
+    sort_no: 260
+  is_supplier:
+    name: is_supplier
+    type: boolean
+    label: Supplier
+    visible_on: '{{global.mode ===''read'' ? true : false}}'
+    readonly: true
+    sort_no: 250
+  last_logon:
+    name: last_logon
+    type: date
+    omit: true
+    hidden: true
+    label: Last Logon Date
+    sort_no: 390
+  locale:
+    name: locale
+    label: Language
+    type: select
+    required: true
+    allowedValues:
+      - en-us
+      - zh-cn
+      - ja
+    options:
+      - label: 简体中文
+        value: zh-cn
+      - label: English
+        value: en-us
+      - label: 日本語
+        value: ja
+    amis:
+      value: '${locale ? locale : (window:Builder.settings.default_language == ''zh-CN'' ? ''zh-cn'' : (window:Builder.settings.default_language ? (window:Builder.settings.default_language === ''en'' ? ''en-us'' : window:Builder.settings.default_language) : ''zh-cn''))}'
+    sort_no: 280
+  manager:
+    name: manager
+    type: lookup
+    label: Superior
+    reference_to: users
+    filterable: false
+    sort_no: 220
+  mobile:
+    name: mobile
+    type: text
+    label: Mobile
+    searchable: true
+    group: '-'
+    index: true
+    sort_no: 140
+    filterable: true
+    amis:
+      tpl: '${IF(pageType == ''record'' && formFactor != ''LARGE'' && isLookup != true, "<a href=''tel: " + mobile + "'' >" + (mobile ? mobile : '''') + "</a>", (mobile ? mobile : ''''))}'
+  mobile_verified:
+    name: mobile_verified
+    type: boolean
+    label: Mobile Verified
+    readonly: true
+    visible_on: '{{global.mode ===''read'' ? true : false}}'
+    hidden: false
+    sort_no: 150
+  name:
+    name: name
+    label: Name
+    type: text
+    defaultValue: ''
+    description: ''
+    inlineHelpText: ''
+    required: true
+    searchable: true
+    index: true
+    sortable: true
+    filterable: true
+    sort_no: 100
+  organization:
+    name: organization
+    label: Main Department
+    type: lookup
+    reference_to: organizations
+    readonly: true
+    visible_on: '{{global.mode ===''read'' ? true : false}}'
+    filterable: false
+    sort_no: 180
+  organizations:
+    name: organizations
+    type: lookup
+    label: All Departments
+    reference_to: organizations
+    multiple: true
+    index: true
+    defaultValue: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(
+      ) {
+
+
+        var organization = Session.get('organization');
+        var orgId = organization && organization._id;
+        if(orgId){
+          return [orgId];
+        }
+
+
+      }
+    required: true
+    filterable: true
+    searchable: true
+    sort_no: 160
+    visible_on: '{{global.mode ===''read'' ? true : (global.user.is_space_admin || global.user.roles.includes(''organization_admin''))}}'
+  organizations_parents:
+    name: organizations_parents
+    label: All Departments and Superiors
+    type: lookup
+    reference_to: organizations
+    multiple: true
+    readonly: true
+    visible_on: '{{global.mode ===''read'' ? true : false}}'
+    filterable: false
+    hidden: false
+    sort_no: 170
+  password:
+    name: password
+    label: 密码
+    type: password
+    sort_no: 355
+    visible_on: '{{recordId ? false : true}}'
+  password_expired:
+    name: password_expired
+    label: Password expired
+    type: boolean
+    omit: false
+    hidden: false
+    sort_no: 360
+    defaultValue: false
+  position:
+    name: position
+    type: text
+    label: Title
+    sortable: true
+    filterable: true
+    sort_no: 210
+    searchable: true
+  profile:
+    name: profile
+    type: lookup
+    label: Profile
+    showIcon: false
+    required: true
+    create: false
+    reference_to: permission_set
+    reference_to_field: name
+    visible_on: '{{global.user.is_space_admin}}'
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(filters,values
+      ) {
+
+        var is_space_admin = Builder.settings.context.user.is_space_admin;
+        if(is_space_admin){
+          return ["type","=","profile"]
+        }else{
+          return [["type","=","profile"], 'and', ["name","!=","admin"]]
+        }
+
+      }
+    defaultValue: user
+    sort_no: 230
+    filterable: true
+  sms_notification:
+    name: sms_notification
+    label: Recieve SMS Notifications
+    type: boolean
+    sort_no: 310
+  sort_no:
+    name: sort_no
+    type: number
+    label: Sort Number
+    group: '-'
+    sortable: true
+    sort_no: 290
+  user:
+    name: user
+    type: master_detail
+    reference_to: users
+    index: true
+    visible_on: '{{false}}'
+    label: User
+    filterable: false
+    sort_no: 350
+    readonly: true
+  user_accepted:
+    name: user_accepted
+    type: boolean
+    label: Valid
+    defaultValue: true
+    sort_no: 320
+    visible_on: '{{recordId ? true : false}}'
+  username:
+    name: username
+    type: text
+    label: Username
+    searchable: true
+    index: true
+    sort_no: 110
+    filterable: true
+  work_phone:
+    name: work_phone
+    type: text
+    label: Work Phone Number
+    searchable: true
+    sort_no: 270
+    amis:
+      tpl: '${IF(pageType == ''record'' && formFactor != ''LARGE'' && isLookup != true, "<a href=''tel: " + work_phone + "'' >" + (work_phone ? work_phone : '''') + "</a>",(work_phone ? work_phone : ''''))}'

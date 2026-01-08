@@ -23,3 +23,1165 @@ paging:
 relatedList:
   - permission_fields
 version: 2
+fields:
+  _name:
+    name: _name
+    amis:
+      disabledOn: '${is_system == true}'
+      copyable: true
+    hidden: false
+    index: true
+    label: Field Name
+    required: true
+    searchable: true
+    sort_no: 30
+    type: text
+    visible_on: '{{global.mode !=''read'' ? true : false}}'
+  amis:
+    name: amis
+    group: amis
+    hidden: false
+    inlineHelpText: '<a href=''https://docs.steedos.com/zh-CN/no-code/customize/fields/field-attributes/#amis-%E5%B1%9E%E6%80%A7'' target=''_blank''>查看帮助</a>'
+    is_wide: true
+    label: Amis 属性
+    language: json
+    sort_no: 550
+    type: code
+  auto_fill_mapping.$:
+    name: auto_fill_mapping.$
+    blackbox: true
+    group: auto_fill
+    hidden: false
+    label: Auto Fill Mapping
+    sort_no: 510
+    type: object
+  auto_fill_mapping.$.from:
+    name: auto_fill_mapping.$.from
+    depend_on:
+      - reference_to
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(filters,values
+      ) {
+
+        var currentFilter = [];
+        //当前字段为多选时，from的字段不能选择multiple为true的
+        if (values.multiple) {
+          currentFilter.push(['multiple', '!=', true]);
+        }
+
+        if(values && values.reference_to){
+          currentFilter.push(['object', '=', values.reference_to]);
+        }else{
+          currentFilter.push(['_id', '=', 'no']);
+        }
+
+        return currentFilter;
+
+      }
+    group: auto_fill
+    hidden: false
+    label: 'From:Fields in object that reference to'
+    reference_to: object_fields
+    reference_to_field: name
+    required: true
+    sort_no: 520
+    type: lookup
+  auto_fill_mapping.$.to:
+    name: auto_fill_mapping.$.to
+    depend_on:
+      - object
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(filters,values
+      ) {
+
+
+
+
+        //按照from字段类型给予不同的过滤限制,具体规则参考https://github.com/steedos/steedos-platform/issues/6496
+        var fieldFilters = {
+            "text": ["text", "textarea"],
+            "textarea": ["text", "textarea"],
+            "boolean": ["boolean", "toggle"],
+            "toggle": ["boolean", "toggle"],
+            "number": ["number", "currency"],
+            "currency": ["number", "currency"],
+            "lookup": ["lookup", "master_detail"],
+            "master_detail": ["lookup", "master_detail"],
+            "autonumber": ["autonumber", "text", "textarea"],
+            "email": ["email", "text", "textarea"]
+        };
+        var currentFilter = [];
+        //这里调用getUISchemaSync时传入true强制抓取最新schema是因为：设置自动填充时，如果from中选择了一个刚新建的字段，下面的fromField变量会取不到刚新建的字段，造成设置to属性会报错
+        var referenceObject = BuilderAmisObject && BuilderAmisObject.AmisLib && BuilderAmisObject.AmisLib.getUISchemaSync(values.reference_to, true);
+        var fromField = referenceObject && referenceObject.fields[values.from];
+
+        if (values.multiple) {
+          //当前字段为多选时，若from的字段类型为lookup、master_detail、select时，to的字段则必须选择multiple为true的
+          if (_.includes(["lookup","master_detail","select"], fromField.type)) {
+            currentFilter.push(['multiple', '=', true]);
+          }
+        }else {
+          //当前字段为单选时，若from的字段多选，to的字段则也必须多选；若from不是多选，则to也不能是多选
+          if (fromField.multiple){
+            currentFilter.push(['multiple', '=', true]);
+          } else {
+            currentFilter.push(['multiple', '!=', true]);
+          }
+        }
+        if (fromField) {
+            if(fromField.type == "select"){
+              //要注意下拉框字段类型有data_type属性，可能为boolean/number/text/null，默认值为null，表示text类型
+              var fromFieldDataType = fromField.data_type || "text";
+              currentFilter.push(['type', '=', 'select']);
+              if (fromFieldDataType === "text") {
+                currentFilter.push([['data_type', '=', 'text'], 'or', ['data_type', '=', null]]);
+              }
+              else {
+                currentFilter.push(['data_type', '=', fromFieldDataType]);
+              }
+            }
+            else if (fromField.data_type) {
+                // 公式字段类型按data_type属性处理
+                currentFilter.push(['type', 'in', fieldFilters[fromField.data_type] || fromField.data_type.split()]);
+            } else {
+              currentFilter.push(['type', 'in', fieldFilters[fromField.type] || fromField.type.split()]);
+              if (fromField.type == "lookup" || fromField.type == "master_detail") {
+                if(fromField.reference_to === "users"){
+                  currentFilter.push([['reference_to', '=', "users"],"or", ['reference_to', '=', "space_users"]]);
+                }
+                else{
+                  if (fromField.reference_to) {
+                    currentFilter.push(['reference_to', '=', fromField.reference_to]);
+                  }
+                  if (fromField.reference_to_field) {
+                    currentFilter.push(['reference_to_field', '=', fromField.reference_to_field]);
+                  }
+                }
+              }
+            }
+        }
+        if (values && values.object) {
+            currentFilter.push(['object', '=', values.object]);
+        } else {
+            currentFilter.push(['_id', '=', 'no']);
+        }
+        return currentFilter;
+
+
+
+
+      }
+    group: auto_fill
+    hidden: false
+    label: 'To:Fields in the current form'
+    reference_to: object_fields
+    reference_to_field: name
+    required: true
+    sort_no: 530
+    type: lookup
+    amis:
+      disabledOn: '${!from}'
+  auto_fill_mapping:
+    name: auto_fill_mapping
+    amis:
+      enableDialog: false
+    group: auto_fill
+    hidden: false
+    inlineHelpText: 'When the data is selected, the field values in the reference object are automatically filled into the current form field according to the following mapping.'
+    is_wide: true
+    label: Auto Fill Mapping
+    sort_no: 500
+    type: table
+    visible_on: '{{(formData.type === ''lookup'' || formData.type === ''master_detail'') && formData.reference_to}}'
+  autonumber_enable_modify:
+    name: autonumber_enable_modify
+    hidden: false
+    label: 允许修改编号
+    sort_no: 120
+    type: boolean
+    visible_on: '{{formData.type === ''autonumber'' ? true: false}}'
+  column_name:
+    name: column_name
+    amis:
+      disabledOn: '${is_system == true}'
+    filters: []
+    group: Advanced
+    hidden: false
+    index: true
+    inlineHelpText: Only supports relational databases.
+    label: Database column name
+    searchable: true
+    sort_no: 590
+    type: text
+    visible_on: '${_master.record.datasource != null &&(_master.record.datasource != "meteor") &&(_master.record.datasource != "default")}'
+  coordinatesType:
+    name: coordinatesType
+    amis:
+      disabledOn: '${is_system == true}'
+    defaultValue: bd09
+    hidden: false
+    label: 坐标类型
+    sort_no: 140
+    type: text
+    visible_on: '{{[''location''].indexOf(formData.type) > -1 ? true: false}}'
+  create:
+    name: create
+    amis:
+      disabledOn: '${is_system == true}'
+    defaultValue: true
+    group: ui
+    hidden: false
+    label: 弹出选择时允许新建
+    sort_no: 440
+    type: boolean
+    visible_on: '{{[''lookup''].indexOf(formData.type) > -1 ? true: false}}'
+  data_type:
+    name: data_type
+    amis:
+      disabledOn: '${is_system == true}'
+    depend_on:
+      - type
+    hidden: false
+    inlineHelpText: This field must be filled when the field type is 'Formula'
+    label: Data Type
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(values
+      ) {
+
+
+
+
+        return Steedos.getFieldDataTypes(values);
+
+
+
+
+      }
+    required: '{{[''formula''].indexOf(formData.type) > -1 ? true: false}}'
+    sort_no: 160
+    type: lookup
+    visible_on: '{{[''formula'',''select''].indexOf(formData.type) > -1 ? true: false}}'
+  defaultValue:
+    name: defaultValue
+    amis:
+      type: service
+      className: 'antd-Form-item antd-Form-item--normal m-0 defaultValue_field steedos-defaultValue-${type}-${global.mode} ${type !== ''html'' ? ''flex steedos-defaultValue-flex-grow'' : ''''} ${global.mode === ''read'' ? ''md:border-b'' : ''''} ${uiSchema && uiSchema.fields.defaultValue.is_wide ? ''col-span-2 m-0'' : ''''}'
+      schemaApi:
+        url: '${context.rootUrl}/service/api/object_fields/defaultValue/schema'
+        method: post
+        data:
+          object: '${object}'
+          name: '${name}'
+          options: '${options|filter:label:isTrue|filter:value:isTrue}'
+          type: '${type}'
+          reference_to: '${reference_to}'
+          multiple: '${multiple}'
+          filtersFunction: '${filtersFunction}'
+          reference_to_field: '${reference_to_field}'
+          mode: '${global.mode}'
+          scale: '${scale}'
+          _id: '${_id}'
+        trackExpression: '${object},${options|filter:label:isTrue|filter:value:isTrue|pick:label,value|json},${type},${reference_to},${reference_to_field},${multiple},${filtersFunction},${_id},${scale}'
+        headers:
+          Authorization: 'Bearer ${context.tenantId},${context.authToken}'
+      onEvent:
+        fetchSchemaInited:
+          weight: 0
+          actions:
+            - actionType: setValue
+              componentId: service_detail_page
+              args:
+                value:
+                  defaultValue: '${event.data.body[0].value}'
+              expression: 'global.mode ===''read'' && event.data.body[0].value'
+    blackbox: true
+    hidden: false
+    is_wide: true
+    label: Default Value
+    sort_no: 350
+    type: object
+    visible_on: '{{formData.type && [''autonumber'',''formula'',''summary'',''image'',''file''].indexOf(formData.type) < 0}}'
+  deleted_lookup_record_behavior:
+    name: deleted_lookup_record_behavior
+    amis:
+      disabledOn: '${required==true}'
+      value: '${IFS(true===required, "retain", !required && !deleted_lookup_record_behavior, "clear", deleted_lookup_record_behavior)}'
+    hidden: false
+    is_wide: true
+    label: 相关表记录删除规则
+    options:
+      - label: 相关表记录删除时，同时删除该字段值
+        value: clear
+      - label: 不允许删除
+        value: retain
+    required: true
+    sort_no: 100
+    type: select
+    visible_on: '{{ ''lookup'' === formData.type ? true: false }}'
+    description: 如果该字段是必填项，则默认不允许删除且禁止修改。
+  depend_on:
+    name: depend_on
+    amis:
+      disabledOn: '${is_system == true}'
+    depend_on:
+      - object
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(filters,values
+      ) {
+
+
+
+
+        if(values && values.object){
+          return ['object', '=', values.object]
+        }else{
+          return ['_id', '=', 'no']
+        }
+
+
+
+
+      }
+    group: ui
+    hidden: false
+    inlineHelpText: 联动字段；例如：A是B依赖的字段，当A字段值发生改变，B字段选项值会随之改变。
+    label: 依赖的字段
+    multiple: true
+    reference_to: object_fields
+    reference_to_field: name
+    sort_no: 470
+    type: lookup
+    visible_on: '{{[''lookup'', ''master_detail''].indexOf(formData.type) > -1 ? true: false}}'
+  description:
+    name: description
+    hidden: false
+    is_wide: true
+    label: Description
+    sort_no: 380
+    type: textarea
+    inlineHelpText: 在字段下方增加解释说明
+    amis:
+      type: input-rich-text
+      name: rich
+      options:
+        menubar: false
+        height: 200
+        plugins:
+          - lists
+        toolbar: undo redo | formatselect | bold italic forecolor backcolor  | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat
+  enable_enhanced_lookup:
+    name: enable_enhanced_lookup
+    defaultValue: true
+    group: ui
+    hidden: false
+    label: Enable Enhanced Lookup
+    sort_no: 430
+    type: boolean
+    visible_on: '{{[''lookup''].indexOf(formData.type) > -1 ? true: false}}'
+  enable_thousands:
+    name: enable_thousands
+    defaultValue: true
+    group: ui
+    hidden: false
+    label: 显示千分符
+    sort_no: 450
+    type: boolean
+    visible_on: '{{[''number'',''currency'',''percent''].indexOf(formData.type) > -1 ? true: false}}'
+  filterable:
+    name: filterable
+    group: Advanced
+    hidden: false
+    label: Filterable
+    sort_no: 570
+    type: boolean
+  filters:
+    name: filters
+    amis:
+      disabledOn: '${is_system == true}'
+    group: ui
+    hidden: false
+    inlineHelpText: 'vWhen the field type is Lookup Relationship or Master Detail Relationship, filtering conditions can be configured for the field, filtering option list; The field values can be configured as formulas, and the fields referenced in the formulas need to be configured in Dependent Fields at the same time'
+    is_wide: true
+    label: Lookup Relationship Filters Condition
+    readonly: false
+    sort_no: 460
+    type: code
+    visible_on: '{{([''lookup'', ''master_detail''].indexOf(formData.type) > -1 ? true: false) && !!formData.reference_to}}'
+  filtersFunction:
+    name: filtersFunction
+    amis:
+      disabledOn: '${is_system == true}'
+      placeholder: |-
+        function(filters, values){
+
+        }
+    hidden: false
+    is_wide: true
+    label: Lookup Relationship Filters Function
+    language: javascript
+    readonly: true
+    sort_no: 660
+    type: code
+    visible_on: '{{false}}'
+  formula:
+    name: formula
+    amis:
+      disabledOn: '${is_system == true}'
+    hidden: false
+    inlineHelpText: This field must be filled when the field type is 'Autonumber' or 'Formula'
+    is_wide: true
+    label: Formula
+    required: '{{[''autonumber'', ''formula''].indexOf(formData.type) > -1 ? true: false}}'
+    sort_no: 150
+    type: textarea
+    visible_on: '{{[''autonumber'', ''formula''].indexOf(formData.type) > -1 ? true: false}}'
+  formula_blank_value:
+    name: formula_blank_value
+    amis:
+      disabledOn: '${is_system == true}'
+    hidden: false
+    inlineHelpText: 'If your formula references any number or currency fields, specify what happens to the formula output when their values are blank.'
+    label: Blank Field Handling
+    options:
+      - label: Treat blank fields as zeroes
+        value: zeroes
+      - label: Treat blank fields as blanks
+        value: blanks
+    required: '{{[''formula''].indexOf(formData.type) > -1 ? true: false}}'
+    sort_no: 170
+    type: select
+    visible_on: '{{[''formula''].indexOf(formData.type) > -1 ? true: false}}'
+  generated:
+    name: generated
+    amis:
+      disabledOn: '${is_system == true}'
+    filters: []
+    group: Advanced
+    hidden: false
+    label: Generated
+    sort_no: 630
+    type: boolean
+    visible_on: '${_master.record.datasource != null &&(_master.record.datasource != "meteor") &&(_master.record.datasource != "default")}'
+  group:
+    name: group
+    group: ui
+    hidden: false
+    label: Group
+    readonly: true
+    sort_no: 480
+    type: text
+  hidden:
+    name: hidden
+    hidden: false
+    label: Hidden
+    sort_no: 670
+    type: boolean
+    visible_on: '{{false}}'
+  index:
+    name: index
+    group: Advanced
+    hidden: false
+    inlineHelpText: The Creation Is Executed Once A Day By Default And The Existing Indexes Are Not Repeatedly Created.
+    label: Is Index Field
+    sort_no: 620
+    type: boolean
+  inlineHelpText:
+    name: inlineHelpText
+    group: ui
+    hidden: false
+    is_wide: true
+    label: Prompt text
+    sort_no: 420
+    type: textarea
+    inlineHelpText: 在字段名称的右侧增加一个叹号提示，可查看对该字段的解释说明
+  is_customize:
+    name: is_customize
+    hidden: false
+    label: Customized
+    readonly: true
+    sort_no: 360
+    type: boolean
+  is_name:
+    name: is_name
+    amis:
+      disabledOn: '${is_system == true}'
+    group: Advanced
+    hidden: false
+    label: Is Name
+    sort_no: 650
+    type: boolean
+    visible_on: '${ARRAYSOME([''text'', ''textarea'', ''autonumber'', ''date'', ''datetime'', ''time'', ''formula'', ''lookup'', ''master_detail''], item => item === type) && !multiple}'
+  is_system:
+    name: is_system
+    hidden: false
+    label: System
+    visible_on: '{{false}}'
+    sort_no: 370
+    type: boolean
+  is_wide:
+    name: is_wide
+    group: ui
+    hidden: false
+    label: Is Wide
+    sort_no: 390
+    type: boolean
+  label:
+    name: label
+    hidden: false
+    is_name: true
+    label: Label
+    required: true
+    sort_no: 20
+    type: text
+  language:
+    name: language
+    amis:
+      disabledOn: '${is_system == true}'
+    hidden: false
+    label: 语言
+    options:
+      - label: bat
+        value: bat
+      - label: c
+        value: c
+      - label: coffeescript
+        value: coffeescript
+      - label: cpp
+        value: cpp
+      - label: csharp
+        value: csharp
+      - label: css
+        value: css
+      - label: dockerfile
+        value: dockerfile
+      - label: fsharp
+        value: fsharp
+      - label: go
+        value: go
+      - label: handlebars
+        value: handlebars
+      - label: html
+        value: html
+      - label: ini
+        value: ini
+      - label: java
+        value: java
+      - label: javascript
+        value: javascript
+      - label: json
+        value: json
+      - label: less
+        value: less
+      - label: lua
+        value: lua
+      - label: markdown
+        value: markdown
+      - label: msdax
+        value: msdax
+      - label: objective-c
+        value: objective-c
+      - label: php
+        value: php
+      - label: plaintext
+        value: plaintext
+      - label: postiats
+        value: postiats
+      - label: powershell
+        value: powershell
+      - label: pug
+        value: pug
+      - label: python
+        value: python
+      - label: r
+        value: r
+      - label: razor
+        value: razor
+      - label: ruby
+        value: ruby
+      - label: sb
+        value: sb
+      - label: scss
+        value: scss
+      - label: shell
+        value: shell
+      - label: sol
+        value: sol
+      - label: sql
+        value: sql
+      - label: swift
+        value: swift
+      - label: typescript
+        value: typescript
+      - label: vb
+        value: vb
+      - label: xml
+        value: xml
+      - label: yaml
+        value: yaml
+    required: '{{[''code''].indexOf(formData.type) > -1 ? true: false}}'
+    sort_no: 130
+    type: select
+    visible_on: '{{[''code''].indexOf(formData.type) > -1 ? true: false}}'
+  multiple:
+    name: multiple
+    amis:
+      disabledOn: '${is_system == true}'
+    hidden: false
+    inlineHelpText: Single choice and multiple choice switch to each other. Please resubmit the existing records or modify the saving format of this field in the database.
+    label: Multiple
+    sort_no: 70
+    type: boolean
+    visible_on: '{{[''select'', ''lookup'', ''image'',''file''].indexOf(formData.type) > -1 ? true: false}}'
+  name:
+    name: name
+    amis:
+      disabledOn: '${is_system == true}'
+      copyable: true
+    hidden: false
+    index: true
+    inlineHelpText: 'Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters'
+    label: API Name
+    readonly: true
+    searchable: true
+    sort_no: 40
+    type: text
+    visible_on: '{{global.mode !=''read'' ? false : true}}'
+  object:
+    name: object
+    amis:
+      disabledOn: 'true'
+    filters:
+      - name
+      - notcontains
+      - - base
+        - core
+        - space_users_invite
+        - _object_reload_logs
+    hidden: false
+    label: Object
+    reference_to: objects
+    reference_to_field: name
+    required: true
+    sort_no: 10
+    type: master_detail
+    write_requires_master_read: true
+  options.$.color:
+    name: options.$.color
+    hidden: false
+    label: Color
+    required: false
+    sort_no: 250
+    type: color
+  options.$.description:
+    name: options.$.description
+    hidden: false
+    label: Description
+    required: false
+    sort_no: 260
+    type: text
+  options.$:
+    name: options.$
+    blackbox: true
+    hidden: false
+    label: Options
+    sort_no: 220
+    type: object
+  options.$.label:
+    name: options.$.label
+    hidden: false
+    label: Label
+    required: true
+    sort_no: 230
+    type: text
+  options.$.value:
+    name: options.$.value
+    hidden: false
+    label: Value
+    required: true
+    sort_no: 240
+    type: text
+  options:
+    name: options
+    amis:
+      showIndex: true
+      disabledOn: '${is_system == true}'
+      enableDialog: false
+      draggable: true
+      columns:
+        - label
+        - value
+        - name: color
+          width: 170
+        - name: description
+          width: 300
+    hidden: false
+    inlineHelpText: The label and value of each option cannot be empty. Set the background color to FFFFFF in hexadecimal format.
+    is_wide: true
+    label: Options
+    required: '{{formData.type === ''select'' ? true: false}}'
+    sort_no: 210
+    type: table
+    visible_on: '{{formData.type === ''select'' ? true: false}}'
+  precision:
+    name: precision
+    amis:
+      value: 18
+      disabledOn: '${is_system == true}'
+    hidden: false
+    label: Precision
+    required: '{{ (function(){ if([''number'', ''currency'', ''percent'', ''summary''].indexOf(formData.type) > -1){ return true; } else{ if([''formula''].indexOf(formData.type) > -1 && [''number'', ''currency'', ''percent''].indexOf(formData.data_type) > -1){ return true; } else{ return false; } } })() }}'
+    scale: 0
+    sort_no: 180
+    type: currency
+    visible_on: '{{ (function(){ if([''number'', ''currency'', ''percent'', ''summary''].indexOf(formData.type) > -1){ return true; } else{ if([''formula''].indexOf(formData.type) > -1 && [''number'', ''currency'', ''percent''].indexOf(formData.data_type) > -1){ return true; } else{ return false; } } })() }}'
+  primary:
+    name: primary
+    amis:
+      disabledOn: '${is_system == true}'
+    filters: []
+    group: Advanced
+    hidden: false
+    label: Primary Key
+    sort_no: 600
+    type: boolean
+    visible_on: '${_master.record.datasource != null &&(_master.record.datasource != "meteor") &&(_master.record.datasource != "default")}'
+  readonly:
+    name: readonly
+    group: ui
+    hidden: false
+    inlineHelpText: It is read-only and does not appear on the form when you create or edit records.
+    label: Readonly
+    sort_no: 400
+    type: boolean
+  reference_to:
+    name: reference_to
+    amis:
+      menuTpl: '<div>${label}(${value})</div>'
+      disabledOn: '${is_system == true}'
+    hidden: false
+    label: Reference to
+    reference_to: objects
+    reference_to_field: name
+    required: '{{[''lookup'',''master_detail''].indexOf(formData.type) > -1 ? true: false}}'
+    sort_no: 60
+    type: lookup
+    visible_on: '{{[''lookup'', ''master_detail''].indexOf(formData.type) > -1 ? true: false}}'
+  reference_to_field:
+    name: reference_to_field
+    amis:
+      disabledOn: '${is_system == true}'
+    depend_on:
+      - reference_to
+    description: 默认为主键
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(filters,values
+      ) {
+
+
+
+
+        if(values && values.reference_to){
+          return ['object', '=', values.reference_to]
+        }else{
+          return ['_id', '=', 'no']
+        }
+
+
+
+
+      }
+    group: Advanced
+    hidden: false
+    inlineHelpText: 关联的对象保存到当前对象字段的值；例如：A对象关联B对象后，当A1记录关联了B1记录，默认会存B1记录的_id存到A1记录中。如果修改了外键字段后，会将“外键字段”替换_id存储到A1记录中。
+    label: 外键字段
+    reference_to: object_fields
+    reference_to_field: name
+    sort_no: 610
+    type: lookup
+    visible_on: '{{[''lookup'', ''master_detail''].indexOf(formData.type) > -1 ? true: false}}'
+  required:
+    name: required
+    hidden: false
+    label: Required
+    sort_no: 340
+    type: boolean
+    visible_on: '{{[''autonumber'',''summary'',''formula''].indexOf(formData.type) > -1 ? false: true}}'
+  rows:
+    name: rows
+    hidden: false
+    label: Rows
+    required: '{{formData.type === ''textarea'' ? true: false}}'
+    scale: 0
+    sort_no: 200
+    type: currency
+    visible_on: '{{formData.type === ''textarea'' ? true: false}}'
+  scale:
+    name: scale
+    amis:
+      value: 2
+      disabledOn: '${is_system == true}'
+    hidden: false
+    inlineHelpText: 'If the field type is a Percent, this indicates the number of decimal places the field will display, for example, two decimal places will display as 10.20%.'
+    label: Scale
+    min: 0
+    required: '{{ (function(){ if([''number'', ''currency'', ''percent'', ''summary''].indexOf(formData.type) > -1){ return true; } else{ if([''formula''].indexOf(formData.type) > -1 && [''number'', ''currency'', ''percent''].indexOf(formData.data_type) > -1){ return true; } else{ return false; } } })() }}'
+    scale: 0
+    sort_no: 190
+    type: currency
+    visible_on: '{{ (function(){ if([''number'', ''currency'', ''percent'', ''summary''].indexOf(formData.type) > -1){ return true; } else{ if([''formula''].indexOf(formData.type) > -1 && [''number'', ''currency'', ''percent''].indexOf(formData.data_type) > -1){ return true; } else{ return false; } } })() }}'
+  searchable:
+    name: searchable
+    group: Advanced
+    hidden: false
+    label: Searchable
+    sort_no: 560
+    type: boolean
+  show_as_qr:
+    name: show_as_qr
+    amis:
+      disabledOn: '${is_system == true}'
+    hidden: false
+    label: Show_as_qr
+    sort_no: 330
+    type: boolean
+    visible_on: '{{formData.type === ''url'' ? true: false}}'
+  sort_no:
+    name: sort_no
+    defaultValue: 100
+    group: ui
+    hidden: false
+    label: Sort Number
+    scale: 0
+    sort_no: 490
+    sortable: true
+    type: number
+  sortable:
+    name: sortable
+    group: Advanced
+    hidden: false
+    label: Sortable
+    sort_no: 580
+    type: boolean
+    visible_on: '{{ ["image","file","lookup","master_detail","select"].indexOf(formData.type)<0 }}'
+  static:
+    name: static
+    group: ui
+    hidden: false
+    inlineHelpText: 'Displays as read-only, but the field value can be set by default, autofill, or custom scripts when creating and editing records.'
+    label: Readonly and displayed while editing
+    sort_no: 410
+    type: boolean
+  summary_field:
+    name: summary_field
+    amis:
+      disabledOn: '${is_system == true}'
+      autoComplete:
+        method: get
+        url: '${context.rootUrl}/service/api/@${summary_object}/uiSchema?summary_object=${summary_object}&summary_type=${summary_type}&term=${term}'
+        data:
+          summary_type: '${summary_type}'
+        headers:
+          Authorization: 'Bearer ${context.tenantId},${context.authToken}'
+        sendOn: '!!this.summary_object && !!this.summary_type'
+        adaptor: |-
+          const summary_type = api.body.summary_type;
+          const term = api.query.term;
+          let fields = payload.fields;
+          let options = [];
+          if (fields) {
+            if (summary_type && summary_type !== "count") {
+              if (summary_type === "sum" || summary_type === "avg") {
+                /*sum/avg类型可以汇总数值、金额、百分比字段*/
+                _.forEach(fields, (value, key) => {
+                  let fieldType = value.type;
+                  if (["formula", "summary"].indexOf(fieldType) > -1) {
+                    /*要聚合的字段为公式或汇总字段时，按其字段数据类型判断是否支持聚合*/
+                    fieldType = value.data_type;
+                  }
+                  if (["number", "currency", "percent"].indexOf(fieldType) > -1) {
+                    options.push({ label: value.label, value: value.name });
+                  }
+                })
+              }
+              else {
+                /*min、max类型可以汇总数值、金额、百分比、日期、日期时间字段*/
+                _.forEach(fields, (value, key) => {
+                  let fieldType = value.type;
+                  if (["formula", "summary"].indexOf(fieldType) > -1) {
+                    /*要聚合的字段为公式或汇总字段时，按其字段数据类型判断是否支持聚合*/
+                    fieldType = value.data_type;
+                  }
+                  if (["number", "currency", "percent", "date", "datetime"].indexOf(fieldType) > -1) {
+                    options.push({ label: value.label, value: value.name });
+                  }
+                })
+              }
+            }
+            if (term) {
+              options = _.filter(options, (item) => {
+                return item.label.toLowerCase().indexOf(term.toLowerCase()) > -1;
+              })
+            }
+          }
+          payload = {
+            data: { options: options },
+            msg: "",
+            status: 0
+          }
+          return payload;
+    defaultIcon: service_contract
+    depend_on:
+      - summary_object
+      - summary_type
+    enable_enhanced_lookup: false
+    hidden: false
+    inlineHelpText: 'If the field type is a ''Roll-Up Summary'' and the ''Roll-Up Type'' is not COUNT, this field must be filled in, Only fields that aggregate number, currency, date, and datetime types are supported.'
+    label: Field to Aggregate
+    reference_to: object_fields
+    reference_to_field: name
+    required: '{{formData.type === ''summary'' && formData.summary_type !== ''count'' ? true: false}}'
+    sort_no: 270
+    type: lookup
+    visible_on: '{{formData.type === ''summary'' && formData.summary_object && formData.summary_type && formData.summary_type !== ''count''}}'
+  summary_filters.$.field:
+    name: summary_filters.$.field
+    hidden: false
+    label: Field
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(values
+      ) {
+
+        var summaryObject = BuilderAmisObject && BuilderAmisObject.AmisLib && BuilderAmisObject.AmisLib.getUISchemaSync(values.summary_object, false);
+        var fields = summaryObject && summaryObject.fields;
+        let options = [];
+        if (fields) {
+          _.forEach(fields, function(f, k){
+            /*hidden,grid等类型的字段，不需要过滤*/
+            if(!_.includes(["grid","object", "[Object]", "[object]", "Object", "avatar", "image", "markdown", "html"], f.type) && !f.hidden){
+              /*filters.$.field及flow.current等子字段也不需要过滤*/
+              if(k.indexOf(".") < 0){
+                options.push({label: f.label || k, value: k})
+              }
+            }
+          })
+        }
+        return options;
+
+      }
+    depend_on:
+      - summary_object
+    showIcon: false
+    sort_no: 300
+    type: lookup
+  summary_filters.$:
+    name: summary_filters.$
+    blackbox: true
+    hidden: false
+    label: Filter Criteria
+    sort_no: 290
+    type: object
+  summary_filters.$.operation:
+    name: summary_filters.$.operation
+    hidden: false
+    label: Operator
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(values
+      ) {
+
+        var summaryObject = BuilderAmisObject && BuilderAmisObject.AmisLib && BuilderAmisObject.AmisLib.getUISchemaSync(values.summary_object, false);
+        var fields = summaryObject && summaryObject.fields;
+        var getFieldDataType = function(objectFields, key){
+          if (objectFields && key){
+            var currentField = objectFields[key];
+            var result = currentField && currentField.type;
+            if (["formula", "summary"].indexOf(result) > -1){
+              result = currentField.data_type;
+            }
+            return result;
+          }
+          else{
+            return "text";
+          }
+        }
+        
+        let options = [];
+        if (fields) {
+          const field = api.context.field;
+          if(field){
+            var filter_field_type = getFieldDataType(fields, field);
+            options = Steedos.ObjectFieldManager.getSummaryFiltersOperation(filter_field_type);
+          }
+        }
+        return options;
+
+      }
+    depend_on:
+      - summary_object
+      - field
+    showIcon: false
+    sort_no: 310
+    type: lookup
+  summary_filters.$.value:
+    name: summary_filters.$.value
+    hidden: false
+    label: Value
+    sort_no: 320
+    type: text
+  summary_filters:
+    name: summary_filters
+    amis:
+      disabledOn: '${is_system == true}'
+      inlineEditMode: true
+      showIndex: true
+    depend_on:
+      - summary_object
+    hidden: false
+    inlineHelpText: 'Only records meeting certain criteria should be included in the calculation, all records should be included in the calculation while the criteria is empty.'
+    is_wide: true
+    label: Filter Criteria
+    sort_no: 280
+    type: table
+    visible_on: '{{formData.type === ''summary''}}'
+  summary_object:
+    name: summary_object
+    amis:
+      disabledOn: '${is_system == true}'
+      source:
+        method: get
+        url: '${context.rootUrl}/service/api/amis-metadata-objects/objects/${object}/detailLists/options?depend_on_object=${object}'
+        headers:
+          Authorization: 'Bearer ${context.tenantId},${context.authToken}'
+        adaptor: ''
+        sendOn: this.object
+        requestAdaptor: ''
+      autoComplete:
+        method: get
+        url: '${context.rootUrl}/service/api/amis-metadata-objects/objects/${object}/detailLists/options?depend_on_object=${object}'
+        headers:
+          Authorization: 'Bearer ${context.tenantId},${context.authToken}'
+        adaptor: ''
+        sendOn: this.object
+        requestAdaptor: ''
+    depend_on:
+      - object
+    hidden: false
+    inlineHelpText: This field must be filled in when the field type is 'Roll-Up Summary'.
+    label: Object to Summarize
+    reference_to: objects
+    reference_to_field: name
+    required: '{{formData.type === ''summary'' ? true: false}}'
+    sort_no: 80
+    type: lookup
+    visible_on: '{{formData.type === ''summary'' ? true: false}}'
+  summary_type:
+    name: summary_type
+    amis:
+      disabledOn: '${is_system == true}'
+    hidden: false
+    inlineHelpText: This field must be filled in when the field type is 'Roll-Up Summary'.
+    label: Roll-Up Type
+    options:
+      - label: COUNT
+        value: count
+      - label: SUM
+        value: sum
+      - label: MIN
+        value: min
+      - label: MAX
+        value: max
+      - label: AVG
+        value: avg
+    required: '{{formData.type === ''summary'' ? true: false}}'
+    sort_no: 90
+    type: select
+    visible_on: '{{formData.type === ''summary'' ? true: false}}'
+  type:
+    name: type
+    amis:
+      disabledOn: '${is_system == true}'
+      searchable: true
+    hidden: false
+    label: Type
+    options:
+      - label: Text
+        value: text
+      - label: Textarea
+        value: textarea
+      - label: Html
+        value: html
+      - label: Lookup
+        value: lookup
+      - label: Master Detail
+        value: master_detail
+      - label: Select
+        value: select
+      - label: Boolean
+        value: boolean
+      - label: Date
+        value: date
+      - label: Datetime
+        value: datetime
+      - label: Time
+        value: time
+      - label: Number
+        value: number
+      - label: Currency
+        value: currency
+      - label: Percent
+        value: percent
+      - label: Image
+        value: image
+      - label: File
+        value: file
+      - label: Code
+        value: code
+      - label: Markdown
+        value: markdown
+      - label: Color
+        value: color
+      - label: Toggle
+        value: toggle
+      - label: Password
+        value: password
+      - label: Autonumber
+        value: autonumber
+      - label: Url
+        value: url
+      - label: Email
+        value: email
+      - label: Location
+        value: location
+      - label: Formula
+        value: formula
+      - label: 累计汇总
+        value: summary
+    required: true
+    sort_no: 50
+    type: select
+  unique:
+    name: unique
+    group: Advanced
+    hidden: false
+    inlineHelpText: The Creation Is Executed Once A Day By Default And The Existing Indexes Are Not Repeatedly Created.
+    label: Unique Index
+    sort_no: 640
+    type: boolean
+  visible_on:
+    name: visible_on
+    group: amis
+    hidden: false
+    inlineHelpText: '<a href=''https://docs.steedos.com/zh-CN/no-code/customize/fields/field-attributes#%E5%AD%97%E6%AE%B5%E6%98%BE%E7%A4%BA%E5%85%AC%E5%BC%8F'' target=''_blank''>查看帮助</a>'
+    is_wide: true
+    label: Visible On
+    sort_no: 540
+    type: textarea
+  write_requires_master_read:
+    name: write_requires_master_read
+    amis:
+      disabledOn: '${is_system == true}'
+    hidden: false
+    inlineHelpText: 'Sets the minimum sharing access level required on the master record to create, edit, or delete child records. This field applies only to master-detail or junction object custom field types. true—Allows users with “Read” access to the master record permission to create, edit, or delete child records. This setting makes sharing less restrictive. false—Allows users with “Read/Write” access to the master record permission to create, edit, or delete child records. This setting is more restrictive than true, and is the default value.'
+    label: Write requires master read
+    sort_no: 110
+    type: boolean
+    visible_on: '{{formData.type === ''master_detail'' ? true: false}}'

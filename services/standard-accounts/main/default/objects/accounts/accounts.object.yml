@@ -10,3 +10,514 @@ enable_share: true
 enable_audit: true
 enable_enhanced_lookup: true
 version: 2
+fields:
+  account_division:
+    name: account_division
+    label: 业务伙伴分部
+    type: text
+    hidden: true
+    sort_no: 360
+  account_number:
+    name: account_number
+    type: text
+    label: 业务伙伴编号
+    hidden: true
+    sort_no: 260
+  account_source:
+    name: account_source
+    type: text
+    label: 业务伙伴来源
+    hidden: true
+    sort_no: 320
+  annual_revenue:
+    name: annual_revenue
+    label: 年收入
+    type: currency
+    hidden: true
+    sort_no: 340
+  assistant:
+    name: assistant
+    label: 助理
+    type: text
+    hidden: true
+    sort_no: 380
+  asst_phone:
+    name: asst_phone
+    label: 助理电话
+    type: text
+    hidden: true
+    sort_no: 390
+  billing_address:
+    name: billing_address
+    type: textarea
+    label: 开单地址
+    rows: 3
+    group: 地址信息
+    sort_no: 240
+  birthdate:
+    name: birthdate
+    label: 生日
+    type: date
+    hidden: true
+    sort_no: 400
+  credit_code:
+    name: credit_code
+    type: text
+    label: 纳税人识别号（身份证/其他）
+    searchable: true
+    sort_no: 160
+  department:
+    name: department
+    label: 部门
+    type: text
+    hidden: true
+    sort_no: 410
+  description:
+    name: description
+    label: 描述
+    type: textarea
+    is_wide: true
+    sort_no: 200
+  do_not_call:
+    name: do_not_call
+    label: 请勿致电
+    type: boolean
+    inlineHelpText: 是否想要通过电话联系联系人。
+    hidden: true
+    sort_no: 430
+  email:
+    name: email
+    label: 电子邮件
+    type: email
+    hidden: true
+    sort_no: 420
+  fax:
+    name: fax
+    type: text
+    label: 传真
+    sort_no: 190
+  fax_opt_out:
+    name: fax_opt_out
+    label: 退出传真列表
+    type: boolean
+    inlineHelpText: 是否将联系人包含在传真中。
+    hidden: true
+    sort_no: 450
+  has_opted_out_of_email:
+    name: has_opted_out_of_email
+    label: 退出邮件列表
+    type: boolean
+    inlineHelpText: 是否将联系人包含在群发邮件列表中。
+    hidden: true
+    sort_no: 440
+  home_phone:
+    name: home_phone
+    label: 家庭电话
+    type: text
+    hidden: true
+    sort_no: 460
+  industry:
+    name: industry
+    type: select
+    label: 行业
+    searchable: true
+    sortable: true
+    options:
+      - label: 农业
+        value: Agriculture
+      - label: 服饰
+        value: Apparel
+      - label: 银行
+        value: Banking
+      - label: 生物科技
+        value: Biotechnology
+      - label: 化工
+        value: Chemicals
+      - label: 通信
+        value: Communications
+      - label: 建筑
+        value: Construction
+      - label: 咨询
+        value: Consulting
+      - label: 教育
+        value: Education
+      - label: 电子
+        value: Electronics
+      - label: 能源
+        value: Energy
+      - label: 工程
+        value: Engineering
+      - label: 娱乐
+        value: Entertainment
+      - label: 环保
+        value: Environmental
+      - label: 金融
+        value: Finance
+      - label: 食品饮料
+        value: Food_&_Beverage
+      - label: 政府组织
+        value: Government
+      - label: 医疗保健
+        value: Healthcare
+      - label: 服务
+        value: Hospitality
+      - label: 保险
+        value: Insurance
+      - label: 机械
+        value: Machinery
+      - label: 制造
+        value: Manufacturing
+      - label: 媒体
+        value: Media
+      - label: 非牟利组织
+        value: Not_For_Profit
+      - label: 其他
+        value: Other
+      - label: 休闲
+        value: Recreation
+      - label: 零售
+        value: Retail
+      - label: 航运
+        value: Shipping
+      - label: 科技
+        value: Technology
+      - label: 电讯
+        value: Telecommunications
+      - label: 交通运输
+        value: Transportation
+      - label: 公用事业
+        value: Utilities
+      - label: 软件
+        value: Software
+    filterable: true
+    sort_no: 210
+  invoice_address:
+    name: invoice_address
+    label: 开票地址
+    group: 开票信息
+    type: text
+    sort_no: 280
+  invoice_bank:
+    name: invoice_bank
+    label: 开户行
+    group: 开票信息
+    type: text
+    sort_no: 300
+  invoice_combinenum:
+    name: invoice_combinenum
+    label: 账号
+    group: 开票信息
+    type: text
+    sort_no: 310
+  invoice_phone:
+    name: invoice_phone
+    label: 开票电话
+    group: 开票信息
+    type: text
+    sort_no: 290
+  is_customer:
+    name: is_customer
+    type: boolean
+    label: 客户
+    hidden: false
+    omit: false
+    sort_no: 130
+  is_supplier:
+    name: is_supplier
+    type: boolean
+    label: 供应商
+    hidden: false
+    omit: false
+    sort_no: 120
+  lead_source:
+    name: lead_source
+    type: select
+    label: 潜在业务伙伴来源
+    searchable: true
+    sortable: true
+    options:
+      - label: 广告
+        value: Advertisement
+      - label: 业务伙伴活动
+        value: Customer_Event
+      - label: 员工推荐
+        value: Employee_Referral
+      - label: 百度搜索
+        value: Baidu_AdWords
+      - label: 其他
+        value: Other
+      - label: 合作伙伴
+        value: Partner
+      - label: 采购清单
+        value: Purchased_List
+      - label: 贸易展览
+        value: Trade_Show
+      - label: 线上研讨
+        value: Webinar
+      - label: 网站
+        value: Website
+    filterable: true
+    inlineHelpText: 潜在业务伙伴来源，例如，广告、合作伙伴或 Web。
+    hidden: true
+    sort_no: 470
+  mailing_city:
+    name: mailing_city
+    type: text
+    label: 邮寄地址-城市
+    group: 地址信息
+    hidden: true
+    sort_no: 480
+  mailing_street:
+    name: mailing_street
+    type: text
+    label: 邮寄地址-街道
+    group: 地址信息
+    hidden: true
+    sort_no: 490
+  mailing_zip:
+    name: mailing_zip
+    type: text
+    label: 邮寄地址-邮政编码
+    group: 地址信息
+    hidden: true
+    sort_no: 500
+  mobile:
+    name: mobile
+    label: 手机
+    type: text
+    hidden: true
+    sort_no: 540
+  name:
+    name: name
+    label: 业务伙伴名称
+    type: text
+    searchable: true
+    required: true
+    sortable: true
+    index: true
+    sort_no: 100
+  number_of_employees:
+    name: number_of_employees
+    type: number
+    label: 员工人数
+    sort_no: 220
+  other_city:
+    name: other_city
+    type: text
+    label: 其他地址-城市
+    group: 其他地址信息
+    hidden: true
+    sort_no: 510
+  other_phone:
+    name: other_phone
+    label: 其他电话
+    type: text
+    hidden: true
+    sort_no: 560
+  other_street:
+    name: other_street
+    type: text
+    label: 其他地址-街道
+    group: 其他地址信息
+    hidden: true
+    sort_no: 520
+  other_zip:
+    name: other_zip
+    type: text
+    label: 其他地址-邮政编码
+    group: 其他地址信息
+    hidden: true
+    sort_no: 530
+  owner:
+    name: owner
+    label: 我方客户经理
+    sortable: true
+    omit: false
+    hidden: false
+    sort_no: 110
+  ownership:
+    name: ownership
+    label: 所有权
+    type: select
+    sortable: true
+    options:
+      - label: 国营
+        value: National
+      - label: 私营
+        value: Private
+      - label: 子公司
+        value: Subcompany
+      - label: 其他
+        value: Others
+    inlineHelpText: 公司的所有权，例如，公有或私有。
+    hidden: true
+    sort_no: 350
+  parent_id:
+    name: parent_id
+    type: lookup
+    label: 母公司
+    reference_to: accounts
+    inlineHelpText: 作为大公司或组织的子公司的母公司。父级业务伙伴必须是华炎魔方中的现有业务伙伴。您可输入业务伙伴名称，或使用查找图标选择（或创建）业务伙伴。
+    sort_no: 150
+  partner_account:
+    name: partner_account
+    label: 合作伙伴
+    type: boolean
+    hidden: true
+    sort_no: 370
+  phone:
+    name: phone
+    type: text
+    label: 电话
+    defaultValue: ''
+    sort_no: 180
+  rating:
+    name: rating
+    label: 分级
+    type: select
+    sortable: true
+    options:
+      - label: 非常重要
+        value: Hot
+      - label: 重要
+        value: Warm
+      - label: 普通
+        value: Cold
+    filterable: true
+    inlineHelpText: 您如何划分此业务伙伴等级的分类，例如，普通、重要。
+    sort_no: 270
+  salutation:
+    name: salutation
+    type: select
+    label: 性别
+    hidden: true
+    options:
+      - label: 男
+        value: Male
+      - label: 女
+        value: Female
+    sort_no: 550
+  shipping_address:
+    name: shipping_address
+    type: textarea
+    label: 发货地址
+    rows: 3
+    group: 地址信息
+    sort_no: 250
+  site:
+    name: site
+    type: text
+    label: 业务伙伴地点
+    hidden: true
+    inlineHelpText: 可用业务伙伴地点字段来指定同一公司的不同位置。例如，假设百度在北京和上海均设有办公室。创建两个名为百度的业务伙伴，但是业务伙伴地点的值分别为北京和上海。
+    sort_no: 330
+  state:
+    name: state
+    label: 区域
+    type: select
+    sortable: true
+    options:
+      - label: 北京
+        value: BJ
+      - label: 上海
+        value: SH
+      - label: 重庆
+        value: CQ
+      - label: 天津
+        value: TJ
+      - label: 河北
+        value: HB
+      - label: 山西
+        value: SX
+      - label: 辽宁
+        value: LN
+      - label: 吉林
+        value: GL
+      - label: 黑龙江
+        value: HLJ
+      - label: 江苏
+        value: JS
+      - label: 浙江
+        value: ZJ
+      - label: 安徽
+        value: AH
+      - label: 福建
+        value: FJ
+      - label: 江西
+        value: JX
+      - label: 山东
+        value: SD
+      - label: 河南
+        value: HN
+      - label: 湖北
+        value: HUB
+      - label: 湖南
+        value: HUN
+      - label: 广东
+        value: GD
+      - label: 海南
+        value: HAN
+      - label: 四川
+        value: SC
+      - label: 贵州
+        value: GZ
+      - label: 云南
+        value: YN
+      - label: 陕西
+        value: SHX
+      - label: 甘肃
+        value: GS
+      - label: 青海
+        value: QH
+      - label: 内蒙古
+        value: NMG
+      - label: 广西
+        value: GX
+      - label: 西藏
+        value: XZ
+      - label: 宁夏
+        value: NX
+      - label: 新疆
+        value: XJ
+      - label: 香港
+        value: HK
+      - label: 澳门
+        value: AM
+      - label: 台湾
+        value: TW
+    filterable: true
+    inlineHelpText: 业务伙伴被分配至的区域。
+    sort_no: 230
+  type:
+    name: type
+    label: 类型
+    type: select
+    sortable: true
+    options:
+      - label: 分析师
+        value: Analyst
+      - label: 竞争者
+        value: Competitor
+      - label: 顾客
+        value: Customer
+      - label: 集成商
+        value: Integrator
+      - label: 投资者
+        value: Investor
+      - label: 合作伙伴
+        value: Partner
+      - label: 公关媒体
+        value: Press
+      - label: 潜在
+        value: Prospect
+      - label: 代理商
+        value: Reseller
+      - label: 其他
+        value: Other
+    filterable: true
+    sort_no: 140
+  website:
+    name: website
+    type: url
+    label: 网站
+    sort_no: 170

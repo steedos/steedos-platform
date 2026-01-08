@@ -7,3 +7,76 @@ enable_dataloader: false
 isMetadata: true
 paging:
   enabled: false
+fields:
+  _name:
+    name: _name
+    type: text
+    label: Api Name
+    searchable: true
+    index: true
+    required: true
+    sort_no: 100
+  description:
+    name: description
+    label: Description
+    type: textarea
+    sort_no: 200
+    is_wide: true
+  isEnabled:
+    name: isEnabled
+    label: Enabled
+    type: boolean
+    defaultValue: true
+    sort_no: 140
+  is_system:
+    name: is_system
+    type: boolean
+    label: System
+    readonly: true
+    visible_on: '{{global.mode ===''read'' ? true : false}}'
+    disabled: true
+    sort_no: 180
+  name:
+    name: name
+    hidden: false
+    label: Name
+    required: false
+    sort_no: 90
+    type: text
+    visible_on: '{{false}}'
+    readonly: true
+  objectApiName:
+    name: objectApiName
+    label: Object
+    type: master_detail
+    reference_to: objects
+    reference_to_field: name
+    required: true
+    sort_no: 120
+  record_permissions:
+    name: record_permissions
+    type: object
+    visible_on: '{{global.mode ===''read'' ? true : false}}'
+    sort_no: 160
+  script:
+    name: script
+    label: Script
+    type: code
+    language: javascript
+    is_wide: true
+    required: true
+    defaultValue: |-
+      // ctx: {input, params, broker, getObject, getUser}
+      // objects: all steedos objects
+      // db: mongodb client instance
+      // npm: {_, moment, validator, filters, axios, formData, mongodb, sequelize}
+    editorDidMount: |-
+      if(window._registerCompletionItemProviderFunction){
+        return ;
+      }
+      window._registerCompletionItemProviderFunction = true;
+      const result = Steedos.authRequest("/service/api/suggestions/function.d.ts", {async: false});
+      monaco.languages.typescript.javascriptDefaults.addExtraLib(
+        result
+      );
+    sort_no: 150

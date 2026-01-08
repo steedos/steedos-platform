@@ -1,7 +1,0 @@
-name: work_phone
-type: text
-label: Work Phone Number
-searchable: true
-sort_no: 270
-amis: 
-  tpl: "${IF(pageType == 'record' && formFactor != 'LARGE' && isLookup != true, \"<a href='tel: \" + work_phone + \"' >\" + (work_phone ? work_phone : '') + \"</a>\",(work_phone ? work_phone : ''))}"

@@ -1,5 +1,0 @@
-name: logging
-type: boolean
-label: Debug
-group: advanced
-sort_no: 240

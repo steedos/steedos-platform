@@ -1,7 +1,0 @@
-name: tab
-label: 选项卡
-type: master_detail
-reference_to: tabs
-reference_to_field: name
-required: true
-index: true

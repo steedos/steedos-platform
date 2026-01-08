@@ -3,3 +3,119 @@ label: Company
 icon: account
 hidden: true
 version: 2
+fields:
+  admins:
+    name: admins
+    label: Admin Users
+    type: lookup
+    reference_to: users
+    index: true
+    multiple: true
+    filterable: true
+    sort_no: 5
+  balance:
+    name: balance
+    label: Account Balance
+    type: number
+    scale: 2
+    omit: true
+    hidden: true
+    sort_no: 160
+  billing.remaining_months:
+    name: billing.remaining_months
+    type: number
+    omit: true
+    hidden: true
+    sort_no: 180
+  company_id:
+    name: company_id
+    defaultValue: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(
+      ) {
+
+
+        /* 主分部 company_id / 所属分部 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
+
+
+      }
+    omit: true
+    hidden: true
+    sort_no: 190
+  company_ids:
+    name: company_ids
+    defaultValue: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(
+      ) {
+
+
+        /* 主分部 company_id / 所属分部 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
+
+
+      }
+    omit: true
+    hidden: true
+    sort_no: 200
+  default_organization:
+    name: default_organization
+    label: Default organization
+    type: lookup
+    reference_to: organizations
+    group: Register account
+    sort_no: 12
+  default_profile:
+    name: default_profile
+    label: Default profile
+    type: lookup
+    showIcon: false
+    reference_to: permission_set
+    reference_to_field: name
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(filters,values
+      ) {
+
+        return [["type", "=", "profile"], ["name", "!=", "admin"]]
+
+      }
+    group: Register account
+    sort_no: 11
+  enable_register:
+    name: enable_register
+    label: Enable User Registration
+    type: boolean
+    group: Register account
+    defaultValue: false
+    sort_no: 10
+  features:
+    name: features
+    type: '[text]'
+    hidden: true
+    omit: true
+    readonly: true
+    sort_no: 210
+  name:
+    name: name
+    label: Name
+    type: text
+    defaultValue: ''
+    description: ''
+    inlineHelpText: ''
+    required: true
+    searchable: true
+    index: true
+    sort_no: 1
+  owner:
+    name: owner
+    label: Owner
+    type: lookup
+    reference_to: users
+    readonly: true
+    omit: false
+    hidden: false
+    sort_no: 110
+  services:
+    name: services
+    type: object
+    blackbox: true
+    omit: true
+    hidden: true
+    sort_no: 170

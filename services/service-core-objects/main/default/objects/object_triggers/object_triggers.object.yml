@@ -7,3 +7,146 @@ isMetadata: true
 enable_dataloader: false
 paging:
   enabled: false
+fields:
+  _name:
+    name: _name
+    type: text
+    label: Api Name
+    searchable: true
+    index: true
+    required: true
+    sort_no: 100
+    filterable: true
+  authentication_header_key:
+    name: authentication_header_key
+    type: text
+    label: Header Name
+    group: 认证
+    sort_no: 180
+    visible_on: '${type === ''url'' && authentication_type === ''header''}'
+    amis:
+      - options:
+          - label: authorization
+            value: authorization
+  authentication_header_value:
+    name: authentication_header_value
+    type: text
+    label: Header Value
+    group: 认证
+    sort_no: 190
+    visible_on: '${type === ''url'' && authentication_type === ''header''}'
+  authentication_type:
+    name: authentication_type
+    label: 认证类型
+    type: select
+    group: 认证
+    options:
+      - label: 不认证
+        value: none
+      - label: Header Auth
+        value: header
+    defaultValue: none
+    sort_no: 170
+    visible_on: '${type === ''url''}'
+  handler:
+    name: handler
+    label: Handler
+    type: code
+    language: javascript
+    is_wide: true
+    required: true
+    defaultValue: |-
+      // ctx
+      // objects: all steedos objects
+      // db: mongodb client instance
+      // services
+      // npm: {_, moment, validator, filters, axios, formData, mongodb, sequelize}
+    editorDidMount: |-
+      if(window._registerCompletionItemProviderTrigger){
+        return ;
+      }
+      window._registerCompletionItemProviderTrigger = true;
+      const result = Steedos.authRequest("/service/api/suggestions/trigger.d.ts", {async: false});
+      monaco.languages.typescript.javascriptDefaults.addExtraLib(
+        result
+      );
+    sort_no: 150
+    visible_on: '${type != ''url''}'
+  isEnabled:
+    name: isEnabled
+    label: Enabled
+    type: boolean
+    defaultValue: true
+    sort_no: 140
+    filterable: true
+  is_system:
+    name: is_system
+    type: boolean
+    label: System
+    readonly: true
+    visible_on: '{{global.mode ===''read'' ? true : false}}'
+    disabled: true
+    sort_no: 170
+  listenTo:
+    name: listenTo
+    label: Object
+    type: master_detail
+    reference_to: objects
+    reference_to_field: name
+    required: true
+    sort_no: 120
+    filterable: true
+  name:
+    name: name
+    data_type: text
+    type: text
+    visible_on: '{{false}}'
+    sort_no: 110
+    filterable: true
+  record_permissions:
+    name: record_permissions
+    type: object
+    visible_on: '{{global.mode ===''read'' ? true : false}}'
+    sort_no: 160
+  type:
+    name: type
+    label: 类型
+    type: select
+    options:
+      - label: 代码
+        value: code
+      - label: 接口
+        value: url
+    defaultValue: code
+    sort_no: 132
+  url:
+    name: url
+    type: url
+    label: URL
+    sort_no: 160
+    is_wide: true
+    visible_on: '${type === ''url''}'
+  when:
+    name: when
+    label: Execution Time Option
+    type: select
+    required: true
+    multiple: true
+    is_wide: true
+    options:
+      - label: 新增记录之前
+        value: beforeInsert
+      - label: 新增记录之后
+        value: afterInsert
+      - label: 修改记录之前
+        value: beforeUpdate
+      - label: 修改记录之后
+        value: afterUpdate
+      - label: 删除记录之前
+        value: beforeDelete
+      - label: 删除记录之后
+        value: afterDelete
+      - label: 查询记录之前
+        value: beforeFind
+    sort_no: 130
+    filterable: true

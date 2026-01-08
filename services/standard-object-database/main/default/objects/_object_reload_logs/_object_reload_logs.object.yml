@@ -1,2 +1,16 @@
 name: _object_reload_logs
 hidden: true
+fields:
+  change_data:
+    name: change_data
+    type: object
+    blackbox: true
+    sort_no: 110
+  change_time:
+    name: change_time
+    type: datetime
+    sort_no: 120
+  object_name:
+    name: object_name
+    type: text
+    sort_no: 100

@@ -3,3 +3,152 @@ label: User
 icon: user
 enable_api: true
 hidden: false
+fields:
+  avatar:
+    name: avatar
+    label: Avatar
+    type: avatar
+    sort_no: 100
+  company_id:
+    name: company_id
+    defaultValue: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(
+      ) {
+
+
+        /* 主分部 company_id / 所属分部 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
+
+
+      }
+    omit: true
+    hidden: true
+    sort_no: 240
+  company_ids:
+    name: company_ids
+    defaultValue: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(
+      ) {
+
+
+        /* 主分部 company_id / 所属分部 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
+
+
+      }
+    omit: true
+    hidden: true
+    sort_no: 250
+  email:
+    name: email
+    type: text
+    label: Email
+    sort_no: 130
+  email_notification:
+    name: email_notification
+    label: Recieve Email Notifications
+    type: boolean
+    sort_no: 180
+  is_cloudadmin:
+    name: is_cloudadmin
+    type: boolean
+    omit: true
+    hidden: true
+    label: is CloudAdmin
+    sort_no: 210
+  is_deleted:
+    name: is_deleted
+    type: boolean
+    omit: true
+    hidden: true
+    label: Deleted
+    sort_no: 220
+  last_logon:
+    name: last_logon
+    type: date
+    omit: true
+    hidden: true
+    label: Last Logon Date
+    sort_no: 200
+  locale:
+    name: locale
+    label: Language
+    type: select
+    allowedValues:
+      - en-us
+      - zh-cn
+    options:
+      - label: Simplified Chinese
+        value: zh-cn
+      - label: English
+        value: en-us
+    filterable: true
+    sort_no: 160
+  lockout:
+    name: lockout
+    type: boolean
+    omit: true
+    hidden: true
+    sort_no: 280
+    label: Lockout
+  login_failed_lockout_time:
+    name: login_failed_lockout_time
+    type: datetime
+    omit: true
+    hidden: true
+    sort_no: 270
+    label: Login Failed Lockout Time
+  login_failed_number:
+    name: login_failed_number
+    type: number
+    omit: true
+    hidden: true
+    sort_no: 260
+    label: Login Failed Number
+  mobile:
+    name: mobile
+    type: text
+    label: Mobile
+    group: '-'
+    readonly: true
+    index: true
+    sort_no: 120
+  name:
+    name: name
+    label: Name
+    type: text
+    required: true
+    searchable: true
+    index: true
+    sort_no: 110
+  password_expired:
+    name: password_expired
+    label: Password expired
+    type: boolean
+    omit: true
+    hidden: true
+    sort_no: 230
+  primary_email_verified:
+    name: primary_email_verified
+    type: boolean
+    omit: true
+    hidden: true
+    label: Primary Email Verified
+    sort_no: 190
+  steedos_id:
+    name: steedos_id
+    type: text
+    unique: true
+    readonly: true
+    omit: true
+    label: Steedos ID
+    sort_no: 150
+  username:
+    name: username
+    type: text
+    omit: true
+    label: Username
+    sort_no: 140
+  utcOffset:
+    name: utcOffset
+    label: Time Zone
+    type: number
+    sort_no: 170

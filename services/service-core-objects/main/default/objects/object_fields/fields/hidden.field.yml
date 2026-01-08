@@ -1,6 +1,0 @@
-name: hidden
-hidden: false
-label: Hidden
-sort_no: 670
-type: boolean
-visible_on: '{{false}}'

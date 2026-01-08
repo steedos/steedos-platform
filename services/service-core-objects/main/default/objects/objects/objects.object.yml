@@ -11,3 +11,476 @@ label: Objects
 paging:
   enabled: false
 version: 2
+fields:
+  actions:
+    name: actions
+    blackbox: true
+    hidden: true
+    label: Actions
+    omit: true
+    sort_no: 360
+    type: object
+    visible_on: '{{false}}'
+  app_unique_id:
+    name: app_unique_id
+    hidden: true
+    label: App Unique ID
+    sort_no: 420
+    type: text
+    visible_on: '{{false}}'
+  app_version:
+    name: app_version
+    hidden: true
+    label: App Version
+    sort_no: 430
+    type: text
+    visible_on: '{{false}}'
+  compactLayouts:
+    name: compactLayouts
+    depend_on:
+      - name
+    filters: []
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(filters,values
+      ) {
+
+
+
+
+
+        return ['object', '=', values.name]
+
+
+
+
+
+      }
+    group: feature
+    hidden: false
+    is_wide: true
+    label: 高亮字段
+    multiple: true
+    reference_to: object_fields
+    reference_to_field: name
+    sort_no: 900
+    type: lookup
+  custom:
+    name: custom
+    hidden: true
+    label: Custom
+    omit: true
+    sort_no: 400
+    type: boolean
+    visible_on: '{{false}}'
+  datasource:
+    name: datasource
+    amis:
+      disabledOn: '${is_system == true}'
+    defaultValue: default
+    filters: []
+    group: advanced
+    hidden: false
+    label: Datasource
+    reference_to: datasources
+    required: false
+    showIcon: false
+    sort_no: 180
+    type: master_detail
+  description:
+    name: description
+    hidden: false
+    is_wide: true
+    label: Description
+    sort_no: 50
+    type: textarea
+    filterable: true
+  enable_api:
+    name: enable_api
+    defaultValue: true
+    hidden: true
+    label: Enable API
+    sort_no: 270
+    type: boolean
+    visible_on: '{{false}}'
+  enable_audit:
+    name: enable_audit
+    type: boolean
+    label: Enable Audit
+    group: feature
+    sort_no: 240
+  enable_chatter:
+    name: enable_chatter
+    hidden: false
+    group: feature
+    label: Enable Comments
+    sort_no: 135
+    type: boolean
+    visible_on: '{{ Builder.settings.platform && ["platform-standard", "platform-enterprise", "platform-professional"].includes(Builder.settings.platform.product)  }}'
+  enable_dataloader:
+    name: enable_dataloader
+    defaultValue: true
+    hidden: true
+    label: Enable Dataloader
+    sort_no: 310
+    type: boolean
+    visible_on: '{{false}}'
+  enable_enhanced_lookup:
+    name: enable_enhanced_lookup
+    defaultValue: true
+    group: advanced
+    hidden: false
+    label: Enable Enhanced Lookup
+    sort_no: 230
+    type: boolean
+  enable_events:
+    name: enable_events
+    group: feature
+    hidden: false
+    label: Enable Events
+    sort_no: 160
+    type: boolean
+  enable_files:
+    name: enable_files
+    group: feature
+    hidden: false
+    label: Enable Files
+    sort_no: 130
+    type: boolean
+  enable_form_tabs:
+    name: enable_form_tabs
+    group: advanced
+    label: Enable Form Tabs
+    sort_no: 461
+    type: boolean
+  enable_inline_edit:
+    name: enable_inline_edit
+    defaultValue: true
+    group: feature
+    hidden: false
+    label: Enable Single Field Edit
+    sort_no: 210
+    type: boolean
+  enable_instances:
+    name: enable_instances
+    group: feature
+    hidden: false
+    label: Enable Instances
+    sort_no: 140
+    type: boolean
+  enable_lock_detail:
+    name: enable_lock_detail
+    defaultValue: true
+    filters: []
+    group: advanced
+    hidden: false
+    label: Enable Lock Details
+    sort_no: 220
+    type: boolean
+  enable_notes:
+    name: enable_notes
+    group: feature
+    hidden: true
+    label: Enable Notes
+    sort_no: 170
+    type: boolean
+  enable_search:
+    name: enable_search
+    hidden: true
+    label: Enable Search
+    sort_no: 460
+    type: boolean
+    visible_on: '{{false}}'
+  enable_share:
+    name: enable_share
+    defaultValue: false
+    hidden: true
+    label: Enable Share
+    sort_no: 290
+    type: boolean
+    visible_on: '{{false}}'
+  enable_split:
+    name: enable_split
+    defaultValue: false
+    group: advanced
+    hidden: false
+    label: Enable Split
+    sort_no: 240
+    type: boolean
+  enable_tasks:
+    name: enable_tasks
+    group: feature
+    hidden: false
+    label: Enable Tasks
+    sort_no: 150
+    type: boolean
+  enable_tree:
+    name: enable_tree
+    group: advanced
+    hidden: false
+    label: Enable Tree
+    sort_no: 200
+    type: boolean
+  enable_workflow:
+    name: enable_workflow
+    defaultValue: true
+    filters: []
+    hidden: true
+    label: Enable Workflow
+    required: false
+    sort_no: 260
+    type: boolean
+    visible_on: '{{false}}'
+  extend:
+    name: extend
+    hidden: false
+    label: Extend
+    sort_no: 470
+    type: text
+    visible_on: '{{false}}'
+  field_groups.$.collapsed:
+    name: field_groups.$.collapsed
+    hidden: false
+    label: 默认折叠
+    sort_no: 80
+    type: boolean
+  field_groups.$.group_name:
+    name: field_groups.$.group_name
+    hidden: false
+    label: 名称
+    sort_no: 70
+    type: text
+  field_groups.$.visible_on:
+    name: field_groups.$.visible_on
+    hidden: false
+    label: 显示条件
+    sort_no: 90
+    type: text
+  field_groups:
+    name: field_groups
+    blackbox: true
+    filters: []
+    hidden: false
+    readonly: true
+    is_wide: true
+    label: 字段分组
+    sort_no: 60
+    type: grid
+    group: advanced
+    defaultValue:
+      - group_name: 系统信息
+        collapsed: true
+  fields:
+    name: fields
+    blackbox: true
+    hidden: true
+    label: Fields
+    omit: true
+    sort_no: 340
+    type: object
+    visible_on: '{{false}}'
+  fields_serial_number:
+    name: fields_serial_number
+    disabled: true
+    hidden: true
+    label: Serial Number
+    omit: true
+    scale: 0
+    sort_no: 440
+    type: number
+    visible_on: '{{false}}'
+  icon:
+    name: icon
+    hidden: false
+    label: Icon
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(
+      ) {
+
+
+
+
+
+              var options;
+              options = [];
+
+              _.forEach(Steedos.resources.sldsIcons.standard, function (svg) {
+                return options.push({
+                  value: svg,
+                  label: svg,
+                  icon: svg
+                });
+              });
+              return options;
+            
+
+
+
+
+      }
+    required: true
+    sort_no: 30
+    type: lookup
+  in_development:
+    name: in_development
+    amis:
+      disabledOn: '${is_system == true}'
+    defaultValue: '1'
+    hidden: false
+    label: Development State
+    options:
+      - label: Developing ( Only administrators can access. )
+        value: '1'
+      - label: Deployed
+        value: '0'
+    required: true
+    sort_no: 40
+    type: select
+    filterable: true
+  is_customize:
+    name: is_customize
+    hidden: false
+    label: 是否自定义
+    readonly: true
+    sort_no: 100
+    type: boolean
+    filterable: true
+  is_deleted:
+    name: is_deleted
+    disabled: false
+    hidden: false
+    label: 已删除
+    omit: true
+    readonly: false
+    sort_no: 280
+    visible_on: '{{false}}'
+    type: boolean
+  is_enable:
+    name: is_enable
+    amis:
+      disabledOn: '${is_system == true}'
+    defaultValue: true
+    filters: []
+    hidden: true
+    label: Enable
+    required: false
+    sort_no: 250
+    type: boolean
+    visible_on: '{{false}}'
+  is_system:
+    name: is_system
+    disabled: true
+    hidden: false
+    label: System
+    readonly: true
+    sort_no: 110
+    type: boolean
+    visible_on: '{{global.mode ===''read'' ? true : false}}'
+    filterable: true
+  label:
+    name: label
+    filterable: true
+    hidden: false
+    is_name: true
+    label: Label
+    required: true
+    searchable: true
+    sort_no: 10
+    type: text
+  list_views:
+    name: list_views
+    blackbox: true
+    hidden: true
+    label: ListViews
+    omit: true
+    sort_no: 350
+    type: object
+    visible_on: '{{false}}'
+  name:
+    name: name
+    amis:
+      disabledOn: '${is_system == true}'
+      copyable: true
+    filterable: true
+    hidden: false
+    index: true
+    label: API Name
+    required: true
+    searchable: true
+    sort_no: 20
+    type: text
+  owner:
+    name: owner
+    hidden: true
+    index: true
+    label: Owner
+    omit: true
+    sort_no: 410
+    sortable: true
+    visible_on: '{{false}}'
+  permission_set:
+    name: permission_set
+    blackbox: true
+    hidden: true
+    label: Permission Set
+    omit: true
+    sort_no: 380
+    type: object
+    visible_on: '{{false}}'
+  relatedList:
+    name: relatedList
+    blackbox: true
+    hidden: true
+    label: Related List
+    omit: true
+    sort_no: 370
+    type: grid
+    visible_on: '{{false}}'
+  reload_time:
+    name: reload_time
+    disabled: true
+    hidden: true
+    label: 重新加载时间
+    omit: true
+    readonly: true
+    sort_no: 450
+    type: datetime
+    visible_on: '{{false}}'
+  sidebar:
+    name: sidebar
+    blackbox: true
+    hidden: true
+    label: Sidebar
+    omit: true
+    sort_no: 330
+    type: object
+    visible_on: '{{false}}'
+  table_name:
+    name: table_name
+    amis:
+      disabledOn: '${is_system == true}'
+    group: advanced
+    hidden: false
+    index: true
+    label: Table Name
+    searchable: true
+    sort_no: 190
+    type: text
+  triggers:
+    name: triggers
+    blackbox: true
+    hidden: true
+    label: Triggers
+    omit: true
+    sort_no: 390
+    type: object
+    visible_on: '{{false}}'
+  version:
+    name: version
+    defaultValue: 2
+    hidden: true
+    label: Version
+    readonly: true
+    scale: 0
+    sort_no: 320
+    type: number
+    visible_on: '{{false}}'

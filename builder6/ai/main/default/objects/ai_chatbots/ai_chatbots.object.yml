@@ -30,3 +30,502 @@ is_enable: true
 label: 智能体
 locked: false
 version: 2
+fields:
+  avatarUrl:
+    name: avatarUrl
+    create: true
+    enable_enhanced_lookup: true
+    enable_thousands: true
+    filterable: false
+    generated: false
+    group: Style
+    hidden: false
+    index: false
+    is_name: false
+    is_wide: true
+    label: Avatar
+    multiple: false
+    primary: false
+    readonly: false
+    required: false
+    searchable: false
+    show_as_qr: false
+    sort_no: 130
+    sortable: false
+    static: false
+    type: text
+    unique: false
+    write_requires_master_read: false
+  company_id:
+    name: company_id
+    label: 主分部
+    sort_no: 200
+    type: lookup
+    visible_on: '{{false}}'
+  company_ids:
+    name: company_ids
+    label: 所属分部
+    sort_no: 210
+    type: lookup
+    visible_on: '{{false}}'
+  created:
+    name: created
+    group: 系统信息
+    hidden: false
+    label: 创建时间
+    sort_no: 140
+    type: datetime
+  created_by:
+    name: created_by
+    group: 系统信息
+    hidden: false
+    label: 创建人
+    sort_no: 150
+    type: lookup
+  defaultMessage:
+    name: defaultMessage
+    amis:
+      clearValueOnHidden: false
+    create: true
+    defaultValue: 我今天能帮您什么？
+    enable_enhanced_lookup: true
+    enable_thousands: true
+    filterable: false
+    filters: []
+    generated: false
+    group: Setup
+    hidden: false
+    index: false
+    is_name: false
+    is_wide: true
+    label: Greeting text
+    multiple: false
+    primary: false
+    readonly: false
+    required: false
+    rows: 4
+    searchable: false
+    show_as_qr: false
+    sort_no: 31
+    sortable: false
+    static: false
+    type: textarea
+    unique: false
+    visible_on: '{{defaultMessageMode == ''static'' ? true : false}}'
+    write_requires_master_read: false
+  defaultMessageMode:
+    name: defaultMessageMode
+    amis:
+      type: list-select
+      options:
+        - value: static
+          body: |-
+            <div class="m-l-sm m-r-sm m-b-sm m-t-xs"><svg class="mb-2 mr-2 slds-icon slds-icon--small slds-icon-text-default test-class inline" aria-hidden="true"><use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit"></use></svg>
+                                            <div class="font-medium text-lg inline">静态</div>
+                                            <div class="text-sm">在每次对话开始时显示相同的信息。</div>
+            </div>
+        - value: generated
+          body: |-
+            <div class="m-l-sm m-r-sm  m-b-sm m-t-xs"><svg class="mb-2 mr-2 slds-icon slds-icon--small slds-icon-text-default test-class inline" aria-hidden="true"><use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#magicwand"></use></svg>
+                                            <div class="font-medium text-lg inline">生成</div>
+                                        <div class="text-sm">使用 AI 为每次对话生成独特的问候语。</div>
+            </div>
+    create: true
+    data_type: text
+    defaultValue: static
+    enable_enhanced_lookup: true
+    enable_thousands: true
+    filterable: false
+    filters: []
+    generated: false
+    group: Setup
+    hidden: false
+    index: false
+    is_name: false
+    is_wide: true
+    label: Greeting type
+    multiple: false
+    options:
+      - label: Static
+        value: static
+        description: Show the same message at he start of every conversation
+      - label: Generated
+        value: generated
+        description: Use AI to generate a unique greeting for every conversation
+    primary: false
+    readonly: false
+    required: false
+    searchable: false
+    show_as_qr: false
+    sort_no: 30
+    sortable: true
+    static: false
+    type: select
+    unique: false
+    write_requires_master_read: false
+  defaultPrompt:
+    name: defaultPrompt
+    amis:
+      clearValueOnHidden: false
+    create: true
+    defaultValue: 打个招呼，告诉我你能做什么。
+    enable_enhanced_lookup: true
+    enable_thousands: true
+    filterable: false
+    filters: []
+    generated: false
+    group: Setup
+    hidden: false
+    index: false
+    is_name: false
+    is_wide: true
+    label: Greeting prompt
+    multiple: false
+    primary: false
+    readonly: false
+    required: false
+    rows: 4
+    searchable: false
+    show_as_qr: false
+    sort_no: 31
+    sortable: false
+    static: false
+    type: textarea
+    unique: false
+    visible_on: '{{defaultMessageMode != ''static'' ? true : false}}'
+    write_requires_master_read: false
+  directive:
+    name: directive
+    amis:
+      editorOptions:
+        wordWrap: 'on'
+    create: true
+    defaultValue: You are a mongodb assistant.
+    description: 'Provide instructions for how the chatbot should respond to users. Include key information like role, objective, and style to customize the chatbot.'
+    enable_enhanced_lookup: true
+    enable_thousands: true
+    filterable: false
+    filters: []
+    generated: false
+    group: Instructions
+    hidden: false
+    index: false
+    is_wide: true
+    label: Directive
+    multiple: false
+    primary: false
+    readonly: false
+    required: true
+    rows: 8
+    searchable: false
+    show_as_qr: false
+    sort_no: 110
+    sortable: false
+    static: false
+    type: markdown
+    unique: false
+    write_requires_master_read: false
+  disclosureText:
+    name: disclosureText
+    amis:
+      clearValueOnHidden: false
+    create: true
+    defaultValue: '这是一个自动化的聊天助手回复。[了解更多](https://builder6.com)'
+    description: This input accepts markdown links.
+    enable_enhanced_lookup: true
+    enable_thousands: true
+    filterable: false
+    generated: false
+    group: Setup
+    hidden: false
+    index: false
+    is_name: false
+    is_wide: true
+    label: Disclosure message
+    multiple: false
+    primary: false
+    readonly: false
+    required: false
+    rows: 3
+    searchable: false
+    show_as_qr: false
+    sort_no: 90
+    sortable: false
+    static: false
+    type: textarea
+    unique: false
+    visible_on: '${displayDisclosure === true}'
+    write_requires_master_read: false
+  displayDisclosure:
+    name: displayDisclosure
+    create: true
+    enable_enhanced_lookup: true
+    enable_thousands: true
+    filterable: false
+    generated: false
+    group: Setup
+    hidden: false
+    index: false
+    is_name: false
+    is_wide: true
+    label: Display disclosure message in Greeting
+    multiple: false
+    primary: false
+    readonly: false
+    required: false
+    searchable: false
+    show_as_qr: false
+    sort_no: 80
+    sortable: false
+    static: false
+    type: toggle
+    unique: false
+    write_requires_master_read: false
+  embedHosts:
+    name: embedHosts
+    hidden: false
+    label: Embed Hosts
+    language: json
+    sort_no: 10
+    type: code
+    visible_on: '{{false}}'
+  label:
+    name: label
+    filterable: true
+    group: Setup
+    hidden: false
+    index: true
+    label: Name
+    required: true
+    searchable: true
+    sort_no: 10
+    type: text
+  locked:
+    name: locked
+    label: 已锁定
+    sort_no: 190
+    type: boolean
+    visible_on: '{{false}}'
+  maxTokens:
+    name: maxTokens
+    create: true
+    enable_enhanced_lookup: true
+    enable_thousands: true
+    filterable: false
+    generated: false
+    group: Setup
+    hidden: false
+    index: false
+    is_name: false
+    is_wide: true
+    label: maxTokens
+    multiple: false
+    precision: 18
+    primary: false
+    readonly: true
+    required: false
+    scale: 0
+    searchable: false
+    show_as_qr: false
+    sort_no: 100
+    sortable: true
+    static: false
+    type: number
+    unique: false
+    write_requires_master_read: false
+  model:
+    name: model
+    filterable: true
+    group: Setup
+    hidden: false
+    index: true
+    label: Model
+    required: true
+    searchable: true
+    sort_no: 20
+    type: select
+    amis:
+      searchable: 'true,'
+      multiple: false
+      source:
+        url: '${context.rootUrl}/api/v6/ai/models'
+        method: get
+        requestAdaptor: ''
+        adaptor: |
+          return {
+            status: 0,
+            msg: '',
+            data: {
+              options: payload.map(item => ({
+                label: item.id,
+                value: item.id
+              }))
+            }
+          }
+        messages: {}
+  modified:
+    name: modified
+    group: 系统信息
+    hidden: false
+    label: 修改时间
+    sort_no: 160
+    type: datetime
+  modified_by:
+    name: modified_by
+    group: 系统信息
+    hidden: false
+    label: 修改人
+    sort_no: 170
+    type: lookup
+  name:
+    name: name
+    filterable: true
+    group: Setup
+    hidden: false
+    index: true
+    label: API Name
+    required: true
+    searchable: true
+    sort_no: 15
+    type: text
+  owner:
+    name: owner
+    hidden: false
+    index: true
+    label: 作者
+    omit: false
+    sort_no: 120
+    sortable: true
+  placeholder:
+    name: placeholder
+    create: true
+    defaultValue: 问我任何事情
+    enable_enhanced_lookup: true
+    enable_thousands: true
+    filterable: false
+    filters: []
+    generated: false
+    group: Setup
+    hidden: false
+    index: false
+    is_name: false
+    is_wide: true
+    label: User input placeholder
+    multiple: false
+    primary: false
+    readonly: false
+    required: false
+    searchable: false
+    show_as_qr: false
+    sort_no: 50
+    sortable: true
+    static: false
+    type: text
+    unique: false
+    write_requires_master_read: false
+  suggestions:
+    name: suggestions
+    type: select
+    label: 建议
+    sort_no: 187
+    is_wide: true
+    group: Actions
+    description: 当用户开始对话时显示
+    options: []
+    multiple: true
+    amis:
+      type: input-array
+      name: suggestions
+      items:
+        type: input-text
+        clearable: false
+  temperature:
+    name: temperature
+    amis:
+      type: input-range
+      tooltipVisible: true
+      tooltipPlacement: right
+      min: 0
+      max: 1
+      step: 0.1
+    create: true
+    defaultValue: 0.7
+    enable_enhanced_lookup: true
+    enable_thousands: true
+    filterable: false
+    filters: []
+    generated: false
+    group: Setup
+    hidden: false
+    index: false
+    is_wide: true
+    label: Creativity
+    precision: 18
+    primary: false
+    readonly: false
+    required: false
+    scale: 0
+    searchable: false
+    show_as_qr: false
+    sort_no: 70
+    sortable: true
+    static: false
+    type: number
+    unique: false
+    write_requires_master_read: false
+  triggers.$.suggestions:
+    name: triggers.$.suggestions
+    type: text
+    label: 建议
+    sort_no: 187
+    is_wide: true
+    amis:
+      type: input-array
+      name: suggestions
+      items:
+        type: input-text
+        clearable: false
+  triggers.$.triggerCondition:
+    name: triggers.$.triggerCondition
+    type: select
+    label: 触发条件
+    sort_no: 186
+    is_wide: true
+    options:
+      - label: 当用户开始对话时
+        value: beginning_of_conversation
+    amis:
+      value: beginning_of_conversation
+  triggers.$.type:
+    name: triggers.$.type
+    type: select
+    label: 类型
+    sort_no: 185
+    is_wide: true
+    options:
+      - label: 建议
+        value: suggestions
+    amis:
+      value: suggestions
+  triggers:
+    name: triggers
+    filterable: false
+    generated: false
+    group: Actions
+    hidden: false
+    index: false
+    is_name: false
+    is_wide: true
+    label: Triggers
+    multiple: false
+    primary: false
+    readonly: false
+    required: false
+    searchable: false
+    show_as_qr: false
+    sort_no: 180
+    sortable: false
+    static: false
+    type: table
+    unique: false
+    visible_on: '{{false}}'

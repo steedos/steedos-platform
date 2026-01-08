@@ -5,3 +5,245 @@ hidden: true
 version: 2
 paging:
   enabled: false
+fields:
+  created:
+    name: created
+    type: datetime
+    hidden: true
+  created_by:
+    name: created_by
+    type: lookup
+    hidden: true
+  dependencies:
+    name: dependencies
+    type: select
+    multiple: true
+    label: 依赖项
+  description:
+    name: description
+    filterable: true
+    hidden: false
+    index: false
+    is_name: false
+    is_wide: true
+    label: 简述
+    omit: false
+    readonly: false
+    required: false
+    rows: 2
+    searchable: true
+    sort_no: 450
+    sortable: false
+    type: textarea
+  homepage:
+    name: homepage
+    type: url
+    label: homepage
+    sort_no: 130
+  icon:
+    name: icon
+    type: text
+    visible_on: '{{false}}'
+  instance_id:
+    name: instance_id
+    filterable: false
+    hidden: false
+    index: false
+    is_name: false
+    is_wide: false
+    label: 实例ID
+    omit: false
+    readonly: false
+    required: true
+    searchable: true
+    sort_no: 110
+    sortable: true
+    type: text
+    visible_on: '{{false}}'
+  isUnmanaged:
+    name: isUnmanaged
+    type: boolean
+    label: 模板
+    visible_on: '{{false}}'
+  label:
+    name: label
+    filterable: true
+    hidden: false
+    index: true
+    is_name: true
+    is_wide: false
+    label: 软件包名称
+    omit: false
+    readonly: false
+    required: true
+    searchable: true
+    sort_no: 100
+    sortable: true
+    type: text
+  metadata.$.api_name:
+    name: metadata.$.api_name
+    label: Api Name
+    type: text
+    sort_no: 520
+  metadata.$.label:
+    name: metadata.$.label
+    label: 名称
+    type: text
+    sort_no: 510
+  metadata.$.type:
+    name: metadata.$.type
+    label: 类型
+    type: select
+    sort_no: 530
+    options:
+      - label: 自定义按钮
+        value: CustomAction
+      - label: 自定义应用
+        value: CustomApplication
+      - label: 自定义字段
+        value: CustomField
+      - label: 列表视图
+        value: CustomListview
+      - label: 自定义对象
+        value: CustomObject
+      - label: 对象权限
+        value: CustomPermission
+      - label: 权限集
+        value: CustomPermissionset
+      - label: 简档
+        value: CustomProfile
+      - label: 报表
+        value: CustomReport
+      - label: 验证规则
+        value: CustomValidationRule
+      - label: 页面布局
+        value: Layout
+      - label: 工作流操作
+        value: Workflow
+      - label: 流程
+        value: Flow
+      - label: 批准过程
+        value: ApprovalProcess
+      - label: 角色
+        value: Role
+      - label: 审批岗位
+        value: FlowRole
+      - label: 查询
+        value: Query
+      - label: 图表
+        value: Chart
+      - label: 页面
+        value: Page
+      - label: 选项卡
+        value: Tab
+  metadata:
+    name: metadata
+    label: 软件包组件
+    type: grid
+    is_wide: true
+    sort_no: 500
+  modified:
+    name: modified
+    type: datetime
+    hidden: true
+  modified_by:
+    name: modified_by
+    type: lookup
+    hidden: true
+  name:
+    name: name
+    filterable: true
+    hidden: false
+    index: true
+    is_name: false
+    is_wide: false
+    label: npm module
+    omit: false
+    readonly: false
+    required: true
+    searchable: true
+    sort_no: 100
+    sortable: true
+    type: text
+  node_id:
+    name: node_id
+    filterable: false
+    hidden: false
+    index: false
+    is_name: false
+    is_wide: false
+    label: 节点ID
+    omit: false
+    readonly: false
+    required: true
+    searchable: true
+    sort_no: 110
+    sortable: true
+    type: text
+    visible_on: '{{false}}'
+  readme:
+    name: readme
+    type: markdown
+    is_wide: true
+    visible_on: '{{false}}'
+  service_name:
+    name: service_name
+    filterable: false
+    hidden: false
+    index: true
+    is_name: false
+    is_wide: false
+    label: 服务名称
+    omit: false
+    readonly: false
+    required: true
+    searchable: true
+    sort_no: 100
+    sortable: true
+    type: text
+    visible_on: '{{false}}'
+  static:
+    name: static
+    type: boolean
+    label: 静态(不支持卸载、升级)
+    visible_on: '{{false}}'
+  status:
+    name: status
+    filterable: true
+    hidden: false
+    index: true
+    is_name: false
+    is_wide: false
+    label: 状态
+    omit: false
+    readonly: false
+    required: true
+    searchable: true
+    sort_no: 160
+    sortable: true
+    type: select
+    options:
+      - label: 已启用
+        value: enable
+        color: 3df53d
+      - label: 启动中
+        value: starting
+        color: ffff00
+      - label: 已停用
+        value: disable
+        color: dcd0d0
+  version:
+    name: version
+    filterable: true
+    hidden: false
+    index: false
+    is_name: false
+    is_wide: false
+    label: 已安装版本
+    omit: false
+    readonly: false
+    required: true
+    searchable: true
+    sort_no: 110
+    sortable: true
+    type: text

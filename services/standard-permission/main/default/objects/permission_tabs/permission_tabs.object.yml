@@ -7,3 +7,40 @@ enable_dataloader: false
 isMetadata: true
 paging:
   enabled: false
+fields:
+  is_system:
+    name: is_system
+    type: boolean
+    label: 系统
+    visible_on: '{{global.mode ===''read'' ? true : false}}'
+    readonly: true
+    disabled: true
+    sort_no: 999
+  permission:
+    name: permission
+    label: 权限
+    type: select
+    options:
+      - label: 默认打开
+        value: 'on'
+      - label: 默认关闭
+        value: 'off'
+    defaultValue: 'on'
+    required: true
+    index: true
+  permission_set:
+    name: permission_set
+    label: 所属权限集
+    type: master_detail
+    reference_to: permission_set
+    reference_to_field: name
+    required: true
+    index: true
+  tab:
+    name: tab
+    label: 选项卡
+    type: master_detail
+    reference_to: tabs
+    reference_to_field: name
+    required: true
+    index: true

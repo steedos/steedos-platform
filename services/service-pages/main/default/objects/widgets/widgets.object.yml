@@ -18,3 +18,53 @@ icon: shipment
 is_enable: true
 label: 部件
 version: 2
+fields:
+  label:
+    name: label
+    index: true
+    label: 名称
+    required: true
+    searchable: true
+    sort_no: 100
+    type: text
+    is_name: true
+  name:
+    name: name
+    index: true
+    label: API Name
+    required: false
+    searchable: true
+    hidden: true
+    sort_no: 100
+    type: text
+  options:
+    name: options
+    label: options
+    sort_no: 150
+    type: object
+    blackbox: true
+  owner:
+    name: owner
+    hidden: true
+    index: true
+    label: 所有者
+    omit: true
+    sort_no: 100
+    sortable: true
+  page:
+    name: page
+    label: page
+    reference_to: pages
+    reference_to_field: name
+    sort_no: 130
+    type: lookup
+  type:
+    name: type
+    label: type
+    sort_no: 120
+    type: text
+  visualization:
+    name: visualization
+    label: visualization
+    sort_no: 140
+    type: text

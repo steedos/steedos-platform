@@ -1,9 +1,0 @@
-name: user
-type: master_detail
-reference_to: users
-index: true
-visible_on: "{{false}}"
-label: User
-filterable: false
-sort_no: 350
-readonly: true

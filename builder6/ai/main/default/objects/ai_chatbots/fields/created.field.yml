@@ -1,6 +1,0 @@
-name: created
-group: 系统信息
-hidden: false
-label: 创建时间
-sort_no: 140
-type: datetime

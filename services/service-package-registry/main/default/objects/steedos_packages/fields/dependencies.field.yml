@@ -1,4 +1,0 @@
-name: dependencies
-type: select
-multiple: true
-label: 依赖项

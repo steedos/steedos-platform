@@ -1,7 +1,0 @@
-name: group
-group: ui
-hidden: false
-label: Group
-readonly: true
-sort_no: 480
-type: text

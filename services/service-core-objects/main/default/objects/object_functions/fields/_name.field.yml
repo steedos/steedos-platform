@@ -1,7 +1,0 @@
-name: _name
-type: text
-label: Api Name
-searchable: true
-index: true
-required: true
-sort_no: 100

@@ -1,6 +1,0 @@
-name: enable_register
-label: Enable User Registration
-type: boolean
-group: Register account
-defaultValue: false
-sort_no: 10

@@ -3,3 +3,53 @@ label: 工作流时间触发器执行队列
 version: 2
 hidden: true
 icon: app
+fields:
+  _error:
+    name: _error
+    label: 错误信息
+    type: text
+    index: true
+  _excuted:
+    name: _excuted
+    label: 已执行
+    type: boolean
+    required: true
+    index: true
+  _excuted_at:
+    name: _excuted_at
+    label: 执行完成时间
+    type: datetime
+  _excuting:
+    name: _excuting
+    label: 正在执行
+    type: boolean
+    required: true
+    index: true
+  record_id:
+    name: record_id
+    label: 记录ID
+    type: text
+  updates_field_actions:
+    name: updates_field_actions
+    type: lookup
+    multiple: true
+    label: 工作流操作：字段更新
+    is_wide: true
+    reference_to: action_field_updates
+    reference_to_field: name
+  workflow_notifications_actions:
+    name: workflow_notifications_actions
+    type: lookup
+    multiple: true
+    label: 工作流操作：消息提醒
+    is_wide: true
+    reference_to: workflow_notifications
+    reference_to_field: name
+  workflow_outbound_messages_actions:
+    name: workflow_outbound_messages_actions
+    type: lookup
+    multiple: true
+    label: 工作流操作：出站消息
+    is_wide: true
+    reference_to: workflow_outbound_messages
+    reference_to_field: name

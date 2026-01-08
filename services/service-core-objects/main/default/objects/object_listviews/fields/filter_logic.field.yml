@@ -1,7 +1,0 @@
-name: filter_logic
-label: Logic
-type: text
-readonly: true
-hidden: true
-visible_on: '{{global.mode ===''read'' ? true : false}}'
-sort_no: 340

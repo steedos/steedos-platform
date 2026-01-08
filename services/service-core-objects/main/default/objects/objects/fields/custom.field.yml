@@ -1,7 +1,0 @@
-name: custom
-hidden: true
-label: Custom
-omit: true
-sort_no: 400
-type: boolean
-visible_on: '{{false}}'

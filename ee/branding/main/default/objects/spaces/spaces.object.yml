@@ -1,2 +1,36 @@
 extend: spaces
 name: spaces
+fields:
+  account_logo:
+    name: account_logo
+    label: Account logo
+    type: avatar
+    group: branding
+  avatar:
+    name: avatar
+    label: Logo
+    type: avatar
+    group: branding
+  avatar_dark:
+    name: avatar_dark
+    label: Dark Logo
+    type: avatar
+    hidden: true
+    group: branding
+  avatar_square:
+    name: avatar_square
+    label: Square Logo
+    type: avatar
+    hidden: true
+    group: branding
+  background:
+    name: background
+    label: Background
+    type: avatar
+    group: branding
+  favicon:
+    name: favicon
+    label: Favicon
+    type: avatar
+    hidden: false
+    group: branding

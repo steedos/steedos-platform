@@ -1,7 +1,0 @@
-name: label
-hidden: false
-is_name: true
-label: Label
-required: true
-sort_no: 20
-type: text

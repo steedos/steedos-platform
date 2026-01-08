@@ -1,8 +1,0 @@
-name: name
-hidden: false
-label: Name
-required: false
-sort_no: 90
-type: text
-visible_on: '{{false}}'
-readonly: true

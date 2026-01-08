@@ -1,7 +1,0 @@
-name: enable_api
-defaultValue: true
-hidden: true
-label: Enable API
-sort_no: 270
-type: boolean
-visible_on: '{{false}}'

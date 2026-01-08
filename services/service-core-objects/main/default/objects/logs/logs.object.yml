@@ -2,3 +2,26 @@ name: logs
 label: System Logs
 hidden: true
 icon: job_profile
+fields:
+  data:
+    name: data
+    type: code
+    language: json
+    is_wide: true
+    sort_no: 200
+  level:
+    name: level
+    type: text
+    sort_no: 120
+    searchable: true
+    filterable: true
+  name:
+    name: name
+    type: text
+    sort_no: 100
+    filterable: true
+    searchable: true
+  node_id:
+    name: node_id
+    type: text
+    sort_no: 150

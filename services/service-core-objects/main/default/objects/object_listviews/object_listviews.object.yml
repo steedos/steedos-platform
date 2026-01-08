@@ -7,3 +7,565 @@ isMetadata: true
 hidden: true
 paging:
   enabled: false
+fields:
+  adaptor:
+    name: adaptor
+    label: Adaptor
+    type: code
+    language: javascript
+    is_wide: true
+    inlineHelpText: '函数签名: (payload, response, api) => payload'
+    group: advanced
+    sort_no: 920
+  amis_schema:
+    name: amis_schema
+    label: Amis Schema
+    type: code
+    group: advanced
+    language: json
+    required: false
+    is_wide: true
+    visible_on: '{{false}}'
+    sort_no: 930
+  calendar_all_day_field:
+    name: calendar_all_day_field
+    filterable: true
+    index: false
+    is_wide: false
+    label: 是否全天字段
+    required: false
+    reference_to: object_fields
+    reference_to_field: name
+    enable_enhanced_lookup: false
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(filters,values
+      ) {
+
+
+        return [['object', '=', values.object_name],[['type', '=', 'boolean'],'or',['type', '=', 'toggle']]];
+
+
+      }
+    sortable: false
+    type: lookup
+    group: 日历
+    sort_no: 840
+    visible_on: '${type == ''calendar'' || type == ''timeline''}'
+  calendar_current_view:
+    name: calendar_current_view
+    filterable: true
+    index: false
+    is_wide: false
+    label: 默认视图
+    required: false
+    sortable: false
+    type: select
+    options:
+      - label: 月视图
+        value: dayGridMonth
+      - label: 周视图
+        value: timeGridWeek
+      - label: 日视图
+        value: timeGridDay
+      - label: 月时间线视图
+        value: resourceTimelineMonth
+      - label: 周时间线视图
+        value: resourceTimelineWeek
+      - label: 日时间线视图
+        value: resourceTimelineDay
+    group: 日历
+    sort_no: 830
+    visible_on: '${false}'
+  calendar_end_field:
+    name: calendar_end_field
+    filterable: true
+    index: false
+    is_wide: false
+    label: 结束时间字段
+    required: false
+    reference_to: object_fields
+    reference_to_field: name
+    enable_enhanced_lookup: false
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(filters,values
+      ) {
+
+
+        return [['object', '=', values.object_name],['type', '=', 'datetime']];
+
+
+      }
+    sortable: false
+    type: lookup
+    group: 日历
+    sort_no: 810
+    visible_on: '${type == ''calendar'' || type == ''timeline''}'
+    amis:
+      requiredOn: '${type == ''calendar'' || type == ''timeline''}'
+  calendar_group_field:
+    name: calendar_group_field
+    filterable: true
+    index: false
+    is_wide: false
+    label: 资源字段
+    required: false
+    reference_to: object_fields
+    reference_to_field: name
+    enable_enhanced_lookup: false
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(filters,values
+      ) {
+
+
+        return [['object', '=', values.object_name],['multiple', '!=', true],[['type', '=', 'lookup'],'or',['type', '=', 'master_detail']]];
+
+
+      }
+    sortable: false
+    type: lookup
+    group: 日历
+    sort_no: 850
+    visible_on: '${type == ''timeline''}'
+    amis:
+      requiredOn: '${type == ''timeline''}'
+  calendar_resource_color_field:
+    name: calendar_resource_color_field
+    filterable: true
+    index: false
+    is_wide: false
+    label: 资源颜色字段
+    required: false
+    reference_to: object_fields
+    reference_to_field: name
+    enable_enhanced_lookup: false
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(filters,values
+      ) {
+
+
+        return [['object', '=', values.object_name],['type', '=', 'color']];
+
+
+      }
+    sortable: false
+    type: lookup
+    group: 日历
+    sort_no: 860
+    visible_on: '${false}'
+  calendar_resource_filters:
+    name: calendar_resource_filters
+    filterable: false
+    index: false
+    is_wide: true
+    label: 资源过滤条件
+    required: false
+    sortable: false
+    type: code
+    depend_on:
+      - object_name
+    group: 日历
+    sort_no: 870
+    visible_on: '${false}'
+  calendar_start_field:
+    name: calendar_start_field
+    filterable: true
+    index: false
+    is_wide: false
+    label: 开始时间字段
+    required: false
+    reference_to: object_fields
+    reference_to_field: name
+    enable_enhanced_lookup: false
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(filters,values
+      ) {
+
+
+        return [['object', '=', values.object_name],['type', '=', 'datetime']];
+
+
+      }
+    sortable: false
+    type: lookup
+    group: 日历
+    sort_no: 800
+    visible_on: '${type == ''calendar'' || type == ''timeline''}'
+    amis:
+      requiredOn: '${type == ''calendar'' || type == ''timeline''}'
+  columns.$.field:
+    name: columns.$.field
+    label: Field
+    type: lookup
+    multiple: false
+    is_wide: false
+    required: true
+    depend_on:
+      - object_name
+    reference_to: object_fields
+    reference_to_field: name
+    enable_enhanced_lookup: false
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(filters,values
+      ) {
+
+
+        return ['object', '=', values.object_name]
+
+
+      }
+    sort_no: 250
+  columns.$:
+    name: columns.$
+    label: Column
+    blackbox: true
+    type: object
+    sort_no: 240
+  columns.$.width:
+    name: columns.$.width
+    label: Width
+    type: text
+    sort_no: 260
+  columns.$.wrap:
+    name: columns.$.wrap
+    label: Wrap
+    type: boolean
+    sort_no: 270
+  columns:
+    name: columns
+    label: Columns
+    type: table
+    is_wide: true
+    required: false
+    group: show_columns
+    amis:
+      columns:
+        - field
+        - name: width
+          width: 100
+        - name: wrap
+          width: 100
+    sort_no: 230
+    visible_on: '${type != ''calendar'' && type != ''timeline''}'
+  crudDataFilter:
+    name: crudDataFilter
+    label: 重写表格
+    type: code
+    language: javascript
+    is_wide: true
+    inlineHelpText: |
+      重写列表crud配置，函数签名：(crud, env, data) => crud 
+    group: advanced
+    sort_no: 920
+  crud_mode:
+    name: crud_mode
+    label: 显示模式
+    type: select
+    options:
+      - label: 表格
+        value: table
+      - label: 卡片
+        value: cards
+    defaultValue: table
+    sort_no: 220
+    visible_on: '${false}'
+    amis:
+      visibleOn: '${false}'
+  enable_amis_schema:
+    name: enable_amis_schema
+    label: Enable amis_schema
+    type: boolean
+    group: advanced
+    required: false
+    sort_no: 920
+    hidden: true
+  extra_columns:
+    name: extra_columns
+    label: Extra Columns
+    type: lookup
+    multiple: true
+    is_wide: false
+    required: false
+    depend_on:
+      - object_name
+    reference_to: object_fields
+    reference_to_field: name
+    enable_enhanced_lookup: false
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(filters,values
+      ) {
+
+        return ['object', '=', values.object_name]
+
+      }
+    sort_no: 900
+    group: advanced
+    visible_on: '${type != ''calendar'' && type != ''timeline''}'
+  filter_fields:
+    name: filter_fields
+    label: Default Filter Fields
+    type: lookup
+    multiple: true
+    is_wide: true
+    hidden: true
+    depend_on:
+      - object_name
+    reference_to: object_fields
+    reference_to_field: name
+    sort_no: 280
+  filter_logic:
+    name: filter_logic
+    label: Logic
+    type: text
+    readonly: true
+    hidden: true
+    visible_on: '{{global.mode ===''read'' ? true : false}}'
+    sort_no: 340
+  filter_scope:
+    name: filter_scope
+    label: Filter Scope
+    type: select
+    defaultValue: space
+    required: true
+    options:
+      - label: 我的
+        value: mine
+      - label: 工作区
+        value: space
+    sort_no: 130
+  filters:
+    name: filters
+    label: Filters
+    type: code
+    is_wide: true
+    hidden: false
+    readonly: false
+    depend_on:
+      - object_name
+    group: filters
+    sort_no: 330
+  is_enable:
+    name: is_enable
+    type: toggle
+    label: Enable
+    defaultValue: true
+    sort_no: 210
+  is_system:
+    name: is_system
+    type: boolean
+    label: System
+    readonly: true
+    visible_on: '{{global.mode ===''read'' ? true : false}}'
+    disabled: true
+    sort_no: 410
+  label:
+    name: label
+    label: Label
+    type: text
+    is_name: true
+    required: true
+    sort_no: 100
+  mobile_columns.$.field:
+    name: mobile_columns.$.field
+    label: Field
+    type: lookup
+    multiple: false
+    is_wide: false
+    required: true
+    depend_on:
+      - object_name
+    reference_to: object_fields
+    reference_to_field: name
+    enable_enhanced_lookup: false
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(filters,values
+      ) {
+
+
+        return ['object', '=', values.object_name]
+
+
+      }
+    sort_no: 370
+  mobile_columns.$:
+    name: mobile_columns.$
+    label: Column
+    blackbox: true
+    type: object
+    sort_no: 360
+  mobile_columns:
+    name: mobile_columns
+    label: Mobile Columns
+    type: table
+    is_wide: true
+    depend_on:
+      - object_name
+    group: show_columns
+    sort_no: 350
+    visible_on: '${type != ''calendar'' && type != ''timeline''}'
+  name:
+    name: name
+    label: API Name
+    type: text
+    searchable: true
+    index: true
+    inlineHelpText: 'Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters'
+    amis:
+      requiredOn: '${!!recordId}'
+    sort_no: 110
+  object_name:
+    name: object_name
+    label: Object
+    type: master_detail
+    write_requires_master_read: true
+    required: true
+    reference_to: objects
+    reference_to_field: name
+    sort_no: 120
+    defaultValue: '${targetObjectName}'
+  requestAdaptor:
+    name: requestAdaptor
+    label: Request Adaptor
+    type: code
+    language: javascript
+    is_wide: true
+    inlineHelpText: 函数签名：(api) => api， 数据在 api.data 中，修改后返回 api 对象。
+    group: advanced
+    sort_no: 910
+  scrolling_mode:
+    name: scrolling_mode
+    label: Scrolling Mode
+    inlineHelpText: Define the scroll bar display style for the data list.
+    type: select
+    options:
+      - label: Standard ( Click the page number to load the data of the corresponding page. )
+        value: standard
+      - label: 'Virtual ( Switch the page through the scroll bar. When you scroll to the corresponding page, the data will be loaded remotely. )'
+        value: virtual
+      - label: 'Infinite ( Initially, only the first page will be loaded, and the next page will be loaded while scrolling. )'
+        value: infinite
+    defaultValue: '"standard"'
+    hidden: true
+    sort_no: 190
+  searchable_fields.$.field:
+    name: searchable_fields.$.field
+    label: Field
+    type: lookup
+    multiple: false
+    is_wide: false
+    reference_to: object_fields
+    reference_to_field: name
+    sort_no: 400
+  searchable_fields.$:
+    name: searchable_fields.$
+    label: Column
+    blackbox: true
+    type: object
+    sort_no: 390
+  searchable_fields:
+    name: searchable_fields
+    label: Searchable Fields
+    type: grid
+    is_wide: true
+    depend_on:
+      - object_name
+    group: search_term
+    sort_no: 380
+    visible_on: '${type != ''calendar'' && type != ''timeline''}'
+  shared:
+    name: shared
+    label: Shared to All Users
+    type: boolean
+    visible_on: '{{false}}'
+    group: share_rules
+    sort_no: 140
+  shared_to:
+    name: shared_to
+    label: Who can see this list view?
+    type: select
+    defaultValue: mine
+    required: true
+    options:
+      - label: Only I can view this list view.
+        value: mine
+      - label: This list view is available to all users.
+        value: space
+      - label: Share the list view with some organizations.
+        value: organizations
+    visible_on: '${global.user.is_space_admin}'
+    group: share_rules
+    sort_no: 150
+  shared_to_organizations:
+    name: shared_to_organizations
+    label: Shared to which organizations?
+    type: lookup
+    reference_to: organizations
+    multiple: true
+    is_wide: true
+    depend_on:
+      - shared_to
+    visible_on: '${global.user.is_space_admin && shared_to ===''organizations''}'
+    group: share_rules
+    sort_no: 160
+  show_count:
+    name: show_count
+    label: Show Record Count
+    type: boolean
+    sort_no: 170
+  sort.$:
+    name: sort.$
+    label: Order
+    blackbox: true
+    type: object
+    sort_no: 300
+  sort.$.field_name:
+    name: sort.$.field_name
+    label: Field Name
+    type: lookup
+    reference_to: object_fields
+    reference_to_field: name
+    sort_no: 310
+  sort.$.order:
+    name: sort.$.order
+    label: Sort Order
+    type: select
+    defaultValue: asc
+    options:
+      - label: ASC
+        value: asc
+      - label: DESC
+        value: desc
+    sort_no: 320
+  sort:
+    name: sort
+    label: Default Sort Order
+    type: grid
+    is_wide: true
+    depend_on:
+      - object_name
+    group: sort
+    sort_no: 290
+    visible_on: '${type != ''calendar'' && type != ''timeline''}'
+  sort_no:
+    name: sort_no
+    label: Sort no
+    type: number
+    scale: 0
+    defaultValue: 100
+    sort_no: 200
+  type:
+    name: type
+    label: Type
+    type: select
+    options:
+      - label: Grid
+        value: grid
+      - label: Cards
+        value: cards
+      - label: Calendar
+        value: calendar
+      - label: Timeline
+        value: timeline
+    defaultValue: grid
+    hidden: false
+    sort_no: 230
+    required: true

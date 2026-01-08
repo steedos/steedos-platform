@@ -1,6 +1,0 @@
-name: login_failed_lockout_time
-type: datetime
-omit: true
-hidden: true
-sort_no: 270
-label: Login Failed Lockout Time

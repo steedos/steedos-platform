@@ -21,3 +21,65 @@ is_enable: true
 label: 参数配置
 locked: false
 version: 2
+fields:
+  key:
+    name: key
+    create: true
+    enable_enhanced_lookup: true
+    enable_thousands: true
+    filterable: false
+    generated: false
+    hidden: false
+    index: false
+    is_name: false
+    is_wide: false
+    label: key
+    multiple: false
+    primary: false
+    readonly: false
+    required: false
+    searchable: false
+    show_as_qr: false
+    sort_no: 20
+    sortable: true
+    static: false
+    type: text
+    unique: false
+    write_requires_master_read: false
+  type:
+    name: type
+    label: 类型
+    type: select
+    options:
+      - label: User
+        value: user
+      - label: Space
+        value: space
+    hidden: true
+    defaultValue: space
+  value:
+    name: value
+    create: true
+    enable_enhanced_lookup: true
+    enable_thousands: true
+    filterable: false
+    filters: []
+    generated: false
+    hidden: false
+    index: false
+    is_name: false
+    is_wide: true
+    label: value
+    language: json
+    multiple: false
+    primary: false
+    readonly: false
+    required: false
+    searchable: false
+    show_as_qr: false
+    sort_no: 40
+    sortable: true
+    static: false
+    type: code
+    unique: false
+    write_requires_master_read: false

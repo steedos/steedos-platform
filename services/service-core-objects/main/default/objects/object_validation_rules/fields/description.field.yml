@@ -1,6 +1,0 @@
-name: description
-type: textarea
-is_wide: true
-label: description
-sort_no: 130
-filterable: true

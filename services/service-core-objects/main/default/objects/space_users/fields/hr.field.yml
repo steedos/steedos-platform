@@ -1,7 +1,0 @@
-name: hr
-type: object
-blackbox: true
-omit: true
-hidden: true
-label: HR
-sort_no: 380

@@ -2,3 +2,75 @@ name: notifications
 label: Notification
 icon: quick_text
 hidden: false
+fields:
+  body:
+    name: body
+    label: Body
+    type: textarea
+    sort_no: 110
+  created:
+    name: created
+    label: Notification Time
+    sort_no: 180
+  from:
+    name: from
+    label: From
+    type: lookup
+    reference_to: users
+    sortable: true
+    index: true
+    omit: true
+    sort_no: 150
+  is_read:
+    name: is_read
+    label: Readed
+    type: boolean
+    sort_no: 170
+  name:
+    name: name
+    label: Title
+    type: text
+    sort_no: 100
+  owner:
+    name: owner
+    label: Owner
+    hidden: false
+    sort_no: 160
+  related_name:
+    name: related_name
+    label: Name of Related Object Record
+    type: text
+    sort_no: 130
+  related_to:
+    name: related_to
+    label: Related Object Record
+    type: lookup
+    index: true
+    reference_to: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(
+      ) {
+
+
+            try{
+              let objects = [];
+              var queryResult = Steedos.authRequest(`/graphql`, {
+                  type: 'POST', async: false, 
+                  data: JSON.stringify({
+                    query: `{ objects{ name } }`
+                  })
+              });
+              objects = queryResult && queryResult.data && queryResult.data.objects;
+              return _.map(objects, 'name') ;
+            }catch(e){
+              return []
+            }
+            
+
+      }
+    filterable: true
+    sort_no: 120
+  url:
+    name: url
+    label: URL
+    type: url
+    sort_no: 140

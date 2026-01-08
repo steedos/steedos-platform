@@ -1,6 +1,0 @@
-name: last_logon
-type: date
-omit: true
-hidden: true
-label: Last Logon Date
-sort_no: 390

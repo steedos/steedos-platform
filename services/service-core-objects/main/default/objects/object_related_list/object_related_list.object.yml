@@ -5,3 +5,217 @@ hidden: true
 enable_dataloader: false
 paging:
   enabled: false
+fields:
+  columns.$.field:
+    name: columns.$.field
+    label: Field
+    type: lookup
+    multiple: false
+    is_wide: false
+    required: true
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(values
+      ) {
+
+
+              if (!(values != null ? values.objectName : void 0)) {
+                values.objectName = Session.get("object_name");
+              }
+              
+              if(values.objectName && !_.isString(values.objectName)){
+                values.objectName = values.objectName.name
+              }
+
+              return Creator.getObjectFieldOptions(values != null ? values.objectName : void 0, true);
+            
+
+      }
+    sort_no: 140
+  columns.$:
+    name: columns.$
+    label: Column
+    blackbox: true
+    type: object
+    sort_no: 130
+  columns.$.width:
+    name: columns.$.width
+    label: Width
+    type: text
+    sort_no: 150
+  columns.$.wrap:
+    name: columns.$.wrap
+    label: Wrap
+    type: boolean
+    sort_no: 160
+  columns:
+    name: columns
+    label: Columns
+    type: grid
+    is_wide: true
+    required: true
+    depend_on:
+      - objectName
+    sort_no: 120
+  filters:
+    name: filters
+    label: Filters
+    type: textarea
+    is_wide: true
+    sort_no: 240
+  mobile_columns.$.field:
+    name: mobile_columns.$.field
+    label: Field
+    type: lookup
+    multiple: false
+    is_wide: false
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(values
+      ) {
+
+
+              if (!(values != null ? values.objectName : void 0)) {
+                values.objectName = Session.get("object_name");
+              }
+
+              if(values.objectName && !_.isString(values.objectName)){
+                values.objectName = values.objectName.name
+              }
+
+              return Creator.getObjectFieldOptions(values != null ? values.objectName : void 0, true);
+            
+
+      }
+    sort_no: 190
+  mobile_columns.$:
+    name: mobile_columns.$
+    label: Column
+    blackbox: true
+    type: object
+    sort_no: 180
+  mobile_columns:
+    name: mobile_columns
+    label: Mobile Columns
+    type: grid
+    is_wide: true
+    depend_on:
+      - objectName
+    sort_no: 170
+  objectName:
+    name: objectName
+    label: Related Object
+    type: lookup
+    required: true
+    depend_on:
+      - object_name
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(values
+      ) {
+
+
+              var object_name = values.object_name
+              if(_.isObject(object_name)){
+                object_name = object_name.name
+              }
+              var _options;
+
+              _options = [];
+
+              _.forEach(Creator.objectsByName, function (o, k) {
+                if(_.includes(['cms_files', 'instances', 'tasks', 'notes', 'events', 'approvals', 'audit_records'], k)){
+                  return _options.push({
+                    label: o.label,
+                    value: k,
+                    icon: o.icon
+                  });
+                }else{
+                  _.each(o.fields, function(field, fieldName){
+                    if((field.type === 'master_detail' || field.type === 'lookup') && field.reference_to && field.reference_to == object_name){
+                      return _options.push({
+                        label: o.label,
+                        value: k,
+                        icon: o.icon
+                      });
+                    }
+                  })
+                }
+              });
+              return _.uniq(_options, function(item){ return item.value});
+            
+
+      }
+    sort_no: 110
+  object_name:
+    name: object_name
+    label: To Object
+    type: master_detail
+    required: true
+    reference_to: objects
+    reference_to_field: name
+    sort_no: 100
+  sort.$:
+    name: sort.$
+    label: Order
+    blackbox: true
+    type: object
+    sort_no: 210
+  sort.$.field_name:
+    name: sort.$.field_name
+    label: Field Name
+    type: lookup
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(values
+      ) {
+
+
+              var _object, _options, fields, icon;
+              if(values.objectName && !_.isString(values.objectName)){
+                values.objectName = values.objectName.name
+              }
+              _options = [];
+              _object = Creator.getObject(values != null ? values.objectName : void 0);
+              fields = Creator.getFields(values != null ? values.objectName : void 0);
+              icon = _object.icon;
+
+              _.forEach(fields, function (f) {
+                var label;
+
+                if (!_object.fields[f].hidden) {
+                  label = _object.fields[f].label;
+                  return _options.push({
+                    label: label || f,
+                    value: f,
+                    icon: icon
+                  });
+                }
+              });
+
+              return _options;
+            
+
+      }
+    sort_no: 220
+  sort.$.order:
+    name: sort.$.order
+    label: Sort Order
+    type: select
+    defaultValue: asc
+    options:
+      - label: ASC
+        value: asc
+      - label: DESC
+        value: desc
+    sort_no: 230
+  sort:
+    name: sort
+    label: Default Sort Order
+    type: grid
+    is_wide: true
+    depend_on:
+      - objectName
+    sort_no: 200
+  sort_no:
+    name: sort_no
+    type: number
+    label: Sort Number
+    inlineHelpText: High Value First.
+    sort_no: 250

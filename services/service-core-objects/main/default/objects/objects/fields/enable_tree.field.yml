@@ -1,6 +1,0 @@
-name: enable_tree
-group: advanced
-hidden: false
-label: Enable Tree
-sort_no: 200
-type: boolean

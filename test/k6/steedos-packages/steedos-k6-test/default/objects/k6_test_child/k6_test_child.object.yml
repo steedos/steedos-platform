@@ -18,3 +18,64 @@ is_enable: true
 label: K6-子表
 locked: false
 version: 2
+fields:
+  master:
+    name: master
+    create: true
+    enable_thousands: true
+    filterable: false
+    generated: false
+    hidden: false
+    index: false
+    is_name: false
+    is_wide: false
+    label: master
+    multiple: false
+    primary: false
+    readonly: false
+    reference_to: k6_test_main
+    required: false
+    searchable: false
+    show_as_qr: false
+    sort_no: 110
+    sortable: false
+    static: false
+    type: master_detail
+    unique: false
+    write_requires_master_read: false
+  name:
+    name: name
+    create: true
+    enable_thousands: true
+    filterable: true
+    index: true
+    label: 名称
+    required: true
+    searchable: true
+    sort_no: 100
+    type: text
+  number:
+    name: number
+    create: true
+    enable_thousands: true
+    filterable: false
+    generated: false
+    hidden: false
+    index: false
+    is_name: false
+    is_wide: false
+    label: 数值
+    multiple: false
+    precision: 18
+    primary: false
+    readonly: false
+    required: false
+    scale: 3
+    searchable: false
+    show_as_qr: false
+    sort_no: 120
+    sortable: false
+    static: false
+    type: number
+    unique: false
+    write_requires_master_read: false

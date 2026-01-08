@@ -20,3 +20,150 @@ label: 微页面
 version: 2
 paging:
   enabled: false
+fields:
+  allow_anonymous:
+    name: allow_anonymous
+    label: Allow anonymous access
+    type: toggle
+    sort_no: 470
+    visible_on: '{{''app'' == formData.type ? true: false}}'
+  dashboard_filters_enabled:
+    name: dashboard_filters_enabled
+    label: Use Dashboard Level Filters
+    sort_no: 120
+    type: toggle
+    hidden: true
+  description:
+    name: description
+    label: 描述
+    type: textarea
+    is_wide: true
+    sort_no: 480
+  is_active:
+    name: is_active
+    label: 状态
+    sort_no: 130
+    type: toggle
+    defaultValue: true
+    visible_on: '{{''redash'' != formData.render_engine ? true: false}}'
+    filterable: true
+  is_archived:
+    name: is_archived
+    label: 已归档
+    sort_no: 130
+    type: toggle
+    hidden: true
+  is_draft:
+    name: is_draft
+    label: is_draft
+    sort_no: 140
+    type: toggle
+    hidden: true
+  is_favorite:
+    name: is_favorite
+    label: is_favorite
+    sort_no: 150
+    type: toggle
+    hidden: true
+  is_system:
+    name: is_system
+    type: boolean
+    label: 系统
+    visible_on: '{{global.mode ===''read'' ? true : false}}'
+    readonly: true
+    disabled: true
+    sort_no: 999
+  label:
+    name: label
+    index: true
+    label: 名称
+    required: true
+    searchable: true
+    sort_no: 120
+    is_name: true
+    type: text
+    filterable: true
+  name:
+    name: name
+    index: true
+    label: API Name
+    required: true
+    searchable: true
+    sort_no: 100
+    type: text
+    filterable: true
+  object_name:
+    name: object_name
+    label: 对象
+    type: lookup
+    sort_no: 135
+    reference_to: objects
+    reference_to_field: name
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(filters,values
+      ) {
+
+        return ['name', '!=', 'cfs_instances_filerecord']
+
+      }
+    filterable: true
+    required: '{{''record'' == formData.type || ''list'' == formData.type || ''form'' == formData.type ? true: false}}'
+    visible_on: '{{''record'' == formData.type || ''list'' == formData.type || ''form'' == formData.type ? true: false}}'
+  owner:
+    name: owner
+    hidden: true
+    index: true
+    label: 所有者
+    omit: true
+    sort_no: 100
+    sortable: true
+  render_engine:
+    name: render_engine
+    type: select
+    label: 渲染器
+    defaultValue: amis
+    options:
+      - label: Amis
+        value: amis
+    required: true
+    sort_no: 125
+  schema:
+    name: schema
+    type: code
+    language: json
+    is_wide: true
+    sort_no: 300
+    omit: true
+    hidden: true
+  slug:
+    name: slug
+    label: slug
+    sort_no: 160
+    type: text
+    hidden: true
+  type:
+    name: type
+    label: 类型
+    type: select
+    defaultValue: app
+    required: true
+    options:
+      - label: 应用程序页面
+        value: app
+      - label: 记录页面
+        value: record
+      - label: 列表页面
+        value: list
+      - label: 表单
+        value: form
+    sort_no: 130
+    visible_on: '{{''redash'' != formData.render_engine ? true: false}}'
+    filterable: true
+  version:
+    name: version
+    type: number
+    label: 版本号
+    scale: 0
+    omit: false
+    readonly: true
+    visible_on: '{{global.mode ===''read'' ? true : false}}'

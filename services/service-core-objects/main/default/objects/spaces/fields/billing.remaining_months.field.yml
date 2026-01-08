@@ -1,5 +1,0 @@
-name: billing.remaining_months
-type: number
-omit: true
-hidden: true
-sort_no: 180

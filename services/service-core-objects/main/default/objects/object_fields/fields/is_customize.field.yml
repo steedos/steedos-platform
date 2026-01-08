@@ -1,6 +1,0 @@
-name: is_customize
-hidden: false
-label: Customized
-readonly: true
-sort_no: 360
-type: boolean

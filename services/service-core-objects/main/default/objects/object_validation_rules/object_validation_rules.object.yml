@@ -7,3 +7,51 @@ enable_dataloader: false
 isMetadata: true
 paging:
   enabled: false
+fields:
+  active:
+    name: active
+    type: boolean
+    label: Active
+    inlineHelpText: 'Indicates whether this validation rule is active, (true), or not active (false).'
+    sort_no: 120
+    filterable: true
+  description:
+    name: description
+    type: textarea
+    is_wide: true
+    label: description
+    sort_no: 130
+    filterable: true
+  error_condition_formula:
+    name: error_condition_formula
+    type: textarea
+    is_wide: true
+    label: errorConditionFormula
+    inlineHelpText: 'The formula defined in the validation rule. If the formula returns a value of true, an error message is displayed.'
+    required: true
+    sort_no: 140
+  error_message:
+    name: error_message
+    type: textarea
+    is_wide: true
+    label: errorMessage
+    inlineHelpText: The message that appears if the validation rule fails. The message must be 255 characters or less.
+    sort_no: 150
+  name:
+    name: name
+    type: text
+    label: Name
+    required: true
+    sort_no: 100
+    filterable: true
+    searchable: true
+  object_name:
+    name: object_name
+    type: master_detail
+    label: Object
+    reference_to: objects
+    write_requires_master_read: true
+    reference_to_field: name
+    required: true
+    sort_no: 110
+    filterable: true

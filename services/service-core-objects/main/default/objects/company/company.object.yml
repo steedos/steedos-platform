@@ -5,3 +5,74 @@ enable_api: true
 hidden: false
 enable_enhanced_lookup: true
 version: 2
+fields:
+  admins:
+    name: admins
+    label: Admin Users
+    type: lookup
+    reference_to: users
+    multiple: true
+    filterable: false
+    sort_no: 150
+  code:
+    name: code
+    label: Code
+    type: text
+    sort_no: 110
+    filterable: true
+    searchable: true
+  company_id:
+    name: company_id
+    label: 分部Id
+    omit: true
+    hidden: true
+    sort_no: 180
+  company_ids:
+    name: company_ids
+    label: 分部
+    omit: true
+    hidden: true
+    sort_no: 190
+  currency_type:
+    name: currency_type
+    label: Currency Type
+    type: text
+    sort_no: 140
+    hidden: true
+  description:
+    name: description
+    label: Description
+    type: textarea
+    is_wide: true
+    sort_no: 160
+  name:
+    name: name
+    label: Name
+    type: text
+    required: true
+    sort_no: 100
+    filterable: true
+    searchable: true
+  organization:
+    name: organization
+    label: Corresponding Department
+    type: lookup
+    required: true
+    reference_to: organizations
+    omit: false
+    sort_no: 130
+    filterable: true
+  parent:
+    name: parent
+    label: Parent
+    type: lookup
+    reference_to: company
+    hidden: true
+    sort_no: 120
+  sort_no:
+    name: sort_no
+    label: Sort Number
+    type: number
+    defaultValue: 100
+    sortable: true
+    sort_no: 155

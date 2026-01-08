@@ -1,6 +1,0 @@
-# avatar_dark旧版本的wokflow中在用，所以隐藏掉，暂时不能删除
-name: avatar_dark
-label: Dark Logo
-type: avatar
-hidden: true
-group: branding

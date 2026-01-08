@@ -1,7 +1,0 @@
-name: position
-type: text
-label: Title
-sortable: true
-filterable: true
-sort_no: 210
-searchable: true

@@ -6,3 +6,86 @@ hidden: true
 enable_inline_edit: false
 enable_enhanced_lookup: true
 isMetadata: true
+fields:
+  app:
+    name: app
+    label: 应用
+    type: lookup
+    reference_to: apps
+    reference_to_field: code
+    filters:
+      - - - code
+          - '!='
+          - admin
+    sort_no: 80
+  description:
+    name: description
+    label: 描述
+    type: textarea
+    sort_no: 40
+    is_wide: true
+    filterable: true
+  endpoint_url:
+    name: endpoint_url
+    label: 端点 URL
+    type: url
+    required: true
+    sort_no: 50
+    is_wide: true
+    filterable: true
+    searchable: true
+  label:
+    name: label
+    label: 名称
+    type: text
+    required: true
+    searchable: true
+    index: true
+    is_name: true
+    sort_no: 20
+    filterable: true
+  name:
+    name: name
+    label: Api Name
+    type: text
+    required: true
+    searchable: true
+    index: true
+    sort_no: 30
+    filterable: true
+  object_fields_to_send:
+    name: object_fields_to_send
+    label: 要发送的字段
+    type: lookup
+    multiple: true
+    is_wide: true
+    reference_to: object_fields
+    reference_to_field: name
+    depend_on:
+      - object_name
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(filters,values
+      ) {
+
+        return ['object', '=', values.object_name]
+
+      }
+    sort_no: 70
+  object_name:
+    name: object_name
+    label: 对象
+    type: lookup
+    required: true
+    is_wide: true
+    reference_to: objects
+    reference_to_field: name
+    index: true
+    sort_no: 10
+    filterable: true
+  user_to_send_as:
+    name: user_to_send_as
+    label: 发送方用户
+    type: lookup
+    reference_to: users
+    sort_no: 60
+    hidden: true

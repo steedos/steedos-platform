@@ -18,3 +18,74 @@ hidden: true
 icon: contract
 is_enable: true
 version: 2
+fields:
+  app:
+    name: app
+    label: 应用
+    type: lookup
+    reference_to: apps
+    reference_to_field: code
+    filters:
+      - - code
+        - '!='
+        - admin
+    sort_no: 120
+    required: '{{(formData.type == ''appDefault'' || formData.type == ''appRecordProfile'') ? true : false}}'
+    visible_on: '{{(formData.type == ''appDefault'' || formData.type == ''appRecordProfile'') ? true : false}}'
+  desktop:
+    name: desktop
+    type: boolean
+    label: 桌面端
+    sort_no: 130
+    defaultValue: true
+  is_system:
+    name: is_system
+    type: boolean
+    label: 系统
+    visible_on: '{{global.mode ===''read'' ? true : false}}'
+    readonly: true
+    disabled: true
+    sort_no: 999
+  mobile:
+    name: mobile
+    type: boolean
+    label: 移动端
+    sort_no: 140
+    defaultValue: true
+  page:
+    name: page
+    label: 页面
+    type: master_detail
+    reference_to: pages
+    sort_no: 110
+    required: true
+  profile:
+    name: profile
+    type: lookup
+    label: 简档
+    reference_to: permission_set
+    filters:
+      - - type
+        - '='
+        - profile
+    sort_no: 125
+    required: '{{formData.type == ''appRecordProfile'' ? true : false}}'
+    visible_on: '{{formData.type == ''appRecordProfile'' ? true : false}}'
+  record_type:
+    name: record_type
+    type: text
+    label: 记录类型
+    hidden: true
+  type:
+    name: type
+    label: 授权类型
+    type: select
+    required: true
+    defaultValue: orgDefault
+    options:
+      - label: 组织默认设置
+        value: orgDefault
+      - label: 应用程序默认设置
+        value: appDefault
+      - label: 应用程序和简档
+        value: appRecordProfile

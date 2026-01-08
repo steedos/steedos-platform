@@ -1,7 +1,0 @@
-name: enable_chatter
-hidden: false
-group: feature
-label: Enable Comments
-sort_no: 135
-type: boolean
-visible_on: '{{ Builder.settings.platform && ["platform-standard", "platform-enterprise", "platform-professional"].includes(Builder.settings.platform.product)  }}'

@@ -18,3 +18,45 @@ hidden: true
 icon: contract
 is_enable: true
 version: 2
+fields:
+  description:
+    name: description
+    label: 描述
+    type: textarea
+    is_wide: true
+    sort_no: 480
+  is_active:
+    name: is_active
+    label: 已发布
+    sort_no: 130
+    readonly: true
+    type: boolean
+  is_system:
+    name: is_system
+    type: boolean
+    label: 系统
+    visible_on: '{{global.mode ===''read'' ? true : false}}'
+    readonly: true
+    disabled: true
+    sort_no: 999
+  page:
+    name: page
+    label: 页面
+    type: master_detail
+    reference_to: pages
+    readonly: true
+  schema:
+    name: schema
+    label: schema
+    type: code
+    language: json
+    is_wide: true
+    sort_no: 300
+    omit: false
+    hidden: false
+  version:
+    name: version
+    type: number
+    label: 版本号
+    scale: 0
+    readonly: true

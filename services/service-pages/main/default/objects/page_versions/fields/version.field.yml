@@ -1,5 +1,0 @@
-name: version
-type: number
-label: 版本号
-scale: 0
-readonly: true

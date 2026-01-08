@@ -3,3 +3,103 @@ label: 安全日志
 version: 2
 icon: budget
 hidden: true
+fields:
+  data:
+    name: data
+    type: code
+    language: json
+    label: 数据
+    is_wide: true
+    sort_no: 200
+  http_user_agent:
+    name: http_user_agent
+    type: text
+    label: User Agent
+    sort_no: 50
+    is_wide: true
+  is_mobile:
+    name: is_mobile
+    label: 手机
+    type: boolean
+    sort_no: 30
+  is_tablet:
+    name: is_tablet
+    label: 平板电脑
+    type: boolean
+    sort_no: 40
+  message:
+    name: message
+    type: text
+    label: 消息
+    sort_no: 60
+    is_wide: true
+  name:
+    name: name
+    type: text
+    label: 名称
+    sort_no: 10
+    filterable: true
+    searchable: true
+  object:
+    name: object
+    type: text
+    label: 对象
+    filterable: true
+    searchable: true
+  related_to:
+    label: 相关项
+    type: lookup
+    index: true
+    reference_to: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(
+      ) {
+
+            try{
+              let objects = [];
+              var queryResult = Steedos.authRequest(`/graphql`, {
+                  type: 'POST', async: false, 
+                  data: JSON.stringify({
+                    query: `{ objects{ name,space,enable_tasks } }`
+                  })
+              });
+              objects = queryResult && queryResult.data && queryResult.data.objects;
+              return _.map(objects, 'name') ;
+            }catch(e){
+              return []
+            }
+
+      }
+    name: related_to
+    filterable: true
+  remote_addr:
+    name: remote_addr
+    label: IP 地址
+    type: text
+    sort_no: 25
+  remote_user:
+    name: remote_user
+    type: lookup
+    reference_to: users
+    label: 操作人
+    sort_no: 22
+    filterable: true
+  status:
+    name: status
+    type: select
+    label: 状态
+    sort_no: 26
+    options:
+      - label: 成功
+        value: success
+        color: 008000
+      - label: 失败
+        value: fail
+        color: ff0000
+    filterable: true
+  type:
+    name: type
+    type: text
+    label: 类型
+    sort_no: 20
+    filterable: true
+    searchable: true

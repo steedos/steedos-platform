@@ -17,3 +17,91 @@ icon: omni_supervisor
 is_enable: true
 label: API Key
 version: 2
+fields:
+  active:
+    name: active
+    filterable: true
+    hidden: false
+    index: false
+    is_name: false
+    is_wide: false
+    label: 启用
+    omit: false
+    readonly: false
+    required: false
+    searchable: false
+    sort_no: 150
+    sortable: false
+    type: boolean
+  api_key:
+    name: api_key
+    hidden: false
+    index: false
+    is_name: true
+    is_wide: false
+    label: API Key
+    omit: false
+    readonly: false
+    required: false
+    sort_no: 140
+    sortable: false
+    type: text
+    visible_on: '{{global.mode ===''read'' ? true : false}}'
+    filterable: true
+    searchable: true
+  last_use_time:
+    name: last_use_time
+    filterable: false
+    hidden: false
+    index: false
+    is_name: false
+    is_wide: false
+    label: 最后使用时间
+    visible_on: '{{global.mode ===''read'' ? true : false}}'
+    readonly: true
+    required: false
+    searchable: false
+    sort_no: 160
+    sortable: false
+    type: datetime
+  name:
+    name: name
+    defaultValue: null
+    description: null
+    filterable: false
+    group: null
+    hidden: true
+    index: true
+    inlineHelpText: null
+    is_name: false
+    is_wide: false
+    label: 名称
+    omit: false
+    readonly: false
+    required: false
+    searchable: true
+    sort_no: 100
+    sortable: false
+    type: text
+  owner:
+    name: owner
+    description: null
+    filterable: false
+    filtersFunction: null
+    group: null
+    hidden: false
+    index: true
+    inlineHelpText: null
+    is_name: false
+    is_wide: false
+    label: 所有者
+    multiple: false
+    omit: false
+    optionsFunction: null
+    readonly: true
+    disabled: true
+    required: false
+    searchable: false
+    sort_no: 170
+    sortable: true
+    visible_on: '{{global.mode ===''read'' ? true : false}}'

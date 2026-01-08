@@ -1,5 +1,0 @@
-name: company_id
-label: 主分部
-sort_no: 200
-type: lookup
-visible_on: '{{false}}'

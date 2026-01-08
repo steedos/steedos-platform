@@ -7,7 +7,7 @@ enable_enhanced_lookup: true
 enable_inline_edit: false
 version: 2
 pages:
-  lookup: 
+  lookup:
     is_enable: true
     amis_schema: |-
       {
@@ -37,3 +37,116 @@ pages:
           }
         }
       }
+fields:
+  children:
+    name: children
+    label: Subordinates
+    type: lookup
+    reference_to: organizations
+    multiple: true
+    visible_on: '{{false}}'
+    group: systemfields
+    filterable: false
+    sort_no: 140
+  company_id:
+    name: company_id
+    label: Main Division
+    defaultValue: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(
+      ) {
+
+
+        /* 主分部 company_id / 所属分部 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
+
+
+      }
+    readonly: true
+    visible_on: '{{global.mode ===''read'' ? true : false}}'
+    hidden: false
+    sort_no: 170
+    filterable: true
+  company_ids:
+    name: company_ids
+    label: All Divisions
+    defaultValue: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(
+      ) {
+
+
+        /* 主分部 company_id / 所属分部 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
+
+
+      }
+    omit: true
+    hidden: true
+    sort_no: 180
+  fullname:
+    name: fullname
+    label: Fullname
+    type: text
+    visible_on: '{{false}}'
+    is_name: true
+    searchable: true
+    sort_no: 110
+  hidden:
+    name: hidden
+    label: Hidden
+    type: boolean
+    sort_no: 200
+  is_company:
+    name: is_company
+    label: Divisional
+    type: boolean
+    hidden: false
+    index: true
+    readonly: true
+    visible_on: '{{global.mode ===''read'' ? true : false}}'
+    sort_no: 190
+  name:
+    name: name
+    label: Name
+    type: text
+    required: true
+    searchable: true
+    index: true
+    sortable: true
+    sort_no: 100
+    filterable: true
+  parent:
+    name: parent
+    label: Superior
+    type: lookup
+    reference_to: organizations
+    sortable: true
+    index: true
+    blackbox: true
+    filterable: true
+    sort_no: 120
+  parents:
+    name: parents
+    label: All Superiors
+    type: lookup
+    reference_to: organizations
+    multiple: true
+    omit: true
+    group: systemfields
+    hidden: true
+    blackbox: true
+    filterable: true
+    sort_no: 130
+  sort_no:
+    name: sort_no
+    label: Sort Number
+    type: number
+    defaultValue: 100
+    sortable: true
+    sort_no: 150
+  users:
+    name: users
+    label: Members
+    type: lookup
+    reference_to: users
+    multiple: true
+    is_wide: true
+    filterable: true
+    sort_no: 160

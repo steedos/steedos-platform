@@ -1,7 +1,0 @@
-name: enable_dataloader
-defaultValue: true
-hidden: true
-label: Enable Dataloader
-sort_no: 310
-type: boolean
-visible_on: '{{false}}'

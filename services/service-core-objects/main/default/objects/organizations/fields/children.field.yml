@@ -1,9 +1,0 @@
-name: children
-label: Subordinates
-type: lookup
-reference_to: organizations
-multiple: true
-visible_on: '{{false}}'
-group: systemfields
-filterable: false
-sort_no: 140

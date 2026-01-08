@@ -1,8 +1,0 @@
-name: schema
-label: schema
-type: code
-language: json
-is_wide: true
-sort_no: 300
-omit: false
-hidden: false

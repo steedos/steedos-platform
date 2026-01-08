@@ -4,3 +4,114 @@ icon: output
 hidden: true
 isMetadata: true
 version: 2
+fields:
+  active:
+    name: active
+    label: Active
+    type: boolean
+    defaultValue: true
+    sort_no: 80
+  condition:
+    name: condition
+    type: text
+    sort_no: 40
+    is_wide: true
+    label: 准入条件
+    inlineHelpText: 指定准入条件，减少触发执行次数。最大限度地减少非必要执行次数，这将有助于节省资源。如果您创建将在记录更新时触发，我们建议先定义准入条件。然后，对于何时为更新的记录运行，选择仅在更新记录满足条件要求时选项。
+  content_type:
+    name: content_type
+    label: Format of Request
+    type: text
+    defaultValue: '"application/json"'
+    hidden: true
+  event:
+    name: event
+    type: select
+    label: 何时触发
+    required: true
+    multiple: false
+    sort_no: 30
+    options:
+      - label: 记录已创建
+        value: create
+      - label: 记录已更新
+        value: update
+      - label: 记录已创建或已更新
+        value: createAndUpdate
+      - label: 记录已删除
+        value: delete
+    filterable: true
+  execute_when:
+    name: execute_when
+    label: 何时运行更新记录的webhook
+    type: select
+    inlineHelpText: 您可能希望仅在将触发记录从不满足条件要求更改为满足条件要求时运行。在出现此情况时，选择第二个选项。
+    visible_on: '${!!condition && (event === ''update'' || event === ''createAndUpdate'')}'
+    sort_no: 50
+    is_wide: true
+    options:
+      - label: 每次更新记录并满足条件要求
+        value: trueEveryTime
+      - label: 仅在更新记录以满足条件要求时
+        value: trueOnChangeOnly
+    filterable: true
+  fields:
+    name: fields
+    type: lookup
+    label: Fields
+    multiple: true
+    is_wide: true
+    sort_no: 60
+    description: '如果未配置, 则推送所有字段'
+    depend_on:
+      - object_name
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function anonymous(values
+      ) {
+
+        var _object, _options, fields, icon, object_name;
+        object_name = values.object_name;
+        if (!object_name) {
+          return [];
+        }
+        _options = [];
+        _object = getUISchemaSync(object_name);
+        fields = _object.fields;
+        icon = _object.icon;
+        _.forEach(fields, function(f, k) {
+          return _options.push({
+            label: f.label || k,
+            value: k
+          });
+        });
+        return _options;
+
+      }
+  name:
+    name: name
+    type: text
+    label: Name
+    required: true
+    sort_no: 10
+    filterable: true
+    searchable: true
+  object_name:
+    name: object_name
+    type: lookup
+    reference_to: objects
+    reference_to_field: name
+    label: Object
+    required: true
+    index: true
+    sort_no: 20
+    searchable: true
+    filterable: true
+  payload_url:
+    name: payload_url
+    label: Payload URL
+    type: text
+    is_wide: true
+    required: true
+    sort_no: 70
+    filterable: true
+    searchable: true

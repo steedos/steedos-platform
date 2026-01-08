@@ -8,3 +8,225 @@ enable_tasks: true
 enable_api: true
 enable_audit: true
 version: 2
+fields:
+  account:
+    name: account
+    label: 所属客户
+    type: master_detail
+    reference_to: accounts
+    sortable: true
+    filterable: true
+    inlineHelpText: 联系人所链接的客户。输入客户名称、从列表中选择客户或创建客户。
+    sort_no: 120
+  assistant:
+    name: assistant
+    label: 助理
+    type: text
+    hidden: true
+    sort_no: 340
+  asst_phone:
+    name: asst_phone
+    label: 助理电话
+    type: text
+    hidden: true
+    sort_no: 350
+  birthdate:
+    name: birthdate
+    label: 生日
+    type: date
+    sort_no: 220
+  department:
+    name: department
+    label: 部门
+    type: text
+    sortable: true
+    inlineHelpText: 关联的业务或组织单元。
+    sort_no: 160
+  description:
+    name: description
+    label: 备注
+    type: textarea
+    is_wide: true
+    sort_no: 260
+  do_not_call:
+    name: do_not_call
+    label: 请勿致电
+    type: boolean
+    inlineHelpText: 是否想要通过电话联系联系人。
+    hidden: true
+    sort_no: 360
+  email:
+    name: email
+    label: 邮件
+    type: email
+    sort_no: 170
+  fax:
+    name: fax
+    label: 传真
+    type: text
+    sort_no: 180
+  fax_opt_out:
+    name: fax_opt_out
+    label: 退出传真列表
+    type: boolean
+    inlineHelpText: 是否将联系人包含在传真中。
+    hidden: true
+    sort_no: 380
+  has_opted_out_of_email:
+    name: has_opted_out_of_email
+    label: 退出邮件列表
+    type: boolean
+    inlineHelpText: 是否将联系人包含在群发邮件列表中。
+    hidden: true
+    sort_no: 370
+  hoddy:
+    name: hoddy
+    label: 爱好
+    type: text
+    is_wide: true
+    sort_no: 250
+  home_phone:
+    name: home_phone
+    label: 家庭电话
+    type: text
+    sort_no: 210
+  individual:
+    name: individual
+    label: 个人
+    type: text
+    hidden: true
+    sort_no: 290
+  last_request_date:
+    name: last_request_date
+    label: 上次保持联系请求日期
+    type: date
+    hidden: true
+    sort_no: 280
+  last_save_date:
+    name: last_save_date
+    label: 上次保持联系保存日期
+    type: date
+    hidden: true
+    sort_no: 270
+  lead_source:
+    name: lead_source
+    type: select
+    label: 潜在客户来源
+    searchable: true
+    sortable: true
+    options:
+      - label: 广告
+        value: Advertisement
+      - label: 客户活动
+        value: Customer_Event
+      - label: 员工推荐
+        value: Employee_Referral
+      - label: 百度搜索
+        value: Baidu_AdWords
+      - label: 其他
+        value: Other
+      - label: 合作伙伴
+        value: Partner
+      - label: 采购清单
+        value: Purchased_List
+      - label: 贸易展览
+        value: Trade_Show
+      - label: 线上研讨
+        value: Webinar
+      - label: 网站
+        value: Website
+    filterable: true
+    inlineHelpText: 潜在客户来源，例如，广告、合作伙伴或 Web。
+    hidden: true
+    sort_no: 390
+  mailing_address:
+    name: mailing_address
+    type: textarea
+    label: 邮寄地址
+    is_wide: true
+    rows: 3
+    group: 地址信息
+    sort_no: 230
+  mobile:
+    name: mobile
+    label: 手机
+    type: text
+    sort_no: 200
+  name:
+    name: name
+    type: text
+    label: 姓名
+    required: true
+    searchable: true
+    sortable: true
+    index: true
+    sort_no: 100
+  other_city:
+    name: other_city
+    type: text
+    label: 其他地址-城市
+    group: 其他地址信息
+    hidden: true
+    sort_no: 300
+  other_phone:
+    name: other_phone
+    label: 其他电话
+    type: text
+    hidden: true
+    sort_no: 330
+  other_street:
+    name: other_street
+    type: text
+    label: 其他地址-街道
+    group: 其他地址信息
+    hidden: true
+    sort_no: 310
+  other_zip:
+    name: other_zip
+    type: text
+    label: 其他地址-邮政编码
+    group: 其他地址信息
+    hidden: true
+    sort_no: 320
+  owner:
+    name: owner
+    label: 我方客户经理
+    sortable: true
+    omit: false
+    hidden: false
+    sort_no: 110
+  phone:
+    name: phone
+    label: 工作电话
+    type: text
+    sort_no: 190
+  reports_to_id:
+    name: reports_to_id
+    type: lookup
+    label: 直属上司
+    reference_to: contacts
+    create: true
+    inlineHelpText: 联系人管理员的姓名。输入联系人名称，或从列表中选择联系人。
+    sort_no: 130
+  salutation:
+    name: salutation
+    type: select
+    label: 性别
+    options:
+      - label: 男
+        value: Male
+      - label: 女
+        value: Female
+    sort_no: 140
+  title:
+    name: title
+    label: 职务
+    type: text
+    sortable: true
+    sort_no: 150
+  user:
+    name: user
+    type: lookup
+    reference_to: users
+    label: 外部用户
+    sort_no: 240
