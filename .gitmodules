@@ -1,4 +1,0 @@
-[submodule "steedos-widgets"]
-	path = steedos-widgets
-	url = https://github.com/steedos/steedos-widgets.git
-	branch = 6.10
