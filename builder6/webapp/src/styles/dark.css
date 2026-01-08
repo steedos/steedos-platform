@@ -15,4 +15,8 @@
             color: var(--color-gray-200);
         }
     }
+
+    .steedos-header-app-name {
+        color: var(--color-white);
+    }
 }

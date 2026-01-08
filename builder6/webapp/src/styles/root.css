@@ -10,18 +10,29 @@
   --color-black: #000000;
   --color-white: #ffffff;
 
+  --color-brand-main: var(--color-sky-900);
+  --color-brand-900: var(--color-sky-900);
+  --color-brand-800: var(--color-sky-800);
+  --color-brand-700: var(--color-sky-700);
+  --color-brand-600: var(--color-sky-600);
+  --color-brand-500: var(--color-sky-500);
+  --color-brand-400: var(--color-sky-400);
+  --color-brand-300: var(--color-sky-300);
+  --color-brand-200: var(--color-sky-200);
+  --color-brand-100: var(--color-sky-100);
+  --color-brand-50: var(--color-sky-50);
 
-  --colors-brand-main: var(--color-sky-900);
-  --colors-brand-1: var(--color-sky-900);
-  --colors-brand-2: var(--color-sky-800);
-  --colors-brand-3: var(--color-sky-700);
-  --colors-brand-4: var(--color-sky-600);
-  --colors-brand-5: var(--color-sky-500);
-  --colors-brand-6: var(--color-sky-400);
-  --colors-brand-7: var(--color-sky-300);
-  --colors-brand-8: var(--color-sky-200);
-  --colors-brand-9: var(--color-sky-100);
-  --colors-brand-10: var(--color-sky-50);
+  --colors-brand-main: var(--color-brand-main);
+  --colors-brand-1: var(--color-brand-900);
+  --colors-brand-2: var(--color-brand-800);
+  --colors-brand-3: var(--color-brand-700);
+  --colors-brand-4: var(--color-brand-600);
+  --colors-brand-5: var(--color-brand-500);
+  --colors-brand-6: var(--color-brand-400);
+  --colors-brand-7: var(--color-brand-300);
+  --colors-brand-8: var(--color-brand-200);
+  --colors-brand-9: var(--color-brand-100);
+  --colors-brand-10: var(--color-brand-50);
 
   --color-gray-25: #fcfcfd;
   --color-gray-50: #f9fafb;

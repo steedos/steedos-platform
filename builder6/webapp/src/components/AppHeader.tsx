@@ -14,11 +14,11 @@ const getHeaderSchema = (props) => {
         body: [
             {
                 "type": "wrapper",
-                "className": "sticky p-0 top-0 z-40 w-full flex-none backdrop-blur-md backdrop-saturate-150 transition-colors duration-500 lg:z-[1000] steedos-header-container border-b border-gray-200/50 dark:border-gray-700/50",
+                "className": "sticky p-0 top-0 z-40 w-full flex-none transition-colors duration-500 lg:z-[1000] steedos-header-container shadow-sm",
                 body: [
                     {
                         "type": "wrapper",
-                        "className": 'flex w-full px-4 lg:px-5 py-0 h-[56px] justify-between items-center steedos-header-container-line-one',
+                        "className": 'flex w-full px-4 lg:px-5 py-0 h-[64px] justify-between items-center steedos-header-container-line-one',
                         "body": [
                             {
                                 type: "service",
@@ -38,7 +38,7 @@ const getHeaderSchema = (props) => {
                                 body: [
                                     {
                                         "type": "button",
-                                        "className": "toggle-sidebar flex items-center justify-center w-9 h-9 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors mr-1",
+                                        "className": "toggle-sidebar flex items-center justify-center w-9 h-9 rounded-full hover:bg-black/5 transition-colors mr-1",
                                         "visibleOn": "${window:innerWidth < 768 && !!app && app.showSidebar}",
                                         "onEvent": {
                                             "click": {
@@ -64,14 +64,14 @@ const getHeaderSchema = (props) => {
                                                 "name": "rows",
                                                 "colorVariant": "default",
                                                 "id": "u:afc3a08e8cf3",
-                                                "className": "slds-button_icon slds-global-header__icon text-gray-500"
+                                                "className": "slds-button_icon slds-global-header__icon"
                                             }
                                         ],
                                     },
                                     {
                                         "type": "button",
                                         "visibleOn": "${window:innerWidth < 768 && (window:historyPaths.length > 1 || window:historyPaths[0].params.record_id)}",
-                                        "className":"flex items-center justify-center w-9 h-9 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors mr-1",
+                                        "className":"flex items-center justify-center w-9 h-9 rounded-full hover:bg-black/5 transition-colors mr-1",
                                         "onEvent": {
                                             "click": {
                                                 "actions": [
@@ -88,7 +88,7 @@ const getHeaderSchema = (props) => {
                                                 "category": "utility",
                                                 "name": "chevronleft",
                                                 "colorVariant": "default",
-                                                "className": "slds-button_icon slds-global-header__icon text-gray-500"
+                                                "className": "slds-button_icon slds-global-header__icon"
                                             }
                                         ]
                                     },
@@ -111,7 +111,7 @@ const getHeaderSchema = (props) => {
                                     //     "tpl": '',
                                     // },
                                     {
-                                        "className": 'w-auto ml-3 font-semibold text-lg tracking-tight inline-block align-middle text-slate-800 dark:text-white',
+                                        "className": 'steedos-header-app-name w-auto ml-2 font-semibold !text-lg tracking-tight inline-block align-middle',
                                         "type": "tpl",                                        
                                         "hiddenOn": "${window:innerWidth < 768}",
                                         "tpl": '${app.name}',
@@ -121,7 +121,7 @@ const getHeaderSchema = (props) => {
                             {
                                 "type": "steedos-global-header-toolbar",
                                 "label": "Global Header",
-                                className: 'flex flex-nowrap gap-x-2 items-center',
+                                className: 'flex flex-nowrap gap-x-6 items-center',
                                 logoutScript: "window.signOut();",
                                 customButtons: customButtons
                             }
@@ -132,12 +132,12 @@ const getHeaderSchema = (props) => {
             },
             {
                 "type": "button",
-                "className": 'p-0 absolute inset-0 mt-[56px]',
+                "className": 'p-0 absolute inset-0 mt-[64px]',
                 visibleOn: '${!!app && app.showSidebar}',
                 body: [
                     {
                         type: "wrapper",
-                        className: 'sidebar-wrapper bg-white border-r px-2 pt-2 pb-16 fixed z-20 h-full h-fill flex flex-col overflow-y-auto block transition-all duration-300',
+                        className: 'sidebar-wrapper px-2 pt-4 pb-16 fixed z-20 h-full h-fill flex flex-col overflow-y-auto block transition-all duration-300',
                         visibleOn: '${!!app}',
                         body: [
                             {
@@ -219,17 +219,17 @@ export const AppHeader = () => {
 
                         const themeColor = appData.color || 'sky';
                         const linkColor = themeColor != 'gray' ? themeColor : 'sky';
-                        document.documentElement.style.setProperty('--colors-brand-main', `var(--color-${themeColor}-900)`);
-                        document.documentElement.style.setProperty('--colors-brand-1', `var(--color-${linkColor}-900)`);
-                        document.documentElement.style.setProperty('--colors-brand-2', `var(--color-${linkColor}-900)`);
-                        document.documentElement.style.setProperty('--colors-brand-3', `var(--color-${linkColor}-800)`);
-                        document.documentElement.style.setProperty('--colors-brand-4', `var(--color-${linkColor}-700)`);
-                        document.documentElement.style.setProperty('--colors-brand-5', `var(--color-${linkColor}-600)`);
-                        document.documentElement.style.setProperty('--colors-brand-6', `var(--color-${linkColor}-500)`);
-                        document.documentElement.style.setProperty('--colors-brand-7', `var(--color-${linkColor}-400)`);
-                        document.documentElement.style.setProperty('--colors-brand-8', `var(--color-${linkColor}-300)`);
-                        document.documentElement.style.setProperty('--colors-brand-9', `var(--color-${linkColor}-100)`);
-                        document.documentElement.style.setProperty('--colors-brand-10', `var(--color-${linkColor}-50)`);
+                        document.documentElement.style.setProperty('--color-brand-main', `var(--color-${themeColor}-900)`);
+                        document.documentElement.style.setProperty('--color-brand-900', `var(--color-${linkColor}-900)`);
+                        document.documentElement.style.setProperty('--color-brand-900', `var(--color-${linkColor}-900)`);
+                        document.documentElement.style.setProperty('--color-brand-800', `var(--color-${linkColor}-800)`);
+                        document.documentElement.style.setProperty('--color-brand-700', `var(--color-${linkColor}-700)`);
+                        document.documentElement.style.setProperty('--color-brand-600', `var(--color-${linkColor}-600)`);
+                        document.documentElement.style.setProperty('--color-brand-500', `var(--color-${linkColor}-500)`);
+                        document.documentElement.style.setProperty('--color-brand-400', `var(--color-${linkColor}-400)`);
+                        document.documentElement.style.setProperty('--color-brand-300', `var(--color-${linkColor}-300)`);
+                        document.documentElement.style.setProperty('--color-brand-100', `var(--color-${linkColor}-100)`);
+                        document.documentElement.style.setProperty('--color-brand-50', `var(--color-${linkColor}-50)`);
                         document.documentElement.style.setProperty('--colors-other-5', `var(--color-${linkColor}-600)`);
                         document.documentElement.style.setProperty('--colors-other-6', `var(--color-${linkColor}-500)`);
                         document.documentElement.style.setProperty('--colors-other-7', `var(--color-${linkColor}-400)`);

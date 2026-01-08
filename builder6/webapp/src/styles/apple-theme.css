@@ -30,20 +30,10 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.01em;
 }
 
-/* Glassmorphism Headers - Background removed to allow app configuration */
-.steedos-header-container, .navbar {
-  /* background-color: var(--apple-glass-bg); */
-  /* backdrop-filter: blur(20px); */
-  /* -webkit-backdrop-filter: blur(20px); */
-  border-bottom: 1px solid rgba(0,0,0,0.05);
-  box-shadow: none;
-}
-
 /* Sidebar Glass Effect */
 .sidebar-wrapper, .steedos .skin-blue-light .main-sidebar {
   background-color: var(--apple-glass-bg);
   backdrop-filter: blur(20px);
-  border-right: 1px solid rgba(0,0,0,0.05);
 }
 
 /* Card Style Modernization */

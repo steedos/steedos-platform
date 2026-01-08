@@ -93,7 +93,6 @@ a {
     color: var(--color-white);
 }
 
-
 /* 修正手机端字体小的问题 */
 @media (max-width: 767px) {
 
@@ -129,4 +128,115 @@ a {
     .lb-inbox-button {
         color: var(--color-gray-600);
     }
+}
+
+.sidebar-wrapper {
+    background-color: var(--color-gray-50);
+    border-right: 1px solid var(--color-gray-200);
+}
+
+
+.steedos {
+  --Menu-width--collapsed: 32px;
+  --Menu-light-fontColor: var(--Layout-light-fontColor);
+  --Menu-light-fontColor-onHover: var(--link-color);
+  --Menu-light-fontColor-onActive: var(--color-slate-900);
+  --Menu-light-active-backgroundColor: var(--color-brand-100)
+  --Menu-light-backgroundColor-onHover: var(--color-slate-50);
+  --Menu-light-selectedIndicator-color: transparent;
+  --Nav-Item-height: 44px;
+  /* --Nav-Item-height--horizontal: 2.5rem; */
+  --Nav-item-borderRadius: 0.5rem;
+  --Nav-item-onHover-bg: rgba(21,137,238,.1);
+  --Nav-item-onActive-bg: rgba(21,137,238,.1);
+  --Nav-item-onActive-color: var(--link-color);
+  --Nav-Item-maxWidth--tabs: 200px;
+}
+.antd-Nav-Menu.antd-Nav-Menu-horizontal {
+  --Menu-light-backgroundColor-onHover: rgba(151, 151, 151, 0.1);
+  --Menu-light-fontColor-onHover: var(--Layout-fontColor--onHover);
+}
+
+.antd-Nav-Menu-item {
+  border-radius: 0.375rem;
+  margin-top: 3px;
+  margin-left: 0rem;
+}
+
+.antd-Nav-Menu-collapsed 
+.antd-Nav-Menu-item {
+  border-radius: 0;
+  margin-top: 0;
+  margin-left: 0rem;
+}
+
+.antd-Nav-Menu-item-dragBar {
+  left: 0px;
+  height: 16px;
+}
+
+.antd-Nav-item.is-active {
+  box-shadow:var(--link-color) 4px 0 0 inset;
+}
+
+
+.antd-Nav-Menu-submenu-arrow > svg {
+  display: initial;
+}
+
+.antd-Nav-Menu-light .antd-Nav-Menu-item, .antd-Nav-Menu-light .antd-Nav-Menu-submenu-title {
+  padding-right: 4px;
+}
+
+/*  nav下配置itemBadge属性后item不会自动撑开 */ 
+.antd-Nav-Menu-item-wrap .antd-Badge{
+  width: -webkit-fill-available;
+}
+
+.antd-Nav-Menu-item-link{
+  display: flex;
+  align-items: center;
+  min-height:var(--Nav-Item-height);
+  font-weight: 600 !important;
+}
+
+
+.antd-Nav-Menu .antd-Nav-Menu-submenu > .antd-Nav-Menu-submenu-title .antd-Nav-Menu-item-label {
+  color: var(--color-slate-400);
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.antd-Nav .antd-Nav-dropIndicator {
+  position: absolute;
+  background: gray;
+  height: 0.125rem;
+}
+
+.antd-Nav-Menu-inline .antd-Nav-Menu-item-selected {
+    background-color: var(--color-brand-50);
+}
+
+.antd-Nav-Menu-item-active {
+  background-color: var(--color-slate-50);
+}
+
+.antd-Nav-Menu-inline .antd-Nav-Menu-item-selected::before {
+    border-right: 0;
+}
+
+.antd-Nav-Menu-item-active .antd-Nav-Menu-item-label, .antd-Nav-Menu-item-active .antd-Nav-Menu-item-icon, .antd-Nav-Menu-item-active .antd-Nav-Menu-item-icon-after, .antd-Nav-Menu-item-active .antd-Nav-Menu-submenu-arrow {
+    color: var(--color-slate-900);
+}
+
+.antd-Nav-Menu-item:active .antd-Nav-Menu-item-label, .antd-Nav-Menu-item:active .antd-Nav-Menu-item-icon, .antd-Nav-Menu-item:active .antd-Nav-Menu-item-icon-after, .antd-Nav-Menu-item:active .antd-Nav-Menu-submenu-arrow, .antd-Nav-Menu-submenu-title:active .antd-Nav-Menu-item-label, .antd-Nav-Menu-submenu-title:active .antd-Nav-Menu-item-icon, .antd-Nav-Menu-submenu-title:active .antd-Nav-Menu-item-icon-after, .antd-Nav-Menu-submenu-title:active .antd-Nav-Menu-submenu-arrow {
+    color: var(--color-slate-900);
+}
+
+.antd-Nav-Menu-item:active, .antd-Nav-Menu-submenu-title:active {
+    color: var(--color-slate-900);
+}
+
+.steedos-header-app-name {
+    color: var(--color-brand-700);
 }

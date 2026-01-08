@@ -8,12 +8,12 @@
     right: 0;
     bottom: 0;
     left: 0;
-    margin-top: 56px;
+    margin-top: 64px;
 }
 
 @media (min-width: 767px) {
     .creator-content-wrapper {
-        height:calc(100% - 56px)
+        height:calc(100% - 64px)
     }
 
     .creator-content-wrapper>.builder-component{
