@@ -521,7 +521,7 @@ module.exports = {
                 if(!record){
                     record = {}
                 }
-                var isVisible = Steedos.Object.base.actions.standard_new.visible() && record.is_system && data.uiSchema.isMetadata;
+                var isVisible = Steedos.StandardObjects.Base.Actions.standard_new.visible() && record.is_system && data.uiSchema.isMetadata;
                 if (isVisible){
                     if(object_name == "apps"){
                         if(record_id === 'admin'){return false;}
