@@ -11,6 +11,7 @@
 ### 开发指南
 - **[开发者指南 (中文)](./DEVELOPER_GUIDE_CN.md)** - 完整的开发环境搭建、开发工作流和最佳实践
 - **[包和服务索引 (中文)](./PACKAGES_INDEX_CN.md)** - 所有核心包和微服务的详细索引
+- **[快速参考 (中文)](./QUICK_REFERENCE_CN.md)** - 常用命令、API 和配置的快速参考
 
 ### 技术文档
 - **[ObjectQL](./objectql.md)** - 对象查询语言详细说明
@@ -76,8 +77,9 @@ docs/
 ├── README.md                    # 本文档
 ├── CORE_ARCHITECTURE_CN.md      # 核心架构 (中文)
 ├── CORE_ARCHITECTURE_EN.md      # 核心架构 (英文)
-├── DEVELOPER_GUIDE_CN.md        # 开发者指南
-├── PACKAGES_INDEX_CN.md         # 包和服务索引
+├── DEVELOPER_GUIDE_CN.md        # 开发者指南 (中文)
+├── PACKAGES_INDEX_CN.md         # 包和服务索引 (中文)
+├── QUICK_REFERENCE_CN.md        # 快速参考 (中文)
 ├── objectql.md                  # ObjectQL 文档
 ├── object-service.md            # 对象服务文档
 ├── trigger.md                   # 触发器文档
