@@ -146,6 +146,14 @@
     "is_hide_mobile_menu": {
       "type": "boolean",
       "description": "始终隐藏手机端菜单选项卡"
+    },
+    "enable_nav_schema": {
+      "type": "boolean",
+      "description": "启用自定义导航"
+    },
+    "nav_schema": {
+      "type": "string",
+      "description": "导航 Amis Schema"
     }
   }
 }
