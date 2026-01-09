@@ -1,111 +1,109 @@
-# Steedos Platform 文档中心
+# Steedos Platform Documentation
 
-欢迎来到 Steedos Platform (华炎魔方) 文档中心！
+Welcome to Steedos Platform documentation!
 
-## 📚 核心文档
+## 📚 Core Documentation
 
-### 架构文档
-- **[核心架构 (中文)](./CORE_ARCHITECTURE_CN.md)** - 深入了解 Steedos 平台的整体架构、设计模式和技术栈
-- **[Core Architecture (English)](./CORE_ARCHITECTURE_EN.md)** - Comprehensive overview of Steedos platform architecture
+### Architecture Documentation
+- **[Core Architecture](./CORE_ARCHITECTURE_EN.md)** - Comprehensive overview of Steedos platform architecture, design patterns, and technology stack
 
-### 开发指南
-- **[开发者指南 (中文)](./DEVELOPER_GUIDE_CN.md)** - 完整的开发环境搭建、开发工作流和最佳实践
-- **[包和服务索引 (中文)](./PACKAGES_INDEX_CN.md)** - 所有核心包和微服务的详细索引
-- **[快速参考 (中文)](./QUICK_REFERENCE_CN.md)** - 常用命令、API 和配置的快速参考
+### Development Guides
+- **[Developer Guide](./DEVELOPER_GUIDE.md)** - Complete guide for development environment setup, workflows, and best practices
+- **[Packages & Services Index](./PACKAGES_INDEX.md)** - Detailed index of all 26 core packages and 39 microservices
+- **[Quick Reference](./QUICK_REFERENCE.md)** - Quick reference for commands, APIs, and configurations
 
-### 技术文档
-- **[ObjectQL](./objectql.md)** - 对象查询语言详细说明
-- **[Object Service](./object-service.md)** - 对象服务架构
-- **[Trigger](./trigger.md)** - 触发器使用指南
-- **[Environment Variables](./env.md)** - 环境变量配置
+### Technical Documentation
+- **[ObjectQL](./objectql.md)** - Object Query Language detailed documentation
+- **[Object Service](./object-service.md)** - Object service architecture
+- **[Trigger](./trigger.md)** - Trigger usage guide
+- **[Environment Variables](./env.md)** - Environment variable configuration
 
-## 🚀 快速开始
+## 🚀 Quick Start
 
-### 方式一：Docker 一键启动
+### Option 1: Docker One-Click Start
 
 ```bash
 docker run -d -p 80:80 steedos/steedos-community:3.0
 ```
 
-访问 http://localhost
+Visit http://localhost
 
-### 方式二：创建新项目
+### Option 2: Create New Project
 
 ```bash
-# 创建项目
+# Create project
 npx create-steedos-app my-project
 
-# 进入目录并安装依赖
+# Enter directory and install dependencies
 cd my-project
 yarn install
 
-# 启动服务
+# Start service
 yarn start
 ```
 
-访问 http://localhost:5100
+Visit http://localhost:5100
 
-## 📖 学习路径
+## 📖 Learning Path
 
-### 初学者
-1. 阅读 [README](../README_cn.md) 了解项目概况
-2. 跟随快速开始部署第一个应用
-3. 学习 [ObjectQL](./objectql.md) 进行数据操作
+### For Beginners
+1. Read [README](../README.md) to understand project overview
+2. Follow Quick Start to deploy your first application
+3. Learn [ObjectQL](./objectql.md) for data operations
 
-### 开发者
-1. 阅读 [核心架构文档](./CORE_ARCHITECTURE_CN.md)
-2. 参考 [开发者指南](./DEVELOPER_GUIDE_CN.md) 搭建开发环境
-3. 浏览 [包和服务索引](./PACKAGES_INDEX_CN.md) 了解各个模块
+### For Developers
+1. Read [Core Architecture](./CORE_ARCHITECTURE_EN.md)
+2. Follow [Developer Guide](./DEVELOPER_GUIDE.md) to set up development environment
+3. Browse [Packages Index](./PACKAGES_INDEX.md) to understand each module
 
-### 高级用户
-1. 深入学习微服务架构和扩展机制
-2. 自定义触发器和业务逻辑
-3. 集成第三方系统和 AI 服务
+### For Advanced Users
+1. Deep dive into microservices architecture and extension mechanisms
+2. Customize triggers and business logic
+3. Integrate third-party systems and AI services
 
-## 🔗 相关资源
+## 🔗 Resources
 
-- **官方网站**: [www.steedos.com](https://www.steedos.com/)
-- **在线文档**: [docs.steedos.com](https://docs.steedos.com/)
+- **Official Website**: [www.steedos.com](https://www.steedos.com/)
+- **Online Documentation**: [docs.steedos.com](https://docs.steedos.com/)
 - **GitHub**: [github.com/steedos/steedos-platform](https://github.com/steedos/steedos-platform)
-- **示例项目**: [github.com/steedos/steedos-templates](https://github.com/steedos/steedos-templates)
-- **社区讨论**: [GitHub Discussions](https://github.com/steedos/steedos-platform/discussions)
+- **Example Projects**: [github.com/steedos/steedos-templates](https://github.com/steedos/steedos-templates)
+- **Community**: [GitHub Discussions](https://github.com/steedos/steedos-platform/discussions)
 
-## 📝 文档结构
+## 📝 Documentation Structure
 
 ```
 docs/
-├── README.md                    # 本文档
-├── CORE_ARCHITECTURE_CN.md      # 核心架构 (中文)
-├── CORE_ARCHITECTURE_EN.md      # 核心架构 (英文)
-├── DEVELOPER_GUIDE_CN.md        # 开发者指南 (中文)
-├── PACKAGES_INDEX_CN.md         # 包和服务索引 (中文)
-├── QUICK_REFERENCE_CN.md        # 快速参考 (中文)
-├── objectql.md                  # ObjectQL 文档
-├── object-service.md            # 对象服务文档
-├── trigger.md                   # 触发器文档
-├── env.md                       # 环境变量
-├── cn/                          # 中文文档目录
-└── images/                      # 图片资源
+├── README.md                    # This document
+├── CORE_ARCHITECTURE_EN.md      # Core architecture
+├── DEVELOPER_GUIDE.md           # Developer guide
+├── PACKAGES_INDEX.md            # Packages and services index
+├── QUICK_REFERENCE.md           # Quick reference
+├── objectql.md                  # ObjectQL documentation
+├── object-service.md            # Object service documentation
+├── trigger.md                   # Trigger documentation
+├── env.md                       # Environment variables
+├── cn/                          # Chinese documentation directory
+└── images/                      # Image resources
 ```
 
-## 🤝 贡献
+## 🤝 Contributing
 
-欢迎为文档做出贡献！如果您发现文档有错误或需要改进的地方：
+We welcome contributions to documentation! If you find errors or areas for improvement:
 
-1. Fork 项目
-2. 创建您的特性分支
-3. 提交您的修改
-4. 推送到分支
-5. 创建 Pull Request
+1. Fork the project
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
 
-## 📮 获取帮助
+## 📮 Get Help
 
-- **Bug 报告**: [GitHub Issues](https://github.com/steedos/steedos-platform/issues)
-- **功能请求**: [GitHub Discussions](https://github.com/steedos/steedos-platform/discussions)
-- **技术支持**: 查看官网联系方式
+- **Bug Reports**: [GitHub Issues](https://github.com/steedos/steedos-platform/issues)
+- **Feature Requests**: [GitHub Discussions](https://github.com/steedos/steedos-platform/discussions)
+- **Technical Support**: See contact information on official website
 
 ---
 
-**其他文档**: 更多详细文档已迁移至 [www.steedos.cn/docs](https://www.steedos.cn/docs)  
-**文档版本**: 3.0.12  
-**最后更新**: 2026-01-09
+**More Documentation**: Additional detailed documentation available at [www.steedos.cn/docs](https://www.steedos.cn/docs)  
+**Documentation Version**: 3.0.12  
+**Last Updated**: 2026-01-09

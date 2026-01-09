@@ -1,66 +1,66 @@
-# Steedos Platform 快速参考
+# Steedos Platform Quick Reference
 
-> 版本: 3.0.12  
-> 最后更新: 2026-01-09
+> Version: 3.0.12  
+> Last Updated: 2026-01-09
 
-本文档提供快速查阅的常用命令、API 和配置参考。
+This document provides a quick reference for commonly used commands, APIs, and configurations.
 
 ---
 
-## 🚀 常用命令
+## 🚀 Common Commands
 
-### 项目管理
+### Project Management
 
 ```bash
-# 克隆项目
+# Clone project
 git clone https://github.com/steedos/steedos-platform.git
 
-# 安装依赖
+# Install dependencies
 yarn
 
-# 构建所有包
+# Build all packages
 yarn build
 
-# 启动开发服务器
+# Start development server
 yarn start
 
-# 启动 Web 应用开发服务器
+# Start Web application development server
 yarn webapp
 
-# 清理依赖
+# Clean dependencies
 yarn clean
 
-# Docker 启动所有服务
+# Start all services with Docker
 yarn docker
 
-# 仅启动数据库服务
+# Start database services only
 yarn docker:db
 ```
 
-### 创建新应用/包
+### Create New App/Package
 
 ```bash
-# 创建新应用
+# Create new application
 npx create-steedos-app my-app
 cd my-app
 yarn install
 yarn start
 
-# 创建新软件包
+# Create new package
 npx create-steedos-package my-package
 ```
 
 ### Moleculer REPL
 
 ```bash
-# 启动 REPL
+# Start REPL
 yarn repl
 
-# REPL 常用命令
-mol$ actions                    # 列出所有 actions
-mol$ services                   # 列出所有 services
-mol$ nodes                      # 列出所有节点
-mol$ info objectql              # 查看服务信息
+# Common REPL commands
+mol$ actions                    # List all actions
+mol$ services                   # List all services
+mol$ nodes                      # List all nodes
+mol$ info objectql              # View service info
 mol$ call objectql.find --objectName accounts
 ```
 
@@ -68,7 +68,7 @@ mol$ call objectql.find --objectName accounts
 
 ## 📊 ObjectQL API
 
-### 查询 (find)
+### Query (find)
 
 ```javascript
 const records = await objects.accounts.find({
@@ -83,7 +83,7 @@ const records = await objects.accounts.find({
 });
 ```
 
-### 查询单条 (findOne)
+### Find One (findOne)
 
 ```javascript
 const record = await objects.accounts.findOne(
@@ -94,42 +94,42 @@ const record = await objects.accounts.findOne(
 );
 ```
 
-### 插入 (insert)
+### Insert
 
 ```javascript
 const newRecord = await objects.accounts.insert(
   {
-    name: '新客户',
+    name: 'New Account',
     industry: 'tech',
     status: 'active'
   },
-  userSession  // 可选，用于权限检查
+  userSession  // optional, for permission check
 );
 ```
 
-### 更新 (update)
+### Update
 
 ```javascript
 const updated = await objects.accounts.update(
   recordId,
   {
     status: 'inactive',
-    notes: '更新备注'
+    notes: 'Update notes'
   },
-  userSession  // 可选
+  userSession  // optional
 );
 ```
 
-### 删除 (delete)
+### Delete
 
 ```javascript
 const result = await objects.accounts.delete(
   recordId,
-  userSession  // 可选
+  userSession  // optional
 );
 ```
 
-### 聚合 (aggregate)
+### Aggregate
 
 ```javascript
 const result = await objects.accounts.aggregate(
@@ -140,48 +140,48 @@ const result = await objects.accounts.aggregate(
     { $group: { _id: '$industry', count: { $sum: 1 } } },
     { $sort: { count: -1 } }
   ],
-  userSession  // 可选
+  userSession  // optional
 );
 ```
 
 ---
 
-## 🔍 过滤器语法
+## 🔍 Filter Syntax
 
-### 基本操作符
+### Basic Operators
 
 ```javascript
-// 等于
+// Equals
 ['field', '=', 'value']
 
-// 不等于
+// Not equals
 ['field', '!=', 'value']
 
-// 大于/小于
+// Greater than/less than
 ['age', '>', 18]
 ['age', '>=', 18]
 ['age', '<', 65]
 ['age', '<=', 65]
 
-// 文本操作
+// Text operations
 ['name', 'startswith', 'A']
-['name', 'contains', '测试']
-['name', 'notcontains', '删除']
+['name', 'contains', 'test']
+['name', 'notcontains', 'delete']
 
-// 范围
+// Range
 ['age', 'between', [18, 65]]
 ```
 
-### 组合条件
+### Combined Conditions
 
 ```javascript
-// AND (默认)
+// AND (default)
 [
   ['field1', '=', 'value1'],
   ['field2', '=', 'value2']
 ]
 
-// 显式 AND
+// Explicit AND
 [
   ['field1', '=', 'value1'],
   'and',
@@ -195,7 +195,7 @@ const result = await objects.accounts.aggregate(
   ['field2', '=', 'value2']
 ]
 
-// 复杂组合
+// Complex combination
 [
   [
     ['status', '=', 'active'],
@@ -207,12 +207,12 @@ const result = await objects.accounts.aggregate(
 ]
 ```
 
-### 数组值
+### Array Values
 
 ```javascript
-// IN 操作 (自动转换)
+// IN operation (auto-converts)
 ['status', '=', ['active', 'pending']]
-// 等同于
+// Equivalent to
 [
   ['status', '=', 'active'],
   'or',
@@ -225,14 +225,14 @@ const result = await objects.accounts.aggregate(
 
 ---
 
-## 🎯 元数据定义
+## 🎯 Metadata Definitions
 
-### 对象定义 (Object)
+### Object Definition
 
 ```yaml
 # custom_object.object.yml
 name: custom_object
-label: 自定义对象
+label: Custom Object
 icon: account
 enable_search: true
 enable_files: true
@@ -241,34 +241,34 @@ enable_notes: true
 fields:
   name:
     type: text
-    label: 名称
+    label: Name
     required: true
     searchable: true
   status:
     type: select
-    label: 状态
+    label: Status
     options:
-      - label: 草稿
+      - label: Draft
         value: draft
-      - label: 已发布
+      - label: Published
         value: published
     default_value: draft
   owner:
     type: lookup
     reference_to: users
-    label: 所有者
+    label: Owner
   amount:
     type: currency
-    label: 金额
+    label: Amount
     precision: 2
 list_views:
   all:
-    label: 所有
+    label: All
     columns: [name, status, owner, created]
     filter_scope: space
     filters: []
   recent:
-    label: 最近查看
+    label: Recently Viewed
     columns: [name, status, modified]
     filter_scope: space
     filters: []
@@ -287,37 +287,37 @@ permission_set:
     viewAllRecords: true
 ```
 
-### 字段类型
+### Field Types
 
-| 类型 | 说明 | 示例 |
-|------|------|------|
-| text | 文本 | `type: text` |
-| textarea | 多行文本 | `type: textarea, rows: 3` |
-| number | 数字 | `type: number, scale: 2` |
-| currency | 货币 | `type: currency, precision: 2` |
-| percent | 百分比 | `type: percent, scale: 2` |
-| boolean | 布尔 | `type: boolean` |
-| date | 日期 | `type: date` |
-| datetime | 日期时间 | `type: datetime` |
-| select | 下拉选择 | `type: select, options: [...]` |
-| lookup | 查找关系 | `type: lookup, reference_to: users` |
-| master_detail | 主从关系 | `type: master_detail, reference_to: accounts` |
-| grid | 子表 | `type: grid` |
-| file | 文件 | `type: file` |
-| image | 图片 | `type: image` |
+| Type | Description | Example |
+|------|-------------|---------|
+| text | Text | `type: text` |
+| textarea | Multi-line text | `type: textarea, rows: 3` |
+| number | Number | `type: number, scale: 2` |
+| currency | Currency | `type: currency, precision: 2` |
+| percent | Percentage | `type: percent, scale: 2` |
+| boolean | Boolean | `type: boolean` |
+| date | Date | `type: date` |
+| datetime | Datetime | `type: datetime` |
+| select | Dropdown select | `type: select, options: [...]` |
+| lookup | Lookup relationship | `type: lookup, reference_to: users` |
+| master_detail | Master-detail relationship | `type: master_detail, reference_to: accounts` |
+| grid | Sub-table | `type: grid` |
+| file | File | `type: file` |
+| image | Image | `type: image` |
 | url | URL | `type: url` |
-| email | 邮箱 | `type: email` |
-| autonumber | 自动编号 | `type: autonumber, formula: 'A{0000}'` |
-| formula | 公式 | `type: formula, data_type: text` |
-| summary | 汇总 | `type: summary, summary_type: count` |
+| email | Email | `type: email` |
+| autonumber | Auto-number | `type: autonumber, formula: 'A{0000}'` |
+| formula | Formula | `type: formula, data_type: text` |
+| summary | Summary | `type: summary, summary_type: count` |
 
-### 应用定义 (App)
+### Application Definition
 
 ```yaml
 # custom_app.app.yml
 _id: custom_app
-name: 自定义应用
-description: 应用描述
+name: Custom Application
+description: Application description
 icon: apps
 is_creator: true
 visible: true
@@ -328,12 +328,12 @@ objects:
   - contacts
 ```
 
-### 权限集 (Permission Set)
+### Permission Set
 
 ```yaml
 # custom.permissionset.yml
 name: custom_permission
-label: 自定义权限
+label: Custom Permission
 license: platform
 object_permissions:
   accounts:
@@ -354,9 +354,9 @@ field_permissions:
 
 ---
 
-## 🔧 触发器
+## 🔧 Triggers
 
-### 完整触发器示例
+### Complete Trigger Example
 
 ```javascript
 // accounts.trigger.js
@@ -365,7 +365,7 @@ module.exports = {
   
   beforeInsert: async function() {
     const { doc } = this;
-    // 插入前逻辑
+    // Before insert logic
     if (!doc.code) {
       doc.code = await generateCode('ACC');
     }
@@ -373,51 +373,51 @@ module.exports = {
   
   afterInsert: async function() {
     const { doc, id } = this;
-    // 插入后逻辑
-    console.log('新记录创建:', doc.name);
+    // After insert logic
+    console.log('New record created:', doc.name);
   },
   
   beforeUpdate: async function() {
     const { doc, previousDoc } = this;
-    // 更新前逻辑
+    // Before update logic
     if (doc.status !== previousDoc.status) {
-      console.log('状态变更:', previousDoc.status, '->', doc.status);
+      console.log('Status changed:', previousDoc.status, '->', doc.status);
     }
   },
   
   afterUpdate: async function() {
     const { doc, previousDoc } = this;
-    // 更新后逻辑
+    // After update logic
   },
   
   beforeDelete: async function() {
     const { id } = this;
-    // 删除前逻辑 - 可以抛出错误阻止删除
+    // Before delete logic - can throw error to prevent deletion
     const hasRelated = await checkRelatedRecords(id);
     if (hasRelated) {
-      throw new Error('存在关联数据，无法删除');
+      throw new Error('Cannot delete: related data exists');
     }
   },
   
   afterDelete: async function() {
     const { previousDoc } = this;
-    // 删除后逻辑
-    console.log('记录已删除:', previousDoc.name);
+    // After delete logic
+    console.log('Record deleted:', previousDoc.name);
   }
 };
 ```
 
-### 触发器上下文
+### Trigger Context
 
 ```javascript
 {
-  userId,        // 当前用户 ID
-  spaceId,       // 当前工作区 ID  
-  objectName,    // 对象名称
-  id,            // 记录 ID (insert 时为空)
-  doc,           // 当前文档
-  previousDoc,   // 更新/删除前的文档
-  datasource     // 数据源实例
+  userId,        // Current user ID
+  spaceId,       // Current workspace ID  
+  objectName,    // Object name
+  id,            // Record ID (empty for insert)
+  doc,           // Current document
+  previousDoc,   // Previous document (update/delete)
+  datasource     // Datasource instance
 }
 ```
 
@@ -425,16 +425,16 @@ module.exports = {
 
 ## 🌐 REST API
 
-### 基础 URL
+### Base URL
 
 ```
 http://localhost:5100/api/v4
 ```
 
-### 认证
+### Authentication
 
 ```bash
-# 登录获取 Token
+# Login to get Token
 curl -X POST http://localhost:5100/api/v4/users/login \
   -H "Content-Type: application/json" \
   -d '{
@@ -442,15 +442,15 @@ curl -X POST http://localhost:5100/api/v4/users/login \
     "password": "password"
   }'
 
-# 使用 Token
-curl -H "Authorization: Bearer <token>" \
+# Use Token
+curl -H "Authorization: Bearer ******" \
   http://localhost:5100/api/v4/accounts
 ```
 
-### CRUD 操作
+### CRUD Operations
 
 ```bash
-# 查询
+# Query
 POST /api/v4/:objectName/find
 {
   "fields": ["name", "industry"],
@@ -458,39 +458,39 @@ POST /api/v4/:objectName/find
   "top": 10
 }
 
-# 查询单条
+# Get one
 GET /api/v4/:objectName/:id
 
-# 插入
+# Insert
 POST /api/v4/:objectName
 {
-  "name": "新记录",
+  "name": "New Record",
   "status": "active"
 }
 
-# 更新
+# Update
 PUT /api/v4/:objectName/:id
 {
   "status": "inactive"
 }
 
-# 删除
+# Delete
 DELETE /api/v4/:objectName/:id
 ```
 
 ---
 
-## 🔐 环境变量
+## 🔐 Environment Variables
 
-### 基础配置
+### Basic Configuration
 
 ```bash
-# 服务配置
+# Service configuration
 ROOT_URL=http://localhost:5100
 PORT=5100
 NODE_ENV=development
 
-# 数据库
+# Database
 MONGO_URL=mongodb://localhost:27017/steedos
 MONGO_OPLOG_URL=mongodb://localhost:27017/local
 
@@ -501,24 +501,24 @@ REDIS_URL=redis://localhost:6379
 TRANSPORTER=redis://localhost:6379
 CACHER=redis://localhost:6379
 
-# 日志
+# Logging
 STEEDOS_LOG_LEVEL=info  # trace, debug, info, warn, error
 ```
 
-### 邮件配置
+### Email Configuration
 
 ```bash
-MAIL_URL=smtp://username:password@smtp.example.com:587
+MAIL_URL=smtp://smtp.example.com:587
 MAIL_FROM=noreply@example.com
 ```
 
-### 文件存储
+### File Storage
 
 ```bash
-# 本地存储
+# Local storage
 STEEDOS_STORAGE_DIR=/app/storage
 
-# S3 存储
+# S3 storage
 STEEDOS_CFS_STORE=S3
 STEEDOS_CFS_AWS_S3_BUCKET=my-bucket
 STEEDOS_CFS_AWS_S3_REGION=us-east-1
@@ -527,55 +527,55 @@ STEEDOS_CFS_AWS_S3_ENDPOINT=https://s3.amazonaws.com
 
 ---
 
-## 🎨 Amis 页面配置
+## 🎨 Amis Page Configuration
 
-### 基础页面
+### Basic Page
 
 ```yaml
 # custom_page.page.yml
 name: custom_page
-label: 自定义页面
+label: Custom Page
 type: page
 body:
   type: crud
   api: /api/v4/accounts/find
   columns:
     - name: name
-      label: 名称
+      label: Name
       searchable: true
     - name: status
-      label: 状态
+      label: Status
       type: select
 ```
 
 ---
 
-## 📝 公式语法
+## 📝 Formula Syntax
 
-### 常用函数
+### Common Functions
 
 ```javascript
-// 文本函数
-CONCATENATE(text1, text2, ...)  // 连接文本
-UPPER(text)                     // 转大写
-LOWER(text)                     // 转小写
-LEN(text)                       // 文本长度
+// Text functions
+CONCATENATE(text1, text2, ...)  // Concatenate text
+UPPER(text)                     // Convert to uppercase
+LOWER(text)                     // Convert to lowercase
+LEN(text)                       // Text length
 
-// 数学函数
-SUM(num1, num2, ...)           // 求和
-AVERAGE(num1, num2, ...)       // 平均值
-MAX(num1, num2, ...)           // 最大值
-MIN(num1, num2, ...)           // 最小值
-ROUND(number, decimals)        // 四舍五入
+// Math functions
+SUM(num1, num2, ...)           // Sum
+AVERAGE(num1, num2, ...)       // Average
+MAX(num1, num2, ...)           // Maximum
+MIN(num1, num2, ...)           // Minimum
+ROUND(number, decimals)        // Round
 
-// 日期函数
-TODAY()                        // 今天
-NOW()                          // 当前时间
-YEAR(date)                     // 年份
-MONTH(date)                    // 月份
-DAY(date)                      // 天数
+// Date functions
+TODAY()                        // Today
+NOW()                          // Current time
+YEAR(date)                     // Year
+MONTH(date)                    // Month
+DAY(date)                      // Day
 
-// 逻辑函数
+// Logical functions
 IF(condition, value_if_true, value_if_false)
 AND(condition1, condition2, ...)
 OR(condition1, condition2, ...)
@@ -584,18 +584,18 @@ NOT(condition)
 
 ---
 
-## 🐛 调试技巧
+## 🐛 Debugging Tips
 
-### 日志输出
+### Log Output
 
 ```javascript
-// 在触发器或 Action 中
+// In triggers or actions
 console.log('Debug info:', data);
 this.logger.info('Info message');
 this.logger.error('Error message');
 ```
 
-### 设置日志级别
+### Set Log Level
 
 ```javascript
 // steedos.config.js
@@ -604,23 +604,23 @@ module.exports = {
 };
 ```
 
-### VS Code 断点调试
+### VS Code Breakpoint Debugging
 
-1. 在代码中设置断点
-2. 按 F5 启动调试
-3. 或在终端运行: `node --inspect server.js`
+1. Set breakpoints in code
+2. Press F5 to start debugging
+3. Or run in terminal: `node --inspect server.js`
 
 ---
 
-## 📚 相关链接
+## 📚 Related Links
 
-- **官方文档**: [docs.steedos.com](https://docs.steedos.com/)
-- **核心架构**: [CORE_ARCHITECTURE_CN.md](./CORE_ARCHITECTURE_CN.md)
-- **开发者指南**: [DEVELOPER_GUIDE_CN.md](./DEVELOPER_GUIDE_CN.md)
-- **包和服务索引**: [PACKAGES_INDEX_CN.md](./PACKAGES_INDEX_CN.md)
+- **Official Documentation**: [docs.steedos.com](https://docs.steedos.com/)
+- **Core Architecture**: [CORE_ARCHITECTURE_EN.md](./CORE_ARCHITECTURE_EN.md)
+- **Developer Guide**: [DEVELOPER_GUIDE.md](./DEVELOPER_GUIDE.md)
+- **Packages Index**: [PACKAGES_INDEX.md](./PACKAGES_INDEX.md)
 - **GitHub**: [github.com/steedos/steedos-platform](https://github.com/steedos/steedos-platform)
 
 ---
 
-**快速参考版本**: 3.0.12  
-**最后更新**: 2026-01-09
+**Quick Reference Version**: 3.0.12  
+**Last Updated**: 2026-01-09
