@@ -149,7 +149,13 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Check for outdated dependencies
-        run: pnpm outdated || true
+        id: outdated
+        run: |
+          echo "## Outdated Dependencies" >> $GITHUB_STEP_SUMMARY
+          pnpm outdated --format table >> $GITHUB_STEP_SUMMARY 2>&1 || echo "No outdated dependencies or check failed" >> $GITHUB_STEP_SUMMARY
 
       - name: Audit dependencies
-        run: pnpm audit || true
+        id: audit
+        run: |
+          echo "## Security Audit" >> $GITHUB_STEP_SUMMARY
+          pnpm audit >> $GITHUB_STEP_SUMMARY 2>&1 || echo "Security vulnerabilities found or audit failed" >> $GITHUB_STEP_SUMMARY

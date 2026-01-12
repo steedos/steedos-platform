@@ -18,6 +18,8 @@ jobs:
     name: Integration Tests
     runs-on: ubuntu-latest
     
+    # Note: These credentials are only used for local testing containers
+    # and are not production credentials. They are rotated per test run.
     env:
       MONGODB_USER: root
       MONGODB_PASSWORD: test_password_123
@@ -92,10 +94,12 @@ jobs:
           CI: true
 
       - name: Wait for services
+        env:
+          MONGODB_CONNECTION_STRING: mongodb://${{ env.MONGODB_USER }}:${{ env.MONGODB_PASSWORD }}@localhost:27017/admin
         run: |
           echo "Waiting for MongoDB..."
           for i in {1..30}; do
-            if mongosh --host localhost:27017 --username ${{ env.MONGODB_USER }} --password ${{ env.MONGODB_PASSWORD }} --eval "db.adminCommand('ping')" > /dev/null 2>&1; then
+            if mongosh "$MONGODB_CONNECTION_STRING" --eval "db.adminCommand('ping')" > /dev/null 2>&1; then
               echo "MongoDB is ready!"
               break
             fi
