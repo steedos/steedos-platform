@@ -121,6 +121,12 @@ yarn start
 
 Visit `http://localhost:5100` and start building with AI.
 
+## 📚 Developer Documentation
+
+* 📖 **AI Programming Guide**: [AI_PROGRAMMING_GUIDE.md](./AI_PROGRAMMING_GUIDE.md) - Comprehensive development guide and best practices
+* 📝 **Developer Guide**: [DEVELOPER_GUIDE.md](./docs/DEVELOPER_GUIDE.md) - Quick start and core concepts
+* 🤝 **Contributing Guide**: [CONTRIBUTING.md](./CONTRIBUTING.md) - How to contribute to the project
+
 ## 🤝 Community & Contributing
 
 Steedos is a fully open-source project. We are actively exploring the frontiers of **AI x Low-Code**.
