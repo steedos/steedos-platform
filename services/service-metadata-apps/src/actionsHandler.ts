@@ -437,9 +437,14 @@ async function transformAppToMenus(ctx, app, mobile, userSession, context) {
     tab_groups: app.tab_groups,
     is_hide_mobile_menu: app.is_hide_mobile_menu,
     visible_on: app.visible_on || "${true}",
+    default_tab: app.default_tab,
   };
 
-  if (app.enable_nav_schema && app.nav_schema && (!mobile || mobile === 'false')) {
+  if (
+    app.enable_nav_schema &&
+    app.nav_schema &&
+    (!mobile || mobile === "false")
+  ) {
     menu.nav_schema = _.isString(app.nav_schema)
       ? JSON.parse(app.nav_schema)
       : app.nav_schema;
@@ -524,6 +529,94 @@ async function transformAppToMenus(ctx, app, mobile, userSession, context) {
       if (child) {
         menu.children.push(child);
       }
+    }
+  }
+
+  if (menu.default_tab && _.isString(menu.default_tab)) {
+    const defaultTabStr = menu.default_tab;
+    let defaultTab = _.find(menu.children, (item) => {
+      return item.id === defaultTabStr || item.tabApiName === defaultTabStr;
+    });
+
+    if (!defaultTab && context && context.tabs) {
+      const tabConfig = _.find(
+        context.tabs,
+        (t) => t.metadata && t.metadata.name === defaultTabStr,
+      );
+      if (tabConfig && tabConfig.metadata) {
+        const tab = tabConfig.metadata;
+        // 尝试从 menu.children 中查找（如果已存在）
+        if (tab.type === "object" && tab.object) {
+          defaultTab = _.find(menu.children, (item) => item.id === tab.object);
+        } else {
+          defaultTab = _.find(menu.children, (item) => item.id === tab.name);
+        }
+
+        // 如果找不到，则手动构造一个轻量级的 defaultTab 对象用于路由跳转
+        if (!defaultTab) {
+          try {
+            if (tab.type === "object") {
+              // 为了性能，不再计算label，也不校验权限，仅为了路由跳转
+              // const objectConfig = await _getObject(tab.object).getConfig();
+              defaultTab = {
+                id: tab.object,
+                type: tab.type,
+                icon: tab.icon,
+                path: `${appPath}/${tab.object}`,
+                name: tab.label || tab.name,
+                tabApiName: tab.name,
+              };
+            } else if (tab.type === "url") {
+              defaultTab = {
+                id: tab.name,
+                type: tab.type,
+                icon: tab.icon,
+                path: tab.url,
+                name: tab.label || tab.name,
+                tabApiName: tab.name,
+              };
+              if (tab.is_new_window) {
+                defaultTab.target = "_blank";
+              } else if (tab.is_use_iframe) {
+                defaultTab.is_use_iframe = true;
+                defaultTab.path = `${appPath}/tab_iframe/${tab.name}/?url=${encodeURIComponent(tab.url)}`;
+              }
+            } else if (tab.type === "page") {
+              defaultTab = {
+                id: tab.name,
+                icon: tab.icon,
+                type: tab.type,
+                page: tab.page,
+                path: `${appPath}/${tab.type}/${tab.page}`,
+                name: tab.label || tab.name,
+                tabApiName: tab.name,
+              };
+            } else if (tab.type === "analytics_dashboard") {
+              const url = `/analytics/embed/dashboard/${tab.analytics_dashboard}?titled=false&bordered=false`;
+              defaultTab = {
+                id: tab.name,
+                type: tab.type,
+                icon: tab.icon,
+                path: url,
+                name: tab.label || tab.name,
+                tabApiName: tab.name,
+              };
+              if (tab.is_new_window) {
+                defaultTab.target = "_blank";
+              } else {
+                defaultTab.is_use_iframe = true;
+                defaultTab.path = `${appPath}/tab_iframe/${tab.name}/?url=${url}`;
+              }
+            }
+          } catch (e) {
+            console.error(e);
+          }
+        }
+      }
+    }
+
+    if (defaultTab) {
+      menu.default_tab = defaultTab;
     }
   }
 

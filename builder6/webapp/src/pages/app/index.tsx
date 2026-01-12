@@ -15,6 +15,15 @@ const on_click_script = `
     let app_items = payload;
     if(app_items && app_items.length > 0){
       let firstApp = app_items[0];
+      if(firstApp && firstApp.default_tab){
+        if (typeof firstApp.default_tab === 'object' && firstApp.default_tab.path) {
+          window.location.href = firstApp.default_tab.path;
+        }
+        else{
+          window.location.href = `/app/${firstApp.id}/${firstApp.default_tab}`;
+        }
+        return payload;
+      }
       if(firstApp && firstApp.children && firstApp.children.length > 0){
         let firstTab = firstApp.children[0];
         if(firstTab){
