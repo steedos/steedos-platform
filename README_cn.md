@@ -121,6 +121,13 @@ yarn start
 
 访问 `http://localhost:5100` 即可开始使用 AI 构建应用。
 
+## 📚 开发者文档 | Developer Docs
+
+* 🤖 **AI 辅助开发指南**: [AI_DEVELOPMENT_GUIDE.md](./AI_DEVELOPMENT_GUIDE.md) - 代码质量工具、TypeScript 严格模式、测试基础设施
+* 📘 **TypeScript 迁移指南**: [TYPESCRIPT_MIGRATION.md](./docs/TYPESCRIPT_MIGRATION.md) - 严格模式迁移步骤
+* 📖 **开发者指南**: [DEVELOPER_GUIDE.md](./docs/DEVELOPER_GUIDE.md) - 快速入门和核心概念
+* 🤝 **贡献指南**: [CONTRIBUTING.md](./CONTRIBUTING.md) - 如何为项目做贡献
+
 ## 🧩 生态与集成 | Ecosystem
 
 华炎魔方拥有强大的连接能力：

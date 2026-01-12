@@ -21,14 +21,24 @@
     "release:beta": "yarn lerna publish --force-publish --exact --dist-tag beta --registry https://registry.npmjs.org",
     "release:again": "lerna publish from-package --registry https://registry.npmjs.org",
     "depcheck:services": "depcheck services/* --json > depcheck-services-result.json",
-    "depcheck:packages": "depcheck packages/* --json > depcheck-packages-result.json"
+    "depcheck:packages": "depcheck packages/* --json > depcheck-packages-result.json",
+    "lint": "eslint . --ext .ts,.js",
+    "lint:fix": "eslint . --ext .ts,.js --fix",
+    "format": "prettier --write \"**/*.{ts,js,json,md,yml,yaml}\"",
+    "format:check": "prettier --check \"**/*.{ts,js,json,md,yml,yaml}\"",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "type-check": "tsc --noEmit",
+    "type-check:strict": "tsc --noEmit -p tsconfig.strict.json"
   },
   "lint-staged": {
-    "**/*.ts": [
-      "prettier --ignore-path ./.prettierignore --write"
+    "**/*.{ts,js}": [
+      "eslint --fix",
+      "prettier --write"
     ],
-    "packages/**/*.json": [
-      "prettier --ignore-path ./.prettierignore --write"
+    "**/*.{json,md,yml,yaml}": [
+      "prettier --write"
     ]
   },
   "devDependencies": {
@@ -36,6 +46,7 @@
     "@commitlint/cli": "^20.2.0",
     "@commitlint/config-angular": "^20.2.0",
     "@eslint/js": "^9.22.0",
+    "@types/jest": "^29.5.12",
     "@types/node": "^18.0.3",
     "cnpm": "^9.0.1",
     "concurrently": "^8.2.1",
@@ -43,10 +54,13 @@
     "eslint": "^9.22.0",
     "globals": "^16.0.0",
     "husky": "^9.1.7",
+    "jest": "^29.7.0",
     "lerna": "^9.0.3",
     "lint-staged": "15.4.3",
     "nodemon": "^3.1.11",
+    "prettier": "^3.2.5",
     "rimraf": "^6.0.1",
+    "ts-jest": "^29.1.2",
     "tslib": "^2.4.0",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.26.1"

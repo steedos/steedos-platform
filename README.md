@@ -121,6 +121,13 @@ yarn start
 
 Visit `http://localhost:5100` and start building with AI.
 
+## 📚 Developer Documentation
+
+* 🤖 **AI Development Guide**: [AI_DEVELOPMENT_GUIDE.md](./AI_DEVELOPMENT_GUIDE.md) - Code quality tooling, TypeScript strict mode, testing infrastructure
+* 📘 **TypeScript Migration**: [TYPESCRIPT_MIGRATION.md](./docs/TYPESCRIPT_MIGRATION.md) - Step-by-step guide for strict mode migration
+* 📖 **Developer Guide**: [DEVELOPER_GUIDE.md](./docs/DEVELOPER_GUIDE.md) - Setup and core concepts
+* 🤝 **Contributing**: [CONTRIBUTING.md](./CONTRIBUTING.md) - How to contribute
+
 ## 🤝 Community & Contributing
 
 Steedos is a fully open-source project. We are actively exploring the frontiers of **AI x Low-Code**.
