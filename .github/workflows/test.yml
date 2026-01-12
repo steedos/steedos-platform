@@ -58,7 +58,7 @@ jobs:
       - name: Lint code
         run: |
           if [ -f "eslint.config.mjs" ]; then
-            pnpm exec eslint . --max-warnings 0 || echo "Linting completed with warnings"
+            pnpm exec eslint . --max-warnings 0
           else
             echo "No linting configuration found, skipping..."
           fi
