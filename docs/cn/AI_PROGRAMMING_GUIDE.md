@@ -255,7 +255,7 @@ interface SteedosObject {
   name: string;
   label: string;
   fields: Record<string, SteedosField>;
-  triggers?: SteeedosTrigger[];
+  triggers?: SteedosTrigger[];
 }
 
 // 使用 type 定义联合类型和复杂类型
