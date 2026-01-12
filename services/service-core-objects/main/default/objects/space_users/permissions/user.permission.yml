@@ -4,6 +4,7 @@ allowDelete: false
 allowEdit: true
 allowRead: true
 modifyAllRecords: false
+viewAllRecords: true
 viewCompanyRecords: true
 uneditable_fields:
   - profile
