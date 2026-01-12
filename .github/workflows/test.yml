@@ -119,15 +119,16 @@ jobs:
       - name: Validate commits
         run: |
           if [ -f ".commitlintrc.json" ]; then
-            pnpm exec commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} || echo "Commit linting completed with warnings"
+            pnpm exec commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }}
           else
             echo "No commitlint configuration found, skipping..."
           fi
-        continue-on-error: true
 
   dependency-check:
     name: Check dependencies
     runs-on: ubuntu-latest
+    # Run as informational job that doesn't block the build
+    continue-on-error: true
     
     steps:
       - name: Checkout code
@@ -149,8 +150,6 @@ jobs:
 
       - name: Check for outdated dependencies
         run: pnpm outdated || true
-        continue-on-error: true
 
       - name: Audit dependencies
         run: pnpm audit || true
-        continue-on-error: true

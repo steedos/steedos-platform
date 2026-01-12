@@ -18,15 +18,20 @@ jobs:
     name: Integration Tests
     runs-on: ubuntu-latest
     
+    env:
+      MONGODB_USER: root
+      MONGODB_PASSWORD: test_password_123
+      MONGODB_DATABASE: steedos_test
+    
     services:
       mongodb:
         image: mongo:5.0
         ports:
           - 27017:27017
         env:
-          MONGO_INITDB_ROOT_USERNAME: root
-          MONGO_INITDB_ROOT_PASSWORD: password
-          MONGO_INITDB_DATABASE: steedos
+          MONGO_INITDB_ROOT_USERNAME: ${{ env.MONGODB_USER }}
+          MONGO_INITDB_ROOT_PASSWORD: ${{ env.MONGODB_PASSWORD }}
+          MONGO_INITDB_DATABASE: ${{ env.MONGODB_DATABASE }}
         options: >-
           --health-cmd "mongosh --eval 'db.adminCommand({ping: 1})'"
           --health-interval 10s
@@ -90,7 +95,7 @@ jobs:
         run: |
           echo "Waiting for MongoDB..."
           for i in {1..30}; do
-            if mongosh --host localhost:27017 --username root --password password --eval "db.adminCommand('ping')" > /dev/null 2>&1; then
+            if mongosh --host localhost:27017 --username ${{ env.MONGODB_USER }} --password ${{ env.MONGODB_PASSWORD }} --eval "db.adminCommand('ping')" > /dev/null 2>&1; then
               echo "MongoDB is ready!"
               break
             fi
@@ -120,7 +125,7 @@ jobs:
       - name: Run integration tests
         run: |
           # Set up environment variables for integration tests
-          export MONGO_URL=mongodb://root:password@localhost:27017/steedos?authSource=admin
+          export MONGO_URL=mongodb://${{ env.MONGODB_USER }}:${{ env.MONGODB_PASSWORD }}@localhost:27017/${{ env.MONGODB_DATABASE }}?authSource=admin
           export REDIS_URL=redis://localhost:6379
           export NATS_URL=nats://localhost:4222
           export NODE_ENV=test
