@@ -34,7 +34,7 @@
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
-    
+
     // Code quality
     "forceConsistentCasingInFileNames": true,
     "allowUnusedLabels": false,

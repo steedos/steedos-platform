@@ -25,6 +25,8 @@ module.exports = {
       statements: 50,
     },
   },
+  // Maps @steedos/* imports to package source directories
+  // Assumes all packages follow the convention of having src/ directory
   moduleNameMapper: {
     '^@steedos/(.*)$': '<rootDir>/packages/$1/src',
   },
