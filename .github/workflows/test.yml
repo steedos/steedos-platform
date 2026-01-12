@@ -66,7 +66,7 @@ jobs:
       - name: Type check
         run: |
           if [ -f "tsconfig.json" ]; then
-            pnpm exec tsc --noEmit || echo "Type checking completed with errors"
+            pnpm exec tsc --noEmit
           else
             echo "No TypeScript configuration found, skipping..."
           fi
