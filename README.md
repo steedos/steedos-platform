@@ -125,6 +125,7 @@ Visit `http://localhost:5100` and start building with AI.
 
 * 🤖 **AI Development Guide**: [AI_DEVELOPMENT_GUIDE.md](./AI_DEVELOPMENT_GUIDE.md) - Code quality tooling, TypeScript strict mode, testing infrastructure
 * 📘 **TypeScript Migration**: [TYPESCRIPT_MIGRATION.md](./docs/TYPESCRIPT_MIGRATION.md) - Step-by-step guide for strict mode migration
+* ⚙️ **Workflow Automation**: [WORKFLOW_AUTOMATION.md](./docs/WORKFLOW_AUTOMATION.md) - CI/CD, GitHub Actions, Git hooks
 * 📖 **Developer Guide**: [DEVELOPER_GUIDE.md](./docs/DEVELOPER_GUIDE.md) - Setup and core concepts
 * 🤝 **Contributing**: [CONTRIBUTING.md](./CONTRIBUTING.md) - How to contribute
 

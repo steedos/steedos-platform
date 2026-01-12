@@ -1,0 +1,54 @@
+name: Auto Label PRs
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+jobs:
+  auto-label:
+    name: Auto Label Pull Requests
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Label based on file paths
+        uses: actions/labeler@v5
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          configuration-path: .github/labeler.yml
+
+      - name: Label based on PR size
+        uses: pascalgn/size-label-action@v0.5.4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          sizes: >
+            {
+              "0": "XS",
+              "20": "S",
+              "50": "M",
+              "200": "L",
+              "500": "XL",
+              "1000": "XXL"
+            }
+
+      - name: Label based on PR type
+        uses: TimonVS/pr-labeler-action@v4
+        with:
+          configuration-path: .github/pr-labeler.yml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  auto-assign-reviewer:
+    name: Auto Assign Reviewers
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+    steps:
+      - name: Auto assign reviewers
+        uses: kentaro-m/auto-assign-action@v2.0.0
+        with:
+          configuration-path: .github/auto-assign.yml

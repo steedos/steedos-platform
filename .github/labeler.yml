@@ -1,0 +1,60 @@
+# Auto-labeling configuration based on file paths
+# https://github.com/actions/labeler
+
+# Documentation
+documentation:
+  - '**/*.md'
+  - 'docs/**/*'
+
+# Core packages
+core:
+  - 'packages/metadata-core/**/*'
+  - 'packages/objectql/**/*'
+  - 'packages/formula/**/*'
+
+# Services
+services:
+  - 'services/**/*'
+
+# Enterprise
+enterprise:
+  - 'ee/**/*'
+
+# Builder
+builder:
+  - 'builder6/**/*'
+
+# Tests
+tests:
+  - '**/*.test.ts'
+  - '**/*.spec.ts'
+  - 'test/**/*'
+
+# Configuration
+config:
+  - '*.config.*'
+  - 'tsconfig*.json'
+  - 'package.json'
+  - 'lerna.json'
+  - '.eslintrc*'
+  - '.prettierrc*'
+
+# CI/CD
+ci:
+  - '.github/**/*'
+  - '.husky/**/*'
+
+# Dependencies
+dependencies:
+  - 'package.json'
+  - 'yarn.lock'
+
+# TypeScript
+typescript:
+  - '**/*.ts'
+  - 'tsconfig*.json'
+
+# JavaScript
+javascript:
+  - '**/*.js'
+  - '**/*.mjs'

@@ -1,0 +1,57 @@
+name: Dependency Update
+
+on:
+  schedule:
+    # Run every Monday at 9:00 AM UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  update-dependencies:
+    name: Update Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: '3.0'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'yarn'
+
+      - name: Update dependencies
+        run: |
+          yarn upgrade-interactive --latest
+        continue-on-error: true
+
+      - name: Run depcheck
+        run: |
+          yarn depcheck:packages
+          yarn depcheck:services
+        continue-on-error: true
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: 'chore: update dependencies'
+          title: 'chore: automated dependency updates'
+          body: |
+            ## Automated Dependency Updates
+            
+            This PR contains automated dependency updates.
+            
+            ### Changes
+            - Updated npm dependencies to latest versions
+            - Ran depcheck to identify unused dependencies
+            
+            ### Review Checklist
+            - [ ] Review updated packages
+            - [ ] Check for breaking changes
+            - [ ] Run tests to ensure compatibility
+            - [ ] Update changelogs if needed
+          branch: chore/dependency-updates
+          delete-branch: true
+          labels: dependencies, automated

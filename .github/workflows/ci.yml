@@ -1,0 +1,105 @@
+name: CI - Code Quality
+
+on:
+  pull_request:
+    branches:
+      - main
+      - master
+      - '3.0'
+      - '2.7'
+  push:
+    branches:
+      - main
+      - master
+      - '3.0'
+      - '2.7'
+
+jobs:
+  lint-and-format:
+    name: Lint and Format Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Run ESLint
+        run: yarn lint
+        continue-on-error: true
+
+      - name: Check Prettier formatting
+        run: yarn format:check
+
+      - name: TypeScript type check
+        run: yarn type-check
+        continue-on-error: true
+
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Run tests
+        run: yarn test --ci --coverage --maxWorkers=2
+        env:
+          CI: true
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./coverage/lcov.info
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: false
+
+  build:
+    name: Build Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Build packages
+        run: yarn build
+        env:
+          CI: true
+
+      - name: Check for build artifacts
+        run: |
+          if [ -z "$(find packages -name 'lib' -type d)" ]; then
+            echo "No build artifacts found"
+            exit 1
+          fi

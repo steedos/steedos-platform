@@ -1,0 +1,14 @@
+# Auto-labeling based on PR branch name or title
+# https://github.com/TimonVS/pr-labeler-action
+
+feature: ['feat/*', 'feature/*']
+bugfix: ['fix/*', 'bugfix/*', 'hotfix/*']
+documentation: ['docs/*', 'doc/*']
+dependencies: ['deps/*', 'chore/deps*', 'chore/dependency*']
+refactor: ['refactor/*', 'refact/*']
+performance: ['perf/*', 'performance/*']
+test: ['test/*', 'tests/*']
+ci: ['ci/*']
+build: ['build/*']
+chore: ['chore/*']
+style: ['style/*']
