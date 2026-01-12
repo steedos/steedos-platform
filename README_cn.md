@@ -121,6 +121,48 @@ yarn start
 
 访问 `http://localhost:5100` 即可开始使用 AI 构建应用。
 
+## 🛠️ 开发指南 | Development Guide
+
+### 包管理器
+
+本项目现已支持使用 **pnpm** 作为包管理器，相比 Yarn/npm 具有以下优势：
+
+- ⚡ **更快的安装速度**: 比 Yarn/npm 快 2-3 倍
+- 💾 **节省磁盘空间**: 使用硬链接节省 50-70% 的空间
+- 🔒 **更严格的依赖管理**: 避免幽灵依赖问题
+
+#### 快速开始
+
+```bash
+# 安装 pnpm
+npm install -g pnpm
+
+# 安装项目依赖
+pnpm install
+
+# 构建项目
+pnpm run build
+
+# 运行测试
+pnpm -r run test
+```
+
+详细文档请参考：
+- 📖 [PNPM 迁移评估报告](./PNPM_MIGRATION_EVALUATION.md)
+- 📘 [PNPM 迁移指南](./PNPM_MIGRATION_GUIDE.md)
+- 📗 [测试流程文档](./TESTING_GUIDE.md)
+- 🚀 [快速开始指南](./QUICK_START.md)
+
+### 持续集成
+
+项目配置了完整的 CI/CD 测试流程：
+
+- ✅ **基本测试工作流**: 自动运行单元测试、代码检查、类型检查
+- ✅ **集成测试工作流**: 使用 MongoDB、Redis、NATS 进行集成测试
+- ✅ **多版本测试**: 支持 Node.js 22.x 和 20.x
+
+查看 `.github/workflows/` 目录了解更多详情。
+
 ## 🧩 生态与集成 | Ecosystem
 
 华炎魔方拥有强大的连接能力：

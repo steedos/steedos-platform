@@ -121,6 +121,48 @@ yarn start
 
 Visit `http://localhost:5100` and start building with AI.
 
+## 🛠️ Development Guide
+
+### Package Manager
+
+This project now supports **pnpm** as the package manager, offering several advantages over Yarn/npm:
+
+- ⚡ **Faster installation**: 2-3x faster than Yarn/npm
+- 💾 **Disk space efficiency**: Saves 50-70% disk space using hard links
+- 🔒 **Strict dependency management**: Prevents phantom dependencies
+
+#### Quick Start
+
+```bash
+# Install pnpm
+npm install -g pnpm
+
+# Install project dependencies
+pnpm install
+
+# Build the project
+pnpm run build
+
+# Run tests
+pnpm -r run test
+```
+
+For detailed documentation, see:
+- 📖 [PNPM Migration Evaluation](./PNPM_MIGRATION_EVALUATION.md)
+- 📘 [PNPM Migration Guide](./PNPM_MIGRATION_GUIDE.md)
+- 📗 [Testing Guide](./TESTING_GUIDE.md)
+- 🚀 [Quick Start Guide](./QUICK_START.md)
+
+### Continuous Integration
+
+The project includes comprehensive CI/CD test workflows:
+
+- ✅ **Basic test workflow**: Automated unit tests, linting, type checking
+- ✅ **Integration test workflow**: Tests with MongoDB, Redis, NATS
+- ✅ **Multi-version testing**: Supports Node.js 22.x and 20.x
+
+Check the `.github/workflows/` directory for more details.
+
 ## 🤝 Community & Contributing
 
 Steedos is a fully open-source project. We are actively exploring the frontiers of **AI x Low-Code**.

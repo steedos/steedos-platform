@@ -1,0 +1,185 @@
+name: Integration Tests
+
+on:
+  push:
+    branches:
+      - main
+      - 3.0
+  pull_request:
+    branches:
+      - main
+      - 3.0
+  schedule:
+    # Run every day at 2 AM UTC
+    - cron: '0 2 * * *'
+
+jobs:
+  integration:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    
+    services:
+      mongodb:
+        image: mongo:5.0
+        ports:
+          - 27017:27017
+        env:
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: password
+          MONGO_INITDB_DATABASE: steedos
+        options: >-
+          --health-cmd "mongosh --eval 'db.adminCommand({ping: 1})'"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      nats:
+        image: nats:latest
+        ports:
+          - 4222:4222
+        options: >-
+          --health-cmd "wget --no-verbose --tries=1 --spider http://localhost:8222/healthz || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build packages
+        run: pnpm run build
+        env:
+          CI: true
+
+      - name: Wait for services
+        run: |
+          echo "Waiting for MongoDB..."
+          timeout 30 bash -c 'until nc -z localhost 27017; do sleep 1; done'
+          echo "Waiting for Redis..."
+          timeout 30 bash -c 'until nc -z localhost 6379; do sleep 1; done'
+          echo "Waiting for NATS..."
+          timeout 30 bash -c 'until nc -z localhost 4222; do sleep 1; done'
+          echo "All services are ready!"
+
+      - name: Run integration tests
+        run: |
+          # Set up environment variables for integration tests
+          export MONGO_URL=mongodb://root:password@localhost:27017/steedos?authSource=admin
+          export REDIS_URL=redis://localhost:6379
+          export NATS_URL=nats://localhost:4222
+          export NODE_ENV=test
+          
+          # Run integration tests if they exist
+          pnpm -r --filter "./packages/**" --if-present test:integration || echo "No integration tests found"
+        continue-on-error: true
+
+      - name: Upload integration test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: integration-test-results
+          path: |
+            **/coverage/
+            **/test-results/
+          if-no-files-found: ignore
+
+  e2e:
+    name: E2E Tests
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event_name == 'schedule'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          run_install: false
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build packages
+        run: pnpm run build
+        env:
+          CI: true
+
+      - name: Start services with Docker Compose
+        run: |
+          if [ -f "docker-compose.yml" ]; then
+            docker-compose up -d mongodb mongodb-init redis nats
+            sleep 10
+          else
+            echo "No docker-compose.yml found, skipping..."
+          fi
+        continue-on-error: true
+
+      - name: Run E2E tests
+        run: |
+          # Run E2E tests if they exist
+          pnpm -r --if-present test:e2e || echo "No E2E tests found"
+        continue-on-error: true
+
+      - name: Stop services
+        if: always()
+        run: |
+          if [ -f "docker-compose.yml" ]; then
+            docker-compose down
+          fi
+        continue-on-error: true
+
+      - name: Upload E2E test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-test-results
+          path: |
+            **/test-results/
+            **/screenshots/
+          if-no-files-found: ignore

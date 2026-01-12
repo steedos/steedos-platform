@@ -1,0 +1,5 @@
+packages:
+  - 'packages/*'
+  - 'services/*'
+  - 'ee/*'
+  - 'builder6/*'
