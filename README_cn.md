@@ -129,12 +129,6 @@ yarn start
 * **IM 集成:** 预置企业微信、钉钉、飞书连接器。
 * **数据集成:** 轻松连接 SAP, Oracle 等传统 ERP 系统。
 
-## 📚 开发者文档 | Developer Docs
-
-* 📖 **AI 编程指引**: [AI_PROGRAMMING_GUIDE.md](./AI_PROGRAMMING_GUIDE.md) - 完整的开发指南和最佳实践
-* 📝 **开发者指南**: [DEVELOPER_GUIDE.md](./docs/DEVELOPER_GUIDE.md) - 快速入门和核心概念
-* 🤝 **贡献指南**: [CONTRIBUTING.md](./CONTRIBUTING.md) - 如何为项目做贡献
-
 ## 🤝 贡献与社区 | Community
 
 华炎魔方是完全开源的项目，我们正在积极探索 **AI x Low-Code** 的前沿。
