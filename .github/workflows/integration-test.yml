@@ -47,11 +47,7 @@ jobs:
         image: nats:latest
         ports:
           - 4222:4222
-        options: >-
-          --health-cmd "wget --no-verbose --tries=1 --spider http://localhost:8222/healthz || exit 1"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+          - 8222:8222
 
     steps:
       - name: Checkout code
@@ -93,11 +89,32 @@ jobs:
       - name: Wait for services
         run: |
           echo "Waiting for MongoDB..."
-          timeout 30 bash -c 'until nc -z localhost 27017; do sleep 1; done'
+          for i in {1..30}; do
+            if mongosh --host localhost:27017 --username root --password password --eval "db.adminCommand('ping')" > /dev/null 2>&1; then
+              echo "MongoDB is ready!"
+              break
+            fi
+            sleep 1
+          done
+          
           echo "Waiting for Redis..."
-          timeout 30 bash -c 'until nc -z localhost 6379; do sleep 1; done'
+          for i in {1..30}; do
+            if redis-cli -h localhost ping > /dev/null 2>&1; then
+              echo "Redis is ready!"
+              break
+            fi
+            sleep 1
+          done
+          
           echo "Waiting for NATS..."
-          timeout 30 bash -c 'until nc -z localhost 4222; do sleep 1; done'
+          for i in {1..30}; do
+            if curl -f http://localhost:8222/healthz > /dev/null 2>&1; then
+              echo "NATS is ready!"
+              break
+            fi
+            sleep 1
+          done
+          
           echo "All services are ready!"
 
       - name: Run integration tests
@@ -109,8 +126,7 @@ jobs:
           export NODE_ENV=test
           
           # Run integration tests if they exist
-          pnpm -r --filter "./packages/**" --if-present test:integration || echo "No integration tests found"
-        continue-on-error: true
+          pnpm -r --filter "./packages/**" --if-present test:integration
 
       - name: Upload integration test results
         if: always()
@@ -163,8 +179,7 @@ jobs:
       - name: Run E2E tests
         run: |
           # Run E2E tests if they exist
-          pnpm -r --if-present test:e2e || echo "No E2E tests found"
-        continue-on-error: true
+          pnpm -r --if-present test:e2e
 
       - name: Stop services
         if: always()

@@ -74,8 +74,7 @@ jobs:
       - name: Run tests
         run: |
           # Run tests for packages that have test scripts
-          pnpm -r --if-present test || echo "Some tests failed or no tests found"
-        continue-on-error: true
+          pnpm -r --if-present test
 
       - name: Build packages
         run: pnpm run build

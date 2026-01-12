@@ -1,5 +1,11 @@
+# Steedos Platform Workspace Configuration
+# Defines monorepo workspaces for pnpm
 packages:
+  # Core packages: shared libraries and utilities
   - 'packages/*'
+  # Microservices: individual service modules
   - 'services/*'
+  # Enterprise edition: commercial features
   - 'ee/*'
+  # Builder6: development tools and builders
   - 'builder6/*'
