@@ -256,7 +256,7 @@ export const AppHeader = () => {
         return <></>
     }
 
-    let logoSrc = ''; //'/images/logo.svg';
+    let logoSrc = '/images/logo.svg';
 
     if(Builder.settings?.context?.user?.space?.avatar){
         logoSrc = '/api/v6/files/cfs.avatars.filerecord/' + Builder.settings.context.user.space.avatar
