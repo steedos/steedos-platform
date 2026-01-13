@@ -4,6 +4,8 @@
  * @Description: 基于steedos builder 实现 Amis组件的动态注册
  */
 
+// Delay before triggering popstate event to ensure AMIS components are ready
+const MENU_UPDATE_DELAY = 100;
 
 window.addEventListener('message', function (event) {
     const { data } = event;
@@ -21,6 +23,6 @@ window.addEventListener('message', function (event) {
                 state: window.history.state
             });
             window.dispatchEvent(popStateEvent);
-        }, 50);
+        }, MENU_UPDATE_DELAY);
     }
 })

@@ -4,6 +4,9 @@ import { use } from "i18next";
 import { useEffect, useState } from "react";
 import { useParams, useLocation } from 'react-router-dom';
 
+// Delay before triggering popstate event to ensure AMIS components are ready
+const MENU_UPDATE_DELAY = 100;
+
 const getHeaderSchema = (props) => {
     const { logoSrc, customButtons, className } = props
     const isMobile = window.innerWidth <= 768
@@ -245,7 +248,7 @@ export const AppHeader = () => {
                                 state: window.history.state
                             });
                             window.dispatchEvent(popStateEvent);
-                        }, 100);
+                        }, MENU_UPDATE_DELAY);
                     }
                 }catch(err){
                     console.error('Failed to fetch app data:', err);
