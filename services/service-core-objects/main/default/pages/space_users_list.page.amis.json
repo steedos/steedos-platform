@@ -13,7 +13,7 @@
                         {
                             "type": "wrapper",
                             "size": "none",
-                            "className": "space-users-list-sidebar-wrapper flex-shrink-0 min-w-[260px] overflow-y-auto bg-white border-r lg:order-first lg:flex lg:flex-col ",
+                            "className": "space-users-list-sidebar-wrapper flex-shrink-0 min-w-[260px] overflow-y-auto bg-white border-r lg:order-first lg:flex lg:flex-col h-full",
                             "body": [
                                 {
                                     "type": "input-tree",
@@ -136,7 +136,7 @@
                         {
                             "type": "wrapper",
                             "size": "none",
-                            "className": "flex-1 focus:outline-none lg:order-last",
+                            "className": "flex-1 focus:outline-none lg:order-last overflow-hidden h-full flex flex-col",
                             "body": [
                                 {
                                     "type": "steedos-object-listview",
@@ -182,7 +182,7 @@
                                             "hiddenOn": "${window:innerWidth < 768 && false}"
                                         }
                                     ],
-                                    "className": "",
+                                    "className": "h-full flex-1",
                                     "style": {
                                         "border": 0,
                                         "border-radius": 0
@@ -278,7 +278,13 @@
             "min-width": "260px"
         },
         ".space-users-list-custom-page.space-users-list-pc .space-users-list-sidebar-wrapper .antd-Form-item .antd-Tree": {
-            "max-height": "none"
+            "max-height": "100%",
+            "overflow-y": "auto"
+        },
+        ".space-users-list-custom-page .steedos-object-listview": {
+            "height": "100%",
+            "display": "flex",
+            "flex-direction": "column"
         }
     }
 }
