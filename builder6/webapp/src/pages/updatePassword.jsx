@@ -13,7 +13,7 @@ import { changePassword } from '../actions/users';
 import { getCurrentUserId, getCurrentUser } from '../selectors/entities/users';
 import * as GlobalAction from '../actions/global_actions';
 import { validatePassword } from '../client/password';
-import { redirect } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 class UpdatePassword extends React.Component {
 
@@ -108,7 +108,8 @@ class UpdatePassword extends React.Component {
         });
         return;
       }else{
-        GlobalAction.emitUserLoggedOutEvent('/login');
+        // After password change, redirect to logout and then to login (not back to update-password)
+        this.props.navigate('/logout?redirect_uri=/login');
       }
     });
   };
@@ -202,4 +203,11 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UpdatePassword);
+// A wrapper component to pass location and navigate to class component
+const withRouter = (props) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  return <UpdatePassword {...props} location={location} navigate={navigate} />;
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter);
