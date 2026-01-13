@@ -237,6 +237,15 @@ export const AppHeader = () => {
                         document.documentElement.style.setProperty('--colors-link-5', `var(--color-${linkColor}-600)`);
                         document.documentElement.style.setProperty('--colors-link-6', `var(--color-${linkColor}-500)`);
                         document.documentElement.style.setProperty('--colors-link-7', `var(--color-${linkColor}-400)`);
+                        
+                        // Trigger popstate event after app menu data is loaded to update active menu item
+                        // This ensures the correct tab is highlighted based on current URL
+                        setTimeout(() => {
+                            const popStateEvent = new PopStateEvent('popstate', {
+                                state: window.history.state
+                            });
+                            window.dispatchEvent(popStateEvent);
+                        }, 100);
                     }
                 }catch(err){
                     console.error('Failed to fetch app data:', err);

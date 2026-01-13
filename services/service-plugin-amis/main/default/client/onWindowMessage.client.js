@@ -12,21 +12,15 @@ window.addEventListener('message', function (event) {
     }
     // Handle route changes to update active menu items
     if (data.type === 'ROUTE_CHANGE') {
-        // Dispatch a custom event that AMIS navigation components can listen to
-        // This ensures menu items are highlighted correctly after navigation or page refresh
-        const event = new CustomEvent('steedos:route-change', {
-            detail: {
-                path: data.path,
-                search: data.search,
-                hash: data.hash
-            }
-        });
-        window.dispatchEvent(event);
-        
-        // Additionally, trigger a location change event that AMIS components may be listening to
-        // Small delay to ensure DOM is ready
+        // AMIS navigation components use isCurrentUrl to determine active state
+        // They check this when the location changes, so we trigger a popstate event
+        // to force them to re-evaluate the active state based on current pathname
         setTimeout(() => {
-            window.dispatchEvent(new Event('popstate'));
+            // Trigger popstate event which AMIS nav components listen to
+            const popStateEvent = new PopStateEvent('popstate', {
+                state: window.history.state
+            });
+            window.dispatchEvent(popStateEvent);
         }, 50);
     }
 })
