@@ -244,9 +244,16 @@ export const AppHeader = () => {
                         // Trigger popstate event after app menu data is loaded to update active menu item
                         // This ensures the correct tab is highlighted based on current URL
                         setTimeout(() => {
-                            const popStateEvent = new PopStateEvent('popstate', {
-                                state: window.history.state
-                            });
+                            // Use fallback for older browsers that don't support PopStateEvent constructor
+                            let popStateEvent;
+                            try {
+                                popStateEvent = new PopStateEvent('popstate', {
+                                    state: window.history.state
+                                });
+                            } catch (e) {
+                                // Fallback for older browsers
+                                popStateEvent = new Event('popstate');
+                            }
                             window.dispatchEvent(popStateEvent);
                         }, MENU_UPDATE_DELAY);
                     }

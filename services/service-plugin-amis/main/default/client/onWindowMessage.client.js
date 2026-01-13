@@ -9,6 +9,12 @@ const MENU_UPDATE_DELAY = 100;
 
 window.addEventListener('message', function (event) {
     const { data } = event;
+    
+    // Validate event origin for security - only process messages from same origin
+    if (event.origin !== window.location.origin) {
+        return;
+    }
+    
     if (data.type === 'builder.assetsLoaded') {
         window.assetsLoaded = true;
     }
@@ -19,9 +25,16 @@ window.addEventListener('message', function (event) {
         // to force them to re-evaluate the active state based on current pathname
         setTimeout(() => {
             // Trigger popstate event which AMIS nav components listen to
-            const popStateEvent = new PopStateEvent('popstate', {
-                state: window.history.state
-            });
+            // Use fallback for older browsers that don't support PopStateEvent constructor
+            let popStateEvent;
+            try {
+                popStateEvent = new PopStateEvent('popstate', {
+                    state: window.history.state
+                });
+            } catch (e) {
+                // Fallback for older browsers
+                popStateEvent = new Event('popstate');
+            }
             window.dispatchEvent(popStateEvent);
         }, MENU_UPDATE_DELAY);
     }
