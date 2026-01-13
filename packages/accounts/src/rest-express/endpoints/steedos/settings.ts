@@ -137,16 +137,22 @@ export const getSettings =
         if (passwordService && typeof passwordService.getUserProfile === 'function') {
           const userProfile = await passwordService.getUserProfile(user._id);
           if (userProfile) {
-            // Merge profile-specific password policy into password config
-            passwordConfig = {
-              ...passwordConfig,
-              password_min_length: userProfile.password_min_length,
-              password_max_length: userProfile.password_max_length,
-              password_require_uppercase: userProfile.password_require_uppercase,
-              password_require_lowercase: userProfile.password_require_lowercase,
-              password_require_number: userProfile.password_require_number,
-              password_require_special_character: userProfile.password_require_special_character,
-            };
+            // Define password policy fields to merge from user profile
+            const policyFields = [
+              'password_min_length',
+              'password_max_length',
+              'password_require_uppercase',
+              'password_require_lowercase',
+              'password_require_number',
+              'password_require_special_character'
+            ];
+            
+            // Merge only defined policy fields from user profile
+            policyFields.forEach(field => {
+              if (userProfile[field] !== undefined) {
+                passwordConfig[field] = userProfile[field];
+              }
+            });
           }
         }
       } catch (error) {

@@ -38,6 +38,8 @@ import {
   PasswordLoginType,
   PasswordType,
   ErrorMessages,
+  SPECIAL_CHAR_PATTERN,
+  DEFAULT_PASSWORD_POLICY,
 } from "./types";
 import { errors } from "./errors";
 import { getSteedosConfig, getObject } from "@steedos/objectql";
@@ -421,12 +423,12 @@ export default class AccountsPassword implements AuthenticationService {
     let login_expiration_in_days = null;
     let phone_logout_other_clients = false;
     let phone_login_expiration_in_days = null;
-    let password_min_length = 8;
-    let password_require_uppercase = false;
-    let password_require_lowercase = false;
-    let password_require_number = false;
-    let password_require_special_character = false;
-    let password_max_length = 128;
+    let password_min_length = DEFAULT_PASSWORD_POLICY.min_length;
+    let password_require_uppercase = DEFAULT_PASSWORD_POLICY.require_uppercase;
+    let password_require_lowercase = DEFAULT_PASSWORD_POLICY.require_lowercase;
+    let password_require_number = DEFAULT_PASSWORD_POLICY.require_number;
+    let password_require_special_character = DEFAULT_PASSWORD_POLICY.require_special_character;
+    let password_max_length = DEFAULT_PASSWORD_POLICY.max_length;
     const spaceUsers = await getObject("space_users").find({
       filters: `(user eq '${userId}') and (space eq '${spaceId}')`,
     });
@@ -503,17 +505,23 @@ export default class AccountsPassword implements AuthenticationService {
 
   /**
    * @description Validate password against profile password policy
-   * @param {string} password - Password to validate
+   * @param {string | PasswordType} password - Password to validate
    * @param {object} userProfile - User profile with password policy settings
    * @returns {void} - Throws error if password doesn't meet policy requirements
    */
-  private validatePasswordPolicy(password: string, userProfile: any): void {
+  private validatePasswordPolicy(password: string | PasswordType, userProfile: any): void {
+    // If password is an object (hashed), we can't validate it against policy
+    // Policy validation should happen before hashing
+    if (typeof password !== 'string') {
+      return;
+    }
+
     if (!password) {
       throw new Error("密码不能为空");
     }
 
-    const minLength = userProfile.password_min_length || 8;
-    const maxLength = userProfile.password_max_length || 128;
+    const minLength = userProfile.password_min_length || DEFAULT_PASSWORD_POLICY.min_length;
+    const maxLength = userProfile.password_max_length || DEFAULT_PASSWORD_POLICY.max_length;
 
     // Check minimum length
     if (password.length < minLength) {
@@ -541,7 +549,7 @@ export default class AccountsPassword implements AuthenticationService {
     }
 
     // Check special character requirement
-    if (userProfile.password_require_special_character && !/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+    if (userProfile.password_require_special_character && !SPECIAL_CHAR_PATTERN.test(password)) {
       throw new Error("密码必须包含至少一个特殊字符(如 !@#$%^&* 等)");
     }
   }
