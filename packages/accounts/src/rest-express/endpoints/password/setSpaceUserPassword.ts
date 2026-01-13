@@ -66,6 +66,11 @@ export const setSpaceUserPassword =
       const bcryptedPassword = await bcryptPassword(password);
       const servicePassword: any = accountsServer.getServices().password;
       await servicePassword.db.setPassword(user_id, bcryptedPassword);
+      // Update password_modified_at timestamp
+      await getObject("users").directUpdate(user_id, {
+        password_modified_at: new Date(),
+        password_expired: false
+      });
       const changedUserInfo = await getObject("users").findOne(user_id);
       if (changedUserInfo?.services?.password?.bcrypt) {
         await getObject("users").update(user_id, {

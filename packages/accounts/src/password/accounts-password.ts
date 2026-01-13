@@ -465,6 +465,56 @@ export default class AccountsPassword implements AuthenticationService {
   }
 
   /**
+   * @description Check if user's password has expired based on space configuration
+   * @param {string} userId - User id.
+   * @returns {Promise<void>} - Throws error if password expired.
+   */
+  public async checkPasswordExpiry(userId: string): Promise<void> {
+    const spaceId = getSteedosConfig().tenant._id;
+    
+    // Get space configuration for password expiry
+    const spaces = await getObject("spaces").find({
+      filters: `_id eq '${spaceId}'`,
+      fields: ['password_expiry_days']
+    });
+    
+    if (!spaces || spaces.length === 0) {
+      return; // No space found, skip check
+    }
+    
+    const space = spaces[0];
+    const passwordExpiryDays = space.password_expiry_days;
+    
+    // If password_expiry_days is not set or is 0, skip expiry check
+    if (!passwordExpiryDays || passwordExpiryDays <= 0) {
+      return;
+    }
+    
+    // Get user's password_modified_at timestamp
+    const user = await this.db.findUserById(userId);
+    const passwordModifiedAt = user.password_modified_at;
+    
+    // If password_modified_at is not set, assume it's expired to force initial password change
+    if (!passwordModifiedAt) {
+      await this.db.updateUser(userId, {
+        $set: { password_expired: true }
+      });
+      return; // Don't throw error here, let the validate endpoint handle it
+    }
+    
+    // Calculate days since password was last modified
+    const daysSinceModified = moment().diff(moment(passwordModifiedAt), 'days');
+    
+    // Check if password has expired
+    if (daysSinceModified >= passwordExpiryDays) {
+      await this.db.updateUser(userId, {
+        $set: { password_expired: true }
+      });
+      // Don't throw error here, let the validate endpoint handle it
+    }
+  }
+
+  /**
    * @description Change the password for a user.
    * @param {string} userId - User id.
    * @param {string} newPassword - A new password for the user.
@@ -874,6 +924,10 @@ export default class AccountsPassword implements AuthenticationService {
         $unset: { login_failed_lockout_time: 1 },
       });
     }
+
+    // Check password expiry based on space configuration
+    // Only check for password-based authentication (not OIDC or other services)
+    await this.checkPasswordExpiry(foundUser.id);
 
     return foundUser;
   }

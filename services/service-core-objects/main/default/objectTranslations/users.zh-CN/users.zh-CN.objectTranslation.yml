@@ -60,7 +60,11 @@ fields:
     help: 
     description: 
   password_expired:
-    label: Password expired
+    label: 密码已过期
+    help: 
+    description: 
+  password_modified_at:
+    label: 密码修改时间
     help: 
     description: 
   company_id:

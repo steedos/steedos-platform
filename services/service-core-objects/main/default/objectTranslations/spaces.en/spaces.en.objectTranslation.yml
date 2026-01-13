@@ -10,6 +10,10 @@ fields:
     label: Space Owner
     help: 
     description: 
+  password_expiry_days:
+    label: Password Expiry Days
+    help: Number of days after which users must change their password. Leave empty to disable password expiry.
+    description: 
   admins:
     label: Admins
     help: 
@@ -52,6 +56,7 @@ fields:
     description: 
 groups:
   register_account: Register account
+  Security: Security
   developer: Developer
 listviews:
   all:

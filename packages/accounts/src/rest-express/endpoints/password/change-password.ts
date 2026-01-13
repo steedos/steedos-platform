@@ -49,7 +49,7 @@ export const changePassword =
       );
       password.db.collection.updateOne(
         { _id: (req as any).userId },
-        { $set: { password_expired: false } },
+        { $set: { password_expired: false, password_modified_at: new Date() } },
       );
       try {
         await db.updateMany(

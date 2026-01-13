@@ -112,6 +112,14 @@ fields:
     omit: false
     hidden: false
     sort_no: 110
+  password_expiry_days:
+    name: password_expiry_days
+    label: Password Expiry Days
+    type: number
+    group: Security
+    inlineHelpText: Number of days after which users must change their password. Leave empty to disable password expiry.
+    sort_no: 120
+    min: 0
   services:
     name: services
     type: object
