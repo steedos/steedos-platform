@@ -5,9 +5,9 @@
     "target": "ES2022",
     "outDir": "./lib",
     "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
     ],
     "jsx": "react",
     "rootDir": "src",

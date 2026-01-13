@@ -2,7 +2,7 @@
   "compilerOptions": {
     "module": "esnext",
     "target": "ES2022",
-    "lib": ["dom", "es6"],
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "moduleResolution": "node",
     "importHelpers": true,
     "jsx": "react",
