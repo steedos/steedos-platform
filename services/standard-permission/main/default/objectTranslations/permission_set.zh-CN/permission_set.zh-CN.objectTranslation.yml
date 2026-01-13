@@ -88,6 +88,30 @@ fields:
       - label: 始终(必须由管理员重置)
         value: '0'
     description: 
+  password_min_length:
+    label: 最小密码长度
+    help: 密码最少需要包含的字符数
+    description:
+  password_require_uppercase:
+    label: 要求大写字母
+    help: 密码必须包含至少一个大写字母(A-Z)
+    description:
+  password_require_lowercase:
+    label: 要求小写字母
+    help: 密码必须包含至少一个小写字母(a-z)
+    description:
+  password_require_number:
+    label: 要求数字
+    help: 密码必须包含至少一个数字(0-9)
+    description:
+  password_require_special_character:
+    label: 要求特殊字符
+    help: 密码必须包含至少一个特殊字符(如 !@#$%^&* 等)
+    description:
+  password_max_length:
+    label: 最大密码长度
+    help: 密码最多可以包含的字符数
+    description:
 groups:
   profile_password_policy: 密码策略
   login_policy: 登录策略

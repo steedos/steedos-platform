@@ -362,6 +362,13 @@ export default class AccountsPassword implements AuthenticationService {
       throw new Error(this.options.errors.resetPasswordLinkUnknownAddress);
     }
 
+    // Validate password against profile policy
+    const saas = getSteedosConfig().tenant.saas;
+    if (!saas) {
+      const userProfile = await this.getUserProfile(user.id);
+      this.validatePasswordPolicy(newPassword, userProfile);
+    }
+
     const password = await this.hashAndBcryptPassword(newPassword);
     // Change the user password and remove the old token
     await this.db.setResetPassword(
@@ -414,6 +421,12 @@ export default class AccountsPassword implements AuthenticationService {
     let login_expiration_in_days = null;
     let phone_logout_other_clients = false;
     let phone_login_expiration_in_days = null;
+    let password_min_length = 8;
+    let password_require_uppercase = false;
+    let password_require_lowercase = false;
+    let password_require_number = false;
+    let password_require_special_character = false;
+    let password_max_length = 128;
     const spaceUsers = await getObject("space_users").find({
       filters: `(user eq '${userId}') and (space eq '${spaceId}')`,
     });
@@ -449,6 +462,24 @@ export default class AccountsPassword implements AuthenticationService {
           phone_login_expiration_in_days =
             userProfile.phone_login_expiration_in_days;
         }
+        if (_.has(userProfile, "password_min_length")) {
+          password_min_length = Number(userProfile.password_min_length);
+        }
+        if (_.has(userProfile, "password_require_uppercase")) {
+          password_require_uppercase = userProfile.password_require_uppercase;
+        }
+        if (_.has(userProfile, "password_require_lowercase")) {
+          password_require_lowercase = userProfile.password_require_lowercase;
+        }
+        if (_.has(userProfile, "password_require_number")) {
+          password_require_number = userProfile.password_require_number;
+        }
+        if (_.has(userProfile, "password_require_special_character")) {
+          password_require_special_character = userProfile.password_require_special_character;
+        }
+        if (_.has(userProfile, "password_max_length")) {
+          password_max_length = Number(userProfile.password_max_length);
+        }
       }
     }
     return Object.assign({
@@ -461,7 +492,58 @@ export default class AccountsPassword implements AuthenticationService {
       login_expiration_in_days,
       phone_logout_other_clients,
       phone_login_expiration_in_days,
+      password_min_length,
+      password_require_uppercase,
+      password_require_lowercase,
+      password_require_number,
+      password_require_special_character,
+      password_max_length,
     });
+  }
+
+  /**
+   * @description Validate password against profile password policy
+   * @param {string} password - Password to validate
+   * @param {object} userProfile - User profile with password policy settings
+   * @returns {void} - Throws error if password doesn't meet policy requirements
+   */
+  private validatePasswordPolicy(password: string, userProfile: any): void {
+    if (!password) {
+      throw new Error("密码不能为空");
+    }
+
+    const minLength = userProfile.password_min_length || 8;
+    const maxLength = userProfile.password_max_length || 128;
+
+    // Check minimum length
+    if (password.length < minLength) {
+      throw new Error(`密码长度不能少于 ${minLength} 个字符`);
+    }
+
+    // Check maximum length
+    if (password.length > maxLength) {
+      throw new Error(`密码长度不能超过 ${maxLength} 个字符`);
+    }
+
+    // Check uppercase requirement
+    if (userProfile.password_require_uppercase && !/[A-Z]/.test(password)) {
+      throw new Error("密码必须包含至少一个大写字母(A-Z)");
+    }
+
+    // Check lowercase requirement
+    if (userProfile.password_require_lowercase && !/[a-z]/.test(password)) {
+      throw new Error("密码必须包含至少一个小写字母(a-z)");
+    }
+
+    // Check number requirement
+    if (userProfile.password_require_number && !/[0-9]/.test(password)) {
+      throw new Error("密码必须包含至少一个数字(0-9)");
+    }
+
+    // Check special character requirement
+    if (userProfile.password_require_special_character && !/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+      throw new Error("密码必须包含至少一个特殊字符(如 !@#$%^&* 等)");
+    }
   }
 
   /**
@@ -501,6 +583,9 @@ export default class AccountsPassword implements AuthenticationService {
       const passwordHistory = user.services.password_history || [];
 
       const userProfile = await this.getUserProfile(userId);
+
+      // Validate password against profile policy
+      this.validatePasswordPolicy(newPassword, userProfile);
 
       const validPasswordHistory = _.last(
         passwordHistory,
