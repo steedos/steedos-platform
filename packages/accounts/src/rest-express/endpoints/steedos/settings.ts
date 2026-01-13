@@ -122,13 +122,42 @@ export const getSettings =
       settings = await util.getSettings(tenant._id, true);
     }
 
+    // Build password configuration - start with global config
+    let passwordConfig = config.password
+      ? config.password
+      : config.public?.password
+        ? config.public?.password
+        : {};
+
+    // If user is authenticated, merge their profile's password policy
+    const user = (req as any).user;
+    if (user && user._id && tenant._id) {
+      try {
+        const passwordService = accountsServer.getServices()['password'];
+        if (passwordService && typeof passwordService.getUserProfile === 'function') {
+          const userProfile = await passwordService.getUserProfile(user._id);
+          if (userProfile) {
+            // Merge profile-specific password policy into password config
+            passwordConfig = {
+              ...passwordConfig,
+              password_min_length: userProfile.password_min_length,
+              password_max_length: userProfile.password_max_length,
+              password_require_uppercase: userProfile.password_require_uppercase,
+              password_require_lowercase: userProfile.password_require_lowercase,
+              password_require_number: userProfile.password_require_number,
+              password_require_special_character: userProfile.password_require_special_character,
+            };
+          }
+        }
+      } catch (error) {
+        // If there's an error getting user profile, just use global config
+        console.error('Error getting user password policy:', error);
+      }
+    }
+
     res.json({
       tenant: _tenant,
-      password: config.password
-        ? config.password
-        : config.public?.password
-          ? config.public?.password
-          : {},
+      password: passwordConfig,
       root_url: process.env.ROOT_URL,
       already_mail_service: already_mail_service,
       already_sms_service: already_sms_service,
