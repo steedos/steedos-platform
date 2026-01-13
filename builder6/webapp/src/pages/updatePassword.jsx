@@ -13,7 +13,7 @@ import { changePassword } from '../actions/users';
 import { getCurrentUserId, getCurrentUser } from '../selectors/entities/users';
 import * as GlobalAction from '../actions/global_actions';
 import { validatePassword } from '../client/password';
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 
 class UpdatePassword extends React.Component {
 
