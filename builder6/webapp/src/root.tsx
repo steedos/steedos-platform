@@ -13,12 +13,14 @@ import { Steedos } from './utils/steedos';
 import { t } from 'i18next';
 import axios from 'axios';
 import { io } from "socket.io-client";
+import * as CryptoJS from 'crypto-js';
 
 const _window: any = window;
 _window.io = io;
 _window['axios'] = axios;
 _window['Builder'] = Builder;
 _window['builder'] = builder;
+_window['CryptoJS'] = CryptoJS;
 
 
 if(_window['Steedos']){
