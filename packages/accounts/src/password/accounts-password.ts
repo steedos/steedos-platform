@@ -162,6 +162,24 @@ const getPathFragmentPrefix = function () {
   return pathFragmentPrefix;
 };
 
+export interface UserProfilePolicy {
+  space: string;
+  password_history: number;
+  max_login_attempts: number;
+  lockout_interval: number;
+  logout_other_clients: boolean;
+  enable_MFA: boolean;
+  login_expiration_in_days: number | null;
+  phone_logout_other_clients: boolean;
+  phone_login_expiration_in_days: number | null;
+  password_min_length: number;
+  password_require_uppercase: boolean;
+  password_require_lowercase: boolean;
+  password_require_number: boolean;
+  password_require_special_character: boolean;
+  password_max_length: number;
+}
+
 // interface MyDatabaseInterface extends DatabaseInterface{
 //   updateUser?(userId: string, options: any): Promise<void>;
 // }
@@ -413,7 +431,7 @@ export default class AccountsPassword implements AuthenticationService {
     return null;
   }
 
-  public async getUserProfile(userId) {
+  public async getUserProfile(userId): Promise<UserProfilePolicy> {
     const spaceId = getSteedosConfig().tenant._id;
     let password_history = 3;
     let max_login_attempts = 10;
@@ -465,7 +483,10 @@ export default class AccountsPassword implements AuthenticationService {
             userProfile.phone_login_expiration_in_days;
         }
         if (_.has(userProfile, "password_min_length")) {
-          password_min_length = Number(userProfile.password_min_length);
+          const parsedValue = Number(userProfile.password_min_length);
+          if (!isNaN(parsedValue)) {
+            password_min_length = parsedValue;
+          }
         }
         if (_.has(userProfile, "password_require_uppercase")) {
           password_require_uppercase = userProfile.password_require_uppercase;
@@ -480,7 +501,10 @@ export default class AccountsPassword implements AuthenticationService {
           password_require_special_character = userProfile.password_require_special_character;
         }
         if (_.has(userProfile, "password_max_length")) {
-          password_max_length = Number(userProfile.password_max_length);
+          const parsedValue = Number(userProfile.password_max_length);
+          if (!isNaN(parsedValue)) {
+            password_max_length = parsedValue;
+          }
         }
       }
     }
@@ -506,10 +530,10 @@ export default class AccountsPassword implements AuthenticationService {
   /**
    * @description Validate password against profile password policy
    * @param {string | PasswordType} password - Password to validate
-   * @param {object} userProfile - User profile with password policy settings
+   * @param {UserProfilePolicy} userProfile - User profile with password policy settings
    * @returns {void} - Throws error if password doesn't meet policy requirements
    */
-  private validatePasswordPolicy(password: string | PasswordType, userProfile: any): void {
+  private validatePasswordPolicy(password: string | PasswordType, userProfile: UserProfilePolicy): void {
     // If password is an object (hashed), we can't validate it against policy
     // Policy validation should happen before hashing
     if (typeof password !== 'string') {
