@@ -1,7 +1,7 @@
 {   
   "compilerOptions": {
       "outDir": "./main/default/routes",
-      "target": "es6",
+      "target": "ES2022",
       "module": "commonjs",
       "moduleResolution": "node",
       "importHelpers": true,
