@@ -470,11 +470,19 @@ export default class AccountsPassword implements AuthenticationService {
    * @returns {Promise<void>} - Throws error if password expired.
    */
   public async checkPasswordExpiry(userId: string): Promise<void> {
-    const spaceId = getSteedosConfig().tenant._id;
+    const config = getSteedosConfig();
+    const tenant = config?.tenant;
+    
+    // Safety check: if tenant is not configured, skip expiry check
+    if (!tenant || !tenant._id) {
+      return;
+    }
+    
+    const spaceId = tenant._id;
     
     // Get space configuration for password expiry
     const spaces = await getObject("spaces").find({
-      filters: `_id eq '${spaceId}'`,
+      filters: [['_id', '=', spaceId]],
       fields: ['password_expiry_days']
     });
     
@@ -494,12 +502,11 @@ export default class AccountsPassword implements AuthenticationService {
     const user = await this.db.findUserById(userId);
     const passwordModifiedAt = user.password_modified_at;
     
-    // If password_modified_at is not set, assume it's expired to force initial password change
+    // If password_modified_at is not set, don't force expiry
+    // This allows existing users to continue using their passwords
+    // New users will have password_modified_at set on first password creation
     if (!passwordModifiedAt) {
-      await this.db.updateUser(userId, {
-        $set: { password_expired: true }
-      });
-      return; // Don't throw error here, let the validate endpoint handle it
+      return; // Skip check for users without password_modified_at
     }
     
     // Calculate days since password was last modified
