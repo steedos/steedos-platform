@@ -132,6 +132,61 @@ fields:
       - label: 已提交
         value: submitted
     defaultValue: draft
+  
+  # 隐藏字段（通过 visible_on 控制）
+  internal_notes:
+    type: textarea
+    label: 内部备注
+    visible_on: '{{false}}'  # 默认隐藏
+```
+
+### 字段可见性控制
+
+字段的显示和隐藏主要通过 `visible_on` 属性控制：
+
+```yaml
+fields:
+  # 始终显示
+  always_visible:
+    type: text
+    label: 总是显示
+    visible_on: '{{true}}'
+  
+  # 条件显示
+  conditional_field:
+    type: text
+    label: 条件字段
+    visible_on: '{{formData.status === "approved"}}'
+  
+  # 默认隐藏
+  hidden_field:
+    type: text
+    label: 隐藏字段
+    visible_on: '{{false}}'
+```
+
+**重要**：
+- 如果需要将隐藏字段改为显示，添加 `visible_on: '{{true}}'`
+- 如果已有 `visible_on` 配置，修改其表达式而非添加新的
+- `visible_on` 优先级高于 `hidden` 属性
+
+### 字段属性覆盖
+
+在扩展包中可以覆盖字段属性：
+
+```yaml
+# 基础包
+fields:
+  phone:
+    type: text
+    label: 电话
+    hidden: true
+
+# 扩展包 - 将隐藏字段设为显示
+fields:
+  phone:
+    visible_on: '{{true}}'  # 覆盖显示状态
+    label: 联系电话         # 覆盖标签
 ```
 
 ### 独立字段文件

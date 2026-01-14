@@ -43,6 +43,11 @@ fields:
     type: lookup
     label: Related To
     reference_to: accounts
+  hidden_field:
+    type: text
+    label: Hidden Field
+    hidden: true
+    visible_on: '{{false}}'  # Hidden by default
 list_views:
   all:
     label: All
@@ -54,6 +59,20 @@ permission_set:
     allowRead: true
     allowEdit: true
 ```
+
+### Field Visibility Override
+
+```yaml
+# In extension package to make hidden field visible
+fields:
+  hidden_field:
+    visible_on: '{{true}}'  # Make visible
+    
+  conditional_field:
+    visible_on: '{{formData.status === "active"}}'  # Conditional
+```
+
+**Important**: Field visibility is primarily controlled by `visible_on` attribute. To show a hidden field, add `visible_on: '{{true}}'`.
 
 ## 🔍 ObjectQL Cheat Sheet
 

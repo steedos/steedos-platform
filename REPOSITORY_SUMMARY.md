@@ -124,6 +124,17 @@ fields:
     reference_to: accounts
   amount:
     type: currency
+  internal_notes:
+    type: textarea
+    label: Internal Notes
+    hidden: true
+    visible_on: '{{false}}'  # Hidden by default
+
+# Field Override (in extension package)
+# To make hidden field visible, add visible_on
+fields:
+  internal_notes:
+    visible_on: '{{true}}'  # Override to make visible
 
 # Application Definition (.app.yml)
 name: sales
@@ -147,6 +158,12 @@ module.exports = {
   }
 };
 ```
+
+**Important Field Property Override Rules**:
+- Object and field properties can be overridden in extension packages
+- Field visibility is primarily controlled through `visible_on` attribute
+- To make a hidden field visible: Add `visible_on: '{{true}}'`
+- If `visible_on` already exists, modify the expression instead of adding new one
 
 ### 2. ObjectQL Query Patterns
 

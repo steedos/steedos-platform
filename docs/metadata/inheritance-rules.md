@@ -148,6 +148,36 @@ fields:
     type: text
     label: 电话
     required: false
+    hidden: true
+```
+
+**扩展包**:
+```yaml
+name: accounts
+fields:
+  phone:
+    required: true      # 只覆盖 required 属性
+    label: 联系电话     # 覆盖 label 属性
+    visible_on: '{{true}}'  # 将隐藏字段设为显示
+```
+
+**合并结果**:
+```yaml
+name: accounts
+fields:
+  phone:
+    type: text          # 保留原值
+    label: 联系电话     # 使用新值
+    required: true      # 使用新值
+    hidden: true        # 保留原值
+    visible_on: '{{true}}'  # 新增属性，控制字段显示
+```
+
+**字段可见性控制**:
+- 字段的显示/隐藏主要通过 `visible_on` 属性控制
+- 如果需要将隐藏字段改为显示，添加 `visible_on: '{{true}}'`
+- 如果已有 `visible_on` 配置，需要修改其表达式而非添加新的
+- `hidden` 属性和 `visible_on` 可以同时存在，`visible_on` 优先级更高
 ```
 
 **扩展包**:

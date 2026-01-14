@@ -670,6 +670,7 @@ field_name:
   readonly: false         # 是否只读
   hidden: false           # 是否隐藏
   omit: false            # 是否排除
+  visible_on: null       # 字段可见性控制表达式
   group: "分组名"          # 字段分组
   sortable: true         # 是否可排序
   searchable: true       # 是否可搜索
@@ -678,6 +679,32 @@ field_name:
   description: ""        # 字段描述
   defaultValue: null     # 默认值
 ```
+
+### 字段可见性控制
+
+字段的显示和隐藏主要通过 `visible_on` 属性控制：
+
+```yaml
+# 始终显示字段
+field_name:
+  type: text
+  label: 字段名
+  visible_on: '{{true}}'
+
+# 条件显示字段（根据其他字段值）
+conditional_field:
+  type: text
+  label: 条件字段
+  visible_on: '{{formData.status === "active"}}'
+
+# 隐藏字段
+hidden_field:
+  type: text
+  label: 隐藏字段
+  visible_on: '{{false}}'
+```
+
+**重要**: 如果需要将隐藏的字段调整为显示状态，应添加 `visible_on: '{{true}}'`，除非已有其他 `visible_on` 配置。
 
 ## 字段命名规范
 

@@ -201,7 +201,9 @@ When multiple packages define the same object:
 4. **Objects deep merge** - Object properties merge recursively
 5. **Triggers replace** - Later triggers completely replace earlier ones
 
-Example:
+### Field Property Override
+
+**Important**: Object and field properties can be overridden in extension packages.
 
 ```yaml
 # Base package
@@ -210,14 +212,35 @@ fields:
   phone:
     type: text
     required: false
+    hidden: true
 
 # Extension package (loaded later)
 name: accounts
 fields:
   phone:
-    required: true    # Override
+    required: true    # Override required
+    visible_on: '{{true}}'  # Make hidden field visible
   industry:          # Add new field
     type: select
+```
+
+### Field Visibility Control
+
+**Critical**: Field visibility is primarily controlled through the `visible_on` attribute:
+
+- To make a hidden field visible: Add `visible_on: '{{true}}'`
+- To conditionally show field: Use `visible_on: '{{formData.status === "active"}}'`
+- If `visible_on` already exists, modify the expression instead of adding a new one
+- The `visible_on` attribute takes precedence over the `hidden` attribute
+
+Example:
+```yaml
+# Make a hidden field visible
+fields:
+  previously_hidden:
+    type: text
+    label: Now Visible
+    visible_on: '{{true}}'  # Add this to show the field
 ```
 
 ## Testing
