@@ -17,7 +17,20 @@ export const AppView = () => {
         
         const data = response.data; // Axios stores response data in .data property
         
-        // Check if data exists and has at least one item with a path
+        // Check if default_tab exists and navigate to it
+        if (data?.default_tab) {
+          if (typeof data.default_tab === 'object' && data.default_tab.path) {
+            navigate(data.default_tab.path);
+            return;
+          }
+          // If default_tab is a string, construct the path
+          if (typeof data.default_tab === 'string') {
+            navigate(`/app/${appId}/${data.default_tab}`);
+            return;
+          }
+        }
+        
+        // Fallback: Check if data exists and has at least one item with a path
         if (data?.children.length > 0 && data.children[0].path) {
           const children = _.sortBy(data.children, ['index']);
           navigate(children[0].path);
