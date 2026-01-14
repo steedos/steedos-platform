@@ -20,7 +20,8 @@ export const AppView = () => {
         
         // Check if default_tab exists and navigate to it
         if (data?.default_tab) {
-          if (typeof data.default_tab === 'object' && data.default_tab.path) {
+          // If default_tab is an object with a path, use it
+          if (typeof data.default_tab === 'object' && data.default_tab !== null && data.default_tab.path) {
             navigate(data.default_tab.path);
             return;
           }
