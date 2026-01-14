@@ -13,9 +13,23 @@ Welcome to Steedos Platform documentation!
 - **[Quick Reference](./QUICK_REFERENCE.md)** - Quick reference for commands, APIs, and configurations
 
 ### Technical Documentation
-- **[ObjectQL](./objectql.md)** - Object Query Language detailed documentation
+- **[Metadata](./metadata/)** - Complete metadata documentation including inheritance rules
+  - [Metadata Overview](./metadata/README.md)
+  - [Metadata Types](./metadata/metadata-types.md)
+  - [Inheritance Rules](./metadata/inheritance-rules.md)
+  - [Object Metadata](./metadata/object-metadata.md)
+  - [Field Types](./metadata/field-types.md)
+  - [Permissions](./metadata/permissions.md)
+- **[ObjectQL](./objectql/)** - Object Query Language complete guide
+  - [ObjectQL Overview](./objectql/README.md)
+  - [Query Syntax](./objectql/query-syntax.md)
+  - [Filter Operators](./objectql/filter-operators.md)
+  - [Best Practices](./objectql/best-practices.md)
+- **[Triggers](./triggers/)** - Trigger development guide
+  - [Trigger Overview](./triggers/README.md)
+  - [Trigger Types](./triggers/trigger-types.md)
+  - [Trigger Context](./triggers/trigger-context.md)
 - **[Object Service](./object-service.md)** - Object service architecture
-- **[Trigger](./trigger.md)** - Trigger usage guide
 - **[Environment Variables](./env.md)** - Environment variable configuration
 
 ## 🚀 Quick Start
@@ -49,17 +63,22 @@ Visit http://localhost:5100
 ### For Beginners
 1. Read [README](../README.md) to understand project overview
 2. Follow Quick Start to deploy your first application
-3. Learn [ObjectQL](./objectql.md) for data operations
+3. Learn [Metadata Basics](./metadata/) to understand data models
+4. Learn [ObjectQL](./objectql/) for data operations
 
 ### For Developers
 1. Read [Core Architecture](./CORE_ARCHITECTURE_EN.md)
 2. Follow [Developer Guide](./DEVELOPER_GUIDE.md) to set up development environment
-3. Browse [Packages Index](./PACKAGES_INDEX.md) to understand each module
+3. Understand [Metadata System](./metadata/) and [Inheritance Rules](./metadata/inheritance-rules.md)
+4. Learn [Trigger Development](./triggers/) for business logic
+5. Master [ObjectQL Best Practices](./objectql/best-practices.md)
+6. Browse [Packages Index](./PACKAGES_INDEX.md) to understand each module
 
 ### For Advanced Users
-1. Deep dive into microservices architecture and extension mechanisms
-2. Customize triggers and business logic
-3. Integrate third-party systems and AI services
+1. Deep dive into [Metadata Inheritance](./metadata/inheritance-rules.md) and override mechanisms
+2. Customize [Triggers](./triggers/) and implement complex business logic
+3. Optimize [ObjectQL Queries](./objectql/query-syntax.md) for performance
+4. Integrate third-party systems and AI services
 
 ## 🔗 Resources
 
@@ -73,17 +92,32 @@ Visit http://localhost:5100
 
 ```
 docs/
-├── README.md                    # This document
-├── CORE_ARCHITECTURE_EN.md      # Core architecture
-├── DEVELOPER_GUIDE.md           # Developer guide
-├── PACKAGES_INDEX.md            # Packages and services index
-├── QUICK_REFERENCE.md           # Quick reference
-├── objectql.md                  # ObjectQL documentation
-├── object-service.md            # Object service documentation
-├── trigger.md                   # Trigger documentation
-├── env.md                       # Environment variables
-├── cn/                          # Chinese documentation directory
-└── images/                      # Image resources
+├── README.md                         # This document
+├── CORE_ARCHITECTURE_EN.md           # Core architecture
+├── DEVELOPER_GUIDE.md                # Developer guide
+├── PACKAGES_INDEX.md                 # Packages and services index
+├── QUICK_REFERENCE.md                # Quick reference
+├── object-service.md                 # Object service documentation
+├── env.md                            # Environment variables
+├── metadata/                         # Metadata documentation (NEW)
+│   ├── README.md                     # Metadata overview
+│   ├── metadata-types.md             # Metadata types reference
+│   ├── inheritance-rules.md          # Inheritance and override rules
+│   ├── object-metadata.md            # Object metadata detailed guide
+│   ├── field-types.md                # Field types complete reference
+│   └── permissions.md                # Permissions configuration
+├── objectql/                         # ObjectQL documentation (NEW)
+│   ├── README.md                     # ObjectQL overview
+│   ├── query-syntax.md               # Query syntax detailed guide
+│   ├── filter-operators.md           # Filter operators reference
+│   └── best-practices.md             # ObjectQL best practices
+├── triggers/                         # Trigger documentation (NEW)
+│   ├── README.md                     # Trigger overview
+│   ├── trigger-types.md              # Trigger types and use cases
+│   └── trigger-context.md            # Trigger context reference
+├── cn/                               # Chinese documentation directory
+├── diagrams/                         # Architecture diagrams
+└── images/                           # Image resources
 ```
 
 ## 🤝 Contributing
