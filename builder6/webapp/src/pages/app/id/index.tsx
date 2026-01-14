@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import axios from 'axios';
+import _ from 'lodash';
 
 export const AppView = () => {
   const { appId } = useParams();
