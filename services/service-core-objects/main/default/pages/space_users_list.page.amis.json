@@ -13,7 +13,7 @@
                         {
                             "type": "wrapper",
                             "size": "none",
-                            "className": "space-users-list-sidebar-wrapper flex-shrink-0 min-w-[260px] overflow-y-auto bg-white border-r lg:order-first lg:flex lg:flex-col ",
+                            "className": "space-users-list-sidebar-wrapper flex-shrink-0 min-w-[260px] bg-white border-r lg:order-first lg:flex lg:flex-col ",
                             "body": [
                                 {
                                     "type": "input-tree",
@@ -277,8 +277,18 @@
         ".space-users-list-custom-page.space-users-list-pc.space-users-list-sidebar-open .space-users-list-sidebar-wrapper": {
             "min-width": "260px"
         },
-        ".space-users-list-custom-page.space-users-list-pc .space-users-list-sidebar-wrapper .antd-Form-item .antd-Tree": {
-            "max-height": "none"
+        ".space-users-list-custom-page.space-users-list-pc .space-users-list-sidebar-wrapper .antd-Form-item": {
+            "height": "100%"
+        },
+        ".space-users-list-custom-page.space-users-list-pc .space-users-list-sidebar-wrapper .antd-TreeControl": {
+            "display": "flex",
+            "flex-direction": "column",
+            "height": "100%"
+        },
+        ".space-users-list-custom-page.space-users-list-pc .space-users-list-sidebar-wrapper .antd-Tree": {
+            "flex": "1",
+            "overflow-y": "auto",
+            "max-height": "none !important"
         }
     }
 }
