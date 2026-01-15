@@ -13,7 +13,7 @@
                         {
                             "type": "wrapper",
                             "size": "none",
-                            "className": "space-users-list-sidebar-wrapper flex-shrink-0 min-w-[260px] overflow-y-auto bg-white border-r lg:order-first lg:flex lg:flex-col ",
+                            "className": "space-users-list-sidebar-wrapper flex-shrink-0 min-w-[260px] overflow-y-auto bg-white border-r lg:order-first lg:flex lg:flex-col h-full",
                             "body": [
                                 {
                                     "type": "input-tree",
@@ -136,7 +136,7 @@
                         {
                             "type": "wrapper",
                             "size": "none",
-                            "className": "flex-1 focus:outline-none lg:order-last",
+                            "className": "flex-1 focus:outline-none lg:order-last overflow-auto",
                             "body": [
                                 {
                                     "type": "steedos-object-listview",
@@ -224,7 +224,7 @@
         "disabled": true
     },
     "className": {
-        "space-users-list-custom-page h-full": true,
+        "space-users-list-custom-page h-full overflow-hidden": true,
         "space-users-list-mobile": "${window:innerWidth < 768}",
         "space-users-list-pc space-users-list-sidebar-open": "${window:innerWidth > 768}"
     },
@@ -279,6 +279,13 @@
         },
         ".space-users-list-custom-page.space-users-list-pc .space-users-list-sidebar-wrapper .antd-Form-item .antd-Tree": {
             "max-height": "none"
+        },
+        ".space-users-list-custom-page .antd-Tree-itemText span": {
+            "overflow": "hidden",
+            "text-overflow": "ellipsis",
+            "white-space": "nowrap",
+            "display": "inline-block",
+            "max-width": "100%"
         }
     }
 }
