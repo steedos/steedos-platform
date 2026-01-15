@@ -1,5 +1,6 @@
+
 <p align="center">
-  <a href="https://docs.steedos.com/en/">
+  <a href="https://objectstack.ai">
     <img alt="Steedos Logo" src="./docs/images/logo.svg" width="100" />
   </a>
 </p>
@@ -7,115 +8,119 @@
 <h1 align="center">Steedos Platform</h1>
 
 <p align="center">
-  <strong>The AI-Native Low-Code Platform for Enterprise</strong>
+  <strong>Evolving into <a href="https://objectstack.ai">ObjectStack</a>: The AI-Native Infrastructure.</strong>
 </p>
 
 <p align="center">
-  <em>Prompt to App. Fusing Generative AI with a Metadata-Driven Core.</em>
+  <em>Metadata is the new Code.</em>
   <br/>
-  <em>Build data models, UIs, and microservices in minutes—not months.</em>
+  <em>The open-source standard for AI-generated enterprise software.</em>
 </p>
 
-<p align="center">
-  <a href="https://www.npmjs.com/package/@steedos/server"><img src="https://img.shields.io/npm/v/@steedos/server.svg" alt="NPM Version"></a>
-  <a href="https://hub.docker.com/r/steedos/steedos-community"><img src="https://img.shields.io/docker/pulls/steedos/steedos-community.svg" alt="Docker Pulls"></a>
-  <a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
-</p>
+<div align="center">
+
+[![NPM Version](https://img.shields.io/npm/v/@steedos/server.svg)](https://www.npmjs.com/package/@steedos/server)
+[![Docker Pulls](https://img.shields.io/docker/pulls/steedos/steedos-community.svg)](https://hub.docker.com/r/steedos/steedos-community)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+
+</div>
 
 <p align="center">
   <a href="./README_cn.md">中文 (Chinese)</a> •
-  <a href="https://www.steedos.com/" target="_blank">Website</a> •
+  <a href="https://objectstack.ai/" target="_blank"><strong>New Website</strong></a> •
   <a href="https://docs.steedos.com/" target="_blank">Documentation</a> •
   <a href="https://github.com/steedos/steedos-templates">Examples</a> •
   <a href="https://github.com/steedos/steedos-platform/discussions">Community</a>
 </p>
 
-<br/>
+---
+
+> [!IMPORTANT]
+> **🚀 We are migrating to ObjectStack!**
+> 
+> Steedos Platform is undergoing a major architectural evolution. We are refactoring our core into **[ObjectStack](https://objectstack.ai)** — a modular, headless, and AI-native stack consisting of **ObjectQL** (Protocol), **ObjectOS** (Engine), and **Object UI** (Renderer).
+>
+> While Steedos Platform v2.x remains supported, future development is focused on the ObjectStack ecosystem.
+
+---
 
 ## 📖 Introduction
 
-**Steedos Platform** represents the next evolution of low-code development. We combine the proven reliability of a **Metadata Driven Architecture** (similar to Salesforce) with the disruptive speed of **Generative AI**.
+**Steedos Platform** is the enterprise-grade implementation of the **ObjectStack** architecture. It combines the reliability of a Metadata Driven Architecture (similar to Salesforce) with the disruptive speed of Generative AI.
 
-Instead of manually dragging and dropping components, Steedos allows you to use **Natural Language** to orchestrate the creation of enterprise-grade systems. The AI Engine automatically generates the metadata, code, and APIs, while our robust kernel ensures security, scalability, and transactional integrity.
+We are redefining how software is built. Instead of writing boilerplate code or manually dragging components, we provide a **Universal Metadata Standard (ObjectQL)** that allows AI to generate complex applications instantly.
 
-Whether building CRM, ERP, or complex industry solutions, Steedos empowers you to achieve **10x development efficiency** while maintaining full control over your source code and data.
+### The ObjectStack Trinity
+Steedos is built upon three independent yet synergistic pillars:
+
+1.  **ObjectQL (The Protocol):** A unified language to define Data, Logic, and UI. It serves as the standard interface between AI and your software.
+2.  **ObjectOS (The Engine):** A headless runtime kernel providing standardized APIs, Authentication, Permissions, and Workflow automation.
+3.  **Object UI (The View):** A schema-driven rendering engine (based on React & Tailwind) that instantly transforms metadata into modern, responsive interfaces.
 
 <br/>
 <p align="center">
-  <img src="https://docs.steedos.com/diagrams/steedos-overview.svg" width="100%" alt="Steedos Platform Architecture">
+  <img src="https://docs.steedos.com/diagrams/steedos-overview.svg" width="100%" alt="ObjectStack Architecture">
 </p>
 <br/>
 
-## ⚡ Why Steedos?
+## ⚡ Why ObjectStack?
 
-| Feature | Steedos Platform (AI Native) | Salesforce | Traditional Low-Code |
+| Feature | ObjectStack (New Architecture) | Legacy Low-Code | Salesforce |
 | :--- | :--- | :--- | :--- |
-| **Development Paradigm** | 🤖 **AI-First (Prompt-Driven)** | 🖱️ Click / Code | 🖱️ Drag & Drop |
-| **Core Architecture** | 🧠 **Metadata Driven** | 🧠 Metadata Driven | 📄 Hard-coded Schemas |
-| **Tech Stack** | ⚛️ **Node.js + React + Amis** | ⚠️ Proprietary (Apex/Aura) | 🐢 Vendor Specific |
-| **Microservices** | 🚀 **Auto-Generated (Standard Code)** | ❌ Difficult to extend | ❌ Black Box |
-| **Deployment** | ☁️ **On-Prem / Private Cloud** | 🔒 Public Cloud Only | ☁️ Hybrid |
-| **Cost** | 💰 **Open Source** | 💰💰💰 Expensive Subscription | 💰💰 Seat-based Pricing |
+| **Philosophy** | 🤖 **AI-Native (Text-to-App)** | 🖱️ Drag & Drop | 🖱️ Click / Code |
+| **Data Layer** | 🧬 **ObjectQL (Headless)** | 📄 Proprietary Schemas | 🔒 Closed Metadata |
+| **UI Framework** | 🎨 **Object UI (React + Tailwind)** | 🐢 Vendor Specific | ⚠️ Aura / LWC |
+| **Extensibility** | 🧩 **Modular Packages (@objectapp)** | ❌ Monolithic | ❌ Hard to extend |
+| **Deployment** | ☁️ **Anywhere (Edge/Server)** | ☁️ Hybrid | 🔒 Cloud Only |
 
 ## 🌟 Core Capabilities
 
-### 1. 🤖 AI Data Modeling (Copilot)
+### 1. 🤖 AI Data Modeling (Powered by ObjectQL)
 Stop manually defining database schemas. Just describe your business logic.
-* **Text-to-Schema:** Tell the AI *"I need a Project Management system with Projects, Tasks, and Milestones,"* and it instantly generates the Entity Relationship Diagram (ERD) and Metadata.
-* **Smart Relationships:** Automatically handles Lookup, Master-Detail, and Roll-up Summary relationships.
-* **API Ready:** Instantly exposes GraphQL and RESTful APIs for every generated model.
+* **Text-to-Schema:** Tell the AI *"I need a Project Management system,"* and it generates standard `*.object.yml` files.
+* **Database Agnostic:** Deploy the same metadata to MongoDB, PostgreSQL, or simple JSON files.
+* **Instant APIs:** ObjectOS automatically exposes GraphQL and REST APIs for every model.
 
-### 2. 🎨 Generative UI & Page Designer
-Create complex enterprise interfaces using conversation.
-* **Text-to-UI:** Deeply integrated with the **Baidu Amis** framework. Describe a page (e.g., *"A dashboard showing sales revenue by region and a list of high-priority leads"*), and the AI generates the JSON configuration.
-* **Visual Editor:** Fine-tune the AI-generated results with our drag-and-drop designer.
-* **Responsive:** Automatically adapts to Mobile, Tablet, and Desktop.
+### 2. 🎨 Generative UI (Powered by Object UI)
+Decoupled UI rendering for the modern web.
+* **Schema-Driven Rendering:** No more hard-coded HTML. The UI is generated dynamically from `*.page.yml` metadata.
+* **Tailwind & Shadcn:** Built with the latest frontend tech stack. Fully customizable via metadata attributes.
+* **React Components:** Seamlessly inject custom React components into the standard page layout.
 
-### 3. ⚡ AI Microservices & Logic
+### 3. ⚡ Logic & Automation (Powered by ObjectOS)
 Business logic shouldn't be a black box.
-* **Text-to-Code:** Describe your automation rules (e.g., *"When a contract status changes to 'Signed', calculate the commission and notify the manager"*), and Steedos generates standard **Node.js** code.
-* **Workflow Engine:** Built-in engine for Approvals, Webhooks, and time-based triggers.
-* **Sandboxed Execution:** Run AI-generated logic safely within the platform.
+* **Flow & Triggers:** Define automated workflows using simple YAML configurations or TypeScript functions.
+* **Enterprise Security:** Built-in RBAC (Role-Based Access Control) down to the field level.
+* **Microservices Ready:** Architecture designed to run as independent services communicating via standard protocols.
 
-### 4. 🛡️ Enterprise-Grade Foundation
-AI brings the speed; our Core brings the stability.
-* **Security:** Granular permission control (Object, Field, and Record-level Sharing Rules).
-* **Org Management:** Comprehensive Users, Roles, Profiles, and Permission Sets.
-* **DX (Developer Experience):** All metadata is stored as YAML/JSON files. Full GitOps support for CI/CD pipelines.
+## 🏗️ Architecture Transition
 
-## 🏗️ Architecture
+We are moving from a monolithic structure to a monorepo workspace containing:
 
-Steedos is built on a modern, open-source stack designed for microservices.
-
-* **AI Engine:** LLM Integration Layer (OpenAI / Compatible Models)
-* **Backend:** Node.js, Moleculer (Microservices), MongoDB (Metadata), SQL (Data)
-* **Frontend:** React, Amis (Baidu's Low-Code Framework)
+* **`@objectql/spec`**: The core type definitions and JSON schemas.
+* **`objectql`**: The server-side ORM and runtime engine.
+* **`@object-ui/react`**: The frontend rendering engine.
+* **`@objectapp/*`**: Modular business application packages (CRM, ERP, etc.).
 
 ## 🚀 Quick Start
 
 ### Option 1: Docker (Fastest)
 
-Run the Steedos Community Edition with a single command:
+Run the latest stable version of Steedos (pre-ObjectStack transition complete):
 
 ```bash
 docker run -d -p 80:80 steedos/steedos-community:3.0
 
 ```
 
-### Option 2: Create New Project (For Developers)
+### Option 2: Create New App
 
-Initialize a standard project to start customizing:
+Initialize a project using our scaffolding tool:
 
 ```bash
-# Create project
-npx create-steedos-app my-project
-
-# Enter directory and install dependencies
-cd my-project
-yarn install
-
-# Start the server
-yarn start
+npx create-steedos-app my-app
+cd my-app
+yarn install && yarn start
 
 ```
 
@@ -123,10 +128,11 @@ Visit `http://localhost:5100` and start building with AI.
 
 ## 🤝 Community & Contributing
 
-Steedos is a fully open-source project. We are actively exploring the frontiers of **AI x Low-Code**.
+Steedos and ObjectStack are open-source projects. We are actively exploring the frontiers of **AI x Metadata**.
 
 * 🐛 **Report Issues**: [GitHub Issues](https://github.com/steedos/steedos-platform/issues)
 * 💬 **Discussions**: [GitHub Discussions](https://github.com/steedos/steedos-platform/discussions)
+* 🌍 **Website**: [objectstack.ai](https://www.google.com/url?sa=E&source=gmail&q=https://objectstack.ai)
 
 ## Contact Us
 
