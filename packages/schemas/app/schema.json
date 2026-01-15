@@ -152,7 +152,7 @@
       "description": "启用自定义导航"
     },
     "nav_schema": {
-      "type": "string",
+      "type": ["string", "object"],
       "description": "导航 Amis Schema"
     }
   }
