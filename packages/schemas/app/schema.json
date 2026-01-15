@@ -67,6 +67,10 @@
         "description": "选项卡唯一标识。"
       }
     },
+    "default_tab": {
+      "type": ["string", "object"],
+      "description": "首次默认进入的导航选项卡"
+    },
     "tab_items": {
       "type": "object",
       "description": "选项卡"
