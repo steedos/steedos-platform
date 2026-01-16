@@ -1,6 +1,6 @@
 {
   "name": "@steedos/client",
-  "version": "3.0.13-beta.8",
+  "version": "3.0.13-beta.9",
   "description": "client lib for steedos",
   "main": "lib/index.js",
   "scripts": {
@@ -16,8 +16,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@steedos/filters": "3.0.13-beta.8",
+    "@steedos/filters": "3.0.13-beta.9",
     "node-fetch": "^3.2.10"
   },
-  "gitHead": "06f98b7d7e54d72326fcd3f1500afe90714fd67a"
+  "gitHead": "3195edc9120425e3384ce713160bc77d585612f9"
 }
