@@ -48,7 +48,7 @@ const Home = () => {
         goResetPassword(navigate)
       }else{
         let redirect_uri = new URLSearchParams(location?location.search:"").get('redirect_uri');
-        if (redirect_uri){
+        if (redirect_uri && redirect_uri != '/update-password'){
           window.location.href = redirect_uri;
         }else{
           window.location.href = '/app';

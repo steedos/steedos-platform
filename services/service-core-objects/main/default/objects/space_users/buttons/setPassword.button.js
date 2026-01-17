@@ -26,7 +26,7 @@ module.exports = {
                     type: 'post', async: false, data: JSON.stringify({
                         space_user_id: record_id,
                         space_id: userSession.spaceId,
-                        password: CryptoJS.SHA256(inputValue).toString()
+                        password: window.sha256(inputValue).toString()
                     })
                 });
                 if (!result) {
@@ -70,6 +70,29 @@ module.exports = {
             autoComplete: "new-password",
             className: "ant-input",
             ref: inputRef,
+            style: {
+                WebkitBoxSizing: 'border-box',
+                boxSizing: 'border-box',
+                margin: 0,
+                padding: '4px 11px', 
+                fontVariant: 'tabular-nums',
+                listStyle: 'none',
+                WebkitFontFeatureSettings: "'tnum'",
+                fontFeatureSettings: "'tnum'",
+                position: 'relative',
+                display: 'inline-block',
+                width: '100%',
+                height: '32px',
+                color: 'rgba(0, 0, 0, 0.65)',
+                fontSize: '14px',
+                lineHeight: 1.5,
+                backgroundColor: '#fff',
+                backgroundImage: 'none',
+                border: '1px solid #d9d9d9',
+                borderRadius: '4px',
+                WebkitTransition: 'all 0.3s',
+                transition: 'all 0.3s',
+                }
             // onKeyDown: (event) => {
             //     // 禁用ctrlKey/metaKey+c/v/a，复制、剪切、粘贴、全选，其中metaKey是mac系统中相关操作的辅助键
             //     if ((event.ctrlKey || event.metaKey) && [67, 88, 86, 65].indexOf(event.keyCode) > -1) {
