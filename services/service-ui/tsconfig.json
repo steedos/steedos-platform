@@ -1,7 +1,7 @@
 {   
   "compilerOptions": {
       "outDir": "./main/default/routes",
-      "target": "es6",
+      "target": "ES2022",
       "module": "commonjs",
       "moduleResolution": "node",
       "importHelpers": true,
@@ -20,13 +20,9 @@
       "strictNullChecks": false,
       "skipLibCheck": true,
       "lib": [
-        "es5",
-        "es6",
-        "es2015",
-        "es2016",
-        "es2017",
-        "esnext"
+        "ES2022"
       ],
+      "types": ["node"],
       "removeComments": true
   },
   "include": [
