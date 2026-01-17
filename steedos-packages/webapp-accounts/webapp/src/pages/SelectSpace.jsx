@@ -76,12 +76,15 @@ class SelectSpace extends React.PureComponent {
   }
 
   componentDidMount() {
-    if(Object.keys(this.props.spaces).length === 0 && this.props.tenant.enable_create_tenant) {
-      hashHistory.push({
-        pathname: '/create-space',
-        search: this.props.location.search
-      });
-    }
+    setTimeout(()=>{
+      if(Object.keys(this.props.spaces).length === 0 && this.props.tenant.enable_create_tenant) {
+        this.props.navigate('/create-space');
+      }
+      if(Object.keys(this.props.spaces).length === 1 && this.props.tenant.enable_create_tenant != true){
+        this.props.actions.selectSpace(Object.keys(this.props.spaces)[0]);
+        this.props.navigate(`/home/${Object.keys(this.props.spaces)[0]}` + (this.props.location.search ? `${this.props.location.search }` : ''));
+      }
+    }, 0)
   }
 
   render() {
