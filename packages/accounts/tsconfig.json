@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
     "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "module": "commonjs",
     "outDir": "./lib",
     "target": "ES2022",
     "allowJs": true,
