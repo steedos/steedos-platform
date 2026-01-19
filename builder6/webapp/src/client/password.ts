@@ -8,8 +8,35 @@
 
 import { trim, includes } from 'lodash'
 declare var fun: any;
+
+/**
+ * Regular expression pattern for special characters
+ * Matches common special characters like !@#$%^&*()_+-=[]{}|;:'",.<>?/\
+ */
+const SPECIAL_CHAR_PATTERN = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+
+/**
+ * Default password policy values
+ */
+const DEFAULT_PASSWORD_POLICY = {
+  min_length: 8,
+  max_length: 128,
+};
+
 export function validatePassword(passwordConfig, password, userName){
-    const {policy, policyError, policyerror, policyFunction, policies} = passwordConfig
+    const {
+        policy, 
+        policyError, 
+        policyerror, 
+        policyFunction, 
+        policies,
+        password_min_length,
+        password_max_length,
+        password_require_uppercase,
+        password_require_lowercase,
+        password_require_number,
+        password_require_special_character
+    } = passwordConfig
 
     if(!password || trim(password).length === 0){
         throw new Error('密码不能为空');
@@ -21,6 +48,35 @@ export function validatePassword(passwordConfig, password, userName){
         }
     }
 
+    // New structured password policy validation
+    const minLength = password_min_length || DEFAULT_PASSWORD_POLICY.min_length;
+    const maxLength = password_max_length || DEFAULT_PASSWORD_POLICY.max_length;
+
+    if (password.length < minLength) {
+        throw new Error(`密码长度不能少于 ${minLength} 个字符`);
+    }
+
+    if (password.length > maxLength) {
+        throw new Error(`密码长度不能超过 ${maxLength} 个字符`);
+    }
+
+    if (password_require_uppercase && !/[A-Z]/.test(password)) {
+        throw new Error('密码必须包含至少一个大写字母(A-Z)');
+    }
+
+    if (password_require_lowercase && !/[a-z]/.test(password)) {
+        throw new Error('密码必须包含至少一个小写字母(a-z)');
+    }
+
+    if (password_require_number && !/[0-9]/.test(password)) {
+        throw new Error('密码必须包含至少一个数字(0-9)');
+    }
+
+    if (password_require_special_character && !SPECIAL_CHAR_PATTERN.test(password)) {
+        throw new Error('密码必须包含至少一个特殊字符(如 !@#$%^&* 等)');
+    }
+
+    // Legacy regex-based policy validation (for backward compatibility)
     if(policy){
       if(!(new RegExp(policy)).test(password || '')){
           throw new Error(policyError || policyerror || '密码不符合规则');

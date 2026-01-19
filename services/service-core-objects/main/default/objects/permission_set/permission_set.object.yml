@@ -135,6 +135,52 @@ fields:
         value: '0'
     defaultValue: "15"
     visible_on: "{{'profile' === formData.type ? true: false}}"
+  password_min_length:
+    type: number
+    group: profile password policy
+    label: 最小密码长度
+    inlineHelpText: 密码最少需要包含的字符数
+    min: 1
+    max: 256
+    defaultValue: 8
+    visible_on: "{{'profile' === formData.type ? true: false}}"
+  password_require_uppercase:
+    type: boolean
+    group: profile password policy
+    label: 要求大写字母
+    inlineHelpText: 密码必须包含至少一个大写字母(A-Z)
+    defaultValue: false
+    visible_on: "{{'profile' === formData.type ? true: false}}"
+  password_require_lowercase:
+    type: boolean
+    group: profile password policy
+    label: 要求小写字母
+    inlineHelpText: 密码必须包含至少一个小写字母(a-z)
+    defaultValue: false
+    visible_on: "{{'profile' === formData.type ? true: false}}"
+  password_require_number:
+    type: boolean
+    group: profile password policy
+    label: 要求数字
+    inlineHelpText: 密码必须包含至少一个数字(0-9)
+    defaultValue: false
+    visible_on: "{{'profile' === formData.type ? true: false}}"
+  password_require_special_character:
+    type: boolean
+    group: profile password policy
+    label: 要求特殊字符
+    inlineHelpText: 密码必须包含至少一个特殊字符(如 !@#$%^&* 等)
+    defaultValue: false
+    visible_on: "{{'profile' === formData.type ? true: false}}"
+  password_max_length:
+    type: number
+    group: profile password policy
+    label: 最大密码长度
+    inlineHelpText: 密码最多可以包含的字符数
+    min: 1
+    max: 256
+    defaultValue: 128
+    visible_on: "{{'profile' === formData.type ? true: false}}"
   enable_MFA:
     type: boolean
     label: 多重身份验证(需要开启短信服务)

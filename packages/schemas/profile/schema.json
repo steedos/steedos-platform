@@ -82,6 +82,30 @@
     "phone_login_expiration_in_days": {
       "type": "number",
       "description": "手机App登录到期时间(天)"
+    },
+    "password_min_length": {
+      "type": "number",
+      "description": "最小密码长度"
+    },
+    "password_require_uppercase": {
+      "type": "boolean",
+      "description": "要求大写字母"
+    },
+    "password_require_lowercase": {
+      "type": "boolean",
+      "description": "要求小写字母"
+    },
+    "password_require_number": {
+      "type": "boolean",
+      "description": "要求数字"
+    },
+    "password_require_special_character": {
+      "type": "boolean",
+      "description": "要求特殊字符"
+    },
+    "password_max_length": {
+      "type": "number",
+      "description": "最大密码长度"
     }
   }
 }
