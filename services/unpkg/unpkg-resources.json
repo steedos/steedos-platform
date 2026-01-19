@@ -17,5 +17,6 @@
     "jquery@3.7.1",
     "liquidjs@10.24.0",
     "lodash@4.17.21",
-    "sortablejs@1.15.6"
+    "sortablejs@1.15.6",
+    "mermaid@9.1.2"
 ]
