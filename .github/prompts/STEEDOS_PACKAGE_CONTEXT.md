@@ -117,6 +117,10 @@ list_views:
       - contract_no
       - amount
       - status
+    filter_scope: space
+    sort:
+      - field_name: created
+        order: desc
 
 permission_set:
   user:
@@ -124,6 +128,16 @@ permission_set:
     allowRead: true
     allowEdit: true
     allowDelete: false
+    modifyAllRecords: false
+    viewAllRecords: true
+  
+  admin:
+    allowCreate: true
+    allowRead: true
+    allowEdit: true
+    allowDelete: true
+    modifyAllRecords: true
+    viewAllRecords: true
 ```
 
 ### contracts.trigger.js (Server-Side Validation, JavaScript)

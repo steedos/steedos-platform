@@ -29,6 +29,36 @@ When working with this repository:
 - ❌ Django or Flask files
 - ❌ Any Python code
 
+### Required Elements in .object.yml Files
+
+**Every .object.yml MUST include:**
+1. ✅ **list_views** section with at least an `all` view
+2. ✅ **permission_set** section with at least `user` and `admin` permissions
+3. ✅ **fields** section with proper field definitions
+
+**Example of required sections:**
+```yaml
+list_views:
+  all:
+    label: All Records
+    columns: [name, status, modified]
+    filter_scope: space
+
+permission_set:
+  user:
+    allowCreate: true
+    allowRead: true
+    allowEdit: true
+    allowDelete: false
+  admin:
+    allowCreate: true
+    allowRead: true
+    allowEdit: true
+    allowDelete: true
+    modifyAllRecords: true
+    viewAllRecords: true
+```
+
 ### Package Structure Template
 
 ```
@@ -90,6 +120,41 @@ fields:
     options:
       - label: Active
         value: active
+      - label: Inactive
+        value: inactive
+
+# Default list view (REQUIRED)
+list_views:
+  all:
+    label: All Records
+    columns:
+      - name
+      - status
+      - owner
+      - modified
+    filter_scope: space
+    sort:
+      - field_name: modified
+        order: desc
+
+# Default permissions (REQUIRED)
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: false
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true
+```
 ```
 
 **Moleculer Service (package.service.js):**
