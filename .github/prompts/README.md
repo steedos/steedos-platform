@@ -10,6 +10,27 @@
 
 ---
 
+## 🎉 NEW: Automatic GitHub Copilot Support | 全新:自动 GitHub Copilot 支持
+
+**无需手动复制! GitHub Copilot 现在会自动读取项目上下文!**
+
+**No manual copying needed! GitHub Copilot now automatically reads project context!**
+
+We've added **`.github/copilot-instructions.md`** which GitHub Copilot automatically recognizes. This means:
+
+我们添加了 **`.github/copilot-instructions.md`** 文件,GitHub Copilot 会自动识别。这意味着:
+
+- ✅ Copilot automatically knows this is a Steedos (Node.js) project
+- ✅ No need to manually copy prompt files
+- ✅ Generates correct JavaScript/YAML code (not Python)
+- ✅ Works out of the box in VS Code with GitHub Copilot
+
+Simply use natural instructions like: "创建合同管理软件包" and Copilot will generate the correct Steedos package structure!
+
+只需使用自然指令如: "创建合同管理软件包",Copilot 就会生成正确的 Steedos 软件包结构!
+
+---
+
 ## ⚠️ Important: For Package Creation | 创建软件包必读
 
 **If you want to create a Steedos package, use this file as context for AI:**
@@ -36,22 +57,24 @@ This repository contains comprehensive AI prompts designed to assist developers 
 ## 📁 Structure | 结构
 
 ```
-.github/prompts/
-├── STEEDOS_PACKAGE_CONTEXT.md   # 🆕 Quick context for package creation
-├── platform/          # Platform Development Prompts | 平台开发提示词
-│   ├── 01-core-architecture.md      # Core architecture development
-│   ├── 02-metadata-development.md   # Metadata & ObjectQL
-│   ├── 03-microservices-development.md  # Microservices
-│   └── 04-testing-quality.md        # Testing & QA
-│
-└── customer/          # Customer Development Prompts | 客户开发提示词
-    ├── 01-general-development.md    # General guide (中英双语)
-    ├── 02-objectql-modeling.md      # Data modeling
-    ├── 03-business-logic.md         # Triggers & Actions
-    ├── 04-ui-pages.md               # UI development with Amis
-    └── 05-package-development.md    # Complete package creation (中英双语)
+.github/
+├── copilot-instructions.md      # 🆕🔥 Auto-loaded by GitHub Copilot!
+└── prompts/
+    ├── STEEDOS_PACKAGE_CONTEXT.md   # Quick context for package creation
+    ├── platform/          # Platform Development Prompts | 平台开发提示词
+    │   ├── 01-core-architecture.md      # Core architecture development
+    │   ├── 02-metadata-development.md   # Metadata & ObjectQL
+    │   ├── 03-microservices-development.md  # Microservices
+    │   └── 04-testing-quality.md        # Testing & QA
+    │
+    └── customer/          # Customer Development Prompts | 客户开发提示词
+        ├── 01-general-development.md    # General guide (中英双语)
+        ├── 02-objectql-modeling.md      # Data modeling
+        ├── 03-business-logic.md         # Triggers & Actions
+        ├── 04-ui-pages.md               # UI development with Amis
+        └── 05-package-development.md    # Complete package creation (中英双语)
 
-.cursorrules           # Root-level cursor rules for platform dev
+.cursorrules           # Root-level cursor rules for Cursor IDE
 ```
 
 ## 🎯 For Platform Developers | 平台开发者
@@ -249,6 +272,36 @@ If you're building applications using Steedos:
 - Specific instructions
 
 ## 🤖 Using with AI Assistants | AI 辅助开发
+
+### ⭐ GitHub Copilot (Automatic - Recommended!) | GitHub Copilot (自动识别 - 推荐!)
+
+**NEW: Zero configuration required!** GitHub Copilot automatically reads `.github/copilot-instructions.md`
+
+**全新: 零配置! ** GitHub Copilot 自动读取 `.github/copilot-instructions.md`
+
+Just open VS Code with GitHub Copilot and start coding:
+
+只需在 VS Code 中打开项目并使用 GitHub Copilot:
+
+```javascript
+// Simply type your instruction in natural language:
+// 只需用自然语言输入指令:
+
+// "创建合同管理软件包,并在服务端校验合同名称长度不能大于20个字符"
+
+// Copilot will automatically generate:
+// Copilot 会自动生成:
+// ✅ package.json (JavaScript/Node.js)
+// ✅ package.service.js (Moleculer)
+// ✅ contracts.object.yml (Steedos metadata)
+// ✅ contracts.trigger.js (JavaScript validation)
+```
+
+**No manual copying needed!** Copilot knows this is a Steedos project and will generate the correct code.
+
+**无需手动复制!** Copilot 知道这是 Steedos 项目,会生成正确的代码。
+
+---
 
 ### Quick Start for Package Creation | 快速创建软件包
 
