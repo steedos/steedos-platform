@@ -10,6 +10,20 @@
 
 ---
 
+## ⚠️ Important: For Package Creation | 创建软件包必读
+
+**If you want to create a Steedos package, use this file as context for AI:**
+
+**如果要创建 Steedos 软件包,请将此文件作为 AI 的上下文:**
+
+➡️ **`STEEDOS_PACKAGE_CONTEXT.md`** ⬅️
+
+This concise file ensures AI assistants generate Node.js/JavaScript code (not Python) with proper Steedos package structure.
+
+这个精简文件确保 AI 助手生成 Node.js/JavaScript 代码(而不是 Python),并使用正确的 Steedos 软件包结构。
+
+---
+
 ## 📖 Overview | 概述
 
 This repository contains comprehensive AI prompts designed to assist developers working with the Steedos Platform. The prompts are divided into two main categories:
@@ -23,6 +37,7 @@ This repository contains comprehensive AI prompts designed to assist developers 
 
 ```
 .github/prompts/
+├── STEEDOS_PACKAGE_CONTEXT.md   # 🆕 Quick context for package creation
 ├── platform/          # Platform Development Prompts | 平台开发提示词
 │   ├── 01-core-architecture.md      # Core architecture development
 │   ├── 02-metadata-development.md   # Metadata & ObjectQL
@@ -234,6 +249,28 @@ If you're building applications using Steedos:
 - Specific instructions
 
 ## 🤖 Using with AI Assistants | AI 辅助开发
+
+### Quick Start for Package Creation | 快速创建软件包
+
+**Problem**: AI generates Python code instead of Steedos package?  
+**问题**: AI 生成了 Python 代码而不是 Steedos 软件包?
+
+**Solution**: Use the specific context file!  
+**解决方案**: 使用专用的上下文文件!
+
+```
+Step 1: Copy this file content to your conversation:
+第一步: 将此文件内容复制到对话中:
+➡️ .github/prompts/STEEDOS_PACKAGE_CONTEXT.md
+
+Step 2: Then give your instruction:
+第二步: 然后给出指令:
+
+"使用 Steedos 平台(Node.js + JavaScript)创建合同管理软件包,
+在服务端校验合同名称长度不能大于20个字符。
+生成所有必需文件: package.json, package.service.js, 
+contracts.object.yml, contracts.trigger.js"
+```
 
 ### Example Prompts
 

@@ -1,11 +1,79 @@
 # Steedos 软件包开发 - 完整指南 / Complete Package Development Guide
 
+## ⚠️ CRITICAL CONTEXT | 关键上下文 ⚠️
+
+**THIS IS A STEEDOS PLATFORM PROJECT - NOT Python, NOT Django, NOT any other framework!**
+
+**这是 Steedos 平台项目 - 不是 Python、不是 Django、不是任何其他框架！**
+
+### Technology Stack | 技术栈
+- **Platform**: Steedos (华炎魔方) - Enterprise Low-Code Platform
+- **Backend**: Node.js + TypeScript + Moleculer
+- **Metadata**: YAML files (.object.yml, .trigger.js, .action.js)
+- **Database**: MongoDB / PostgreSQL
+- **Frontend**: React + Amis
+- **Package Manager**: Yarn / NPM
+
+### Required File Types | 必需的文件类型
+- ✅ `.object.yml` - Object definitions (NOT .py files)
+- ✅ `.trigger.js` - JavaScript triggers (NOT Python)
+- ✅ `.action.js` - JavaScript actions (NOT Python)
+- ✅ `package.json` - NPM package config (NOT requirements.txt)
+- ✅ `package.service.js` - Moleculer service (NOT Python)
+
+### DO NOT USE | 禁止使用
+- ❌ Python files (.py)
+- ❌ Django
+- ❌ Flask
+- ❌ requirements.txt
+- ❌ Any Python frameworks
+
 [中文指南 | Chinese Guide Below]
 
 ## 角色定位 | Role
-你是 Steedos 平台的软件包开发者,能够创建完整的、可复用的业务软件包,包括对象定义、业务逻辑、界面和权限配置。
+你是 Steedos 平台的软件包开发者,能够创建完整的、可复用的业务软件包,包括对象定义、业务逻辑、界面和权限配置。使用 Node.js/JavaScript/TypeScript,不使用 Python。
 
-You are a Steedos package developer who can create complete, reusable business packages including object definitions, business logic, UI, and permission configurations.
+You are a Steedos package developer who can create complete, reusable business packages including object definitions, business logic, UI, and permission configurations. Use Node.js/JavaScript/TypeScript, NOT Python.
+
+---
+
+---
+
+## 🤖 如何使用此提示词 | How to Use This Prompt
+
+### 使用 Cursor / GitHub Copilot / AI 助手
+
+**方法 1: 作为上下文引用 (推荐)**
+```
+请阅读 .github/prompts/customer/05-package-development.md 文件的完整内容。
+
+然后,使用 Steedos 平台(Node.js + JavaScript + YAML元数据)创建合同管理软件包,
+包括以下功能:
+- 合同对象定义 (contracts.object.yml)
+- 服务端校验: 合同名称长度不能大于20个字符 (在 .trigger.js 中实现)
+- package.json 和 package.service.js 配置
+- 完整的目录结构
+
+请生成所有必需的文件。
+```
+
+**方法 2: 明确指定技术栈**
+```
+使用 Steedos 平台技术栈创建合同管理软件包:
+- 平台: Steedos (不是 Python,不是 Django)
+- 语言: JavaScript/TypeScript + YAML
+- 框架: Node.js + Moleculer
+- 文件类型: .object.yml, .trigger.js, .action.js, package.json
+
+参考 .github/prompts/customer/05-package-development.md 中的完整示例,
+创建包含服务端验证(合同名称≤20字符)的完整软件包。
+```
+
+**关键要点 | Key Points:**
+- ✅ 明确说明使用 "Steedos 平台" 或 "Node.js"
+- ✅ 要求生成 .object.yml 和 .trigger.js 文件
+- ✅ 引用此提示词文件获取完整上下文
+- ❌ 不要使用模糊的描述如"创建软件包"(可能被理解为 Python)
 
 ---
 
