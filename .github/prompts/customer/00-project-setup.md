@@ -18,12 +18,13 @@ Steedos 项目是一个简单的 Node.js 项目,核心只需要:
 my-project/
 ├── package.json              # 包含 @steedos/server 依赖
 ├── steedos-config.yml        # 必需: Steedos 配置文件 (可以为空)
+├── .env                      # 推荐: 环境配置 (包含默认设置)
 ├── steedos-packages/         # 可选: 自定义软件包
 │   └── my-package/
 │       ├── package.json
 │       ├── package.service.js
 │       └── main/default/
-└── .env                      # 可选: 环境配置
+└── steedos-storage/          # 自动创建: 文件存储目录
 ```
 
 ### 最小化 package.json
@@ -116,7 +117,29 @@ touch steedos-config.yml
 mkdir -p steedos-packages
 ```
 
-#### 步骤 6: 启动项目
+#### 步骤 5: (可选但推荐) 创建 .env 文件
+
+在项目根目录创建 `.env` 文件,包含默认配置:
+
+```env
+PORT=5100
+ROOT_URL=http://localhost:5100
+MONGO_URL=mongodb://127.0.0.1:27017/steedos
+TRANSPORTER=redis://127.0.0.1:6379
+CACHER=redis://127.0.0.1:6379/1
+
+STEEDOS_STORAGE_DIR=./steedos-storage
+
+B6_LOG_LEVEL=warn
+```
+
+#### 步骤 6: (可选) 创建软件包目录
+
+```bash
+mkdir -p steedos-packages
+```
+
+#### 步骤 7: 启动项目
 
 ```bash
 npm start
@@ -124,7 +147,7 @@ npm start
 steedos start
 ```
 
-服务器将在 http://localhost:5000 启动。
+服务器将在 http://localhost:5100 启动。
 
 ### 添加自定义软件包
 
@@ -143,21 +166,30 @@ steedos-packages/
 
 Steedos 会自动加载所有 `steedos-packages/` 中的软件包。
 
-### 环境配置 (可选)
+### 环境配置
 
-创建 `.env` 文件配置数据库等:
+**推荐**: 在项目根目录创建 `.env` 文件,包含以下默认配置:
 
 ```env
-# MongoDB 连接
-MONGO_URL=mongodb://localhost:27017/steedos
-MONGO_OPLOG_URL=mongodb://localhost:27017/local
+PORT=5100
+ROOT_URL=http://localhost:5100
+MONGO_URL=mongodb://127.0.0.1:27017/steedos
+TRANSPORTER=redis://127.0.0.1:6379
+CACHER=redis://127.0.0.1:6379/1
 
-# Root URL
-ROOT_URL=http://localhost:5000
+STEEDOS_STORAGE_DIR=./steedos-storage
 
-# 端口
-PORT=5000
+B6_LOG_LEVEL=warn
 ```
+
+**说明**:
+- `PORT`: 服务器端口,默认 5100
+- `ROOT_URL`: 应用根 URL
+- `MONGO_URL`: MongoDB 数据库连接地址
+- `TRANSPORTER`: Moleculer 传输层 (Redis)
+- `CACHER`: Moleculer 缓存层 (Redis)
+- `STEEDOS_STORAGE_DIR`: 文件存储目录
+- `B6_LOG_LEVEL`: 日志级别
 
 ### 自然语言指令示例
 
@@ -171,9 +203,9 @@ PORT=5000
 **生成内容应包括:**
 1. ✅ `package.json` (包含 `@steedos/server` 依赖)
 2. ✅ `steedos-config.yml` (空文件或基本配置)
-3. ✅ `workspaces` 配置
-4. ✅ 启动脚本
-5. ✅ 可选的 `.env` 配置文件
+3. ✅ `.env` 文件 (推荐包含默认配置)
+4. ✅ `workspaces` 配置
+5. ✅ 启动脚本
 6. ✅ 可选的初始软件包
 7. ❌ 不要生成 Python 文件
 8. ❌ 不要生成 requirements.txt
@@ -244,12 +276,13 @@ A Steedos project is simply a Node.js project. The core requirements:
 my-project/
 ├── package.json              # With @steedos/server dependency
 ├── steedos-config.yml        # Required: Steedos config file (can be empty)
+├── .env                      # Recommended: Environment config (with default settings)
 ├── steedos-packages/         # Optional: Custom packages
 │   └── my-package/
 │       ├── package.json
 │       ├── package.service.js
 │       └── main/default/
-└── .env                      # Optional: Environment config
+└── steedos-storage/          # Auto-created: File storage directory
 ```
 
 ### Minimal package.json
@@ -342,7 +375,29 @@ Or create a basic configuration file:
 mkdir -p steedos-packages
 ```
 
-#### Step 6: Start the Project
+#### Step 5: (Optional but Recommended) Create .env File
+
+Create a `.env` file in the project root with default configuration:
+
+```env
+PORT=5100
+ROOT_URL=http://localhost:5100
+MONGO_URL=mongodb://127.0.0.1:27017/steedos
+TRANSPORTER=redis://127.0.0.1:6379
+CACHER=redis://127.0.0.1:6379/1
+
+STEEDOS_STORAGE_DIR=./steedos-storage
+
+B6_LOG_LEVEL=warn
+```
+
+#### Step 6: (Optional) Create Packages Directory
+
+```bash
+mkdir -p steedos-packages
+```
+
+#### Step 7: Start the Project
 
 ```bash
 npm start
@@ -350,7 +405,7 @@ npm start
 steedos start
 ```
 
-The server will start at http://localhost:5000.
+The server will start at http://localhost:5100.
 
 ### Adding Custom Packages
 
@@ -369,21 +424,30 @@ steedos-packages/
 
 Steedos automatically loads all packages in `steedos-packages/`.
 
-### Environment Configuration (Optional)
+### Environment Configuration
 
-Create `.env` file for database configuration:
+**Recommended**: Create a `.env` file in the project root with the following default configuration:
 
 ```env
-# MongoDB Connection
-MONGO_URL=mongodb://localhost:27017/steedos
-MONGO_OPLOG_URL=mongodb://localhost:27017/local
+PORT=5100
+ROOT_URL=http://localhost:5100
+MONGO_URL=mongodb://127.0.0.1:27017/steedos
+TRANSPORTER=redis://127.0.0.1:6379
+CACHER=redis://127.0.0.1:6379/1
 
-# Root URL
-ROOT_URL=http://localhost:5000
+STEEDOS_STORAGE_DIR=./steedos-storage
 
-# Port
-PORT=5000
+B6_LOG_LEVEL=warn
 ```
+
+**Explanation**:
+- `PORT`: Server port, default 5100
+- `ROOT_URL`: Application root URL
+- `MONGO_URL`: MongoDB database connection URL
+- `TRANSPORTER`: Moleculer transporter (Redis)
+- `CACHER`: Moleculer cacher (Redis)
+- `STEEDOS_STORAGE_DIR`: File storage directory
+- `B6_LOG_LEVEL`: Logging level
 
 ### Natural Language Instruction Examples
 
@@ -396,12 +460,13 @@ When user says:
 
 **Generated content should include:**
 1. ✅ `package.json` (with `@steedos/server` dependency)
-2. ✅ `workspaces` configuration
-3. ✅ Start script
-4. ✅ Optional `.env` config file
-5. ✅ Optional initial package
-6. ❌ NO Python files
-7. ❌ NO requirements.txt
+2. ✅ `steedos-config.yml` (empty or basic config)
+3. ✅ `.env` file (recommended with default config)
+4. ✅ `workspaces` configuration
+5. ✅ Start script
+6. ✅ Optional initial package
+7. ❌ NO Python files
+8. ❌ NO requirements.txt
 
 ### Complete Example: Project with Initial Package
 

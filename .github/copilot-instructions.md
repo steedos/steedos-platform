@@ -45,14 +45,28 @@ touch steedos-config.yml
 ```
 Create an empty `steedos-config.yml` file in the project root. This file is required by Steedos.
 
-3. **Install dependencies**:
+3. **Create .env file (RECOMMENDED)**:
+Create a `.env` file with default configuration:
+```env
+PORT=5100
+ROOT_URL=http://localhost:5100
+MONGO_URL=mongodb://127.0.0.1:27017/steedos
+TRANSPORTER=redis://127.0.0.1:6379
+CACHER=redis://127.0.0.1:6379/1
+
+STEEDOS_STORAGE_DIR=./steedos-storage
+
+B6_LOG_LEVEL=warn
+```
+
+4. **Install dependencies**:
 ```bash
 npm install
 # or
 yarn install
 ```
 
-4. **Start the server**:
+5. **Start the server**:
 ```bash
 npm start
 # or
@@ -64,8 +78,8 @@ steedos start
 A minimal Steedos project only needs:
 - `package.json` with `@steedos/server` dependency
 - `steedos-config.yml` **REQUIRED** configuration file (can be empty)
+- `.env` file **RECOMMENDED** with default configuration (see below)
 - Optional: `steedos-packages/` folder for custom packages
-- Optional: `.env` file for configuration
 
 The `@steedos/server` package provides everything needed to run Steedos.
 
@@ -74,10 +88,11 @@ The `@steedos/server` package provides everything needed to run Steedos.
 Generate a Node.js project with:
 1. ✅ `package.json` with `@steedos/server` dependency
 2. ✅ `steedos-config.yml` file (empty or basic config) - **REQUIRED**
-3. ✅ `workspaces` configuration for packages
-4. ✅ Start script: `"start": "steedos start"`
-5. ✅ Optional: Initial package in `steedos-packages/`
-6. ❌ NOT Python files or Django/Flask setup
+3. ✅ `.env` file with default configuration - **RECOMMENDED**
+4. ✅ `workspaces` configuration for packages
+5. ✅ Start script: `"start": "steedos start"`
+6. ✅ Optional: Initial package in `steedos-packages/`
+7. ❌ NOT Python files or Django/Flask setup
 
 ### When Creating Steedos Packages
 
