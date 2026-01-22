@@ -22,6 +22,7 @@
 | `customer/02-objectql-modeling.md` | Data modeling | Designing database schema |
 | `customer/03-business-logic.md` | Triggers & Actions | Adding validation, automation |
 | `customer/04-ui-pages.md` | UI with Amis | Creating dashboards, forms |
+| `customer/05-package-development.md` | Complete package creation | Building reusable packages (NEW!) |
 
 ## 🎯 Quick Decision Tree | 快速决策树
 
@@ -36,12 +37,35 @@ Are you working on Steedos platform core?
 │
 └─ No (Building applications) → Use Customer Prompts (.github/prompts/customer/)
     ├─ Just starting? → 01-general-development.md
+    ├─ Creating a complete package? → 05-package-development.md (NEW!)
     ├─ Designing data models? → 02-objectql-modeling.md
     ├─ Adding business logic? → 03-business-logic.md
     └─ Creating UI? → 04-ui-pages.md
 ```
 
 ## 💡 Common Scenarios | 常见场景
+
+### Scenario 0: Creating a Complete Package (NEW!)
+场景 0: 创建完整的软件包 (新增!)
+
+**Prompt to Use**: `customer/05-package-development.md`
+
+**Ask AI**:
+```
+Following the Steedos package development guide, create a contract management package with:
+- Contract object with name, type, customer, amount, dates
+- Server-side validation: contract name length cannot exceed 20 characters
+- Trigger with beforeInsert and beforeUpdate validation
+- Custom actions for submit and sign
+- Complete package structure with package.json and package.service.js
+
+按照 Steedos 软件包开发指南,创建合同管理软件包:
+- 合同对象,包含名称、类型、客户、金额、日期等字段
+- 服务端校验: 合同名称长度不能大于20个字符
+- 触发器实现 beforeInsert 和 beforeUpdate 验证
+- 自定义动作用于提交和签署
+- 完整的软件包结构,包含 package.json 和 package.service.js
+```
 
 ### Scenario 1: Creating a New Business Object
 场景 1: 创建新的业务对象
@@ -149,6 +173,7 @@ the following requirements:
 | ObjectQL Modeling | 765 | Field types, relationships, validation |
 | Business Logic | 711 | Triggers, actions, notifications |
 | UI & Pages | 672 | Amis, components, charts, layouts |
+| Package Development | 850 | Complete package creation, validation (NEW!) |
 
 ## 📚 Learning Path | 学习路径
 
@@ -159,17 +184,22 @@ the following requirements:
    - Set up development environment
    - Create first object
 
-2. **Week 2**: Study `customer/02-objectql-modeling.md`
+2. **Week 2**: Study `customer/05-package-development.md` (NEW!)
+   - Learn complete package structure
+   - Create your first package
+   - Implement server-side validation
+
+3. **Week 3**: Study `customer/02-objectql-modeling.md`
    - Learn all field types
    - Practice relationships
    - Design your data model
 
-3. **Week 3**: Master `customer/03-business-logic.md`
+4. **Week 4**: Master `customer/03-business-logic.md`
    - Implement triggers
    - Create custom actions
    - Add validations
 
-4. **Week 4**: Explore `customer/04-ui-pages.md`
+5. **Week 5**: Explore `customer/04-ui-pages.md`
    - Build dashboards
    - Create forms
    - Design user interfaces

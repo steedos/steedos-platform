@@ -33,7 +33,8 @@ This repository contains comprehensive AI prompts designed to assist developers 
     ├── 01-general-development.md    # General guide (中英双语)
     ├── 02-objectql-modeling.md      # Data modeling
     ├── 03-business-logic.md         # Triggers & Actions
-    └── 04-ui-pages.md               # UI development with Amis
+    ├── 04-ui-pages.md               # UI development with Amis
+    └── 05-package-development.md    # Complete package creation (中英双语)
 
 .cursorrules           # Root-level cursor rules for platform dev
 ```
@@ -81,6 +82,7 @@ If you're building applications using Steedos:
 
 1. **Start with General Development** - Read `customer/01-general-development.md` (bilingual)
 2. **Follow the workflow**:
+   - 📦 **Package Development** → Create complete packages (NEW!)
    - 📊 **Data Modeling** → Define objects with ObjectQL
    - 🔄 **Business Logic** → Add triggers and actions
    - 🎨 **UI Development** → Create pages with Amis
@@ -103,6 +105,7 @@ If you're building applications using Steedos:
 
 | What You Want to Do | Read This Prompt |
 |---------------------|-----------------|
+| Create complete package | Package Development (NEW!) |
 | Create data models | ObjectQL Modeling |
 | Validate data | Business Logic (Triggers) |
 | Auto-fill fields | Business Logic (Triggers) |
@@ -201,6 +204,14 @@ If you're building applications using Steedos:
 - Data binding
 - Charts and visualizations
 - Responsive design
+
+#### 5. Package Development (`05-package-development.md`) **NEW!**
+- Complete package structure
+- Step-by-step package creation
+- Server-side validation in triggers
+- Package configuration
+- Testing and deployment
+- Real-world example: Contract Management
 
 ## 🌟 Key Features | 核心特性
 
