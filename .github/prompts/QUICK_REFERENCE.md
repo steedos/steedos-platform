@@ -18,11 +18,12 @@
 
 | File | Purpose | Use When |
 |------|---------|----------|
+| `customer/00-project-setup.md` | Project creation & setup | Creating a new Steedos project (NEW! 🆕) |
 | `customer/01-general-development.md` | Platform overview & workflow | Starting a new project |
 | `customer/02-objectql-modeling.md` | Data modeling | Designing database schema |
 | `customer/03-business-logic.md` | Triggers & Actions | Adding validation, automation |
 | `customer/04-ui-pages.md` | UI with Amis | Creating dashboards, forms |
-| `customer/05-package-development.md` | Complete package creation | Building reusable packages (NEW!) |
+| `customer/05-package-development.md` | Complete package creation | Building reusable packages |
 
 ## 🎯 Quick Decision Tree | 快速决策树
 
@@ -36,8 +37,9 @@ Are you working on Steedos platform core?
 │   └─ Writing tests? → 04-testing-quality.md
 │
 └─ No (Building applications) → Use Customer Prompts (.github/prompts/customer/)
+    ├─ Need to create a new project? → 00-project-setup.md (NEW! 🆕)
     ├─ Just starting? → 01-general-development.md
-    ├─ Creating a complete package? → 05-package-development.md (NEW!)
+    ├─ Creating a complete package? → 05-package-development.md
     ├─ Designing data models? → 02-objectql-modeling.md
     ├─ Adding business logic? → 03-business-logic.md
     └─ Creating UI? → 04-ui-pages.md
@@ -45,8 +47,28 @@ Are you working on Steedos platform core?
 
 ## 💡 Common Scenarios | 常见场景
 
-### Scenario 0: Creating a Complete Package (NEW!)
-场景 0: 创建完整的软件包 (新增!)
+### Scenario 0: Creating a New Steedos Project (NEW! 🆕)
+场景 0: 创建新的 Steedos 项目 (新增!)
+
+**Prompt to Use**: `customer/00-project-setup.md`
+
+**Ask AI**:
+```
+Following the Steedos project setup guide, create a new Steedos project with:
+- Node.js package.json with @steedos/server dependency
+- Workspaces configuration for packages
+- Start script using "steedos start"
+- Optional: Initial contract management package
+
+按照 Steedos 项目创建指南,创建一个新的 Steedos 项目:
+- Node.js package.json,包含 @steedos/server 依赖
+- Workspaces 配置用于管理软件包
+- 使用 "steedos start" 的启动脚本
+- 可选: 初始的合同管理软件包
+```
+
+### Scenario 1: Creating a Complete Package
+场景 1: 创建完整的软件包
 
 **Prompt to Use**: `customer/05-package-development.md`
 
@@ -67,8 +89,8 @@ Following the Steedos package development guide, create a contract management pa
 - 完整的软件包结构,包含 package.json 和 package.service.js
 ```
 
-### Scenario 1: Creating a New Business Object
-场景 1: 创建新的业务对象
+### Scenario 2: Creating a New Business Object
+场景 2: 创建新的业务对象
 
 **Prompt to Use**: `customer/02-objectql-modeling.md`
 

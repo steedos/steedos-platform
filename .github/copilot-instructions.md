@@ -14,6 +14,63 @@ When working with this repository:
 - **Databases**: MongoDB (metadata), PostgreSQL/MySQL (business data)
 - **Package Manager**: Yarn 3.8.7
 
+## Creating a New Steedos Project
+
+### Quick Start (Minimal Setup)
+
+To create a new Steedos project from scratch:
+
+1. **Create project directory and package.json**:
+```json
+{
+  "name": "my-steedos-project",
+  "version": "0.0.1",
+  "private": true,
+  "workspaces": [
+    "steedos-packages/*"
+  ],
+  "scripts": {
+    "start": "steedos start",
+    "build": "lerna run build"
+  },
+  "dependencies": {
+    "@steedos/server": "latest"
+  }
+}
+```
+
+2. **Install dependencies**:
+```bash
+npm install
+# or
+yarn install
+```
+
+3. **Start the server**:
+```bash
+npm start
+# or
+steedos start
+```
+
+### Project Structure
+
+A minimal Steedos project only needs:
+- `package.json` with `@steedos/server` dependency
+- Optional: `steedos-packages/` folder for custom packages
+- Optional: `.env` file for configuration
+
+The `@steedos/server` package provides everything needed to run Steedos.
+
+### When User Says "创建 Steedos 项目" (Create Steedos Project)
+
+Generate a Node.js project with:
+1. ✅ `package.json` with `@steedos/server` dependency
+2. ✅ `workspaces` configuration for packages
+3. ✅ Start script: `"start": "steedos start"`
+4. ✅ Optional: Initial package in `steedos-packages/`
+5. ❌ NOT Python files or Django/Flask setup
+
 ### When Creating Steedos Packages
 
 **ALWAYS generate these file types:**

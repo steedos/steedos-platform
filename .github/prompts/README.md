@@ -68,6 +68,7 @@ This repository contains comprehensive AI prompts designed to assist developers 
     │   └── 04-testing-quality.md        # Testing & QA
     │
     └── customer/          # Customer Development Prompts | 客户开发提示词
+        ├── 00-project-setup.md          # 🆕 Project creation & setup (中英双语)
         ├── 01-general-development.md    # General guide (中英双语)
         ├── 02-objectql-modeling.md      # Data modeling
         ├── 03-business-logic.md         # Triggers & Actions
@@ -118,9 +119,10 @@ If you're building applications using Steedos:
 
 ### Quick Start
 
-1. **Start with General Development** - Read `customer/01-general-development.md` (bilingual)
-2. **Follow the workflow**:
-   - 📦 **Package Development** → Create complete packages (NEW!)
+1. **New to Steedos? Start here** - Read `customer/00-project-setup.md` to create your first project (NEW! 🆕)
+2. **Building applications? Follow this workflow**:
+   - 🎯 **Project Setup** → Create a new Steedos project (NEW!)
+   - 📦 **Package Development** → Create complete packages
    - 📊 **Data Modeling** → Define objects with ObjectQL
    - 🔄 **Business Logic** → Add triggers and actions
    - 🎨 **UI Development** → Create pages with Amis
@@ -128,6 +130,8 @@ If you're building applications using Steedos:
 ### Development Workflow
 
 ```
+0. Create Steedos Project (NEW!)
+   ↓
 1. Define Data Models (ObjectQL)
    ↓
 2. Add Business Logic (Triggers)
@@ -143,7 +147,8 @@ If you're building applications using Steedos:
 
 | What You Want to Do | Read This Prompt |
 |---------------------|-----------------|
-| Create complete package | Package Development (NEW!) |
+| Create new Steedos project | Project Setup (NEW! 🆕) |
+| Create complete package | Package Development |
 | Create data models | ObjectQL Modeling |
 | Validate data | Business Logic (Triggers) |
 | Auto-fill fields | Business Logic (Triggers) |
