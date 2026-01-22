@@ -1,0 +1,213 @@
+# Steedos Platform Development Rules
+
+You are an expert developer working on the Steedos Platform, an AI-native low-code platform built on ObjectStack architecture. This platform enables rapid enterprise application development through metadata-driven architecture.
+
+## Project Overview
+
+Steedos Platform is:
+- An enterprise-grade low-code development platform
+- Built with Node.js, TypeScript, MongoDB, and React
+- Based on metadata-driven architecture (similar to Salesforce)
+- Uses microservices architecture (Moleculer framework)
+- Supports ObjectQL for data modeling
+- Integrates AI capabilities for rapid app generation
+- Provides both GraphQL and REST APIs
+
+## Technology Stack
+
+### Backend
+- **Runtime**: Node.js ≥22.0.0
+- **Language**: TypeScript
+- **Microservices**: Moleculer framework
+- **Databases**: MongoDB (metadata), PostgreSQL/MySQL (business data)
+- **Cache**: Redis
+- **Message Queue**: NATS
+- **Package Manager**: Yarn 3.8.7
+
+### Frontend
+- **Framework**: React
+- **UI Library**: Baidu Amis (low-code UI framework)
+- **Styling**: Tailwind CSS
+
+## Code Standards
+
+### TypeScript/JavaScript
+- Use TypeScript for all new code
+- Follow strict type checking
+- Use async/await instead of callbacks
+- Use ES6+ features
+- Prefer functional programming patterns
+- Use meaningful variable and function names
+
+### Metadata Files
+- Use YAML format for metadata definitions (.object.yml, .page.yml)
+- Follow ObjectQL schema standards
+- Include proper labels and descriptions
+- Maintain consistent naming conventions (snake_case for API names)
+
+### File Naming
+- Objects: `{object_name}.object.yml`
+- Pages: `{page_name}.page.yml`
+- Triggers: `{object_name}.trigger.js`
+- Actions: `{object_name}.action.js`
+- Services: `{service_name}.service.ts`
+
+## Project Structure
+
+```
+steedos-platform/
+├── packages/          # Core NPM packages (26 packages)
+├── services/          # Microservice modules (39 services)
+├── builder6/          # Builder application
+│   ├── server/        # Main server
+│   ├── webapp/        # Web frontend
+│   └── ai/            # AI modules
+├── ee/                # Enterprise edition features
+└── docs/              # Documentation
+```
+
+## Development Workflow
+
+1. **Start databases**: `yarn docker:db` (MongoDB, Redis, NATS)
+2. **Build packages**: `yarn build`
+3. **Start server**: `yarn start` (port 5100)
+4. **Start webapp**: `yarn webapp` (port 3000)
+
+## Key Concepts
+
+### ObjectQL
+- Core data modeling language
+- Defines objects (tables), fields, relationships
+- Automatically generates CRUD APIs
+- Supports triggers and validations
+
+### Metadata Structure
+```yaml
+name: object_api_name
+label: Display Name
+fields:
+  field_name:
+    type: text|number|lookup|master_detail|...
+    label: Field Label
+    required: true|false
+```
+
+### Microservices
+- Each service is a Moleculer microservice
+- Located in `services/` directory
+- Follows standard structure: main/default/{objects|pages|triggers|actions}
+
+## Best Practices
+
+### When Writing Code
+- Always add JSDoc comments for functions and classes
+- Handle errors properly with try-catch
+- Use environment variables for configuration
+- Write unit tests for business logic
+- Follow existing code patterns in the repository
+
+### When Creating Metadata
+- Use descriptive labels (support both English and Chinese)
+- Define proper field types and validations
+- Set appropriate permissions and visibility
+- Include help text for complex fields
+- Use consistent API naming (snake_case)
+
+### When Developing Services
+- Keep services focused and single-purpose
+- Use service mixins for shared functionality
+- Implement proper error handling
+- Add service metadata in package.service.yml
+- Follow the standard directory structure
+
+### When Working with AI Features
+- Use OpenAI SDK for AI integrations
+- Configure via environment variables (OPENAI_API_KEY, OPENAI_BASE_URL)
+- Support multiple AI providers (OpenAI, Aliyun, etc.)
+- Implement proper error handling for AI calls
+
+## Common Patterns
+
+### Creating a New Object
+1. Create `{name}.object.yml` in appropriate service
+2. Define fields with proper types
+3. Add list views and page layouts
+4. Implement triggers if needed
+5. Add permissions
+
+### Creating a Trigger
+```javascript
+module.exports = {
+  listenTo: 'object_name',
+  beforeInsert: async function() {
+    // validation logic
+  },
+  afterUpdate: async function() {
+    // post-processing logic
+  }
+}
+```
+
+### Creating a Custom Action
+```javascript
+module.exports = {
+  name: 'action_name',
+  label: 'Action Label',
+  visible: true,
+  on: 'record',
+  todo: async function(object_name, record_id) {
+    // action logic
+  }
+}
+```
+
+## Testing
+
+- Run tests with appropriate test commands
+- Write unit tests for business logic
+- Test API endpoints thoroughly
+- Validate metadata changes
+- Test permissions and security
+
+## Documentation
+
+- Update README files when adding new features
+- Document API changes
+- Add inline comments for complex logic
+- Keep developer guide up to date
+- Provide examples for new patterns
+
+## Security
+
+- Never commit API keys or secrets
+- Use environment variables for sensitive data
+- Implement proper permission checks
+- Validate user input
+- Use parameterized queries
+- Follow OWASP security guidelines
+
+## Performance
+
+- Optimize database queries
+- Use indexes appropriately
+- Implement caching where needed
+- Avoid N+1 query problems
+- Monitor service performance
+
+## Version Control
+
+- Write clear, descriptive commit messages
+- Follow conventional commits format
+- Keep commits focused and atomic
+- Review code before committing
+- Use meaningful branch names
+
+## When Uncertain
+
+- Check existing code patterns in the repository
+- Refer to the documentation in /docs
+- Look at similar implementations in services/
+- Ask for clarification if needed
+- Follow the principle of least surprise
+
+Remember: Steedos Platform is evolving into ObjectStack - focus on modular, metadata-driven, and AI-friendly architecture patterns.
