@@ -68,13 +68,20 @@ steedos-packages/
     ├── package.service.js        # Moleculer service (JavaScript)
     └── main/default/
         ├── objects/
-        │   └── [object-name]/
-        │       ├── [name].object.yml    # YAML
-        │       ├── [name].trigger.js    # JavaScript
-        │       └── [name].action.js     # JavaScript
-        └── applications/
-            └── [app-name].app.yml
+        │   ├── [object-name].object.yml    # Object definition (YAML)
+        │   └── [object-name].action.js     # Custom actions (JavaScript)
+        ├── triggers/
+        │   └── [object-name].trigger.js    # Server-side validation (JavaScript)
+        ├── applications/
+        │   └── [app-name].app.yml          # Application definition (optional)
+        └── pages/
+            └── [page-name].page.yml        # Custom pages (optional)
 ```
+
+**Important Notes:**
+- Triggers go in `main/default/triggers/` folder (NOT inside objects folder)
+- Applications should be created based on user requirements
+- Each package should have at least one object and may include an application
 
 ### Server-Side Validation Pattern
 
@@ -191,10 +198,31 @@ module.exports = {
 - Include proper field types and validations
 
 ### File Naming
-- Objects: `{object_name}.object.yml`
-- Triggers: `{object_name}.trigger.js`
-- Actions: `{object_name}.action.js`
-- Pages: `{page_name}.page.yml`
+- Objects: `{object_name}.object.yml` (in `objects/` folder)
+- Triggers: `{object_name}.trigger.js` (in `triggers/` folder, NOT in objects/)
+- Actions: `{object_name}.action.js` (in `objects/` folder)
+- Pages: `{page_name}.page.yml` (in `pages/` folder)
+- Applications: `{app_name}.app.yml` (in `applications/` folder)
+
+### Application Files (.app.yml)
+
+**When to create an application:**
+- Create when user requests a specific app or management interface
+- Applications group related objects together
+- Include relevant objects in the `objects:` list or use `tab_items:` for detailed configuration
+
+**Example Application:**
+```yaml
+name: Contract Management
+code: contracts
+description: Contract management application
+icon: contract
+is_creator: true
+objects:
+  - contracts
+  - contract_items
+visible: true
+```
 
 ## Common Mistakes to Avoid
 
@@ -202,6 +230,9 @@ module.exports = {
 2. ❌ Don't use .py extension for any Steedos files
 3. ❌ Don't confuse "软件包" (package) with Python packages
 4. ❌ Don't create Django/Flask applications
+5. ❌ Don't put triggers inside `objects/[object-name]/` folder
+   - ✅ Triggers go in `main/default/triggers/` folder
+6. ❌ Don't forget to create application files when user requests a management interface
 
 ## When User Says "创建软件包" (Create Package)
 

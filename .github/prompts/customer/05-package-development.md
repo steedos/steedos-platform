@@ -98,10 +98,10 @@ steedos-packages/
     └── main/
         └── default/
             ├── objects/           # 对象定义
-            │   └── contracts/     # 合同对象
-            │       ├── contracts.object.yml
-            │       ├── contracts.trigger.js
-            │       └── contracts.action.js
+            │   ├── contracts.object.yml
+            │   └── contracts.action.js
+            ├── triggers/          # 触发器(服务端校验)
+            │   └── contracts.trigger.js
             ├── applications/      # 应用定义
             │   └── contracts.app.yml
             ├── pages/            # 页面定义
@@ -109,6 +109,13 @@ steedos-packages/
             └── profiles/         # 权限配置
                 └── user.profile.yml
 ```
+
+**重要说明 | Important Notes:**
+- ✅ 触发器文件放在 `main/default/triggers/` 文件夹中
+- ❌ 不要把触发器放在 `objects/[对象名]/` 文件夹中
+- ✅ 根据用户需求创建应用文件(.app.yml)
+- ✅ Triggers go in `main/default/triggers/` folder
+- ❌ NOT in `objects/[object-name]/` folder
 
 ## 完整示例: 创建合同管理软件包
 
@@ -119,10 +126,13 @@ steedos-packages/
 
 ```bash
 # 在项目根目录执行
-mkdir -p steedos-packages/contract-management/main/default/objects/contracts
+mkdir -p steedos-packages/contract-management/main/default/objects
+mkdir -p steedos-packages/contract-management/main/default/triggers
 mkdir -p steedos-packages/contract-management/main/default/applications
 mkdir -p steedos-packages/contract-management/main/default/profiles
 ```
+
+**注意**: 触发器文件放在 `triggers/` 文件夹,不是 `objects/` 文件夹!
 
 ### 步骤 2: 创建 package.json
 
@@ -201,7 +211,7 @@ module.exports = {
 
 ### 步骤 4: 创建合同对象定义
 
-**文件路径**: `steedos-packages/contract-management/main/default/objects/contracts/contracts.object.yml`
+**文件路径**: `steedos-packages/contract-management/main/default/objects/contracts.object.yml`
 
 ```yaml
 name: contracts
@@ -394,7 +404,9 @@ permission_set:
 
 ### 步骤 5: 创建触发器(服务端校验)
 
-**文件路径**: `steedos-packages/contract-management/main/default/objects/contracts/contracts.trigger.js`
+**文件路径**: `steedos-packages/contract-management/main/default/triggers/contracts.trigger.js`
+
+**重要**: 触发器文件必须放在 `triggers/` 文件夹中,不是 `objects/` 文件夹!
 
 ```javascript
 /**
@@ -544,7 +556,7 @@ module.exports = {
 
 ### 步骤 6: 创建自定义动作
 
-**文件路径**: `steedos-packages/contract-management/main/default/objects/contracts/contracts.action.js`
+**文件路径**: `steedos-packages/contract-management/main/default/objects/contracts.action.js`
 
 ```javascript
 /**
@@ -630,17 +642,20 @@ module.exports = {
 
 **文件路径**: `steedos-packages/contract-management/main/default/applications/contracts.app.yml`
 
+**说明**: 当用户需要一个管理界面或应用时创建此文件。如果用户只要求创建对象而没有提到应用,可以省略此步骤。
+
 ```yaml
-_id: contracts
 name: 合同管理
+code: contracts
 description: 合同管理应用 - Contract Management Application
 icon: contract
 is_creator: true
-sort: 100
 objects:
   - contracts
 mobile_objects:
   - contracts
+visible: true
+sort: 100
 ```
 
 ### 步骤 8: 在项目中引用软件包

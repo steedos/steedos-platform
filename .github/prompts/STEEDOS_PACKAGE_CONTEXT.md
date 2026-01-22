@@ -33,15 +33,22 @@ steedos-packages/
     ├── package.service.js        # Moleculer service (JavaScript)
     └── main/default/
         ├── objects/
-        │   └── [object-name]/
-        │       ├── [object-name].object.yml    # YAML
-        │       ├── [object-name].trigger.js    # JavaScript
-        │       └── [object-name].action.js     # JavaScript
+        │   ├── [object-name].object.yml    # Object definition (YAML)
+        │   └── [object-name].action.js     # Custom actions (JavaScript)
+        ├── triggers/
+        │   └── [object-name].trigger.js    # Server-side validation (JavaScript)
         ├── applications/
-        │   └── [app-name].app.yml
+        │   └── [app-name].app.yml          # Application (created based on requirements)
         └── pages/
-            └── [page-name].page.yml
+            └── [page-name].page.yml        # Custom pages (optional)
 ```
+
+**Critical: Folder Structure Rules**
+- ✅ Triggers: `main/default/triggers/[object-name].trigger.js`
+- ✅ Objects: `main/default/objects/[object-name].object.yml`
+- ✅ Actions: `main/default/objects/[object-name].action.js`
+- ❌ NOT: `objects/[object-name]/[object-name].trigger.js` (WRONG!)
+- ✅ Applications: Create when user requests an app or management interface
 
 ## Example: Contract Management Package
 
