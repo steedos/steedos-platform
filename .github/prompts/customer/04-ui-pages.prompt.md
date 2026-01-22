@@ -1,3 +1,8 @@
+---
+name: ui-pages
+description: "Steedos 页面开发 - Amis UI Guide / Page & UI Development with Amis"
+---
+
 # Steedos 页面开发 - Amis UI Guide / Page & UI Development with Amis
 
 [中文指南 | Chinese Guide Below]

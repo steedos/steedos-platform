@@ -1,3 +1,8 @@
+---
+name: testing-quality
+description: "Steedos Platform - Testing and Quality Assurance Prompt"
+---
+
 # Steedos Platform - Testing and Quality Assurance Prompt
 
 ## Role

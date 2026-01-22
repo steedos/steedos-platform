@@ -1,3 +1,8 @@
+---
+name: package-development
+description: "Steedos 软件包开发 - 完整指南 / Complete Package Development Guide"
+---
+
 # Steedos 软件包开发 - 完整指南 / Complete Package Development Guide
 
 ## ⚠️ CRITICAL CONTEXT | 关键上下文 ⚠️

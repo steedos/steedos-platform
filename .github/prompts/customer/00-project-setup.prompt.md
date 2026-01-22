@@ -1,3 +1,8 @@
+---
+name: project-setup
+description: "Steedos 项目创建指南 / Steedos Project Setup Guide"
+---
+
 # Steedos 项目创建指南 / Steedos Project Setup Guide
 
 [English version below]

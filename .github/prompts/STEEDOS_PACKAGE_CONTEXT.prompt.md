@@ -1,3 +1,8 @@
+---
+name: STEEDOS_PACKAGE_CONTEXT
+description: "Steedos Package Creation - AI Assistant Context"
+---
+
 # Steedos Package Creation - AI Assistant Context
 
 ## ⚠️ IMPORTANT: THIS IS STEEDOS PLATFORM (Node.js), NOT PYTHON!

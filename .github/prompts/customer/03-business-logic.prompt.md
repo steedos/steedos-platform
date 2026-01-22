@@ -1,3 +1,8 @@
+---
+name: business-logic
+description: "Steedos 业务逻辑开发 - Triggers & Actions / Business Logic Development"
+---
+
 # Steedos 业务逻辑开发 - Triggers & Actions / Business Logic Development
 
 [中文指南 | Chinese Guide Below]

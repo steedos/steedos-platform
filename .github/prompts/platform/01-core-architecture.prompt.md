@@ -1,3 +1,8 @@
+---
+name: core-architecture
+description: "Steedos Platform - Core Architecture Development Prompt"
+---
+
 # Steedos Platform - Core Architecture Development Prompt
 
 ## Role

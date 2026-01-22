@@ -1,3 +1,8 @@
+---
+name: metadata-development
+description: "Steedos Platform - Metadata Development Prompt"
+---
+
 # Steedos Platform - Metadata Development Prompt
 
 ## Role

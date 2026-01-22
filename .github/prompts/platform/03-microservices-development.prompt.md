@@ -1,3 +1,8 @@
+---
+name: microservices-development
+description: "Steedos Platform - Microservices Development Prompt"
+---
+
 # Steedos Platform - Microservices Development Prompt
 
 ## Role

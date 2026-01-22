@@ -1,3 +1,8 @@
+---
+name: objectql-modeling
+description: "Steedos 数据建模 - ObjectQL 开发指南 / ObjectQL Data Modeling Guide"
+---
+
 # Steedos 数据建模 - ObjectQL 开发指南 / ObjectQL Data Modeling Guide
 
 [中文指南 | Chinese Guide Below]

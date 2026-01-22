@@ -1,3 +1,8 @@
+---
+name: general-development
+description: "Steedos 项目开发 - 通用开发指南 / Steedos Project Development Guide"
+---
+
 # Steedos 项目开发 - 通用开发指南 / Steedos Project Development Guide
 
 [English version below]
