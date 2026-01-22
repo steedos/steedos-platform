@@ -17,6 +17,7 @@ Steedos 项目是一个简单的 Node.js 项目,核心只需要:
 ```
 my-project/
 ├── package.json              # 包含 @steedos/server 依赖
+├── steedos-config.yml        # 必需: Steedos 配置文件 (可以为空)
 ├── steedos-packages/         # 可选: 自定义软件包
 │   └── my-package/
 │       ├── package.json
@@ -49,6 +50,7 @@ my-project/
 - `@steedos/server`: 这是唯一必需的依赖,包含了运行 Steedos 所需的全部功能
 - `workspaces`: 支持在 `steedos-packages/` 中创建多个软件包
 - `steedos start`: 启动命令
+- `steedos-config.yml`: **必需的配置文件**(可以为空文件)
 
 ### 创建步骤
 
@@ -93,13 +95,28 @@ npm install
 yarn install
 ```
 
-#### 步骤 4: (可选) 创建软件包目录
+#### 步骤 4: 创建 steedos-config.yml
+
+**必需**: 在项目根目录创建一个空的 `steedos-config.yml` 文件:
+
+```bash
+touch steedos-config.yml
+```
+
+或者创建一个基本的配置文件:
+
+```yaml
+# steedos-config.yml
+# 这是 Steedos 的配置文件,可以为空或添加自定义配置
+```
+
+#### 步骤 5: (可选) 创建软件包目录
 
 ```bash
 mkdir -p steedos-packages
 ```
 
-#### 步骤 5: 启动项目
+#### 步骤 6: 启动项目
 
 ```bash
 npm start
@@ -153,12 +170,13 @@ PORT=5000
 
 **生成内容应包括:**
 1. ✅ `package.json` (包含 `@steedos/server` 依赖)
-2. ✅ `workspaces` 配置
-3. ✅ 启动脚本
-4. ✅ 可选的 `.env` 配置文件
-5. ✅ 可选的初始软件包
-6. ❌ 不要生成 Python 文件
-7. ❌ 不要生成 requirements.txt
+2. ✅ `steedos-config.yml` (空文件或基本配置)
+3. ✅ `workspaces` 配置
+4. ✅ 启动脚本
+5. ✅ 可选的 `.env` 配置文件
+6. ✅ 可选的初始软件包
+7. ❌ 不要生成 Python 文件
+8. ❌ 不要生成 requirements.txt
 
 ### 完整示例:创建带初始软件包的项目
 
@@ -225,6 +243,7 @@ A Steedos project is simply a Node.js project. The core requirements:
 ```
 my-project/
 ├── package.json              # With @steedos/server dependency
+├── steedos-config.yml        # Required: Steedos config file (can be empty)
 ├── steedos-packages/         # Optional: Custom packages
 │   └── my-package/
 │       ├── package.json
@@ -257,6 +276,7 @@ my-project/
 - `@steedos/server`: The only required dependency containing all Steedos functionality
 - `workspaces`: Support creating multiple packages in `steedos-packages/`
 - `steedos start`: Start command
+- `steedos-config.yml`: **Required configuration file** (can be empty)
 
 ### Creation Steps
 
@@ -301,13 +321,28 @@ npm install
 yarn install
 ```
 
-#### Step 4: (Optional) Create Packages Directory
+#### Step 4: Create steedos-config.yml
+
+**Required**: Create an empty `steedos-config.yml` file in the project root:
+
+```bash
+touch steedos-config.yml
+```
+
+Or create a basic configuration file:
+
+```yaml
+# steedos-config.yml
+# This is the Steedos configuration file, can be empty or contain custom config
+```
+
+#### Step 5: (Optional) Create Packages Directory
 
 ```bash
 mkdir -p steedos-packages
 ```
 
-#### Step 5: Start the Project
+#### Step 6: Start the Project
 
 ```bash
 npm start

@@ -39,14 +39,20 @@ To create a new Steedos project from scratch:
 }
 ```
 
-2. **Install dependencies**:
+2. **Create steedos-config.yml (REQUIRED)**:
+```bash
+touch steedos-config.yml
+```
+Create an empty `steedos-config.yml` file in the project root. This file is required by Steedos.
+
+3. **Install dependencies**:
 ```bash
 npm install
 # or
 yarn install
 ```
 
-3. **Start the server**:
+4. **Start the server**:
 ```bash
 npm start
 # or
@@ -57,6 +63,7 @@ steedos start
 
 A minimal Steedos project only needs:
 - `package.json` with `@steedos/server` dependency
+- `steedos-config.yml` **REQUIRED** configuration file (can be empty)
 - Optional: `steedos-packages/` folder for custom packages
 - Optional: `.env` file for configuration
 
@@ -66,10 +73,11 @@ The `@steedos/server` package provides everything needed to run Steedos.
 
 Generate a Node.js project with:
 1. ✅ `package.json` with `@steedos/server` dependency
-2. ✅ `workspaces` configuration for packages
-3. ✅ Start script: `"start": "steedos start"`
-4. ✅ Optional: Initial package in `steedos-packages/`
-5. ❌ NOT Python files or Django/Flask setup
+2. ✅ `steedos-config.yml` file (empty or basic config) - **REQUIRED**
+3. ✅ `workspaces` configuration for packages
+4. ✅ Start script: `"start": "steedos start"`
+5. ✅ Optional: Initial package in `steedos-packages/`
+6. ❌ NOT Python files or Django/Flask setup
 
 ### When Creating Steedos Packages
 
