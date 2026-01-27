@@ -14,6 +14,13 @@ import { ApiTags } from "@nestjs/swagger";
 export class AppController {
   @Get("/api/v6/amis/public_settings")
   getPublicSettings() {
+    const publicEnv = {};
+    Object.keys(process.env).forEach((key) => {
+      if (key.startsWith("PUBLIC")) {
+        publicEnv[key] = process.env[key];
+      }
+    });
+
     return {
       rootUrl: process.env.ROOT_URL,
       assetUrls: process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS
@@ -23,7 +30,10 @@ export class AppController {
       serverStatus: global.STEEDOS_STARTED ? "running" : "starting",
       steedosVersion: process.env.STEEDOS_VERSION,
       steedosAmisVersion: process.env.STEEDOS_AMIS_VERSION,
-      PUBLIC_SETTINGS: global.Steedos.settings.PUBLIC_SETTINGS || {},
+      PUBLIC_SETTINGS: {
+        ...(global.Steedos.settings.PUBLIC_SETTINGS || {}),
+        ...publicEnv,
+      },
     };
   }
 
