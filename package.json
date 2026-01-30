@@ -5,7 +5,8 @@
     "packages/*",
     "services/*",
     "ee/*",
-    "builder6/*"
+    "builder6/*",
+    "apps/*"
   ],
   "scripts": {
     "clean": "lerna clean",
