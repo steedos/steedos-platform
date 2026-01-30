@@ -21,6 +21,9 @@ yarn dev
 
 Open http://localhost:3000 with your browser to see the result.
 
+> **Note**: The production build (`yarn build`) requires internet access to fetch fonts from Google Fonts. In restricted network environments, the dev server will work fine but builds may fail. This is a Next.js font optimization feature and not specific to this documentation setup.
+
+
 ## Explore
 
 In the project, you can see:
