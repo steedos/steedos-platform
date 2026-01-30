@@ -1,15 +1,21 @@
-# docs
+# Steedos Platform Documentation
 
 This is a Next.js application generated with
 [Create Fumadocs](https://github.com/fuma-nama/fumadocs).
 
+## Installation
+
+Before running the documentation site, install dependencies from the repository root:
+
+```bash
+cd /path/to/steedos-platform
+yarn install
+```
+
 Run development server:
 
 ```bash
-npm run dev
-# or
-pnpm dev
-# or
+cd apps/docs
 yarn dev
 ```
 

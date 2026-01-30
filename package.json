@@ -24,6 +24,9 @@
     "depcheck:services": "depcheck services/* --json > depcheck-services-result.json",
     "depcheck:packages": "depcheck packages/* --json > depcheck-packages-result.json"
   },
+  "resolutions": {
+    "xlsx": "npm:0.18.5"
+  },
   "lint-staged": {
     "**/*.ts": [
       "prettier --ignore-path ./.prettierignore --write"
