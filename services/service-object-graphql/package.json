@@ -1,6 +1,6 @@
 {
     "name": "@steedos/service-object-graphql",
-    "version": "3.0.13-beta.17",
+    "version": "3.0.13-beta.19",
     "main": "package.service.js",
     "publishConfig": {
         "access": "public"
@@ -14,12 +14,12 @@
     "description": "steedos package",
     "repository": {},
     "license": "MIT",
-    "gitHead": "01ee4d8d206061b3965c0c550d7d625012237c8f",
+    "gitHead": "090a59902abfc2767332972db2c0d71e360193c8",
     "dependencies": {
-        "@steedos/filters": "3.0.13-beta.17",
-        "@steedos/i18n": "3.0.13-beta.17",
-        "@steedos/objectql": "3.0.13-beta.17",
-        "@steedos/service-object-mixin": "3.0.13-beta.17",
+        "@steedos/filters": "3.0.13-beta.19",
+        "@steedos/i18n": "3.0.13-beta.19",
+        "@steedos/objectql": "3.0.13-beta.19",
+        "@steedos/service-object-mixin": "3.0.13-beta.19",
         "graphql": "^15.8.0",
         "graphql-parse-resolve-info": "^4.12.3",
         "moleculer": "^0.14.35",
