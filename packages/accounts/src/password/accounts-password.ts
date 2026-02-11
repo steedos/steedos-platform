@@ -334,11 +334,15 @@ export default class AccountsPassword implements AuthenticationService {
     await this.db.updateUser(user.id, {$set: {password_expired: false, password_modified_date: new Date()}});
     
     // Update space_users as well
-    const spaceUsers = await getObject("space_users").find({
-      filters: `(user eq '${user.id}')`,
-    });
-    for(const spaceUser of spaceUsers){
-      await getObject("space_users").update(spaceUser._id, {password_expired: false});
+    try {
+      const Creator = require('@steedos/core').Creator;
+      if(Creator && Creator.getCollection){
+        Creator.getCollection('space_users').update({user: user.id}, {$set: {password_expired: false}}, {
+          multi: true
+        });
+      }
+    } catch (error) {
+      console.error('Error updating space_users:', error);
     }
 
     this.server.getHooks().emit(ServerHooks.ResetPasswordSuccess, user);
@@ -421,7 +425,8 @@ export default class AccountsPassword implements AuthenticationService {
             userProfile.phone_login_expiration_in_days;
         }
         if (_.has(userProfile, "password_expiration_days")) {
-          password_expiration_days = Number(userProfile.password_expiration_days);
+          const value = Number(userProfile.password_expiration_days);
+          password_expiration_days = !isNaN(value) && value >= 0 ? value : 0;
         }
       }
     }
@@ -836,11 +841,15 @@ export default class AccountsPassword implements AuthenticationService {
               // Set password_expired to true
               await this.db.updateUser(foundUser.id, {$set: {password_expired: true}});
               // Update space_users as well
-              const spaceUsers = await getObject("space_users").find({
-                filters: `(user eq '${foundUser.id}')`,
-              });
-              for(const spaceUser of spaceUsers){
-                await getObject("space_users").update(spaceUser._id, {password_expired: true});
+              try {
+                const Creator = require('@steedos/core').Creator;
+                if(Creator && Creator.getCollection){
+                  Creator.getCollection('space_users').update({user: foundUser.id}, {$set: {password_expired: true}}, {
+                    multi: true
+                  });
+                }
+              } catch (error) {
+                console.error('Error updating space_users:', error);
               }
             }
           }else{
