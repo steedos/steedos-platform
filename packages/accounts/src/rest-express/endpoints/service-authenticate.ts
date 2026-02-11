@@ -48,11 +48,8 @@ export const serviceAuthenticate =
         });
       }
 
-      //确认用户密码是否过期
-      let user = await db.collection.findOne(
-        { _id: session.userId },
-        { password_expired: 1 },
-      );
+      // OIDC/OAuth用户不检查密码过期，因此不需要获取password_expired
+      // Users authenticated via OIDC/OAuth don't need password expiry check
 
       //创建Meteor token
       let authToken = null;

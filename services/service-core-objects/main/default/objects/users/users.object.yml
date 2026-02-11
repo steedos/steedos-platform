@@ -126,6 +126,13 @@ fields:
     omit: true
     hidden: true
     sort_no: 230
+  password_modified_at:
+    name: password_modified_at
+    label: Password Modified At
+    type: datetime
+    omit: true
+    hidden: true
+    sort_no: 235
   primary_email_verified:
     name: primary_email_verified
     type: boolean

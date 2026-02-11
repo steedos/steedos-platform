@@ -10,6 +10,10 @@ fields:
     label: 所有者
     help: 
     description: 
+  password_expiry_days:
+    label: 密码过期天数
+    help: 用户必须修改密码的天数。留空表示禁用密码过期。
+    description: 
   admins:
     label: 管理员
     help: 
@@ -52,6 +56,7 @@ fields:
     description: 
 groups:
   register_account: 用户自助注册
+  Security: 安全
   developer: 华炎云
 listviews:
   all:

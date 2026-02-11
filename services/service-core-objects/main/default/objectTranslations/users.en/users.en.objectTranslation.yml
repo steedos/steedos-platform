@@ -63,6 +63,10 @@ fields:
     label: Password expired
     help: 
     description: 
+  password_modified_at:
+    label: Password Modified At
+    help: 
+    description: 
   company_id:
     label: 
     help: 

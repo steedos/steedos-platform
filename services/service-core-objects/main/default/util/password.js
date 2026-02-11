@@ -45,4 +45,5 @@ exports.parsePassword = function(newPassword, options){
     }
     options.services.password.bcrypt = bcrypt;
     options.password_expired = false;
+    options.password_modified_at = new Date();
 }

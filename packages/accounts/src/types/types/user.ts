@@ -11,4 +11,6 @@ export interface User {
   id: string;
   services?: object;
   deactivated: boolean;
+  password_expired?: boolean;
+  password_modified_at?: Date;
 }
