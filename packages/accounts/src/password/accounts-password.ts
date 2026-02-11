@@ -329,6 +329,17 @@ export default class AccountsPassword implements AuthenticationService {
     const password = await this.hashAndBcryptPassword(newPassword);
     // Change the user password and remove the old token
     await this.db.setResetPassword(user.id, resetTokenRecord.address, password, token);
+    
+    // Reset password_expired and update password_modified_date
+    await this.db.updateUser(user.id, {$set: {password_expired: false, password_modified_date: new Date()}});
+    
+    // Update space_users as well
+    const spaceUsers = await getObject("space_users").find({
+      filters: `(user eq '${user.id}')`,
+    });
+    for(const spaceUser of spaceUsers){
+      await getObject("space_users").update(spaceUser._id, {password_expired: false});
+    }
 
     this.server.getHooks().emit(ServerHooks.ResetPasswordSuccess, user);
 
