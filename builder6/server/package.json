@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@builder6/cli": "^3.2.12",
-    "@builder6/core": "^3.2.12",
+    "@builder6/core": "^3.2.14",
     "@builder6/docs": "^3.2.12",
     "@builder6/email": "^3.2.12",
     "@builder6/files": "^3.2.12",
@@ -35,7 +35,7 @@
     "@builder6/pages": "^3.2.12",
     "@builder6/query-mongodb": "^3.2.12",
     "@builder6/rooms": "^3.2.12",
-    "@builder6/server": "^3.2.12",
+    "@builder6/server": "^3.2.14",
     "@builder6/services": "^3.2.12",
     "@builder6/sharepoint": "^3.2.12",
     "@builder6/steedos": "^3.2.12",

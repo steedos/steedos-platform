@@ -2803,9 +2803,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@builder6/core@npm:3.2.13, @builder6/core@npm:^3.2.12":
-  version: 3.2.13
-  resolution: "@builder6/core@npm:3.2.13"
+"@builder6/core@npm:3.2.14, @builder6/core@npm:^3.2.14":
+  version: 3.2.14
+  resolution: "@builder6/core@npm:3.2.14"
   dependencies:
     "@aws-sdk/client-cloudwatch-logs": ^3.943.0
     "@builder6/query-mongodb": 3.2.12
@@ -2824,7 +2824,7 @@ __metadata:
     nestjs-pino: ^4.4.1
     pino-http: ^11.0.0
     pino-pretty: ^13.0.0
-  checksum: 9d62c417f01872c3d45337069f78140af980235ff2887d69788aee950b3f7d14a1edb58e49fcf2adbbbebad00e04515b7e398771127091f9ef2cc125e18edcb6
+  checksum: 0d275199bbddb646feb10e4ce2b0a1167d490700c8cc47696b7fd9465b34ea6af38756c558783a9985dc64f5f9e4e096fab74edda252513ab8b67011e2b435b3
   languageName: node
   linkType: hard
 
@@ -3062,12 +3062,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@builder6/server@npm:^3.2.12":
-  version: 3.2.13
-  resolution: "@builder6/server@npm:3.2.13"
+"@builder6/server@npm:^3.2.14":
+  version: 3.2.14
+  resolution: "@builder6/server@npm:3.2.14"
   dependencies:
     "@builder6/cli": 3.2.13
-    "@builder6/core": 3.2.13
+    "@builder6/core": 3.2.14
     "@builder6/docs": 3.2.12
     "@builder6/email": 3.2.12
     "@builder6/files": 3.2.12
@@ -3130,7 +3130,7 @@ __metadata:
     sha256: ^0.2.0
     uuid: ^13.0.0
     ws: 8.18.3
-  checksum: 88d619e7bea5bf1a3c1ee099ce1f5b8d7f1d3043bdcd852dcd70603802ea7403098545f4747e306725a45b00feb926d3980a9a0ff6ed7ef5722418857338f06e
+  checksum: 302edb6d5debeaeb5525506c0d427dcf3714078b37a5ae2a2b7e0ee66d52bc7ead77d8dcb242e18c7378f6ce4f85f7bcfde0a84126d4c053ce3673a328f6c1f5
   languageName: node
   linkType: hard
 
@@ -9112,7 +9112,7 @@ __metadata:
   resolution: "@steedos/server@workspace:builder6/server"
   dependencies:
     "@builder6/cli": ^3.2.12
-    "@builder6/core": ^3.2.12
+    "@builder6/core": ^3.2.14
     "@builder6/docs": ^3.2.12
     "@builder6/email": ^3.2.12
     "@builder6/files": ^3.2.12
@@ -9124,7 +9124,7 @@ __metadata:
     "@builder6/pages": ^3.2.12
     "@builder6/query-mongodb": ^3.2.12
     "@builder6/rooms": ^3.2.12
-    "@builder6/server": ^3.2.12
+    "@builder6/server": ^3.2.14
     "@builder6/services": ^3.2.12
     "@builder6/sharepoint": ^3.2.12
     "@builder6/steedos": ^3.2.12
