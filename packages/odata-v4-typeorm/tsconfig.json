@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "sourceMap": true,
-    "target": "es6",
+    "target": "ES2022",
     "module": "commonjs",
     "declaration": true,
     "skipLibCheck": true,

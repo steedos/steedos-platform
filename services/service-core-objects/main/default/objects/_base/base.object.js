@@ -12,6 +12,12 @@ var standardCustomizeSaveRequestAdaptor = `
         delete newDoc.__filename;
         delete newDoc.responseData;
         delete newDoc.responseStatus;
+        console.log('newDoc.nav_schema', newDoc.nav_schema);
+        if(newDoc.nav_schema){
+            if(typeof newDoc.nav_schema !== 'string'){
+                newDoc.nav_schema = JSON.stringify(newDoc.nav_schema);
+            }
+        }
     }
     else if(objectName === "permission_set"){
         objectFields = ['name', 'label', 'type', 'license', 'lockout_interval', 'max_login_attempts', 'password_history', 'default_standard_buttons', 'assigned_apps'];

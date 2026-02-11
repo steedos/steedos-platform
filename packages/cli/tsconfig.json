@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "module": "commonjs",
-        "target": "ES2017",
+        "target": "ES2022",
         "noImplicitAny": false,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
@@ -15,8 +15,9 @@
         "outDir": "./dist",
         "newLine": "LF",
         "lib": [
-            "es2017"
+            "ES2022"
         ],
+        "types": ["node"],
         "skipLibCheck": true,
         "esModuleInterop": true,
         "removeComments": true

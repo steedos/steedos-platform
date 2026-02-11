@@ -27,6 +27,7 @@ export const DEFAULT_LIMIT_AFTER = 30;
 const DEFAULT_LOGIN_EXPIRATION_DAYS = 90;
 const LOGIN_UNEXPIRING_TOKEN_DAYS = 365 * 100;
 
+(window as any).sha256 = sha256;
 export default class Client4 {
   LOGIN_TOKEN_KEY = "Meteor.loginToken";
   LOGIN_TOKEN_EXPIRES_KEY = "Meteor.loginTokenExpires";

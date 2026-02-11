@@ -71,6 +71,11 @@ RUN yarn config set registry https://registry.npmjs.org
 
 RUN yarn && yarn cache clean
 
+# 预加载 UNPKG 资源到缓存
+RUN mkdir -p /steedos-storage/unpkg \
+    && export NPM_CACHE_FOLDER=/steedos-storage/unpkg \
+    && node /app/node_modules/@steedos/unpkg/preload-unpkg.js
+
 # steedosctl
 COPY ./app/steedosctl /opt/steedos/steedosctl
 

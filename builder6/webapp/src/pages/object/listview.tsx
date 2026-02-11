@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2025-02-07 14:36:24
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2025-02-28 16:55:26
+ * @LastEditors: yinlianghui yinlianghui@hotoa.com
+ * @LastEditTime: 2026-01-15 16:59:23
  * @Description: 
  */
 import { AmisRender } from "../../components/AmisRender";
@@ -32,7 +32,7 @@ export const ObjectListView = () => {
   return (
     <AmisRender schema = {{
       type: 'page',
-      bodyClassName: 'p-0',
+      bodyClassName: 'p-0 h-full',
       body: {
         "type": "steedos-page-object-control",
         "name": "steedosPageObjectControl",
