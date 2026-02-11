@@ -44,7 +44,7 @@ export const changePassword = (accountsServer: AccountsServer) => async (
     const password: any = accountsServer.getServices().password;
 
     await password.changePassword((req as any).userId, oldPassword, newPassword);
-    password.db.collection.updateOne({_id: (req as any).userId}, {$set: {password_expired: false}})
+    await password.db.collection.updateOne({_id: (req as any).userId}, {$set: {password_expired: false, password_modified_date: new Date()}})
     try {
       Creator.getCollection('space_users').update({user: (req as any).userId}, {$set: {password_expired: false}}, {
         multi: true

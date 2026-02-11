@@ -3802,19 +3802,6 @@
     express "^4.17.1"
     underscore "^1.9.1"
 
-"@steedos/utils@^2.5.11-beta.10":
-  version "2.7.31"
-  resolved "https://registry.yarnpkg.com/@steedos/utils/-/utils-2.7.31.tgz#5d14a7a39dee6265c08bb6928d8084094cf1a390"
-  integrity sha512-GerNkVnLYx3NssvQr/phYXgJD5Gtr7kFHccAg8MbC0sJ6PkJjOtDicSJF4HxGNX11MeZA2KI+XEAMgAlsdhoZQ==
-  dependencies:
-    "@steedos/filters" "2.5.11-beta.10"
-    "@steedos/odata-v4-mongodb" "2.5.11-beta.10"
-    clone "^2.1.2"
-    cookies "^0.8.0"
-    mingo "6.1.2"
-    psl "1.9.0"
-    underscore "1.5.2"
-
 "@steedos/webapp@2.2.25":
   version "2.2.25"
   resolved "https://registry.yarnpkg.com/@steedos/webapp/-/webapp-2.2.25.tgz#efe3af7bc204513658e08e9d793e5f9a836e4b85"

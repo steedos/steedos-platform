@@ -329,6 +329,21 @@ export default class AccountsPassword implements AuthenticationService {
     const password = await this.hashAndBcryptPassword(newPassword);
     // Change the user password and remove the old token
     await this.db.setResetPassword(user.id, resetTokenRecord.address, password, token);
+    
+    // Reset password_expired and update password_modified_date
+    await this.db.updateUser(user.id, {$set: {password_expired: false, password_modified_date: new Date()}});
+    
+    // Update space_users as well
+    try {
+      const Creator = require('@steedos/core').Creator;
+      if(Creator && Creator.getCollection){
+        Creator.getCollection('space_users').update({user: user.id}, {$set: {password_expired: false}}, {
+          multi: true
+        });
+      }
+    } catch (error) {
+      console.error('Error updating space_users:', error);
+    }
 
     this.server.getHooks().emit(ServerHooks.ResetPasswordSuccess, user);
 
@@ -373,6 +388,20 @@ export default class AccountsPassword implements AuthenticationService {
     let login_expiration_in_days = null;
     let phone_logout_other_clients = false;
     let phone_login_expiration_in_days = null;
+    let password_expiration_days = 0;
+    
+    // Get password_expiration_days from spaces object
+    const spaces = await getObject("spaces").find({
+      filters: `(_id eq '${spaceId}')`,
+    });
+    if (spaces.length > 0) {
+      const space = spaces[0];
+      if (_.has(space, "password_expiration_days")) {
+        const value = Number(space.password_expiration_days);
+        password_expiration_days = !isNaN(value) && value >= 0 ? value : 0;
+      }
+    }
+    
     const spaceUsers = await getObject("space_users").find({
       filters: `(user eq '${userId}') and (space eq '${spaceId}')`,
     });
@@ -420,6 +449,7 @@ export default class AccountsPassword implements AuthenticationService {
       login_expiration_in_days,
       phone_logout_other_clients,
       phone_login_expiration_in_days,
+      password_expiration_days,
     });
   }
 
@@ -804,6 +834,39 @@ export default class AccountsPassword implements AuthenticationService {
       );
     }else{
       await this.db.updateUser(foundUser.id, {$set: {lockout: false, login_failed_number: 0}, $unset: {login_failed_lockout_time: 1}});
+      
+      // Check password expiration
+      if(!saas){
+        const userProfile = await this.getUserProfile(foundUser.id);
+        const password_expiration_days = userProfile.password_expiration_days;
+        
+        if(password_expiration_days > 0){
+          const password_modified_date = foundUser.password_modified_date;
+          
+          if(password_modified_date){
+            const daysSinceModified = moment().diff(moment(password_modified_date), 'days');
+            
+            if(daysSinceModified >= password_expiration_days){
+              // Set password_expired to true
+              await this.db.updateUser(foundUser.id, {$set: {password_expired: true}});
+              // Update space_users as well
+              try {
+                const Creator = require('@steedos/core').Creator;
+                if(Creator && Creator.getCollection){
+                  Creator.getCollection('space_users').update({user: foundUser.id}, {$set: {password_expired: true}}, {
+                    multi: true
+                  });
+                }
+              } catch (error) {
+                console.error('Error updating space_users:', error);
+              }
+            }
+          }else{
+            // If password_modified_date is not set, set it to now and don't expire
+            await this.db.updateUser(foundUser.id, {$set: {password_modified_date: new Date()}});
+          }
+        }
+      }
     }
 
     return foundUser;

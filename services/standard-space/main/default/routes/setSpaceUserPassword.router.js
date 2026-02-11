@@ -112,6 +112,24 @@ function setSpaceUserPassword(userSession, space_user_id, space_id, password) {
                 : void 0
               : void 0,
         },
+        $set: {
+          password_expired: false,
+          password_modified_date: new Date(),
+        },
+      }
+    );
+    // Update space_users to clear password_expired flag
+    db.space_users.update(
+      {
+        user: user_id,
+      },
+      {
+        $set: {
+          password_expired: false,
+        },
+      },
+      {
+        multi: true,
       }
     );
   }
