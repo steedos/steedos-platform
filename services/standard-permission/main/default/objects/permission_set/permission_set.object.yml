@@ -134,6 +134,14 @@ fields:
         value: '0'
     defaultValue: "15"
     visible_on: "{{'profile' === formData.type ? true: false}}"
+  password_expiration_days:
+    type: number
+    label: 密码过期天数
+    inlineHelpText: 用户多少天未修改密码后强制修改密码，0表示不限制
+    group: profile password policy
+    defaultValue: 0
+    min: 0
+    visible_on: "{{'profile' === formData.type ? true: false}}"
   enable_MFA:
     type: boolean
     label: 多重身份验证(需要开启短信服务)

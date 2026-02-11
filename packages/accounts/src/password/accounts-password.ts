@@ -373,6 +373,7 @@ export default class AccountsPassword implements AuthenticationService {
     let login_expiration_in_days = null;
     let phone_logout_other_clients = false;
     let phone_login_expiration_in_days = null;
+    let password_expiration_days = 0;
     const spaceUsers = await getObject("space_users").find({
       filters: `(user eq '${userId}') and (space eq '${spaceId}')`,
     });
@@ -408,6 +409,9 @@ export default class AccountsPassword implements AuthenticationService {
           phone_login_expiration_in_days =
             userProfile.phone_login_expiration_in_days;
         }
+        if (_.has(userProfile, "password_expiration_days")) {
+          password_expiration_days = Number(userProfile.password_expiration_days);
+        }
       }
     }
     return Object.assign({
@@ -420,6 +424,7 @@ export default class AccountsPassword implements AuthenticationService {
       login_expiration_in_days,
       phone_logout_other_clients,
       phone_login_expiration_in_days,
+      password_expiration_days,
     });
   }
 
@@ -804,6 +809,35 @@ export default class AccountsPassword implements AuthenticationService {
       );
     }else{
       await this.db.updateUser(foundUser.id, {$set: {lockout: false, login_failed_number: 0}, $unset: {login_failed_lockout_time: 1}});
+      
+      // Check password expiration
+      if(!saas){
+        const userProfile = await this.getUserProfile(foundUser.id);
+        const password_expiration_days = userProfile.password_expiration_days;
+        
+        if(password_expiration_days > 0){
+          const password_modified_date = foundUser.password_modified_date;
+          
+          if(password_modified_date){
+            const daysSinceModified = moment().diff(moment(password_modified_date), 'days');
+            
+            if(daysSinceModified >= password_expiration_days){
+              // Set password_expired to true
+              await this.db.updateUser(foundUser.id, {$set: {password_expired: true}});
+              // Update space_users as well
+              const spaceUsers = await getObject("space_users").find({
+                filters: `(user eq '${foundUser.id}')`,
+              });
+              for(const spaceUser of spaceUsers){
+                await getObject("space_users").update(spaceUser._id, {password_expired: true});
+              }
+            }
+          }else{
+            // If password_modified_date is not set, set it to now and don't expire
+            await this.db.updateUser(foundUser.id, {$set: {password_modified_date: new Date()}});
+          }
+        }
+      }
     }
 
     return foundUser;
