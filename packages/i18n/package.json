@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@steedos/cachers": "^3.0.13-beta.22",
+    "@steedos/cachers": "3.0.13-beta.22",
     "i18next": "^19.3.4",
     "i18next-sprintf-postprocessor": "^0.2.2",
     "underscore": "^1.13.7"
@@ -21,5 +21,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "2764a863470220194f4e2d1b74e46769b57f0cba"
+  "gitHead": "d5313f898793706d7abc6481c62e0cfa9fbe25cc"
 }

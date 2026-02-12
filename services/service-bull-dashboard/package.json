@@ -9,10 +9,10 @@
     },
     "dependencies": {
         "@bull-board/express": "^6.14.0",
-        "@steedos/auth": "^3.0.13-beta.22",
-        "@steedos/router": "^3.0.13-beta.22",
-        "@steedos/service-package-loader": "^3.0.13-beta.22",
+        "@steedos/auth": "3.0.13-beta.22",
+        "@steedos/router": "3.0.13-beta.22",
+        "@steedos/service-package-loader": "3.0.13-beta.22",
         "bullmq": "^5.62.0"
     },
-    "gitHead": "2764a863470220194f4e2d1b74e46769b57f0cba"
+    "gitHead": "d5313f898793706d7abc6481c62e0cfa9fbe25cc"
 }

@@ -12,7 +12,7 @@
     "build": "npx rimraf lib && npx tsc"
   },
   "dependencies": {
-    "@steedos/client": "^3.0.13-beta.22",
+    "@steedos/client": "3.0.13-beta.22",
     "archiver": "^5.1.0",
     "chalk": "^4.1.0",
     "clone": "^2.1.2",
@@ -38,5 +38,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "2764a863470220194f4e2d1b74e46769b57f0cba"
+  "gitHead": "d5313f898793706d7abc6481c62e0cfa9fbe25cc"
 }

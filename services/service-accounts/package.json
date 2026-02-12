@@ -4,11 +4,11 @@
   "main": "package.service.js",
   "license": "MIT",
   "dependencies": {
-    "@steedos/auth": "^3.0.13-beta.22",
+    "@steedos/auth": "3.0.13-beta.22",
     "node-schedule": "^2.0.0"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "2764a863470220194f4e2d1b74e46769b57f0cba"
+  "gitHead": "d5313f898793706d7abc6481c62e0cfa9fbe25cc"
 }

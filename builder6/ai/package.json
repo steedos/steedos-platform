@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@ai-sdk/openai": "^2.0.52",
-    "@steedos/objectql": "^3.0.13-beta.22",
+    "@steedos/objectql": "3.0.13-beta.22",
     "ai": "^5.0.71",
     "openai": "^6.8.1"
   },
@@ -29,7 +29,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "2764a863470220194f4e2d1b74e46769b57f0cba",
+  "gitHead": "d5313f898793706d7abc6481c62e0cfa9fbe25cc",
   "devDependencies": {
     "@types/node": "^18.0.3",
     "typescript": "5.7.3"
