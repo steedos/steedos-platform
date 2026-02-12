@@ -176,7 +176,7 @@ async function main() {
   console.log('========================================');
   
   if (failCount > 0) {
-    process.exit(1);
+    console.warn(`⚠ ${failCount} 个包预加载失败，但不影响镜像构建。这些包将在运行时按需下载。`);
   }
 }
 
