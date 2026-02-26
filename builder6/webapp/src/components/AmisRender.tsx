@@ -113,8 +113,18 @@ export const AmisRender = function ({schema = {}, data = {}, env = {}}) {
       }
       const decodedPathname = decodeURI(pathname);
       const decodedLink = decodeURI(linkPathname);
-      // 精确匹配或前缀匹配（路径段边界）
-      return decodedPathname === decodedLink || decodedPathname.startsWith(decodedLink + '/');
+      // 精确匹配
+      if (decodedPathname === decodedLink) {
+        return true;
+      }
+      // 前缀匹配（路径段边界）：仅对 object 列表页路径生效
+      // 即 /app/{appId}/{objectName} 格式（恰好3段），才允许匹配其子路径（如 /view/xxx）
+      // 避免 /app/admin/space_users/view/xxx 同时匹配 /app/admin/space_users 和自身
+      const linkSegments = decodedLink.replace(/^\//, '').split('/');
+      if (linkSegments.length <= 3 && decodedPathname.startsWith(decodedLink + '/')) {
+        return true;
+      }
+      return false;
     },
     jumpTo: (to: string, action: any, ctx)=>{
       if (to === "goBack") {
