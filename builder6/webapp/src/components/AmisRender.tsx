@@ -6,7 +6,7 @@
  * @Description: 
  */
 import { Builder, builder, BuilderComponent } from '@builder6/react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const normalizeLink = (to, location = window.location) => {
   to = to || "";
@@ -49,6 +49,7 @@ const normalizeLink = (to, location = window.location) => {
 export const AmisRender = function ({schema = {}, data = {}, env = {}}) {
   // console.log(`AmisRender`, schema, data, env)
   const navigate = useNavigate(); 
+  const location = useLocation();
 
   if(!(window as any).goBack){
     (window as any).goBack = ()=>{
@@ -73,10 +74,48 @@ export const AmisRender = function ({schema = {}, data = {}, env = {}}) {
       user: Builder.settings.context.user, 
       now: new Date(),
     },
+    _pathname: location.pathname,
     ...data,
   }
   const mergedEnv = {
     ...env,
+    isCurrentUrl: (to: string, ctx?: any) => {
+      if (!to) {
+        return false;
+      }
+      const link = normalizeLink(to);
+      const pathname = window.location.pathname;
+      const search = '';
+      const idx = link.indexOf('?');
+      let linkPathname = link;
+      let linkSearch = '';
+      if (~idx) {
+        linkPathname = link.substring(0, idx);
+        linkSearch = link.substring(idx);
+      }
+      if (linkSearch) {
+        if (linkPathname !== pathname) {
+          return false;
+        }
+        const currentSearch = window.location.search;
+        if (!currentSearch) {
+          return false;
+        }
+        const linkParams = new URLSearchParams(linkSearch);
+        const currentParams = new URLSearchParams(currentSearch);
+        let allMatch = true;
+        linkParams.forEach((value, key) => {
+          if (currentParams.get(key) !== value) {
+            allMatch = false;
+          }
+        });
+        return allMatch;
+      }
+      const decodedPathname = decodeURI(pathname);
+      const decodedLink = decodeURI(linkPathname);
+      // 精确匹配或前缀匹配（路径段边界）
+      return decodedPathname === decodedLink || decodedPathname.startsWith(decodedLink + '/');
+    },
     jumpTo: (to: string, action: any, ctx)=>{
       if (to === "goBack") {
         return window.history.back();
