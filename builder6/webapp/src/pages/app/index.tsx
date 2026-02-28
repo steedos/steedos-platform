@@ -12,12 +12,32 @@ const on_click_script = `
   `;
 
   const pcInitJumtoFirstAppFirstTabScript = (payload, response, api, context) => {
+    const resolvePathTemplate = (path, data) => {
+      if (!path || path.indexOf('${') < 0) {
+        return path;
+      }
+      try {
+        var currentAmis = (window as any).amisRequire && (window as any).amisRequire('amis');
+        var createObject = (window as any).BuilderAmisObject && (window as any).BuilderAmisObject.AmisLib && (window as any).BuilderAmisObject.AmisLib.createObject;
+        if (currentAmis && createObject) {
+          const resolved = currentAmis.evaluate(path, createObject(context, data || {}));
+          if (typeof resolved === 'string' && resolved) {
+            return resolved;
+          }
+        }
+      }
+      catch(ex){
+        console.warn('resolvePathTemplate failed:', ex);
+      }
+      return path;
+    }
+
     let app_items = payload;
     if(app_items && app_items.length > 0){
       let firstApp = app_items[0];
       if(firstApp && firstApp.default_tab){
         if (typeof firstApp.default_tab === 'object' && firstApp.default_tab.path) {
-          window.location.href = firstApp.default_tab.path;
+          window.location.href = resolvePathTemplate(firstApp.default_tab.path, firstApp.default_tab);
         }
         else{
           window.location.href = `/app/${firstApp.id}/${firstApp.default_tab}`;
@@ -27,7 +47,7 @@ const on_click_script = `
       if(firstApp && firstApp.children && firstApp.children.length > 0){
         let firstTab = firstApp.children[0];
         if(firstTab){
-          window.location.href = firstTab.path;
+          window.location.href = resolvePathTemplate(firstTab.path, firstTab);
         }
       }
     }

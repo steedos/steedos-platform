@@ -6,7 +6,7 @@
  * @Description: 
  */
 import { Builder, builder, BuilderComponent } from '@builder6/react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const normalizeLink = (to, location = window.location) => {
   to = to || "";
@@ -49,6 +49,7 @@ const normalizeLink = (to, location = window.location) => {
 export const AmisRender = function ({schema = {}, data = {}, env = {}}) {
   // console.log(`AmisRender`, schema, data, env)
   const navigate = useNavigate(); 
+  const location = useLocation();
 
   if(!(window as any).goBack){
     (window as any).goBack = ()=>{
@@ -73,10 +74,84 @@ export const AmisRender = function ({schema = {}, data = {}, env = {}}) {
       user: Builder.settings.context.user, 
       now: new Date(),
     },
+    _pathname: location.pathname,
     ...data,
   }
   const mergedEnv = {
     ...env,
+    isCurrentUrl: (to: string, ctx?: any) => {
+      if (!to) {
+        return false;
+      }
+      const link = normalizeLink(to);
+      const pathname = window.location.pathname;
+      const search = '';
+      const idx = link.indexOf('?');
+      let linkPathname = link;
+      let linkSearch = '';
+      if (~idx) {
+        linkPathname = link.substring(0, idx);
+        linkSearch = link.substring(idx);
+      }
+      if (linkSearch) {
+        if (linkPathname !== pathname) {
+          return false;
+        }
+        const currentSearch = window.location.search;
+        if (!currentSearch) {
+          return false;
+        }
+        const linkParams = new URLSearchParams(linkSearch);
+        const currentParams = new URLSearchParams(currentSearch);
+        let allMatch = true;
+        linkParams.forEach((value, key) => {
+          if (currentParams.get(key) !== value) {
+            allMatch = false;
+          }
+        });
+        return allMatch;
+      }
+      const decodedPathname = decodeURI(pathname);
+      const decodedLink = decodeURI(linkPathname);
+      // 精确匹配
+      if (decodedPathname === decodedLink) {
+        return true;
+      }
+      // 前缀匹配（路径段边界）：仅对 object 列表页路径生效
+      // 即 /app/{appId}/{objectName} 格式（≤3段），才允许匹配其子路径（如 /view/xxx）
+      const linkSegments = decodedLink.replace(/^\//, '').split('/');
+      if (linkSegments.length <= 3 && decodedPathname.startsWith(decodedLink + '/')) {
+        // 检查是否有更具体的菜单项匹配当前 URL，避免双重高亮
+        // 例如："人员"(/app/admin/space_users) 和 "个人资料"(/app/admin/space_users/view/${userId})
+        // 当 URL 为 /app/admin/space_users/view/xxx 时，只高亮"个人资料"
+        const navPaths = (window as any)._steedosNavPaths;
+        if (navPaths && navPaths.some((p: string) => {
+          let pp = p;
+          const qi = pp.indexOf('?');
+          if (qi > -1) pp = pp.substring(0, qi);
+          const hi = pp.indexOf('#');
+          if (hi > -1) pp = pp.substring(0, hi);
+          // 跳过自身
+          if (decodeURI(pp) === decodedLink) return false;
+          // 处理含模板变量的路径（如 ${context.user.spaceUserId}），取静态前缀
+          const tmplIdx = pp.indexOf('${');
+          if (tmplIdx > -1) {
+            pp = pp.substring(0, tmplIdx);
+          }
+          const decodedNavPath = decodeURI(pp);
+          // 如果存在一个更长的导航路径：
+          // 1) 它以当前 link 为前缀（说明它是当前 link 的子路径）
+          // 2) 当前 URL 也以它的静态部分为前缀（说明当前 URL 更匹配那个菜单项）
+          // 则当前 link 不应该被前缀匹配高亮
+          return decodedNavPath.startsWith(decodedLink + '/') &&
+                 decodedPathname.startsWith(decodedNavPath);
+        })) {
+          return false;
+        }
+        return true;
+      }
+      return false;
+    },
     jumpTo: (to: string, action: any, ctx)=>{
       if (to === "goBack") {
         return window.history.back();
