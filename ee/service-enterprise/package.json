@@ -1,7 +1,7 @@
 {
   "name": "@steedos/service-enterprise",
   "main": "package.service.js",
-  "version": "3.0.13-beta.30",
+  "version": "3.0.13-beta.32",
   "repository": "https://github.com/steedos/steedos-platform.git",
   "description": "",
   "author": "steedos",
@@ -10,7 +10,7 @@
     "@steedos-labs/analytics": "^3.1.2",
     "@steedos-labs/plugin-print-template": "^3.0.2",
     "@steedos-labs/plugin-workflow": "^3.0.39",
-    "@steedos/ee_branding": "3.0.13-beta.30",
+    "@steedos/ee_branding": "3.0.13-beta.32",
     "@steedos/service-license": "^3.0.2",
     "mssql": "^11.0.1",
     "oracledb": "^6.8.0"
@@ -19,5 +19,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "cb5c5ccf666ad52afbe555df3a3f3b2e6c32f48c"
+  "gitHead": "a5e6973ccd624211f6a35dfe9f0013db260b7a0b"
 }
