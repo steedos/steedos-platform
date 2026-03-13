@@ -312,6 +312,10 @@ export class MetadataDriver extends SteedosMongoDriver {
     }
     const dbSIDMap = new Map(
       dbSources.map((item) => {
+        if (item[key] == null) {
+          item[key] = item._id;
+        }
+
         let idValue = null;
         if (item.object || item.object_name) {
           idValue = `${item.object || item.object_name}.${item[key]}`;
