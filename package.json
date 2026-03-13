@@ -17,19 +17,10 @@
     "i18n": "lerna run i18n",
     "repl": "moleculer-runner  --config steedos.config.js --repl",
     "sync": "lerna exec --no-private  -- cnpm sync \\$LERNA_PACKAGE_NAME",
-    "prepare": "husky install",
     "release:beta": "yarn lerna publish --force-publish --exact --dist-tag beta --registry https://registry.npmjs.org",
     "release:again": "lerna publish from-package --registry https://registry.npmjs.org",
     "depcheck:services": "depcheck services/* --json > depcheck-services-result.json",
     "depcheck:packages": "depcheck packages/* --json > depcheck-packages-result.json"
-  },
-  "lint-staged": {
-    "**/*.ts": [
-      "prettier --ignore-path ./.prettierignore --write"
-    ],
-    "packages/**/*.json": [
-      "prettier --ignore-path ./.prettierignore --write"
-    ]
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -42,9 +33,7 @@
     "depcheck": "^1.4.7",
     "eslint": "^9.22.0",
     "globals": "^16.0.0",
-    "husky": "^9.1.7",
     "lerna": "^9.0.3",
-    "lint-staged": "15.4.3",
     "nodemon": "^3.1.11",
     "rimraf": "^6.0.1",
     "tslib": "^2.4.0",
