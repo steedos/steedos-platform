@@ -1,6 +1,6 @@
 {
   "name": "@steedos/unpkg",
-  "version": "3.0.13-beta.32",
+  "version": "3.0.13-beta.33",
   "main": "package.service.js",
   "license": "MIT",
   "publishConfig": {
@@ -9,5 +9,5 @@
   "dependencies": {
     "@steedos/ee_unpkg": "^3.0.2"
   },
-  "gitHead": "a5e6973ccd624211f6a35dfe9f0013db260b7a0b"
+  "gitHead": "e5a35888786ab2d166becdda1c489dc21e7f280b"
 }
