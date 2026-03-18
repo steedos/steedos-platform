@@ -1,7 +1,7 @@
 name: pages_schema
 objectApiName: pages
 isEnabled: true
-script: |-
+script: |- 
   const pageId = ctx.input.pageId;
 
   if (!pageId) {
@@ -14,7 +14,7 @@ script: |-
       filters: [['name', '=', pageId], "or", ['_id', '=', pageId]],
       top: 1
   });
-  process.stdout.write(`[PerfLog] [pages_schema.function] pages.find done | pageId=${pageId} | cost=${Date.now()-_t0}ms | rows=${pages ? pages.length : 0}\n`);
+  console.log(`[PerfLog] [pages_schema.function] pages.find done | pageId=${pageId} | cost=${Date.now()-_t0}ms | rows=${pages ? pages.length : 0}`);
 
   // Fix: Check if a version was actually found to avoid "undefined" errors
   if (!pages || pages.length === 0) {
@@ -29,7 +29,7 @@ script: |-
       sort: 'version desc',
       top: 1
   });
-  process.stdout.write(`[PerfLog] [pages_schema.function] page_versions.find done | pageId=${pageId} | cost=${Date.now()-_t1}ms | rows=${pageVersions ? pageVersions.length : 0}\n`);
+  console.log(`[PerfLog] [pages_schema.function] page_versions.find done | pageId=${pageId} | cost=${Date.now()-_t1}ms | rows=${pageVersions ? pageVersions.length : 0}`);
 
   // Fix: Check if a version was actually found to avoid "undefined" errors
   if (!pageVersions || pageVersions.length === 0) {
@@ -48,7 +48,7 @@ script: |-
       }
   }
 
-  process.stdout.write(`[PerfLog] [pages_schema.function] total done | pageId=${pageId} | cost=${Date.now()-_t0}ms\n`);
+  console.log(`[PerfLog] [pages_schema.function] total done | pageId=${pageId} | cost=${Date.now()-_t0}ms`);
 
   return {
       "type": "inject",
