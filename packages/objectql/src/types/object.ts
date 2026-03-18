@@ -858,6 +858,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
   async runFunction(functionName: string, input: object, userSession?: object) {
     // 查找function
     const objectName = this.name;
+    const _t0 = Date.now();
     // 从缓存获取
     const fDocs = await broker.call(`${METADATA_CACHER_SERVICE_NAME}.find`, {
       metadataName: "object_functions",
@@ -866,6 +867,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         ["_name", "=", functionName],
       ],
     });
+    process.stdout.write(`[PerfLog] [SteedosObjectType.runFunction] broker.call ${METADATA_CACHER_SERVICE_NAME}.find done | object=${objectName} | function=${functionName} | cost=${Date.now() - _t0}ms | rows=${fDocs.length}\n`);
     const len = fDocs.length;
     if (0 == len) {
       throw new Error(`Can not find function: ${functionName}.`);
@@ -880,6 +882,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         params["userId"] = userSession["userId"];
         params["spaceId"] = userSession["spaceId"];
       }
+      const _t1 = Date.now();
       const result = await runFunction(
         fDoc,
         {},
@@ -891,6 +894,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
           getUser: auth.getSessionByUserId,
         },
       );
+      process.stdout.write(`[PerfLog] [SteedosObjectType.runFunction] runFunction done | object=${objectName} | function=${functionName} | cost=${Date.now() - _t1}ms\n`);
       return result;
     }
   }

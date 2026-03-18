@@ -38,8 +38,9 @@ export class FunctionsController {
     @Query() query: Record<string, any>,
   ) {
     const user = (req as any).user;
+    const _t0 = Date.now();
     // 处理获取对象
-    return await this.objectsService.runFunction(
+    const _result = await this.objectsService.runFunction(
       objectApiName,
       functionApiName,
       {
@@ -49,6 +50,8 @@ export class FunctionsController {
       },
       { userId: user.user, spaceId: user.space },
     );
+    process.stdout.write(`[PerfLog] [FunctionsController.runFunction GET] done | object=${objectApiName} | function=${functionApiName} | cost=${Date.now() - _t0}ms\n`);
+    return _result;
   }
 
   @HttpCode(200)
@@ -69,8 +72,9 @@ export class FunctionsController {
     @Body() body: Record<string, any>,
   ) {
     const user = (req as any).user;
+    const _t0 = Date.now();
     // 处理获取对象
-    return await this.objectsService.runFunction(
+    const _result = await this.objectsService.runFunction(
       objectApiName,
       functionApiName,
       {
@@ -80,5 +84,7 @@ export class FunctionsController {
       },
       { userId: user.user, spaceId: user.space },
     );
+    process.stdout.write(`[PerfLog] [FunctionsController.runFunctionPost POST] done | object=${objectApiName} | function=${functionApiName} | cost=${Date.now() - _t0}ms\n`);
+    return _result;
   }
 }
