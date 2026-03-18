@@ -50,7 +50,7 @@ export class FunctionsController {
       },
       { userId: user.user, spaceId: user.space },
     );
-    console.log(`[PerfLog] [FunctionsController.runFunction GET] done | object=${objectApiName} | function=${functionApiName} | cost=${Date.now() - _t0}ms`);
+    process.stdout.write(`[PerfLog] [FunctionsController.runFunction GET] done | object=${objectApiName} | function=${functionApiName} | cost=${Date.now() - _t0}ms\n`);
     return _result;
   }
 
@@ -84,7 +84,7 @@ export class FunctionsController {
       },
       { userId: user.user, spaceId: user.space },
     );
-    console.log(`[PerfLog] [FunctionsController.runFunctionPost POST] done | object=${objectApiName} | function=${functionApiName} | cost=${Date.now() - _t0}ms`);
+    process.stdout.write(`[PerfLog] [FunctionsController.runFunctionPost POST] done | object=${objectApiName} | function=${functionApiName} | cost=${Date.now() - _t0}ms\n`);
     return _result;
   }
 }

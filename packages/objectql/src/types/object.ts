@@ -867,7 +867,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         ["_name", "=", functionName],
       ],
     });
-    console.log(`[PerfLog] [SteedosObjectType.runFunction] broker.call ${METADATA_CACHER_SERVICE_NAME}.find done | object=${objectName} | function=${functionName} | cost=${Date.now() - _t0}ms | rows=${fDocs.length}`);
+    process.stdout.write(`[PerfLog] [SteedosObjectType.runFunction] broker.call ${METADATA_CACHER_SERVICE_NAME}.find done | object=${objectName} | function=${functionName} | cost=${Date.now() - _t0}ms | rows=${fDocs.length}\n`);
     const len = fDocs.length;
     if (0 == len) {
       throw new Error(`Can not find function: ${functionName}.`);
@@ -894,7 +894,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
           getUser: auth.getSessionByUserId,
         },
       );
-      console.log(`[PerfLog] [SteedosObjectType.runFunction] runFunction done | object=${objectName} | function=${functionName} | cost=${Date.now() - _t1}ms`);
+      process.stdout.write(`[PerfLog] [SteedosObjectType.runFunction] runFunction done | object=${objectName} | function=${functionName} | cost=${Date.now() - _t1}ms\n`);
       return result;
     }
   }

@@ -47,9 +47,9 @@ export class ObjectsService {
   ) {
     const obj = getObject(objectApiName);
     const _t0 = Date.now();
-    console.log(`[PerfLog] [ObjectsService.runFunction] start | object=${objectApiName} | function=${functionApiName}`);
+    process.stdout.write(`[PerfLog] [ObjectsService.runFunction] start | object=${objectApiName} | function=${functionApiName}\n`);
     const _result = await obj.runFunction(functionApiName, params, userSession);
-    console.log(`[PerfLog] [ObjectsService.runFunction] done | object=${objectApiName} | function=${functionApiName} | cost=${Date.now() - _t0}ms`);
+    process.stdout.write(`[PerfLog] [ObjectsService.runFunction] done | object=${objectApiName} | function=${functionApiName} | cost=${Date.now() - _t0}ms\n`);
     return _result;
   }
 }
