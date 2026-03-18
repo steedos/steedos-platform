@@ -30,9 +30,9 @@ module.exports = {
                 const userSession = ctx.meta.user;
                 const { type, app, objectApiName, recordId, pageId, formFactor } = ctx.params;
                 const _t0 = Date.now();
-                console.log(`[PerfLog] [page.getMeSchema action] start | pageId=${pageId} | type=${type} | objectApiName=${objectApiName}`);
+                process.stdout.write(`[PerfLog] [page.getMeSchema action] start | pageId=${pageId} | type=${type} | objectApiName=${objectApiName}\n`);
                 const _result = await this.getMeSchema(type, app, objectApiName, recordId, pageId, formFactor, userSession);
-                console.log(`[PerfLog] [page.getMeSchema action] done | pageId=${pageId} | type=${type} | objectApiName=${objectApiName} | cost=${Date.now()-_t0}ms | hasSchema=${!!(_result && _result.schema)}`);
+                process.stdout.write(`[PerfLog] [page.getMeSchema action] done | pageId=${pageId} | type=${type} | objectApiName=${objectApiName} | cost=${Date.now()-_t0}ms | hasSchema=${!!(_result && _result.schema)}\n`);
                 return _result;
             }
         },
@@ -266,7 +266,7 @@ module.exports = {
                           user: userSession
                         }
                       });
-                    console.log(`[PerfLog] [getDefaultSchema] broker.call ${pageRender}.getDefaultSchema done | type=${type} | objectApiName=${objectApiName} | cost=${Date.now()-_t0}ms | hasResult=${!!_result}`);
+                    process.stdout.write(`[PerfLog] [getDefaultSchema] broker.call ${pageRender}.getDefaultSchema done | type=${type} | objectApiName=${objectApiName} | cost=${Date.now()-_t0}ms | hasResult=${!!_result}\n`);
                     return _result;
                 }
                 return;
@@ -376,44 +376,44 @@ module.exports = {
                 if(pageId){
                     const _t1 = Date.now();
                     const records = await objectql.getObject('pages').find({filters: [['name', '=', pageId]]});
-                    console.log(`[PerfLog] [getMeSchema] pages.find done | pageId=${pageId} | cost=${Date.now()-_t1}ms | rows=${records.length}`);
+                    process.stdout.write(`[PerfLog] [getMeSchema] pages.find done | pageId=${pageId} | cost=${Date.now()-_t1}ms | rows=${records.length}\n`);
                     let pageInfo = {};
                     if(records.length > 0){
                         pageInfo = records[0];
                         const _t2 = Date.now();
                         const pageVersion = await this.getLatestPageVersion(pageInfo._id, true);
-                        console.log(`[PerfLog] [getMeSchema] getLatestPageVersion done | pageId=${pageId} | pageInfoId=${pageInfo._id} | cost=${Date.now()-_t2}ms | hasSchema=${!!(pageVersion && pageVersion.schema)}`);
+                        process.stdout.write(`[PerfLog] [getMeSchema] getLatestPageVersion done | pageId=${pageId} | pageInfoId=${pageInfo._id} | cost=${Date.now()-_t2}ms | hasSchema=${!!(pageVersion && pageVersion.schema)}\n`);
                         if(pageVersion && pageVersion.schema){
-                            console.log(`[PerfLog] [getMeSchema] total done | pageId=${pageId} | cost=${Date.now()-_t0}ms | result=pageVersion schema`);
+                            process.stdout.write(`[PerfLog] [getMeSchema] total done | pageId=${pageId} | cost=${Date.now()-_t0}ms | result=pageVersion schema\n`);
                             return Object.assign({}, pageInfo, {schema: pageVersion.schema});
                         } 
                     }
-                    console.log(`[PerfLog] [getMeSchema] total done | pageId=${pageId} | cost=${Date.now()-_t0}ms | result=null`);
+                    process.stdout.write(`[PerfLog] [getMeSchema] total done | pageId=${pageId} | cost=${Date.now()-_t0}ms | result=null\n`);
                     return ;
                     
                 }
                 // 计算 userSchema
                 const _t3 = Date.now();
                 const userPage = await this.getUserPage(type, app, objectApiName, recordId, formFactor, userSession);
-                console.log(`[PerfLog] [getMeSchema] getUserPage done | type=${type} | objectApiName=${objectApiName} | cost=${Date.now()-_t3}ms | hasPage=${!!userPage}`);
+                process.stdout.write(`[PerfLog] [getMeSchema] getUserPage done | type=${type} | objectApiName=${objectApiName} | cost=${Date.now()-_t3}ms | hasPage=${!!userPage}\n`);
                 if (userPage) {
                     const _t4 = Date.now();
                     const pageVersion = await this.getLatestPageVersion(userPage._id, true);
-                    console.log(`[PerfLog] [getMeSchema] getLatestPageVersion (userPage) done | pageId=${userPage._id} | cost=${Date.now()-_t4}ms | hasSchema=${!!(pageVersion && pageVersion.schema)}`);
+                    process.stdout.write(`[PerfLog] [getMeSchema] getLatestPageVersion (userPage) done | pageId=${userPage._id} | cost=${Date.now()-_t4}ms | hasSchema=${!!(pageVersion && pageVersion.schema)}\n`);
                     if(pageVersion && pageVersion.schema){
-                        console.log(`[PerfLog] [getMeSchema] total done | type=${type} | objectApiName=${objectApiName} | cost=${Date.now()-_t0}ms | result=userPage schema`);
+                        process.stdout.write(`[PerfLog] [getMeSchema] total done | type=${type} | objectApiName=${objectApiName} | cost=${Date.now()-_t0}ms | result=userPage schema\n`);
                         return Object.assign({}, userPage, {schema: pageVersion.schema});
                     }
                 }
                 const _t5 = Date.now();
                 const defaultSchema = await this.getDefaultSchema(type, app, objectApiName, recordId, formFactor, userSession);
-                console.log(`[PerfLog] [getMeSchema] getDefaultSchema done | type=${type} | objectApiName=${objectApiName} | cost=${Date.now()-_t5}ms | hasSchema=${!!defaultSchema}`);
+                process.stdout.write(`[PerfLog] [getMeSchema] getDefaultSchema done | type=${type} | objectApiName=${objectApiName} | cost=${Date.now()-_t5}ms | hasSchema=${!!defaultSchema}\n`);
                 if(defaultSchema){
                     const pageRender = this.settings.pageRender;
-                    console.log(`[PerfLog] [getMeSchema] total done | type=${type} | objectApiName=${objectApiName} | cost=${Date.now()-_t0}ms | result=defaultSchema`);
+                    process.stdout.write(`[PerfLog] [getMeSchema] total done | type=${type} | objectApiName=${objectApiName} | cost=${Date.now()-_t0}ms | result=defaultSchema\n`);
                     return { render_engine: pageRender , schema: defaultSchema}
                 }
-                console.log(`[PerfLog] [getMeSchema] total done | type=${type} | objectApiName=${objectApiName} | cost=${Date.now()-_t0}ms | result=null`);
+                process.stdout.write(`[PerfLog] [getMeSchema] total done | type=${type} | objectApiName=${objectApiName} | cost=${Date.now()-_t0}ms | result=null\n`);
             }
         },
         getLatestPageVersion:{
@@ -425,7 +425,7 @@ module.exports = {
                 }
                 // 根据pageId 获取 page version
                 const pageVersions = await objectql.getObject('page_versions').find({filters: filters, sort: 'version desc', top: 1});
-                console.log(`[PerfLog] [getLatestPageVersion] page_versions.find done | pageId=${pageId} | isArchived=${isArchived} | cost=${Date.now()-_t0}ms | rows=${pageVersions.length}`);
+                process.stdout.write(`[PerfLog] [getLatestPageVersion] page_versions.find done | pageId=${pageId} | isArchived=${isArchived} | cost=${Date.now()-_t0}ms | rows=${pageVersions.length}\n`);
                 if(pageVersions.length === 1){
                     return pageVersions[0]
                 }

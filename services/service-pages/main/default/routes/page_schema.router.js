@@ -31,7 +31,7 @@ router.get('/api/pageSchema/:type', auth.requireAuthentication, async function (
                 user: userSession
             }
         });
-        console.log(`[PerfLog] [page_schema.router] broker.call page.getMeSchema done | type=${type} | pageId=${pageId} | objectApiName=${objectApiName} | cost=${Date.now()-_t0}ms | hasSchema=${!!(pageSchema && pageSchema.schema)}`);
+        process.stdout.write(`[PerfLog] [page_schema.router] broker.call page.getMeSchema done | type=${type} | pageId=${pageId} | objectApiName=${objectApiName} | cost=${Date.now()-_t0}ms | hasSchema=${!!(pageSchema && pageSchema.schema)}\n`);
 
         res.send(pageSchema || {});
     } catch (error) {
