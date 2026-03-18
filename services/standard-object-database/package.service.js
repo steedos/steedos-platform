@@ -54,6 +54,11 @@ module.exports = {
 					throw new Error('No permission')
 				}
 				const userSession = ctx.meta.user;
+
+				if(!userSession || userSession.is_space_admin !== true){
+					throw new Error('No permission')
+				}
+
                 let { id, doc } = ctx.params;
                 return this.objectsUpsert(id, doc, userSession)
 			},
@@ -69,6 +74,9 @@ module.exports = {
 				}
 				const userSession = ctx.meta.user;
                 let { id, doc } = ctx.params;
+                if(!userSession || userSession.is_space_admin !== true){
+					throw new Error('No permission')
+				}
                 let data = '';
                 if (_.isString(doc)) {
                     data = JSON.parse(doc);
