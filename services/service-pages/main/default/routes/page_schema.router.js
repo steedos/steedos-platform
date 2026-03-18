@@ -18,6 +18,7 @@ router.get('/api/pageSchema/:type', auth.requireAuthentication, async function (
         const { app, objectApiName, recordId, pageId, formFactor} = req.query;
         const { type } = req.params;
 
+        const _t0 = Date.now();
         const pageSchema = await objectql.getSteedosSchema().broker.call(`page.getMeSchema`, {
             type,
             app,
@@ -30,6 +31,7 @@ router.get('/api/pageSchema/:type', auth.requireAuthentication, async function (
                 user: userSession
             }
         });
+        console.log(`[PerfLog] [page_schema.router] broker.call page.getMeSchema done | type=${type} | pageId=${pageId} | objectApiName=${objectApiName} | cost=${Date.now()-_t0}ms | hasSchema=${!!(pageSchema && pageSchema.schema)}`);
 
         res.send(pageSchema || {});
     } catch (error) {
