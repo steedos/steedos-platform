@@ -73,6 +73,7 @@ export const runFunction = async (func, thisArg, ...args) => {
       });
     };
     const res: any = await run();
+    process.stdout.write(`[PerfLog] [function.ts] await run() returned | func=${func.objectApiName}.${func.name} | cost=${Date.now()-_t0}ms\n`);
     process.stdout.write(`[PerfLog] [function.ts] total done | func=${func.objectApiName}.${func.name} | cost=${Date.now()-_t0}ms\n`);
     return res;
   } catch (error) {
