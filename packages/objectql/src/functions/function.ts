@@ -20,6 +20,7 @@ function str2function(contents, ...args) {
 }
 
 export const runFunction = async (func, thisArg, ...args) => {
+  const _t0 = Date.now();
   const db = objectql.getDataSource("default").adapter;
   const npm = {
     _: require("lodash"),
@@ -33,6 +34,7 @@ export const runFunction = async (func, thisArg, ...args) => {
     sequelize: require("sequelize"),
   };
 
+  const _t1 = Date.now();
   const vm = new NodeVM({
     sandbox: {
       str2function,
@@ -47,17 +49,22 @@ export const runFunction = async (func, thisArg, ...args) => {
     },
     env: process.env,
   });
+  process.stdout.write(`[PerfLog] [function.ts] NodeVM init done | func=${func.objectApiName}.${func.name} | cost=${Date.now()-_t1}ms\n`);
   const funcFileName = `${func.objectApiName}.${func.name}.function.js`;
+  const _t2 = Date.now();
   let funcInSandbox = vm.run(
     `module.exports = async function(ctx){${func.script}};`,
     funcFileName,
   );
+  process.stdout.write(`[PerfLog] [function.ts] vm.run compile done | func=${func.objectApiName}.${func.name} | cost=${Date.now()-_t2}ms\n`);
   try {
     const run = async function () {
       return new Promise((resolve, reject) => {
+        const _t3 = Date.now();
         funcInSandbox
           .apply(thisArg, args)
           .then((res) => {
+            process.stdout.write(`[PerfLog] [function.ts] script execute done | func=${func.objectApiName}.${func.name} | cost=${Date.now()-_t3}ms\n`);
             resolve(res);
           })
           .catch((error) => {
@@ -66,6 +73,8 @@ export const runFunction = async (func, thisArg, ...args) => {
       });
     };
     const res: any = await run();
+    process.stdout.write(`[PerfLog] [function.ts] await run() returned | func=${func.objectApiName}.${func.name} | cost=${Date.now()-_t0}ms\n`);
+    process.stdout.write(`[PerfLog] [function.ts] total done | func=${func.objectApiName}.${func.name} | cost=${Date.now()-_t0}ms\n`);
     return res;
   } catch (error) {
     const source = error.stack;

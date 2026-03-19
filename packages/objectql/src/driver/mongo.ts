@@ -299,7 +299,13 @@ export class SteedosMongoDriver implements SteedosDriver {
 
     const mongoFilters = this.getMongoFilters(query.filters);
     const mongoOptions = this.getMongoOptions(query);
+    const _perfLogTargets = ["pages", "page_versions"];
+    const isPerfLogTarget = _perfLogTargets.includes(tableName);
+    const perfT0 = isPerfLogTarget ? Date.now() : 0;
     const result = await collection.find(mongoFilters, mongoOptions).toArray();
+    if (isPerfLogTarget) {
+      console.log(`[PerfLog] [MongoDriver.find] db query done | object=${tableName} | cost=${Date.now() - perfT0}ms | rows=${result.length}`);
+    }
 
     return result;
   }
