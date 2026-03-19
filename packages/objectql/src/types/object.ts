@@ -858,7 +858,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
   async runFunction(functionName: string, input: object, userSession?: object) {
     // 查找function
     const objectName = this.name;
-    const _t0 = Date.now();
     // 从缓存获取
     const fDocs = await broker.call(`${METADATA_CACHER_SERVICE_NAME}.find`, {
       metadataName: "object_functions",
@@ -867,7 +866,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
         ["_name", "=", functionName],
       ],
     });
-    process.stdout.write(`[PerfLog] [SteedosObjectType.runFunction] broker.call ${METADATA_CACHER_SERVICE_NAME}.find done | object=${objectName} | function=${functionName} | cost=${Date.now() - _t0}ms | rows=${fDocs.length}\n`);
     const len = fDocs.length;
     if (0 == len) {
       throw new Error(`Can not find function: ${functionName}.`);
@@ -882,7 +880,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
         params["userId"] = userSession["userId"];
         params["spaceId"] = userSession["spaceId"];
       }
-      const _t1 = Date.now();
       const result = await runFunction(
         fDoc,
         {},
@@ -894,7 +891,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
           getUser: auth.getSessionByUserId,
         },
       );
-      process.stdout.write(`[PerfLog] [SteedosObjectType.runFunction] runFunction done | object=${objectName} | function=${functionName} | cost=${Date.now() - _t1}ms\n`);
       return result;
     }
   }
@@ -2894,13 +2890,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
       );
       returnValue = await adapterMethod.apply(this._datasource, args);
     } else {
-      const perfLogTargets = ["pages", "page_versions"];
-      const isPerfLogTarget = method === "find" && perfLogTargets.includes(objectName);
-      let perfStart: number, perfT0: number;
-      if (isPerfLogTarget) {
-        perfStart = Date.now();
-        perfT0 = perfStart;
-      }
       let beforeTriggerContext = await this.getTriggerContext(
         "before",
         method,
@@ -2912,10 +2901,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
         });
       }
       await this.runBeforeTriggers(method, beforeTriggerContext);
-      if (isPerfLogTarget) {
-        console.log(`[PerfLog] [SteedosObjectType.find] beforeFind triggers done | object=${objectName} | cost=${Date.now() - perfT0}ms`);
-        perfT0 = Date.now();
-      }
 
       let previousDoc: any;
       // update/delete时始终查一次整个record doc，公式中依赖了完整doc（比如单元格编辑等情况下doc不完整），after trigger中需要previousDoc
@@ -2962,11 +2947,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
       );
 
       returnValue = await adapterMethod.apply(this._datasource, args);
-      if (isPerfLogTarget) {
-        const rows = Array.isArray(returnValue) ? returnValue.length : 0;
-        console.log(`[PerfLog] [SteedosObjectType.find] db adapter find done | object=${objectName} | cost=${Date.now() - perfT0}ms | rows=${rows}`);
-        perfT0 = Date.now();
-      }
       if (
         method === "find" ||
         method == "findOne" ||
@@ -3006,10 +2986,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
       } else {
         await this.runAfterTriggers(method, afterTriggerContext);
-      }
-      if (isPerfLogTarget) {
-        console.log(`[PerfLog] [SteedosObjectType.find] afterFind triggers done | object=${objectName} | cost=${Date.now() - perfT0}ms`);
-        console.log(`[PerfLog] [SteedosObjectType.find] total done | object=${objectName} | cost=${Date.now() - perfStart}ms`);
       }
       if (
         method === "find" ||
