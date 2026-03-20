@@ -46,10 +46,7 @@ export class ObjectsService {
     userSession?: any,
   ) {
     const obj = getObject(objectApiName);
-    const _t0 = Date.now();
-    process.stdout.write(`[PerfLog] [ObjectsService.runFunction] start | object=${objectApiName} | function=${functionApiName}\n`);
     const _result = await obj.runFunction(functionApiName, params, userSession);
-    process.stdout.write(`[PerfLog] [ObjectsService.runFunction] done | object=${objectApiName} | function=${functionApiName} | cost=${Date.now() - _t0}ms\n`);
     return _result;
   }
 }

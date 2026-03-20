@@ -38,7 +38,6 @@ export class FunctionsController {
     @Query() query: Record<string, any>,
   ) {
     const user = (req as any).user;
-    const _t0 = Date.now();
     // 处理获取对象
     const _result = await this.objectsService.runFunction(
       objectApiName,
@@ -50,7 +49,6 @@ export class FunctionsController {
       },
       { userId: user.user, spaceId: user.space },
     );
-    process.stdout.write(`[PerfLog] [FunctionsController.runFunction GET] done | object=${objectApiName} | function=${functionApiName} | cost=${Date.now() - _t0}ms\n`);
     return _result;
   }
 
@@ -72,7 +70,6 @@ export class FunctionsController {
     @Body() body: Record<string, any>,
   ) {
     const user = (req as any).user;
-    const _t0 = Date.now();
     // 处理获取对象
     const _result = await this.objectsService.runFunction(
       objectApiName,
@@ -84,7 +81,6 @@ export class FunctionsController {
       },
       { userId: user.user, spaceId: user.space },
     );
-    process.stdout.write(`[PerfLog] [FunctionsController.runFunctionPost POST] done | object=${objectApiName} | function=${functionApiName} | cost=${Date.now() - _t0}ms\n`);
     return _result;
   }
 }
