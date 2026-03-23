@@ -32,7 +32,7 @@ router.get('/api/amisListviewDesign', auth.requireAuthentication, async function
         }
         const retUrl = process.env.ROOT_URL + `/app/admin/object_listviews/view/${req.query.id}`
         const steedosBuilderUrl = process.env.STEEDOS_BUILDER_URL || 'https://builder.steedos.cn';
-        const builderHost = `${steedosBuilderUrl}/amis?${assetUrl}locale=${locale}&retUrl=${retUrl}`;
+        const builderHost = `${steedosBuilderUrl}/amis?${assetUrl}locale=${locale}&retUrl=${retUrl}&unpkgUrl=${process.env.STEEDOS_UNPKG_URL || 'https://unpkg.steedos.cn'}`;
         const record = await objectql.getObject('object_listviews').findOne(req.query.id);
         // let data = fs.readFileSync(__dirname+'/design.html', 'utf8');
         // res.send(data.replace('SteedosBuilderHost',steedosBuilderHost).replace('DataContext', JSON.stringify(dataContext)));

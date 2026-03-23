@@ -31,7 +31,7 @@ router.get('/api/amisObjectFieldsDesign', auth.requireAuthentication, async func
         }
         const retUrl = req.query.retUrl || process.env.ROOT_URL + '/app/admin/objects/view/' + req.query.oid
         const steedosBuilderUrl = process.env.STEEDOS_BUILDER_URL || 'https://builder.steedos.cn';
-        const builderHost = `${steedosBuilderUrl}/object?${assetUrl}retUrl=${retUrl}&locale=${locale}&isObjectDesign=1&pType=objectDesign`;
+        const builderHost = `${steedosBuilderUrl}/object?${assetUrl}retUrl=${retUrl}&locale=${locale}&isObjectDesign=1&pType=objectDesign&unpkgUrl=${process.env.STEEDOS_UNPKG_URL || 'https://unpkg.steedos.cn'}`;
 
         const filename = __dirname+'/object_fields_design.ejs'
         const data = {

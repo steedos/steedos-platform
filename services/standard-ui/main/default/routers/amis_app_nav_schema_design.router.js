@@ -31,7 +31,7 @@ router.get('/api/amisAppNavSchemaDesign', auth.requireAuthentication, async func
         }
         const retUrl = process.env.ROOT_URL + `/app/admin/apps/view/${req.query.id}`
         const steedosBuilderUrl = process.env.STEEDOS_BUILDER_URL || 'https://builder.steedos.cn';
-        const builderHost = `${steedosBuilderUrl}/amis?${assetUrl}locale=${locale}&retUrl=${retUrl}`;
+        const builderHost = `${steedosBuilderUrl}/amis?${assetUrl}locale=${locale}&retUrl=${retUrl}&unpkgUrl=${process.env.STEEDOS_UNPKG_URL || 'https://unpkg.steedos.cn'}`;
 
         const filename = __dirname+'/amis_app_nav_schema_design.ejs'
         const data = {

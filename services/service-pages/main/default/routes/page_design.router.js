@@ -34,7 +34,7 @@ router.get('/api/pageDesign', auth.requireAuthentication, async function (req, r
         const page = await objectql.broker.call(`page.getLatestPageVersion`, {pageId: req.query.pageId});
         const retUrl = req.query.retUrl || process.env.ROOT_URL + '/app/admin/pages/view/' + req.query.pageId
         const steedosBuilderUrl = process.env.STEEDOS_BUILDER_URL || 'https://builder.steedos.cn';
-        const builderHost = `${steedosBuilderUrl}/amis?${assetUrl}retUrl=${retUrl}&locale=${locale}&pageType=${page.type}`;
+        const builderHost = `${steedosBuilderUrl}/amis?${assetUrl}retUrl=${retUrl}&locale=${locale}&pageType=${page.type}&unpkgUrl=${process.env.STEEDOS_UNPKG_URL || 'https://unpkg.steedos.cn'}`;
 
         const filename = __dirname+'/page_design.ejs'
         const data = {
@@ -47,7 +47,8 @@ router.get('/api/pageDesign', auth.requireAuthentication, async function (req, r
             pageId: req.query.pageId,
             userSession: userSession,
             useOpenAPI: process.env.STEEDOS_PUBLIC_USE_OPEN_API,
-            locale: locale
+            locale: locale,
+            unpkgUrl: process.env.STEEDOS_UNPKG_URL || 'https://unpkg.steedos.cn',
         }
         const options = {}
         ejs.renderFile(filename, data, options, function(err, str){
