@@ -8629,9 +8629,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos-labs/plugin-workflow@npm:^3.0.46":
-  version: 3.0.46
-  resolution: "@steedos-labs/plugin-workflow@npm:3.0.46"
+"@steedos-labs/plugin-workflow@npm:^3.0.47":
+  version: 3.0.47
+  resolution: "@steedos-labs/plugin-workflow@npm:3.0.47"
   dependencies:
     formidable: ^2.1.5
     graphql-parse-resolve-info: ^4.12.3
@@ -8639,14 +8639,14 @@ __metadata:
     jszip: ^3.10.1
     lodash: ^4.17.21
     node-schedule: ^2.0.0
-  checksum: 5d580cf7c17c1fde8a0c802e25bb5ceab811ea3005f2afa2008af9b9155979ec5b93b8736dd2f6d5c7a36fe38879ed47e8c3f8edcd7b63b4a2291f060095de72
+  checksum: 107df3cd06e7131336ac802fc88a7fc293af440099a81d4fb4b2078bb760635dfc73fbaeff282fa058e6ca00a6d5f495557247b1c7adfd1ab5500cce54dbcea6
   languageName: node
   linkType: hard
 
-"@steedos-widgets/amis-object@npm:^6.10.52-beta.27":
-  version: 6.10.52-beta.27
-  resolution: "@steedos-widgets/amis-object@npm:6.10.52-beta.27"
-  checksum: e9acab56409f6d8de32c4d331b6af89561ad7185d4dc7c5f887760c89dfb9c7da7744f548afc78334acdf7bec640da71564938e70518cc5f7ca5bae32c975777
+"@steedos-widgets/amis-object@npm:^6.10.52-beta.28":
+  version: 6.10.52-beta.28
+  resolution: "@steedos-widgets/amis-object@npm:6.10.52-beta.28"
+  checksum: b547ef4add2c2ddafa24ef2ada3ccb5dcac8cacb579ba1789b4e82cc114f0d97dcaee12d044753b91b767b98b09259223e6ef0438a613bb56ce1aec5c5366256
   languageName: node
   linkType: hard
 
@@ -9341,7 +9341,7 @@ __metadata:
   dependencies:
     "@steedos-labs/analytics": ^3.1.2
     "@steedos-labs/plugin-print-template": ^3.0.2
-    "@steedos-labs/plugin-workflow": ^3.0.46
+    "@steedos-labs/plugin-workflow": ^3.0.47
     "@steedos/ee_branding": 3.0.13-beta.40
     "@steedos/service-license": ^3.0.2
     mssql: ^11.0.1
@@ -9733,7 +9733,7 @@ __metadata:
     "@material-ui/icons": ^4.4.1
     "@material-ui/styles": ^4.4.1
     "@salesforce-ux/design-system": 2.28.1
-    "@steedos-widgets/amis-object": ^6.10.52-beta.27
+    "@steedos-widgets/amis-object": ^6.10.52-beta.28
     "@tailwindcss/typography": ^0.5.19
     "@tailwindui/react": ^0.1.1
     "@types/node": ^14.14.19
