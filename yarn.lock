@@ -8597,10 +8597,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos-builder/amis-editor@npm:6.10.0-beta.2":
-  version: 6.10.0-beta.2
-  resolution: "@steedos-builder/amis-editor@npm:6.10.0-beta.2"
-  checksum: 7d693f2b3accc122a78e16811f68db0cfe38a7083e7902c1da812ccca88a3ac31d978803d1c00e0228fcbfd35d152fc389b8843343554af8a4c7fecd67ecce32
+"@steedos-builder/amis-editor@npm:6.10.0-beta.3":
+  version: 6.10.0-beta.3
+  resolution: "@steedos-builder/amis-editor@npm:6.10.0-beta.3"
+  checksum: 3a6f6fc3abc97da7c620972bd77c7d5ffebc179501857993b90943cf8aae373d09608a88298dbda406a24280ce4c3fc7af6be22037551007a59f8254c788a570
   languageName: node
   linkType: hard
 
@@ -8629,9 +8629,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos-labs/plugin-workflow@npm:^3.0.45":
-  version: 3.0.45
-  resolution: "@steedos-labs/plugin-workflow@npm:3.0.45"
+"@steedos-labs/plugin-workflow@npm:^3.0.46":
+  version: 3.0.46
+  resolution: "@steedos-labs/plugin-workflow@npm:3.0.46"
   dependencies:
     formidable: ^2.1.5
     graphql-parse-resolve-info: ^4.12.3
@@ -8639,14 +8639,14 @@ __metadata:
     jszip: ^3.10.1
     lodash: ^4.17.21
     node-schedule: ^2.0.0
-  checksum: e8801ee337ff3462834ee21b1e8d62e43bc49cb4a475a00bcc6d08a7caf26a6eb71a339b0c6059503761a3bf02eb149d6dc53a6ea19fb1f9de127d1711083763
+  checksum: 5d580cf7c17c1fde8a0c802e25bb5ceab811ea3005f2afa2008af9b9155979ec5b93b8736dd2f6d5c7a36fe38879ed47e8c3f8edcd7b63b4a2291f060095de72
   languageName: node
   linkType: hard
 
-"@steedos-widgets/amis-object@npm:^6.10.52-beta.26":
-  version: 6.10.52-beta.26
-  resolution: "@steedos-widgets/amis-object@npm:6.10.52-beta.26"
-  checksum: 1dcc6ec8ff8fe704425a3f0ba2d1273ee4d349081bedac38d883036e749759f03a76a6a22688fa387291dba7571259b58448bd13dc499d13212df61f7bfed797
+"@steedos-widgets/amis-object@npm:^6.10.52-beta.27":
+  version: 6.10.52-beta.27
+  resolution: "@steedos-widgets/amis-object@npm:6.10.52-beta.27"
+  checksum: e9acab56409f6d8de32c4d331b6af89561ad7185d4dc7c5f887760c89dfb9c7da7744f548afc78334acdf7bec640da71564938e70518cc5f7ca5bae32c975777
   languageName: node
   linkType: hard
 
@@ -9260,7 +9260,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@steedos/service-community@workspace:services/service-community"
   dependencies:
-    "@steedos-builder/amis-editor": 6.10.0-beta.2
+    "@steedos-builder/amis-editor": 6.10.0-beta.3
     "@steedos/data-import": 3.0.13-beta.39
     "@steedos/migrate": 3.0.13-beta.39
     "@steedos/server": 3.0.13-beta.39
@@ -9341,7 +9341,7 @@ __metadata:
   dependencies:
     "@steedos-labs/analytics": ^3.1.2
     "@steedos-labs/plugin-print-template": ^3.0.2
-    "@steedos-labs/plugin-workflow": ^3.0.45
+    "@steedos-labs/plugin-workflow": ^3.0.46
     "@steedos/ee_branding": 3.0.13-beta.39
     "@steedos/service-license": ^3.0.2
     mssql: ^11.0.1
@@ -9733,7 +9733,7 @@ __metadata:
     "@material-ui/icons": ^4.4.1
     "@material-ui/styles": ^4.4.1
     "@salesforce-ux/design-system": 2.28.1
-    "@steedos-widgets/amis-object": ^6.10.52-beta.26
+    "@steedos-widgets/amis-object": ^6.10.52-beta.27
     "@tailwindcss/typography": ^0.5.19
     "@tailwindui/react": ^0.1.1
     "@types/node": ^14.14.19
