@@ -1,6 +1,6 @@
 {
     "name": "@steedos/service-rest",
-    "version": "3.0.13-beta.44",
+    "version": "3.0.13-beta.45",
     "main": "package.service.js",
     "publishConfig": {
         "access": "public"
@@ -15,9 +15,9 @@
     "repository": {},
     "license": "MIT",
     "dependencies": {
-        "@steedos/objectql": "3.0.13-beta.44",
-        "@steedos/service-object-mixin": "3.0.13-beta.44",
+        "@steedos/objectql": "3.0.13-beta.45",
+        "@steedos/service-object-mixin": "3.0.13-beta.45",
         "lodash": "^4.17.21"
     },
-    "gitHead": "43a34391b224e9966aa03b747e428636882751ac"
+    "gitHead": "84d9090be59998081a144ddf52ef711e2524cd16"
 }
