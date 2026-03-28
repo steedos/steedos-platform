@@ -1,6 +1,6 @@
 {
   "name": "@steedos/metadata-api",
-  "version": "3.0.13-beta.45",
+  "version": "3.0.13-beta.46",
   "description": "",
   "main": "lib/index.js",
   "files": [
@@ -21,9 +21,9 @@
     "access": "public"
   },
   "dependencies": {
-    "@steedos/auth": "3.0.13-beta.45",
-    "@steedos/metadata-core": "3.0.13-beta.45",
-    "@steedos/objectql": "3.0.13-beta.45",
+    "@steedos/auth": "3.0.13-beta.46",
+    "@steedos/metadata-core": "3.0.13-beta.46",
+    "@steedos/objectql": "3.0.13-beta.46",
     "chalk": "^4.1.0",
     "clone": "2.1.2",
     "compressing": "^1.5.1",
@@ -37,5 +37,5 @@
   "devDependencies": {
     "typescript": "5.7.3"
   },
-  "gitHead": "84d9090be59998081a144ddf52ef711e2524cd16"
+  "gitHead": "759bfd4d60fceb76bd3206f9c4d69c2d64abef43"
 }
