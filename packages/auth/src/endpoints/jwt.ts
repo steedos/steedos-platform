@@ -39,7 +39,22 @@ async function getTokenInfo(req) {
       }
       let hashedTokenObj = hashStampedToken(stampedToken)
       await insertHashedLoginToken(userId, hashedTokenObj)
-
+      let sessionObj = {
+          _id: await getSteedosSchema().getObject("users")._makeNewID(),
+          userId: user._id,
+          token: authToken,
+          ip: null,
+          userAgent: null,
+          is_phone: false,
+          is_tablet: false,
+          login_expiration_in_days: null,
+          user_provider: null,
+          extraData: null,
+          valid: true,
+          created: new Date(),
+          modified: new Date()
+      }
+      await getSteedosSchema().getObject("sessions").directInsert(sessionObj);
       data = { userId: userId, authToken: authToken }
     }
   }
@@ -75,6 +90,14 @@ export const jwtSSO = async (req, res) => {
     let data = await getTokenInfo({ user: verifiedPayload })
     setAuthCookies(req, res, data.userId, data.authToken, spaceId)
     let redirectUrl = verifiedPayload.redirect_url;
+    if(redirectUrl && (redirectUrl.startsWith('https://') || redirectUrl.startsWith('http%3A%2F%2F'))){
+      redirectUrl = decodeURIComponent(redirectUrl);
+    }
+    if(redirectUrl){
+      redirectUrl = `/home/${spaceId}?redirect_uri=${redirectUrl}`
+    }else{
+      redirectUrl = `/home/${spaceId}`
+    }
     res.redirect(302, redirectUrl);
   } catch (error) {
     console.error(error);
