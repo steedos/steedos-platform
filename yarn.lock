@@ -8643,10 +8643,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos-widgets/amis-object@npm:^6.10.52-beta.33":
-  version: 6.10.52-beta.33
-  resolution: "@steedos-widgets/amis-object@npm:6.10.52-beta.33"
-  checksum: babe721a155f9ed93a8cfd6d0ba12254ba4a507b597c63203ae252dfa0bdd919059a5f0a14522e2cb69a842bfa3329a66a61cf599035cacce97ae9eca9f455b8
+"@steedos-widgets/amis-object@npm:^6.10.52-beta.34":
+  version: 6.10.52-beta.34
+  resolution: "@steedos-widgets/amis-object@npm:6.10.52-beta.34"
+  checksum: 443f3962f14c641e444a044377d09c9cef9c2732aff051ab62ed5efa90645d3887b07d96b1be4c632c3fa0d75393b7c952a8375e3826a8851fb5a4db06af7459
   languageName: node
   linkType: hard
 
@@ -9733,7 +9733,7 @@ __metadata:
     "@material-ui/icons": ^4.4.1
     "@material-ui/styles": ^4.4.1
     "@salesforce-ux/design-system": 2.28.1
-    "@steedos-widgets/amis-object": ^6.10.52-beta.33
+    "@steedos-widgets/amis-object": ^6.10.52-beta.34
     "@tailwindcss/typography": ^0.5.19
     "@tailwindui/react": ^0.1.1
     "@types/node": ^14.14.19
