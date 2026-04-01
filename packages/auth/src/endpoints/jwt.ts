@@ -30,15 +30,19 @@ async function getTokenInfo(req) {
     let authToken = payload.sessionId ? `${payload.iss}-${payload.username}-${payload.sessionId}` : `${payload.iss}-${payload.username}`
     let hashedToken = hashLoginToken(authToken).replace(/\//g, '%2F');
     let filters = `(services/resume/loginTokens/hashedToken eq '${hashedToken}')`;
-    if (await userObj.count({ filters: filters })) {
-      data = { userId: userId, authToken: authToken }
-    } else {
+    if (!(await userObj.count({ filters: filters }))) {
       let stampedToken = {
         token: authToken,
         when: new Date
       }
       let hashedTokenObj = hashStampedToken(stampedToken)
       await insertHashedLoginToken(userId, hashedTokenObj)
+    }
+    let sessionsObj = getSteedosSchema().getObject("sessions");
+    let existingSessions = await sessionsObj.find({ filters: `(userId eq '${userId}') and (token eq '${authToken}')` });
+    if (existingSessions && existingSessions.length > 0) {
+      await sessionsObj.directUpdate(existingSessions[0]._id, { valid: true, modified: new Date() });
+    } else {
       let sessionObj = {
           _id: await getSteedosSchema().getObject("users")._makeNewID(),
           userId: user._id,
@@ -54,9 +58,9 @@ async function getTokenInfo(req) {
           created: new Date(),
           modified: new Date()
       }
-      await getSteedosSchema().getObject("sessions").directInsert(sessionObj);
-      data = { userId: userId, authToken: authToken }
+      await sessionsObj.directInsert(sessionObj);
     }
+    data = { userId: userId, authToken: authToken }
   }
 
   return data;
