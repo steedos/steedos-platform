@@ -42,6 +42,10 @@ fields:
     label: 共享列表视图给哪些组织？
     help: 
     description: 
+  filter_required:
+    label: 要求先筛选
+    help: 启用后，用户必须先设置过滤条件才会请求数据。
+    description: 
   show_count:
     label: 显示条目数
     help: 

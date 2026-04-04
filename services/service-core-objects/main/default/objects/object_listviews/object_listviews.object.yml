@@ -300,6 +300,13 @@ fields:
     sort_no: 900
     group: advanced
     visible_on: '${type != ''calendar'' && type != ''timeline''}'
+  filter_required:
+    name: filter_required
+    label: Filter Required
+    inlineHelpText: When enabled, users must set filter conditions before data is loaded.
+    type: boolean
+    defaultValue: false
+    sort_no: 180
   filter_fields:
     name: filter_fields
     label: Default Filter Fields
