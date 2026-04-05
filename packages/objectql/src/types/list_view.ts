@@ -10,6 +10,7 @@ abstract class SteedosObjectListViewTypeProperties{
     filters?: []
     filter_fields?: []
     sort?: []
+    filter_required?: boolean
 }
 
 export interface SteedosObjectListViewTypeConfig extends SteedosObjectListViewTypeProperties{}

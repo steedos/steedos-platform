@@ -111,6 +111,10 @@
       "type": "array",
       "description": "共享列表视图给哪些组织？"
     },
+    "filter_required": {
+      "type": "boolean",
+      "description": "是否要求用户先设置过滤条件后才进行数据请求"
+    },
     "scrolling_mode": {
       "type": "string",
       "description": "滚动条样式",

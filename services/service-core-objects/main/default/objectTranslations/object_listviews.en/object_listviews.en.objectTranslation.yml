@@ -45,6 +45,10 @@ fields:
     label: Shared to which organizations?
     help: 
     description: 
+  filter_required:
+    label: Filter Required
+    help: When enabled, users must set filter conditions before data is loaded.
+    description: 
   show_count:
     label: Show Record Count
     help: 
