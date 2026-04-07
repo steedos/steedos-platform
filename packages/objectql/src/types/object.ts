@@ -66,6 +66,7 @@ import { getMongoInsertBaseDoc, getMongoUpdateBaseDoc } from "./method_base";
 import { getDefaultValuesDoc } from "./defaultValue";
 import { runFunction } from "../functions/function";
 import { t } from "@steedos/i18n";
+import { PerfTimer } from "../util/perf";
 
 declare var TAPi18n;
 
@@ -609,7 +610,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
           continue;
         }
         let trigger = triggers[triggerKeys[index]];
-        await this.runTirgger(trigger, context);
+        await PerfTimer.time(
+          `${this.name}.${when} trigger "${triggerKeys[index]}"`,
+          () => this.runTirgger(trigger, context),
+        );
       }
     }
 
@@ -627,7 +631,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
               todo: listener[when],
             };
             let trigger = new SteedosTriggerType(triggerConfig);
-            await this.runTirgger(trigger, context);
+            await PerfTimer.time(
+              `${this.name}.${when} wildcard trigger "${key}"`,
+              () => this.runTirgger(trigger, context),
+            );
           }
         }
       }
@@ -2635,10 +2642,21 @@ export class SteedosObjectType extends SteedosObjectProperties {
       method = "find";
     }
     let meteorWhen = `before${method.charAt(0).toLocaleUpperCase()}${_.rest([...method]).join("")}`;
+    const timer = new PerfTimer(`${this.name}.${meteorWhen}`);
+
     await this.runBaseTriggers(meteorWhen, context);
+    timer.mark('baseTriggers');
+
     await this.runFunctionTriggers(meteorWhen, context);
+    timer.mark('functionTriggers');
+
     await this.runTriggers(meteorWhen, context);
-    return await this.runTriggerActions(meteorWhen, context);
+    timer.mark('triggers');
+
+    const result = await this.runTriggerActions(meteorWhen, context);
+    timer.mark('triggerActions');
+    timer.done();
+    return result;
   }
 
   private async runAfterTriggers(
@@ -2646,10 +2664,21 @@ export class SteedosObjectType extends SteedosObjectProperties {
     context: SteedosTriggerContextConfig,
   ) {
     let meteorWhen = `after${method.charAt(0).toLocaleUpperCase()}${_.rest([...method]).join("")}`;
+    const timer = new PerfTimer(`${this.name}.${meteorWhen}`);
+
     await this.runBaseTriggers(meteorWhen, context);
+    timer.mark('baseTriggers');
+
     await this.runFunctionTriggers(meteorWhen, context);
+    timer.mark('functionTriggers');
+
     await this.runTriggers(meteorWhen, context);
-    return await this.runTriggerActions(meteorWhen, context);
+    timer.mark('triggers');
+
+    const result = await this.runTriggerActions(meteorWhen, context);
+    timer.mark('triggerActions');
+    timer.done();
+    return result;
   }
 
   private async appendRecordPermission(
@@ -2890,6 +2919,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
       );
       returnValue = await adapterMethod.apply(this._datasource, args);
     } else {
+      const timer = new PerfTimer(`${objectName}.${method}`);
+
       let beforeTriggerContext = await this.getTriggerContext(
         "before",
         method,
@@ -2900,13 +2931,16 @@ export class SteedosObjectType extends SteedosObjectProperties {
           id: paramRecordId,
         });
       }
+      timer.mark('getTriggerContext_before');
       await this.runBeforeTriggers(method, beforeTriggerContext);
+      timer.mark('beforeTriggers');
 
       let previousDoc: any;
       // update/delete时始终查一次整个record doc，公式中依赖了完整doc（比如单元格编辑等情况下doc不完整），after trigger中需要previousDoc
       if (method === "update" || method === "delete") {
         previousDoc = await this.findOne(recordId, {}, userSession);
       }
+      timer.mark('fetchPreviousDoc');
       // 先把当前record的公式字段值计算结果填充到doc中。
       // 如果是update，则要额外传入previousDoc，与doc合并成完整的record doc，因为公式运算时需要当前记录完整的doc，比如单元格编辑时doc中只有当前字段值
       // 如果是删除记录docAfterFormulaRun返回的会是undefined，不会影响doc
@@ -2920,6 +2954,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
       if (docAfterFormulaRun) {
         Object.assign(doc, docAfterFormulaRun);
       }
+      timer.mark('getRecordFormulaDoc');
 
       await runValidationRules(
         method,
@@ -2927,6 +2962,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         args[0],
         userSession,
       );
+      timer.mark('validationRules');
       let afterTriggerContext = await this.getTriggerContext(
         "after",
         method,
@@ -2945,8 +2981,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
         1,
         userSession ? userSession.userId : undefined,
       );
+      timer.mark('getTriggerContext_after');
 
       returnValue = await adapterMethod.apply(this._datasource, args);
+      timer.mark('adapterMethod');
       if (
         method === "find" ||
         method == "findOne" ||
@@ -2987,6 +3025,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
       } else {
         await this.runAfterTriggers(method, afterTriggerContext);
       }
+      timer.mark('afterTriggers');
       if (
         method === "find" ||
         method == "findOne" ||
@@ -3011,6 +3050,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         user_session: userSession,
         previous_record: afterTriggerContext.previousDoc,
       }).run();
+      timer.mark('workflowRules');
       if (returnValue) {
         if (method === "insert") {
           // 当为insert时，上面代码执行后的doc不带_id，只能从returnValue中取
@@ -3025,6 +3065,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
           doc,
           userSession,
         );
+        timer.mark('fieldFormulas');
         await this.runRecordSummaries(
           method,
           objectName,
@@ -3033,8 +3074,11 @@ export class SteedosObjectType extends SteedosObjectProperties {
           previousDoc,
           userSession,
         );
+        timer.mark('recordSummaries');
       }
       await brokeEmitEvents(objectName, method, afterTriggerContext);
+      timer.mark('brokeEmitEvents');
+      timer.done();
     }
     return returnValue;
   }

@@ -27,6 +27,7 @@ export * from "./locale";
 export * from "./field";
 export * from "./function_expression";
 export * from "./convert";
+export * from "./perf";
 
 const validator = require("validator");
 
