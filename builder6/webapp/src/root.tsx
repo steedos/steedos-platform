@@ -40,14 +40,6 @@ const Root: React.FC<any> = (props) => {
     const loadMeAndConfig = async () => {
       try {
         await props.actions.loadSettings(); 
-
-        if (props.tenant && props.tenant.favicon_url) {
-          const faviconLink = document.querySelector('link[rel="shortcut icon"]') as HTMLLinkElement;
-          if (faviconLink) {
-            faviconLink.href = props.tenant.favicon_url;
-          }
-        }
-
         await props.actions.loadMe();
         setConfigLoaded(true);
       } catch (error) {
@@ -59,6 +51,15 @@ const Root: React.FC<any> = (props) => {
     loadMeAndConfig();
 
   }, []);
+
+  useEffect(() => {
+    if (props.tenant && props.tenant.favicon_url) {
+      const faviconLink = document.querySelector('link[rel="shortcut icon"]') as HTMLLinkElement;
+      if (faviconLink) {
+        faviconLink.href = props.tenant.favicon_url;
+      }
+    }
+  }, [props.tenant]);
 
   if (!configLoaded) {
     return <div />;

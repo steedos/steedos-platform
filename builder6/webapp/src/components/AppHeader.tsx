@@ -258,14 +258,14 @@ export const AppHeader = () => {
 
     let logoSrc = '/images/logo.svg';
 
-    if(Builder.settings?.context?.user?.space?.avatar){
+    if(Builder.settings?.platform?.is_oem && Builder.settings?.context?.user?.space?.avatar){
         logoSrc = '/api/v6/files/cfs.avatars.filerecord/' + Builder.settings.context.user.space.avatar
     }
 
     const faviconLink: any = document.querySelector('link[rel*="icon"], link[rel*="shortcut"]');
 
     let favicon = '/images/logo.svg';
-    if(Builder.settings?.context?.user?.space?.favicon){
+    if(Builder.settings?.platform?.is_oem && Builder.settings?.context?.user?.space?.favicon){
         favicon = "/api/v6/files/cfs.avatars.filerecord/" + Builder.settings.context.user.space.favicon;
     }
 
