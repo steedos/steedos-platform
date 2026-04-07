@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2025-01-22 12:51:08
- * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2025-08-26 11:52:51
+ * @LastEditors: yinlianghui yinlianghui@hotoa.com
+ * @LastEditTime: 2026-04-07 13:15:58
  * @Description: 
  */
 import { Builder, builder, BuilderComponent } from '@builder6/react';
@@ -53,7 +53,21 @@ export const AmisRender = function ({schema = {}, data = {}, env = {}}) {
 
   if(!(window as any).goBack){
     (window as any).goBack = ()=>{
-      navigate(-1);
+      // 当新窗口打开时 history.length <= 2，没有有效的历史页面可以返回
+      // 此时从 URL 解析出对象列表页路径进行导航
+      if (window.history.length <= 2) {
+        const pathname = window.location.pathname;
+        // URL 模式: /app/{appId}/{objectName}/view/{recordId}
+        const match = pathname.match(/^(\/app\/[^/]+\/[^/]+)(\/view\/.*)?$/);
+        if (match && match[2]) {
+          // 有 /view/ 部分，返回到对象列表页
+          navigate(match[1]);
+        } else {
+          navigate(-1);
+        }
+      } else {
+        navigate(-1);
+      }
     }
   }
 
