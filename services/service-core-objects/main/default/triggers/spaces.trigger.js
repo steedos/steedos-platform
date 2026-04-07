@@ -129,7 +129,7 @@ module.exports = {
         const suObj = objectql.getObject('space_users')
         const spaceObj = objectql.getObject('spaces')
         // 工作区修改后，该工作区的根部门的name也要修改，根部门和子部门的fullname也要修改
-        if (doc.name) {
+        if (doc.name && doc.name !== previousDoc.name) {
             const spaceDoc = await spaceObj.findOne(id)
             // 直接修改根部门名字，跳过验证
             const rootOrg = (await orgObj.find({
