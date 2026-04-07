@@ -1,6 +1,6 @@
 {
     "name": "@steedos/service-saas",
-    "version": "3.0.13-beta.52",
+    "version": "3.0.13-beta.53",
     "main": "package.service.js",
     "publishConfig": {
         "access": "public"
@@ -11,5 +11,5 @@
     "description": "steedos package",
     "repository": {},
     "license": "MIT",
-    "gitHead": "2f73b1be0b506058b2307e880722da01e1e49e3d"
+    "gitHead": "844dd277937846614fb95677b71092e7ade35556"
 }
