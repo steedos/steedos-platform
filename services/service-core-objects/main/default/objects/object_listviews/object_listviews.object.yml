@@ -306,7 +306,8 @@ fields:
     inlineHelpText: When enabled, users must set filter conditions before data is loaded.
     type: boolean
     defaultValue: false
-    sort_no: 180
+    sort_no: 902
+    group: advanced
   filter_fields:
     name: filter_fields
     label: Default Filter Fields
