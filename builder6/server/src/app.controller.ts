@@ -16,7 +16,7 @@ export class AppController {
   getPublicSettings() {
     const publicEnv = {};
     Object.keys(process.env).forEach((key) => {
-      if (key.startsWith("PUBLIC")) {
+      if (key.startsWith("PUBLIC") || key.startsWith("STEEDOS_PUBLIC")) {
         publicEnv[key] = process.env[key];
       }
     });
