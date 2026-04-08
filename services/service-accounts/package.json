@@ -1,14 +1,14 @@
 {
   "name": "@steedos/service-accounts",
-  "version": "3.0.13-beta.53",
+  "version": "3.0.13-beta.54",
   "main": "package.service.js",
   "license": "MIT",
   "dependencies": {
-    "@steedos/auth": "3.0.13-beta.53",
+    "@steedos/auth": "3.0.13-beta.54",
     "node-schedule": "^2.0.0"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "844dd277937846614fb95677b71092e7ade35556"
+  "gitHead": "c93a583ddeee4d7c0f886fe4c980b3681f011166"
 }

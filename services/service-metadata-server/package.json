@@ -1,22 +1,22 @@
 {
   "name": "@steedos/service-metadata-server",
-  "version": "3.0.13-beta.53",
+  "version": "3.0.13-beta.54",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
     "build": "rm -rf ./lib && tsc"
   },
   "dependencies": {
-    "@steedos/objectql": "3.0.13-beta.53",
-    "@steedos/service-metadata": "3.0.13-beta.53",
-    "@steedos/service-metadata-apps": "3.0.13-beta.53",
-    "@steedos/service-metadata-layouts": "3.0.13-beta.53",
-    "@steedos/service-metadata-objects": "3.0.13-beta.53",
-    "@steedos/service-metadata-permissionsets": "3.0.13-beta.53",
-    "@steedos/service-metadata-tabs": "3.0.13-beta.53",
-    "@steedos/service-metadata-translations": "3.0.13-beta.53",
-    "@steedos/service-metadata-triggers": "3.0.13-beta.53",
-    "@steedos/service-packages": "3.0.13-beta.53",
+    "@steedos/objectql": "3.0.13-beta.54",
+    "@steedos/service-metadata": "3.0.13-beta.54",
+    "@steedos/service-metadata-apps": "3.0.13-beta.54",
+    "@steedos/service-metadata-layouts": "3.0.13-beta.54",
+    "@steedos/service-metadata-objects": "3.0.13-beta.54",
+    "@steedos/service-metadata-permissionsets": "3.0.13-beta.54",
+    "@steedos/service-metadata-tabs": "3.0.13-beta.54",
+    "@steedos/service-metadata-translations": "3.0.13-beta.54",
+    "@steedos/service-metadata-triggers": "3.0.13-beta.54",
+    "@steedos/service-packages": "3.0.13-beta.54",
     "lodash": "^4.17.21",
     "underscore": "^1.13.7"
   },
@@ -26,5 +26,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "844dd277937846614fb95677b71092e7ade35556"
+  "gitHead": "c93a583ddeee4d7c0f886fe4c980b3681f011166"
 }
