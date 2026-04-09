@@ -51,22 +51,27 @@ export const AmisRender = function ({schema = {}, data = {}, env = {}}) {
   const navigate = useNavigate(); 
   const location = useLocation();
 
+  // 跟踪应用内 SPA 导航次数，用于判断是否有有效的应用内历史可回退
+  // 不能依赖 history.length，因为 SSO 等外部跳转会增加浏览器历史条目
+  if(typeof (window as any)._appNavCount === 'undefined'){
+    (window as any)._appNavCount = 0;
+  }
+
   if(!(window as any).goBack){
     (window as any).goBack = ()=>{
-      // 当新窗口打开时 history.length <= 2，没有有效的历史页面可以返回
-      // 此时从 URL 解析出对象列表页路径进行导航
-      if (window.history.length <= 2) {
+      if ((window as any)._appNavCount > 0) {
+        (window as any)._appNavCount--;
+        navigate(-1);
+      } else {
+        // 没有应用内导航历史，从 URL 解析对象列表页路径
         const pathname = window.location.pathname;
         // URL 模式: /app/{appId}/{objectName}/view/{recordId}
         const match = pathname.match(/^(\/app\/[^/]+\/[^/]+)(\/view\/.*)?$/);
         if (match && match[2]) {
-          // 有 /view/ 部分，返回到对象列表页
           navigate(match[1]);
         } else {
           navigate(-1);
         }
-      } else {
-        navigate(-1);
       }
     }
   }
@@ -168,13 +173,18 @@ export const AmisRender = function ({schema = {}, data = {}, env = {}}) {
     },
     jumpTo: (to: string, action: any, ctx)=>{
       if (to === "goBack") {
-        return window.history.back();
+        return (window as any).goBack();
       }
 
       to = normalizeLink(to);
 
       if (action && action.actionType === "url") {
-        action.blank === false ? navigate(to) : window.open(to);
+        if (action.blank === false) {
+          (window as any)._appNavCount = ((window as any)._appNavCount || 0) + 1;
+          navigate(to);
+        } else {
+          window.open(to);
+        }
         return;
       }
 
@@ -186,6 +196,7 @@ export const AmisRender = function ({schema = {}, data = {}, env = {}}) {
       if (/^https?:\/\//.test(to)) {
         window.location.replace(to);
       } else {
+        (window as any)._appNavCount = ((window as any)._appNavCount || 0) + 1;
         navigate(to);
       }
     },
