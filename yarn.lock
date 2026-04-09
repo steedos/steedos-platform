@@ -9042,7 +9042,6 @@ __metadata:
     typeorm: 0.3.26
     typescript: 5.7.3
     underscore: ^1.13.7
-    vm2: ^3.9.19
   languageName: unknown
   linkType: soft
 
@@ -11673,7 +11672,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn-walk@npm:^8.0.2, acorn-walk@npm:^8.1.1, acorn-walk@npm:^8.3.4":
+"acorn-walk@npm:^8.0.2, acorn-walk@npm:^8.1.1":
   version: 8.3.4
   resolution: "acorn-walk@npm:8.3.4"
   dependencies:
@@ -11691,7 +11690,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn@npm:^8.1.0, acorn@npm:^8.11.0, acorn@npm:^8.14.1, acorn@npm:^8.15.0, acorn@npm:^8.4.1, acorn@npm:^8.8.1, acorn@npm:^8.9.0":
+"acorn@npm:^8.1.0, acorn@npm:^8.11.0, acorn@npm:^8.15.0, acorn@npm:^8.4.1, acorn@npm:^8.8.1, acorn@npm:^8.9.0":
   version: 8.15.0
   resolution: "acorn@npm:8.15.0"
   bin:
@@ -35977,18 +35976,6 @@ __metadata:
   bin:
     vite: bin/vite.js
   checksum: 181b04ef3baad6c2aa452861c1f0885a39445bcb84369e63a5e2b864b9a4c9a4b301c457cca4169f18076cf9ff8e5ab986f2d6c361f9d8fb1110e51b96d18866
-  languageName: node
-  linkType: hard
-
-"vm2@npm:^3.9.19":
-  version: 3.10.0
-  resolution: "vm2@npm:3.10.0"
-  dependencies:
-    acorn: ^8.14.1
-    acorn-walk: ^8.3.4
-  bin:
-    vm2: bin/vm2
-  checksum: 7c9a65baeae84718e2888538d5c68bc6cb53a919492f0113fe656aa11da977f8da6b0e4f7044ee459859b01d7738146d0c12a6f0de65a1c9f26fcac3e53134b9
   languageName: node
   linkType: hard
 

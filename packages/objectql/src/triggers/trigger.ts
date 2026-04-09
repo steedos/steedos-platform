@@ -5,7 +5,7 @@
  * @LastEditTime: 2024-11-25 10:41:20
  * @Description:
  */
-const { NodeVM } = require("vm2");
+import * as vm from "vm";
 const _ = require("lodash");
 import { ObjectId } from "mongodb";
 import axios from "axios";
@@ -20,6 +20,31 @@ function str2function(contents, ...args) {
     return null;
   }
 }
+
+// Cached npm modules (loaded once)
+let _npmModules = null;
+function getNpmModules() {
+  if (!_npmModules) {
+    _npmModules = {
+      _: require("lodash"),
+      lodash: require("lodash"),
+      moment: require("moment"),
+      validator: require("validator"),
+      filters: require("@steedos/filters"),
+      axios: require("axios"),
+      formData: require("form-data"),
+      mongodb: require("mongodb"),
+      sequelize: require("sequelize"),
+    };
+  }
+  return _npmModules;
+}
+
+// Cached compiled scripts (V8 compilation cached)
+const _compiledTriggerScripts = new Map<
+  string,
+  { script: vm.Script; handler: string }
+>();
 
 const sendPost = async (url, body, options) => {
   try {
@@ -83,56 +108,51 @@ export const runTriggerFunction = async (trigger, thisArg, ...args) => {
     return await runUrlTrigger(trigger, thisArg, args);
   }
   const db = objectql.getDataSource("default").adapter;
-  const npm = {
-    _: require("lodash"),
-    lodash: require("lodash"),
-    moment: require("moment"),
-    validator: require("validator"),
-    filters: require("@steedos/filters"),
-    axios: require("axios"),
-    formData: require("form-data"),
-    mongodb: require("mongodb"),
-    sequelize: require("sequelize"),
-  };
+  const npm = getNpmModules();
 
   // ----- code trigger -----
-  const vm = new NodeVM({
-    sandbox: {
-      str2function,
-      global: npm,
-      npm,
-      services: (global as any).services,
-      objects: (global as any).objects,
-      makeNewID: () => {
-        return new ObjectId().toHexString();
-      },
-      db,
-    },
-    require: {
-      external: true,
-      root: "./",
-    },
-    env: process.env,
-  });
+  // Get or compile script (V8 compilation is cached)
+  const cacheKey = `${trigger.listenTo}.${trigger.name}`;
   const triggerFileName = `${trigger.listenTo}.${trigger.name}.trigger.js`;
-  let triggerInSandbox = vm.run(
-    `module.exports = async function(ctx){${trigger.handler}};`,
-    triggerFileName,
-  );
+  let cached = _compiledTriggerScripts.get(cacheKey);
+  if (!cached || cached.handler !== trigger.handler) {
+    const script = new vm.Script(
+      `(async function(ctx){${trigger.handler}})`,
+      { filename: triggerFileName },
+    );
+    cached = { script, handler: trigger.handler };
+    _compiledTriggerScripts.set(cacheKey, cached);
+  }
+
+  // Create sandbox context per execution
+  const sandbox = vm.createContext({
+    str2function,
+    global: npm,
+    npm,
+    services: (global as any).services,
+    objects: (global as any).objects,
+    makeNewID: () => {
+      return new ObjectId().toHexString();
+    },
+    db,
+    console,
+    require,
+    setTimeout,
+    clearTimeout,
+    setInterval,
+    clearInterval,
+    setImmediate,
+    clearImmediate,
+    Promise,
+    Buffer,
+    process,
+  });
+
+  // Run compiled script in sandbox to get the trigger function
+  const triggerInSandbox = cached.script.runInContext(sandbox);
+
   try {
-    const runTrigger = async function () {
-      return new Promise((resolve, reject) => {
-        triggerInSandbox
-          .apply(thisArg, args)
-          .then((res) => {
-            resolve(res);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    };
-    const res: any = await runTrigger();
+    const res = await triggerInSandbox.apply(thisArg, args);
     return res;
   } catch (error) {
     const source = error.stack;

@@ -6,7 +6,7 @@
  * @FilePath: /steedos-platform-2.3/packages/objectql/src/functions/function.ts
  * @Description:
  */
-const { NodeVM } = require("vm2");
+import * as vm from "vm";
 const objectql = require("@steedos/objectql");
 
 function str2function(contents, ...args) {
@@ -19,53 +19,73 @@ function str2function(contents, ...args) {
   }
 }
 
+// Cached npm modules (loaded once)
+let _npmModules = null;
+function getNpmModules() {
+  if (!_npmModules) {
+    _npmModules = {
+      _: require("lodash"),
+      lodash: require("lodash"),
+      moment: require("moment"),
+      validator: require("validator"),
+      filters: require("@steedos/filters"),
+      axios: require("axios"),
+      formData: require("form-data"),
+      mongodb: require("mongodb"),
+      sequelize: require("sequelize"),
+    };
+  }
+  return _npmModules;
+}
+
+// Cached compiled scripts (V8 compilation cached)
+const _compiledFuncScripts = new Map<
+  string,
+  { script: vm.Script; source: string }
+>();
+
 export const runFunction = async (func, thisArg, ...args) => {
   const db = objectql.getDataSource("default").adapter;
-  const npm = {
-    _: require("lodash"),
-    lodash: require("lodash"),
-    moment: require("moment"),
-    validator: require("validator"),
-    filters: require("@steedos/filters"),
-    axios: require("axios"),
-    formData: require("form-data"),
-    mongodb: require("mongodb"),
-    sequelize: require("sequelize"),
-  };
+  const npm = getNpmModules();
 
-  const vm = new NodeVM({
-    sandbox: {
-      str2function,
-      global: npm,
-      npm,
-      objects: (global as any).objects,
-      db,
-    },
-    require: {
-      external: true,
-      root: "./",
-    },
-    env: process.env,
-  });
+  // Get or compile script (V8 compilation is cached)
+  const cacheKey = `${func.objectApiName}.${func.name}`;
   const funcFileName = `${func.objectApiName}.${func.name}.function.js`;
-  let funcInSandbox = vm.run(
-    `module.exports = async function(ctx){${func.script}};`,
-    funcFileName,
-  );
+  let cached = _compiledFuncScripts.get(cacheKey);
+  if (!cached || cached.source !== func.script) {
+    const script = new vm.Script(
+      `(async function(ctx){${func.script}})`,
+      { filename: funcFileName },
+    );
+    cached = { script, source: func.script };
+    _compiledFuncScripts.set(cacheKey, cached);
+  }
+
+  // Create sandbox context per execution
+  const sandbox = vm.createContext({
+    str2function,
+    global: npm,
+    npm,
+    objects: (global as any).objects,
+    db,
+    console,
+    require,
+    setTimeout,
+    clearTimeout,
+    setInterval,
+    clearInterval,
+    setImmediate,
+    clearImmediate,
+    Promise,
+    Buffer,
+    process,
+  });
+
+  // Run compiled script in sandbox to get the function
+  const funcInSandbox = cached.script.runInContext(sandbox);
+
   try {
-    const run = async function () {
-      return new Promise((resolve, reject) => {
-        funcInSandbox
-          .apply(thisArg, args)
-          .then((res) => {
-            resolve(res);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    };
-    const res: any = await run();
+    const res = await funcInSandbox.apply(thisArg, args);
     return res;
   } catch (error) {
     const source = error.stack;
