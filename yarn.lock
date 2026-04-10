@@ -8619,19 +8619,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos-labs/plugin-print-template@npm:^3.0.2":
-  version: 3.0.2
-  resolution: "@steedos-labs/plugin-print-template@npm:3.0.2"
+"@steedos-labs/plugin-print-template@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "@steedos-labs/plugin-print-template@npm:3.0.3"
   dependencies:
     docx: 7.8.2
     jsdom: 21.0.0
-  checksum: dc2846c7fb002e548d8b6151dc134bb40c0a6b7bd1b1f7eb240d3e6f2cd3938ce6b7da8db442d9e109cdc2981afa8d1bd1a1134287ee115b1f51d02ee4911450
+  checksum: bdae5b33ba6bfe434b9eb8f9075149d2b7810046cbe9053962490917b0219aa70bc016add3f88926265cb382de10858458fe0f71bf22ed2ceaa5645d13d2e279
   languageName: node
   linkType: hard
 
-"@steedos-labs/plugin-workflow@npm:^3.0.62":
-  version: 3.0.62
-  resolution: "@steedos-labs/plugin-workflow@npm:3.0.62"
+"@steedos-labs/plugin-workflow@npm:^3.0.63":
+  version: 3.0.63
+  resolution: "@steedos-labs/plugin-workflow@npm:3.0.63"
   dependencies:
     formidable: ^2.1.5
     graphql-parse-resolve-info: ^4.12.3
@@ -8639,7 +8639,7 @@ __metadata:
     jszip: ^3.10.1
     lodash: ^4.17.21
     node-schedule: ^2.0.0
-  checksum: 896b57e86233a8ff2fbbf0328388f8f3cec8517a407bf43bf905e35e40ddb4328db0a3dfb997abb03ebd1c9682344601cfc3eadc1562f5e0805b8de2eb71c00b
+  checksum: 6938e8c15e661bc80a23995bfb18cdd6d0be5750a57fe28582f7ebff29258b888e1551cd4b9491ece31dd2b2dcd10961a8023e5a22db5cec4b68860c62bb86f9
   languageName: node
   linkType: hard
 
@@ -9339,8 +9339,8 @@ __metadata:
   resolution: "@steedos/service-enterprise@workspace:ee/service-enterprise"
   dependencies:
     "@steedos-labs/analytics": ^3.1.2
-    "@steedos-labs/plugin-print-template": ^3.0.2
-    "@steedos-labs/plugin-workflow": ^3.0.62
+    "@steedos-labs/plugin-print-template": ^3.0.3
+    "@steedos-labs/plugin-workflow": ^3.0.63
     "@steedos/ee_branding": 3.0.13-beta.58
     "@steedos/service-license": ^3.0.2
     mssql: ^11.0.1
