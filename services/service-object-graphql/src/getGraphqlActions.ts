@@ -885,9 +885,7 @@ export async function translateToUI(
                   const fName = fileRecord.original?.name;
                   return {
                     name: fName,
-                    url: absoluteUrl(
-                      `/api/v6/files/download/cfs.${storageName}.filerecord/${fileRecord._id}/${fName}${optionsStr}`,
-                    ),
+                    url: `/api/v6/files/download/cfs.${storageName}.filerecord/${fileRecord._id}/${fName}${optionsStr}`,
                     size: fileRecord.original?.size,
                     type: fileRecord.original?.type,
                     value: fileRecord._id,
@@ -909,9 +907,7 @@ export async function translateToUI(
                   const fName = fileRecord["original"]["name"];
                   fileValue = {
                     name: fName,
-                    url: absoluteUrl(
-                      `/api/v6/files/download/cfs.${storageName}.filerecord/${value}/${fName}${optionsStr}`,
-                    ),
+                    url: `/api/v6/files/download/cfs.${storageName}.filerecord/${value}/${fName}${optionsStr}`,
                     size: fileRecord.original?.size,
                     type: fileRecord.original?.type,
                     value: fileRecord._id,
