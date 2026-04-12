@@ -1,6 +1,7 @@
 import { AmisRender } from "../../components/AmisRender";
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { Builder } from "@builder6/react";
+import { values, first } from 'lodash';
 
 export const ObjectDetail = () => {
   const { appId, objectName, recordId } = useParams();
@@ -13,6 +14,19 @@ export const ObjectDetail = () => {
       navigate(`/app/${appId}/${objectName}/grid/${sideListViewId}?display=grid`)
     }, 1)
     return;
+  }
+
+  const sideObject = urlParams.get('side_object');
+  if(Steedos.Page.getDisplay(objectName) === 'split' && !sideObject){
+    const uiSchema = (window as any).getUISchemaSync(objectName);
+    const defaultListName = sideListViewId || first(values(uiSchema?.list_views))?.name || '';
+    setTimeout(()=>{
+      navigate(
+        `/app/${appId}/${objectName}/view/${recordId}?side_object=${objectName}&side_listview_id=${defaultListName}&additionalFilters=`,
+        { replace: true }
+      );
+    }, 1)
+    return null;
   }
 
   return (
