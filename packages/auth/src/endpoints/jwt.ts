@@ -98,7 +98,7 @@ export const jwtSSO = async (req, res) => {
       redirectUrl = decodeURIComponent(redirectUrl);
     }
     if(redirectUrl){
-      redirectUrl = `/home/${spaceId}?redirect_uri=${redirectUrl}`
+      redirectUrl = `/home/${spaceId}?redirect_uri=${encodeURIComponent(redirectUrl)}`
     }else{
       redirectUrl = `/home/${spaceId}`
     }

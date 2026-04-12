@@ -95,7 +95,7 @@ export function finishSignin(currentUser, tenant, location, navigate){
     //   }
     let redirect_uri = new URLSearchParams(location?location.search:"").get('redirect_uri')
     if(redirect_uri){
-      navigate('/home?redirect_uri=' + redirect_uri);
+      navigate('/home?redirect_uri=' + encodeURIComponent(redirect_uri));
     }else{
       navigate('/home');
     }
