@@ -24,7 +24,7 @@ const LoggedIn = ({ children }) => {
     );
 
     if (!currentUser) {
-      navigate('/login?redirect_uri=' + encodeURIComponent(window.location.pathname));
+      navigate('/login?redirect_uri=' + encodeURIComponent(window.location.pathname + window.location.search));
       return
     }
     if (!currentSpaceId) {

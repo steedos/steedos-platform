@@ -18,7 +18,7 @@ const getRedirectUrl = ()=>{
 
 const goResetPassword = (navigate)=>{
     const redirect = getRedirectUrl();
-    navigate("/update-password?redirect_uri=" + redirect);
+    navigate("/update-password?redirect_uri=" + encodeURIComponent(redirect));
 }
 
 // 首页只是用来跳转
