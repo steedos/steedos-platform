@@ -1,3 +1,8 @@
+---
+name: object-functions
+description: |
+  Define reusable JavaScript functions for Steedos objects that can be called from formulas, buttons, validations, and APIs. Use this skill to encapsulate complex business logic in maintainable functions. Covers function definition (inline in YAML or separate .functions.js files), usage in formulas, actions, and triggers, async functions, error handling, and parameter documentation. Includes examples for calculations, validations, and data processing.
+---
 # Steedos Object Functions | Steedos 对象函数
 
 ## Overview | 概述

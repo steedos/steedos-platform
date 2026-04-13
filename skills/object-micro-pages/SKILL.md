@@ -1,3 +1,8 @@
+---
+name: object-micro-pages
+description: |
+  Create customizable record detail pages embedded within Steedos object records. Use this skill to build enhanced layouts with custom components and rich interactions beyond standard record pages. Covers page types (detail, dashboard, form), page definition in objects/[object]/pages/, Amis schema configuration, page assignment to objects, and conditional page display. Includes examples for detail pages, dashboards, forms, and analytics views.
+---
 # Steedos Object Micro Pages | Steedos 对象微页面
 
 ## Overview | 概述

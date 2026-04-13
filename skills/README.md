@@ -2,15 +2,15 @@
 
 ## Overview | 概述
 
-This directory contains distilled knowledge about the Steedos platform, organized as standalone "skills" that can be used by AI coding assistants, developers, and as reference documentation.
+This directory contains distilled knowledge about the Steedos platform, organized as Anthropic-compatible skills that can be used by AI coding assistants like Claude, developers, and as reference documentation.
 
-此目录包含关于 Steedos 平台的精炼知识,以独立的"技能"形式组织,可供 AI 编程助手、开发者使用,也可作为参考文档。
+此目录包含关于 Steedos 平台的精炼知识,以 Anthropic 兼容的技能形式组织,可供 Claude 等 AI 编程助手、开发者使用,也可作为参考文档。
 
 ## What are Skills? | 什么是技能?
 
-Skills are comprehensive, self-contained guides that document specific aspects of Steedos platform development. Each skill file provides:
+Skills are comprehensive, self-contained guides following the [Anthropic Agent Skills specification](https://github.com/anthropics/skills). Each skill provides:
 
-技能是全面的、独立的指南,记录 Steedos 平台开发的特定方面。每个技能文件提供:
+技能是全面的、独立的指南,遵循 [Anthropic Agent Skills 规范](https://github.com/anthropics/skills)。每个技能提供:
 
 - Complete syntax and structure reference
 - Practical code examples
@@ -18,321 +18,128 @@ Skills are comprehensive, self-contained guides that document specific aspects o
 - Troubleshooting guidance
 - Bilingual content (English and Chinese)
 
+## Directory Structure | 目录结构
+
+Each skill is in its own directory with a `SKILL.md` file following the Anthropic specification:
+
+```
+skills/
+├── project-format/
+│   └── SKILL.md
+├── package-format/
+│   └── SKILL.md
+├── environment-variables/
+│   └── SKILL.md
+└── ...
+```
+
 ## Skills Index | 技能索引
 
-### 🏗️ Foundation | 基础
+### 🏗️ Foundation | 基础 (3 skills)
 
-#### [01-project-format.md](./01-project-format.md)
-**Steedos Project Structure | Steedos 项目结构**
+#### [project-format](./project-format/SKILL.md)
+Learn how to create and structure Steedos projects, including minimal requirements, package.json configuration, steedos-config.yml setup, directory structure, and installation.
 
-Learn how to create and structure a Steedos project, including:
-- Minimal project requirements
-- package.json configuration
-- steedos-config.yml setup
-- Directory structure
-- Installation and setup
+了解如何创建和组织 Steedos 项目,包括最小项目要求、package.json 配置、steedos-config.yml 设置、目录结构和安装。
 
-了解如何创建和组织 Steedos 项目,包括:
-- 最小项目要求
-- package.json 配置
-- steedos-config.yml 设置
-- 目录结构
-- 安装和设置
+#### [package-format](./package-format/SKILL.md)
+Master Steedos package creation and structure, including directory organization, package.json and package.service.js configuration, metadata management, and publishing.
 
-#### [02-package-format.md](./02-package-format.md)
-**Steedos Package Development | Steedos 软件包开发**
+掌握 Steedos 软件包创建和结构,包括目录组织、package.json 和 package.service.js 配置、元数据管理和发布。
 
-Master Steedos package creation and structure:
-- Package directory structure
-- package.json and package.service.js
-- Metadata organization
-- Package registration
-- Publishing and versioning
+#### [environment-variables](./environment-variables/SKILL.md)
+Configure Steedos with environment variables for server, database, cache, security, email, storage, and deployment settings.
 
-掌握 Steedos 软件包创建和结构:
-- 软件包目录结构
-- package.json 和 package.service.js
-- 元数据组织
-- 软件包注册
-- 发布和版本管理
+使用环境变量配置 Steedos 的服务器、数据库、缓存、安全、邮件、存储和部署设置。
 
-#### [03-environment-variables.md](./03-environment-variables.md)
-**Environment Configuration | 环境配置**
+### 🎨 User Interface | 用户界面 (2 skills)
 
-Configure Steedos with environment variables:
-- Core variables (server, database, cache)
-- Security and authentication
-- Email and storage configuration
-- Development vs. production settings
-- Docker configuration
+#### [applications](./applications/SKILL.md)
+Create applications to organize functionality, including application structure (.app.yml), object grouping, icons, visibility, admin menus, and mobile configuration.
 
-使用环境变量配置 Steedos:
-- 核心变量(服务器、数据库、缓存)
-- 安全和认证
-- 邮件和存储配置
-- 开发与生产环境设置
-- Docker 配置
+创建应用程序来组织功能,包括应用程序结构 (.app.yml)、对象分组、图标、可见性、管理菜单和移动端配置。
 
-### 🎨 User Interface | 用户界面
+#### [micro-pages](./micro-pages/SKILL.md)
+Build standalone custom pages using Amis framework, including dashboards, reports, custom forms, charts, and visualizations.
 
-#### [04-applications.md](./04-applications.md)
-**Application Definitions | 应用程序定义**
+使用 Amis 框架构建独立的自定义页面,包括仪表板、报表、自定义表单、图表和可视化。
 
-Create applications to organize functionality:
-- Application structure (.app.yml)
-- Object grouping
-- Icons and visibility
-- Admin menus
-- Mobile configuration
+### 📊 Data Modeling | 数据建模 (3 skills)
 
-创建应用程序来组织功能:
-- 应用程序结构 (.app.yml)
-- 对象分组
-- 图标和可见性
-- 管理菜单
-- 移动端配置
+#### [objects](./objects/SKILL.md)
+Define data models with ObjectQL, including object structure (.object.yml), standard fields, object properties, relationships, and complete examples.
 
-#### [13-micro-pages.md](./13-micro-pages.md)
-**Micro Pages | 微页面**
+使用 ObjectQL 定义数据模型,包括对象结构 (.object.yml)、标准字段、对象属性、关系和完整示例。
 
-Build custom pages using Amis framework:
-- Page structure (.page.yml)
-- Dashboard pages
-- Report pages
-- Custom forms
-- Charts and visualizations
+#### [object-fields](./object-fields/SKILL.md)
+Master all field types and configurations, including text, number, date/time, selection, boolean, relationship (lookup, master-detail), and special fields (formula, summary, file).
 
-使用 Amis 框架构建自定义页面:
-- 页面结构 (.page.yml)
-- 仪表板页面
-- 报表页面
-- 自定义表单
-- 图表和可视化
+掌握所有字段类型和配置,包括文本、数字、日期时间、选择、布尔、关系(查找、主从)和特殊字段(公式、汇总、文件)。
 
-### 📊 Data Modeling | 数据建模
+#### [object-list-views](./object-list-views/SKILL.md)
+Configure list views for data display, including structure, columns, filters, sorting, grouping, filter scopes, and dynamic filters.
 
-#### [05-objects.md](./05-objects.md)
-**Object Definitions | 对象定义**
+配置列表视图以显示数据,包括结构、列、筛选器、排序、分组、筛选范围和动态筛选器。
 
-Define data models with ObjectQL:
-- Object structure (.object.yml)
-- Standard fields
-- Object properties
-- Relationships
-- Complete examples
+### 🔒 Security | 安全 (1 skill)
 
-使用 ObjectQL 定义数据模型:
-- 对象结构 (.object.yml)
-- 标准字段
-- 对象属性
-- 关系
-- 完整示例
+#### [object-permissions](./object-permissions/SKILL.md)
+Control access with permission sets, including object-level, record-level, and field-level permissions, permission profiles, and dynamic permissions.
 
-#### [06-object-fields.md](./06-object-fields.md)
-**Field Types Reference | 字段类型参考**
+使用权限集控制访问,包括对象级、记录级和字段级权限、权限配置文件和动态权限。
 
-Master all field types and configurations:
-- Text, number, date/time fields
-- Selection and boolean fields
-- Relationship fields (lookup, master-detail)
-- Special fields (formula, summary, file)
-- Field properties and validations
+### ⚙️ Business Logic | 业务逻辑 (4 skills)
 
-掌握所有字段类型和配置:
-- 文本、数字、日期时间字段
-- 选择和布尔字段
-- 关系字段(查找、主从)
-- 特殊字段(公式、汇总、文件)
-- 字段属性和验证
+#### [object-buttons](./object-buttons/SKILL.md)
+Create custom actions and buttons, including action structure (.action.js), record and list actions, user interactions, API integration, and workflow automation.
 
-#### [08-object-list-views.md](./08-object-list-views.md)
-**List Views | 列表视图**
+创建自定义操作和按钮,包括操作结构 (.action.js)、记录和列表操作、用户交互、API 集成和工作流自动化。
 
-Configure list views for data display:
-- List view structure
-- Columns and filters
-- Sorting and grouping
-- Filter scopes
-- Dynamic filters
+#### [object-triggers](./object-triggers/SKILL.md)
+Implement business logic with triggers, including lifecycle (.trigger.js), before/after insert/update/delete hooks, data validation, auto-fill fields, external API calls, and best practices.
 
-配置列表视图以显示数据:
-- 列表视图结构
-- 列和筛选器
-- 排序和分组
-- 筛选范围
-- 动态筛选器
+使用触发器实现业务逻辑,包括生命周期 (.trigger.js)、插入/更新/删除前后钩子、数据验证、自动填充字段、外部 API 调用和最佳实践。
 
-### 🔒 Security | 安全
+#### [object-functions](./object-functions/SKILL.md)
+Create reusable functions for use in formulas, triggers, and actions, including function definition, helper functions, complex calculations, and data transformations.
 
-#### [09-object-permissions.md](./09-object-permissions.md)
-**Permissions and Security | 权限和安全**
+创建可复用函数用于公式、触发器和操作,包括函数定义、辅助函数、复杂计算和数据转换。
 
-Control access with permission sets:
-- Object-level permissions
-- Record-level permissions
-- Field-level permissions
-- Permission profiles
-- Dynamic permissions
+#### [object-micro-pages](./object-micro-pages/SKILL.md)
+Customize object detail and form pages, including object-specific pages, detail page layouts, custom form pages, dashboard pages, and page configurations using Amis.
 
-使用权限集控制访问:
-- 对象级权限
-- 记录级权限
-- 字段级权限
-- 权限配置文件
-- 动态权限
-
-### ⚙️ Business Logic | 业务逻辑
-
-#### [07-object-buttons.md](./07-object-buttons.md)
-**Actions and Buttons | 操作和按钮**
-
-Create custom actions and buttons:
-- Action structure (.action.js)
-- Record and list actions
-- User interactions
-- API integration
-- Workflow automation
-
-创建自定义操作和按钮:
-- 操作结构 (.action.js)
-- 记录和列表操作
-- 用户交互
-- API 集成
-- 工作流自动化
-
-#### [10-object-triggers.md](./10-object-triggers.md)
-**Server-Side Triggers | 服务端触发器**
-
-Implement business logic with triggers:
-- Trigger lifecycle (.trigger.js)
-- Before/after insert/update/delete
-- Data validation
-- Auto-fill fields
-- External API calls
-- Best practices
-
-使用触发器实现业务逻辑:
-- 触发器生命周期 (.trigger.js)
-- 插入/更新/删除前后
-- 数据验证
-- 自动填充字段
-- 外部 API 调用
-- 最佳实践
-
-#### [11-object-functions.md](./11-object-functions.md)
-**Custom Functions | 自定义函数**
-
-Create reusable functions:
-- Function definition
-- Usage in formulas and triggers
-- Helper functions
-- Complex calculations
-- Data transformations
-
-创建可复用函数:
-- 函数定义
-- 在公式和触发器中使用
-- 辅助函数
-- 复杂计算
-- 数据转换
-
-#### [12-object-micro-pages.md](./12-object-micro-pages.md)
-**Object Micro Pages | 对象微页面**
-
-Customize object detail and form pages:
-- Object-specific pages
-- Detail page layouts
-- Custom form pages
-- Dashboard pages
-- Page configurations
-
-自定义对象详情和表单页面:
-- 对象特定页面
-- 详情页布局
-- 自定义表单页面
-- 仪表板页面
-- 页面配置
-
-## How to Use | 如何使用
-
-### For AI Coding Assistants | 用于 AI 编程助手
-
-These skills are designed to work with AI coding assistants like:
-- GitHub Copilot
-- Cursor
-- Claude
-- ChatGPT
-
-**Usage:**
-1. Reference specific skill files in your prompts
-2. AI assistants can read these files as context
-3. Get accurate Steedos-specific code generation
-
-**使用方法:**
-1. 在提示词中引用特定的技能文件
-2. AI 助手可以将这些文件作为上下文读取
-3. 获得准确的 Steedos 特定代码生成
-
-### For Developers | 用于开发者
-
-Use as reference documentation:
-- Quick syntax lookup
-- Copy-paste examples
-- Best practices guide
-- Troubleshooting help
-
-用作参考文档:
-- 快速语法查找
-- 复制粘贴示例
-- 最佳实践指南
-- 故障排除帮助
-
-### For Learning | 用于学习
-
-Follow the skills in order:
-1. Start with Foundation (01-03)
-2. Learn Data Modeling (05-06, 08)
-3. Add Business Logic (07, 10-11)
-4. Build UI (04, 12-13)
-5. Secure Your App (09)
-
-按顺序学习技能:
-1. 从基础开始 (01-03)
-2. 学习数据建模 (05-06, 08)
-3. 添加业务逻辑 (07, 10-11)
-4. 构建 UI (04, 12-13)
-5. 保护应用 (09)
+自定义对象详情和表单页面,包括对象特定页面、详情页布局、自定义表单页面、仪表板页面和使用 Amis 的页面配置。
 
 ## Quick Reference | 快速参考
 
-### By Task | 按任务
+### By Task | 按任务查找
 
-| What You Want to Do | Read This Skill |
-|---------------------|----------------|
-| Create a new Steedos project | 01-project-format.md |
-| Create a package | 02-package-format.md |
-| Configure environment | 03-environment-variables.md |
-| Define data models | 05-objects.md, 06-object-fields.md |
-| Create list views | 08-object-list-views.md |
-| Add validation logic | 10-object-triggers.md |
-| Create custom buttons | 07-object-buttons.md |
-| Build dashboards | 13-micro-pages.md |
-| Configure permissions | 09-object-permissions.md |
-| Create custom pages | 12-object-micro-pages.md, 13-micro-pages.md |
+| Task | Skill |
+|------|-------|
+| Create a new Steedos project | [project-format](./project-format/SKILL.md) |
+| Create a package | [package-format](./package-format/SKILL.md) |
+| Configure environment | [environment-variables](./environment-variables/SKILL.md) |
+| Define data models | [objects](./objects/SKILL.md), [object-fields](./object-fields/SKILL.md) |
+| Create list views | [object-list-views](./object-list-views/SKILL.md) |
+| Add validation logic | [object-triggers](./object-triggers/SKILL.md) |
+| Create custom buttons | [object-buttons](./object-buttons/SKILL.md) |
+| Build dashboards | [micro-pages](./micro-pages/SKILL.md) |
+| Configure permissions | [object-permissions](./object-permissions/SKILL.md) |
+| Create custom pages | [object-micro-pages](./object-micro-pages/SKILL.md), [micro-pages](./micro-pages/SKILL.md) |
 
-### By File Type | 按文件类型
+### By File Type | 按文件类型查找
 
 | File Type | Skill Reference |
 |-----------|----------------|
-| `package.json` | 01, 02 |
-| `steedos-config.yml` | 01 |
-| `.env` | 03 |
-| `*.app.yml` | 04 |
-| `*.object.yml` | 05, 06, 08, 09 |
-| `*.action.js` | 07 |
-| `*.trigger.js` | 10 |
-| `*.page.yml` | 12, 13 |
-| Functions | 11 |
+| `package.json` | [project-format](./project-format/SKILL.md), [package-format](./package-format/SKILL.md) |
+| `steedos-config.yml` | [project-format](./project-format/SKILL.md) |
+| `.env` | [environment-variables](./environment-variables/SKILL.md) |
+| `*.app.yml` | [applications](./applications/SKILL.md) |
+| `*.object.yml` | [objects](./objects/SKILL.md), [object-fields](./object-fields/SKILL.md) |
+| `*.action.js` | [object-buttons](./object-buttons/SKILL.md) |
+| `*.trigger.js` | [object-triggers](./object-triggers/SKILL.md) |
+| `*.page.yml` | [object-micro-pages](./object-micro-pages/SKILL.md), [micro-pages](./micro-pages/SKILL.md) |
+| Functions | [object-functions](./object-functions/SKILL.md) |
 
 ## Technology Stack | 技术栈
 
@@ -355,25 +162,84 @@ Follow the skills in order:
 
 **不是 Python!** 这是一个 JavaScript/Node.js 平台。
 
-## File Size Summary | 文件大小概览
+## How to Use | 如何使用
 
+### For AI Coding Assistants | 用于 AI 编程助手
+
+These skills follow the [Anthropic Agent Skills specification](https://github.com/anthropics/skills) and work with:
+- Claude (via Agent Skills API)
+- GitHub Copilot
+- Cursor
+- Other AI coding assistants
+
+**Usage:**
+AI assistants can automatically discover and load skills based on context, or you can reference them explicitly.
+
+**使用方法:**
+AI 助手可以根据上下文自动发现和加载技能,或者您可以明确引用它们。
+
+### For Developers | 用于开发者
+
+Use as reference documentation:
+- Quick syntax lookup
+- Copy-paste examples
+- Best practices guide
+- Troubleshooting help
+
+用作参考文档:
+- 快速语法查找
+- 复制粘贴示例
+- 最佳实践指南
+- 故障排除帮助
+
+### For Learning | 用于学习
+
+Recommended learning path:
+
+1. **Foundation** (start here)
+   - [project-format](./project-format/SKILL.md)
+   - [package-format](./package-format/SKILL.md)
+   - [environment-variables](./environment-variables/SKILL.md)
+
+2. **Data Modeling**
+   - [objects](./objects/SKILL.md)
+   - [object-fields](./object-fields/SKILL.md)
+   - [object-list-views](./object-list-views/SKILL.md)
+
+3. **Business Logic**
+   - [object-triggers](./object-triggers/SKILL.md)
+   - [object-buttons](./object-buttons/SKILL.md)
+   - [object-functions](./object-functions/SKILL.md)
+
+4. **User Interface**
+   - [applications](./applications/SKILL.md)
+   - [object-micro-pages](./object-micro-pages/SKILL.md)
+   - [micro-pages](./micro-pages/SKILL.md)
+
+5. **Security**
+   - [object-permissions](./object-permissions/SKILL.md)
+
+## Skill Format | 技能格式
+
+Each skill follows the Anthropic SKILL.md specification:
+
+### YAML Frontmatter
+
+```yaml
+---
+name: skill-name
+description: |
+  What the skill covers and when to use it (max 1024 chars)
+---
 ```
-01-project-format.md          ~7 KB   | Project structure
-02-package-format.md         ~11 KB   | Package development
-03-environment-variables.md   ~9 KB   | Environment config
-04-applications.md           ~11 KB   | Application definitions
-05-objects.md                ~16 KB   | Object definitions
-06-object-fields.md          ~23 KB   | Field types reference
-07-object-buttons.md         ~20 KB   | Actions and buttons
-08-object-list-views.md      ~18 KB   | List views
-09-object-permissions.md     ~19 KB   | Security and permissions
-10-object-triggers.md        ~28 KB   | Server-side triggers
-11-object-functions.md       ~17 KB   | Custom functions
-12-object-micro-pages.md     ~23 KB   | Object pages
-13-micro-pages.md            ~25 KB   | Standalone pages
-───────────────────────────────────────
-Total                       ~227 KB   | Complete documentation
-```
+
+### Markdown Body
+
+Complete documentation with:
+- Bilingual content (English and Chinese)
+- Syntax references and examples
+- Best practices
+- Troubleshooting guides
 
 ## Contributing | 贡献
 
@@ -383,6 +249,7 @@ To improve these skills:
 2. **Suggest Improvements**: Share better examples or explanations
 3. **Add Examples**: Contribute real-world use cases
 4. **Translate**: Help with translations and localization
+5. **Follow Spec**: Maintain [Anthropic SKILL.md format](https://github.com/anthropics/skills)
 
 改进这些技能:
 
@@ -390,6 +257,7 @@ To improve these skills:
 2. **建议改进**: 分享更好的示例或说明
 3. **添加示例**: 贡献实际用例
 4. **翻译**: 帮助翻译和本地化
+5. **遵循规范**: 保持 [Anthropic SKILL.md 格式](https://github.com/anthropics/skills)
 
 ## Related Resources | 相关资源
 
@@ -406,10 +274,19 @@ To improve these skills:
 - 🏠 [Steedos Website](https://www.steedos.com/)
 - 💬 [Community Discussions](https://github.com/steedos/steedos-platform/discussions)
 - 📦 [Steedos Templates](https://github.com/steedos/steedos-templates)
+- 🤖 [Anthropic Agent Skills](https://github.com/anthropics/skills)
+
+## Statistics | 统计
+
+- **Total Skills**: 13
+- **Total Documentation**: ~250KB
+- **Format**: Anthropic SKILL.md specification
+- **Languages**: English + Chinese (bilingual)
 
 ## Version | 版本
 
-**Version**: 1.0.0
+**Version**: 2.0.0
+**Format**: Anthropic Agent Skills
 **Last Updated**: 2026-04-13
 **Steedos Platform Version**: 3.0.x
 
@@ -422,6 +299,6 @@ These skills are part of the Steedos Platform project and follow the same MIT li
 ---
 
 <p align="center">
-  <strong>🚀 Happy Coding with Steedos! 🚀</strong><br>
-  <em>用 Steedos 加速你的开发! 🚀</em>
+  <strong>🚀 Anthropic-Compatible Skills for Steedos! 🚀</strong><br>
+  <em>符合 Anthropic 规范的 Steedos 技能库! 🚀</em>
 </p>

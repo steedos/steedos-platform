@@ -1,3 +1,8 @@
+---
+name: object-buttons
+description: |
+  Create custom actions and buttons for Steedos objects. Use this skill to define object actions that appear on record pages or list views, enabling custom workflows, integrations, and batch operations. Covers action properties (label, visible, on, todo), display locations (record, list, record_more), visibility control, user input dialogs, batch operations, API integrations, and UI interactions. Includes complete examples and best practices.
+---
 # Steedos Object Actions | Steedos 对象动作
 
 ## Overview | 概述
