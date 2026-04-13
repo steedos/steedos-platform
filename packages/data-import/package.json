@@ -1,15 +1,15 @@
 {
   "name": "@steedos/data-import",
-  "version": "3.0.13-beta.59",
+  "version": "3.0.13",
   "main": "package.service.js",
   "license": "MIT",
   "scripts": {
     "build": "rm -rf ./lib && tsc"
   },
   "dependencies": {
-    "@steedos/metadata-api": "3.0.13-beta.59",
-    "@steedos/metadata-core": "3.0.13-beta.59",
-    "@steedos/objectql": "3.0.13-beta.59",
+    "@steedos/metadata-api": "3.0.13",
+    "@steedos/metadata-core": "3.0.13",
+    "@steedos/objectql": "3.0.13",
     "bson": "4.6.4",
     "csvtojson": "~2.0.10",
     "dotenv-flow": "^3.1.0",
@@ -22,5 +22,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "07f2f1ee5f998f9f0507608ea0f71e478e9b5ef7"
+  "gitHead": "a71381a476ebd1183cd2c7096005b7d99820e21c"
 }
