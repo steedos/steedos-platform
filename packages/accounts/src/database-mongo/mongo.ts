@@ -1049,8 +1049,9 @@ export class Mongo implements DatabaseInterface {
       token: token,
       when: when,
     };
+    const now = new Date();
     let hashedToken: any = hashStampedToken(stampedAuthToken);
-    hashedToken.created = new Date();
+    hashedToken.created = now;
     hashedToken.is_phone = is_phone;
     hashedToken.is_tablet = is_tablet;
     await this.collection.updateOne(
@@ -1059,6 +1060,9 @@ export class Mongo implements DatabaseInterface {
         $push: {
           "services.resume.loginTokens": hashedToken,
         },
+        $set: {
+          last_logon: now,
+        },
       },
     );
 
@@ -1066,7 +1070,7 @@ export class Mongo implements DatabaseInterface {
       { user: userId },
       {
         $set: {
-          last_logon: new Date(),
+          last_logon: now,
         },
       },
     );
