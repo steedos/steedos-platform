@@ -2,12 +2,12 @@
 name: micro-pages
 description: |
   Build standalone custom pages using Amis low-code framework, independent of
-object records. Use this skill to create dashboards, reports, custom forms,
-and any custom UI. Covers page definition structure in main/default/pages/,
-Amis schema configuration, service components for dynamic data, responsive
-design with grids, chart integration, form wizards, and tab navigation.
-Includes complete examples for sales dashboards, reports, custom forms, and
-analytics.
+  object records. Use this skill to create dashboards, reports, custom forms,
+  and any custom UI. Covers page definition structure in main/default/pages/,
+  Amis schema configuration, service components for dynamic data, responsive
+  design with grids, chart integration, form wizards, and tab navigation.
+  Includes complete examples for sales dashboards, reports, custom forms, and
+  analytics.
 ---
 # Steedos Standalone Micro Pages | Steedos 独立微页面
 

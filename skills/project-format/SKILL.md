@@ -2,10 +2,10 @@
 name: project-format
 description: |
   Learn how to create and structure Steedos projects using Node.js/TypeScript.
-Covers minimal project requirements, package.json configuration,
-steedos-config.yml setup, directory structure, environment variables, and
-installation procedures. Use when creating a new Steedos project or
-understanding project organization.
+  Covers minimal project requirements, package.json configuration,
+  steedos-config.yml setup, directory structure, environment variables, and
+  installation procedures. Use when creating a new Steedos project or
+  understanding project organization.
 ---
 
 # Steedos Project Format | Steedos 项目格式
