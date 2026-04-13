@@ -1,7 +1,13 @@
 ---
 name: object-fields
 description: |
-  Comprehensive guide to all Steedos field types and their configurations. Covers text fields (text, textarea, HTML, code, URL, email, password), numeric fields (number, currency, percent, autonumber), date/time fields, boolean/selection fields (boolean, toggle, select), relationship fields (lookup, master-detail), computed fields (formula, summary), file/media types, and special field types. Includes field properties, validation, default values, dependencies, and best practices.
+  Comprehensive guide to all Steedos field types and their configurations.
+Covers text fields (text, textarea, HTML, code, URL, email, password), numeric
+fields (number, currency, percent, autonumber), date/time fields,
+boolean/selection fields (boolean, toggle, select), relationship fields
+(lookup, master-detail), computed fields (formula, summary), file/media types,
+and special field types. Includes field properties, validation, default
+values, dependencies, and best practices.
 ---
 # Steedos Object Fields | Steedos 对象字段
 

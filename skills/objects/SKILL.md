@@ -1,7 +1,12 @@
 ---
 name: objects
 description: |
-  Defines Steedos object data models using YAML. Objects represent database tables with fields, permissions, list views, and behaviors. Use this skill to create and configure objects, define standard and custom fields, set up relationships, configure feature flags, and establish naming conventions. Covers object file structure, property configuration, field organization, validation rules, and performance optimization.
+  Defines Steedos object data models using YAML. Objects represent database
+tables with fields, permissions, list views, and behaviors. Use this skill to
+create and configure objects, define standard and custom fields, set up
+relationships, configure feature flags, and establish naming conventions.
+Covers object file structure, property configuration, field organization,
+validation rules, and performance optimization.
 ---
 
 # Steedos Objects | Steedos 对象定义

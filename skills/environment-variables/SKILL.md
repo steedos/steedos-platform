@@ -1,7 +1,11 @@
 ---
 name: environment-variables
 description: |
-  Configure Steedos applications using environment variables for server settings, databases (MongoDB, PostgreSQL/MySQL), message queues (Redis/NATS), file storage, authentication, email, and localization. Covers development vs production configurations, Docker setup, and security best practices. Use when setting up or troubleshooting Steedos deployments.
+  Configure Steedos applications using environment variables for server
+settings, databases (MongoDB, PostgreSQL/MySQL), message queues (Redis/NATS),
+file storage, authentication, email, and localization. Covers development vs
+production configurations, Docker setup, and security best practices. Use when
+setting up or troubleshooting Steedos deployments.
 ---
 
 # Steedos Environment Variables | Steedos 环境变量

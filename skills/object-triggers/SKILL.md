@@ -1,7 +1,13 @@
 ---
 name: object-triggers
 description: |
-  Create server-side JavaScript triggers that execute automatically on data changes. Use this skill for data validation, automation, notifications, and external system integration. Covers trigger lifecycle hooks (beforeInsert, afterInsert, beforeUpdate, afterUpdate, beforeDelete, afterDelete), context variables (doc, previousDoc, userId, spaceId), complete examples for validation, auto-fill, notifications, cascade operations, and API integration. Important: triggers must be in main/default/triggers/ folder.
+  Create server-side JavaScript triggers that execute automatically on data
+changes. Use this skill for data validation, automation, notifications, and
+external system integration. Covers trigger lifecycle hooks (beforeInsert,
+afterInsert, beforeUpdate, afterUpdate, beforeDelete, afterDelete), context
+variables (doc, previousDoc, userId, spaceId), complete examples for
+validation, auto-fill, notifications, cascade operations, and API integration.
+Important: triggers must be in main/default/triggers/ folder.
 ---
 # Steedos Object Triggers | Steedos 对象触发器
 

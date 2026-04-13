@@ -1,7 +1,13 @@
 ---
 name: object-permissions
 description: |
-  Configure comprehensive multi-level permission control for Steedos objects. Use this skill to set up object-level permissions (CRUD operations), record-level permissions (ownership, company-based, sharing rules), and field-level permissions (read/write access). Covers permission sets (user, admin, custom), permission properties (allowCreate, allowRead, allowEdit, allowDelete, viewAllRecords, modifyAllRecords), field visibility, and dynamic permissions with triggers.
+  Configure comprehensive multi-level permission control for Steedos objects.
+Use this skill to set up object-level permissions (CRUD operations),
+record-level permissions (ownership, company-based, sharing rules), and
+field-level permissions (read/write access). Covers permission sets (user,
+admin, custom), permission properties (allowCreate, allowRead, allowEdit,
+allowDelete, viewAllRecords, modifyAllRecords), field visibility, and dynamic
+permissions with triggers.
 ---
 # Steedos Object Permissions | Steedos 对象权限
 

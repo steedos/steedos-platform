@@ -1,7 +1,12 @@
 ---
 name: object-list-views
 description: |
-  Define and configure list views for displaying Steedos object records in table format. Use this skill to control visible columns, filtering, sorting, and grouping. Covers list view structure, column configuration (including related fields, formulas, summaries), filter operators and conditions, date-based filters, quick filter sidebars, sorting options, and mobile column optimization. Includes examples for various use cases.
+  Define and configure list views for displaying Steedos object records in table
+format. Use this skill to control visible columns, filtering, sorting, and
+grouping. Covers list view structure, column configuration (including related
+fields, formulas, summaries), filter operators and conditions, date-based
+filters, quick filter sidebars, sorting options, and mobile column
+optimization. Includes examples for various use cases.
 ---
 # Steedos Object List Views | Steedos 对象列表视图
 

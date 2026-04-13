@@ -1,7 +1,11 @@
 ---
 name: applications
 description: |
-  Create and configure Steedos applications that group related objects, pages, and functionality. Learn about application properties, icon configuration, object assignment, mobile settings, admin menus, visibility control, and permission-based access. Use when organizing objects into logical business applications or creating navigation structures.
+  Create and configure Steedos applications that group related objects, pages,
+and functionality. Learn about application properties, icon configuration,
+object assignment, mobile settings, admin menus, visibility control, and
+permission-based access. Use when organizing objects into logical business
+applications or creating navigation structures.
 ---
 
 # Steedos Applications | Steedos 应用程序

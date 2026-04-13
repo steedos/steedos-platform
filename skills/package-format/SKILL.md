@@ -1,7 +1,11 @@
 ---
 name: package-format
 description: |
-  Understand Steedos package structure and organization. Learn how to create self-contained, reusable modules with objects, business logic, and UI components using Moleculer microservices. Covers package.json setup, service configuration, metadata organization, naming conventions, and best practices. Use when developing or organizing Steedos packages.
+  Understand Steedos package structure and organization. Learn how to create
+self-contained, reusable modules with objects, business logic, and UI
+components using Moleculer microservices. Covers package.json setup, service
+configuration, metadata organization, naming conventions, and best practices.
+Use when developing or organizing Steedos packages.
 ---
 
 # Steedos Package Format | Steedos 软件包格式
