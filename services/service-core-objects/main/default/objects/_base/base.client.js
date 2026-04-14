@@ -153,7 +153,7 @@ Steedos.StandardObjects = {
                         console.error('instanceId not exists');
                         return;
                     }
-                    Steedos.authRequest(Steedos.absoluteUrl(`api/workflow/instance/check_is_removed/${instanceId}`), {
+                    Steedos.authRequest(Steedos.absoluteUrl(`/api/workflow/instance/check_is_removed/${instanceId}`), {
                         type: 'POST',
                         async: false,
                         data: JSON.stringify({
@@ -162,11 +162,10 @@ Steedos.StandardObjects = {
                         }),
                         contentType: 'application/json',
                         success: function (res) {
-                            Steedos.openWindow(Steedos.absoluteUrl(`api/workflow/instance/${instanceId}`))
+                            Steedos.openWindow(Steedos.absoluteUrl(`/api/workflow/instance/${instanceId}`))
                         },
                         error: function (res) {
-                            // toastr.error('未找到申请单，可能已被删除，请重新发起审批。');
-                            FlowRouter.reload();
+                            SteedosUI.message.error("未找到申请单，可能已被删除，请重新发起审")
                         }
                     });
                 }
