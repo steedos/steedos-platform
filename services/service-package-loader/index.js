@@ -110,7 +110,8 @@ module.exports = {
             // 扫描软件包中的元数据, 如果有 .object.js 文件, 则输出警告信息
             const filePatten2 = [
                 path.join(packagePath, "**", "*.object.js"),
-                "!" + path.join(packagePath, "node_modules"),
+                "!" + path.join(packagePath, "node_modules", "**"),
+                "!" + path.join(packagePath, "**", "node_modules", "**"),
             ]
             const matchedPaths2 = metaDataCore.syncMatchFiles(filePatten2);
             for await (const filePath of matchedPaths2) {
