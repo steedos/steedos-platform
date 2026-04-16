@@ -4,6 +4,9 @@ import { use } from "i18next";
 import { useEffect, useState } from "react";
 import { useParams, useLocation } from 'react-router-dom';
 
+// Delay before triggering popstate event to ensure AMIS components are ready
+const MENU_UPDATE_DELAY = 100;
+
 const getHeaderSchema = (props) => {
     const { logoSrc, customButtons, className } = props
     const isMobile = window.innerWidth <= 768
@@ -237,6 +240,22 @@ export const AppHeader = () => {
                         document.documentElement.style.setProperty('--colors-link-5', `var(--color-${linkColor}-600)`);
                         document.documentElement.style.setProperty('--colors-link-6', `var(--color-${linkColor}-500)`);
                         document.documentElement.style.setProperty('--colors-link-7', `var(--color-${linkColor}-400)`);
+                        
+                        // Trigger popstate event after app menu data is loaded to update active menu item
+                        // This ensures the correct tab is highlighted based on current URL
+                        setTimeout(() => {
+                            // Use fallback for older browsers that don't support PopStateEvent constructor
+                            let popStateEvent;
+                            try {
+                                popStateEvent = new PopStateEvent('popstate', {
+                                    state: window.history.state
+                                });
+                            } catch (e) {
+                                // Fallback for older browsers
+                                popStateEvent = new Event('popstate');
+                            }
+                            window.dispatchEvent(popStateEvent);
+                        }, MENU_UPDATE_DELAY);
                     }
                 }catch(err){
                     console.error('Failed to fetch app data:', err);
