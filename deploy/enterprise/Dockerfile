@@ -1,13 +1,13 @@
 FROM ubuntu:focal
 
 # The env variables are needed for Steedos server to correctly handle non-roman scripts like Arabic.
-ENV LANG C.UTF-8
-ENV LC_ALL C.UTF-8
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Etc/UTC
 
 RUN apt-get update || : && apt-get install -y \
-    python \
+    python3 \
     curl \
     jq \
     build-essential 
@@ -108,7 +108,7 @@ RUN rm -rf \
 WORKDIR /opt/steedos
 
 # ------------------------------------------------------------------------
-ENV TMP /tmp/steedos
+ENV TMP=/tmp/steedos
 ENV NGINX_WWW_PATH="$TMP/www"
 
 RUN cd - \
@@ -119,7 +119,7 @@ RUN cd - \
   && node prepare-image.mjs
 
 
-ENV PATH /opt/steedos/utils/node_modules/.bin:/opt/java/bin:$PATH
+ENV PATH=/opt/steedos/utils/node_modules/.bin:/opt/java/bin:$PATH
 
 LABEL com.centurylinklabs.watchtower.lifecycle.pre-check=/watchtower-hooks/pre-check.sh
 LABEL com.centurylinklabs.watchtower.lifecycle.pre-update=/watchtower-hooks/pre-update.sh
