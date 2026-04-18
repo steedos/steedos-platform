@@ -22,10 +22,53 @@ import {
 } from "http-proxy-middleware";
 
 import project from "../package.json";
-import { AllExceptionsFilter } from "@builder6/core";
+import { AllExceptionsFilter, MongodbService } from "@builder6/core";
 import { HybridAdapter } from "@builder6/core";
 import express from "express";
 import { readFileSync } from "fs";
+
+// Cached OEM favicon URL (with TTL)
+let _cachedFaviconUrl: string | undefined;
+let _faviconCacheExpiry = 0;
+const FAVICON_CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+let _mongodbService: MongodbService | null = null;
+
+async function getOemFaviconUrl(): Promise<string> {
+  const now = Date.now();
+  if (_cachedFaviconUrl !== undefined && now < _faviconCacheExpiry) {
+    return _cachedFaviconUrl;
+  }
+
+  try {
+    const platform = ((global as any).Steedos?.settings?.PUBLIC_SETTINGS || {}).platform || {};
+    if (!platform.is_oem) {
+      _cachedFaviconUrl = '';
+      _faviconCacheExpiry = now + FAVICON_CACHE_TTL;
+      return '';
+    }
+
+    const tenantId = process.env.STEEDOS_TENANT_ID;
+    if (!tenantId || !_mongodbService) {
+      _cachedFaviconUrl = '';
+      _faviconCacheExpiry = now + FAVICON_CACHE_TTL;
+      return '';
+    }
+
+    const spaceDoc = await _mongodbService.findOne('spaces', { _id: tenantId }, { projection: { favicon: 1 } });
+
+    if (spaceDoc && spaceDoc.favicon) {
+      _cachedFaviconUrl = `/api/v6/files/cfs.avatars.filerecord/${spaceDoc.favicon}`;
+    } else {
+      _cachedFaviconUrl = '';
+    }
+    _faviconCacheExpiry = now + FAVICON_CACHE_TTL;
+  } catch (e) {
+    // Don't cache on error so we retry next request
+    return '';
+  }
+
+  return _cachedFaviconUrl;
+}
 
 export async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -40,6 +83,7 @@ export async function bootstrap() {
   });
 
   global["app"] = app;
+  _mongodbService = app.get(MongodbService);
   app.useLogger(app.get(Logger));
   app.useGlobalFilters(new AllExceptionsFilter());
   app.useWebSocketAdapter(new HybridAdapter(app));
@@ -197,7 +241,7 @@ export async function bootstrap() {
       "/home",
       "/home/:spaceId",
     ];
-    expressApp.get(frontendRoutes, (req, res) => {
+    expressApp.get(frontendRoutes, async (req, res) => {
       const indexPath = join(webappDistPath, "index.html");
       // 同步读取 index.html 内容
       let indexHtml = readFileSync(indexPath, "utf8");
@@ -205,6 +249,15 @@ export async function bootstrap() {
         /https:\/\/unpkg\.com/g,
         process.env.STEEDOS_UNPKG_URL || "https://unpkg.com",
       );
+
+      // OEM favicon: replace default favicon with custom one
+      const oemFaviconUrl = await getOemFaviconUrl();
+      if (oemFaviconUrl) {
+        indexHtml = indexHtml.replace(
+          /href="\/images\/logo\.svg"/,
+          `href="${oemFaviconUrl}"`,
+        );
+      }
       // 你的自定义脚本
       const BUILDER6_PUBLIC_SETTINGS = {
         unpkgUrl: process.env.STEEDOS_UNPKG_URL || "https://unpkg.com",

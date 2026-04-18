@@ -54,7 +54,7 @@ export class AppMoleculer extends Service {
             "objectql.directFind",
             {
               objectName: "spaces",
-              query: { top: 1, fields: ["_id"], sort: "created desc" },
+              query: { top: 1, fields: ["_id"], sort: "created asc" },
             },
             {},
           );

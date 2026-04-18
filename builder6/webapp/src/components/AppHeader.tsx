@@ -1,8 +1,26 @@
 import { AmisRender } from "./AmisRender"
 import { Builder } from '@builder6/react';
-import { use } from "i18next";
 import { useEffect, useState } from "react";
 import { useParams, useLocation } from 'react-router-dom';
+
+const isTrueValue = (value: any) => value === true || value === 'true';
+
+const setBrowserFavicon = (faviconUrl?: string) => {
+    if (!faviconUrl) {
+        return;
+    }
+    const faviconLink: any = document.querySelector('link[rel*="icon"], link[rel*="shortcut"]');
+    if (faviconLink) {
+        if (faviconLink.href !== faviconUrl) {
+            faviconLink.href = faviconUrl;
+        }
+        return;
+    }
+    const newFaviconLink = document.createElement('link');
+    newFaviconLink.rel = 'icon';
+    newFaviconLink.href = faviconUrl;
+    document.head.appendChild(newFaviconLink);
+};
 
 const getHeaderSchema = (props) => {
     const { logoSrc, customButtons, className } = props
@@ -174,9 +192,27 @@ export const AppHeader = () => {
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const params = useParams();
-    let { appId = null, objectName } = params;
+    let { appId = null } = params;
     const isMobile = window.innerWidth < 1024;
     let [ app, setApp ] = useState(null);
+    const isOem = isTrueValue(Builder.settings?.platform?.is_oem);
+    const oemSpaceAvatar = Builder.settings?.context?.user?.space?.avatar;
+    const oemSpaceFavicon = Builder.settings?.context?.user?.space?.favicon;
+
+    useEffect(() => {
+        if (isOem) {
+            document.body.classList.add('is-oem');
+        } else {
+            document.body.classList.remove('is-oem');
+        }
+    }, [isOem]);
+
+    useEffect(() => {
+        if (isOem && oemSpaceFavicon) {
+            setBrowserFavicon(`/api/v6/files/cfs.avatars.filerecord/${oemSpaceFavicon}`);
+        }
+    }, [isOem, oemSpaceFavicon]);
+
     useEffect(() => {
         const fetchApp = async () => {
             if (appId === '-' || appId == null) {
@@ -258,24 +294,8 @@ export const AppHeader = () => {
 
     let logoSrc = '/images/logo.svg';
 
-    if(Builder.settings?.platform?.is_oem && Builder.settings?.context?.user?.space?.avatar){
-        logoSrc = '/api/v6/files/cfs.avatars.filerecord/' + Builder.settings.context.user.space.avatar
-    }
-
-    const faviconLink: any = document.querySelector('link[rel*="icon"], link[rel*="shortcut"]');
-
-    let favicon = '/images/logo.svg';
-    if(Builder.settings?.platform?.is_oem && Builder.settings?.context?.user?.space?.favicon){
-        favicon = "/api/v6/files/cfs.avatars.filerecord/" + Builder.settings.context.user.space.favicon;
-    }
-
-    if (faviconLink) {
-        faviconLink.href = favicon;
-    }else{
-        const newFaviconLink = document.createElement('link');
-        newFaviconLink.rel = 'icon';
-        newFaviconLink.href = favicon;
-        document.head.appendChild(newFaviconLink);
+    if(isOem && oemSpaceAvatar){
+        logoSrc = '/api/v6/files/cfs.avatars.filerecord/' + oemSpaceAvatar;
     }
 
     const headerSchema = getHeaderSchema({logoSrc, appId});

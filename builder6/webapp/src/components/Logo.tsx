@@ -9,13 +9,18 @@ interface Props {
   logoUrl?: string;
 }
 
-const Logo = ({ tenant, location }: any) => {
+const Logo = ({ tenant, settings }: any) => {
+  const platform = settings?.platform || {};
+  const isOem = platform?.is_oem === true || platform?.is_oem === 'true';
+  const tenantConfig = settings?.tenant || {};
   let logoUrl = `${localizeMessage('accounts.logoURL')}`;
-  if (tenant.logo_url) {
-    logoUrl = tenant.logo_url
+  if (isOem && (tenant?.logo_url || tenantConfig?.logo_url)) {
+    logoUrl = tenant?.logo_url || tenantConfig?.logo_url;
+  } else if (tenant?.logo_url) {
+    logoUrl = tenant.logo_url;
   }
   return (<div>
-    <img src={logoUrl} className='h-10'></img>
+    <img src={logoUrl} className='h-10' alt='logo'></img>
     </div>
   )
 };
@@ -23,6 +28,7 @@ const Logo = ({ tenant, location }: any) => {
 function mapStateToProps(state: any) {
   return {
       tenant: getTenant(state),
+      settings: getSettings(state),
   };
 }
 

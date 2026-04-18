@@ -415,6 +415,24 @@ class Login extends React.Component {
 
   componentDidMount() {
     this.initGeetest()
+
+    const platform = this.props.settings?.platform || {};
+    const tenant = this.props.tenant || {};
+    const isOem = platform.is_oem === true || platform.is_oem === 'true';
+    const faviconUrl = tenant.favicon_url || this.props.settings?.tenant?.favicon_url;
+    if (isOem && faviconUrl) {
+      const faviconLink = document.querySelector('link[rel*="icon"], link[rel*="shortcut"]');
+      if (faviconLink) {
+        if (faviconLink.href !== faviconUrl) {
+          faviconLink.href = faviconUrl;
+        }
+      } else {
+        const newFaviconLink = document.createElement('link');
+        newFaviconLink.rel = 'icon';
+        newFaviconLink.href = faviconUrl;
+        document.head.appendChild(newFaviconLink);
+      }
+    }
   }
 
   render() {

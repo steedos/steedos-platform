@@ -51,7 +51,7 @@ export const getSettings =
       tenant._id = process.env.STEEDOS_TENANT_ID;
     }
 
-    const platform = (global as any).Steedos.settings.public?.platform || {};
+    const platform = (global.Steedos.settings.PUBLIC_SETTINGS || {}).platform || {};
 
     if (tenant._id) {
       let spaceDoc = await db.findOne("spaces", tenant._id, {
@@ -68,7 +68,13 @@ export const getSettings =
       let steedosService = getSteedosService();
       if (steedosService && spaceDoc) {
         _.assignIn(tenant, spaceDoc);
-        if (spaceDoc.account_logo) {
+        if (spaceDoc.avatar) {
+          tenant.logo_url =
+            steedosService +
+            "api/v6/files/cfs.avatars.filerecord/" +
+            spaceDoc.avatar;
+        }
+        else if (spaceDoc.account_logo) {
           tenant.logo_url =
             steedosService +
             "api/v6/files/cfs.avatars.filerecord/" +
@@ -78,12 +84,7 @@ export const getSettings =
             steedosService +
             "api/v6/files/cfs.avatars.filerecord/" +
             spaceDoc.avatar_dark;
-        } else if (spaceDoc.avatar) {
-          tenant.logo_url =
-            steedosService +
-            "api/v6/files/cfs.avatars.filerecord/" +
-            spaceDoc.avatar;
-        }
+        } 
         if (spaceDoc.background) {
           tenant.background_url =
             steedosService +

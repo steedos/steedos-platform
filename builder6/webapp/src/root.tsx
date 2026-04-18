@@ -30,6 +30,23 @@ if(_window['Steedos']){
 const Root: React.FC<any> = (props) => {
   const [configLoaded, setConfigLoaded] = useState<boolean>(false);
 
+  const setBrowserFavicon = (faviconUrl?: string) => {
+    if (!faviconUrl) {
+      return;
+    }
+    const faviconLink = document.querySelector('link[rel*="icon"], link[rel*="shortcut"]') as HTMLLinkElement;
+    if (faviconLink) {
+      if (faviconLink.href !== faviconUrl) {
+        faviconLink.href = faviconUrl;
+      }
+      return;
+    }
+    const newFaviconLink = document.createElement('link');
+    newFaviconLink.rel = 'icon';
+    newFaviconLink.href = faviconUrl;
+    document.head.appendChild(newFaviconLink);
+  };
+
   useEffect(() => {
     const uid = new URLSearchParams(window.location.search).get('uid');
     if (uid) {
@@ -54,12 +71,17 @@ const Root: React.FC<any> = (props) => {
 
   useEffect(() => {
     if (props.tenant && props.tenant.favicon_url) {
-      const faviconLink = document.querySelector('link[rel="shortcut icon"]') as HTMLLinkElement;
-      if (faviconLink) {
-        faviconLink.href = props.tenant.favicon_url;
-      }
+      setBrowserFavicon(props.tenant.favicon_url);
+      try { localStorage.setItem('steedos_favicon_url', props.tenant.favicon_url); } catch (e) {}
     }
-  }, [props.tenant]);
+
+    const isOem = props.settings?.platform?.is_oem === true || props.settings?.platform?.is_oem === 'true';
+    if (isOem) {
+      document.body.classList.add('is-oem');
+    } else {
+      document.body.classList.remove('is-oem');
+    }
+  }, [props.tenant, props.settings]);
 
   if (!configLoaded) {
     return <div />;

@@ -29,6 +29,18 @@ html {
   display: none;
 }
 
+/* OEM 模式下隐藏右上角“关于/帮助”入口 */
+body.is-oem [data-item-id="about"],
+body.is-oem [data-item-id="help"],
+body.is-oem [data-key="about"],
+body.is-oem [data-key="help"],
+body.is-oem [title="关于"],
+body.is-oem [title="帮助"],
+body.is-oem [title="About"],
+body.is-oem [title="Help"] {
+  display: none !important;
+}
+
 /* :root {
   --body-bg: rgb(225, 239, 254);
 } */
