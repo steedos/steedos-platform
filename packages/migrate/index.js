@@ -7,14 +7,21 @@
  */
 const migrate = require('migrate')
 const path = require('path');
+const fs = require('fs');
 const validator = require('validator');
 const registry = require('@steedos/service-package-registry');
 const userDir = registry.settings.userDir;
 const stateStore = path.join(userDir, '.migrate');
 const migrationsDirectory = path.join(__dirname, 'migrations');
 
-const up = async function () {
+const ensureStateStoreDir = function () {
+    if (!fs.existsSync(userDir)) {
+        fs.mkdirSync(userDir, { recursive: true });
+    }
+}
 
+const up = async function () {
+    ensureStateStoreDir();
     migrate.load({
         stateStore: stateStore,
         migrationsDirectory: migrationsDirectory
