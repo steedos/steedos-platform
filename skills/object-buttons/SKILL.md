@@ -87,12 +87,12 @@ amis_schema: |-
 
 ### Display Locations (`on`) | 显示位置
 
-```yaml
-on: record_only    # Record detail page only
-on: record         # Record context (detail + related)
-on: list           # List view toolbar
-on: list_record    # Both list and record
-```
+| Value | Description |
+|-------|-------------|
+| `record_only` | Record detail page only |
+| `record` | Record context (detail + related) |
+| `list` | List view toolbar |
+| `list_record` | Both list and record |
 
 ## Complete Examples | 完整示例
 

@@ -65,17 +65,18 @@ mobile_columns:
 | `name` | string | Yes | Unique view name |
 | `label` | string | Yes | Display label (use the language of the user's prompt) |
 | `is_enable` | boolean | Yes | Enable/disable view |
-| `crud_mode` | string | Yes | Always `table` |
+| `crud_mode` | string | No | Display mode: `table` (default), `cards` |
 | `columns` | array | Yes | Displayed columns |
 | `shared` | boolean | No | Share with all users |
-| `shared_to` | string | No | Share scope: `space`, `org` |
-| `filter_scope` | string | No | Data scope: `space`, `mine` |
+| `shared_to` | string | No | Who can see: `mine` (default), `space`, `organizations` |
+| `filter_scope` | string | Yes | Data scope: `space` (all records, default), `mine` (my records only) |
 | `filters` | array | No | Default filter conditions |
-| `sort` | array | No | Default sort order |
+| `sort` | array | No | Default sort order (each item: `field_name` + `order`: `asc`/`desc`) |
 | `searchable_fields` | array | No | Full-text search fields |
 | `mobile_columns` | array | No | Mobile-optimized columns |
 | `extra_columns` | array | No | Hidden columns (available for formulas) |
-| `scrolling_mode` | string | No | `standard` or `virtual` |
+| `scrolling_mode` | string | No | Scroll behavior: `standard` (default), `virtual`, `infinite` |
+| `show_count` | boolean | No | Show record count |
 
 ## Columns | 列配置
 

@@ -73,14 +73,22 @@ handler: |-
 
 ### Event Hooks (`when`) | 事件钩子
 
+Complete list of valid values:
+
 ```yaml
 when:
-  - beforeInsert     # Before record creation
-  - afterInsert      # After record creation
-  - beforeUpdate     # Before record update
-  - afterUpdate      # After record update
-  - beforeDelete     # Before record deletion
-  - afterDelete      # After record deletion
+  - beforeInsert      # Before record creation
+  - afterInsert       # After record creation
+  - beforeUpdate      # Before record update
+  - afterUpdate       # After record update
+  - beforeDelete      # Before record deletion
+  - afterDelete       # After record deletion
+  - beforeFind        # Before query
+  - afterFind         # After query
+  - afterFindOne      # After findOne query
+  - afterCount        # After count query
+  - beforeAggregate   # Before aggregation
+  - afterAggregate    # After aggregation
 ```
 
 ## Handler Context | Handler 上下文

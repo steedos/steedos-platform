@@ -30,7 +30,7 @@ name: Application Name
 code: app_code
 description: Application description
 icon_slds: icon_name
-color: '#1890ff'
+color: blue
 is_creator: true
 showSidebar: true
 mobile: true
@@ -106,14 +106,29 @@ showSidebar: true
 ```
 
 #### color (String)
-Application theme color. Accepts hex color codes or named colors.
+Application theme color. Must be one of the following values:
 
-应用程序主题颜色。接受十六进制颜色代码或命名颜色。
+应用程序主题颜色。必须是以下值之一：
+
+| Value | Color |
+|-------|-------|
+| `red` | Red |
+| `orange` | Orange |
+| `yellow` | Yellow |
+| `green` | Green |
+| `teal` | Teal |
+| `cyan` | Cyan |
+| `blue` | Blue |
+| `pink` | Pink |
+| `purple` | Purple |
+| `gray` | Gray |
+
+Default: `sky`
 
 ```yaml
-color: '#1890ff'
-color: red
-color: '#02355a'
+color: blue
+color: teal
+color: purple
 ```
 
 #### dark (Boolean)
@@ -223,7 +238,7 @@ name: Task Management
 code: tasks
 description: Manage tasks and to-dos
 icon_slds: task
-color: '#1890ff'
+color: blue
 is_creator: true
 showSidebar: true
 mobile: true
@@ -245,7 +260,7 @@ name: Contract Management
 code: contracts
 description: Complete contract lifecycle management system
 icon_slds: contract
-color: '#02355a'
+color: teal
 is_creator: true
 showSidebar: true
 mobile: true
@@ -344,7 +359,7 @@ name: Sales Management
 code: sales
 description: Sales pipeline and opportunities
 icon_slds: opportunity
-color: '#e67e22'
+color: orange
 is_creator: true
 showSidebar: true
 mobile: true
@@ -420,7 +435,7 @@ name: Analytics Dashboard
 code: analytics
 description: Business intelligence and reporting
 icon_slds: dashboard
-color: '#3498db'
+color: cyan
 is_creator: true
 showSidebar: true
 mobile: true
@@ -662,7 +677,7 @@ name: Customer Relationship Management
 code: crm
 description: Manage customers, leads, and opportunities
 icon_slds: opportunity
-color: '#e67e22'
+color: orange
 is_creator: true
 showSidebar: true
 mobile: true
@@ -704,7 +719,7 @@ name: Project Management
 code: projects
 description: Track projects, tasks, and resources
 icon_slds: task
-color: '#2ecc71'
+color: green
 is_creator: true
 showSidebar: true
 mobile: true
@@ -740,7 +755,7 @@ name: Human Resources
 code: hr
 description: Employee and HR management
 icon_slds: people
-color: '#9b59b6'
+color: purple
 is_creator: true
 showSidebar: true
 mobile: true
@@ -780,28 +795,18 @@ tab_items:
 
 ## Internationalization | 国际化
 
-### Bilingual Labels
+Application names are translated using `.translation.yml` files. See the [translations skill](../translations/SKILL.md) for details.
+
+应用名称通过 `.translation.yml` 文件翻译。详见[国际化 skill](../translations/SKILL.md)。
 
 ```yaml
-name: Contract Management
-name_zh: 合同管理
-description: Manage contracts and agreements
-description_zh: 管理合同和协议
-```
-
-### Translation Files
-
-Use translation files for better i18n support:
-
-```yaml
-# applications/contracts.app.yml
-name: Contract Management
+# applications/contracts.app.yml — label follows user's prompt language
+name: 合同管理
 code: contracts
 
-# translations/zh-CN.i18n.yml
-contracts:
-  name: 合同管理
-  description: 管理合同和协议
+# objectTranslations are NOT used for apps.
+# Use translations/en.translation.yml for app name translation:
+# CustomLabels or app-level translation entries.
 ```
 
 ## Troubleshooting | 故障排除

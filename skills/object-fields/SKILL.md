@@ -55,7 +55,7 @@ group: Basic Information
 | Property | Type | Description |
 |----------|------|-------------|
 | `name` | string | Field API name (required) |
-| `type` | string | Field type (required) |
+| `type` | string | Field type (required, see [Valid Field Types](#valid-field-types--有效字段类型) below) |
 | `label` | string | Display label — use the language of the user's prompt (required) |
 | `required` | boolean | Is required |
 | `readonly` | boolean | Read-only |
@@ -113,6 +113,41 @@ label: Product Name
 required: true
 searchable: true
 ```
+
+## Valid Field Types | 有效字段类型
+
+The `type` property must be one of the following values:
+
+| Type | Description |
+|------|-------------|
+| `text` | Short text |
+| `textarea` | Long text (multiline) |
+| `html` | Rich text (HTML editor) |
+| `select` | Single or multiple choice (with `options`) |
+| `boolean` | True/false |
+| `toggle` | Toggle switch (same as boolean, different UI) |
+| `date` | Date only |
+| `datetime` | Date and time |
+| `time` | Time only |
+| `number` | Integer or decimal |
+| `currency` | Money amount |
+| `percent` | Percentage |
+| `autonumber` | Auto-generated sequential number |
+| `lookup` | Reference to another object (many-to-one) |
+| `master_detail` | Parent-child reference (cascade delete) |
+| `grid` | Inline table (array of objects) |
+| `url` | URL |
+| `email` | Email address |
+| `image` | Image upload |
+| `file` | File upload |
+| `code` | Code editor |
+| `markdown` | Markdown editor |
+| `color` | Color picker |
+| `location` | Geographic location |
+| `object` | JSON object |
+| `formula` | Computed formula field |
+| `summary` | Roll-up summary field |
+| `password` | Password (masked) |
 
 ## Text Field Types | 文本字段类型
 
@@ -285,6 +320,13 @@ reference_to: users
 multiple: true
 ```
 
+Lookup properties:
+- `reference_to` — target object API name (required)
+- `multiple` — allow selecting multiple records (`true`/`false`)
+- `filters` — filter condition for lookup dropdown
+- `depend_on` — re-fetch options when these fields change
+- `deleted_lookup_record_behavior` — when referenced record is deleted: `clear` (set to null) or `retain` (keep stale reference)
+
 ### master_detail (Parent-Child) | 主从关系
 ```yaml
 name: order
@@ -306,11 +348,16 @@ type: formula
 label: Total Price
 data_type: currency
 scale: 2
+formula_blank_value: zeroes
 formula: !!js/function |
   function() {
     return (this.quantity || 0) * (this.unit_price || 0);
   }
 ```
+
+`data_type` — the output type of the formula: `text`, `number`, `currency`, `percent`, `boolean`, `date`, `datetime`
+
+`formula_blank_value` — how to treat blank fields: `zeroes` (default, treat as 0) or `blanks` (treat as null)
 
 ### summary (Rollup) | 汇总
 ```yaml
@@ -323,7 +370,7 @@ summary_field: customer
 summary_filters: [["status", "!=", "cancelled"]]
 ```
 
-Summary types: `count`, `sum`, `avg`, `min`, `max`
+`summary_type` must be one of: `count`, `sum`, `avg`, `min`, `max`
 
 ## File and Media Types | 文件和媒体类型
 
@@ -343,6 +390,17 @@ label: Avatar
 ```
 
 ## Special Types | 特殊类型
+
+### code (Code Editor) | 代码编辑器
+```yaml
+name: custom_script
+type: code
+label: Script
+language: javascript
+is_wide: true
+```
+
+`language` must be one of: `javascript`, `typescript`, `json`, `html`, `css`, `sql`, `python`, `java`, `ruby`, `go`, `shell`, `yaml`, `xml`, `markdown`, `php`, `csharp`, `cpp`, `c`, `swift`, `lua`, `r`
 
 ### object (JSON)
 ```yaml
