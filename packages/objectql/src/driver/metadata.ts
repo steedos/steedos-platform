@@ -333,11 +333,26 @@ export class MetadataDriver extends SteedosMongoDriver {
         return [idValue, item];
       }),
     );
+
+    // For apps, build a map of DB source codes so that code-sourced apps
+    // whose code matches an existing DB app are excluded (avoid duplicates).
+    const dbCodeMap = metaName === "apps"
+      ? new Map(
+          dbSources
+            .filter((item) => item.code)
+            .map((item) => [item.code, item]),
+        )
+      : null;
+
     codeSources.forEach((item) => {
       if (!item._id) {
         console.error("error: item._id is null");
       }
       if (!dbSIDMap.has(item._id) && !dbIdMap.has(item._id)) {
+        // For apps, also skip code sources that match a DB record by code
+        if (dbCodeMap && dbCodeMap.has(item._id)) {
+          return;
+        }
         dbSIDMap.set(item._id, item);
       }
     });
