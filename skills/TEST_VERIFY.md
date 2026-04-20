@@ -53,6 +53,13 @@
 - [ ] 使用 .translation.yml 翻译应用名和 Tab 名
 - [ ] 路径在 objectTranslations/{object}.en/ 下
 
+## 初始化数据
+- [ ] 文件在 main/default/data/ 目录
+- [ ] 文件名为 {objectName}.data.yml 或 .data.json
+- [ ] 每条记录有 _id
+- [ ] 未手动设置 space/owner/created 等自动字段
+- [ ] 需要时使用 ${space_id} 模板变量
+
 ## 项目结构
 - [ ] 符合 steedos-packages/my-package/main/default/ 格式
 - [ ] 各文件在正确的子目录中
