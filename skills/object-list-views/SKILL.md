@@ -35,8 +35,7 @@ steedos-packages/
 ```yaml
 # objects/orders/listviews/all.listview.yml
 name: all
-label: All Orders
-label_zh: 所有订单
+label: 所有订单
 is_enable: true
 shared: true
 shared_to: space
@@ -64,8 +63,7 @@ mobile_columns:
 | Property | Type | Required | Description |
 |----------|------|----------|-------------|
 | `name` | string | Yes | Unique view name |
-| `label` | string | Yes | English label |
-| `label_zh` | string | No | Chinese label |
+| `label` | string | Yes | Display label (use the language of the user's prompt) |
 | `is_enable` | boolean | Yes | Enable/disable view |
 | `crud_mode` | string | Yes | Always `table` |
 | `columns` | array | Yes | Displayed columns |
@@ -149,8 +147,7 @@ sort:
 ```yaml
 # objects/orders/listviews/all.listview.yml
 name: all
-label: All Orders
-label_zh: 所有订单
+label: 所有订单
 is_enable: true
 shared: true
 shared_to: space
@@ -180,8 +177,7 @@ mobile_columns:
 ```yaml
 # objects/orders/listviews/my_orders.listview.yml
 name: my_orders
-label: My Orders
-label_zh: 我的订单
+label: 我的订单
 is_enable: true
 shared: true
 filter_scope: mine
@@ -200,8 +196,7 @@ sort:
 ```yaml
 # objects/orders/listviews/pending_approval.listview.yml
 name: pending_approval
-label: Pending Approval
-label_zh: 待审批
+label: 待审批
 is_enable: true
 shared: true
 filter_scope: space
@@ -223,8 +218,7 @@ sort:
 ```yaml
 # objects/orders/listviews/high_value.listview.yml
 name: high_value
-label: High Value Orders
-label_zh: 高价值订单
+label: 高价值订单
 is_enable: true
 shared: true
 filter_scope: space
@@ -249,5 +243,5 @@ sort:
 2. **Add searchable_fields**: Enable search on key fields
 3. **Mobile columns**: Only essential fields for mobile
 4. **Meaningful filters**: Create views that match common workflows
-5. **Bilingual labels**: Provide both `label` and `label_zh`
+5. **Label follows user's language**: Write `label` in the language of the user's prompt. For i18n, use the translations skill
 6. **Default sort**: Always specify a meaningful sort order

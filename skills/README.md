@@ -52,12 +52,17 @@ Configure Steedos with environment variables for server, database, cache, securi
 
 使用环境变量配置 Steedos 的服务器、数据库、缓存、安全、邮件、存储和部署设置。
 
-### 🎨 User Interface | 用户界面 (2 skills)
+### 🎨 User Interface | 用户界面 (3 skills)
 
 #### [applications](./applications/SKILL.md)
-Create applications to organize functionality, including application structure (.app.yml), object grouping, icons, visibility, admin menus, and mobile configuration.
+Create applications with showSidebar, tabs/tab_items/tab_groups navigation, color/icon configuration, admin menus, and mobile settings.
 
-创建应用程序来组织功能,包括应用程序结构 (.app.yml)、对象分组、图标、可见性、管理菜单和移动端配置。
+创建应用程序，配置 showSidebar、tabs/tab_items/tab_groups 导航、颜色/图标、管理菜单和移动端设置。
+
+#### [tabs](./tabs/SKILL.md)
+Define navigation tabs (.tab.yml) for application sidebars. Three types: object (list view), page (micro page), and url (internal/external URL). Covers permissions, icons, iframe/new-window, and license restrictions.
+
+定义应用程序侧边栏的导航标签页 (.tab.yml)。三种类型：对象（列表视图）、页面（微页面）和 URL（内部/外部 URL）。涵盖权限、图标、iframe/新窗口和许可证限制。
 
 #### [micro-pages](./micro-pages/SKILL.md)
 Build standalone custom pages using Amis framework, including dashboards, reports, custom forms, charts, and visualizations.
@@ -88,27 +93,61 @@ Control access with permission sets, including object-level, record-level, and f
 
 使用权限集控制访问,包括对象级、记录级和字段级权限、权限配置文件和动态权限。
 
+### 🌐 Internationalization | 国际化 (1 skill)
+
+#### [translations](./translations/SKILL.md)
+Metadata internationalization (i18n) with two file types: translation files (.translation.yml) for app names, tab labels, and custom labels; objectTranslation files (.objectTranslation.yml) for object/field/listview/action labels and picklist options.
+
+元数据国际化 (i18n)，两种文件类型：翻译文件 (.translation.yml) 用于应用名称、标签页标签和自定义标签；对象翻译文件 (.objectTranslation.yml) 用于对象/字段/列表视图/操作标签和下拉选项。
+
 ### ⚙️ Business Logic | 业务逻辑 (4 skills)
 
 #### [object-buttons](./object-buttons/SKILL.md)
-Create custom actions and buttons, including action structure (.action.js), record and list actions, user interactions, API integration, and workflow automation.
+Create custom buttons using Amis UI framework, including button YAML definition (.button.yml), amis_button type with amis_schema, standard buttons, visible_on conditions, and dialog/drawer actions.
 
-创建自定义操作和按钮,包括操作结构 (.action.js)、记录和列表操作、用户交互、API 集成和工作流自动化。
+创建自定义按钮，使用 Amis UI 框架，包括按钮 YAML 定义 (.button.yml)、amis_button 类型与 amis_schema、标准按钮、visible_on 条件和弹窗操作。
 
 #### [object-triggers](./object-triggers/SKILL.md)
-Implement business logic with triggers, including lifecycle (.trigger.js), before/after insert/update/delete hooks, data validation, auto-fill fields, external API calls, and best practices.
+Implement business logic with triggers, including YAML definition (.trigger.yml) with inline handler code, ctx.params, before/after insert/update/delete hooks, data validation, and objects API.
 
-使用触发器实现业务逻辑,包括生命周期 (.trigger.js)、插入/更新/删除前后钩子、数据验证、自动填充字段、外部 API 调用和最佳实践。
+使用触发器实现业务逻辑，包括 YAML 定义 (.trigger.yml) 内联 handler 代码、ctx.params、插入/更新/删除前后钩子、数据验证和 objects API。
 
 #### [object-functions](./object-functions/SKILL.md)
-Create reusable functions for use in formulas, triggers, and actions, including function definition, helper functions, complex calculations, and data transformations.
+Create server-side functions as YAML definitions (.function.yml) with inline script, REST API exposure (is_rest), ctx.input parameters, and objects API for data access.
 
-创建可复用函数用于公式、触发器和操作,包括函数定义、辅助函数、复杂计算和数据转换。
+创建服务端函数，使用 YAML 定义 (.function.yml) 内联 script、REST API 暴露 (is_rest)、ctx.input 参数和 objects API 数据访问。
 
 #### [object-micro-pages](./object-micro-pages/SKILL.md)
 Customize object detail and form pages, including object-specific pages, detail page layouts, custom form pages, dashboard pages, and page configurations using Amis.
 
 自定义对象详情和表单页面,包括对象特定页面、详情页布局、自定义表单页面、仪表板页面和使用 Amis 的页面配置。
+
+### 🖥️ Server (Builder6) | 服务端 (5 skills)
+
+#### [server-architecture](./server-architecture/SKILL.md)
+NestJS + Moleculer hybrid server architecture, module organization, bootstrap sequence, middleware stack, guards (AuthGuard, AdminGuard), and ObjectQL data access pattern.
+
+NestJS + Moleculer 混合服务端架构、模块组织、启动流程、中间件栈、守卫和 ObjectQL 数据访问模式。
+
+#### [server-api](./server-api/SKILL.md)
+REST API reference for /api/v6/ endpoints: data CRUD, object metadata, function execution, filter operators, query parameters, and Swagger/OpenAPI documentation.
+
+/api/v6/ REST API 参考：数据 CRUD、对象元数据、函数执行、筛选运算符、查询参数和 Swagger/OpenAPI 文档。
+
+#### [server-config](./server-config/SKILL.md)
+Server configuration via environment variables and YAML settings files, including datasources, tenant settings, file storage, SSO/OIDC, email, and frontend asset URLs.
+
+通过环境变量和 YAML 配置文件进行服务端配置，包括数据源、租户设置、文件存储、SSO/OIDC、邮件和前端资源 URL。
+
+#### [server-websocket](./server-websocket/SKILL.md)
+Real-time WebSocket system using Socket.IO, connection authentication, room-based event routing, metadata/record/notification change events, and Moleculer integration.
+
+基于 Socket.IO 的实时 WebSocket 系统、连接认证、房间事件路由、元数据/记录/通知变更事件和 Moleculer 集成。
+
+#### [server-moleculer](./server-moleculer/SKILL.md)
+Moleculer microservice integration, broker configuration, event handlers, ObjectQL schema initialization, service lifecycle, and inter-service communication patterns.
+
+Moleculer 微服务集成、代理配置、事件处理、ObjectQL 模式初始化、服务生命周期和跨服务通信模式。
 
 ## Quick Reference | 快速参考
 
@@ -124,8 +163,15 @@ Customize object detail and form pages, including object-specific pages, detail 
 | Add validation logic | [object-triggers](./object-triggers/SKILL.md) |
 | Create custom buttons | [object-buttons](./object-buttons/SKILL.md) |
 | Build dashboards | [micro-pages](./micro-pages/SKILL.md) |
+| Define navigation tabs | [tabs](./tabs/SKILL.md) |
 | Configure permissions | [object-permissions](./object-permissions/SKILL.md) |
+| Translate metadata (i18n) | [translations](./translations/SKILL.md) |
 | Create custom pages | [object-micro-pages](./object-micro-pages/SKILL.md), [micro-pages](./micro-pages/SKILL.md) |
+| Understand server architecture | [server-architecture](./server-architecture/SKILL.md) |
+| Use REST API | [server-api](./server-api/SKILL.md) |
+| Configure server | [server-config](./server-config/SKILL.md) |
+| Real-time WebSocket | [server-websocket](./server-websocket/SKILL.md) |
+| Moleculer microservices | [server-moleculer](./server-moleculer/SKILL.md) |
 
 ### By File Type | 按文件类型查找
 
@@ -136,10 +182,13 @@ Customize object detail and form pages, including object-specific pages, detail 
 | `.env` | [environment-variables](./environment-variables/SKILL.md) |
 | `*.app.yml` | [applications](./applications/SKILL.md) |
 | `*.object.yml` | [objects](./objects/SKILL.md), [object-fields](./object-fields/SKILL.md) |
-| `*.action.js` | [object-buttons](./object-buttons/SKILL.md) |
-| `*.trigger.js` | [object-triggers](./object-triggers/SKILL.md) |
-| `*.page.yml` | [object-micro-pages](./object-micro-pages/SKILL.md), [micro-pages](./micro-pages/SKILL.md) |
-| Functions | [object-functions](./object-functions/SKILL.md) |
+| `*.button.yml` | [object-buttons](./object-buttons/SKILL.md) |
+| `*.trigger.yml` | [object-triggers](./object-triggers/SKILL.md) |
+| `*.function.yml` | [object-functions](./object-functions/SKILL.md) |
+| `*.tab.yml` | [tabs](./tabs/SKILL.md) |
+| `*.translation.yml` | [translations](./translations/SKILL.md) |
+| `*.objectTranslation.yml` | [translations](./translations/SKILL.md) |
+| `*.page.yml` + `*.page.amis.json` | [object-micro-pages](./object-micro-pages/SKILL.md), [micro-pages](./micro-pages/SKILL.md) |
 
 ## Technology Stack | 技术栈
 
@@ -213,11 +262,15 @@ Recommended learning path:
 
 4. **User Interface**
    - [applications](./applications/SKILL.md)
+   - [tabs](./tabs/SKILL.md)
    - [object-micro-pages](./object-micro-pages/SKILL.md)
    - [micro-pages](./micro-pages/SKILL.md)
 
 5. **Security**
    - [object-permissions](./object-permissions/SKILL.md)
+
+6. **Internationalization**
+   - [translations](./translations/SKILL.md)
 
 ## Skill Format | 技能格式
 
@@ -278,7 +331,7 @@ To improve these skills:
 
 ## Statistics | 统计
 
-- **Total Skills**: 13
+- **Total Skills**: 20
 - **Total Documentation**: ~250KB
 - **Format**: Anthropic SKILL.md specification
 - **Languages**: English + Chinese (bilingual)

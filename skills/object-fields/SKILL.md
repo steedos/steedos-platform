@@ -39,8 +39,7 @@ steedos-packages/
 # objects/orders/fields/customer.field.yml
 name: customer
 type: lookup
-label: Customer
-label_zh: 客户
+label: 客户
 reference_to: customers
 required: true
 index: true
@@ -57,8 +56,7 @@ group: Basic Information
 |----------|------|-------------|
 | `name` | string | Field API name (required) |
 | `type` | string | Field type (required) |
-| `label` | string | English label (required) |
-| `label_zh` | string | Chinese label |
+| `label` | string | Display label — use the language of the user's prompt (required) |
 | `required` | boolean | Is required |
 | `readonly` | boolean | Read-only |
 | `hidden` | boolean | Hide from all UI |
@@ -67,6 +65,7 @@ group: Basic Information
 | `defaultValue` | any | Default value |
 | `group` | string | Field group name |
 | `sort_no` | number | Display order |
+| `is_name` | boolean | Mark as the object's display name field (see below) |
 | `is_wide` | boolean | Full width in forms |
 | `index` | boolean | Create database index |
 | `unique` | boolean | Unique constraint |
@@ -76,6 +75,44 @@ group: Basic Information
 | `data_type` | string | Backend data type |
 | `visible_on` | string | Amis formula for conditional visibility |
 | `inlineHelpText` | string | Tooltip help text |
+
+## Name Field (`is_name`) | 名称字段
+
+Every object must have a **name field** — the human-readable identifier shown in lookups, related lists, and record titles. The system determines the name field by:
+
+每个对象必须有一个**名称字段**——在查找、相关列表和记录标题中显示的人类可读标识。系统按以下优先级确定名称字段：
+
+1. A field with `is_name: true` (highest priority)
+2. A field named `name` (fallback)
+
+Use `is_name: true` when the display name is not a simple `name` text field:
+
+当显示名称不是简单的 `name` 文本字段时，使用 `is_name: true`：
+
+```yaml
+# autonumber as name field
+name: order_number
+type: autonumber
+label: Order Number
+formula: 'ORD-{YYYY}{MM}{DD}-{0000}'
+is_name: true
+readonly: true
+
+# lookup as name field
+name: permission_set
+type: master_detail
+label: Permission Set
+reference_to: permission_set
+required: true
+is_name: true
+
+# simple text name field (is_name not needed)
+name: name
+type: text
+label: Product Name
+required: true
+searchable: true
+```
 
 ## Text Field Types | 文本字段类型
 
@@ -407,7 +444,7 @@ filters: [["account", "=", "{$customer}"]]
 
 1. **Use specific types**: `currency` not just `number`, `email` not just `text`
 2. **Add indexes**: `index: true` on frequently queried/filtered fields
-3. **Bilingual labels**: Always provide `label` and `label_zh`
+3. **Label follows user's language**: Write `label` in the language of the user's prompt. For i18n, use the translations skill
 4. **Use sort_no**: Control field display order
 5. **Group fields**: Use `group` to organize related fields
 6. **Set appropriate defaults**: Use `defaultValue` to reduce user input

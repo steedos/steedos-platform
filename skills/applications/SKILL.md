@@ -1,11 +1,11 @@
 ---
 name: applications
 description: |
-  Create and configure Steedos applications that group related objects, pages,
-  and functionality. Learn about application properties, icon configuration,
-  object assignment, mobile settings, admin menus, visibility control, and
-  permission-based access. Use when organizing objects into logical business
-  applications or creating navigation structures.
+  Create and configure Steedos applications. Required fields: name, code, tabs
+  (without tabs the menu will not display). Key properties: showSidebar (always
+  true), tab_items/tab_groups for sidebar grouping, icon_slds (from valid SLDS
+  icon set), color, mobile, admin_menus, and permission-based visibility.
+  Use when organizing objects into logical business applications.
 ---
 
 # Steedos Applications | Steedos 应用程序
@@ -29,13 +29,23 @@ Steedos 应用程序是一个容器,将相关的对象、页面和功能组合�
 name: Application Name
 code: app_code
 description: Application description
-icon: icon_name
+icon_slds: icon_name
+color: '#1890ff'
 is_creator: true
-objects:
-  - object1
-  - object2
+showSidebar: true
+mobile: true
 visible: true
 sort: 100
+tabs:
+  - object1
+  - object2
+tab_items:
+  object1:
+    group: ''
+    index: 1
+  object2:
+    group: ''
+    index: 2
 ```
 
 ## Field Reference | 字段参考
@@ -56,6 +66,20 @@ Unique identifier for the application (API name).
 code: contracts
 ```
 
+#### tabs (Array) — REQUIRED
+**List of tab names for the application's sidebar navigation. This field is required — without it, the application menu will not display.**
+
+**应用程序侧边栏导航的标签页名称列表。此字段为必需 — 没有它，应用程序菜单将无法显示。**
+
+Each entry is either a tab name (matching a `.tab.yml` file) or an object API name (implicit object tab).
+
+```yaml
+tabs:
+  - contracts
+  - contract_items
+  - page_custom_dashboard
+```
+
 ### Optional Fields | 可选字段
 
 #### _id (String)
@@ -72,23 +96,56 @@ Description of the application's purpose.
 description: Manage contracts and agreements
 ```
 
-#### icon (String)
-Icon name to display with the application.
+#### showSidebar (Boolean)
+**Always set to `true`**. Controls whether the sidebar navigation is shown. Required for tabs/tab_items/tab_groups to display properly.
+
+**始终设置为 `true`**。控制是否显示侧边栏导航。tabs/tab_items/tab_groups 需要此设置才能正确显示。
 
 ```yaml
-# Salesforce Lightning Design System icons
-icon: contract
-icon_slds: approval
+showSidebar: true
+```
 
-# Custom icon
-icon: custom_icon
+#### color (String)
+Application theme color. Accepts hex color codes or named colors.
+
+应用程序主题颜色。接受十六进制颜色代码或命名颜色。
+
+```yaml
+color: '#1890ff'
+color: red
+color: '#02355a'
+```
+
+#### dark (Boolean)
+Whether the application uses a dark theme for the sidebar.
+
+```yaml
+dark: true
+```
+
+#### mobile (Boolean)
+Whether the application is available on mobile devices.
+
+```yaml
+mobile: true
 ```
 
 #### icon_slds (String)
-Salesforce Lightning icon name (alternative to `icon`).
+Salesforce Lightning icon name. Must be one of the valid values listed in [Icon Reference](#icon-reference--图标参考) below.
+
+Salesforce Lightning 图标名称。必须是下方[图标参考](#icon-reference--图标参考)中列出的有效值之一。
 
 ```yaml
 icon_slds: approval
+icon_slds: agent_home
+icon_slds: contract
+```
+
+#### icon (String)
+Custom icon name (use `icon_slds` when possible).
+
+```yaml
+icon: custom_icon
 ```
 
 #### is_creator (Boolean)
@@ -114,22 +171,46 @@ Display order in the application menu (lower numbers first).
 sort: 100
 ```
 
-#### objects (Array)
-List of objects included in this application.
+#### tab_items (Object)
+Detailed tab configuration with grouping and ordering. Keys are tab names (matching entries in `tabs`), values specify `group` and `index`.
+
+详细的标签配置，包含分组和排序。键为标签名（对应 `tabs` 中的条目），值指定 `group` 和 `index`。
+
+```yaml
+tab_items:
+  contracts:
+    group: 业务
+    index: 1
+  contract_items:
+    group: 业务
+    index: 2
+  page_custom_dashboard:
+    group: ''
+    index: 0
+```
+
+#### tab_groups (Array)
+Define sidebar navigation groups. Each group has a `group_name` and optional `default_open`.
+
+定义侧边栏导航分组。每个分组有 `group_name` 和可选的 `default_open`。
+
+```yaml
+tab_groups:
+  - group_name: 业务
+    default_open: true
+  - group_name: 管理
+    default_open: true
+```
+
+#### objects (Array) - Legacy
+List of objects (legacy approach, prefer `tabs` + `tab_items`).
+
+对象列表（旧方式，推荐使用 `tabs` + `tab_items`）。
 
 ```yaml
 objects:
   - contracts
   - contract_items
-  - customers
-```
-
-#### mobile_objects (Array)
-Objects available in mobile app (optional, defaults to `objects`).
-
-```yaml
-mobile_objects:
-  - contracts
   - customers
 ```
 
@@ -141,12 +222,19 @@ mobile_objects:
 name: Task Management
 code: tasks
 description: Manage tasks and to-dos
-icon: task
+icon_slds: task
+color: '#1890ff'
 is_creator: true
-objects:
-  - tasks
+showSidebar: true
+mobile: true
 visible: true
 sort: 200
+tabs:
+  - tasks
+tab_items:
+  tasks:
+    group: ''
+    index: 1
 ```
 
 ### Complex Application | 复杂应用
@@ -156,27 +244,44 @@ _id: contract_management
 name: Contract Management
 code: contracts
 description: Complete contract lifecycle management system
-icon: contract
 icon_slds: contract
+color: '#02355a'
 is_creator: true
+showSidebar: true
+mobile: true
 visible: true
 sort: 100
 
-# Desktop objects
-objects:
+tabs:
   - contracts
   - contract_items
   - contract_templates
   - customers
   - contract_approvals
 
-# Mobile objects (subset)
-mobile_objects:
-  - contracts
-  - customers
-  - contract_approvals
+tab_groups:
+  - group_name: 合同
+    default_open: true
+  - group_name: 客户
+    default_open: true
 
-# Admin menu configuration
+tab_items:
+  contracts:
+    group: 合同
+    index: 1
+  contract_items:
+    group: 合同
+    index: 2
+  contract_templates:
+    group: 合同
+    index: 3
+  customers:
+    group: 客户
+    index: 1
+  contract_approvals:
+    group: ''
+    index: 0
+
 admin_menus:
   - _id: contract_settings
     name: Contract Settings
@@ -220,25 +325,6 @@ admin_menus:
 - `object_name`: Associated object
 - `parent`: Parent menu ID
 
-### Tab Items | 标签项
-
-Detailed tab configuration (alternative to `objects`):
-
-```yaml
-tab_items:
-  - object: contracts
-    sort: 100
-    mobile: true
-
-  - object: contract_items
-    sort: 200
-    mobile: false
-
-  - page: custom_dashboard
-    sort: 300
-    mobile: true
-```
-
 ### Landing Page | 落地页
 
 Specify a landing page when opening the app:
@@ -257,14 +343,30 @@ For general business processes:
 name: Sales Management
 code: sales
 description: Sales pipeline and opportunities
-icon: opportunity
+icon_slds: opportunity
+color: '#e67e22'
 is_creator: true
-objects:
+showSidebar: true
+mobile: true
+visible: true
+tabs:
   - leads
   - opportunities
   - quotes
   - orders
-visible: true
+tab_items:
+  leads:
+    group: ''
+    index: 1
+  opportunities:
+    group: ''
+    index: 2
+  quotes:
+    group: ''
+    index: 3
+  orders:
+    group: ''
+    index: 4
 ```
 
 ### 2. Admin Application | 管理应用
@@ -275,8 +377,9 @@ For system administration:
 name: System Administration
 code: admin
 description: System configuration and management
-icon: settings
+icon_slds: settings
 is_creator: false
+showSidebar: true
 visible: true
 permission_sets:
   - admin
@@ -316,13 +419,23 @@ Analytics and reporting:
 name: Analytics Dashboard
 code: analytics
 description: Business intelligence and reporting
-icon: dashboard
+icon_slds: dashboard
+color: '#3498db'
 is_creator: true
+showSidebar: true
+mobile: true
+visible: true
 landing_page: analytics_dashboard
-objects:
+tabs:
   - reports
   - dashboards
-visible: true
+tab_items:
+  reports:
+    group: ''
+    index: 1
+  dashboards:
+    group: ''
+    index: 2
 ```
 
 ## Application Visibility & Permissions | 应用可见性和权限
@@ -345,41 +458,90 @@ permission_sets:
 
 ### Programmatic Visibility
 
-Use a function to determine visibility:
+Use `permission_sets` to control which profiles can access the application:
+
+使用 `permission_sets` 控制哪些权限配置可以访问应用程序：
 
 ```yaml
-visible: !<tag:yaml.org,2002:js/function> |-
-  function() {
-    const user = Creator.getUser();
-    return user.profile === 'admin';
-  }
+permission_sets:
+  - admin
+  - hr_manager
 ```
 
-## Icons | 图标
+## Icon Reference | 图标参考
 
-### Salesforce Lightning Icons
+### Valid icon_slds Values | 有效的 icon_slds 值
 
-Use any Salesforce Lightning Design System icon:
+The following is the complete list of valid `icon_slds` values:
 
-```yaml
-icon_slds: account
-icon_slds: contract
-icon_slds: approval
-icon_slds: task
-icon_slds: opportunity
-icon_slds: dashboard
-```
+以下是 `icon_slds` 的完整有效值列表：
+
+**A**: `account`, `account_info`, `action_list_component`, `actions_and_buttons`, `activation_target`, `activations`, `address`, `agent_home`, `agent_session`, `aggregation_policy`, `all`, `announcement`, `answer_best`, `answer_private`, `answer_public`, `apex`, `apex_plugin`, `app`, `approval`, `apps`, `apps_admin`, `article`, `asset_action`, `asset_action_source`, `asset_audit`, `asset_downtime_period`, `asset_object`, `asset_relationship`, `asset_state_period`, `asset_warranty`, `assigned_resource`, `assignment`, `attach`, `avatar`, `avatar_loading`
+
+**B**: `bot`, `bot_training`, `branch_merge`, `brand`, `budget`, `budget_allocation`, `bundle_config`, `bundle_policy`, `business_hours`, `buyer_account`, `buyer_group`
+
+**C**: `calculated_insights`, `calibration`, `call`, `call_coaching`, `call_history`, `campaign`, `campaign_members`, `cancel_checkout`, `canvas`, `capacity_plan`, `care_request_reviewer`, `carousel`, `case`, `case_change_status`, `case_comment`, `case_email`, `case_log_a_call`, `case_milestone`, `case_transcript`, `case_wrap_up`, `catalog`, `category`, `change_request`, `channel_program_history`, `channel_program_levels`, `channel_program_members`, `channel_programs`, `chart`, `checkout`, `choice`, `client`, `cms`, `coaching`, `code_playground`, `code_set`, `code_set_bundle`, `collection`, `collection_variable`, `connected_apps`, `constant`, `contact`, `contact_list`, `contact_request`, `contract`, `contract_line_item`, `contract_payment`, `coupon_codes`, `currency`, `currency_input`, `custom`, `custom_component_task`, `custom_notification`, `customer_360`, `customer_lifecycle_analytics`, `customer_portal_users`, `customers`
+
+**D**: `dashboard`, `dashboard_component`, `dashboard_ea`, `data_integration_hub`, `data_mapping`, `data_model`, `data_streams`, `datadotcom`, `dataset`, `date_input`, `date_time`, `decision`, `default`, `delegated_account`, `device`, `discounts`, `display_rich_text`, `display_text`, `document`, `document_reference`, `drafts`, `duration_downscale`, `dynamic_record_choice`
+
+**E**: `education`, `einstein_replies`, `email`, `email_chatter`, `employee`, `employee_asset`, `employee_contact`, `employee_job`, `employee_job_position`, `employee_organization`, `empty`, `endorsement`, `entitlement`, `entitlement_policy`, `entitlement_process`, `entitlement_template`, `entity`, `entity_milestone`, `environment_hub`, `event`, `events`, `expense`, `expense_report`, `expense_report_entry`
+
+**F**: `feed`, `feedback`, `field_sales`, `file`, `filter`, `filter_criteria`, `filter_criteria_rule`, `first_non_empty`, `flow`, `folder`, `forecasts`, `form`, `formula`, `fulfillment_order`
+
+**G**: `generic_loading`, `global_constant`, `goals`, `group_loading`, `groups`, `guidance_center`
+
+**H**: `hierarchy`, `high_velocity_sales`, `historical_adherence`, `holiday_operating_hours`, `home`, `household`
+
+**I**: `identifier`, `immunization`, `incident`, `individual`, `insights`, `instore_locations`, `investment_account`, `invocable_action`, `iot_context`, `iot_orchestrations`
+
+**J**: `javascript_button`, `job_family`, `job_position`, `job_profile`
+
+**K**: `kanban`, `key_dates`, `knowledge`
+
+**L**: `lead`, `lead_insights`, `lead_list`, `letterhead`, `lightning_component`, `lightning_usage`, `link`, `list_email`, `live_chat`, `live_chat_visitor`, `location`, `location_permit`, `log_a_call`, `logging`, `loop`
+
+**M**: `macros`, `maintenance_asset`, `maintenance_plan`, `maintenance_work_rule`, `marketing_actions`, `med_rec_recommendation`, `med_rec_statement_recommendation`, `medication`, `medication_dispense`, `medication_ingredient`, `medication_reconciliation`, `medication_statement`, `merge`, `messaging_conversation`, `messaging_session`, `messaging_user`, `metrics`, `multi_picklist`, `multi_select_checkbox`
+
+**N**: `network_contract`, `news`, `note`, `number_input`
+
+**O**: `observation_component`, `omni_supervisor`, `operating_hours`, `opportunity`, `opportunity_contact_role`, `opportunity_splits`, `orchestrator`, `order_item`, `orders`, `outcome`, `output`
+
+**P**: `partner_fund_allocation`, `partner_fund_claim`, `partner_fund_request`, `partner_marketing_budget`, `partners`, `password`, `past_chat`, `patient_medication_dosage`, `payment_gateway`, `people`, `performance`, `person_account`, `person_language`, `person_name`, `photo`, `picklist_choice`, `picklist_type`, `planogram`, `poll`, `portal`, `portal_roles`, `portal_roles_and_subordinates`, `post`, `practitioner_role`, `price_book_entries`, `price_books`, `pricebook`, `pricing_workspace`, `problem`, `procedure`, `procedure_detail`, `process`, `process_exception`, `product`, `product_consumed`, `product_consumed_state`, `product_item`, `product_item_transaction`, `product_quantity_rules`, `product_request`, `product_request_line_item`, `product_required`, `product_service_campaign`, `product_service_campaign_item`, `product_transfer`, `product_transfer_state`, `product_warranty_term`, `product_workspace`, `products`, `promotion_segments`, `promotions`, `promotions_workspace`, `propagation_policy`, `proposition`
+
+**Q**: `qualifications`, `question_best`, `question_feed`, `queue`, `quick_text`, `quip`, `quip_sheet`, `quotes`
+
+**R**: `radio_button`, `read_receipts`, `recent`, `recipe`, `record`, `record_create`, `record_delete`, `record_lookup`, `record_signature_task`, `record_update`, `recycle_bin`, `related_list`, `relationship`, `reply_text`, `report`, `report_type`, `resource_absence`, `resource_capacity`, `resource_preference`, `resource_skill`, `restriction_policy`, `return_order`, `return_order_line_item`, `reward`, `rtc_presence`
+
+**S**: `sales_cadence`, `sales_cadence_target`, `sales_channel`, `sales_path`, `sales_value`, `salesforce_cms`, `scan_card`, `schedule_objective`, `scheduling_constraint`, `scheduling_policy`, `screen`, `search`, `section`, `segments`, `selling_model`, `serialized_product`, `serialized_product_transaction`, `service_appointment`, `service_appointment_capacity_usage`, `service_contract`, `service_crew`, `service_crew_member`, `service_report`, `service_request`, `service_request_detail`, `service_resource`, `service_territory`, `service_territory_location`, `service_territory_member`, `service_territory_policy`, `settings`, `shift`, `shift_pattern`, `shift_pattern_entry`, `shift_preference`, `shift_scheduling_operation`, `shift_template`, `shift_type`, `shipment`, `skill`, `skill_entity`, `skill_requirement`, `slack`, `slider`, `sms`, `snippet`, `snippets`, `sobject`, `sobject_collection`, `social`, `solution`, `sort`, `sort_policy`, `sossession`, `stage`, `stage_collection`, `steps`, `store`, `store_group`, `story`, `strategy`, `survey`, `swarm_request`, `swarm_session`, `system_and_global_variable`
+
+**T**: `tableau`, `task`, `task2`, `team_member`, `template`, `text`, `text_template`, `textarea`, `textbox`, `thanks`, `thanks_loading`, `timesheet`, `timesheet_entry`, `timeslot`, `today`, `toggle`, `topic`, `topic2`, `tour`, `tour_check`, `trailhead`, `trailhead_alt`, `travel_mode`
+
+**U**: `unified_health_score`, `unmatched`, `user`, `user_role`
+
+**V**: `variable`, `variation_attribute_setup`, `variation_products`, `video`, `visit_templates`, `visits`, `visualforce_page`, `voice_call`
+
+**W**: `waits`, `warranty_term`, `webcart`, `work_capacity_limit`, `work_capacity_usage`, `work_contract`, `work_forecast`, `work_order`, `work_order_item`, `work_plan`, `work_plan_rule`, `work_plan_template`, `work_plan_template_entry`, `work_queue`, `work_step`, `work_step_template`, `work_type`, `work_type_group`, `workforce_engagement`
+
+### Common Icons by Category | 常用图标分类
+
+| Category | Recommended Icons |
+|----------|-------------------|
+| CRM/Sales | `opportunity`, `lead`, `account`, `contact`, `campaign`, `quotes` |
+| Contracts | `contract`, `contract_line_item`, `contract_payment` |
+| Projects | `task`, `task2`, `assignment`, `timesheet`, `work_order` |
+| HR/People | `people`, `employee`, `person_account`, `user`, `groups` |
+| Finance | `budget`, `expense`, `expense_report`, `currency`, `payment_gateway` |
+| Content | `article`, `document`, `file`, `knowledge`, `cms` |
+| Dashboard | `dashboard`, `dashboard_ea`, `chart`, `report`, `insights` |
+| Admin | `settings`, `apps_admin`, `connected_apps`, `data_model` |
+| Communication | `email`, `sms`, `live_chat`, `announcement`, `call` |
+| Home/Navigation | `home`, `agent_home`, `app`, `apps`, `kanban` |
 
 ### Custom Icons
 
 ```yaml
 icon: custom_icon_name
 ```
-
-### Icon Resources
-
-- [Salesforce Lightning Icons](https://www.lightningdesignsystem.com/icons/)
-- Icons are referenced by name without prefixes
 
 ## File Location | 文件位置
 
@@ -408,34 +570,53 @@ name: CM
 code: cm_app
 ```
 
-### 2. Object Organization
+### 2. Tab Organization with Groups
 
-Group related objects:
+Group related tabs using `tab_groups` and `tab_items`:
+
+使用 `tab_groups` 和 `tab_items` 对标签进行分组：
 
 ```yaml
-objects:
-  # Core objects first
+tabs:
   - contracts
   - customers
-
-  # Related objects
   - contract_items
   - contract_approvals
-
-  # Configuration objects
   - contract_templates
+
+tab_groups:
+  - group_name: 业务
+    default_open: true
+  - group_name: 配置
+    default_open: false
+
+tab_items:
+  contracts:
+    group: 业务
+    index: 1
+  customers:
+    group: 业务
+    index: 2
+  contract_items:
+    group: 业务
+    index: 3
+  contract_approvals:
+    group: 业务
+    index: 4
+  contract_templates:
+    group: 配置
+    index: 1
 ```
 
-### 3. Mobile Optimization
+### 3. Always Enable Sidebar
 
-Only include essential objects in mobile:
+Always set `showSidebar: true` for proper navigation:
+
+始终设置 `showSidebar: true` 以确保正确的导航：
 
 ```yaml
-mobile_objects:
-  - contracts      # Main object
-  - customers      # Lookup reference
-  - approvals      # Action required
-  # Exclude: templates, settings
+showSidebar: true
+mobile: true
 ```
 
 ### 4. Sort Order
@@ -455,17 +636,21 @@ sort: 900  # Administration
 
 ### 5. Icons
 
-Choose meaningful icons:
+Choose meaningful icons from the [valid icon_slds values](#icon-reference--图标参考):
+
+从[有效的 icon_slds 值](#icon-reference--图标参考)中选择有意义的图标：
 
 ```yaml
 # Business apps
 icon_slds: contract      # Contracts
 icon_slds: opportunity   # Sales
 icon_slds: account       # Customers
+icon_slds: orders        # Orders
 
 # System apps
 icon_slds: settings      # Configuration
 icon_slds: dashboard     # Analytics
+icon_slds: apps_admin    # Administration
 ```
 
 ## Common Patterns | 常见模式
@@ -477,19 +662,39 @@ name: Customer Relationship Management
 code: crm
 description: Manage customers, leads, and opportunities
 icon_slds: opportunity
+color: '#e67e22'
 is_creator: true
-objects:
+showSidebar: true
+mobile: true
+visible: true
+sort: 100
+tabs:
   - accounts
   - contacts
   - leads
   - opportunities
   - quotes
-mobile_objects:
-  - accounts
-  - contacts
-  - opportunities
-visible: true
-sort: 100
+tab_groups:
+  - group_name: 客户
+    default_open: true
+  - group_name: 销售
+    default_open: true
+tab_items:
+  accounts:
+    group: 客户
+    index: 1
+  contacts:
+    group: 客户
+    index: 2
+  leads:
+    group: 销售
+    index: 1
+  opportunities:
+    group: 销售
+    index: 2
+  quotes:
+    group: 销售
+    index: 3
 ```
 
 ### Project Management Application
@@ -499,17 +704,33 @@ name: Project Management
 code: projects
 description: Track projects, tasks, and resources
 icon_slds: task
+color: '#2ecc71'
 is_creator: true
-objects:
+showSidebar: true
+mobile: true
+visible: true
+sort: 150
+tabs:
   - projects
   - tasks
   - milestones
   - time_entries
-mobile_objects:
-  - projects
-  - tasks
-visible: true
-sort: 150
+tab_groups:
+  - group_name: 项目
+    default_open: true
+tab_items:
+  projects:
+    group: 项目
+    index: 1
+  tasks:
+    group: 项目
+    index: 2
+  milestones:
+    group: 项目
+    index: 3
+  time_entries:
+    group: ''
+    index: 4
 ```
 
 ### HR Management Application
@@ -519,21 +740,42 @@ name: Human Resources
 code: hr
 description: Employee and HR management
 icon_slds: people
+color: '#9b59b6'
 is_creator: true
-objects:
-  - employees
-  - departments
-  - positions
-  - attendance
-  - leave_requests
-mobile_objects:
-  - leave_requests
-  - attendance
+showSidebar: true
+mobile: true
 visible: true
 sort: 200
 permission_sets:
   - admin
   - hr_manager
+tabs:
+  - employees
+  - departments
+  - positions
+  - attendance
+  - leave_requests
+tab_groups:
+  - group_name: 人事
+    default_open: true
+  - group_name: 考勤
+    default_open: true
+tab_items:
+  employees:
+    group: 人事
+    index: 1
+  departments:
+    group: 人事
+    index: 2
+  positions:
+    group: 人事
+    index: 3
+  attendance:
+    group: 考勤
+    index: 1
+  leave_requests:
+    group: 考勤
+    index: 2
 ```
 
 ## Internationalization | 国际化
@@ -589,7 +831,8 @@ contracts:
 
 ## References | 参考资料
 
-- [Application Development Guide](../.github/prompts/customer/01-general-development.md)
-- [Object Definition](./05-objects.md)
+- [Object Definition](../objects/SKILL.md)
+- [Micro Pages](../micro-pages/SKILL.md)
+- [Object Permissions](../object-permissions/SKILL.md)
 - [Salesforce Lightning Icons](https://www.lightningdesignsystem.com/icons/)
 - [Steedos Documentation](https://docs.steedos.com/)
