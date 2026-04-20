@@ -28,7 +28,9 @@ const Home = () => {
 
   const currentUser = useSelector(getCurrentUser);
   const currentSpace = useSelector(getCurrentSpace);
-  document.title = `Steedos`;
+  const isOem = Builder.settings?.platform?.is_oem === true || Builder.settings?.platform?.is_oem === 'true';
+  const licensedTo = Builder.settings?.platform?.licensed_to;
+  document.title = (isOem && licensedTo) ? licensedTo : `Steedos`;
 
   useEffect(() => {
     if (!currentUser) {

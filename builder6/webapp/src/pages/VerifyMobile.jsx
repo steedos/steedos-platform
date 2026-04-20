@@ -66,7 +66,9 @@ class VerifyMobile extends React.Component {
             disabledSendVerificationstate: this.props.settings.tenant.enable_open_geetest || false
         };
         window.browserHistory = this.props.history;
-        document.title = Utils.localizeMessage(`accounts.verify_${verifyBy}`) + ` | ${this.props.tenant.name}`;
+        const isOem = this.props.settings?.platform?.is_oem === true || this.props.settings?.platform?.is_oem === 'true';
+        const brandName = (isOem && this.props.settings?.platform?.licensed_to) ? this.props.settings.platform.licensed_to : this.props.tenant.name;
+        document.title = Utils.localizeMessage(`accounts.verify_${verifyBy}`) + ` | ${brandName}`;
     }
 
     handleEmailChange = (e) => {

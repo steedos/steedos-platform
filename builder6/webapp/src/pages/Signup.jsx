@@ -133,7 +133,9 @@ class Signup extends React.Component {
     this.passwordInput = React.createRef();
 
     window.browserHistory = this.props.history;
-    document.title = Utils.localizeMessage('accounts.signup') + ` | ${this.props.tenant.name}`;
+    const isOem = this.props.settings?.platform?.is_oem === true || this.props.settings?.platform?.is_oem === 'true';
+    const brandName = (isOem && this.props.settings?.platform?.licensed_to) ? this.props.settings.platform.licensed_to : this.props.tenant.name;
+    document.title = Utils.localizeMessage('accounts.signup') + ` | ${brandName}`;
 
 
   }

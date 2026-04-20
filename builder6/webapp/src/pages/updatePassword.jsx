@@ -28,7 +28,9 @@ class UpdatePassword extends React.Component {
     };
 
     window.browserHistory = this.props.history;
-    document.title = Utils.localizeMessage('accounts.title.updatePassword') + ` | ${this.props.tenant.name}`;
+    const isOem = this.props.settings?.platform?.is_oem === true || this.props.settings?.platform?.is_oem === 'true';
+    const brandName = (isOem && this.props.settings?.platform?.licensed_to) ? this.props.settings.platform.licensed_to : this.props.tenant.name;
+    document.title = Utils.localizeMessage('accounts.title.updatePassword') + ` | ${brandName}`;
   }
 
 

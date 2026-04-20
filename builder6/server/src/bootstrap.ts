@@ -258,6 +258,15 @@ export async function bootstrap() {
           `href="${oemFaviconUrl}"`,
         );
       }
+
+      // OEM title: replace default title with licensed_to value
+      const platformSettings = ((global as any).Steedos?.settings?.PUBLIC_SETTINGS || {}).platform || {};
+      if (platformSettings.is_oem && platformSettings.licensed_to) {
+        indexHtml = indexHtml.replace(
+          /<title>Steedos<\/title>/,
+          `<title>${platformSettings.licensed_to}</title>`,
+        );
+      }
       // 你的自定义脚本
       const BUILDER6_PUBLIC_SETTINGS = {
         unpkgUrl: process.env.STEEDOS_UNPKG_URL || "https://unpkg.com",

@@ -78,6 +78,10 @@ const Root: React.FC<any> = (props) => {
     const isOem = props.settings?.platform?.is_oem === true || props.settings?.platform?.is_oem === 'true';
     if (isOem) {
       document.body.classList.add('is-oem');
+      const licensedTo = Builder.settings?.platform?.licensed_to;
+      if (licensedTo) {
+        document.title = licensedTo;
+      }
     } else {
       document.body.classList.remove('is-oem');
     }
