@@ -50,6 +50,9 @@ const getAppDescriptionKey = function (appId) {
 
 const getAppGroupKey = function (appId, groupId) {
   const prefix = getPrefix(CUSTOMAPPLICATIONS_KEY);
+  if (!groupId) {
+    return [prefix, appId, "groups", ""].join(KEYSEPARATOR);
+  }
   const fixGroupId = groupId
     .toLocaleLowerCase()
     .replace(/\%/g, "_")

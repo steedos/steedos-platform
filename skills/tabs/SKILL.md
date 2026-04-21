@@ -99,7 +99,9 @@ name: object_contract
 ```
 
 #### type (String)
-Tab type: `object`, `page`, or `url`.
+**⚠️ MUST be one of: `object`, `page`, `url`. No other values are valid. 严禁使用其他值。**
+
+Tab type.
 
 ```yaml
 type: object
@@ -167,6 +169,10 @@ mobile: true
 ```
 
 #### icon (String)
+**⚠️ MUST be a valid SLDS icon name from the objects skill [Valid Icon Values](../objects/SKILL.md#valid-icon-values--有效的-icon-值) list. Do NOT invent icon names. If no icon matches, use `custom` or `record`.**
+
+**⚠️ 必须为对象 skill [有效图标列表](../objects/SKILL.md#valid-icon-values--有效的-icon-值)中的有效 SLDS 图标名称，严禁编造。如无匹配，使用 `custom` 或 `record`。**
+
 Salesforce Lightning Design System icon name.
 
 ```yaml
@@ -213,9 +219,9 @@ license:
 
 ### Permissions | 权限
 
-Control tab visibility per permission set. Each entry has `permission` (`'on'` or `'off'`) and `permission_set`.
+Control tab visibility per permission set. Each entry has `permission` (**⚠️ MUST be `'on'` or `'off'`, no other values**) and `permission_set`.
 
-按权限集控制标签页可见性。每个条目有 `permission`（`'on'` 或 `'off'`）和 `permission_set`。
+按权限集控制标签页可见性。每个条目有 `permission`（**⚠️ 必须为 `'on'` 或 `'off'`**）和 `permission_set`。
 
 ```yaml
 permissions:

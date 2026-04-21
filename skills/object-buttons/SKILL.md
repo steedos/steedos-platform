@@ -78,14 +78,18 @@ amis_schema: |-
 |----------|------|----------|-------------|
 | `name` | string | Yes | Unique identifier (snake_case) |
 | `label` | string | Yes | Display label |
-| `type` | string | Yes | Always `amis_button` |
-| `on` | string | Yes | Where button appears |
+| `type` | string | Yes | **⚠️ MUST be `amis_button`. No other value is valid.** |
+| `on` | string | Yes | **⚠️ MUST be one of: `record_only`, `record`, `list`, `list_record`. See [Display Locations](#display-locations-on--显示位置) below.** |
 | `is_enable` | boolean | Yes | Enable/disable button |
 | `visible` | boolean | No | Show/hide button |
 | `locked` | boolean | No | Lock button from editing |
 | `amis_schema` | string | Yes | Inline Amis JSON schema (YAML block scalar `|-`) |
 
 ### Display Locations (`on`) | 显示位置
+
+**⚠️ The `on` value MUST be one of the values below. Do NOT use other values.**
+
+**⚠️ `on` 值必须为下表中的值之一，严禁使用其他值。**
 
 | Value | Description |
 |-------|-------------|

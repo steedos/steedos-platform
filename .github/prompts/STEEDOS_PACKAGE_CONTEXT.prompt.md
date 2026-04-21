@@ -62,10 +62,7 @@ steedos-packages/
 {
   "name": "@steedos-packages/contract-management",
   "version": "1.0.0",
-  "main": "package.service.js",
-  "dependencies": {
-    "@steedos/service-package-loader": "*"
-  }
+  "main": "package.service.js"
 }
 ```
 

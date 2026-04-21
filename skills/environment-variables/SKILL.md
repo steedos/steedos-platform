@@ -88,7 +88,7 @@ AWS_S3_REGION=us-east-1
 ### Logging | 日志配置
 
 ```env
-# Log level: trace, debug, info, warn, error, fatal
+# Log level: ⚠️ MUST be one of: trace, debug, info, warn, error, fatal
 B6_LOG_LEVEL=warn
 
 # Moleculer log level

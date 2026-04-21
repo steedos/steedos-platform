@@ -87,10 +87,7 @@ steedos-packages/
   "name": "@steedos-packages/my-package",
   "version": "1.0.0",
   "description": "My Steedos Package",
-  "main": "package.service.js",
-  "dependencies": {
-    "@steedos/service-package-loader": "*"
-  }
+  "main": "package.service.js"
 }
 ```
 

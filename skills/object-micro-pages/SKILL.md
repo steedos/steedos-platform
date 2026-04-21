@@ -81,9 +81,9 @@ pageAssignments:
 |----------|------|----------|-------------|
 | `name` | string | Yes | Unique page name |
 | `label` | string | Yes | Display label |
-| `type` | string | Yes | `record` or `list` |
+| `type` | string | Yes | **⚠️ MUST be `record` or `list`. No other values are valid.** |
 | `object_name` | string | Yes | Associated object API name |
-| `render_engine` | string | Yes | Always `amis` |
+| `render_engine` | string | Yes | **⚠️ MUST be `amis`. No other value is valid.** |
 | `is_active` | boolean | Yes | Enable/disable page |
 | `locked` | boolean | No | Lock from editing |
 | `pageAssignments` | array | Yes | Desktop/mobile display settings |

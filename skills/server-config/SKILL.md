@@ -50,7 +50,7 @@ YAML values support `${ENV_VAR}` interpolation from environment variables.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `STEEDOS_EDITION` | auto | Force edition: `ce`, `ee`, `cloud` |
+| `STEEDOS_EDITION` | auto | **⚠️ MUST be one of: `ce`, `ee`, `cloud`.** Force edition |
 | `STEEDOS_LICENSE` | — | Enterprise license key |
 | `STEEDOS_TENANT_ENABLE_SAAS` | `false` | Enable SaaS/Cloud mode |
 
@@ -137,7 +137,7 @@ tenant:
 
 ```yaml
 cfs:
-  store: local    # local | aliyun | aws | steedosCloud
+  store: local    # ⚠️ MUST be one of: local | aliyun | aws | steedosCloud
 
   local:
     folder: ${STEEDOS_STORAGE_DIR}

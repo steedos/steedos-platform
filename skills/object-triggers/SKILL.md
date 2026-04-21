@@ -65,13 +65,17 @@ handler: |-
 |----------|------|----------|-------------|
 | `name` | string | Yes | Unique trigger name |
 | `listenTo` | string | Yes | Object API name to listen to |
-| `when` | array | Yes | Array of event hooks |
+| `when` | array | Yes | **⚠️ Array of event hooks. MUST only contain values from the [Event Hooks](#event-hooks-when--事件钩子) list below.** |
 | `isEnabled` | boolean | Yes | Enable/disable trigger |
-| `type` | string | Yes | Always `code` |
+| `type` | string | Yes | **⚠️ MUST be `code`. No other value is valid.** |
 | `locked` | boolean | No | Lock from editing |
 | `handler` | string | Yes | Inline JavaScript (YAML block scalar `|-`) |
 
 ### Event Hooks (`when`) | 事件钩子
+
+**⚠️ CRITICAL: Each value in the `when` array MUST be from the list below. Do NOT invent event hook names. Any invalid value will cause the trigger to fail silently.**
+
+**⚠️ 重要：`when` 数组中的每个值必须为下方列表中的值，严禁编造事件钩子名称。无效值会导致触发器静默失败。**
 
 Complete list of valid values:
 

@@ -72,8 +72,8 @@ locked: false
 |----------|------|----------|-------------|
 | `name` | string | Yes | Unique page name |
 | `label` | string | Yes | Display label |
-| `type` | string | Yes | `app` (standalone), `record`, or `list` |
-| `render_engine` | string | Yes | Always `amis` |
+| `type` | string | Yes | **⚠️ MUST be one of: `app` (standalone), `record`, `list`. No other values are valid.** |
+| `render_engine` | string | Yes | **⚠️ MUST be `amis`. No other value is valid.** |
 | `is_active` | boolean | Yes | Enable/disable page |
 | `locked` | boolean | No | Lock from editing |
 | `object_name` | string | No | Associated object (for record/list types) |

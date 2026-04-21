@@ -116,7 +116,9 @@ searchable: true
 
 ## Valid Field Types | 有效字段类型
 
-The `type` property must be one of the following values:
+**⚠️ CRITICAL: The `type` property MUST be one of the values listed below. NEVER invent field types. Any value NOT in this list will cause an error.**
+
+**⚠️ 重要：`type` 属性必须为下表中的值之一，严禁自行编造字段类型。不在此列表中的值会导致错误。**
 
 | Type | Description |
 |------|-------------|
@@ -325,7 +327,7 @@ Lookup properties:
 - `multiple` — allow selecting multiple records (`true`/`false`)
 - `filters` — filter condition for lookup dropdown
 - `depend_on` — re-fetch options when these fields change
-- `deleted_lookup_record_behavior` — when referenced record is deleted: `clear` (set to null) or `retain` (keep stale reference)
+- `deleted_lookup_record_behavior` — when referenced record is deleted. **⚠️ MUST be `clear` (set to null) or `retain` (keep stale reference). Only these two values are valid.**
 
 ### master_detail (Parent-Child) | 主从关系
 ```yaml
@@ -355,9 +357,9 @@ formula: !!js/function |
   }
 ```
 
-`data_type` — the output type of the formula: `text`, `number`, `currency`, `percent`, `boolean`, `date`, `datetime`
+`data_type` — the output type of the formula. **⚠️ MUST be one of: `text`, `number`, `currency`, `percent`, `boolean`, `date`, `datetime`. Do NOT use other values.**
 
-`formula_blank_value` — how to treat blank fields: `zeroes` (default, treat as 0) or `blanks` (treat as null)
+`formula_blank_value` — how to treat blank fields. **⚠️ MUST be `zeroes` (default, treat as 0) or `blanks` (treat as null). Only these two values are valid.**
 
 ### summary (Rollup) | 汇总
 ```yaml
@@ -370,7 +372,7 @@ summary_field: customer
 summary_filters: [["status", "!=", "cancelled"]]
 ```
 
-`summary_type` must be one of: `count`, `sum`, `avg`, `min`, `max`
+**⚠️ `summary_type` MUST be one of: `count`, `sum`, `avg`, `min`, `max`. Do NOT use other values.**
 
 ## File and Media Types | 文件和媒体类型
 
@@ -400,7 +402,7 @@ language: javascript
 is_wide: true
 ```
 
-`language` must be one of: `javascript`, `typescript`, `json`, `html`, `css`, `sql`, `python`, `java`, `ruby`, `go`, `shell`, `yaml`, `xml`, `markdown`, `php`, `csharp`, `cpp`, `c`, `swift`, `lua`, `r`
+**⚠️ `language` MUST be one of: `javascript`, `typescript`, `json`, `html`, `css`, `sql`, `python`, `java`, `ruby`, `go`, `shell`, `yaml`, `xml`, `markdown`, `php`, `csharp`, `cpp`, `c`, `swift`, `lua`, `r`. Do NOT use other values.**
 
 ### object (JSON)
 ```yaml

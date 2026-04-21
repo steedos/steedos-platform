@@ -156,10 +156,7 @@ mkdir -p steedos-packages/contract-management/main/default/profiles
     "management"
   ],
   "author": "",
-  "license": "MIT",
-  "dependencies": {
-    "@steedos/service-package-loader": "*"
-  }
+  "license": "MIT"
 }
 ```
 

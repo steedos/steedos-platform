@@ -25,6 +25,10 @@ Steedos 通过两类翻译文件支持元数据级别的国际化：
 
 ## Supported Languages | 支持的语言
 
+**⚠️ Language codes MUST be from the list below. Do NOT invent language codes.**
+
+**⚠️ 语言代码必须为下表中的值，严禁编造。**
+
 | Language Code | Language |
 |---------------|----------|
 | `en` | English |

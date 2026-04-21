@@ -65,17 +65,17 @@ mobile_columns:
 | `name` | string | Yes | Unique view name |
 | `label` | string | Yes | Display label (use the language of the user's prompt) |
 | `is_enable` | boolean | Yes | Enable/disable view |
-| `crud_mode` | string | No | Display mode: `table` (default), `cards` |
+| `crud_mode` | string | No | **⚠️ MUST be `table` (default) or `cards`. No other values are valid.** |
 | `columns` | array | Yes | Displayed columns |
 | `shared` | boolean | No | Share with all users |
-| `shared_to` | string | No | Who can see: `mine` (default), `space`, `organizations` |
-| `filter_scope` | string | Yes | Data scope: `space` (all records, default), `mine` (my records only) |
+| `shared_to` | string | No | **⚠️ MUST be one of: `mine` (default), `space`, `organizations`. No other values are valid.** |
+| `filter_scope` | string | Yes | **⚠️ MUST be `space` (all records, default) or `mine` (my records only). No other values are valid.** |
 | `filters` | array | No | Default filter conditions |
-| `sort` | array | No | Default sort order (each item: `field_name` + `order`: `asc`/`desc`) |
+| `sort` | array | No | Default sort order (each item: `field_name` + `order`: **⚠️ `order` MUST be `asc` or `desc`**) |
 | `searchable_fields` | array | No | Full-text search fields |
 | `mobile_columns` | array | No | Mobile-optimized columns |
 | `extra_columns` | array | No | Hidden columns (available for formulas) |
-| `scrolling_mode` | string | No | Scroll behavior: `standard` (default), `virtual`, `infinite` |
+| `scrolling_mode` | string | No | **⚠️ MUST be one of: `standard` (default), `virtual`, `infinite`. No other values are valid.** |
 | `show_count` | boolean | No | Show record count |
 
 ## Columns | 列配置
