@@ -1,6 +1,6 @@
 {
   "name": "@steedos/metadata-core",
-  "version": "3.0.14-beta.4",
+  "version": "3.0.14-beta.5",
   "description": "",
   "main": "lib/index.js",
   "files": [
@@ -12,7 +12,7 @@
     "build": "npx rimraf lib && npx tsc"
   },
   "dependencies": {
-    "@steedos/client": "3.0.14-beta.4",
+    "@steedos/client": "3.0.14-beta.5",
     "archiver": "^5.1.0",
     "chalk": "^4.1.0",
     "clone": "^2.1.2",
@@ -38,5 +38,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "cf9148b4a4c5a43fbdea03fcd4e6b447851f65cd"
+  "gitHead": "7bf33bd1875781ca7daf3446728d6da7850c1133"
 }
