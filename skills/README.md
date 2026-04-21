@@ -35,7 +35,7 @@ skills/
 
 ## Skills Index | 技能索引
 
-### 🏗️ Foundation | 基础 (3 skills)
+### 🏗️ Foundation | 基础 (4 skills)
 
 #### [project-format](./project-format/SKILL.md)
 Learn how to create and structure Steedos projects, including minimal requirements, package.json configuration, steedos-config.yml setup, directory structure, and installation.
@@ -51,6 +51,11 @@ Master Steedos package creation and structure, including directory organization,
 Configure Steedos with environment variables for server, database, cache, security, email, storage, and deployment settings.
 
 使用环境变量配置 Steedos 的服务器、数据库、缓存、安全、邮件、存储和部署设置。
+
+#### [cli-commands](./cli-commands/SKILL.md)
+Steedos CLI commands reference: start, restart, source management, data import/export, package operations, and authentication. Includes AI-assisted development workflow with automatic restart after code changes.
+
+Steedos CLI 命令参考：启动、重启、源代码管理、数据导入导出、软件包操作和认证。包含 AI 辅助开发工作流（代码修改后自动重启）。
 
 ### 🎨 User Interface | 用户界面 (3 skills)
 
@@ -158,6 +163,10 @@ Moleculer 微服务集成、代理配置、事件处理、ObjectQL 模式初始�
 | Create a new Steedos project | [project-format](./project-format/SKILL.md) |
 | Create a package | [package-format](./package-format/SKILL.md) |
 | Configure environment | [environment-variables](./environment-variables/SKILL.md) |
+| Start/restart server | [cli-commands](./cli-commands/SKILL.md) |
+| AI-assisted restart workflow | [cli-commands](./cli-commands/SKILL.md) |
+| Import/export data | [cli-commands](./cli-commands/SKILL.md) |
+| Deploy/retrieve source | [cli-commands](./cli-commands/SKILL.md) |
 | Define data models | [objects](./objects/SKILL.md), [object-fields](./object-fields/SKILL.md) |
 | Create list views | [object-list-views](./object-list-views/SKILL.md) |
 | Add validation logic | [object-triggers](./object-triggers/SKILL.md) |

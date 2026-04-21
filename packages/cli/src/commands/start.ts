@@ -2,11 +2,34 @@ import { Command } from "@oclif/command";
 import * as fs from "fs";
 import * as path from "path";
 
+export const PID_FILE = ".steedos.pid";
+
+export function getPidFilePath(): string {
+  return path.join(process.cwd(), PID_FILE);
+}
+
+export function writePidFile(): void {
+  fs.writeFileSync(getPidFilePath(), String(process.pid), "utf-8");
+}
+
+export function removePidFile(): void {
+  const pidFile = getPidFilePath();
+  if (fs.existsSync(pidFile)) {
+    fs.unlinkSync(pidFile);
+  }
+}
+
 class StartCommand extends Command {
   async run() {
     try {
       // console.log(`process path`, process.cwd());
       this.checkModuleExists("@steedos/server");
+
+      writePidFile();
+
+      process.on("exit", removePidFile);
+      process.on("SIGINT", () => { removePidFile(); process.exit(0); });
+      process.on("SIGTERM", () => { removePidFile(); process.exit(0); });
 
       const steedosPath = require.resolve("@steedos/server");
       // eslint-disable-next-line @typescript-eslint/no-require-imports
