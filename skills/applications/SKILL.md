@@ -146,9 +146,9 @@ mobile: true
 ```
 
 #### icon_slds (String)
-Salesforce Lightning icon name. Must be one of the valid values listed in [Icon Reference](#icon-reference--图标参考) below.
+**⚠️ MUST be a value from the [Valid icon_slds Values](#valid-icon_slds-values--有效的-icon_slds-值) list below. Do NOT invent icon names. If no icon matches, use `custom` or `record` as a safe default.**
 
-Salesforce Lightning 图标名称。必须是下方[图标参考](#icon-reference--图标参考)中列出的有效值之一。
+Salesforce Lightning 图标名称。**必须**从下方[有效值列表](#valid-icon_slds-values--有效的-icon_slds-值)中选取，严禁自行编造。如无匹配图标，使用 `custom` 或 `record` 作为默认值。
 
 ```yaml
 icon_slds: approval
@@ -485,11 +485,15 @@ permission_sets:
 
 ## Icon Reference | 图标参考
 
+**⚠️ CRITICAL: The `icon_slds` value MUST be chosen from the valid list below. NEVER invent or guess icon names. Any value NOT in this list will cause a broken icon. When in doubt, use `custom` or `record`.**
+
+**⚠️ 重要：`icon_slds` 值必须从下方有效值列表中选取，严禁自行编造图标名称。不在列表中的值会导致图标无法显示。如不确定，使用 `custom` 或 `record`。**
+
 ### Valid icon_slds Values | 有效的 icon_slds 值
 
-The following is the complete list of valid `icon_slds` values:
+The following is the **complete and exhaustive** list of valid `icon_slds` values. Any value NOT in this list will result in a broken icon:
 
-以下是 `icon_slds` 的完整有效值列表：
+以下是 `icon_slds` 的**完整且唯一**有效值列表，不在此列表中的值会导致图标无法显示：
 
 **A**: `account`, `account_info`, `action_list_component`, `actions_and_buttons`, `activation_target`, `activations`, `address`, `agent_home`, `agent_session`, `aggregation_policy`, `all`, `announcement`, `answer_best`, `answer_private`, `answer_public`, `apex`, `apex_plugin`, `app`, `approval`, `apps`, `apps_admin`, `article`, `asset_action`, `asset_action_source`, `asset_audit`, `asset_downtime_period`, `asset_object`, `asset_relationship`, `asset_state_period`, `asset_warranty`, `assigned_resource`, `assignment`, `attach`, `avatar`, `avatar_loading`
 
@@ -551,6 +555,9 @@ The following is the complete list of valid `icon_slds` values:
 | Admin | `settings`, `apps_admin`, `connected_apps`, `data_model` |
 | Communication | `email`, `sms`, `live_chat`, `announcement`, `call` |
 | Home/Navigation | `home`, `agent_home`, `app`, `apps`, `kanban` |
+| Quality/Inspection 质检巡检 | `observation_component`, `visits`, `case`, `work_order`, `procedure` |
+| Equipment/Maintenance 设备维保 | `maintenance_asset`, `maintenance_plan`, `device`, `asset_object` |
+| Service 服务 | `service_request`, `service_contract`, `service_report`, `work_order` |
 
 ### Custom Icons
 
@@ -651,9 +658,9 @@ sort: 900  # Administration
 
 ### 5. Icons
 
-Choose meaningful icons from the [valid icon_slds values](#icon-reference--图标参考):
+**The `icon_slds` value MUST exist in the [valid icon_slds values list](#valid-icon_slds-values--有效的-icon_slds-值). Never invent icon names. Use `custom` or `record` if no specific icon fits.** Common mappings: 质检/检验→`observation_component`, 巡检→`visits`, 设备→`maintenance_asset`, 工单→`work_order`, 审批→`approval`
 
-从[有效的 icon_slds 值](#icon-reference--图标参考)中选择有意义的图标：
+**`icon_slds` 值必须存在于[有效值列表](#valid-icon_slds-values--有效的-icon_slds-值)中，严禁编造。** 常见映射：质检→`observation_component`，巡检→`visits`，设备→`maintenance_asset`，工单→`work_order`，审批→`approval`
 
 ```yaml
 # Business apps
