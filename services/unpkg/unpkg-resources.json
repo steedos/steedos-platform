@@ -29,5 +29,7 @@
     "@salesforce-ux/design-system@2.22.2",
     "@salesforce-ux/design-system@2.28.1",
     "@steedos-labs/analytics-frontend@0.46.6-beta.35",
-    "@steedos-labs/analytics-frontend@0.46.6-beta.32"
+    "@steedos-labs/analytics-frontend@0.46.6-beta.32",
+    "react@18.2.0",
+    "react-dom@18.2.0"
 ]
