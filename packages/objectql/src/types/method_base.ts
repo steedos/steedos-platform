@@ -71,7 +71,7 @@ export async function getMongoInsertBaseDoc(object: any, doc: Dictionary<any>, u
         doc.modified_by = userId;
     }
 
-    var extras = ["spaces", "company", "organizations", "users", "space_users"];
+    var extras = ["spaces", "company", "organizations", "users", "space_users", "flows", "forms"];
     if (extras.indexOf(object.name) < 0 && doc.space) {
         /* company_ids/company_id默认值逻辑*/
         if (!doc.company_id || !doc.company_ids) {
@@ -109,7 +109,7 @@ export async function getMongoUpdateBaseDoc(object: any, doc: Dictionary<any>, u
         doc.modified_by = userId;
     }
 
-    var extras = ["spaces", "company", "organizations", "users", "space_users"];
+    var extras = ["spaces", "company", "organizations", "users", "space_users", "flows", "forms"];
     if (extras.indexOf(object.name) < 0) {
         /* company_ids/company_id级联修改逻辑*/
         if (_.has(doc, "company_ids")) {
