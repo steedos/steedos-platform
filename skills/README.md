@@ -57,6 +57,18 @@ Steedos CLI commands reference: start, restart, source management, data import/e
 
 Steedos CLI 命令参考：启动、重启、源代码管理、数据导入导出、软件包操作和认证。包含 AI 辅助开发工作流（代码修改后自动重启）。
 
+### 📊 Analytics | 数据分析 (2 skills)
+
+#### [dashboards](./dashboards/SKILL.md)
+Create and manage analytics dashboards with multi-tab grid layouts, card placements, parameter filtering, embedding, and public sharing. Based on @steedos-labs/analytics (Metabase engine). Requires enterprise license.
+
+创建和管理分析仪表盘，支持多标签页网格布局、卡片放置、参数筛选、嵌入和公开分享。基于 @steedos-labs/analytics（Metabase 引擎）。需要企业版许可证。
+
+#### [questions](./questions/SKILL.md)
+Create analytics questions (reports/charts) with MBQL or native SQL queries, multiple visualization types, datasets, embedding, and public sharing. Building blocks for dashboards. Requires enterprise license.
+
+创建分析问题（报表/图表），支持 MBQL 或原生 SQL 查询、多种可视化类型、数据集、嵌入和公开分享。仪表盘的构建模块。需要企业版许可证。
+
 ### 🎨 User Interface | 用户界面 (3 skills)
 
 #### [applications](./applications/SKILL.md)
@@ -171,7 +183,8 @@ Moleculer 微服务集成、代理配置、事件处理、ObjectQL 模式初始�
 | Create list views | [object-list-views](./object-list-views/SKILL.md) |
 | Add validation logic | [object-triggers](./object-triggers/SKILL.md) |
 | Create custom buttons | [object-buttons](./object-buttons/SKILL.md) |
-| Build dashboards | [micro-pages](./micro-pages/SKILL.md) |
+| Build dashboards | [micro-pages](./micro-pages/SKILL.md), [dashboards](./dashboards/SKILL.md) |
+| Create analytics questions | [questions](./questions/SKILL.md) |
 | Define navigation tabs | [tabs](./tabs/SKILL.md) |
 | Configure permissions | [object-permissions](./object-permissions/SKILL.md) |
 | Translate metadata (i18n) | [translations](./translations/SKILL.md) |
