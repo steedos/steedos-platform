@@ -1,3 +1,10 @@
+---
+name: test-verify
+description: Verification checklist for skills testing
+metadata:
+  internal: true
+---
+
 # Skills 验证清单
 
 用 TEST_PROMPT.md 的提示词测试后，对照以下要点检查输出是否正确。

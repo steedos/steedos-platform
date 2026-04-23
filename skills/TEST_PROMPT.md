@@ -1,3 +1,10 @@
+---
+name: test-prompt
+description: Test prompt for skills verification
+metadata:
+  internal: true
+---
+
 帮我做一个设备维修管理系统。
 
 我们工厂有很多设备需要管理维护，现在都是用Excel记录的，太乱了，想上一套系统来管。
