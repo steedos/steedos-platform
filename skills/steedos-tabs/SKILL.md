@@ -89,10 +89,10 @@ url: /api/v6/
 
 ### Required Fields | 必需字段
 
-#### name (String)
+#### name (String) — **⚠️ Required, MUST NOT be omitted**
 Unique identifier for the tab. This is the name referenced in the application's `tabs` array.
 
-标签页的唯一标识符。这是在应用程序 `tabs` 数组中引用的名称。
+标签页的唯一标识符。这是在应用程序 `tabs` 数组中引用的名称。**不能省略。**
 
 ```yaml
 name: object_contract

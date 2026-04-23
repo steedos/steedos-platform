@@ -70,7 +70,7 @@ locked: false
 
 | Property | Type | Required | Description |
 |----------|------|----------|-------------|
-| `name` | string | Yes | Unique page name |
+| `name` | string | **Yes** | **⚠️ Unique page name. MUST NOT be omitted.** |
 | `label` | string | Yes | Display label |
 | `type` | string | Yes | **⚠️ MUST be one of: `app` (standalone), `record`, `list`. No other values are valid.** |
 | `render_engine` | string | Yes | **⚠️ MUST be `amis`. No other value is valid.** |

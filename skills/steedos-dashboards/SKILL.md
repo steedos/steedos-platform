@@ -31,7 +31,7 @@ Example: `dashboards/日常看板.dashboard.yml`
 ## File Structure | 文件结构
 
 ```yaml
-name: <仪表盘名称>
+name: <仪表盘名称>           # ⚠️ Required, MUST NOT be omitted | 必填，不能省略
 archived: 'false'
 auto_apply_filters: 'true'
 enable_embedding: 'false'

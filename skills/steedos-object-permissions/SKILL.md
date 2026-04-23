@@ -63,24 +63,24 @@ field_permissions: []
 
 ### Permission Properties | 权限属性
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `name` | string | `{objectName}.{permissionSetId}` |
-| `permission_set_id` | string | Permission set name |
-| `allowCreate` | boolean | Can create new records |
-| `allowRead` | boolean | Can view records |
-| `allowEdit` | boolean | Can edit records |
-| `allowDelete` | boolean | Can delete records |
-| `allowExport` | boolean | Can export records |
-| `viewAllRecords` | boolean | Can view all records |
-| `modifyAllRecords` | boolean | Can edit all records |
-| `allowReadFiles` | boolean | Can read file attachments |
-| `allowCreateFiles` | boolean | Can upload files |
-| `allowEditFiles` | boolean | Can edit files |
-| `allowDeleteFiles` | boolean | Can delete files |
-| `viewAllFiles` | boolean | Can view all files |
-| `modifyAllFiles` | boolean | Can modify all files |
-| `field_permissions` | array | Field-level permissions |
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| `name` | string | **Yes** | **⚠️ MUST NOT be omitted.** Format: `{objectName}.{permissionSetId}` |
+| `permission_set_id` | string | **Yes** | Permission set name |
+| `allowCreate` | boolean | No | Can create new records |
+| `allowRead` | boolean | No | Can view records |
+| `allowEdit` | boolean | No | Can edit records |
+| `allowDelete` | boolean | No | Can delete records |
+| `allowExport` | boolean | No | Can export records |
+| `viewAllRecords` | boolean | No | Can view all records |
+| `modifyAllRecords` | boolean | No | Can edit all records |
+| `allowReadFiles` | boolean | No | Can read file attachments |
+| `allowCreateFiles` | boolean | No | Can upload files |
+| `allowEditFiles` | boolean | No | Can edit files |
+| `allowDeleteFiles` | boolean | No | Can delete files |
+| `viewAllFiles` | boolean | No | Can view all files |
+| `modifyAllFiles` | boolean | No | Can modify all files |
+| `field_permissions` | array | No | Field-level permissions |
 
 ## Complete Examples | 完整示例
 

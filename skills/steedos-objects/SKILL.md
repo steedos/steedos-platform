@@ -107,7 +107,7 @@ enable_dataloader: true
 
 | Property | Type | Required | Description |
 |----------|------|----------|-------------|
-| `name` | string | Yes | Object API name (snake_case) |
+| `name` | string | **Yes** | **⚠️ Object API name (snake_case). MUST NOT be omitted.** |
 | `label` | string | Yes | Display label (use the language of the user's prompt) |
 | `icon` | string | No | **MUST be a value from the [Valid Icon Values](#valid-icon-values--有效的-icon-值) list below. Do NOT invent icon names.** |
 | `custom` | boolean | No | Mark as custom object |

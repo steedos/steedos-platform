@@ -52,15 +52,15 @@ tab_items:
 
 ### Required Fields | 必需字段
 
-#### name (String)
-Application display name shown in the UI.
+#### name (String) — **⚠️ Required, MUST NOT be omitted**
+Application display name shown in the UI. **不能省略。**
 
 ```yaml
 name: Contract Management
 ```
 
-#### code (String)
-Unique identifier for the application (API name).
+#### code (String) — **⚠️ Required, MUST NOT be omitted**
+Unique identifier for the application (API name). **不能省略。**
 
 ```yaml
 code: contracts

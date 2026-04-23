@@ -52,29 +52,29 @@ group: Basic Information
 
 ## Common Properties | 通用属性
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `name` | string | Field API name (required) |
-| `type` | string | Field type (required, see [Valid Field Types](#valid-field-types--有效字段类型) below) |
-| `label` | string | Display label — use the language of the user's prompt (required) |
-| `required` | boolean | Is required |
-| `readonly` | boolean | Read-only |
-| `hidden` | boolean | Hide from all UI |
-| `omit` | boolean | Omit from forms |
-| `disabled` | boolean | Disable editing |
-| `defaultValue` | any | Default value |
-| `group` | string | Field group name |
-| `sort_no` | number | Display order |
-| `is_name` | boolean | Mark as the object's display name field (see below) |
-| `is_wide` | boolean | Full width in forms |
-| `index` | boolean | Create database index |
-| `unique` | boolean | Unique constraint |
-| `searchable` | boolean | Include in global search |
-| `filterable` | boolean | Available in filters |
-| `sortable` | boolean | Sortable in list views |
-| `data_type` | string | Backend data type |
-| `visible_on` | string | Amis formula for conditional visibility |
-| `inlineHelpText` | string | Tooltip help text |
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| `name` | string | **Yes** | **⚠️ Field API name. MUST NOT be omitted. Must match the filename prefix (e.g. `customer` for `customer.field.yml`).** |
+| `type` | string | **Yes** | Field type (see [Valid Field Types](#valid-field-types--有效字段类型) below) |
+| `label` | string | **Yes** | Display label — use the language of the user's prompt |
+| `required` | boolean | No | Is required |
+| `readonly` | boolean | No | Read-only |
+| `hidden` | boolean | No | Hide from all UI |
+| `omit` | boolean | No | Omit from forms |
+| `disabled` | boolean | No | Disable editing |
+| `defaultValue` | any | No | Default value |
+| `group` | string | No | Field group name |
+| `sort_no` | number | No | Display order |
+| `is_name` | boolean | No | Mark as the object's display name field (see below) |
+| `is_wide` | boolean | No | Full width in forms |
+| `index` | boolean | No | Create database index |
+| `unique` | boolean | No | Unique constraint |
+| `searchable` | boolean | No | Include in global search |
+| `filterable` | boolean | No | Available in filters |
+| `sortable` | boolean | No | Sortable in list views |
+| `data_type` | string | No | Backend data type |
+| `visible_on` | string | No | Amis formula for conditional visibility |
+| `inlineHelpText` | string | No | Tooltip help text |
 
 ## Name Field (`is_name`) | 名称字段
 

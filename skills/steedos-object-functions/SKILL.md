@@ -63,7 +63,7 @@ script: |-
 
 | Property | Type | Required | Description |
 |----------|------|----------|-------------|
-| `name` | string | Yes | **⚠️ MUST start with `{objectApiName}_` prefix, e.g. `orders_approve_order`** |
+| `name` | string | **Yes** | **⚠️ MUST NOT be omitted. MUST start with `{objectApiName}_` prefix, e.g. `orders_approve_order`** |
 | `objectApiName` | string | Yes | Associated object API name |
 | `description` | string | No | Human-readable description |
 | `isEnabled` | boolean | Yes | Enable/disable function |

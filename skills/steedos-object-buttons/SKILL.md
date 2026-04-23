@@ -87,7 +87,7 @@ amis_schema: |-
 
 | Property | Type | Required | Description |
 |----------|------|----------|-------------|
-| `name` | string | Yes | Unique identifier (snake_case) |
+| `name` | string | **Yes** | **⚠️ Unique identifier (snake_case). MUST NOT be omitted.** |
 | `label` | string | Yes | Display label |
 | `type` | string | Yes | **⚠️ MUST be `amis_button`. No other value is valid.** |
 | `on` | string | Yes | **⚠️ MUST be one of: `record_only`, `record`, `list`, `list_record`. See [Display Locations](#display-locations-on--显示位置) below.** |

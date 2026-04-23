@@ -62,7 +62,7 @@ mobile_columns:
 
 | Property | Type | Required | Description |
 |----------|------|----------|-------------|
-| `name` | string | Yes | Unique view name |
+| `name` | string | **Yes** | **⚠️ Unique view name. MUST NOT be omitted.** |
 | `label` | string | Yes | Display label (use the language of the user's prompt) |
 | `is_enable` | boolean | Yes | Enable/disable view |
 | `crud_mode` | string | No | **⚠️ MUST be `table` (default) or `cards`. No other values are valid.** |
