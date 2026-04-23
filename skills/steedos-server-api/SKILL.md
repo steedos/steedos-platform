@@ -76,13 +76,13 @@ GET /api/v6/data/:objectName
 
 **Query Parameters**:
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `fields` | string | all | Comma-separated or JSON array: `"name,created"` or `["name","created"]` |
-| `filters` | string (JSON) | none | Filter criteria: `["status","=","active"]` |
-| `sort` | string | none | Sort string: `"name asc, created desc"` |
-| `skip` | number | 0 | Pagination offset |
-| `top` | number | 100 | Records per page |
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `fields` | string | No | all | Comma-separated or JSON array: `"name,created"` or `["name","created"]` |
+| `filters` | string (JSON) | No | none | Filter criteria: `["status","=","active"]` |
+| `sort` | string | No | none | Sort string: `"name asc, created desc"` |
+| `skip` | number | **Yes** | 0 | Pagination offset |
+| `top` | number | **Yes** | 100 | Records per page (max 10,000) |
 
 **Response**:
 

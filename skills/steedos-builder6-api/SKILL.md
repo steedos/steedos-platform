@@ -97,13 +97,13 @@ POST /api/v6/tables/:baseId/:tableId
 GET /api/v6/tables/:baseId/:tableId
 ```
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `fields` | string | all | `"name,created"` or JSON array |
-| `filters` | string (JSON) | none | `["status","=","active"]` |
-| `sort` | string | none | `"name asc, created desc"` |
-| `skip` | number | 0 | Pagination offset |
-| `top` | number | 20 | Records per page |
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `fields` | string | No | all | `"name,created"` or JSON array |
+| `filters` | string (JSON) | No | none | `["status","=","active"]` |
+| `sort` | string | No | none | `"name asc, created desc"` |
+| `skip` | number | **Yes** | 0 | Pagination offset |
+| `top` | number | **Yes** | 20 | Records per page |
 
 **Response**: `{ data: [...], totalCount: N }`
 
@@ -156,7 +156,7 @@ POST /api/v6/direct/:objectName
 GET /api/v6/direct/:objectName
 ```
 
-Same query parameters as Tables API (`fields`, `filters`, `sort`, `skip`, `top`).
+Same query parameters as Tables API (`fields`, `filters`, `sort`, `skip`, `top`). **`skip` and `top` are required.**
 
 ### Get Record | 获取记录
 

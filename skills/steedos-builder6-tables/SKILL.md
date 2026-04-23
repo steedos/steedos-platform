@@ -56,13 +56,13 @@ Lookup fields in the body are automatically resolved — you can pass `{ _id: ".
 GET /api/v6/tables/app1/orders?filters=["amount",">",50]&sort=created desc&top=20&skip=0
 ```
 
-| Parameter | Default | Description |
-|-----------|---------|-------------|
-| `fields` | all | Comma-separated or JSON array |
-| `filters` | none | DevExtreme filter format (JSON) |
-| `sort` | none | `"field asc, field2 desc"` |
-| `skip` | 0 | Pagination offset |
-| `top` | 20 | Page size |
+| Parameter | Required | Default | Description |
+|-----------|----------|---------|-------------|
+| `fields` | No | all | Comma-separated or JSON array |
+| `filters` | No | none | DevExtreme filter format (JSON) |
+| `sort` | No | none | `"field asc, field2 desc"` |
+| `skip` | **Yes** | 0 | Pagination offset |
+| `top` | **Yes** | 20 | Page size |
 
 **Response**:
 

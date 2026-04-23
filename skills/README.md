@@ -148,7 +148,7 @@ Customize object detail and form pages, including object-specific pages, detail 
 
 自定义对象详情和表单页面,包括对象特定页面、详情页布局、自定义表单页面、仪表板页面和使用 Amis 的页面配置。
 
-### 🖥️ Server (Builder6) | 服务端 (12 skills)
+### 🖥️ Server (Builder6) | 服务端 (13 skills)
 
 #### [steedos-server-architecture](./steedos-server-architecture/SKILL.md)
 NestJS + Moleculer hybrid server architecture, module organization, bootstrap sequence, middleware stack, guards (AuthGuard, AdminGuard), and ObjectQL data access pattern.
@@ -159,6 +159,11 @@ NestJS + Moleculer 混合服务端架构、模块组织、启动流程、中间�
 REST API reference for /api/v6/ endpoints: data CRUD, object metadata, function execution, filter operators, query parameters, and Swagger/OpenAPI documentation.
 
 /api/v6/ REST API 参考：数据 CRUD、对象元数据、函数执行、筛选运算符、查询参数和 Swagger/OpenAPI 文档。
+
+#### [steedos-graphql-api](./steedos-graphql-api/SKILL.md)
+GraphQL API auto-generated from object metadata at /graphql. Covers CRUD queries/mutations, lookup expansion (__expand), display formatting (_display), record permissions (_permissions), related records (_related_*), filters, pagination, sorting, authentication, and DataLoader batching.
+
+从对象元数据自动生成的 GraphQL API（/graphql）。涵盖 CRUD 查询/变更、查找字段展开（__expand）、显示格式化（_display）、记录权限（_permissions）、关联记录（_related_*）、筛选、分页、排序、认证和 DataLoader 批量优化。
 
 #### [steedos-server-config](./steedos-server-config/SKILL.md)
 Server configuration via environment variables and YAML settings files, including datasources, tenant settings, file storage, SSO/OIDC, email, and frontend asset URLs.
@@ -235,6 +240,7 @@ Builder6 动态插件系统：启动时通过环境变量加载 NPM 包、NestJS
 | Create custom pages | [steedos-object-micro-pages](./steedos-object-micro-pages/SKILL.md), [steedos-micro-pages](./steedos-micro-pages/SKILL.md) |
 | Understand server architecture | [steedos-server-architecture](./steedos-server-architecture/SKILL.md) |
 | Use REST API | [steedos-server-api](./steedos-server-api/SKILL.md) |
+| Use GraphQL API | [steedos-graphql-api](./steedos-graphql-api/SKILL.md) |
 | Configure server | [steedos-server-config](./steedos-server-config/SKILL.md) |
 | Real-time WebSocket | [steedos-server-websocket](./steedos-server-websocket/SKILL.md) |
 | Moleculer microservices | [steedos-server-moleculer](./steedos-server-moleculer/SKILL.md) |
@@ -426,7 +432,7 @@ To improve these skills:
 
 ## Statistics | 统计
 
-- **Total Skills**: 32
+- **Total Skills**: 33
 - **Total Documentation**: ~350KB
 - **Format**: Anthropic SKILL.md specification
 - **Languages**: English + Chinese (bilingual)

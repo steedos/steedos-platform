@@ -62,8 +62,11 @@ Steedos（华炎魔方）是一个企业级低代码平台。开发者通过 YAM
 **"I want to use the CLI"**
 → [steedos-cli-commands](../steedos-cli-commands/SKILL.md) (start, deploy, import/export)
 
+**"I want to use the REST or GraphQL API"**
+→ [steedos-server-api](../steedos-server-api/SKILL.md) (REST) → [steedos-graphql-api](../steedos-graphql-api/SKILL.md) (GraphQL)
+
 **"I want to understand the server"**
-→ [steedos-server-architecture](../steedos-server-architecture/SKILL.md) → [steedos-server-api](../steedos-server-api/SKILL.md) → [steedos-server-config](../steedos-server-config/SKILL.md) → [steedos-server-moleculer](../steedos-server-moleculer/SKILL.md) → [steedos-server-websocket](../steedos-server-websocket/SKILL.md)
+→ [steedos-server-architecture](../steedos-server-architecture/SKILL.md) → [steedos-server-api](../steedos-server-api/SKILL.md) → [steedos-graphql-api](../steedos-graphql-api/SKILL.md) → [steedos-server-config](../steedos-server-config/SKILL.md) → [steedos-server-moleculer](../steedos-server-moleculer/SKILL.md) → [steedos-server-websocket](../steedos-server-websocket/SKILL.md)
 
 **"I want to work with Builder6 internals"**
 → [steedos-builder6-architecture](../steedos-builder6-architecture/SKILL.md) → [steedos-builder6-api](../steedos-builder6-api/SKILL.md) → [steedos-builder6-config](../steedos-builder6-config/SKILL.md) → [steedos-builder6-tables](../steedos-builder6-tables/SKILL.md) → [steedos-auth](../steedos-auth/SKILL.md) → [steedos-files](../steedos-files/SKILL.md) → [steedos-plugin](../steedos-plugin/SKILL.md)
@@ -96,7 +99,7 @@ Steedos（华炎魔方）是一个企业级低代码平台。开发者通过 YAM
 | Security | steedos-object-permissions |
 | i18n | steedos-translations |
 | Data | steedos-seed-data |
-| Server | steedos-server-architecture, steedos-server-api, steedos-server-config, steedos-server-moleculer, steedos-server-websocket |
+| Server | steedos-server-architecture, steedos-server-api, steedos-graphql-api, steedos-server-config, steedos-server-moleculer, steedos-server-websocket |
 | Builder6 | steedos-builder6-architecture, steedos-builder6-api, steedos-builder6-config, steedos-builder6-tables, steedos-auth, steedos-files, steedos-plugin |
 
 ## Key File Types | 关键文件类型
