@@ -1,516 +1,407 @@
 ---
 name: questions
 description: |
-  Create and manage analytics questions (reports/charts) in Steedos. Questions
-  are data queries with visualizations, based on the @steedos-labs/analytics
-  package (Metabase engine). Covers analytics_card object, dataset_query
-  structure, display types, visualization_settings, parameters, MBQL query
-  language, REST API endpoints, embedding, and permissions. Requires
-  enterprise license.
+  Create analytics question files (.question.yml) in Steedos projects. Questions
+  are report/chart definitions stored as YAML seed data files, based on the
+  @steedos-labs/analytics package (Metabase engine). Covers file format,
+  dataset_query structure (MBQL), display types, visualization_settings,
+  result_metadata, and file naming conventions.
 ---
 
-# Steedos Analytics Questions | Steedos 分析问题（报表）
+# Steedos Analytics Questions — File Format Guide
 
 ## Overview | 概述
 
-Analytics questions (internally called "cards") are data queries paired with visualizations. They can query any Steedos object using MBQL (Metabase Query Language) or native SQL, then display results as tables, charts, maps, or other visual formats. Questions are the building blocks of dashboards.
+Questions are analytics report/chart definitions stored as `.question.yml` seed
+data files under `<package>/main/default/questions/`. Each file defines one
+question (internally a "card") — a data query paired with a visualization.
 
-分析问题（内部称为"卡片"）是数据查询与可视化的组合。它们可以使用 MBQL 或原生 SQL 查询任何 Steedos 对象，然后以表格、图表、地图或其他可视化格式显示结果。问题是仪表盘的构建模块。
+问题是以 `.question.yml` 种子数据文件形式存储的分析报表/图表定义，位于
+`<package>/main/default/questions/` 目录下。
 
-**Prerequisites | 前置条件:**
-- Enterprise license (企业版许可证)
-- `@steedos-labs/analytics` plugin enabled
+## File Location & Naming | 文件路径与命名
 
-## Object: analytics_card | 报表对象
-
-### Object Definition | 对象定义
-
-```yaml
-# objects/analytics_card/analytics_card.object.yml
-name: analytics_card
-custom: true
-hidden: true
-enable_api: true
-enable_dataloader: true
-enable_inline_edit: true
-icon: metrics
-is_enable: true
-label: 报表
-version: 2
+```
+<package>/main/default/questions/<问题名称>.question.yml
 ```
 
-### Key Fields | 关键字段
+Examples:
+- `questions/单位总数.question.yml`
+- `questions/媒体类型统计.question.yml`
+- `questions/从业人员数.question.yml`
 
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `id` | text | No | Unique identifier (indexed) |
-| `name` | text | Yes | Question name (indexed) |
-| `table_id` | lookup(objects) | No | Source object reference |
-| `description` | text | No | Description (is_wide) |
-| `disable_permission` | boolean | No | Skip permission filtering when querying |
-| `dataset` | boolean | No | Whether this is a dataset (default: false) |
-| `dataset_query` | object (blackbox) | No | MBQL or native query definition |
-| `display` | text | No | Visualization type (table, bar, line, pie, etc.) |
-| `visualization_settings` | text | No | Chart configuration |
-| `parameters` | object[] (blackbox) | No | Query parameters |
-| `parameter_mappings` | object[] (blackbox) | No | Parameter-to-field mappings |
-| `result_metadata` | object[] (blackbox) | No | Result column metadata |
-| `query_type` | text | No | Query type (e.g., "query", "native") |
-| `collection_id` | text | No | Collection for organization |
-| `collection_position` | number | No | Position in collection |
-| `collection_preview` | boolean | No | Show in collection preview |
-| `database_id` | text | No | Target database |
-| `archived` | boolean | No | Archive status (default: false) |
-| `cache_ttl` | number | No | Cache time-to-live |
-| `enable_embedding` | boolean | No | Enable iframe embedding (default: false) |
-| `embedding_params` | text | No | Embedding parameter config |
-| `entity_id` | text | No | Entity identifier |
-| `public_uuid` | text | No | Public sharing UUID |
-| `made_public_by_id` | number | No | User who made it public |
-| `creator_id` | lookup(users) | No | Creator reference |
-| `created_at` | datetime | No | Creation timestamp |
-| `updated_at` | datetime | No | Last update timestamp |
-
-### Field Definition Examples | 字段定义示例
+## File Structure | 文件结构
 
 ```yaml
-# objects/analytics_card/fields/name.field.yml
-name: name
-index: true
-label: 名称
-required: true
-sort_no: 100
-type: text
+name: <问题名称>
+created_at: <ISO8601 datetime>
+creator_id: <MongoDB ObjectId>
+database_id: 1
+dataset_query:
+  database: 1
+  type: query          # "query" for MBQL, "native" for SQL
+  query:
+    source-table: <object_name>
+    # optional: filter, aggregation, breakout, limit, order-by
+display: <display_type>
+enable_embedding: false
+entity_id: <MongoDB ObjectId>   # same as id
+id: <MongoDB ObjectId>
+parameter_mappings: []
+parameters: []
+query_type: query
+result_metadata:
+  - ...               # column metadata list
+table_id: <object_name>
+updated_at: <ISO8601 datetime>
+visualization_settings: '{}'
 ```
 
+## ID Generation | ID 生成
+
+All `id` and `entity_id` values are **24-character MongoDB-style hex ObjectIds**.
+Generate unique IDs — never reuse the same ID across different questions.
+
+Example: `68a5805bb74676d1c8cb3614`
+
+`entity_id` and `id` are **always the same value** within one question file.
+
+## dataset_query — MBQL Query | MBQL 查询结构
+
+### Count (scalar) | 计数
+
 ```yaml
-# objects/analytics_card/fields/table_id.field.yml
-name: table_id
-label: 对象
-precision: 18
-scale: 0
-sort_no: 115
-type: lookup
-reference_to: objects
-reference_to_field: name
+dataset_query:
+  database: 1
+  type: query
+  query:
+    source-table: media_org_info
+    aggregation:
+      - - count
 ```
 
+### Count with filter | 带过滤的计数
+
 ```yaml
-# objects/analytics_card/fields/disable_permission.field.yml
-name: disable_permission
-label: 禁用权限过滤
-description: 查询数据时跳过权限集设置的权限限制（如用户只能看到自己创建的数据）
-type: boolean
-sort_no: 300
-is_wide: true
+dataset_query:
+  database: 1
+  type: query
+  query:
+    source-table: media_journalist
+    filter:
+      - '='
+      - - field
+        - media_journalist.open
+        - null
+      - true
+    aggregation:
+      - - count
 ```
 
+### Group by field (breakout) | 按字段分组
+
 ```yaml
-# objects/analytics_card/fields/dataset_query.field.yml
-name: dataset_query
-label: dataset_query
-required: false
-sort_no: 120
-type: object
-blackbox: true
-hidden: false
+dataset_query:
+  database: 1
+  type: query
+  query:
+    source-table: media_infor
+    aggregation:
+      - - count
+    breakout:
+      - - field
+        - media_infor.type
+        - null
 ```
 
+### Table list with limit | 列表查询
+
 ```yaml
-# objects/analytics_card/fields/display.field.yml
-name: display
-label: display
-required: false
-sort_no: 120
-type: text
-hidden: false
+dataset_query:
+  database: 1
+  type: query
+  query:
+    source-table: media_org_info
+    limit: 10000
 ```
 
-### List Views | 列表视图
+### Native SQL query | 原生 SQL 查询
 
 ```yaml
-# objects/analytics_card/listviews/all.listview.yml
-name: all
-columns:
-  - field: name
-  - field: table_id
-  - field: disable_permission
-filter_scope: space
-filters: []
-label: 所有
-scrolling_mode: standard
-shared: true
-sort_no: 100
-type: grid
-```
-
-```yaml
-# objects/analytics_card/listviews/recent.listview.yml
-name: recent
-columns:
-  - field: name
-filter_scope: space
-filters: []
-label: 最近查看
-scrolling_mode: standard
-shared: true
-sort_no: 100
-type: grid
-```
-
-### Permissions | 权限
-
-```yaml
-# objects/analytics_card/permissions/admin.permission.yml
-name: Card.管理员
-allowCreate: true
-allowCreateFiles: true
-allowDelete: true
-allowDeleteFiles: true
-allowEdit: true
-allowEditFiles: true
-allowRead: true
-allowReadFiles: true
-modifyAllFiles: true
-modifyAllRecords: true
-permission_set_id: admin
-viewAllFiles: true
-viewAllRecords: true
-```
-
-```yaml
-# objects/analytics_card/permissions/user.permission.yml
-name: Card.用户
-allowCreate: true
-allowCreateFiles: true
-allowDelete: true
-allowDeleteFiles: true
-allowEdit: true
-allowEditFiles: true
-allowRead: true
-allowReadFiles: true
-modifyAllRecords: false
-permission_set_id: user
-viewAllFiles: true
-viewAllRecords: true
-```
-
-### Buttons | 按钮
-
-#### New Question Button (List Action)
-
-Opens the notebook query builder:
-
-```yaml
-# objects/analytics_card/buttons/standard_new.button.yml
-name: standard_new
-is_enable: true
-label: 新建
-'on': list
-type: amis_button
-visible: true
-amis_schema: |-
-  {
-      "type": "service",
-      "body": [
-          {
-              "type": "button",
-              "label": "${'CustomAction.analytics_card.standard_new' | t}",
-              "onEvent": {
-                  "click": {
-                      "actions": [
-                          {
-                              "actionType": "url",
-                              "args": {
-                                  "url": "${context.rootUrl}/analytics/question/notebook"
-                              }
-                          }
-                      ]
-                  }
-              }
-          }
-      ],
-      "bodyClassName": "p-0"
-  }
-```
-
-#### Edit Button (Record Action)
-
-Opens the question editor:
-
-```yaml
-# objects/analytics_card/buttons/standard_edit.button.yml
-name: standard_edit
-is_enable: true
-label: 编辑
-'on': record_only
-type: amis_button
-visible: true
-amis_schema: |-
-  {
-      "type": "service",
-      "body": [
-          {
-              "type": "button",
-              "label": "${'CustomAction.analytics_card.standard_edit' | t}",
-              "onEvent": {
-                  "click": {
-                      "actions": [
-                          {
-                              "actionType": "url",
-                              "args": {
-                                  "url": "${context.rootUrl}/analytics/question/${recordId}"
-                              }
-                          }
-                      ]
-                  }
-              }
-          }
-      ]
-  }
-```
-
-#### Viewer Button (Record Action)
-
-Opens the question in Amis viewer:
-
-```yaml
-# objects/analytics_card/buttons/viewer.button.yml
-name: viewer
-is_enable: true
-label: 查看
-'on': record_only
-type: amis_button
-visible: true
-amis_schema: |-
-  {
-      "type": "service",
-      "body": [
-          {
-              "type": "button",
-              "label": "${'CustomAction.analytics_card.viewer' | t}",
-              "onEvent": {
-                  "click": {
-                      "actions": [
-                          {
-                              "actionType": "url",
-                              "args": {
-                                  "url": "${context.rootUrl}/analytics/amis/question/${recordId}"
-                              }
-                          }
-                      ]
-                  }
-              }
-          }
-      ]
-  }
+dataset_query:
+  database: 1
+  type: native
+  native:
+    query: "SELECT status, COUNT(*) as cnt FROM contracts GROUP BY status"
 ```
 
 ## Display Types | 显示类型
 
-Questions support various visualization types via the `display` field:
+| `display` value | Description |
+|-----------------|-------------|
+| `scalar`        | Single number (计数/合计等单值) |
+| `table`         | Data table (数据列表) |
+| `bar`           | Bar chart (柱状图) |
+| `line`          | Line chart (折线图) |
+| `pie`           | Pie chart (饼图) |
+| `area`          | Area chart (面积图) |
+| `row`           | Horizontal bar (横向柱状图) |
+| `smartscalar`   | Number with trend (带趋势的数值) |
+| `funnel`        | Funnel chart (漏斗图) |
+| `pivot`         | Pivot table (透视表) |
 
-| Display | Description |
-|---------|-------------|
-| `table` | Data table |
-| `bar` | Bar chart |
-| `line` | Line chart |
-| `pie` | Pie chart |
-| `area` | Area chart |
-| `scalar` | Single number |
-| `smartscalar` | Number with trend |
-| `row` | Horizontal bar |
-| `funnel` | Funnel chart |
-| `progress` | Progress bar |
-| `map` | Geographic map |
-| `scatter` | Scatter plot |
-| `waterfall` | Waterfall chart |
-| `pivot` | Pivot table |
-| `combo` | Combined chart |
-| `object` | Raw object view |
+## visualization_settings | 可视化设置
 
-## Query Types | 查询类型
+For simple questions, use `'{}'` (empty JSON string).
 
-### MBQL Query (Structured)
-
-MBQL (Metabase Query Language) is a structured query format:
-
-```json
-{
-  "dataset_query": {
-    "database": 1,
-    "type": "query",
-    "query": {
-      "source-table": "contracts",
-      "aggregation": [["count"]],
-      "breakout": [["field", "status", {"base-type": "type/Text"}]],
-      "filter": ["=", ["field", "archived", {"base-type": "type/Boolean"}], false]
-    }
-  }
-}
-```
-
-### Native Query (SQL)
-
-```json
-{
-  "dataset_query": {
-    "database": 1,
-    "type": "native",
-    "native": {
-      "query": "SELECT status, COUNT(*) FROM contracts GROUP BY status"
-    }
-  }
-}
-```
-
-## Record Detail Page | 记录详情页
+Common examples:
 
 ```yaml
-# pages/analytics_card_detail.page.yml
-name: analytics_card_detail
-label: 图表记录详情页
-object_name: analytics_card
-is_active: true
-render_engine: amis
-type: record
-pageAssignments:
-  - type: orgDefault
-    page: analytics_card_detail
-    desktop: true
-    mobile: true
+# Scalar — show specific column
+visualization_settings: '{"table.cell_column":"count"}'
+
+# Bar chart — specify axes
+visualization_settings: >-
+  {"graph.dimensions":["type"],"graph.metrics":["count"],"graph.show_values":true,"graph.x_axis.labels_enabled":false,"graph.y_axis.labels_enabled":false}
+
+# Table — specify pivot and cell columns
+visualization_settings: >-
+  {"table.pivot_column":"status","table.cell_column":"count"}
 ```
 
-The detail page (`.page.amis.json`) contains three tabs:
-1. **Chart View** — iframe loading `/analytics/amis/question/{recordId}`
-2. **Details** — Object form with fields: name, table_id, description, disable_permission, owner, company_id, created, created_by, modified, modified_by
-3. **Development** — Shows API URL for integration and copy button
+## result_metadata | 结果列元数据
 
-## API Endpoints | API 端点
+`result_metadata` describes the output columns. Required format varies by query type.
 
-The analytics package exposes REST APIs under `/analytics/api/`:
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `POST` | `/analytics/api/card` | Create new question |
-| `GET` | `/analytics/api/card/:cardIdOrName` | Get question details |
-| `PUT` | `/analytics/api/card/:id` | Update question |
-| `POST` | `/analytics/api/card/:cardId/query` | Execute question query |
-| `POST` | `/analytics/api/card/pivot/:cardId/query` | Execute pivot query |
-| `POST` | `/analytics/api/card/:cardId/series` | Get series data |
-| `POST` | `/analytics/api/dataset` | Execute ad-hoc query |
-
-### URL Routes | URL 路由
-
-| URL | Description |
-|-----|-------------|
-| `/analytics/question/notebook` | New question builder (notebook mode) |
-| `/analytics/question/{id}` | Question editor |
-| `/analytics/amis/question/{id}` | Question viewer (Amis renderer) |
-| `/analytics/embed/question/{token}` | Embedded question |
-| `/analytics/public/question/{uuid}` | Public shared question |
-
-## Application & Tab Configuration | 应用与标签页配置
-
-### Question Admin Tab
+### For aggregation (count) | 聚合查询结果
 
 ```yaml
-# tabs/admin_analytics_card.tab.yml
-name: admin_analytics_card
-label: 问题
-type: object
-object: analytics_card
-desktop: true
-mobile: true
-icon: omni_supervisor
-is_new_window: false
-permissions:
-  - permission: 'on'
-    permission_set: admin
-  - permission: 'off'
-    permission_set: user
-license:
-  - platform-standard
-  - platform-enterprise
-  - platform-professional
+result_metadata:
+  - base_type: type/BigInteger
+    display_name: 计数
+    effective_type: type/BigInteger
+    field_ref:
+      - aggregation
+      - 0
+    name: count
+    semantic_type: type/Quantity
+    source: aggregation
 ```
 
-### Browse & Collection Tabs
+### For breakout + count | 分组+计数结果
 
 ```yaml
-# tabs/analytics_browse.tab.yml
-name: analytics_browse
-label: 浏览数据
-type: url
-url: /analytics/browse/1
-is_use_iframe: true
-desktop: true
-mobile: true
-icon: account
+result_metadata:
+  - id: type                       # field name (short form when no table prefix)
+    name: type
+    display_name: 媒体类型
+    base_type: type/Text
+    effective_type: type/Text
+    semantic_type: null
+    source: breakout
+    visibility_type: normal
+    table_id: media_infor
+    field_ref:
+      - field
+      - media_infor.type
+      - null
+  - base_type: type/BigInteger
+    display_name: 计数
+    effective_type: type/BigInteger
+    field_ref:
+      - aggregation
+      - 0
+    name: count
+    semantic_type: type/Quantity
+    source: aggregation
 ```
+
+### For table list query | 列表查询结果
+
+Each output column needs an entry. `id` uses `<table>.<field>` format:
 
 ```yaml
-# tabs/analytics_collection.tab.yml
-name: analytics_collection
-label: 分析中心
-type: url
-url: /analytics/collection/root
-is_use_iframe: true
-desktop: true
-mobile: true
-icon: account
+result_metadata:
+  - id: media_org_info.name
+    name: name
+    display_name: 单位名称
+    base_type: type/Text
+    effective_type: type/Text
+    semantic_type: null
+    field_ref:
+      - field
+      - media_org_info.name
+      - null
+    source: fields
+    visibility_type: normal
+    table_id: media_org_info
+  - id: media_org_info.created
+    name: created
+    display_name: 创建时间
+    base_type: type/DateTime
+    effective_type: type/DateTime
+    semantic_type: null
+    field_ref:
+      - field
+      - media_org_info.created
+      - null
+    source: fields
+    visibility_type: normal
+    table_id: media_org_info
 ```
 
-## Triggers | 触发器
+#### base_type mapping | 字段类型映射
 
-Question triggers are implemented in JavaScript (via `src/triggers/`):
+| Steedos field type | base_type |
+|--------------------|-----------|
+| text / select / lookup | `type/Text` |
+| number / currency | `type/Float` |
+| integer | `type/Integer` |
+| date | `type/Date` |
+| datetime | `type/DateTime` |
+| boolean | `type/Boolean` |
+| count result | `type/BigInteger` |
 
-| Trigger | Description |
-|---------|-------------|
-| `analytics_card_afterFind` | Merge system card metadata after query |
-| `analytics_card_afterCount` | Calculate actual count including system cards |
-| `analytics_card_afterFindOne` | Merge metadata for single record fetch |
-| `analytics_card_beforeInsert` | Check enterprise license before creation |
+## Complete Examples | 完整示例
 
-## Source Code Structure | 源代码结构
+### Scalar — count of records
 
-The analytics package's `src/` directory contains the business logic:
-
+```yaml
+name: 单位总数
+created_at: 2025-08-20T07:59:23.569Z
+creator_id: 689c34199c7714afa7502547
+database_id: 1
+dataset_query:
+  query:
+    source-table: media_org_info
+    aggregation:
+      - - count
+  type: query
+  database: 1
+display: scalar
+entity_id: 68a5805bb74676d1c8cb3614
+id: 68a5805bb74676d1c8cb3614
+parameter_mappings: []
+parameters: []
+query_type: query
+result_metadata:
+  - base_type: type/BigInteger
+    display_name: 计数
+    effective_type: type/BigInteger
+    field_ref:
+      - aggregation
+      - 0
+    name: count
+    semantic_type: type/Quantity
+    source: aggregation
+table_id: media_org_info
+updated_at: 2025-08-20T07:59:23.569Z
+visualization_settings: '{}'
 ```
-src/
-├── actions/card/          # Card CRUD & query execution
-│   ├── card.js            # GET card by ID/name
-│   ├── cardNew.js         # Create new card
-│   ├── cardSave.js        # Update card
-│   ├── cardQuery.js       # Execute card query
-│   ├── cardAmis.js        # Amis rendering
-│   ├── pivotQuery.js      # Pivot table queries
-│   └── series.js          # Chart series data
-├── methods/               # Shared utilities
-│   ├── convertRowsToAmisRows.js  # Convert to Amis format
-│   ├── getDatabase.js     # Database resolution
-│   ├── getObjectField.js  # Field metadata
-│   └── dashboardParameters2Filter.js  # Parameter conversion
-├── metabase/              # Metabase query engine
-│   ├── query_processor.js # MBQL-to-SQL translation
-│   ├── mbql_u.js          # MBQL utilities
-│   ├── annotate.js        # Result annotation
-│   └── drivers/           # Database-specific drivers
-├── utils/                 # Data transformation
-│   ├── fieldsConversion.js
-│   ├── summarizeConversion.js
-│   └── transform.js
-└── app.js                 # Express route registration
+
+### Bar chart — grouped count
+
+```yaml
+name: 媒体类型统计
+created_at: 2025-08-20T08:06:22.163Z
+creator_id: 689c34199c7714afa7502547
+database_id: 1
+dataset_query:
+  database: 1
+  type: query
+  query:
+    source-table: media_infor
+    aggregation:
+      - - count
+    breakout:
+      - - field
+        - media_infor.type
+        - null
+display: bar
+enable_embedding: false
+entity_id: 68a581feb74676d1c8cb361e
+id: 68a581feb74676d1c8cb361e
+parameter_mappings: []
+parameters: []
+query_type: query
+result_metadata:
+  - id: type
+    name: type
+    display_name: 媒体类型
+    base_type: type/Text
+    effective_type: type/Text
+    semantic_type: null
+    source: breakout
+    visibility_type: normal
+    table_id: media_infor
+    field_ref:
+      - field
+      - media_infor.type
+      - null
+  - base_type: type/BigInteger
+    display_name: 计数
+    effective_type: type/BigInteger
+    field_ref:
+      - aggregation
+      - 0
+    name: count
+    semantic_type: type/Quantity
+    source: aggregation
+table_id: media_infor
+updated_at: 2025-08-20T08:06:22.163Z
+visualization_settings: >-
+  {"graph.x_axis.labels_enabled":false,"graph.y_axis.labels_enabled":false,"graph.dimensions":["type"],"graph.metrics":["count"],"graph.show_values":true}
 ```
 
-## Best Practices | 最佳实践
+### Scalar — count with filter
 
-1. **Enterprise license required**: Question creation checks license via `beforeInsert` trigger
-2. **Use `table_id`**: Always set the source object via `table_id` (references `objects.name`)
-3. **Permission control**: Use `disable_permission` cautiously — it bypasses row-level security
-4. **Datasets**: Mark reusable queries as `dataset: true` for use as virtual tables
-5. **Caching**: Set `cache_ttl` for expensive queries to improve performance
-6. **Embedding**: Enable `enable_embedding` for iframe integration in external apps
-7. **Public sharing**: Use `public_uuid` for unauthenticated access (security implications)
-8. **Admin-only management**: Tab permissions restrict question management to admin users
-9. **Collections**: Organize questions into collections (`collection_id`) for better navigation
+```yaml
+name: 从业人员数
+created_at: 2025-08-20T08:01:35.156Z
+creator_id: 689c34199c7714afa7502547
+database_id: 1
+dataset_query:
+  database: 1
+  type: query
+  query:
+    source-table: media_journalist
+    filter:
+      - '='
+      - - field
+        - media_journalist.open
+        - null
+      - true
+    aggregation:
+      - - count
+display: scalar
+enable_embedding: false
+entity_id: 68a580dfb74676d1c8cb3617
+id: 68a580dfb74676d1c8cb3617
+parameter_mappings: []
+parameters: []
+query_type: query
+result_metadata:
+  - base_type: type/BigInteger
+    display_name: 计数
+    effective_type: type/BigInteger
+    field_ref:
+      - aggregation
+      - 0
+    name: count
+    semantic_type: type/Quantity
+    source: aggregation
+table_id: media_journalist
+updated_at: 2025-08-20T08:01:35.156Z
+visualization_settings: '{"table.cell_column":"count"}'
+```
+
+## Key Rules | 关键规则
+
+1. **File name = question name**: `单位总数.question.yml`
+2. **`id` == `entity_id`**: always the same 24-char hex value
+3. **`table_id`**: the Steedos object name (e.g. `media_org_info`)
+4. **`database_id`** and **`dataset_query.database`**: always `1`
+5. **`query_type`**: always `"query"` (even for native SQL, use `"query"`)
+6. **`parameter_mappings`** and **`parameters`**: use `[]` unless this question participates in dashboard filtering
+7. **`visualization_settings`**: must be a JSON **string** (quoted), not an object
+8. Generate fresh unique ObjectIds — never copy IDs from other questions
