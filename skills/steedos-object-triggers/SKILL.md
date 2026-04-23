@@ -50,7 +50,7 @@ type: code
 locked: false
 handler: |-
   const { doc } = ctx.params;
-  const { _ } = global;
+  const { _ } = npm;
 
   if (doc.amount && doc.amount <= 0) {
     throw new Error('Order amount must be greater than 0');
@@ -97,9 +97,24 @@ when:
 
 ## Handler Context | Handler 上下文
 
+### ctx — Execution Context
+
+```javascript
+// ctx: { params, broker, getObject, getUser }
+ctx.params              // Operation data (see below)
+ctx.broker              // Moleculer service broker
+ctx.getObject(objectApiName) // Get object instance
+ctx.getUser(userId, spaceId) // Get user session details
+```
+
 ### ctx.params — Operation Data
 
 ```javascript
+// Common fields (all events)
+ctx.params.objectName   // Object API name
+ctx.params.userId       // Current user ID
+ctx.params.spaceId      // Current workspace ID
+
 // beforeInsert / afterInsert
 ctx.params.doc          // New document being inserted
 ctx.params.isInsert     // true
@@ -112,9 +127,20 @@ ctx.params.isUpdate     // true
 
 // beforeDelete / afterDelete
 ctx.params.id           // Record ID being deleted
+ctx.params.isDelete     // true
+
+// beforeFind / afterFind
+ctx.params.query        // Query parameters
+ctx.params.isFind       // true
+
+// afterFindOne
+ctx.params.isFindOne    // true
+
+// afterCount
+ctx.params.isCount      // true
 ```
 
-### objects — Object API
+### objects — All Steedos Object Instances
 
 ```javascript
 // Find records
@@ -129,8 +155,8 @@ const records = await objects.orders.find({
 // Find one record
 const record = await objects.orders.findOne(id);
 
-// Insert record
-const newRecord = await objects.orders.insert(doc);  // doc MUST include `space: ctx.spaceId`
+// Insert record (MUST include space)
+const newRecord = await objects.orders.insert({ ...doc, space: ctx.params.spaceId });
 
 // Update (triggers other triggers)
 await objects.orders.update(id, doc);
@@ -148,21 +174,29 @@ await objects.orders.delete(id);
 const count = await objects.orders.count({ filters: [...] });
 ```
 
-### global — Utility Libraries
+### npm — Utility Libraries
 
 ```javascript
-const { _ } = global;        // lodash
-const { moment } = global;   // moment.js
-const { validator } = global; // validator.js
+// npm: { _, moment, validator, filters, axios, formData, mongodb, sequelize }
+const { _ } = npm;              // lodash
+const { moment } = npm;         // moment.js
+const { validator } = npm;      // validator.js
+const { axios } = npm;          // HTTP client
 ```
 
-### ctx — User Context
+`global` is an alias for `npm`, so `const { _ } = global;` also works.
+
+### db — MongoDB Client Instance
 
 ```javascript
-ctx.userId       // Current user ID
-ctx.spaceId      // Current workspace ID
-ctx.getUser(userId, spaceId)  // Get user details
-ctx.broker       // Moleculer service broker
+db.collection('my_collection').find({}).toArray()
+```
+
+### Other Sandbox Variables
+
+```javascript
+makeNewID()             // Generate a new MongoDB ObjectId string
+services                // Moleculer services registry
 ```
 
 ### Returning Doc Changes | 返回文档变更
@@ -356,15 +390,15 @@ type: code
 locked: false
 handler: |-
   const { doc } = ctx.params;
-  const { _ } = global;
+  const { _ } = npm;
 
   // Set initial approval status
   doc.approval_status = 'pending';
   doc.submitted_at = new Date();
 
   // Set submitter info
-  if (ctx.userId) {
-    const user = await ctx.getUser(ctx.userId, ctx.spaceId);
+  if (ctx.params.userId) {
+    const user = await ctx.getUser(ctx.params.userId, ctx.params.spaceId);
     if (user) {
       doc.submitter_name = user.name;
       doc.submitter_email = user.email;
@@ -392,14 +426,14 @@ handler: |-
   if (doc.status && previousDoc && doc.status !== previousDoc.status) {
     const fullRecord = await objects.contracts.findOne(id);
 
-    if (fullRecord.owner && fullRecord.owner !== ctx.userId) {
+    if (fullRecord.owner && fullRecord.owner !== ctx.params.userId) {
       try {
         await ctx.broker.call('notifications.send', {
           to: fullRecord.owner,
           title: 'Contract Status Updated',
           body: 'Contract "' + fullRecord.name + '" status changed to ' + doc.status,
           url: '/app/contracts/view/' + id,
-          from: ctx.userId
+          from: ctx.params.userId
         });
       } catch (e) {
         console.error('Failed to send notification:', e.message);
@@ -410,10 +444,10 @@ handler: |-
 
 ## Best Practices | 最佳实践
 
-1. **Always set `space` when inserting records**: Server-side inserts MUST include `space: ctx.spaceId`, otherwise the record will fail or be invisible:
+1. **Always set `space` when inserting records**: Server-side inserts MUST include `space: ctx.params.spaceId`, otherwise the record will fail or be invisible:
    ```javascript
-   await objects.orders.insert({ ...doc, space: ctx.spaceId });
-   await objects.orders.directInsert({ ...doc, space: ctx.spaceId });
+   await objects.orders.insert({ ...doc, space: ctx.params.spaceId });
+   await objects.orders.directInsert({ ...doc, space: ctx.params.spaceId });
    ```
 2. **Use `before*` for validation and auto-fill**, `after*` for side effects (notifications, cascade updates)
 3. **Use `directUpdate` in after triggers** to avoid triggering infinite loops

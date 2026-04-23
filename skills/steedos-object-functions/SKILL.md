@@ -40,7 +40,7 @@ is_rest: true
 locked: false
 script: |-
   const { input } = ctx;
-  const { _ } = global;
+  const { _ } = npm;
 
   const record = await objects.orders.findOne(input.id);
   if (!record) {
@@ -53,7 +53,7 @@ script: |-
   await objects.orders.directUpdate(input.id, {
     status: 'approved',
     approved_at: new Date(),
-    approved_by: ctx.userId
+    approved_by: ctx.params.userId
   });
 
   return { message: 'Order approved successfully' };
@@ -76,28 +76,36 @@ script: |-
 ### Available Variables | 可用变量
 
 ```javascript
-// ctx - Execution context
-ctx.input        // Function input parameters (from API body or caller)
-ctx.userId       // Current user ID
-ctx.spaceId      // Current workspace ID
-ctx.broker       // Moleculer service broker
-ctx.getUser(userId, spaceId)  // Get user details
+// ctx: { input, params, broker, getObject, getUser }
+ctx.input                    // Function input parameters (from API body or caller)
+ctx.params.userId            // Current user ID
+ctx.params.spaceId           // Current workspace ID
+ctx.broker                   // Moleculer service broker
+ctx.getObject(objectApiName) // Get object instance
+ctx.getUser(userId, spaceId) // Get user session details
 
-// objects - Object API access
+// objects - All Steedos object instances
 objects.orders.findOne(id)
 objects.orders.find({ filters, fields, top, skip, sort })
-objects.orders.insert(doc)   // doc MUST include `space: ctx.spaceId`
+objects.orders.insert(doc)   // doc MUST include `space: ctx.params.spaceId`
 objects.orders.update(id, doc)
 objects.orders.directUpdate(id, doc)  // Bypass triggers
 objects.orders.directInsert(doc)      // Bypass triggers
 objects.orders.delete(id)
 objects.orders.count({ filters })
 
-// global - Utility libraries
-global._           // lodash
-global.moment      // moment.js (date library)
-global.validator   // validator.js
-global.filters     // filter utilities
+// db - MongoDB client instance (for raw queries)
+db.collection('my_collection').find({}).toArray()
+
+// npm: { _, moment, validator, filters, axios, formData, mongodb, sequelize }
+npm._              // lodash
+npm.moment         // moment.js (date library)
+npm.validator      // validator.js
+npm.filters        // @steedos/filters
+npm.axios          // HTTP client
+npm.formData       // form-data
+npm.mongodb        // MongoDB driver
+npm.sequelize      // Sequelize ORM
 ```
 
 ### API Endpoint | API 端点
@@ -145,7 +153,7 @@ script: |-
   await objects.orders.directUpdate(input.id, {
     status: 'submitted',
     submitted_at: new Date(),
-    submitted_by: ctx.userId
+    submitted_by: ctx.params.userId
   });
 
   return { message: 'Order submitted for approval' };
@@ -163,7 +171,7 @@ is_rest: true
 locked: false
 script: |-
   const { input } = ctx;
-  const { _ } = global;
+  const { _ } = npm;
 
   const update = await objects.km_updates.findOne(input.id);
   if (!update) {
@@ -184,7 +192,7 @@ script: |-
     status: 'active',
     updated_from: input.id,
     adopted_at: new Date(),
-    adopted_by: ctx.userId
+    adopted_by: ctx.params.userId
   };
 
   await objects.materials.directUpdate(material._id, updateData);
@@ -219,7 +227,7 @@ script: |-
   await objects.km_updates.directUpdate(input.id, {
     is_deleted: true,
     deleted_at: new Date(),
-    deleted_by: ctx.userId
+    deleted_by: ctx.params.userId
   });
 
   return { message: 'Record moved to trash' };
@@ -283,7 +291,7 @@ is_rest: true
 locked: false
 script: |-
   const { input } = ctx;
-  const { _ } = global;
+  const { _ } = npm;
 
   const ids = input.ids;
   if (!ids || !_.isArray(ids) || ids.length === 0) {
@@ -301,7 +309,7 @@ script: |-
         await objects.orders.directUpdate(id, {
           status: 'approved',
           approved_at: new Date(),
-          approved_by: ctx.userId
+          approved_by: ctx.params.userId
         });
         successCount++;
       } else {
@@ -355,14 +363,14 @@ amis_schema: |-
 
 ## Best Practices | 最佳实践
 
-1. **Always set `space` when inserting records**: Server-side inserts MUST include `space: ctx.spaceId`, otherwise the record will fail or be invisible:
+1. **Always set `space` when inserting records**: Server-side inserts MUST include `space: ctx.params.spaceId`, otherwise the record will fail or be invisible:
    ```javascript
-   await objects.orders.insert({ ...doc, space: ctx.spaceId });
-   await objects.orders.directInsert({ ...doc, space: ctx.spaceId });
+   await objects.orders.insert({ ...doc, space: ctx.params.spaceId });
+   await objects.orders.directInsert({ ...doc, space: ctx.params.spaceId });
    ```
 2. **Use `directUpdate`/`directInsert` when appropriate**: These bypass triggers to avoid infinite loops when updating related records
 3. **Validate input early**: Check `input` parameters and record existence before processing
 4. **Return meaningful results**: Always return an object with a `message` and relevant data
 5. **Handle errors with throw**: Use `throw new Error('message')` for validation failures - the platform returns appropriate HTTP error responses
-6. **Access user context**: Use `ctx.userId` and `ctx.getUser()` for permission checks
-7. **Use lodash from global**: `const { _ } = global;` gives you lodash utilities
+6. **Access user context**: Use `ctx.params.userId` and `ctx.getUser()` for permission checks
+7. **Use npm utilities**: `const { _, moment, axios } = npm;` gives you lodash, moment, axios, etc.
