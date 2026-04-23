@@ -104,17 +104,17 @@ global.filters     // filter utilities
 
 When `is_rest: true`, the function is accessible at:
 ```
-POST /api/v6/functions/{objectApiName}/{shortFunctionName}
-GET  /api/v6/functions/{objectApiName}/{shortFunctionName}
+POST /api/v6/functions/{objectApiName}/{functionApiName}
+GET  /api/v6/functions/{objectApiName}/{functionApiName}
 ```
 
-**⚠️ The `objectApiName_` prefix MUST be removed from the function name in the URL.**
+**⚠️ The `{functionApiName}` in the URL is the function `name` with the `{objectApiName}_` prefix removed.**
 
-Example: a function named `orders_approve_order` (objectApiName: `orders`) is called as:
-```
-POST /api/v6/functions/orders/approve_order
-POST /api/v6/functions/leads/convert_lead
-```
+Example:
+| Function `name` | `objectApiName` | API URL |
+|---|---|---|
+| `orders_approve_order` | `orders` | `/api/v6/functions/orders/approve_order` |
+| `leads_convert_lead` | `leads` | `/api/v6/functions/leads/convert_lead` |
 
 ## Complete Examples | 完整示例
 
