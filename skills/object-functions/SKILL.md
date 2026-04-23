@@ -86,7 +86,7 @@ ctx.getUser(userId, spaceId)  // Get user details
 // objects - Object API access
 objects.orders.findOne(id)
 objects.orders.find({ filters, fields, top, skip, sort })
-objects.orders.insert(doc)
+objects.orders.insert(doc)   // doc MUST include `space: ctx.spaceId`
 objects.orders.update(id, doc)
 objects.orders.directUpdate(id, doc)  // Bypass triggers
 objects.orders.directInsert(doc)      // Bypass triggers
@@ -355,9 +355,14 @@ amis_schema: |-
 
 ## Best Practices | 最佳实践
 
-1. **Use `directUpdate`/`directInsert` when appropriate**: These bypass triggers to avoid infinite loops when updating related records
-2. **Validate input early**: Check `input` parameters and record existence before processing
-3. **Return meaningful results**: Always return an object with a `message` and relevant data
-4. **Handle errors with throw**: Use `throw new Error('message')` for validation failures - the platform returns appropriate HTTP error responses
-5. **Access user context**: Use `ctx.userId` and `ctx.getUser()` for permission checks
-6. **Use lodash from global**: `const { _ } = global;` gives you lodash utilities
+1. **Always set `space` when inserting records**: Server-side inserts MUST include `space: ctx.spaceId`, otherwise the record will fail or be invisible:
+   ```javascript
+   await objects.orders.insert({ ...doc, space: ctx.spaceId });
+   await objects.orders.directInsert({ ...doc, space: ctx.spaceId });
+   ```
+2. **Use `directUpdate`/`directInsert` when appropriate**: These bypass triggers to avoid infinite loops when updating related records
+3. **Validate input early**: Check `input` parameters and record existence before processing
+4. **Return meaningful results**: Always return an object with a `message` and relevant data
+5. **Handle errors with throw**: Use `throw new Error('message')` for validation failures - the platform returns appropriate HTTP error responses
+6. **Access user context**: Use `ctx.userId` and `ctx.getUser()` for permission checks
+7. **Use lodash from global**: `const { _ } = global;` gives you lodash utilities

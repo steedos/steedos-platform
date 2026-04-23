@@ -130,7 +130,7 @@ const records = await objects.orders.find({
 const record = await objects.orders.findOne(id);
 
 // Insert record
-const newRecord = await objects.orders.insert(doc);
+const newRecord = await objects.orders.insert(doc);  // doc MUST include `space: ctx.spaceId`
 
 // Update (triggers other triggers)
 await objects.orders.update(id, doc);
@@ -410,10 +410,15 @@ handler: |-
 
 ## Best Practices | 最佳实践
 
-1. **Use `before*` for validation and auto-fill**, `after*` for side effects (notifications, cascade updates)
-2. **Use `directUpdate` in after triggers** to avoid triggering infinite loops
-3. **Don't throw errors in `after*` triggers** unless absolutely necessary — the record is already saved
-4. **Check for field changes before acting**: Compare `doc` with `previousDoc` to avoid unnecessary operations
-5. **Keep triggers focused**: One trigger per concern (validation, auto-fill, notifications)
-6. **Handle errors gracefully**: Wrap external API calls in try/catch to prevent blocking record saves
-7. **Return `{ doc }` in before triggers**: Always return the modified doc for before events
+1. **Always set `space` when inserting records**: Server-side inserts MUST include `space: ctx.spaceId`, otherwise the record will fail or be invisible:
+   ```javascript
+   await objects.orders.insert({ ...doc, space: ctx.spaceId });
+   await objects.orders.directInsert({ ...doc, space: ctx.spaceId });
+   ```
+2. **Use `before*` for validation and auto-fill**, `after*` for side effects (notifications, cascade updates)
+3. **Use `directUpdate` in after triggers** to avoid triggering infinite loops
+4. **Don't throw errors in `after*` triggers** unless absolutely necessary — the record is already saved
+5. **Check for field changes before acting**: Compare `doc` with `previousDoc` to avoid unnecessary operations
+6. **Keep triggers focused**: One trigger per concern (validation, auto-fill, notifications)
+7. **Handle errors gracefully**: Wrap external API calls in try/catch to prevent blocking record saves
+8. **Return `{ doc }` in before triggers**: Always return the modified doc for before events
