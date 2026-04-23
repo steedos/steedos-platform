@@ -31,8 +31,8 @@ steedos-packages/
 ## Function Structure | 函数结构
 
 ```yaml
-# functions/approve_order.function.yml
-name: approve_order
+# functions/orders_approve_order.function.yml
+name: orders_approve_order
 objectApiName: orders
 description: Approve an order and update status
 isEnabled: true
@@ -63,7 +63,7 @@ script: |-
 
 | Property | Type | Required | Description |
 |----------|------|----------|-------------|
-| `name` | string | Yes | Unique function name |
+| `name` | string | Yes | **⚠️ MUST start with `{objectApiName}_` prefix, e.g. `orders_approve_order`** |
 | `objectApiName` | string | Yes | Associated object API name |
 | `description` | string | No | Human-readable description |
 | `isEnabled` | boolean | Yes | Enable/disable function |
@@ -104,7 +104,16 @@ global.filters     // filter utilities
 
 When `is_rest: true`, the function is accessible at:
 ```
-POST /api/v1/{objectApiName}/functions/{functionName}
+POST /api/v6/functions/{objectApiName}/{shortFunctionName}
+GET  /api/v6/functions/{objectApiName}/{shortFunctionName}
+```
+
+**⚠️ The `objectApiName_` prefix MUST be removed from the function name in the URL.**
+
+Example: a function named `orders_approve_order` (objectApiName: `orders`) is called as:
+```
+POST /api/v6/functions/orders/approve_order
+POST /api/v6/functions/leads/convert_lead
 ```
 
 ## Complete Examples | 完整示例
@@ -112,8 +121,8 @@ POST /api/v1/{objectApiName}/functions/{functionName}
 ### Example 1: Simple Status Update | 简单状态更新
 
 ```yaml
-# functions/submit_order.function.yml
-name: submit_order
+# functions/orders_submit_order.function.yml
+name: orders_submit_order
 objectApiName: orders
 description: Submit order for approval
 isEnabled: true
@@ -145,8 +154,8 @@ script: |-
 ### Example 2: Complex Business Logic | 复杂业务逻辑
 
 ```yaml
-# functions/adopt_update.function.yml
-name: adopt_update
+# functions/km_updates_adopt_update.function.yml
+name: km_updates_adopt_update
 objectApiName: km_updates
 description: Adopt a knowledge management update into materials
 isEnabled: true
@@ -192,8 +201,8 @@ script: |-
 ### Example 3: Soft Delete | 软删除
 
 ```yaml
-# functions/trash_record.function.yml
-name: trash_record
+# functions/km_updates_trash_record.function.yml
+name: km_updates_trash_record
 objectApiName: km_updates
 description: Mark record as trashed instead of deleting
 isEnabled: true
@@ -219,8 +228,8 @@ script: |-
 ### Example 4: External API Integration | 外部 API 集成
 
 ```yaml
-# functions/sync_to_erp.function.yml
-name: sync_to_erp
+# functions/orders_sync_to_erp.function.yml
+name: orders_sync_to_erp
 objectApiName: orders
 description: Sync order to external ERP system
 isEnabled: true
@@ -265,8 +274,8 @@ script: |-
 ### Example 5: Batch Processing | 批量处理
 
 ```yaml
-# functions/batch_approve.function.yml
-name: batch_approve
+# functions/orders_batch_approve.function.yml
+name: orders_batch_approve
 objectApiName: orders
 description: Approve multiple orders at once
 isEnabled: true
@@ -321,21 +330,24 @@ Functions with `is_rest: true` can be called from `amis_button` schemas:
 # In a .button.yml amis_schema:
 amis_schema: |-
   {
-    "type": "button",
-    "label": "Approve",
-    "onEvent": {
-      "click": {
-        "actions": [
-          {
-            "actionType": "ajax",
-            "api": {
-              "url": "/api/v1/orders/functions/approve_order",
-              "method": "post",
-              "requestAdaptor": "api.data = { id: api.body.recordId }",
-              "messages": { "success": "Approved" }
+    "type": "service",
+    "body": {
+      "type": "button",
+      "label": "Approve",
+      "onEvent": {
+        "click": {
+          "actions": [
+            {
+              "actionType": "ajax",
+              "api": {
+                "url": "/api/v6/functions/orders/approve_order",
+                "method": "post",
+                "requestAdaptor": "api.data = { id: api.body.recordId }",
+                "messages": { "success": "Approved" }
+              }
             }
-          }
-        ]
+          ]
+        }
       }
     }
   }

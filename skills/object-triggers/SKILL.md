@@ -63,7 +63,7 @@ handler: |-
 
 | Property | Type | Required | Description |
 |----------|------|----------|-------------|
-| `name` | string | Yes | Unique trigger name |
+| `name` | string | Yes | **⚠️ MUST start with `{listenTo}_` prefix, e.g. `orders_validate`** |
 | `listenTo` | string | Yes | Object API name to listen to |
 | `when` | array | Yes | **⚠️ Array of event hooks. MUST only contain values from the [Event Hooks](#event-hooks-when--事件钩子) list below.** |
 | `isEnabled` | boolean | Yes | Enable/disable trigger |
