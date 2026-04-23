@@ -67,7 +67,7 @@ amis_schema: |-
               "api": {
                 "url": "/api/v6/functions/orders/submit_order",
                 "method": "post",
-                "requestAdaptor": "api.data = { id: api.body.recordId }",
+                "requestAdaptor": "api.data = { id: context.recordId }",
                 "adaptor": "return { ...payload, msg: payload.data?.message || 'Submitted' }",
                 "messages": { "success": "Order submitted" }
               }
@@ -140,7 +140,7 @@ amis_schema: |-
               "api": {
                 "url": "/api/v6/functions/orders/approve_order",
                 "method": "post",
-                "requestAdaptor": "api.data = { id: api.body.recordId }",
+                "requestAdaptor": "api.data = { id: context.recordId }",
                 "adaptor": "return { ...payload, msg: payload.data?.message || 'Approved' }",
                 "messages": { "success": "Order approved successfully" }
               }
@@ -185,7 +185,7 @@ amis_schema: |-
               "api": {
                 "url": "/api/v6/functions/orders/cancel_order",
                 "method": "post",
-                "requestAdaptor": "api.data = { id: api.body.recordId }",
+                "requestAdaptor": "api.data = { id: context.recordId }",
                 "messages": { "success": "Order cancelled" }
               }
             },
@@ -227,7 +227,7 @@ amis_schema: |-
           "api": {
             "url": "/api/v6/functions/orders/reject_order",
             "method": "post",
-            "requestAdaptor": "api.data = { id: api.body.recordId, reason: api.body.reject_reason }",
+            "requestAdaptor": "api.data = { id: context.recordId, reason: api.body.reject_reason }",
             "messages": { "success": "Order rejected" }
           },
           "body": [
@@ -274,7 +274,7 @@ amis_schema: |-
                 "api": {
                   "url": "/api/v6/functions/materials/approve",
                   "method": "post",
-                  "requestAdaptor": "api.data = { id: api.body.recordId }",
+                  "requestAdaptor": "api.data = { id: context.recordId }",
                   "messages": { "success": "Material approved" }
                 }
               },
@@ -427,19 +427,38 @@ Common `actionType` values used in button events:
 
 ## Accessing Record Data in Amis Schema | 在 Amis Schema 中访问记录数据
 
-Inside `amis_schema`, use Amis template variables:
+On record detail pages (`on: record_only` / `record`), the Amis data scope automatically includes:
+
+- `recordId` — Current record's `_id`
+- All fields of the current record (e.g., `status`, `name`, `amount`)
+- `context.user.user` — Current user ID
+
+### In Amis Template Expressions | 在 Amis 模板表达式中
+
+Use `${variable}` syntax for `visibleOn`, `disabledOn`, `value`, etc.:
 
 ```json
 {
   "visibleOn": "${status == 'draft'}",
-  "requestAdaptor": "api.data = { id: api.body.recordId }",
-  "visibleOn": "${ARRAYINCLUDES(approvers, '${context.user.user}')}"
+  "visibleOn": "${ARRAYINCLUDES(approvers, '${context.user.user}')}",
+  "value": "${name} - copy"
 }
 ```
 
-- `${fieldName}` — Access record field values
-- `api.body.recordId` — Current record ID (in requestAdaptor)
-- `${context.user.user}` — Current user ID
+### In requestAdaptor | 在发送适配器中
+
+Use `context.recordId` to get the current record's `_id`:
+
+```json
+{
+  "requestAdaptor": "api.data = { id: context.recordId }",
+  "requestAdaptor": "api.data = { id: context.recordId, reason: api.body.reject_reason }"
+}
+```
+
+- `context.recordId` — Current record `_id` (recommended)
+- `context.user.user` — Current user ID
+- `api.body.fieldName` — Access form field values (in dialog forms)
 
 ## Best Practices | 最佳实践
 
@@ -480,7 +499,7 @@ amis_schema: |-
           "api": {
             "url": "/api/v6/functions/leads/convert_lead",
             "method": "post",
-            "requestAdaptor": "api.data = { id: api.body.recordId, account_name: api.body.account_name, contact_name: api.body.contact_name, create_opportunity: api.body.create_opportunity, opportunity_name: api.body.opportunity_name, opportunity_amount: api.body.opportunity_amount }",
+            "requestAdaptor": "api.data = { id: context.recordId, account_name: api.body.account_name, contact_name: api.body.contact_name, create_opportunity: api.body.create_opportunity, opportunity_name: api.body.opportunity_name, opportunity_amount: api.body.opportunity_amount }",
             "adaptor": "return { ...payload, msg: payload.data?.message || '转化成功' }",
             "messages": { "success": "线索转化成功" }
           },
