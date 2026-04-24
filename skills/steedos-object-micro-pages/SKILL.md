@@ -98,6 +98,19 @@ pageAssignments:
     mobile: false           # Don't show on mobile
 ```
 
+## API Call Rules | API 调用规则
+
+> **⚠️ CRITICAL: When calling `/api/v6/data/` endpoints in Amis schemas, the `skip` and `top` query parameters are REQUIRED. Omitting them will cause errors or return incomplete data.**
+>
+> **⚠️ 重要：在 Amis Schema 中调用 `/api/v6/data/` 接口时，`skip` 和 `top` 查询参数是必填的。省略会导致错误或返回不完整数据。**
+
+```
+✅ Correct:  /api/v6/data/orders?skip=0&top=20
+❌ Wrong:    /api/v6/data/orders
+```
+
+This rule applies to ALL `/api/v6/` list endpoints: `/api/v6/data/`, `/api/v6/tables/`, `/api/v6/direct/`.
+
 ## Amis JSON Schema | Amis JSON Schema
 
 ### Record Detail Page Example | 记录详情页面示例
@@ -231,8 +244,9 @@ Embeds a list view for related records:
 
 ## Best Practices | 最佳实践
 
-1. **Create separate desktop and mobile pages**: Use `_mobile` suffix naming convention
-2. **Use pageAssignments**: Set `desktop: true, mobile: false` for desktop pages and vice versa
-3. **Leverage Steedos components**: Use `steedos-record-service`, `steedos-record-detail`, and `steedos-object-listview` instead of raw API calls where possible
-4. **Keep AMIS JSON in separate file**: Never put AMIS schema inline in the `.page.yml`
-5. **Use responsive grid**: `lg`/`md` breakpoints for multi-column layouts on desktop
+1. **Always pass `skip` and `top`**: Every `/api/v6/data/` list call in Amis schemas MUST include `skip` and `top` parameters.（每个 `/api/v6/data/` 列表请求必须包含 `skip` 和 `top` 参数）
+2. **Create separate desktop and mobile pages**: Use `_mobile` suffix naming convention
+3. **Use pageAssignments**: Set `desktop: true, mobile: false` for desktop pages and vice versa
+4. **Leverage Steedos components**: Use `steedos-record-service`, `steedos-record-detail`, and `steedos-object-listview` instead of raw API calls where possible
+5. **Keep AMIS JSON in separate file**: Never put AMIS schema inline in the `.page.yml`
+6. **Use responsive grid**: `lg`/`md` breakpoints for multi-column layouts on desktop

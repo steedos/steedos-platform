@@ -41,6 +41,9 @@ Steedos（华炎魔方）是一个企业级低代码平台。开发者通过 YAM
 **"I want to create a new project"**
 → [steedos-project-format](../steedos-project-format/SKILL.md) → [steedos-package-format](../steedos-package-format/SKILL.md) → [steedos-environment-variables](../steedos-environment-variables/SKILL.md)
 
+**"I want to understand built-in objects"**
+→ [steedos-builtin-objects](../steedos-builtin-objects/SKILL.md) (core objects: users, spaces, organizations, permission_set, apps, accounts, contacts, tasks, etc.)
+
 **"I want to define data models and fields"**
 → [steedos-objects](../steedos-objects/SKILL.md) → [steedos-object-fields](../steedos-object-fields/SKILL.md) → [steedos-object-list-views](../steedos-object-list-views/SKILL.md)
 
@@ -49,6 +52,9 @@ Steedos（华炎魔方）是一个企业级低代码平台。开发者通过 YAM
 
 **"I want to build UI pages"**
 → [steedos-micro-pages](../steedos-micro-pages/SKILL.md) (standalone pages) → [steedos-object-micro-pages](../steedos-object-micro-pages/SKILL.md) (object detail/form pages) → [steedos-applications](../steedos-applications/SKILL.md) + [steedos-tabs](../steedos-tabs/SKILL.md) (navigation)
+
+**"I want to develop custom React amis components"**
+→ [steedos-webapps](../steedos-webapps/SKILL.md) (React + Vite webapps in packages with IIFE amis Renderer registration)
 
 **"I want to set up permissions and i18n"**
 → [steedos-object-permissions](../steedos-object-permissions/SKILL.md) → [steedos-translations](../steedos-translations/SKILL.md)
@@ -92,9 +98,9 @@ Steedos（华炎魔方）是一个企业级低代码平台。开发者通过 YAM
 | Category | Skills |
 |----------|--------|
 | Foundation | steedos-project-format, steedos-package-format, steedos-environment-variables, steedos-cli-commands |
-| Data Modeling | steedos-objects, steedos-object-fields, steedos-object-list-views |
+| Data Modeling | steedos-builtin-objects, steedos-objects, steedos-object-fields, steedos-object-list-views |
 | Business Logic | steedos-object-triggers, steedos-object-functions, steedos-object-buttons, steedos-object-micro-pages |
-| UI & Apps | steedos-applications, steedos-tabs, steedos-micro-pages |
+| UI & Apps | steedos-applications, steedos-tabs, steedos-micro-pages, steedos-webapps |
 | Analytics | steedos-dashboards, steedos-questions |
 | Security | steedos-object-permissions |
 | i18n | steedos-translations |

@@ -228,6 +228,7 @@ max: 100
 ```
 
 ### autonumber | 自动编号
+
 ```yaml
 name: order_number
 type: autonumber
@@ -236,7 +237,41 @@ formula: 'ORD-{YYYY}{MM}{DD}-{0000}'
 readonly: true
 ```
 
-Format placeholders: `{YYYY}`, `{YY}`, `{MM}`, `{DD}`, `{0000}` (sequential with padding)
+**⚠️ Valid placeholders — ONLY these are supported in the `formula` field:**
+
+| Placeholder | Description | Example Output |
+|-------------|-------------|----------------|
+| `{YYYY}` | 4-digit year | `2026` |
+| `{YY}` | 2-digit year | `26` |
+| `{MM}` | 2-digit month | `04` |
+| `{DD}` | 2-digit day | `23` |
+| `{0000}` | Sequential number with zero-padding (length = number of zeros) | `0001`, `0042` |
+| `{000}` | 3-digit sequential | `001` |
+| `{00000}` | 5-digit sequential | `00001` |
+
+**⚠️ `{project_code}`, `{org_code}`, `{user_name}` or any other field-name placeholders are NOT valid and will appear literally in the output. The `{...}` syntax ONLY supports the date/sequence placeholders listed above.**
+
+**⚠️ `{project_code}`、`{org_code}`、`{user_name}` 等字段名占位符是无效的，会原样输出。`{...}` 语法仅支持上面列出的日期/序号占位符。**
+
+**Formula examples:**
+```yaml
+# Basic: prefix + sequence
+formula: 'INV-{0000}'              # → INV-0001, INV-0002
+
+# Date + sequence (resets daily)
+formula: 'ORD-{YYYY}{MM}{DD}-{0000}'  # → ORD-20260423-0001
+
+# Date + sequence (resets monthly)
+formula: 'PO-{YYYY}{MM}-{000}'        # → PO-202604-001
+
+# Date + sequence (resets yearly)
+formula: 'REQ-{YYYY}-{00000}'         # → REQ-2026-00001
+
+# Prefix only + sequence (never resets)
+formula: 'CUST-{000000}'              # → CUST-000001, CUST-000002
+```
+
+**Sequence reset rule:** The counter resets based on which date placeholders are present — `{YYYY}+{MM}+{DD}` resets daily, `{YYYY}+{MM}` resets monthly, `{YYYY}` only resets yearly, no date placeholder means never resets.
 
 ## Date and Time Types | 日期时间类型
 

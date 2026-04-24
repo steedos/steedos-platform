@@ -96,22 +96,37 @@ pageAssignments:
     mobile: false
 ```
 
+## API Call Rules | API 调用规则
+
+> **⚠️ CRITICAL: When calling `/api/v6/data/` endpoints in Amis schemas, the `skip` and `top` query parameters are REQUIRED. Omitting them will cause errors or return incomplete data.**
+>
+> **⚠️ 重要：在 Amis Schema 中调用 `/api/v6/data/` 接口时，`skip` 和 `top` 查询参数是必填的。省略会导致错误或返回不完整数据。**
+
+```
+✅ Correct:  /api/v6/data/orders?skip=0&top=20
+✅ Correct:  /api/v6/data/orders?skip=0&top=100&filters=["status","=","active"]&sort=created desc
+❌ Wrong:    /api/v6/data/orders
+❌ Wrong:    /api/v6/data/orders?filters=["status","=","active"]
+```
+
+This rule applies to ALL `/api/v6/` list endpoints: `/api/v6/data/`, `/api/v6/tables/`, `/api/v6/direct/`.
+
 ## Amis Schema Guide | Amis Schema 指南
 
 ### Common Components | 常用组件
 
 ```json
-// Service - load data from API
-{ "type": "service", "api": "/api/endpoint", "body": [...] }
+// Service - load data from API (⚠️ skip & top required for /api/v6/data/)
+{ "type": "service", "api": "/api/v6/data/orders?skip=0&top=20", "body": [...] }
 
-// CRUD - data table with paging
-{ "type": "crud", "api": "/api/v4/orders", "columns": [...] }
+// CRUD - data table with paging (⚠️ skip & top required)
+{ "type": "crud", "api": "/api/v6/data/orders?skip=0&top=20", "columns": [...] }
 
 // Chart - ECharts integration
-{ "type": "chart", "api": "/api/stats", "config": {...} }
+{ "type": "chart", "api": "/api/v6/data/stats?skip=0&top=100", "config": {...} }
 
 // Form - input form with submit
-{ "type": "form", "api": "post:/api/endpoint", "body": [...] }
+{ "type": "form", "api": "post:/api/v6/data/orders", "body": [...] }
 
 // Tabs - tabbed navigation
 { "type": "tabs", "tabs": [...] }
@@ -213,7 +228,7 @@ is_active: true
       "header": { "title": "Recent Orders" },
       "body": {
         "type": "crud",
-        "api": "/api/v4/orders?$top=10&$orderby=created desc",
+        "api": "/api/v6/data/orders?skip=0&top=10&sort=created desc",
         "syncLocation": false,
         "columns": [
           { "name": "order_number", "label": "Order #" },
@@ -274,7 +289,7 @@ is_active: true
       "type": "crud",
       "name": "report-table",
       "className": "mt-4",
-      "api": "/api/v4/orders?$filter=status eq '${status}'",
+      "api": "/api/v6/data/orders?skip=0&top=100&filters=[\"status\",\"=\",\"${status}\"]&sort=created desc",
       "syncLocation": false,
       "columns": [
         { "name": "order_number", "label": "Order #" },
@@ -305,8 +320,9 @@ In page AMIS schemas, you can use Steedos-specific components:
 
 ## Best Practices | 最佳实践
 
-1. **Separate metadata from UI**: Keep `.page.yml` minimal (metadata only), put all UI in `.page.amis.json`
-2. **Use service components for data**: Load data dynamically with `service` + `api`
-3. **Responsive design**: Use `grid` with `lg`/`md` breakpoints
-4. **Create mobile variants**: Add `_mobile` suffix for mobile-specific pages (e.g., `dashboard_mobile.page.yml`)
-5. **Use pageAssignments**: Control which pages show on desktop vs mobile
+1. **Always pass `skip` and `top`**: Every `/api/v6/data/` list call MUST include `skip` and `top` parameters. This is the #1 mistake when building pages.（每个 `/api/v6/data/` 列表请求必须包含 `skip` 和 `top` 参数，这是构建页面时最常犯的错误）
+2. **Separate metadata from UI**: Keep `.page.yml` minimal (metadata only), put all UI in `.page.amis.json`
+3. **Use service components for data**: Load data dynamically with `service` + `api`
+4. **Responsive design**: Use `grid` with `lg`/`md` breakpoints
+5. **Create mobile variants**: Add `_mobile` suffix for mobile-specific pages (e.g., `dashboard_mobile.page.yml`)
+6. **Use pageAssignments**: Control which pages show on desktop vs mobile

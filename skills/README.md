@@ -32,7 +32,7 @@ skills/
 │   └── SKILL.md
 ├── steedos-auth/
 │   └── SKILL.md
-└── ... (31 skills total)
+└── ... (35 skills total)
 ```
 
 ## Skills Index | 技能索引
@@ -95,7 +95,17 @@ Build standalone custom pages using Amis framework, including dashboards, report
 
 使用 Amis 框架构建独立的自定义页面,包括仪表板、报表、自定义表单、图表和可视化。
 
-### 📊 Data Modeling | 数据建模 (3 skills)
+#### [steedos-webapps](./steedos-webapps/SKILL.md)
+Develop custom React + Vite webapps in Steedos packages (webapps/ directory). Build custom amis Renderer components via IIFE compilation, with JSX runtime shimming, CSS scope isolation, Express router for SPA access, and multi-webapp management.
+
+在 Steedos 软件包中开发自定义 React + Vite 应用（webapps/ 目录）。通过 IIFE 编译构建自定义 amis Renderer 组件，支持 JSX 运行时桥接、CSS 作用域隔离、Express 路由 SPA 访问和多 webapp 管理。
+
+### 📊 Data Modeling | 数据建模 (4 skills)
+
+#### [steedos-builtin-objects](./steedos-builtin-objects/SKILL.md)
+Built-in objects reference: ~20 core objects (users, spaces, organizations, space_users, permission_set, apps, accounts, contacts, tasks, etc.) with field definitions and relationships. Full index of all ~93 built-in objects.
+
+内置对象参考：约 20 个核心对象（用户、工作区、部门、权限集、应用、业务伙伴、联系人、任务等）的字段定义和关系说明。包含全部约 93 个内置对象的完整索引。
 
 #### [steedos-objects](./steedos-objects/SKILL.md)
 Define data models with ObjectQL, including object structure (.object.yml), standard fields, object properties, relationships, and complete examples.
@@ -228,6 +238,7 @@ Builder6 动态插件系统：启动时通过环境变量加载 NPM 包、NestJS
 | AI-assisted restart workflow | [steedos-cli-commands](./steedos-cli-commands/SKILL.md) |
 | Import/export data | [steedos-cli-commands](./steedos-cli-commands/SKILL.md) |
 | Deploy/retrieve source | [steedos-cli-commands](./steedos-cli-commands/SKILL.md) |
+| Understand built-in objects | [steedos-builtin-objects](./steedos-builtin-objects/SKILL.md) |
 | Define data models | [steedos-objects](./steedos-objects/SKILL.md), [steedos-object-fields](./steedos-object-fields/SKILL.md) |
 | Create list views | [steedos-object-list-views](./steedos-object-list-views/SKILL.md) |
 | Add validation logic | [steedos-object-triggers](./steedos-object-triggers/SKILL.md) |
@@ -238,6 +249,7 @@ Builder6 动态插件系统：启动时通过环境变量加载 NPM 包、NestJS
 | Configure permissions | [steedos-object-permissions](./steedos-object-permissions/SKILL.md) |
 | Translate metadata (i18n) | [steedos-translations](./steedos-translations/SKILL.md) |
 | Create custom pages | [steedos-object-micro-pages](./steedos-object-micro-pages/SKILL.md), [steedos-micro-pages](./steedos-micro-pages/SKILL.md) |
+| Custom React amis components | [steedos-webapps](./steedos-webapps/SKILL.md) |
 | Understand server architecture | [steedos-server-architecture](./steedos-server-architecture/SKILL.md) |
 | Use REST API | [steedos-server-api](./steedos-server-api/SKILL.md) |
 | Use GraphQL API | [steedos-graphql-api](./steedos-graphql-api/SKILL.md) |
@@ -343,6 +355,7 @@ Recommended learning path:
    - [steedos-environment-variables](./steedos-environment-variables/SKILL.md)
 
 2. **Data Modeling**
+   - [steedos-builtin-objects](./steedos-builtin-objects/SKILL.md)
    - [steedos-objects](./steedos-objects/SKILL.md)
    - [steedos-object-fields](./steedos-object-fields/SKILL.md)
    - [steedos-object-list-views](./steedos-object-list-views/SKILL.md)
@@ -357,6 +370,7 @@ Recommended learning path:
    - [steedos-tabs](./steedos-tabs/SKILL.md)
    - [steedos-object-micro-pages](./steedos-object-micro-pages/SKILL.md)
    - [steedos-micro-pages](./steedos-micro-pages/SKILL.md)
+   - [steedos-webapps](./steedos-webapps/SKILL.md)
 
 5. **Security**
    - [steedos-object-permissions](./steedos-object-permissions/SKILL.md)
@@ -432,7 +446,7 @@ To improve these skills:
 
 ## Statistics | 统计
 
-- **Total Skills**: 33
+- **Total Skills**: 35
 - **Total Documentation**: ~350KB
 - **Format**: Anthropic SKILL.md specification
 - **Languages**: English + Chinese (bilingual)

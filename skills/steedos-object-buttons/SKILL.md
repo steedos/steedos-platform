@@ -463,11 +463,12 @@ Use `context.recordId` to get the current record's `_id`:
 ## Best Practices | 最佳实践
 
 1. **`amis_schema` root MUST be `service`**: Always wrap the button in `{"type":"service","body":{...}}`. A bare `button` at the root will not render. （`amis_schema` 根节点必须是 `service`，否则按钮无法显示）
-2. **Use functions for business logic**: Buttons should call server-side functions via AJAX, not embed business logic in the client
-3. **Provide confirmation**: Use `confirmText` for destructive actions
-4. **Reload after action**: Always reload record detail or list view after successful action
-5. **Conditional visibility**: Use `visibleOn` to show buttons only when appropriate
-6. **Bilingual labels**: Provide both English and Chinese labels where needed
+2. **Always pass `skip` and `top` for list queries**: If the button's AJAX or dialog fetches data from `/api/v6/data/`, always include `skip` and `top` parameters. Example: `/api/v6/data/orders?skip=0&top=100`（如果按钮获取 `/api/v6/data/` 列表数据，必须包含 `skip` 和 `top` 参数）
+3. **Use functions for business logic**: Buttons should call server-side functions via AJAX, not embed business logic in the client
+4. **Provide confirmation**: Use `confirmText` for destructive actions
+5. **Reload after action**: Always reload record detail or list view after successful action
+6. **Conditional visibility**: Use `visibleOn` to show buttons only when appropriate
+7. **Bilingual labels**: Provide both English and Chinese labels where needed
 
 ## Real-world Example | 真实完整示例
 
