@@ -111,6 +111,63 @@ pageAssignments:
 
 This rule applies to ALL `/api/v6/` list endpoints: `/api/v6/data/`, `/api/v6/tables/`, `/api/v6/direct/`.
 
+## API v6 Response Structures | API v6 响应数据结构
+
+> **⚠️ You MUST use the correct response structure when writing `adaptor` or accessing API response data. Different endpoints return DIFFERENT formats.**
+>
+> **⚠️ 不同端点返回不同格式的响应数据，编写 `adaptor` 或访问响应数据时必须使用正确的结构。**
+
+| Endpoint | Response Format | Example |
+|----------|----------------|---------|
+| `GET /api/v6/data/:obj` (list) | `{ "data": [...], "totalCount": 42 }` | Items in `data` array, total in `totalCount` |
+| `GET /api/v6/data/:obj/:id` (single) | `{ "_id": "...", "name": "...", ... }` | Raw document, **NOT** wrapped |
+| `POST /api/v6/data/:obj` (create) | `{ "_id": "...", "name": "...", ... }` | Raw created document, **NOT** wrapped |
+| `PATCH /api/v6/data/:obj/:id` (update) | `{ "_id": "...", "name": "...", ... }` | Raw updated document, **NOT** wrapped |
+| `DELETE /api/v6/data/:obj/:id` (delete) | `{ "deleted": true, "_id": "..." }` | Deletion confirmation |
+| `POST /api/v6/functions/:obj/:fn` (function) | Whatever the function returns | **NO wrapping** — raw return value |
+
+### Amis Adaptor Examples | Amis 适配器示例
+
+```json
+// CRUD — list endpoint returns { data: [...], totalCount: N }
+// Amis CRUD auto-maps this: data → items, totalCount → total
+{
+  "type": "crud",
+  "api": "/api/v6/data/orders?skip=0&top=20"
+}
+
+// Service — list endpoint: access items via ${data}
+{
+  "type": "service",
+  "api": "/api/v6/data/orders?skip=0&top=20",
+  "body": {
+    "type": "tpl",
+    "tpl": "Total: ${totalCount}"
+  }
+}
+
+// Function call — response IS the return value, use adaptor to extract
+{
+  "api": {
+    "url": "/api/v6/functions/orders/get_summary",
+    "method": "post",
+    "requestAdaptor": "api.data = { id: context.recordId }",
+    "adaptor": "return { data: payload }"
+  }
+}
+
+// Function call with message — function returns { message: '...' }
+{
+  "api": {
+    "url": "/api/v6/functions/orders/approve",
+    "method": "post",
+    "requestAdaptor": "api.data = { id: context.recordId }",
+    "adaptor": "return { ...payload, msg: payload.message || 'Success' }",
+    "messages": { "success": "${msg}" }
+  }
+}
+```
+
 ## Amis Schema Guide | Amis Schema 指南
 
 ### Common Components | 常用组件

@@ -460,6 +460,45 @@ Use `context.recordId` to get the current record's `_id`:
 - `context.user.user` — Current user ID
 - `api.body.fieldName` — Access form field values (in dialog forms)
 
+## API v6 Response Structures | API v6 响应数据结构
+
+> **⚠️ You MUST use the correct response structure when writing `adaptor`. Different endpoints return DIFFERENT formats.**
+
+| Endpoint | Response Format |
+|----------|----------------|
+| `GET /api/v6/data/:obj` (list) | `{ "data": [...], "totalCount": 42 }` — Items in `data` array |
+| `GET /api/v6/data/:obj/:id` (single) | `{ "_id": "...", "name": "...", ... }` — Raw document, **NOT** wrapped |
+| `POST /api/v6/data/:obj` (create) | `{ "_id": "...", ... }` — Raw created document, **NOT** wrapped |
+| `PATCH /api/v6/data/:obj/:id` (update) | `{ "_id": "...", ... }` — Raw updated document, **NOT** wrapped |
+| `DELETE /api/v6/data/:obj/:id` (delete) | `{ "deleted": true, "_id": "..." }` |
+| `POST /api/v6/functions/:obj/:fn` (function) | Whatever the function returns — **NO wrapping**, raw return value |
+
+### Button Adaptor Patterns | 按钮适配器模式
+
+```json
+// Function returns { message: "Order approved" }
+// adaptor extracts message from the raw return value (payload = function return)
+{
+  "adaptor": "return { ...payload, msg: payload.message || 'Success' }",
+  "messages": { "success": "${msg}" }
+}
+
+// Function returns { success: true, data: { orderId: "..." } }
+// adaptor accesses data directly from the raw return value
+{
+  "adaptor": "return { ...payload, msg: 'Order ' + payload.data.orderId + ' processed' }",
+  "messages": { "success": "${msg}" }
+}
+
+// List query in dialog — response is { data: [...], totalCount: N }
+// Items are in payload.data array
+{
+  "adaptor": "return { data: { items: payload.data, total: payload.totalCount } }"
+}
+```
+
+**⚠️ `payload` in `adaptor` IS the raw API response.** For function endpoints, `payload` = whatever the function returns. For data endpoints, `payload` = `{ data: [...], totalCount: N }` (list) or a raw document (single/create/update).
+
 ## Best Practices | 最佳实践
 
 1. **`amis_schema` root MUST be `service`**: Always wrap the button in `{"type":"service","body":{...}}`. A bare `button` at the root will not render. （`amis_schema` 根节点必须是 `service`，否则按钮无法显示）

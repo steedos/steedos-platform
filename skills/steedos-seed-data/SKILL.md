@@ -121,17 +121,59 @@ Use template variables for workspace-dependent IDs:
 
 ## Date Format | 日期格式
 
-Use EJSON `$date` format for date/datetime fields:
+> **⚠️ CRITICAL: `date` and `datetime` field values MUST be valid date formats. Do NOT use arbitrary strings, descriptive text, or non-date values.**
+>
+> **⚠️ 重要：`date` 和 `datetime` 类型字段的值必须是合法的日期格式，严禁使用任意字符串或非日期值。**
+
+### JSON Format — Use EJSON `$date` | JSON 格式 — 使用 EJSON `$date`
 
 ```json
 [
   {
     "_id": "record_001",
     "name": "示例记录",
-    "start_date": { "$date": "2024-01-01T00:00:00.000Z" },
-    "created": { "$date": "2024-01-01T08:00:00.000Z" }
+    "start_date": { "$date": "2024-01-15T00:00:00.000Z" },
+    "submitted_at": { "$date": "2024-03-20T08:30:00.000Z" }
   }
 ]
+```
+
+### YAML Format — Use ISO Date Strings | YAML 格式 — 使用 ISO 日期字符串
+
+In YAML, `js-yaml` automatically parses ISO date strings as Date objects:
+
+```yaml
+- _id: "record_001"
+  name: "示例记录"
+  start_date: 2024-01-15              # date type — date only
+  submitted_at: 2024-03-20T08:30:00Z  # datetime type — date and time
+```
+
+### Valid Date Formats | 有效日期格式
+
+| Field Type | JSON Format | YAML Format | Example |
+|------------|-------------|-------------|---------|
+| `date` | `{ "$date": "2024-01-15T00:00:00.000Z" }` | `2024-01-15` | Date only |
+| `datetime` | `{ "$date": "2024-03-20T08:30:00.000Z" }` | `2024-03-20T08:30:00Z` | Date and time |
+
+**⚠️ INVALID examples (will cause errors):**
+
+```yaml
+# ❌ WRONG — arbitrary strings, not valid dates
+start_date: "today"
+start_date: "next week"
+start_date: "2024年1月"
+start_date: "TBD"
+start_date: "Q1 2024"
+
+# ❌ WRONG — template expressions (not supported for date fields)
+start_date: "{now}"         # {now} only works as defaultValue in field definitions
+submitted_at: "{today}"
+
+# ✅ CORRECT
+start_date: 2024-01-15
+start_date: 2024-01-15T00:00:00Z
+submitted_at: 2024-03-20T08:30:00Z
 ```
 
 ## Import Behavior | 导入行为
@@ -167,25 +209,32 @@ steedos-packages/
   code: "BASIC"
   price: 9800
   is_active: true
+  launch_date: 2024-01-01
+  published_at: 2024-01-01T09:00:00Z
 
 - _id: "${space_id}_prod_pro"
   name: "专业版"
   code: "PRO"
   price: 29800
   is_active: true
+  launch_date: 2024-03-15
+  published_at: 2024-03-15T09:00:00Z
 
 - _id: "${space_id}_prod_enterprise"
   name: "企业版"
   code: "ENTERPRISE"
   price: 99800
   is_active: true
+  launch_date: 2024-06-01
+  published_at: 2024-06-01T09:00:00Z
 ```
 
 ## Best Practices | 最佳实践
 
 1. **Always include `_id`**: Every record must have a unique `_id`. Use `${space_id}` prefix for workspace-scoped data.
-2. **Use YAML for readability**: YAML is easier to maintain than JSON for seed data.
-3. **Don't set auto fields**: Do not include `space`, `owner`, `created`, `created_by`, `modified`, `modified_by` — they are auto-populated.
-4. **Idempotent IDs**: Use deterministic `_id` values (not random) so repeated imports don't create duplicates.
-5. **Match object API name**: The filename must exactly match the object's API name (e.g., `orders.data.yml` for the `orders` object).
-6. **Keep data minimal**: Only include essential initial data (config, default options, system records). Don't use for large datasets.
+2. **Date fields MUST use valid date format**: `date` fields use `2024-01-15` (YAML) or `{ "$date": "..." }` (JSON). `datetime` fields use `2024-01-15T08:30:00Z` (YAML) or `{ "$date": "..." }` (JSON). Never use arbitrary strings.（日期字段必须使用合法日期格式，严禁使用任意字符串）
+3. **Use YAML for readability**: YAML is easier to maintain than JSON for seed data.
+4. **Don't set auto fields**: Do not include `space`, `owner`, `created`, `created_by`, `modified`, `modified_by` — they are auto-populated.
+5. **Idempotent IDs**: Use deterministic `_id` values (not random) so repeated imports don't create duplicates.
+6. **Match object API name**: The filename must exactly match the object's API name (e.g., `orders.data.yml` for the `orders` object).
+7. **Keep data minimal**: Only include essential initial data (config, default options, system records). Don't use for large datasets.

@@ -370,7 +370,7 @@ amis_schema: |-
    ```
 2. **Use `directUpdate`/`directInsert` when appropriate**: These bypass triggers to avoid infinite loops when updating related records
 3. **Validate input early**: Check `input` parameters and record existence before processing
-4. **Return meaningful results**: Always return an object with a `message` and relevant data
+4. **Return meaningful results**: Always return an object with a `message` and relevant data. **⚠️ The API endpoint returns the function's return value directly — NO wrapping.** Whatever you return becomes the HTTP response body. Example: if you return `{ message: "OK", orderId: "123" }`, the API response IS `{ message: "OK", orderId: "123" }`.
 5. **Handle errors with throw**: Use `throw new Error('message')` for validation failures - the platform returns appropriate HTTP error responses
 6. **Access user context**: Use `ctx.params.userId` and `ctx.getUser()` for permission checks
 7. **Use npm utilities**: `const { _, moment, axios } = npm;` gives you lodash, moment, axios, etc.

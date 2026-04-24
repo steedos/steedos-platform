@@ -194,6 +194,32 @@ Both methods merge `objectName` and `functionApiName` into the parameters:
 }
 ```
 
+**⚠️ Response: The function endpoint returns the raw return value from the function — NO wrapping.** Whatever the function returns is sent directly as the HTTP response body.
+
+```javascript
+// If function returns: { message: "Approved", orderId: "123" }
+// API response IS:     { message: "Approved", orderId: "123" }
+
+// If function returns: "OK"
+// API response IS:     "OK"
+
+// If function returns: [1, 2, 3]
+// API response IS:     [1, 2, 3]
+```
+
+## Response Format Summary | 响应格式汇总
+
+> **⚠️ CRITICAL: Different endpoints return DIFFERENT response formats. Single record operations return raw documents (NOT wrapped). List operations return `{ data, totalCount }`. Function calls return the raw function return value.**
+
+| Endpoint | Response Format | Wrapped? |
+|----------|----------------|----------|
+| `GET /api/v6/data/:obj` (list) | `{ "data": [...], "totalCount": 42 }` | Yes — `data` array + `totalCount` |
+| `GET /api/v6/data/:obj/:id` (single) | `{ "_id": "...", "name": "...", ... }` | **No** — raw document |
+| `POST /api/v6/data/:obj` (create) | `{ "_id": "...", "name": "...", ... }` | **No** — raw created document |
+| `PATCH /api/v6/data/:obj/:id` (update) | `{ "_id": "...", "name": "...", ... }` | **No** — raw updated document |
+| `DELETE /api/v6/data/:obj/:id` (delete) | `{ "deleted": true, "_id": "..." }` | Custom format |
+| `GET/POST /api/v6/functions/:obj/:fn` (function) | Whatever the function returns | **No** — raw return value |
+
 ## File Upload API | 文件上传 API
 
 ```

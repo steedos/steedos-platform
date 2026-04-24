@@ -111,6 +111,33 @@ pageAssignments:
 
 This rule applies to ALL `/api/v6/` list endpoints: `/api/v6/data/`, `/api/v6/tables/`, `/api/v6/direct/`.
 
+## API v6 Response Structures | API v6 响应数据结构
+
+> **⚠️ Different endpoints return DIFFERENT response formats. You MUST use the correct structure when writing `adaptor` or accessing data.**
+
+| Endpoint | Response Format |
+|----------|----------------|
+| `GET /api/v6/data/:obj` (list) | `{ "data": [...], "totalCount": 42 }` — Items in `data` array |
+| `GET /api/v6/data/:obj/:id` (single) | `{ "_id": "...", "name": "...", ... }` — Raw document, **NOT** wrapped |
+| `POST /api/v6/data/:obj` (create) | `{ "_id": "...", ... }` — Raw created document, **NOT** wrapped |
+| `PATCH /api/v6/data/:obj/:id` (update) | `{ "_id": "...", ... }` — Raw updated document, **NOT** wrapped |
+| `DELETE /api/v6/data/:obj/:id` (delete) | `{ "deleted": true, "_id": "..." }` |
+| `POST /api/v6/functions/:obj/:fn` (function) | Whatever the function returns — **NO wrapping**, raw return value |
+
+### Amis Adaptor for Function Calls | 函数调用适配器
+
+```json
+{
+  "api": {
+    "url": "/api/v6/functions/orders/approve",
+    "method": "post",
+    "requestAdaptor": "api.data = { id: context.recordId }",
+    "adaptor": "return { ...payload, msg: payload.message || 'Success' }",
+    "messages": { "success": "${msg}" }
+  }
+}
+```
+
 ## Amis JSON Schema | Amis JSON Schema
 
 ### Record Detail Page Example | 记录详情页面示例

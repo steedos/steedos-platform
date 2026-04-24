@@ -68,6 +68,89 @@ my-package/                              # Steedos package root
 - `main/default/client/<webapp-name>.client.js` triggers loading of the IIFE into the Steedos frontend
 - Each webapp is isolated — can use different dependencies and versions
 
+## Scaffold Selection | 脚手架选择
+
+Before creating a webapp, choose a UI scaffold. This determines which component library and styling approach to use. You can use any React-compatible UI library — below are two recommended options.
+
+创建 webapp 前，先选择 UI 脚手架，决定使用哪个组件库和样式方案。支持任意 React 兼容的 UI 库，以下是两个推荐选项。
+
+| Scaffold | Description | When to Use |
+|----------|-------------|-------------|
+| **antd** (default) | Ant Design component library. Reuses host page's antd via `external`, no extra bundle size. | Default choice — enterprise forms, tables, standard UI. Recommended when unsure. |
+| **shadcn/ui** | Tailwind CSS + Radix UI primitives. Components are copied into project (not a dependency). | Custom/modern UI, full design control, lightweight output. |
+| **Other** | Any React UI library (MUI, Chakra, Mantine, headless, etc.). Follow the same IIFE build pattern. | Specific design system requirements or team preference. |
+
+### Key Differences | 关键区别
+
+| | antd | shadcn/ui |
+|---|------|-----------|
+| Styling | CSS-in-JS (host page antd) | Tailwind CSS utility classes |
+| Bundle | `antd` marked as `external` — zero bundle cost | Components copied into `src/`, bundled into IIFE |
+| Tailwind | Optional | Required |
+| `waitForThing` target | `window.antd` | `window.antd` (still needed — amis SDK depends on antd) |
+| PostCSS plugins | `postcss-prefix-selector` | `postcss-prefix-selector` + Tailwind v4 workarounds (removeAtProperty, unwrapTwSupports, removeAtLayer) |
+
+### antd Scaffold Setup | antd 脚手架
+
+```bash
+cd my-package/webapps
+npm create vite@latest my-widget -- --template react-ts
+cd my-widget
+npm install
+npm install antd
+npm install -D @tailwindcss/postcss autoprefixer postcss-prefix-selector terser
+```
+
+In `vite.amis.config.ts`, mark antd as external:
+```typescript
+rollupOptions: {
+  external: ['react', 'react-dom', 'antd'],
+  output: {
+    globals: {
+      react: 'amisRequire("react")',
+      'react-dom': 'amisRequire("react-dom")',
+      'antd': 'antd',
+    },
+  },
+},
+```
+
+### shadcn/ui Scaffold Setup | shadcn/ui 脚手架
+
+```bash
+cd my-package/webapps
+npm create vite@latest my-widget -- --template react-ts
+cd my-widget
+npm install
+npx shadcn@latest init
+npm install -D @tailwindcss/postcss autoprefixer postcss-prefix-selector terser
+npm install -D tailwindcss
+```
+
+In `vite.amis.config.ts`, do NOT externalize antd (shadcn/ui doesn't use it):
+```typescript
+rollupOptions: {
+  external: ['react', 'react-dom'],
+  output: {
+    globals: {
+      react: 'amisRequire("react")',
+      'react-dom': 'amisRequire("react-dom")',
+    },
+  },
+},
+```
+
+**⚠️ shadcn/ui uses Tailwind v4 — you MUST add the 3 PostCSS workaround plugins** (see [Tailwind CSS v4 Workarounds](#tailwind-css-v4-workarounds) section).
+
+### Other Scaffolds | 其他脚手架
+
+Any React-compatible UI library works. The core requirements are the same:
+
+1. Mark `react` and `react-dom` as `external` in rollup (use `amisRequire`)
+2. If the library is already on the host page (like antd), mark it as `external` too
+3. Use `postcss-prefix-selector` for CSS isolation
+4. If using Tailwind v4, add the 3 PostCSS workaround plugins
+
 ## Creating a New Webapp | 创建新 webapp
 
 ### Step 1: Initialize Vite Project | 初始化
@@ -82,8 +165,15 @@ npm install
 ### Step 2: Add Build Dependencies | 添加构建依赖
 
 ```bash
+# Common dependencies (both scaffolds)
 npm install -D @tailwindcss/postcss autoprefixer postcss-prefix-selector terser
-npm install -D tailwindcss  # if using Tailwind CSS
+
+# antd scaffold
+npm install antd
+
+# shadcn/ui scaffold
+npx shadcn@latest init
+npm install -D tailwindcss
 ```
 
 ### Step 3: Create amis Integration Files | 创建 amis 集成文件
@@ -387,6 +477,42 @@ After registration, reference via `type` in amis JSON schema:
   }
 }
 ```
+
+## API v6 Response Structures | API v6 响应数据结构
+
+When calling Steedos API v6 endpoints from webapp code (fetch/axios), use the correct response format:
+
+| Endpoint | Response Format |
+|----------|----------------|
+| `GET /api/v6/data/:obj?skip=0&top=20` (list) | `{ "data": [...], "totalCount": 42 }` |
+| `GET /api/v6/data/:obj/:id` (single) | `{ "_id": "...", "name": "...", ... }` — Raw document, **NOT** wrapped |
+| `POST /api/v6/data/:obj` (create) | `{ "_id": "...", ... }` — Raw created document, **NOT** wrapped |
+| `PATCH /api/v6/data/:obj/:id` (update) | `{ "_id": "...", ... }` — Raw updated document, **NOT** wrapped |
+| `DELETE /api/v6/data/:obj/:id` (delete) | `{ "deleted": true, "_id": "..." }` |
+| `POST /api/v6/functions/:obj/:fn` (function) | Whatever the function returns — **NO wrapping**, raw return value |
+
+```typescript
+// List records — response has { data, totalCount }
+const res = await fetch('/api/v6/data/orders?skip=0&top=20');
+const { data: orders, totalCount } = await res.json();
+
+// Single record — response IS the record
+const res = await fetch(`/api/v6/data/orders/${id}`);
+const order = await res.json(); // { _id, name, status, ... }
+
+// Create record — response IS the created record
+const res = await fetch('/api/v6/data/orders', { method: 'POST', body: JSON.stringify(record) });
+const created = await res.json(); // { _id, name, created, ... }
+
+// Call function — response IS whatever the function returns
+const res = await fetch('/api/v6/functions/orders/approve', {
+  method: 'POST',
+  body: JSON.stringify({ id: orderId })
+});
+const result = await res.json(); // e.g. { message: "Approved", success: true }
+```
+
+**⚠️ `skip` and `top` are REQUIRED for all list endpoints** (`/api/v6/data/`, `/api/v6/tables/`, `/api/v6/direct/`).
 
 ## Express Router for SPA Access | 通过 Router 提供 SPA 访问
 
