@@ -45,9 +45,12 @@ my-package/                              # Steedos package root
 │       └── package.json
 │
 ├── main/default/
-│   └── client/                          # Client loader files
-│       ├── designer.client.js           # Loads designer amis renderer
-│       └── dashboard.client.js          # Loads dashboard amis renderer
+│   ├── client/                          # Client loader files
+│   │   ├── designer.client.js           # Loads designer amis renderer
+│   │   └── dashboard.client.js          # Loads dashboard amis renderer
+│   └── routes/                          # Express SPA routers
+│       ├── designer.router.js           # SPA access for designer
+│       └── dashboard.router.js          # SPA access for dashboard
 │
 ├── public/                              # Deployed output (copied from each webapp)
 │   ├── designer/
@@ -202,13 +205,82 @@ In the webapp's `package.json`:
 }
 ```
 
-### Step 5: Register in Package Root | 在软件包根目录注册
+### Step 5: Create SPA Router | 创建 SPA 路由
+
+Create `main/default/routes/<webapp-name>.router.js` to serve the webapp as a standalone SPA:
+
+创建 `main/default/routes/<webapp-name>.router.js`，让 webapp 可以作为独立 SPA 访问：
+
+```javascript
+// main/default/routes/my-widget.router.js
+'use strict';
+const express = require('express');
+const router = express.Router();
+const { requireAuthentication } = require("@steedos/auth");
+const path = require('path');
+
+const packageRoot = path.dirname(require.resolve('@steedos-labs/my-package/package.json'));
+const webappDistPath = path.join(packageRoot, 'webapps', 'my-widget', 'dist');
+const amisRendererDistPath = path.join(webappDistPath, 'amis-renderer');
+
+// Main page entry (requires auth)
+router.get('/api/my-package/my-widget', requireAuthentication, async (req, res) => {
+  try {
+    if (process.env.NODE_ENV === 'development') {
+      return res.redirect('http://localhost:5173');
+    }
+    res.sendFile(path.join(webappDistPath, 'index.html'), { dotfiles: 'allow' });
+  } catch (e) {
+    res.status(500).send({ errors: [{ errorMessage: e.message }] });
+  }
+});
+
+// Static assets
+router.use('/api/my-package/my-widget', express.static(webappDistPath));
+
+// SPA fallback (frontend routing support)
+router.use('/api/my-package/my-widget', (req, res, next) => {
+  if (req.method !== 'GET') return next();
+  if (path.extname(req.path)) return next();
+  if (req.path === '/' || req.path === '') return next();
+  requireAuthentication(req, res, () => {
+    try {
+      if (process.env.NODE_ENV === 'development') {
+        return res.redirect('http://localhost:5173');
+      }
+      res.sendFile(path.join(webappDistPath, 'index.html'), { dotfiles: 'allow' });
+    } catch (e) {
+      res.status(500).send({ errors: [{ errorMessage: e.message }] });
+    }
+  });
+});
+
+// amis renderer static assets
+router.use('/api/my-package/my-widget-amis', express.static(amisRendererDistPath));
+
+exports.default = router;
+```
+
+Also update the webapp's `vite.config.ts` to set `base` matching the router path:
+
+同时更新 webapp 的 `vite.config.ts`，设置 `base` 与路由路径一致：
+
+```typescript
+// webapps/my-widget/vite.config.ts
+export default defineConfig(({ command }) => ({
+  base: command === 'build' ? '/api/my-package/my-widget/' : '/',
+  // ... other config
+}))
+```
+
+### Step 6: Register in Package Root | 在软件包根目录注册
 
 ```json
 {
   "name": "@steedos-labs/my-package",
   "files": [
     "main/default/client",
+    "main/default/routes",
     "webapps/my-widget/dist",
     "public/my-widget",
     "package.service.js"
@@ -520,7 +592,11 @@ const result = await res.json(); // e.g. { message: "Approved", success: true }
 
 ## Express Router for SPA Access | 通过 Router 提供 SPA 访问
 
-Webapps can also serve as standalone SPA applications via Express routes in `main/default/routes/`:
+> **Note:** The SPA router is created by default in Step 5 of "Creating a New Webapp". This section provides detailed reference for the router implementation.
+>
+> **注意：** SPA 路由已在「创建新 webapp」Step 5 中默认创建。本节提供路由实现的详细参考。
+
+Webapps serve as standalone SPA applications via Express routes in `main/default/routes/`:
 
 ```javascript
 'use strict';
@@ -681,6 +757,7 @@ removeAtLayer.postcss = true
   "name": "@steedos-labs/my-package",
   "files": [
     "main/default/client",
+    "main/default/routes",
     "webapps/designer/dist",
     "webapps/dashboard/dist",
     "public/designer",
@@ -732,8 +809,21 @@ cd ../.. && npm publish        # files field ensures public/my-widget is include
 | 3 | `webapps/xxx/src/amis-entry.ts` | amis registration entry (modify component import and type) |
 | 4 | `webapps/xxx/vite.amis.config.ts` | IIFE build config (modify entry, global name, CSS scope) |
 | 5 | `webapps/xxx/package.json` | Add `build:amis` script |
-| 6 | Root `package.json` | Include `public/xxx` and `main/default/client` in `files`, add build command |
+| 6 | Root `package.json` | Include `public/xxx`, `main/default/client`, `main/default/routes` in `files`, add build command |
 | 7 | `main/default/client/xxx.client.js` | **⚠️ Client loader — triggers loading of amis renderer into frontend** |
+| 8 | `main/default/routes/xxx.router.js` | **⚠️ SPA router — enables standalone SPA access via `/api/<pkg>/xxx`** |
+
+## Post-Development Prompt | 开发完成后提示
+
+After completing webapp development and configuration, **always inform the user about the available access methods**:
+
+webapp 开发和配置完成后，**务必告知用户可用的访问方式**：
+
+> ✅ Webapp `{webapp-name}` 开发完成！你可以通过以下方式访问：
+>
+> - **amis 组件方式**：在 amis Schema 中使用 `"type": "{webapp-name}"` 嵌入到任意页面
+> - **独立 SPA 方式**：通过浏览器访问 `{ROOT_URL}/api/{package-name}/{webapp-name}`
+> - **开发模式**：运行 `cd webapps/{webapp-name} && npm run dev`，访问 `http://localhost:5173`
 
 ## FAQ | 常见问题
 
