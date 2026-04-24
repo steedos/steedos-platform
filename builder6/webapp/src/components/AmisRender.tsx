@@ -2,11 +2,56 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2025-01-22 12:51:08
  * @LastEditors: yinlianghui yinlianghui@hotoa.com
- * @LastEditTime: 2026-04-07 13:15:58
+ * @LastEditTime: 2026-04-23 16:16:51
  * @Description: 
  */
 import { Builder, builder, BuilderComponent } from '@builder6/react';
 import { useNavigate, useLocation } from 'react-router-dom';
+
+// 全局：每次 URL 变化时，若当前 pathname 是二栏列表页，记录到 sessionStorage
+// 用 history API patch 而不是 useLocation，因为：
+// - ApprovalTreeMenu 同根节点切换用 history.replaceState 静默更新 URL，不触发 react-router 的 location 变化
+// - 详情页内部跳转可能也走 pushState，需要全局拦截才能不漏
+// 用途：goBack fallback 时（_appNavCount=0）恢复带过滤参数的二栏列表 URL
+function recordIfGridListUrl() {
+  try {
+    const pathname = window.location.pathname;
+    if (/^\/app\/[^/]+\/[^/]+\/grid\/[^/]+/.test(pathname)) {
+      sessionStorage.setItem('steedos_last_list_url', pathname + window.location.search);
+      return;
+    }
+    // 进入三栏列表（/view/none）或离开任何对象页面时，清掉 stale 值。
+    // 否则三栏列表会因为 sessionStorage 残留 grid URL 被 widget 的 isGridMode()
+    // 误判为 grid 上下文，导致点菜单时三栏被强转成二栏。
+    // 详情页 /view/<recordId> 不清——可能是从 grid 列表点行进入的，goBack 还要用。
+    const objMatch = pathname.match(/^\/app\/[^/]+\/[^/]+(\/(view|grid)\/([^/?#]+))?/);
+    const isThreePaneList = objMatch && objMatch[2] === 'view' && objMatch[3] === 'none';
+    const isOutsideObjectPage = !objMatch || !objMatch[1];
+    if (isThreePaneList || isOutsideObjectPage) {
+      sessionStorage.removeItem('steedos_last_list_url');
+    }
+  } catch (e) {
+    // 忽略 sessionStorage 不可用
+  }
+}
+if (typeof window !== 'undefined' && !(window as any).__steedosLastListUrlPatched) {
+  (window as any).__steedosLastListUrlPatched = true;
+  const _push = history.pushState;
+  const _replace = history.replaceState;
+  history.pushState = function () {
+    const r = _push.apply(this, arguments as any);
+    recordIfGridListUrl();
+    return r;
+  };
+  history.replaceState = function () {
+    const r = _replace.apply(this, arguments as any);
+    recordIfGridListUrl();
+    return r;
+  };
+  window.addEventListener('popstate', recordIfGridListUrl);
+  // 首次加载也记录一次
+  recordIfGridListUrl();
+}
 
 const normalizeLink = (to, location = window.location) => {
   to = to || "";
@@ -57,21 +102,39 @@ export const AmisRender = function ({schema = {}, data = {}, env = {}}) {
     (window as any)._appNavCount = 0;
   }
 
+  // 记录"最近访问的二栏列表页 URL"由模块顶层的 history patch 完成，无需在此重复
   if(!(window as any).goBack){
     (window as any).goBack = ()=>{
       if ((window as any)._appNavCount > 0) {
         (window as any)._appNavCount--;
         navigate(-1);
-      } else {
-        // 没有应用内导航历史，从 URL 解析对象列表页路径
-        const pathname = window.location.pathname;
-        // URL 模式: /app/{appId}/{objectName}/view/{recordId}
-        const match = pathname.match(/^(\/app\/[^/]+\/[^/]+)(\/view\/.*)?$/);
-        if (match && match[2]) {
-          navigate(match[1]);
-        } else {
-          navigate(-1);
+        return;
+      }
+      // 没有应用内导航历史，走 fallback：
+      // 1) 优先使用 sessionStorage 中保存的最近二栏列表 URL（保留 query 参数如 additionalFilters）
+      //    必须与当前 pathname 同 /app/{app}/{obj} 前缀，避免读到旧标签遗留的脏值
+      const pathname = window.location.pathname;
+      const objMatch = pathname.match(/^(\/app\/[^/]+\/[^/]+)(\/(view|grid)\/.*)?$/);
+      try {
+        const lastListUrl = sessionStorage.getItem('steedos_last_list_url');
+        if (
+          lastListUrl &&
+          objMatch &&
+          lastListUrl.startsWith(objMatch[1] + '/grid/')
+        ) {
+          sessionStorage.removeItem('steedos_last_list_url');
+          navigate(lastListUrl);
+          return;
         }
+      } catch (e) {
+        // 忽略
+      }
+      // 2) 兜底：截掉 /view/... 或 /grid/... 段，回到对象根路径
+      //    （正则同时匹配 view/grid 两种，避免截 grid 时丢段后重新触发 #619）
+      if (objMatch && objMatch[2]) {
+        navigate(objMatch[1]);
+      } else {
+        navigate(-1);
       }
     }
   }
