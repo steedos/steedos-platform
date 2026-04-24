@@ -514,6 +514,10 @@ const result = await res.json(); // e.g. { message: "Approved", success: true }
 
 **⚠️ `skip` and `top` are REQUIRED for all list endpoints** (`/api/v6/data/`, `/api/v6/tables/`, `/api/v6/direct/`).
 
+> **📖 For complete API v6 documentation** (all endpoints, filter operators, complex filters, authentication), **load the [steedos-server-api](../steedos-server-api/SKILL.md) skill**.
+>
+> **📖 如需 API v6 完整文档**（所有端点、筛选运算符、复合筛选、认证方式），**请加载 [steedos-server-api](../steedos-server-api/SKILL.md) 技能**。
+
 ## Express Router for SPA Access | 通过 Router 提供 SPA 访问
 
 Webapps can also serve as standalone SPA applications via Express routes in `main/default/routes/`:
