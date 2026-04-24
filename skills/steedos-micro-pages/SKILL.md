@@ -168,6 +168,10 @@ This rule applies to ALL `/api/v6/` list endpoints: `/api/v6/data/`, `/api/v6/ta
 }
 ```
 
+> **📖 For complete API v6 documentation** (all endpoints, filter operators, complex filters, authentication), **load the [steedos-server-api](../steedos-server-api/SKILL.md) skill**.
+>
+> **📖 如需 API v6 完整文档**（所有端点、筛选运算符、复合筛选、认证方式），**请加载 [steedos-server-api](../steedos-server-api/SKILL.md) 技能**。
+
 ## Amis Schema Guide | Amis Schema 指南
 
 ### Common Components | 常用组件

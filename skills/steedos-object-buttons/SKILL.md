@@ -499,6 +499,10 @@ Use `context.recordId` to get the current record's `_id`:
 
 **⚠️ `payload` in `adaptor` IS the raw API response.** For function endpoints, `payload` = whatever the function returns. For data endpoints, `payload` = `{ data: [...], totalCount: N }` (list) or a raw document (single/create/update).
 
+> **📖 For complete API v6 documentation** (all endpoints, filter operators, complex filters, authentication), **load the [steedos-server-api](../steedos-server-api/SKILL.md) skill**.
+>
+> **📖 如需 API v6 完整文档**（所有端点、筛选运算符、复合筛选、认证方式），**请加载 [steedos-server-api](../steedos-server-api/SKILL.md) 技能**。
+
 ## Best Practices | 最佳实践
 
 1. **`amis_schema` root MUST be `service`**: Always wrap the button in `{"type":"service","body":{...}}`. A bare `button` at the root will not render. （`amis_schema` 根节点必须是 `service`，否则按钮无法显示）
