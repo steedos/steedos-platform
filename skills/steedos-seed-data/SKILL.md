@@ -5,7 +5,8 @@ description: |
   .data.csv files in main/default/data/. Records are imported on service startup
   (insert-only) and on space initialization (upsert). Covers file naming, record
   structure, _id requirement, template variables (${space_id}, ${space_owner_id}),
-  EJSON date format, and import behavior (onlyInsert vs upsert).
+  EJSON date format, autonumber fields (must set values explicitly), and import
+  behavior (onlyInsert vs upsert).
 ---
 # Steedos Seed Data | Steedos 初始化数据
 
@@ -100,6 +101,34 @@ The following fields are **auto-populated** on import (do NOT include them manua
 | `modified_by` | Modifier |
 | `company_id` | Company ID |
 | `company_ids` | Company IDs |
+
+## Autonumber Fields | 自动编号字段
+
+> **⚠️ CRITICAL: `autonumber` fields do NOT auto-generate values during seed data import. You MUST explicitly set values for autonumber fields in seed data files.**
+>
+> **⚠️ 重要：`autonumber` 类型字段在初始化数据导入时不会自动生成编号，必须在数据文件中手动设置值。**
+
+Autonumber fields (e.g., `order_number` with formula `ORD-{YYYY}{MM}{DD}-{0000}`) only auto-generate when records are created through the UI or API. During seed data import, if you omit the autonumber field, it will be empty/null.
+
+自动编号字段（如 `order_number`，公式 `ORD-{YYYY}{MM}{DD}-{0000}`）仅在通过界面或 API 创建记录时自动生成。导入初始化数据时，如果不设置该字段，值将为空。
+
+```yaml
+# ✅ CORRECT — explicitly set autonumber field values
+- _id: "order_001"
+  order_number: "ORD-20240101-0001"
+  customer: "客户A"
+  amount: 9800
+
+- _id: "order_002"
+  order_number: "ORD-20240101-0002"
+  customer: "客户B"
+  amount: 19800
+
+# ❌ WRONG — omitting autonumber field, value will be null
+- _id: "order_003"
+  customer: "客户C"
+  amount: 29800
+```
 
 ## Template Variables | 模板变量
 
@@ -235,6 +264,7 @@ steedos-packages/
 2. **Date fields MUST use valid date format**: `date` fields use `2024-01-15` (YAML) or `{ "$date": "..." }` (JSON). `datetime` fields use `2024-01-15T08:30:00Z` (YAML) or `{ "$date": "..." }` (JSON). Never use arbitrary strings.（日期字段必须使用合法日期格式，严禁使用任意字符串）
 3. **Use YAML for readability**: YAML is easier to maintain than JSON for seed data.
 4. **Don't set auto fields**: Do not include `space`, `owner`, `created`, `created_by`, `modified`, `modified_by` — they are auto-populated.
-5. **Idempotent IDs**: Use deterministic `_id` values (not random) so repeated imports don't create duplicates.
-6. **Match object API name**: The filename must exactly match the object's API name (e.g., `orders.data.yml` for the `orders` object).
-7. **Keep data minimal**: Only include essential initial data (config, default options, system records). Don't use for large datasets.
+5. **Always set autonumber fields**: Autonumber fields do NOT auto-generate during import. You must provide explicit values matching the field's formula pattern (e.g., `ORD-20240101-0001`).（自动编号字段在导入时不会自动生成，必须手动设置值）
+6. **Idempotent IDs**: Use deterministic `_id` values (not random) so repeated imports don't create duplicates.
+7. **Match object API name**: The filename must exactly match the object's API name (e.g., `orders.data.yml` for the `orders` object).
+8. **Keep data minimal**: Only include essential initial data (config, default options, system records). Don't use for large datasets.
