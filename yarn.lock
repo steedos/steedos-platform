@@ -9719,6 +9719,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@steedos/validate@workspace:packages/validate":
+  version: 0.0.0-use.local
+  resolution: "@steedos/validate@workspace:packages/validate"
+  dependencies:
+    "@types/js-yaml": ^3.12.7
+    "@types/node": ^18.0.3
+    js-yaml: ^3.14.1
+    typescript: 5.7.3
+  bin:
+    steedos-validate: ./bin/cli.js
+  languageName: unknown
+  linkType: soft
+
 "@steedos/webapp@3.0.14-beta.7, @steedos/webapp@workspace:builder6/webapp":
   version: 0.0.0-use.local
   resolution: "@steedos/webapp@workspace:builder6/webapp"
