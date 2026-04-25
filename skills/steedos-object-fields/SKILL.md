@@ -334,6 +334,8 @@ options:
 
 ## Relationship Fields | 关系字段
 
+**IMPORTANT**: The `reference_to` value must be the exact API name of the target object. Built-in object names often differ from common expectations — Department is `organizations` (not `departments`), Division is `company` (not `divisions`), Workspace User is `space_users`. Load the `steedos-builtin-objects` skill for the authoritative name list.
+
 ### lookup (Many-to-One) | 查找关系
 ```yaml
 name: customer

@@ -23,6 +23,8 @@ Steedos objects are the foundation of your data model. Each object represents a 
 
 Steedos 对象是数据模型的基础。每个对象代表一个数据库表。对象使用 `.object.yml` 文件定义，相关元数据（字段、列表视图、权限、按钮）在子文件夹的独立文件中定义。
 
+**IMPORTANT**: When adding lookup/master_detail fields that reference built-in objects, you MUST use the correct API names. Built-in object names often differ from common expectations — e.g. Department is `organizations` (not `departments`), Division is `company` (not `divisions`). Load the `steedos-builtin-objects` skill for the authoritative name list.
+
 ## File Location | 文件位置
 
 ### Modern Format (Recommended) | 现代格式（推荐）

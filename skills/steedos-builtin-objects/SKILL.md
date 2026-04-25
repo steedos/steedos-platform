@@ -1,14 +1,49 @@
 ---
 name: steedos-builtin-objects
 description: |
+  TRIGGER when: user creates a new Steedos project or package; user adds a lookup/
+  master_detail field referencing a built-in object (users, organizations, spaces,
+  space_users, company, roles, permission_set, etc.); user asks about built-in object
+  names, fields, or relationships; user mentions departments, users, roles, permissions,
+  or any core platform entity by Chinese or English name; user configures sharing rules
+  or record-level permissions that depend on organizational hierarchy.
+  SKIP: user is only asking about custom object definition syntax (use steedos-objects),
+  or only asking about field types (use steedos-object-fields).
   Steedos platform built-in objects reference. Lists ~20 commonly used
   core objects with field definitions and relationships: users, spaces,
   organizations, space_users, company, roles, permission_set, apps,
   tasks, accounts, contacts, pages, notifications, etc. Also provides
   a full index of all ~93 built-in objects by category.
+
+  IMPORTANT name mappings (Steedos names differ from common expectations):
+  - Department/部门 → object name is `organizations` (NOT departments)
+  - Workspace/工作区 → object name is `spaces`
+  - Workspace User/工作区用户 → object name is `space_users`
+  - Division/分部 → object name is `company`
+  - Permission Profile/权限简档 → object name is `permission_set`
+  - Task/任务 → object name is `tasks`
+  - Contact/联系人 → object name is `contacts`
+  - Account/客户 → object name is `accounts`
 ---
 
 # Steedos Built-in Objects | Steedos 内置对象
+
+## CRITICAL: Object Name Mappings | 重要：对象名称映射
+
+**ALWAYS** use the exact API names below — do NOT guess object names based on common conventions:
+
+| Concept | API Name (object name) | WRONG guesses to avoid |
+|---------|----------------------|----------------------|
+| Department 部门 | **organizations** | ~~departments~~, ~~spaces_departments~~ |
+| Workspace 工作区 | **spaces** | ~~workspaces~~, ~~tenants~~ |
+| Workspace User 工作区用户 | **space_users** | ~~workspace_users~~, ~~members~~ |
+| Division 分部 | **company** | ~~divisions~~, ~~companies~~ |
+| Permission Profile 权限简档 | **permission_set** | ~~profiles~~, ~~permission_profiles~~ |
+| Task 任务 | **tasks** | — |
+| Contact 联系人 | **contacts** | — |
+| Account 客户 | **accounts** | — |
+
+When referencing built-in objects in lookup fields, permissions, or code, you MUST use the API names from the table above. Consult the full object index at the end of this document if unsure.
 
 ## Overview | 概述
 
