@@ -1,0 +1,29 @@
+{
+  "name": "@steedos/validate",
+  "version": "3.0.14-beta.7",
+  "description": "Steedos package validation tool",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "bin": {
+    "steedos-validate": "./bin/cli.js"
+  },
+  "scripts": {
+    "build": "rm -rf ./lib && tsc",
+    "watch": "tsc --watch"
+  },
+  "dependencies": {
+    "js-yaml": "^3.14.1"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^3.12.7",
+    "@types/node": "^18.0.3",
+    "typescript": "5.7.3"
+  },
+  "files": [
+    "lib",
+    "bin"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

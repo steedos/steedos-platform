@@ -183,3 +183,4 @@ metadata_packages:
 5. **Separate metadata files**: Use individual `.field.yml`, `.listview.yml`, `.permission.yml`, `.button.yml` files instead of inline definitions
 6. **Use `snake_case` for API names**: Objects, fields, functions, triggers
 7. **Bilingual labels**: Provide both English and Chinese labels
+8. **Validate after creation**: Run `npx @steedos/validate <packagePath>` after creating or modifying a package to catch naming and content issues early
