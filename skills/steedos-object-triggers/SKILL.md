@@ -1,13 +1,20 @@
 ---
 name: steedos-object-triggers
 description: |
-  Create server-side JavaScript triggers that execute automatically on data
-  changes. Triggers are .trigger.yml files in main/default/triggers/ folder
-  with inline handler code. Covers trigger lifecycle hooks (beforeInsert,
-  afterInsert, beforeUpdate, afterUpdate, beforeDelete, afterDelete), context
-  variables (ctx.params.doc, ctx.params.previousDoc, ctx.params.id), objects
-  API, global utilities, and returning doc changes. Includes examples for
-  validation, auto-fill, cascade operations, and external integration.
+  TRIGGER when: user creates/edits a `.trigger.yml` file; asks how to run
+  server-side JavaScript automatically when records are created, updated, or
+  deleted; asks about trigger lifecycle hooks (beforeInsert, afterInsert,
+  beforeUpdate, afterUpdate, beforeDelete, afterDelete); asks about trigger
+  context variables (ctx.params.doc, ctx.params.previousDoc, ctx.params.id,
+  ctx.params.userId); asks how to validate data, auto-fill fields, cascade
+  updates, or call external APIs on record save. Trigger files live in
+  main/default/triggers/ (NOT inside object folders).
+  SKIP: user wants a MANUALLY invoked server function exposed via REST —
+  use steedos-object-functions; user wants a button action — use
+  steedos-object-buttons; user wants to call the API — use steedos-server-api.
+  Server-side JavaScript triggers (.trigger.yml in triggers/ folder) that fire
+  automatically on data change events. Covers all lifecycle hooks, context API,
+  objects access, validation, and automation patterns.
 ---
 # Steedos Object Triggers | Steedos 对象触发器
 

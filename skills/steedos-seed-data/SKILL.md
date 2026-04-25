@@ -1,12 +1,20 @@
 ---
 name: steedos-seed-data
 description: |
-  Define initial seed data for Steedos objects using .data.json, .data.yml, or
-  .data.csv files in main/default/data/. Records are imported on service startup
-  (insert-only) and on space initialization (upsert). Covers file naming, record
-  structure, _id requirement, template variables (${space_id}, ${space_owner_id}),
-  EJSON date format, autonumber fields (must set values explicitly), and import
-  behavior (onlyInsert vs upsert).
+  TRIGGER when: user creates/edits a `.data.json`, `.data.yml`, or `.data.csv`
+  file in main/default/data/; asks how to pre-populate initial records when
+  the service starts; asks about seed data file naming, _id requirements,
+  template variables (${space_id}, ${space_owner_id}), EJSON date format, or
+  autonumber field values; asks about import behavior (onlyInsert on startup vs
+  upsert on space init); asks how to import initial lookup/reference data or
+  system configuration records.
+  SKIP: user wants to import data via CLI command — use steedos-cli-commands;
+  user wants to define the object schema — use steedos-objects; user wants to
+  insert records programmatically in a trigger — use steedos-object-triggers.
+  Defines initial seed data (.data.json/.yml/.csv in main/default/data/).
+  Records are auto-imported at startup (insert-only) or space init (upsert).
+  Covers file naming, _id requirement, template variables, EJSON dates, and
+  autonumber handling.
 ---
 # Steedos Seed Data | Steedos 初始化数据
 

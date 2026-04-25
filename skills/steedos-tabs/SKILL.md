@@ -1,12 +1,18 @@
 ---
 name: steedos-tabs
 description: |
-  Define navigation tabs for Steedos applications. Tabs appear in the
-  application sidebar and support three types: object (shows list view),
-  page (renders a micro page), and url (opens internal/external URL).
-  Covers .tab.yml structure, permissions per permission_set, icon/label
-  configuration, desktop/mobile visibility, iframe/new-window options,
-  license restrictions, and URL template variables.
+  TRIGGER when: user creates/edits a `.tab.yml` file; asks how to add a
+  navigation item to a Steedos application sidebar; asks about tab types
+  (object tab, page tab, url tab); asks how to link a tab to an object list
+  view, a micro page, or an external/internal URL; asks about tab icon, label,
+  desktop/mobile visibility, is_use_iframe, is_new_window, license restrictions,
+  or permission_set-based tab visibility; asks why a tab does not appear.
+  SKIP: user is asking about the application container that holds tabs —
+  use steedos-applications; user is asking about the page content a tab
+  points to — use steedos-micro-pages or steedos-object-micro-pages.
+  Defines navigation tabs (.tab.yml) for Steedos application sidebars.
+  Supports object (list view), page (Amis micro page), and url (internal/external)
+  types. Covers icon, label, desktop/mobile, iframe options, and permissions.
 ---
 
 # Steedos Tabs | Steedos 标签页

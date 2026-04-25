@@ -1,12 +1,19 @@
 ---
 name: steedos-server-architecture
 description: |
-  Understand Steedos Server (builder6/server) architecture. NestJS 11 +
-  Moleculer 0.14 hybrid backend with Express middleware, Socket.IO real-time,
-  Redis sessions/caching, and ObjectQL data access. Covers module organization,
-  bootstrap sequence, middleware stack, guards, dependency injection, and
-  builder6 package ecosystem (@builder6/core, moleculer, tables, files, rooms,
-  pages, oidc, etc.).
+  TRIGGER when: user asks about HOW Steedos Server is built internally — NestJS
+  module organization, Moleculer service setup, bootstrap sequence, Express
+  middleware stack, AuthGuard/AdminGuard implementation, Socket.IO gateway,
+  dependency injection patterns, or the @builder6/* package ecosystem; asks how
+  to extend or contribute to the server source (builder6/server/src/); asks how
+  NestJS modules, controllers, and services are wired together in Steedos.
+  SKIP: user wants to USE the REST API (call endpoints) — use steedos-server-api
+  or steedos-builder6-api; user wants to configure the server (env vars, YAML
+  settings) — use steedos-server-config or steedos-builder6-config; user wants
+  an overview of Steedos — use steedos-overview.
+  Internal architecture reference for Steedos Server: NestJS 11 + Moleculer 0.14
+  hybrid, module layout, bootstrap, middleware, guards, Socket.IO, Redis, and the
+  @builder6 package ecosystem.
 ---
 
 # Steedos Server Architecture | Steedos 服务端架构

@@ -1,13 +1,16 @@
 ---
 name: steedos-object-fields
 description: |
-  Comprehensive guide to Steedos field types and configurations. Fields are
-  defined as .field.yml files in objects/{name}/fields/. Covers text fields,
-  numeric fields (number, currency, percent, autonumber), date/time,
-  boolean/select, relationship fields (lookup, master-detail), computed fields
-  (formula, summary), file/media, and special types. Includes field properties,
-  amis UI customization, visible_on formulas, validation, defaults, and
-  dependencies.
+  TRIGGER when: user creates/edits a `.field.yml` file; asks about field types
+  (text, number, currency, select, lookup, master_detail, formula, summary, file,
+  image, location, etc.); asks about field properties (required, default, index,
+  searchable, filterable, visible_on, amis, group); asks how to add a field,
+  configure a lookup/relationship field, write a formula, or customize field UI
+  with Amis schema. Fields live in objects/{name}/fields/.
+  SKIP: user is asking about the object itself (.object.yml) — use steedos-objects;
+  asking about list columns — use steedos-object-list-views; asking about
+  field-level security — use steedos-object-permissions.
+  Comprehensive guide to all Steedos field types and .field.yml configuration.
 ---
 # Steedos Object Fields | Steedos 对象字段
 

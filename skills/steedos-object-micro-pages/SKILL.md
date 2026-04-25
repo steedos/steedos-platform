@@ -1,12 +1,16 @@
 ---
 name: steedos-object-micro-pages
 description: |
-  Create customizable record detail and list pages for Steedos objects using
-  Amis. Pages are defined as paired .page.yml and .page.amis.json files in
-  main/default/pages/. Covers record pages (type: record), list pages
-  (type: list), pageAssignments for associating pages with objects,
-  desktop/mobile variants, and Steedos-specific Amis components like
-  steedos-record-service and steedos-object-listview.
+  TRIGGER when: user wants to customize/replace an OBJECT's record detail page or
+  list page using Amis UI; asks about `.page.yml` files with `type: record` or
+  `type: list` that have an `object_name` field; asks about `pageAssignments` to
+  bind a page to an object (orgDefault, desktop, mobile); asks about Steedos-specific
+  Amis components: steedos-record-service, steedos-object-listview, steedos-record-form;
+  asks how to override the default detail view for a specific object.
+  SKIP: user wants a STANDALONE page not bound to an object — use steedos-micro-pages;
+  user wants action buttons on a record — use steedos-object-buttons.
+  Creates customizable record detail (type: record) and list (type: list) pages for
+  specific Steedos objects using Amis, with pageAssignments binding.
 ---
 # Steedos Object Pages | Steedos 对象页面
 

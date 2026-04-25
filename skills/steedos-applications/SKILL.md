@@ -1,11 +1,17 @@
 ---
 name: steedos-applications
 description: |
-  Create and configure Steedos applications. Required fields: name, code, tabs
-  (without tabs the menu will not display). Key properties: showSidebar (always
-  true), tab_items/tab_groups for sidebar grouping, icon_slds (from valid SLDS
-  icon set), color, mobile, admin_menus, and permission-based visibility.
-  Use when organizing objects into logical business applications.
+  TRIGGER when: user creates/edits a `.app.yml` file; asks how to create a
+  Steedos application, configure the app sidebar menu, set app icon/color,
+  control mobile visibility, configure admin_menus, group tabs with tab_groups,
+  restrict app visibility by permission_set; asks why the application menu is
+  not showing (missing tabs field is a common cause).
+  SKIP: user is asking about individual sidebar navigation items (tabs) —
+  use steedos-tabs; user is asking about the pages tabs point to —
+  use steedos-micro-pages or steedos-object-micro-pages.
+  Creates and configures Steedos applications (.app.yml). Required fields:
+  name, code, tabs. Covers icon_slds, color, tab_items/tab_groups, mobile,
+  showSidebar, and permission-based visibility.
 ---
 
 # Steedos Applications | Steedos 应用程序

@@ -1,11 +1,20 @@
 ---
 name: steedos-object-list-views
 description: |
-  Define list views for displaying Steedos object records in table format.
-  List views are .listview.yml files in objects/{name}/listviews/. Covers
-  column configuration, filter operators and conditions, date-based filters,
-  searchable fields, sorting, mobile columns, view types (grid, calendar,
-  kanban), crud_mode, shared settings, and filter scope.
+  TRIGGER when: user creates/edits a `.listview.yml` file; asks how to define
+  a list view (table view) for a Steedos object; asks about list view columns,
+  filters, sort order, searchable fields, mobile columns, view types (grid,
+  calendar, kanban), crud_mode, shared/shared_to, or filter_scope; asks how
+  to set default filters or date-relative filters; asks why certain columns
+  don't appear or filters don't work in an object list.
+  Files live in objects/{name}/listviews/ subfolder.
+  SKIP: user wants to customize the ENTIRE list page UI with Amis components —
+  use steedos-object-micro-pages (type: list); user wants to define the fields
+  themselves — use steedos-object-fields; user wants a standalone dashboard —
+  use steedos-micro-pages.
+  Defines list views (.listview.yml) for Steedos object record tables. Covers
+  columns, filter conditions/operators, sort, searchable fields, mobile columns,
+  view types (grid/calendar/kanban), and sharing settings.
 ---
 # Steedos Object List Views | Steedos 对象列表视图
 

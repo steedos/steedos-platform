@@ -1,10 +1,16 @@
 ---
 name: steedos-overview
 description: |
-  Steedos Platform overview and skill routing guide. Introduces the platform's
-  core capabilities (metadata-driven objects, Amis UI, Moleculer microservices,
-  REST API) and maps tasks to the correct skills. Load this skill first to
-  understand what Steedos is and which skills to use for a given task.
+  TRIGGER when: user is NEW to Steedos and asks "what is Steedos", "where do I
+  start", "how does Steedos work", or any broad orientation question; asks which
+  skill to use for a given task; no other more specific skill clearly matches.
+  SKIP: user has a specific task already identified — route directly to the
+  relevant skill (steedos-objects, steedos-object-fields, steedos-micro-pages,
+  steedos-object-triggers, steedos-server-api, etc.). Use this skill as an
+  orientation/routing guide ONLY, not for implementation details.
+  Steedos Platform overview and skill routing guide. Maps tasks to the correct
+  skill, explains core concepts (metadata-driven objects, Amis UI, Moleculer
+  microservices, REST API) and the full technology stack.
 ---
 
 # Steedos Platform Overview | Steedos 平台概览

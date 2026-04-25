@@ -1,11 +1,18 @@
 ---
 name: steedos-objects
 description: |
-  Defines Steedos object data models using YAML. Objects represent database
-  tables with fields, permissions, list views, and behaviors. Use this skill to
-  create and configure objects, define fields, set up relationships, configure
-  feature flags, and establish naming conventions. Modern format uses separate
-  .field.yml, .listview.yml, .permission.yml, .button.yml files in subfolders.
+  TRIGGER when: user creates/edits a `.object.yml` file; asks how to define a
+  new Steedos object (table), configure object-level settings (label, icon,
+  enable_files, enable_approvals, enable_audit), set up object relationships
+  (extend, base), or asks about the overall object folder structure
+  (objects/{name}/ with fields/, listviews/, permissions/, buttons/ subfolders).
+  Also trigger when user asks "how do I create a new object" or "what goes in .object.yml".
+  SKIP: user is asking about a specific sub-resource — use steedos-object-fields
+  (fields), steedos-object-list-views (listviews), steedos-object-permissions
+  (permissions), steedos-object-buttons (buttons), steedos-object-triggers
+  (triggers), steedos-object-functions (functions).
+  Defines Steedos object data models using YAML (.object.yml). Covers object
+  properties, feature flags, inheritance, naming conventions, and multi-file layout.
 ---
 
 # Steedos Objects | Steedos 对象定义

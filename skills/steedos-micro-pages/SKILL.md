@@ -1,13 +1,16 @@
 ---
 name: steedos-micro-pages
 description: |
-  Build standalone custom pages using Amis low-code framework, independent of
-  object records. Pages are defined as paired .page.yml (metadata) and
-  .page.amis.json (UI schema) files in main/default/pages/. Covers page types
-  (app, list, record), render_engine configuration, pageAssignments for
-  desktop/mobile, and Amis schema with components like service, crud, chart,
-  form, wizard, tabs. Includes examples for dashboards, reports, and custom
-  forms.
+  TRIGGER when: user wants a STANDALONE custom page NOT tied to any object record
+  — e.g. dashboard, report page, app launcher, custom form; asks about `.page.yml`
+  + `.page.amis.json` files with `type: app` in main/default/pages/; asks about
+  Amis components for standalone pages (service, crud, chart, form, wizard);
+  asks about render_engine: amis for standalone pages.
+  SKIP: user wants to customize an OBJECT's record detail or list view — use
+  steedos-object-micro-pages instead; user wants to add page to sidebar — use
+  steedos-tabs; user wants a React webapp — use steedos-webapps.
+  Builds standalone Amis-based custom pages (type: app) independent of object
+  records, defined as paired .page.yml + .page.amis.json in pages/.
 ---
 # Steedos Standalone Pages | Steedos 独立页面
 

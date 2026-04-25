@@ -1,12 +1,20 @@
 ---
 name: steedos-object-functions
 description: |
-  Define server-side JavaScript functions for Steedos objects using YAML.
-  Functions are callable via REST API or from buttons/triggers. Covers
-  function definition (.function.yml files in main/default/functions/),
-  inline script with ctx/objects/global context, REST API exposure,
-  calling from amis_button schemas, and examples for CRUD operations,
-  data processing, and external API integration.
+  TRIGGER when: user creates/edits a `.function.yml` file; asks how to define
+  a server-side JavaScript function callable via REST API or from a button/trigger;
+  asks about function properties (name, objectApiName, is_rest, script, isEnabled);
+  asks about function execution context (ctx.input, ctx.params, objects API); asks
+  how to expose custom business logic as an HTTP endpoint; asks how to call a
+  function from an Amis button's ajax action or from another trigger.
+  Function files live in main/default/functions/ (NOT inside object folders).
+  SKIP: user wants logic that fires AUTOMATICALLY on data changes — use
+  steedos-object-triggers; user wants to call an existing REST endpoint —
+  use steedos-server-api; user wants a UI button definition — use
+  steedos-object-buttons.
+  Defines server-side JavaScript functions (.function.yml in functions/ folder).
+  Functions can be REST-exposed (is_rest: true) and called from buttons, triggers,
+  or external systems via /api/v6/functions/:objectName/:functionName.
 ---
 # Steedos Object Functions | Steedos 对象函数
 

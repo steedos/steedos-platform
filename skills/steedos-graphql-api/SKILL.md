@@ -1,12 +1,19 @@
 ---
 name: steedos-graphql-api
 description: |
-  Steedos GraphQL API reference. Auto-generated from object metadata, serves
-  at /graphql. Covers CRUD queries/mutations ({object}, {object}__findOne,
-  {object}__count, {object}__insert, {object}__update, {object}__delete),
-  lookup expansion (__expand), display formatting (_display), record
-  permissions (_permissions), related records (_related_*), filters,
-  pagination, sorting, authentication, and DataLoader batching.
+  TRIGGER when: user asks about querying or mutating Steedos data via GraphQL
+  (POST /graphql); asks about auto-generated GraphQL operations ({object},
+  {object}__findOne, {object}__count, {object}__insert, {object}__update,
+  {object}__delete); asks about __expand for lookup expansion, _display for
+  formatted values, _permissions for record permissions, _related_* for related
+  records, or DataLoader batching; asks about filters/pagination/sorting in a
+  GraphQL query against Steedos; asks about Apollo Playground at /graphql.
+  SKIP: user wants REST API CRUD — use steedos-server-api or steedos-builder6-api;
+  user wants to call a server function — use steedos-object-functions +
+  steedos-server-api; user is building a generic GraphQL server unrelated to Steedos.
+  Steedos GraphQL API auto-generated from object metadata at /graphql. Covers all
+  CRUD queries/mutations, lookup expansion, display formatting, record permissions,
+  related records, filters, pagination, and authentication.
 ---
 
 # Steedos GraphQL API | Steedos GraphQL 接口

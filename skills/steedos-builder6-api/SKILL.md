@@ -1,13 +1,16 @@
 ---
 name: steedos-builder6-api
 description: |
-  Builder6 Server REST API reference. Covers all /api/v6/ endpoints: Tables
-  CRUD (/api/v6/tables/:baseId/:tableId), Direct MongoDB CRUD
-  (/api/v6/direct/:objectName, admin-only), Files upload/download
-  (/api/v6/files), Auth login (/api/v6/auth/login), Users profile
-  (/api/v6/users/me), health check. Includes query parameters (fields,
-  filters, sort, skip, top), filter operators, batch operations, presigned
-  URLs, and Swagger/OpenAPI documentation.
+  TRIGGER when: user asks about Builder6 REST API endpoints: Tables module
+  (/api/v6/tables/:baseId/:tableId CRUD), Direct MongoDB (/api/v6/direct/:objectName),
+  Files API (/api/v6/files), Auth login (/api/v6/auth/login), Users profile
+  (/api/v6/users/me), presigned URLs, or Swagger UI at /api/v6; asks about
+  baseId/tableId addressing or batch operations in Builder6.
+  SKIP: user asks about /api/v6/data/:objectName CRUD or /api/v6/objects metadata
+  or /api/v6/functions — use steedos-server-api; GraphQL — use steedos-graphql-api;
+  architecture internals — use steedos-server-architecture or steedos-builder6-architecture.
+  Builder6 Server REST API: Tables CRUD, Direct MongoDB, Files, Auth, Users
+  endpoints with query params, filter operators, and Swagger docs.
 ---
 
 # Builder6 Server API | Builder6 服务端 API

@@ -1,12 +1,19 @@
 ---
 name: steedos-object-buttons
 description: |
-  Create custom buttons for Steedos objects using YAML with Amis UI schema.
-  Buttons appear on record pages or list views. Covers button properties
-  (name, label, type, on, amis_schema), display locations (record_only, list,
-  list_record), visibility control via visibleOn formulas, Amis event actions
-  (ajax, dialog, broadcast, reload, toast), and hiding standard buttons.
-  Important: buttons are .button.yml files in objects/{name}/buttons/ folder.
+  TRIGGER when: user creates/edits a `.button.yml` file inside an object's
+  buttons/ subfolder; asks how to add a custom action button to a record detail
+  page or list view; asks about button properties (name, label, type, on,
+  is_enable, visible, visibleOn, amis_schema); asks about Amis event actions
+  inside buttons (ajax, dialog, broadcast, reload, toast); asks how to control
+  button visibility with formulas; asks how to hide standard buttons
+  (standard_edit, standard_delete, standard_new).
+  CRITICAL: amis_schema root MUST be a `service` wrapper, not a bare button.
+  SKIP: user wants logic that fires AUTOMATICALLY on data changes — use
+  steedos-object-triggers; user wants a REST-callable server function —
+  use steedos-object-functions; user wants sidebar navigation — use steedos-tabs.
+  Creates custom action buttons (.button.yml in objects/{name}/buttons/) for
+  Steedos record pages and list views using YAML + inline Amis JSON schema.
 ---
 # Steedos Object Buttons | Steedos 对象按钮
 
