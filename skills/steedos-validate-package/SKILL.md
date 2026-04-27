@@ -62,6 +62,7 @@ yarn validate steedos-packages/my-package --json
 ### Object Files (`.object.yml`)
 - Required fields: `name`, `label`, `icon`
 - `name` must match folder name
+- **`name` MUST be prefixed with `{org_code}_{project_code}_` (e.g. `steedos_crm_contracts`). Flag any object name without at least two underscore-separated prefix segments as a naming violation.**
 - `icon` should be a valid SLDS icon name
 - Object must have a `name` field or `is_name` field among its fields
 
@@ -96,6 +97,7 @@ yarn validate steedos-packages/my-package --json
 
 ### App Files (`.app.yml`)
 - Required fields: `name`, `code`
+- **`code` MUST be prefixed with `{org_code}_{project_code}_` (e.g. `steedos_crm_app`). Flag any app code without at least two underscore-separated prefix segments as a naming violation.**
 - Should have non-empty `tabs`
 
 ### Tab Files (`.tab.yml`)
@@ -114,3 +116,5 @@ yarn validate steedos-packages/my-package --json
 | `field.name-mismatch` | File name must match `name` field value |
 | `button.no-label_zh` | Remove `label_zh`, use i18n translation files instead |
 | `page.missing-amis` | Create matching `.page.amis.json` file |
+| `object.name-prefix` | Object `name` must start with `{org_code}_{project_code}_`, e.g. `steedos_crm_contracts` |
+| `app.code-prefix` | App `code` must start with `{org_code}_{project_code}_`, e.g. `steedos_crm_app` |

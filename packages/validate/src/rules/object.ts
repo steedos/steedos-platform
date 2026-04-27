@@ -14,6 +14,11 @@ export function validateObjectFile(data: any, filePath: string, objectName: stri
     if (!SNAKE_CASE_REGEX.test(data.name)) {
       issues.push({ file, level: 'warning', rule: 'object.name-case', message: `对象名 "${data.name}" 不符合 snake_case 规范` });
     }
+    // 前缀规范：至少包含两个下划线分隔段作为 org_code_project_code_ 前缀
+    const parts = data.name.split('_');
+    if (parts.length < 3) {
+      issues.push({ file, level: 'warning', rule: 'object.name-prefix', message: `对象名 "${data.name}" 缺少命名前缀，应以 {org_code}_{project_code}_ 开头，例如: steedos_crm_${data.name}` });
+    }
   }
 
   if (!data.label) {

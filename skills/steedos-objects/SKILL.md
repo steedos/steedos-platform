@@ -374,12 +374,45 @@ amis_schema: |-
 
 ## Naming Conventions | 命名规范
 
+### ⚠️ Object Name Prefix Rule | 对象名称前缀规范
+
+**All custom objects MUST be prefixed with `{org_code}_{project_code}_` to avoid naming conflicts across packages and organizations.**
+
+**所有自定义对象的 `name` 必须以 `{组织简码}_{项目简码}_` 开头，防止不同包和组织间的命名冲突。**
+
+Format: `{org_code}_{project_code}_{object_name}`
+
+| Part | Description | Example |
+|------|-------------|---------|
+| `org_code` | Organization abbreviation (2–6 chars, lowercase) | `steedos` |
+| `project_code` | Project abbreviation (2–6 chars, lowercase) | `crm` |
+| `object_name` | Object business name (snake_case, plural) | `contracts` |
+
 ```yaml
-# Object names: lowercase, plural, underscores for multi-word
-name: customers        # Good
-name: sales_orders     # Good
-name: SalesOrders      # Bad - no CamelCase
-name: sales-orders     # Bad - no hyphens
+# ✅ Good — prefixed with org_code + project_code
+name: steedos_crm_contracts
+name: steedos_crm_customers
+name: acme_hr_employees
+
+# ❌ Bad — no prefix, risks conflict
+name: contracts
+name: customers
+name: employees
+```
+
+**⚠️ When a user does not specify a prefix, ASK for their organization code and project code before generating object files. Do NOT invent a prefix.**
+
+**⚠️ 如果用户未指定前缀，在生成对象文件前必须询问其组织简码和项目简码，不得自行编造前缀。**
+
+### General Rules | 通用规则
+
+```yaml
+# Object names: lowercase, prefixed, plural, underscores for multi-word
+name: steedos_crm_customers    # Good
+name: steedos_crm_sales_orders # Good
+name: customers                # Bad - missing prefix
+name: SalesOrders              # Bad - no CamelCase
+name: sales-orders             # Bad - no hyphens
 
 # Field names: lowercase, underscores
 customer_name          # Good

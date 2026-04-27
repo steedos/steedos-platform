@@ -586,17 +586,38 @@ steedos-packages/
 
 ## Best Practices | 最佳实践
 
-### 1. Naming Conventions
+### 1. Naming Conventions | 命名规范
+
+#### ⚠️ Application Code Prefix Rule | 应用 code 前缀规范
+
+**All custom applications MUST have their `code` prefixed with `{org_code}_{project_code}_` to avoid naming conflicts.**
+
+**所有自定义应用的 `code` 必须以 `{组织简码}_{项目简码}_` 开头，防止命名冲突。**
+
+Format: `{org_code}_{project_code}_{app_name}`
+
+| Part | Description | Example |
+|------|-------------|---------|
+| `org_code` | Organization abbreviation (2–6 chars, lowercase) | `steedos` |
+| `project_code` | Project abbreviation (2–6 chars, lowercase) | `crm` |
+| `app_name` | App business name (snake_case) | `app` |
 
 ```yaml
-# Good
+# ✅ Good
+name: CRM
+code: steedos_crm_app
+
+name: HR Management
+code: acme_hr_app
+
+# ❌ Bad — no prefix, risks conflict
 name: Contract Management
 code: contracts
-
-# Avoid
-name: CM
-code: cm_app
 ```
+
+**⚠️ When a user does not specify a prefix, ASK for their organization code and project code before generating app files. Do NOT invent a prefix.**
+
+**⚠️ 如果用户未指定前缀，在生成应用文件前必须询问其组织简码和项目简码，不得自行编造前缀。**
 
 ### 2. Tab Organization with Groups
 

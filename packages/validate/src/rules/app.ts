@@ -11,6 +11,12 @@ export function validateAppFile(data: any, filePath: string, rel: (p: string) =>
 
   if (!data.code) {
     issues.push({ file, level: 'error', rule: 'app.required.code', message: '缺少必填字段: code' });
+  } else {
+    // 前缀规范：至少包含两个下划线分隔段作为 org_code_project_code_ 前缀
+    const parts = (data.code as string).split('_');
+    if (parts.length < 3) {
+      issues.push({ file, level: 'warning', rule: 'app.code-prefix', message: `应用 code "${data.code}" 缺少命名前缀，应以 {org_code}_{project_code}_ 开头，例如: steedos_crm_${data.code}` });
+    }
   }
 
   if (!data.tabs || (Array.isArray(data.tabs) && data.tabs.length === 0)) {
