@@ -3,16 +3,18 @@ name: steedos-tabs
 description: |
   TRIGGER when: user creates/edits a `.tab.yml` file; asks how to add a
   navigation item to a Steedos application sidebar; asks about tab types
-  (object tab, page tab, url tab); asks how to link a tab to an object list
-  view, a micro page, or an external/internal URL; asks about tab icon, label,
-  desktop/mobile visibility, is_use_iframe, is_new_window, license restrictions,
-  or permission_set-based tab visibility; asks why a tab does not appear.
+  (object tab, page tab, url tab, analytics_dashboard tab); asks how to link
+  a tab to an object list view, a micro page, an analytics dashboard, or an
+  external/internal URL; asks about tab icon, label, desktop/mobile visibility,
+  is_use_iframe, is_new_window, license restrictions, or permission_set-based
+  tab visibility; asks why a tab does not appear.
   SKIP: user is asking about the application container that holds tabs —
   use steedos-applications; user is asking about the page content a tab
   points to — use steedos-micro-pages or steedos-object-micro-pages.
   Defines navigation tabs (.tab.yml) for Steedos application sidebars.
-  Supports object (list view), page (Amis micro page), and url (internal/external)
-  types. Covers icon, label, desktop/mobile, iframe options, and permissions.
+  Supports object (list view), page (Amis micro page only, NOT dashboards),
+  analytics_dashboard (仪表盘/dashboard), and url (internal/external) types.
+  Covers icon, label, desktop/mobile, iframe options, and permissions.
 ---
 
 # Steedos Tabs | Steedos 标签页
@@ -49,11 +51,11 @@ permissions: []
 type: object
 ```
 
-### 2. Page Tab | 页面标签页
+### 2. Page Tab | 微页面标签页
 
-Renders a micro page (Amis page). Used for dashboards, custom UIs, and landing pages.
+Renders an Amis micro page (`type: page` in `.page.yml`). Used for custom UIs, landing pages, and standalone app pages. **NOT for dashboards** — use `analytics_dashboard` for that.
 
-渲染微页面（Amis 页面）。用于仪表板、自定义界面和落地页。
+渲染 Amis 微页面（`.page.yml` 中 `type: page`）。用于自定义界面、落地页和独立应用页面。**不用于仪表盘** — 仪表盘请使用 `analytics_dashboard`。
 
 ```yaml
 name: page_app_launcher
@@ -68,7 +70,26 @@ permissions: []
 type: page
 ```
 
-### 3. URL Tab | URL 标签页
+### 3. Analytics Dashboard Tab | 仪表盘标签页
+
+Links to an analytics dashboard (仪表盘). **This is the correct type for dashboards — NOT `type: page`.**
+
+指向一个分析仪表盘。**这是仪表盘的正确类型，不要用 `type: page`。**
+
+```yaml
+name: dashboard_sales
+desktop: true
+icon: dashboard
+is_new_window: false
+is_use_iframe: false
+label: 销售仪表盘
+mobile: false
+analytics_dashboard: sales_dashboard
+permissions: []
+type: analytics_dashboard
+```
+
+### 4. URL Tab | URL 标签页
 
 Opens an internal or external URL. Can use iframe or new window.
 
@@ -105,13 +126,19 @@ name: object_contract
 ```
 
 #### type (String)
-**⚠️ MUST be one of: `object`, `page`, `url`. No other values are valid. 严禁使用其他值。**
+**⚠️ MUST be one of: `object`, `page`, `url`, `analytics_dashboard`. No other values are valid. 严禁使用其他值。**
 
-Tab type.
+| Value | Use Case |
+|-------|----------|
+| `object` | Object list view |
+| `page` | Amis micro page (standalone custom UI, NOT dashboards) |
+| `analytics_dashboard` | Analytics dashboard / 仪表盘 |
+| `url` | Internal or external URL |
 
 ```yaml
 type: object
 type: page
+type: analytics_dashboard
 type: url
 ```
 
@@ -135,11 +162,23 @@ object: contracts
 ```
 
 #### page (String) — for `type: page`
-The micro page name to render.
+The micro page name to render. This must be an Amis micro page (`type: page` in `.page.yml`). **Do NOT use this for dashboards** — use `type: analytics_dashboard` instead.
+
+微页面的名称。必须是 Amis 微页面（`.page.yml` 中 `type: page`）。**不要用于仪表盘** — 仪表盘请使用 `type: analytics_dashboard`。
 
 ```yaml
 type: page
 page: app_launcher
+```
+
+#### analytics_dashboard (String) — for `type: analytics_dashboard`
+The analytics dashboard name to display. Use this for all dashboards (仪表盘).
+
+要显示的分析仪表盘名称。所有仪表盘都使用此类型。
+
+```yaml
+type: analytics_dashboard
+analytics_dashboard: sales_dashboard
 ```
 
 #### url (String) — for `type: url`
@@ -290,7 +329,7 @@ type: object
 object: apps
 ```
 
-### Page Tab — Dashboard | 页面标签页 — 仪表板
+### Page Tab — Custom UI | 微页面标签页 — 自定义界面
 
 ```yaml
 name: page_app_store
@@ -307,6 +346,21 @@ permissions:
     permission_set: user
 type: page
 page: app_store
+```
+
+### Analytics Dashboard Tab | 仪表盘标签页
+
+```yaml
+name: dashboard_sales
+desktop: true
+icon: dashboard
+is_new_window: false
+is_use_iframe: false
+label: 销售仪表盘
+mobile: false
+permissions: []
+type: analytics_dashboard
+analytics_dashboard: sales_dashboard
 ```
 
 ### URL Tab — External Tool | URL 标签页 — 外部工具
@@ -436,7 +490,8 @@ steedos-packages/
 |---------|----------|---------|
 | `object_{name}` | Object tabs for business objects | `object_contract` |
 | `admin_{name}` | Admin-only tabs | `admin_apps` |
-| `page_{name}` | Page tabs | `page_app_launcher` |
+| `page_{name}` | Micro page tabs (Amis custom UI) | `page_app_launcher` |
+| `dashboard_{name}` | Analytics dashboard tabs | `dashboard_sales` |
 | `core_{name}` | Core platform tabs | `core_tasks` |
 
 ## Best Practices | 最佳实践
@@ -511,6 +566,7 @@ mobile: false
 ## References | 参考资料
 
 - [Applications](../applications/SKILL.md) — how tabs are used in app configuration
-- [Micro Pages](../micro-pages/SKILL.md) — creating pages for page tabs
+- [Micro Pages](../micro-pages/SKILL.md) — creating pages for `type: page` tabs
+- [Dashboards](../dashboards/SKILL.md) — creating dashboards for `type: analytics_dashboard` tabs
 - [Object Permissions](../object-permissions/SKILL.md) — permission sets referenced in tab permissions
 - [Salesforce Lightning Icons](https://www.lightningdesignsystem.com/icons/)
