@@ -68,8 +68,12 @@ name: Contract Management
 #### code (String) — **⚠️ Required, MUST NOT be omitted**
 Unique identifier for the application (API name). **不能省略。**
 
+**⚠️ CRITICAL: The `code` value MUST exactly match the filename (without `.app.yml`). For example, if `code: steedos_crm`, the file MUST be named `steedos_crm.app.yml`.**
+
+**⚠️ 重要：`code` 值必须与文件名（去掉 `.app.yml` 后缀）完全一致。例如 `code: steedos_crm`，文件名必须为 `steedos_crm.app.yml`。**
+
 ```yaml
-code: contracts
+code: steedos_crm   # → file: steedos_crm.app.yml
 ```
 
 #### tabs (Array) — REQUIRED
@@ -177,12 +181,11 @@ is_creator: true   # Modern UI
 is_creator: false  # Classic UI
 ```
 
-#### visible (Boolean)
-Whether the application is visible in the app menu.
+#### visible (Boolean) — **⚠️ Required, MUST be `true`**
+Whether the application is visible in the app menu. **必须存在且值为 `true`，不能省略。**
 
 ```yaml
-visible: true   # Show in menu
-visible: false  # Hide from menu
+visible: true   # Required — always set this
 ```
 
 #### sort (Number)
@@ -221,18 +224,6 @@ tab_groups:
     default_open: true
   - group_name: 管理
     default_open: true
-```
-
-#### objects (Array) - Legacy
-List of objects (legacy approach, prefer `tabs` + `tab_items`).
-
-对象列表（旧方式，推荐使用 `tabs` + `tab_items`）。
-
-```yaml
-objects:
-  - contracts
-  - contract_items
-  - customers
 ```
 
 ## Complete Example | 完整示例
@@ -588,6 +579,20 @@ steedos-packages/
 
 ### 1. Naming Conventions | 命名规范
 
+#### ⚠️ Application Code & Filename Rule | 应用 code 与文件名规范
+
+**The `code` value MUST exactly match the filename (without `.app.yml`). This is a hard requirement.**
+
+**`code` 值必须与文件名（去掉 `.app.yml` 后缀）完全一致，这是强制要求。**
+
+```yaml
+# File: steedos_crm.app.yml
+code: steedos_crm   # ✅ matches filename
+
+# File: steedos_crm.app.yml
+code: crm           # ❌ does NOT match filename
+```
+
 #### ⚠️ Application Code Prefix Rule | 应用 code 前缀规范
 
 **All custom applications MUST have their `code` prefixed with `{org_code}_{project_code}_` to avoid naming conflicts.**
@@ -707,43 +712,70 @@ icon_slds: apps_admin    # Administration
 ### CRM Application
 
 ```yaml
-name: Customer Relationship Management
-code: crm
-description: Manage customers, leads, and opportunities
+# File: steedos_crm.app.yml
+name: CRM 客户关系管理
+code: steedos_crm
+description: 客户关系管理系统
 icon_slds: opportunity
-color: orange
 is_creator: true
 showSidebar: true
 mobile: true
 visible: true
 sort: 100
+
 tabs:
-  - accounts
-  - contacts
-  - leads
-  - opportunities
-  - quotes
+  - steedos_crm_overview
+  - steedos_crm_leads
+  - steedos_crm_accounts
+  - steedos_crm_contacts
+  - steedos_crm_opportunities
+  - steedos_crm_activities
+  - steedos_crm_quotes
+  - steedos_crm_contracts
+  - steedos_crm_products
+  - steedos_crm_sales_targets
+
 tab_groups:
-  - group_name: 客户
+  - group_name: 概览
     default_open: true
-  - group_name: 销售
+  - group_name: 销售过程
     default_open: true
+  - group_name: 商务管理
+    default_open: true
+  - group_name: 基础数据
+    default_open: true
+
 tab_items:
-  accounts:
-    group: 客户
+  steedos_crm_overview:
+    group: 概览
     index: 1
-  contacts:
-    group: 客户
-    index: 2
-  leads:
-    group: 销售
+  steedos_crm_leads:
+    group: 销售过程
     index: 1
-  opportunities:
-    group: 销售
+  steedos_crm_accounts:
+    group: 销售过程
     index: 2
-  quotes:
-    group: 销售
+  steedos_crm_contacts:
+    group: 销售过程
     index: 3
+  steedos_crm_opportunities:
+    group: 销售过程
+    index: 4
+  steedos_crm_activities:
+    group: 销售过程
+    index: 5
+  steedos_crm_quotes:
+    group: 商务管理
+    index: 1
+  steedos_crm_contracts:
+    group: 商务管理
+    index: 2
+  steedos_crm_products:
+    group: 基础数据
+    index: 1
+  steedos_crm_sales_targets:
+    group: 基础数据
+    index: 2
 ```
 
 ### Project Management Application
