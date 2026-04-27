@@ -1,7 +1,7 @@
 import { Command } from "@oclif/command";
 import * as fs from "fs";
 import * as path from "path";
-import { getPidFilePath, writePidFile, removePidFile } from "./start";
+import { getPidFilePath, writePidFile, removePidFile } from "./pid";
 
 class RestartCommand extends Command {
   async run() {
