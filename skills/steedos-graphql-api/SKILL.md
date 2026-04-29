@@ -9,7 +9,7 @@ description: |
   records, or DataLoader batching; asks about filters/pagination/sorting in a
   GraphQL query against Steedos; asks about Apollo Playground at /graphql.
   SKIP: user wants REST API CRUD — use steedos-server-api or steedos-builder6-api;
-  user wants to call a server function — use steedos-object-functions +
+  user wants to call a server function — use steedos-server-logic +
   steedos-server-api; user is building a generic GraphQL server unrelated to Steedos.
   Steedos GraphQL API auto-generated from object metadata at /graphql. Covers all
   CRUD queries/mutations, lookup expansion, display formatting, record permissions,
@@ -350,5 +350,5 @@ mutation {
 
 - Max **10,000** records per query (`top` parameter)
 - Max **10MB** request/response body
-- No subscriptions (real-time updates use WebSocket instead, see steedos-server-websocket)
+- No subscriptions (real-time updates use WebSocket instead, see steedos-server-internals)
 - Deleted records (`is_deleted: true`) are excluded by default

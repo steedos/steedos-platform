@@ -5,19 +5,23 @@ description: |
   (/api/v6/tables/:baseId/:tableId CRUD), Direct MongoDB (/api/v6/direct/:objectName),
   Files API (/api/v6/files), Auth login (/api/v6/auth/login), Users profile
   (/api/v6/users/me), presigned URLs, or Swagger UI at /api/v6; asks about
-  baseId/tableId addressing or batch operations in Builder6.
+  baseId/tableId addressing, batch operations, collection naming (t_{baseId}_{tableId}),
+  lookup field resolution, DataLoader batching, DevExtreme query adapter
+  (@builder6/query-mongodb), field type handling, or MetaService for field schema.
   SKIP: user asks about /api/v6/data/:objectName CRUD or /api/v6/objects metadata
   or /api/v6/functions — use steedos-server-api; GraphQL — use steedos-graphql-api;
-  architecture internals — use steedos-server-architecture or steedos-builder6-architecture.
+  architecture internals — use steedos-builder6-internals; auth guards/files/plugins —
+  use steedos-builder6-modules.
   Builder6 Server REST API: Tables CRUD, Direct MongoDB, Files, Auth, Users
-  endpoints with query params, filter operators, and Swagger docs.
+  endpoints with query params, filter operators, Swagger docs, plus Tables module
+  internals (lookup resolution, DataLoader, DevExtreme query adapter).
 ---
 
 # Builder6 Server API | Builder6 服务端 API
 
 ## Overview | 概述
 
-Builder6 Server exposes REST APIs under `/api/v6/`. Endpoints are organized by module: Tables (data CRUD), Direct MongoDB (admin CRUD), Files, Auth, and Users.
+Builder6 Server exposes REST APIs under `/api/v6/`. Endpoints are organized by module: Tables (data CRUD), Direct MongoDB (admin CRUD), Files, Auth, and Users. The Tables module (`@builder6/tables`) provides automatic lookup field resolution, DataLoader batching, and DevExtreme-compatible query parameters.
 
 ## Swagger / OpenAPI
 
@@ -82,17 +86,34 @@ GET /api/v6/users/:userId/avatar
 
 Public endpoint. Returns avatar image or redirects to file URL. Falls back to default SVG.
 
+---
+
 ## Tables API — `/api/v6/tables` | 数据表 API
 
-CRUD for table records. Uses `AuthGuard`. Collection naming: `t_{baseId}_{tableId}`.
+CRUD for table records. Uses `AuthGuard`. MongoDB collection naming: `t_{baseId}_{tableId}`.
+
+### Endpoints | 端点
+
+| Method | Path | Description |
+|--------|------|-------------|
+| `POST` | `/:baseId/:tableId` | Create record |
+| `GET` | `/:baseId/:tableId` | List records (paginated) |
+| `GET` | `/:baseId/:tableId/:recordId` | Get single record |
+| `PUT/PATCH` | `/:baseId/:tableId/:recordId` | Update record |
+| `DELETE` | `/:baseId/:tableId/:recordId` | Delete record |
+| `DELETE` | `/:baseId/:tableId` | Delete multiple (body: `{records: [...]}`) |
+| `GET` | `/meta/bases/:baseId/tables/:tableId` | Get table metadata |
 
 ### Create Record | 创建记录
 
 ```
 POST /api/v6/tables/:baseId/:tableId
+Body: { "name": "Order 1", "amount": 100 }
 ```
 
-**Body**: Record JSON. Auto-generated: `owner`, `created_by`, `created`, `modified_by`, `modified`, `space`.
+Auto-injected fields: `owner`, `created_by`, `created`, `modified_by`, `modified`, `space`.
+
+Lookup fields in the body are automatically resolved — you can pass `{ _id: "..." }` objects or plain string IDs.
 
 ### List Records | 查询记录
 
@@ -108,7 +129,7 @@ GET /api/v6/tables/:baseId/:tableId
 | `skip` | number | **Yes** | 0 | Pagination offset |
 | `top` | number | **Yes** | 20 | Records per page |
 
-**Response**: `{ data: [...], totalCount: N }`
+**Response**: `{ "data": [...], "totalCount": N }`
 
 ### Get Record | 获取记录
 
@@ -129,7 +150,7 @@ PATCH /api/v6/tables/:baseId/:tableId/:recordId
 DELETE /api/v6/tables/:baseId/:tableId/:recordId
 ```
 
-### Delete Multiple | 批量删除
+### Batch Delete | 批量删除
 
 ```
 DELETE /api/v6/tables/:baseId/:tableId
@@ -137,11 +158,83 @@ Body: { "records": ["id1", "id2"] }
 Response: { "records": [{ "deleted": true, "_id": "id1" }, ...] }
 ```
 
-### Get Table Metadata | 获取表元数据
+### Lookup Field Resolution | 查找字段解析
+
+**On Read** — lookup fields are expanded via DataLoader:
 
 ```
-GET /api/v6/tables/meta/bases/:baseId/tables/:tableId
+// Stored in DB
+{ "customer": "cust123" }
+
+// Returned to client (expanded)
+{ "customer": { "_id": "cust123", "name": "Acme Corp" } }
 ```
+
+Supports both single lookup and `multiple: true` (array of IDs → array of objects).
+
+**On Write** — lookup fields are converted back:
+
+```
+// Client sends
+{ "customer": { "_id": "cust123", "name": "Acme Corp" } }
+
+// Stored in DB
+{ "customer": "cust123" }
+```
+
+If a string value (not an ID) is passed, the system searches by both `_id` and `name` in the referenced collection.
+
+### DataLoader Batching
+
+Lookup fields are resolved via `DataLoader` to prevent N+1 queries:
+
+```typescript
+const loader = new DataLoader(async (ids: string[]) => {
+  const records = await mongodbService.find(collectionName, {
+    _id: { $in: ids }
+  }, { projection: { _id: 1, name: 1 } });
+  return ids.map(id => records.find(r => r._id === id));
+});
+```
+
+Loaders are cached per collection name within the service instance.
+
+### Field Type Handling | 字段类型处理
+
+On write, field types are auto-converted:
+
+| Field Type | Conversion |
+|------------|------------|
+| `lookup` | Object → `_id` string; string → lookup by `_id` or `name` |
+| `date`, `datetime`, `time` | String → `new Date(value)` |
+
+### MetaService | 元数据服务
+
+```typescript
+const fields = await metaService.getTableMeta(baseId, tableId);
+// Built-in: created_by and modified_by are automatically treated as lookup → users
+```
+
+### DevExtreme Query Adapter
+
+`@builder6/query-mongodb` translates DevExtreme `loadOptions` to MongoDB aggregation:
+
+```typescript
+import { querySimple } from '@builder6/query-mongodb';
+
+const result = await querySimple(collection, {
+  take: 20,
+  skip: 0,
+  filter: ["amount", ">", 50],
+  sort: [{ selector: "created", desc: true }],
+  select: ["name", "amount"],
+  requireTotalCount: true,
+}, { replaceIds: false });
+
+// result: { data: [...], totalCount: N }
+```
+
+---
 
 ## Direct MongoDB API — `/api/v6/direct` | 直接数据库 API
 
@@ -207,6 +300,8 @@ DELETE /api/v6/direct/:objectName
 Body: { "records": ["id1", "id2"] }
 ```
 
+---
+
 ## Files API — `/api/v6/files` | 文件 API
 
 ### Upload File | 上传文件
@@ -250,6 +345,8 @@ POST /api/v6/files/:collectionName/presigned-urls
 Body: { "records": ["fileId1", "fileId2"] }
 Response: { "urls": ["https://...", "https://..."] }
 ```
+
+---
 
 ## Filter Operators | 筛选运算符
 

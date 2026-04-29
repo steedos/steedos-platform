@@ -10,7 +10,7 @@ description: |
   tab visibility; asks why a tab does not appear.
   SKIP: user is asking about the application container that holds tabs —
   use steedos-applications; user is asking about the page content a tab
-  points to — use steedos-micro-pages or steedos-object-micro-pages.
+  points to — use steedos-pages.
   Defines navigation tabs (.tab.yml) for Steedos application sidebars.
   Supports object (list view), page (Amis micro page only, NOT dashboards),
   analytics_dashboard (仪表盘/dashboard), and url (internal/external) types.

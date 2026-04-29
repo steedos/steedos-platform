@@ -8,7 +8,7 @@ description: |
   not showing (missing tabs field is a common cause).
   SKIP: user is asking about individual sidebar navigation items (tabs) —
   use steedos-tabs; user is asking about the pages tabs point to —
-  use steedos-micro-pages or steedos-object-micro-pages.
+  use steedos-pages.
   Creates and configures Steedos applications (.app.yml). Required fields:
   name, code, tabs. Covers icon_slds, color, tab_items/tab_groups, mobile,
   showSidebar, and permission-based visibility.

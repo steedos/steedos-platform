@@ -10,8 +10,8 @@ description: |
   (standard_edit, standard_delete, standard_new).
   CRITICAL: amis_schema root MUST be a `service` wrapper, not a bare button.
   SKIP: user wants logic that fires AUTOMATICALLY on data changes — use
-  steedos-object-triggers; user wants a REST-callable server function —
-  use steedos-object-functions; user wants sidebar navigation — use steedos-tabs.
+  steedos-server-logic; user wants a REST-callable server function —
+  use steedos-server-logic; user wants sidebar navigation — use steedos-tabs.
   Creates custom action buttons (.button.yml in objects/{name}/buttons/) for
   Steedos record pages and list views using YAML + inline Amis JSON schema.
 ---

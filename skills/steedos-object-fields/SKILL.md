@@ -8,7 +8,7 @@ description: |
   configure a lookup/relationship field, write a formula, or customize field UI
   with Amis schema. Fields live in objects/{name}/fields/.
   SKIP: user is asking about the object itself (.object.yml) — use steedos-objects;
-  asking about list columns — use steedos-object-list-views; asking about
+  asking about list columns — use steedos-objects; asking about
   field-level security — use steedos-object-permissions.
   Comprehensive guide to all Steedos field types and .field.yml configuration.
 ---

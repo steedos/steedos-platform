@@ -14,6 +14,10 @@ export function validatePackageJson(filePath: string | null, rel: (p: string) =>
     if (data.main && data.main !== 'package.service.js') {
       issues.push({ file: rel(filePath), level: 'warning', rule: 'structure.package-json.main', message: `package.json main 字段为 "${data.main}"，通常应为 "package.service.js"` });
     }
+    const allDeps = { ...data.dependencies, ...data.devDependencies, ...data.peerDependencies };
+    if (allDeps['@steedos/service-package-loader'] !== undefined) {
+      issues.push({ file: rel(filePath), level: 'error', rule: 'structure.package-json.no-package-loader', message: 'package.json 不能依赖 @steedos/service-package-loader，请将其从 dependencies/devDependencies/peerDependencies 中删除' });
+    }
   } catch (e) {
     issues.push({ file: rel(filePath), level: 'error', rule: 'structure.package-json.parse', message: 'package.json 解析失败' });
   }

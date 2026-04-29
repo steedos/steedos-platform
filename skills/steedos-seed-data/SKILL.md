@@ -8,9 +8,9 @@ description: |
   autonumber field values; asks about import behavior (onlyInsert on startup vs
   upsert on space init); asks how to import initial lookup/reference data or
   system configuration records.
-  SKIP: user wants to import data via CLI command — use steedos-cli-commands;
+  SKIP: user wants to import data via CLI command — use steedos-getting-started;
   user wants to define the object schema — use steedos-objects; user wants to
-  insert records programmatically in a trigger — use steedos-object-triggers.
+  insert records programmatically in a trigger — use steedos-server-logic.
   Defines initial seed data (.data.json/.yml/.csv in main/default/data/).
   Records are auto-imported at startup (insert-only) or space init (upsert).
   Covers file naming, _id requirement, template variables, EJSON dates, and

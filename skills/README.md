@@ -24,103 +24,52 @@ Each skill is in its own directory with a `SKILL.md` file following the Anthropi
 
 ```
 skills/
-├── steedos-project-format/
+├── steedos-getting-started/
 │   └── SKILL.md
-├── steedos-package-format/
+├── steedos-project-package/
 │   └── SKILL.md
 ├── steedos-objects/
 │   └── SKILL.md
-├── steedos-auth/
-│   └── SKILL.md
-└── ... (35 skills total)
+└── ... (22 skills total)
 ```
 
 ## Skills Index | 技能索引
 
 ### 🗺️ Start Here | 从这里开始
 
-#### [steedos-overview](./steedos-overview/SKILL.md)
-Steedos Platform overview and skill routing guide. Introduces core capabilities and maps tasks to the correct skills. Load this skill first to understand what Steedos is and which skills to use.
+#### [steedos-getting-started](./steedos-getting-started/SKILL.md)
+Steedos Platform overview, skill routing guide, CLI commands reference, and package validation tool. Load this skill first to understand what Steedos is and which skills to use.
 
-Steedos 平台概览与技能路由指南。介绍核心能力，并将任务映射到对应技能。首先加载此技能以了解 Steedos 是什么以及使用哪些技能。
+Steedos 平台概览、技能路由指南、CLI 命令参考和软件包校验工具。首先加载此技能以了解 Steedos 是什么以及使用哪些技能。
 
-### 🏗️ Foundation | 基础 (4 skills)
+### 🏗️ Foundation | 基础 (2 skills)
 
-#### [steedos-project-format](./steedos-project-format/SKILL.md)
-Learn how to create and structure Steedos projects, including minimal requirements, package.json configuration, steedos-config.yml setup, directory structure, and installation.
+#### [steedos-project-package](./steedos-project-package/SKILL.md)
+Learn how to create and structure Steedos projects and packages, including minimal requirements, package.json, steedos-config.yml, package.service.js, directory structure, metadata file types, and naming conventions.
 
-了解如何创建和组织 Steedos 项目,包括最小项目要求、package.json 配置、steedos-config.yml 设置、目录结构和安装。
+了解如何创建和组织 Steedos 项目和软件包，包括项目要求、package.json、steedos-config.yml、package.service.js、目录结构、元数据文件类型和命名规范。
 
-#### [steedos-package-format](./steedos-package-format/SKILL.md)
-Master Steedos package creation and structure, including directory organization, package.json and package.service.js configuration, metadata management, and publishing.
+#### [steedos-configuration](./steedos-configuration/SKILL.md)
+Configure Steedos Server via environment variables and YAML settings files. Covers required env vars, steedos-config.yml, YAML settings with env interpolation, datasources, tenant settings, CFS file storage, SSO/OIDC, email, Docker setup, and security best practices.
 
-掌握 Steedos 软件包创建和结构,包括目录组织、package.json 和 package.service.js 配置、元数据管理和发布。
+通过环境变量和 YAML 配置文件配置 Steedos 服务端。涵盖必需变量、steedos-config.yml、YAML 环境变量插值、数据源、租户设置、文件存储、SSO/OIDC、邮件、Docker 部署和安全最佳实践。
 
-#### [steedos-environment-variables](./steedos-environment-variables/SKILL.md)
-Configure Steedos with environment variables for server, database, cache, security, email, storage, and deployment settings.
-
-使用环境变量配置 Steedos 的服务器、数据库、缓存、安全、邮件、存储和部署设置。
-
-#### [steedos-cli-commands](./steedos-cli-commands/SKILL.md)
-Steedos CLI commands reference: start, restart, source management, data import/export, package operations, and authentication. Includes AI-assisted development workflow with automatic restart after code changes.
-
-Steedos CLI 命令参考：启动、重启、源代码管理、数据导入导出、软件包操作和认证。包含 AI 辅助开发工作流（代码修改后自动重启）。
-
-### 📊 Analytics | 数据分析 (2 skills)
-
-#### [steedos-dashboards](./steedos-dashboards/SKILL.md)
-Create and manage analytics dashboards with multi-tab grid layouts, card placements, parameter filtering, embedding, and public sharing. Based on @steedos-labs/analytics (Metabase engine). Requires enterprise license.
-
-创建和管理分析仪表盘，支持多标签页网格布局、卡片放置、参数筛选、嵌入和公开分享。基于 @steedos-labs/analytics（Metabase 引擎）。需要企业版许可证。
-
-#### [steedos-questions](./steedos-questions/SKILL.md)
-Create analytics questions (reports/charts) with MBQL or native SQL queries, multiple visualization types, datasets, embedding, and public sharing. Building blocks for dashboards. Requires enterprise license.
-
-创建分析问题（报表/图表），支持 MBQL 或原生 SQL 查询、多种可视化类型、数据集、嵌入和公开分享。仪表盘的构建模块。需要企业版许可证。
-
-### 🎨 User Interface | 用户界面 (3 skills)
-
-#### [steedos-applications](./steedos-applications/SKILL.md)
-Create applications with showSidebar, tabs/tab_items/tab_groups navigation, color/icon configuration, admin menus, and mobile settings.
-
-创建应用程序，配置 showSidebar、tabs/tab_items/tab_groups 导航、颜色/图标、管理菜单和移动端设置。
-
-#### [steedos-tabs](./steedos-tabs/SKILL.md)
-Define navigation tabs (.tab.yml) for application sidebars. Three types: object (list view), page (micro page), and url (internal/external URL). Covers permissions, icons, iframe/new-window, and license restrictions.
-
-定义应用程序侧边栏的导航标签页 (.tab.yml)。三种类型：对象（列表视图）、页面（微页面）和 URL（内部/外部 URL）。涵盖权限、图标、iframe/新窗口和许可证限制。
-
-#### [steedos-micro-pages](./steedos-micro-pages/SKILL.md)
-Build standalone custom pages using Amis framework, including dashboards, reports, custom forms, charts, and visualizations.
-
-使用 Amis 框架构建独立的自定义页面,包括仪表板、报表、自定义表单、图表和可视化。
-
-#### [steedos-webapps](./steedos-webapps/SKILL.md)
-Develop custom React + Vite webapps in Steedos packages (webapps/ directory). Build custom amis Renderer components via IIFE compilation, with JSX runtime shimming, CSS scope isolation, Express router for SPA access, and multi-webapp management.
-
-在 Steedos 软件包中开发自定义 React + Vite 应用（webapps/ 目录）。通过 IIFE 编译构建自定义 amis Renderer 组件，支持 JSX 运行时桥接、CSS 作用域隔离、Express 路由 SPA 访问和多 webapp 管理。
-
-### 📊 Data Modeling | 数据建模 (4 skills)
+### 📊 Data Modeling | 数据建模 (3 skills)
 
 #### [steedos-builtin-objects](./steedos-builtin-objects/SKILL.md)
-Built-in objects reference: ~20 core objects (users, spaces, organizations, space_users, permission_set, apps, accounts, contacts, tasks, etc.) with field definitions and relationships. Full index of all ~93 built-in objects.
+Built-in objects reference: ~20 core objects (users, spaces, organizations, space_users, permission_set, apps, etc.) with field definitions and relationships. Full index of all ~93 built-in objects.
 
-内置对象参考：约 20 个核心对象（用户、工作区、部门、权限集、应用、业务伙伴、联系人、任务等）的字段定义和关系说明。包含全部约 93 个内置对象的完整索引。
+内置对象参考：约 20 个核心对象的字段定义和关系。包含全部约 93 个内置对象的完整索引。
 
 #### [steedos-objects](./steedos-objects/SKILL.md)
-Define data models with ObjectQL, including object structure (.object.yml), standard fields, object properties, relationships, and complete examples.
+Define data models (.object.yml) and list views (.listview.yml). Covers object properties, feature flags, inheritance, naming conventions, multi-file layout, list view columns, filters, sort, and sharing settings.
 
-使用 ObjectQL 定义数据模型,包括对象结构 (.object.yml)、标准字段、对象属性、关系和完整示例。
+定义数据模型 (.object.yml) 和列表视图 (.listview.yml)。涵盖对象属性、功能开关、继承、命名规范、多文件布局、列表视图列、筛选、排序和共享设置。
 
 #### [steedos-object-fields](./steedos-object-fields/SKILL.md)
 Master all field types and configurations, including text, number, date/time, selection, boolean, relationship (lookup, master-detail), and special fields (formula, summary, file).
 
 掌握所有字段类型和配置,包括文本、数字、日期时间、选择、布尔、关系(查找、主从)和特殊字段(公式、汇总、文件)。
-
-#### [steedos-object-list-views](./steedos-object-list-views/SKILL.md)
-Configure list views for data display, including structure, columns, filters, sorting, grouping, filter scopes, and dynamic filters.
-
-配置列表视图以显示数据,包括结构、列、筛选器、排序、分组、筛选范围和动态筛选器。
 
 ### 🔒 Security | 安全 (1 skill)
 
@@ -132,98 +81,89 @@ Control access with permission sets, including object-level, record-level, and f
 ### 🌐 Internationalization | 国际化 (1 skill)
 
 #### [steedos-translations](./steedos-translations/SKILL.md)
-Metadata internationalization (i18n) with two file types: translation files (.translation.yml) for app names, tab labels, and custom labels; objectTranslation files (.objectTranslation.yml) for object/field/listview/action labels and picklist options.
+Metadata internationalization (i18n) with translation files (.translation.yml) and objectTranslation files (.objectTranslation.yml).
 
-元数据国际化 (i18n)，两种文件类型：翻译文件 (.translation.yml) 用于应用名称、标签页标签和自定义标签；对象翻译文件 (.objectTranslation.yml) 用于对象/字段/列表视图/操作标签和下拉选项。
+元数据国际化 (i18n)，翻译文件和对象翻译文件。
 
-### ⚙️ Business Logic | 业务逻辑 (4 skills)
+### ⚙️ Business Logic | 业务逻辑 (2 skills)
 
 #### [steedos-object-buttons](./steedos-object-buttons/SKILL.md)
-Create custom buttons using Amis UI framework, including button YAML definition (.button.yml), amis_button type with amis_schema, standard buttons, visible_on conditions, and dialog/drawer actions.
+Create custom buttons using Amis UI framework (.button.yml in objects/{name}/buttons/), including amis_button type with amis_schema, standard buttons, visible_on conditions, and dialog/drawer actions.
 
-创建自定义按钮，使用 Amis UI 框架，包括按钮 YAML 定义 (.button.yml)、amis_button 类型与 amis_schema、标准按钮、visible_on 条件和弹窗操作。
+创建自定义按钮，使用 Amis UI 框架，包括按钮 YAML 定义、amis_schema、标准按钮、visible_on 条件和弹窗操作。
 
-#### [steedos-object-triggers](./steedos-object-triggers/SKILL.md)
-Implement business logic with triggers, including YAML definition (.trigger.yml) with inline handler code, ctx.params, before/after insert/update/delete hooks, data validation, and objects API.
+#### [steedos-server-logic](./steedos-server-logic/SKILL.md)
+Server-side JavaScript triggers (.trigger.yml) and functions (.function.yml). Triggers fire automatically on data change events. Functions are REST-exposed business logic callable from buttons, triggers, or external systems.
 
-使用触发器实现业务逻辑，包括 YAML 定义 (.trigger.yml) 内联 handler 代码、ctx.params、插入/更新/删除前后钩子、数据验证和 objects API。
+服务端 JavaScript 触发器和函数。触发器在数据变更时自动执行，函数可作为 REST 端点暴露，从按钮、触发器或外部系统调用。
 
-#### [steedos-object-functions](./steedos-object-functions/SKILL.md)
-Create server-side functions as YAML definitions (.function.yml) with inline script, REST API exposure (is_rest), ctx.input parameters, and objects API for data access.
+### 🎨 User Interface | 用户界面 (4 skills)
 
-创建服务端函数，使用 YAML 定义 (.function.yml) 内联 script、REST API 暴露 (is_rest)、ctx.input 参数和 objects API 数据访问。
+#### [steedos-applications](./steedos-applications/SKILL.md)
+Create applications with showSidebar, tabs/tab_items/tab_groups navigation, color/icon configuration, admin menus, and mobile settings.
 
-#### [steedos-object-micro-pages](./steedos-object-micro-pages/SKILL.md)
-Customize object detail and form pages, including object-specific pages, detail page layouts, custom form pages, dashboard pages, and page configurations using Amis.
+创建应用程序，配置侧边栏、导航、颜色/图标、管理菜单和移动端设置。
 
-自定义对象详情和表单页面,包括对象特定页面、详情页布局、自定义表单页面、仪表板页面和使用 Amis 的页面配置。
+#### [steedos-tabs](./steedos-tabs/SKILL.md)
+Define navigation tabs (.tab.yml) for application sidebars. Types: object (list view), page (micro page), analytics_dashboard, and url (internal/external URL).
 
-### 🖥️ Server (Builder6) | 服务端 (13 skills)
+定义应用程序侧边栏的导航标签页。类型：对象、页面、仪表盘和 URL。
 
-#### [steedos-server-architecture](./steedos-server-architecture/SKILL.md)
-NestJS + Moleculer hybrid server architecture, module organization, bootstrap sequence, middleware stack, guards (AuthGuard, AdminGuard), and ObjectQL data access pattern.
+#### [steedos-pages](./steedos-pages/SKILL.md)
+Build custom pages using Amis framework. Standalone pages (type: app) for dashboards and reports, plus object-bound pages (type: record/list) for custom detail and list layouts.
 
-NestJS + Moleculer 混合服务端架构、模块组织、启动流程、中间件栈、守卫和 ObjectQL 数据访问模式。
+使用 Amis 框架构建自定义页面。独立页面（仪表板、报表）和对象绑定页面（自定义详情和列表布局）。
+
+#### [steedos-webapps](./steedos-webapps/SKILL.md)
+Develop custom React + Vite webapps in Steedos packages. Build custom amis Renderer components via IIFE compilation with JSX runtime shimming and CSS scope isolation.
+
+在 Steedos 软件包中开发自定义 React + Vite 应用，构建自定义 amis Renderer 组件。
+
+### 📊 Analytics | 数据分析 (1 skill)
+
+#### [steedos-analytics](./steedos-analytics/SKILL.md)
+Create analytics questions (reports/charts) and dashboards. Covers MBQL/SQL queries, visualization types, grid layouts, parameter filtering, embedding, and public sharing. Requires enterprise license.
+
+创建分析问题（报表/图表）和仪表盘。涵盖 MBQL/SQL 查询、可视化类型、网格布局、参数筛选、嵌入和公开分享。需要企业版许可证。
+
+### 📦 Data | 数据 (1 skill)
+
+#### [steedos-seed-data](./steedos-seed-data/SKILL.md)
+Define initial seed data (.data.json/.yml/.csv). Records are auto-imported at startup (insert-only) or space init (upsert).
+
+定义初始化数据。记录在启动时自动导入。
+
+### 🖥️ Server | 服务端 (6 skills)
 
 #### [steedos-server-api](./steedos-server-api/SKILL.md)
-REST API reference for /api/v6/ endpoints: data CRUD, object metadata, function execution, filter operators, query parameters, and Swagger/OpenAPI documentation.
+REST API reference for /api/v6/ endpoints: data CRUD, object metadata, function execution, filter operators, and Swagger/OpenAPI documentation.
 
-/api/v6/ REST API 参考：数据 CRUD、对象元数据、函数执行、筛选运算符、查询参数和 Swagger/OpenAPI 文档。
+/api/v6/ REST API 参考：数据 CRUD、对象元数据、函数执行、筛选运算符和 Swagger 文档。
 
 #### [steedos-graphql-api](./steedos-graphql-api/SKILL.md)
-GraphQL API auto-generated from object metadata at /graphql. Covers CRUD queries/mutations, lookup expansion (__expand), display formatting (_display), record permissions (_permissions), related records (_related_*), filters, pagination, sorting, authentication, and DataLoader batching.
+GraphQL API auto-generated from object metadata at /graphql. Covers CRUD queries/mutations, lookup expansion, display formatting, record permissions, related records, filters, pagination, and DataLoader batching.
 
-从对象元数据自动生成的 GraphQL API（/graphql）。涵盖 CRUD 查询/变更、查找字段展开（__expand）、显示格式化（_display）、记录权限（_permissions）、关联记录（_related_*）、筛选、分页、排序、认证和 DataLoader 批量优化。
+从对象元数据自动生成的 GraphQL API。涵盖 CRUD 查询/变更、查找字段展开、分页、排序和 DataLoader 批量优化。
 
-#### [steedos-server-config](./steedos-server-config/SKILL.md)
-Server configuration via environment variables and YAML settings files, including datasources, tenant settings, file storage, SSO/OIDC, email, and frontend asset URLs.
+#### [steedos-server-internals](./steedos-server-internals/SKILL.md)
+Steedos Server internal architecture: NestJS 11 + Moleculer 0.14 hybrid, module layout, bootstrap, middleware, guards, Socket.IO WebSocket, Moleculer events, and inter-service communication.
 
-通过环境变量和 YAML 配置文件进行服务端配置，包括数据源、租户设置、文件存储、SSO/OIDC、邮件和前端资源 URL。
+Steedos 服务端内部架构：NestJS + Moleculer 混合架构、模块组织、启动流程、中间件栈、守卫、WebSocket 和 Moleculer 事件。
 
-#### [steedos-server-websocket](./steedos-server-websocket/SKILL.md)
-Real-time WebSocket system using Socket.IO, connection authentication, room-based event routing, metadata/record/notification change events, and Moleculer integration.
+#### [steedos-builder6-internals](./steedos-builder6-internals/SKILL.md)
+Builder6 Server architecture and configuration. NestJS 11 + Moleculer 0.14 hybrid monorepo with 20+ @builder6/* packages, B6_* environment variables, and ConfigService access.
 
-基于 Socket.IO 的实时 WebSocket 系统、连接认证、房间事件路由、元数据/记录/通知变更事件和 Moleculer 集成。
-
-#### [steedos-server-moleculer](./steedos-server-moleculer/SKILL.md)
-Moleculer microservice integration, broker configuration, event handlers, ObjectQL schema initialization, service lifecycle, and inter-service communication patterns.
-
-Moleculer 微服务集成、代理配置、事件处理、ObjectQL 模式初始化、服务生命周期和跨服务通信模式。
-
-#### [steedos-builder6-architecture](./steedos-builder6-architecture/SKILL.md)
-Builder6 Server architecture: NestJS 11 + Moleculer 0.14 hybrid monorepo with 20+ @builder6/* packages, module organization, bootstrap sequence, middleware stack, WebSocket (HybridAdapter), Swagger, guards, and Nx/Lerna workspace.
-
-Builder6 服务端架构：NestJS 11 + Moleculer 0.14 混合 Monorepo（20+ @builder6/* 包）、模块组织、启动流程、中间件栈、WebSocket（HybridAdapter）、Swagger、守卫和 Nx/Lerna 工作区。
+Builder6 服务端架构和配置。Monorepo 结构、B6_* 环境变量和 ConfigService 访问。
 
 #### [steedos-builder6-api](./steedos-builder6-api/SKILL.md)
-Builder6 REST API reference: Tables CRUD (/api/v6/tables/:baseId/:tableId), Direct MongoDB CRUD (admin-only), Files upload/download, Auth login, Users profile, batch operations, presigned URLs, and Swagger/OpenAPI documentation.
+Builder6 REST API: Tables CRUD (/api/v6/tables/:baseId/:tableId), Direct MongoDB CRUD, Files, Auth, Users, batch operations, lookup field resolution via DataLoader, and DevExtreme query adapter.
 
-Builder6 REST API 参考：数据表 CRUD、直接 MongoDB CRUD（管理员）、文件上传下载、认证登录、用户信息、批量操作、预签名 URL 和 Swagger 文档。
+Builder6 REST API：数据表 CRUD、直接 MongoDB CRUD、文件上传下载、认证、DataLoader 和 DevExtreme 查询适配器。
 
-#### [steedos-builder6-config](./steedos-builder6-config/SKILL.md)
-Builder6 Server configuration via environment variables (B6_* and STEEDOS_* prefixes). Covers required vars (B6_MONGO_URL, B6_TRANSPORTER, B6_CACHER), server port, JWT/session secrets, file storage (local/S3), Moleculer settings, and Steedos compatibility aliases.
+#### [steedos-builder6-modules](./steedos-builder6-modules/SKILL.md)
+Builder6 authentication (guards, token formats, AuthService), file upload/download (local + S3 storage), and dynamic plugin system (NestJS/Moleculer plugins, lifecycle).
 
-Builder6 服务端配置：B6_* 和 STEEDOS_* 环境变量、必需配置（B6_MONGO_URL、B6_TRANSPORTER、B6_CACHER）、端口、JWT/Session 密钥、文件存储、Moleculer 设置和 Steedos 兼容别名。
-
-#### [steedos-builder6-tables](./steedos-builder6-tables/SKILL.md)
-Builder6 Tables module for structured data management. API at /api/v6/tables/:baseId/:tableId. Covers MongoDB collection naming (t_{baseId}_{tableId}), record CRUD, lookup field resolution via DataLoader, DevExtreme query adapter, batch delete, and MetaService for field schema.
-
-Builder6 数据表模块：/api/v6/tables/ API、MongoDB 集合命名（t_{baseId}_{tableId}）、记录 CRUD、DataLoader 查找字段解析、DevExtreme 查询适配器、批量删除和 MetaService。
-
-#### [steedos-auth](./steedos-auth/SKILL.md)
-Builder6 authentication and authorization: AuthGuard and AdminGuard (NestJS CanActivate), triple token formats (JWT, spaceId+authToken cookies, apikey), password hashing (SHA256+bcrypt), login token stamping, cookie management, and request user context.
-
-Builder6 认证授权：AuthGuard 和 AdminGuard、三种 Token 格式（JWT、Cookie、API Key）、密码哈希、登录 Token 生命周期、Cookie 管理和请求用户上下文。
-
-#### [steedos-files](./steedos-files/SKILL.md)
-Builder6 file upload/download system with local filesystem and AWS S3 storage. API at /api/v6/files/:collectionName. Covers multipart upload, collection naming, storage paths, S3 presigned URLs, streaming download, and public download configuration.
-
-Builder6 文件上传下载系统：本地和 S3 双存储、/api/v6/files/ API、分片上传、集合命名、存储路径、S3 预签名 URL、流式下载和公开下载配置。
-
-#### [steedos-plugin](./steedos-plugin/SKILL.md)
-Builder6 dynamic plugin system: NPM packages loaded at startup via environment variables. Covers PluginModule.forRootAsync() for NestJS module plugins (B6_PLUGIN_MODULES), MoleculerPluginService for Moleculer service plugins (B6_PLUGIN_PACKAGES), automatic npm install, private registry support, and plugin lifecycle.
-
-Builder6 动态插件系统：启动时通过环境变量加载 NPM 包、NestJS 模块插件（B6_PLUGIN_MODULES）、Moleculer 服务插件（B6_PLUGIN_PACKAGES）、自动 npm install、私有仓库支持和插件生命周期。
+Builder6 认证（守卫、Token、AuthService）、文件上传下载（本地 + S3）和动态插件系统。
 
 ## Quick Reference | 快速参考
 
@@ -231,55 +171,46 @@ Builder6 动态插件系统：启动时通过环境变量加载 NPM 包、NestJS
 
 | Task | Skill |
 |------|-------|
-| Create a new Steedos project | [steedos-project-format](./steedos-project-format/SKILL.md) |
-| Create a package | [steedos-package-format](./steedos-package-format/SKILL.md) |
-| Configure environment | [steedos-environment-variables](./steedos-environment-variables/SKILL.md) |
-| Start/restart server | [steedos-cli-commands](./steedos-cli-commands/SKILL.md) |
-| AI-assisted restart workflow | [steedos-cli-commands](./steedos-cli-commands/SKILL.md) |
-| Import/export data | [steedos-cli-commands](./steedos-cli-commands/SKILL.md) |
-| Deploy/retrieve source | [steedos-cli-commands](./steedos-cli-commands/SKILL.md) |
+| Create a new project/package | [steedos-project-package](./steedos-project-package/SKILL.md) |
+| Configure environment | [steedos-configuration](./steedos-configuration/SKILL.md) |
+| Start/restart server | [steedos-getting-started](./steedos-getting-started/SKILL.md) |
+| CLI commands | [steedos-getting-started](./steedos-getting-started/SKILL.md) |
+| Validate a package | [steedos-getting-started](./steedos-getting-started/SKILL.md) |
 | Understand built-in objects | [steedos-builtin-objects](./steedos-builtin-objects/SKILL.md) |
 | Define data models | [steedos-objects](./steedos-objects/SKILL.md), [steedos-object-fields](./steedos-object-fields/SKILL.md) |
-| Create list views | [steedos-object-list-views](./steedos-object-list-views/SKILL.md) |
-| Add validation logic | [steedos-object-triggers](./steedos-object-triggers/SKILL.md) |
+| Create list views | [steedos-objects](./steedos-objects/SKILL.md) |
+| Add triggers/functions | [steedos-server-logic](./steedos-server-logic/SKILL.md) |
 | Create custom buttons | [steedos-object-buttons](./steedos-object-buttons/SKILL.md) |
-| Build dashboards | [steedos-micro-pages](./steedos-micro-pages/SKILL.md), [steedos-dashboards](./steedos-dashboards/SKILL.md) |
-| Create analytics questions | [steedos-questions](./steedos-questions/SKILL.md) |
+| Build UI pages | [steedos-pages](./steedos-pages/SKILL.md) |
+| Build dashboards/reports | [steedos-analytics](./steedos-analytics/SKILL.md) |
 | Define navigation tabs | [steedos-tabs](./steedos-tabs/SKILL.md) |
 | Configure permissions | [steedos-object-permissions](./steedos-object-permissions/SKILL.md) |
 | Translate metadata (i18n) | [steedos-translations](./steedos-translations/SKILL.md) |
-| Create custom pages | [steedos-object-micro-pages](./steedos-object-micro-pages/SKILL.md), [steedos-micro-pages](./steedos-micro-pages/SKILL.md) |
-| Custom React amis components | [steedos-webapps](./steedos-webapps/SKILL.md) |
-| Understand server architecture | [steedos-server-architecture](./steedos-server-architecture/SKILL.md) |
+| Custom React components | [steedos-webapps](./steedos-webapps/SKILL.md) |
 | Use REST API | [steedos-server-api](./steedos-server-api/SKILL.md) |
 | Use GraphQL API | [steedos-graphql-api](./steedos-graphql-api/SKILL.md) |
-| Configure server | [steedos-server-config](./steedos-server-config/SKILL.md) |
-| Real-time WebSocket | [steedos-server-websocket](./steedos-server-websocket/SKILL.md) |
-| Moleculer microservices | [steedos-server-moleculer](./steedos-server-moleculer/SKILL.md) |
-| Builder6 architecture | [steedos-builder6-architecture](./steedos-builder6-architecture/SKILL.md) |
+| Server architecture | [steedos-server-internals](./steedos-server-internals/SKILL.md) |
 | Builder6 REST API | [steedos-builder6-api](./steedos-builder6-api/SKILL.md) |
-| Builder6 configuration | [steedos-builder6-config](./steedos-builder6-config/SKILL.md) |
-| Builder6 tables management | [steedos-builder6-tables](./steedos-builder6-tables/SKILL.md) |
-| Authentication & authorization | [steedos-auth](./steedos-auth/SKILL.md) |
-| File upload/download | [steedos-files](./steedos-files/SKILL.md) |
-| Dynamic plugins | [steedos-plugin](./steedos-plugin/SKILL.md) |
+| Auth/Files/Plugins | [steedos-builder6-modules](./steedos-builder6-modules/SKILL.md) |
 
 ### By File Type | 按文件类型查找
 
 | File Type | Skill Reference |
 |-----------|----------------|
-| `package.json` | [steedos-project-format](./steedos-project-format/SKILL.md), [steedos-package-format](./steedos-package-format/SKILL.md) |
-| `steedos-config.yml` | [steedos-project-format](./steedos-project-format/SKILL.md) |
-| `.env` | [steedos-environment-variables](./steedos-environment-variables/SKILL.md) |
-| `*.app.yml` | [steedos-applications](./steedos-applications/SKILL.md) |
-| `*.object.yml` | [steedos-objects](./steedos-objects/SKILL.md), [steedos-object-fields](./steedos-object-fields/SKILL.md) |
+| `package.json`, `steedos-config.yml` | [steedos-project-package](./steedos-project-package/SKILL.md) |
+| `.env` | [steedos-configuration](./steedos-configuration/SKILL.md) |
+| `*.object.yml` | [steedos-objects](./steedos-objects/SKILL.md) |
+| `*.field.yml` | [steedos-object-fields](./steedos-object-fields/SKILL.md) |
+| `*.listview.yml` | [steedos-objects](./steedos-objects/SKILL.md) |
+| `*.trigger.yml` | [steedos-server-logic](./steedos-server-logic/SKILL.md) |
+| `*.function.yml` | [steedos-server-logic](./steedos-server-logic/SKILL.md) |
 | `*.button.yml` | [steedos-object-buttons](./steedos-object-buttons/SKILL.md) |
-| `*.trigger.yml` | [steedos-object-triggers](./steedos-object-triggers/SKILL.md) |
-| `*.function.yml` | [steedos-object-functions](./steedos-object-functions/SKILL.md) |
+| `*.app.yml` | [steedos-applications](./steedos-applications/SKILL.md) |
 | `*.tab.yml` | [steedos-tabs](./steedos-tabs/SKILL.md) |
+| `*.page.yml` + `*.page.amis.json` | [steedos-pages](./steedos-pages/SKILL.md) |
+| `*.permission.yml` | [steedos-object-permissions](./steedos-object-permissions/SKILL.md) |
 | `*.translation.yml` | [steedos-translations](./steedos-translations/SKILL.md) |
-| `*.objectTranslation.yml` | [steedos-translations](./steedos-translations/SKILL.md) |
-| `*.page.yml` + `*.page.amis.json` | [steedos-object-micro-pages](./steedos-object-micro-pages/SKILL.md), [steedos-micro-pages](./steedos-micro-pages/SKILL.md) |
+| `*.data.yml` / `*.data.json` | [steedos-seed-data](./steedos-seed-data/SKILL.md) |
 
 ## Technology Stack | 技术栈
 
@@ -287,7 +218,7 @@ Builder6 动态插件系统：启动时通过环境变量加载 NPM 包、NestJS
 
 **Backend:**
 - Node.js + TypeScript
-- Moleculer microservices
+- NestJS 11 + Moleculer 0.14 microservices
 - MongoDB / PostgreSQL / MySQL
 
 **Frontend:**
@@ -299,8 +230,6 @@ Builder6 动态插件系统：启动时通过环境变量加载 NPM 包、NestJS
 - JavaScript files (.js)
 
 **NOT Python!** This is a JavaScript/Node.js platform.
-
-**不是 Python!** 这是一个 JavaScript/Node.js 平台。
 
 ## How to Use | 如何使用
 
@@ -325,67 +254,17 @@ These skills follow the [Anthropic Agent Skills specification](https://github.co
 - Cursor
 - Other AI coding assistants
 
-**Usage:**
-AI assistants can automatically discover and load skills based on context, or you can reference them explicitly.
-
-**使用方法:**
-AI 助手可以根据上下文自动发现和加载技能,或者您可以明确引用它们。
-
-### For Developers | 用于开发者
-
-Use as reference documentation:
-- Quick syntax lookup
-- Copy-paste examples
-- Best practices guide
-- Troubleshooting help
-
-用作参考文档:
-- 快速语法查找
-- 复制粘贴示例
-- 最佳实践指南
-- 故障排除帮助
-
 ### For Learning | 用于学习
 
 Recommended learning path:
 
-1. **Foundation** (start here)
-   - [steedos-project-format](./steedos-project-format/SKILL.md)
-   - [steedos-package-format](./steedos-package-format/SKILL.md)
-   - [steedos-environment-variables](./steedos-environment-variables/SKILL.md)
-
-2. **Data Modeling**
-   - [steedos-builtin-objects](./steedos-builtin-objects/SKILL.md)
-   - [steedos-objects](./steedos-objects/SKILL.md)
-   - [steedos-object-fields](./steedos-object-fields/SKILL.md)
-   - [steedos-object-list-views](./steedos-object-list-views/SKILL.md)
-
-3. **Business Logic**
-   - [steedos-object-triggers](./steedos-object-triggers/SKILL.md)
-   - [steedos-object-buttons](./steedos-object-buttons/SKILL.md)
-   - [steedos-object-functions](./steedos-object-functions/SKILL.md)
-
-4. **User Interface**
-   - [steedos-applications](./steedos-applications/SKILL.md)
-   - [steedos-tabs](./steedos-tabs/SKILL.md)
-   - [steedos-object-micro-pages](./steedos-object-micro-pages/SKILL.md)
-   - [steedos-micro-pages](./steedos-micro-pages/SKILL.md)
-   - [steedos-webapps](./steedos-webapps/SKILL.md)
-
-5. **Security**
-   - [steedos-object-permissions](./steedos-object-permissions/SKILL.md)
-
-6. **Internationalization**
-   - [steedos-translations](./steedos-translations/SKILL.md)
-
-7. **Server & Builder6**
-   - [steedos-server-architecture](./steedos-server-architecture/SKILL.md)
-   - [steedos-builder6-architecture](./steedos-builder6-architecture/SKILL.md)
-   - [steedos-builder6-api](./steedos-builder6-api/SKILL.md)
-   - [steedos-auth](./steedos-auth/SKILL.md)
-   - [steedos-files](./steedos-files/SKILL.md)
-   - [steedos-builder6-tables](./steedos-builder6-tables/SKILL.md)
-   - [steedos-plugin](./steedos-plugin/SKILL.md)
+1. **Foundation** — [steedos-project-package](./steedos-project-package/SKILL.md), [steedos-configuration](./steedos-configuration/SKILL.md)
+2. **Data Modeling** — [steedos-builtin-objects](./steedos-builtin-objects/SKILL.md), [steedos-objects](./steedos-objects/SKILL.md), [steedos-object-fields](./steedos-object-fields/SKILL.md)
+3. **Business Logic** — [steedos-server-logic](./steedos-server-logic/SKILL.md), [steedos-object-buttons](./steedos-object-buttons/SKILL.md)
+4. **User Interface** — [steedos-applications](./steedos-applications/SKILL.md), [steedos-tabs](./steedos-tabs/SKILL.md), [steedos-pages](./steedos-pages/SKILL.md), [steedos-webapps](./steedos-webapps/SKILL.md)
+5. **Security** — [steedos-object-permissions](./steedos-object-permissions/SKILL.md)
+6. **Internationalization** — [steedos-translations](./steedos-translations/SKILL.md)
+7. **Server & Builder6** — [steedos-server-internals](./steedos-server-internals/SKILL.md), [steedos-builder6-internals](./steedos-builder6-internals/SKILL.md), [steedos-builder6-api](./steedos-builder6-api/SKILL.md), [steedos-builder6-modules](./steedos-builder6-modules/SKILL.md)
 
 ## Skill Format | 技能格式
 
@@ -409,64 +288,19 @@ Complete documentation with:
 - Best practices
 - Troubleshooting guides
 
-## Contributing | 贡献
-
-To improve these skills:
-
-1. **Report Issues**: If you find errors or outdated information
-2. **Suggest Improvements**: Share better examples or explanations
-3. **Add Examples**: Contribute real-world use cases
-4. **Translate**: Help with translations and localization
-5. **Follow Spec**: Maintain [Anthropic SKILL.md format](https://github.com/anthropics/skills)
-
-改进这些技能:
-
-1. **报告问题**: 如果发现错误或过时信息
-2. **建议改进**: 分享更好的示例或说明
-3. **添加示例**: 贡献实际用例
-4. **翻译**: 帮助翻译和本地化
-5. **遵循规范**: 保持 [Anthropic SKILL.md 格式](https://github.com/anthropics/skills)
-
-## Related Resources | 相关资源
-
-### In This Repository
-
-- [`.github/copilot-instructions.md`](../.github/copilot-instructions.md) - GitHub Copilot auto-loaded instructions
-- [`.github/prompts/`](../.github/prompts/) - Detailed prompt files
-- [`.cursorrules`](../.cursorrules) - Cursor IDE rules
-- [`docs/`](../docs/) - Technical documentation
-
-### External Resources
-
-- 📘 [Steedos Documentation](https://docs.steedos.com/)
-- 🏠 [Steedos Website](https://www.steedos.com/)
-- 💬 [Community Discussions](https://github.com/steedos/steedos-platform/discussions)
-- 📦 [Steedos Templates](https://github.com/steedos/steedos-templates)
-- 🤖 [Anthropic Agent Skills](https://github.com/anthropics/skills)
-
 ## Statistics | 统计
 
-- **Total Skills**: 35
-- **Total Documentation**: ~350KB
+- **Total Skills**: 22
 - **Format**: Anthropic SKILL.md specification
 - **Languages**: English + Chinese (bilingual)
 
 ## Version | 版本
 
-**Version**: 2.1.0
+**Version**: 3.0.0
 **Format**: Anthropic Agent Skills
-**Last Updated**: 2026-04-23
+**Last Updated**: 2026-04-29
 **Steedos Platform Version**: 3.0.x
 
 ## License | 许可
 
 These skills are part of the Steedos Platform project and follow the same MIT license.
-
-这些技能是 Steedos 平台项目的一部分,遵循相同的 MIT 许可证。
-
----
-
-<p align="center">
-  <strong>🚀 Anthropic-Compatible Skills for Steedos! 🚀</strong><br>
-  <em>符合 Anthropic 规范的 Steedos 技能库! 🚀</em>
-</p>
