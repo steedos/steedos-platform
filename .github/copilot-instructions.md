@@ -61,16 +61,12 @@ B6_LOG_LEVEL=warn
 
 4. **Install dependencies**:
 ```bash
-npm install
-# or
 yarn install
 ```
 
 5. **Start the server**:
 ```bash
-npm start
-# or
-steedos start
+yarn start
 ```
 
 ### Project Structure
