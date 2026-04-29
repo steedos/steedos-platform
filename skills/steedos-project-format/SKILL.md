@@ -23,7 +23,7 @@ Steedos 项目是运行 Steedos 平台的 Node.js/TypeScript 项目。这是创�
 - **Frontend**: React + Amis (Baidu low-code UI framework)
 - **Metadata**: YAML files (.object.yml, .trigger.js, .action.js)
 - **Databases**: MongoDB (metadata), PostgreSQL/MySQL (business data)
-- **Package Manager**: Yarn 3.8.7 or NPM
+- **Package Manager**: Yarn
 
 ## Minimal Project Structure | 最小项目结构
 
@@ -62,8 +62,8 @@ my-steedos-project/
 
 **Key Points:**
 - `@steedos/server` dependency is REQUIRED
-- `workspaces` for custom packages (if using Yarn)
-- `start` script to run Steedos
+- `workspaces` for custom packages
+- `start` script to run Steedos (use `yarn start`)
 
 ### 2. steedos-config.yml (REQUIRED)
 
@@ -107,7 +107,7 @@ my-steedos-project/
 ├── steedos-config.yml                # Steedos configuration
 ├── .env                              # Environment variables
 ├── .gitignore                        # Git ignore
-├── yarn.lock / package-lock.json    # Dependency lock file
+├── yarn.lock                         # Dependency lock file
 ├── node_modules/                     # Dependencies
 ├── steedos-storage/                  # File storage
 └── steedos-packages/                 # Custom packages
@@ -135,7 +135,7 @@ cd my-steedos-project
 ### Step 2: Create package.json
 
 ```bash
-npm init -y
+yarn init -y
 # Edit package.json to add required fields
 ```
 
@@ -162,17 +162,13 @@ EOF
 ### Step 5: Install Dependencies
 
 ```bash
-npm install @steedos/server
-# or
 yarn add @steedos/server
 ```
 
 ### Step 6: Start Server
 
 ```bash
-npm start
-# or
-steedos start
+yarn start
 ```
 
 ## Creating with CLI | 使用 CLI 创建
@@ -181,14 +177,14 @@ Steedos provides a CLI tool for quick project creation:
 
 ```bash
 # Install CLI
-npm install -g @steedos/cli
+yarn global add @steedos/cli
 
 # Create project
 steedos create my-project
 cd my-project
 
 # Start
-npm start
+yarn start
 ```
 
 ## Workspace Configuration | 工作区配置
@@ -263,27 +259,25 @@ build/
 4. **Dependencies**:
    - Lock dependency versions in production
    - Regularly update dependencies
-   - Use `yarn.lock` or `package-lock.json`
+   - Use `yarn.lock` for dependency locking
 
 ## Common Commands | 常用命令
 
 ```bash
 # Start development server
-npm start
+yarn start
 
 # Build packages
-npm run build
+yarn build
 
 # Install dependencies
-npm install
-# or
 yarn install
 
 # Add new package
 cd steedos-packages
 mkdir my-package
 cd my-package
-npm init -y
+yarn init -y
 ```
 
 ## Troubleshooting | 故障排除
