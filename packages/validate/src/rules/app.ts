@@ -23,6 +23,18 @@ export function validateAppFile(data: any, filePath: string, rel: (p: string) =>
     issues.push({ file, level: 'warning', rule: 'app.required.tabs', message: '缺少 tabs 字段或为空，应用菜单将不会显示' });
   }
 
+  if (data.is_creator !== true) {
+    issues.push({ file, level: 'error', rule: 'app.required.is_creator', message: '缺少必填字段 is_creator 或值不为 true，应设置 is_creator: true' });
+  }
+
+  if (data.visible !== true) {
+    issues.push({ file, level: 'error', rule: 'app.required.visible', message: '缺少必填字段 visible 或值不为 true，应设置 visible: true' });
+  }
+
+  if (data.showSidebar !== true) {
+    issues.push({ file, level: 'error', rule: 'app.required.showSidebar', message: '缺少必填字段 showSidebar 或值不为 true，应设置 showSidebar: true' });
+  }
+
   if (data.icon_slds && !VALID_SLDS_ICONS.has(data.icon_slds)) {
     issues.push({ file, level: 'warning', rule: 'app.icon-invalid', message: `icon_slds "${data.icon_slds}" 不在有效的 SLDS 图标列表中` });
   }

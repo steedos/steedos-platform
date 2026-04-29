@@ -90,6 +90,33 @@ tabs:
   - page_custom_dashboard
 ```
 
+#### is_creator (Boolean) — **⚠️ Required, MUST be `true`**
+Whether this application uses the Creator UI framework. **Must always be `true`.**
+
+**是否使用 Creator UI 框架。必须始终设置为 `true`，不能省略。**
+
+```yaml
+is_creator: true
+```
+
+#### visible (Boolean) — **⚠️ Required, MUST be `true`**
+Whether the application is visible in the app menu. **Must always be `true`.**
+
+**应用是否在菜单中可见。必须始终设置为 `true`，不能省略。**
+
+```yaml
+visible: true
+```
+
+#### showSidebar (Boolean) — **⚠️ Required, MUST be `true`**
+Whether the sidebar navigation is shown. **Must always be `true`.**
+
+**是否显示侧边栏导航。必须始终设置为 `true`，不能省略。**
+
+```yaml
+showSidebar: true
+```
+
 ### Optional Fields | 可选字段
 
 #### _id (String)
@@ -104,15 +131,6 @@ Description of the application's purpose.
 
 ```yaml
 description: Manage contracts and agreements
-```
-
-#### showSidebar (Boolean)
-**Always set to `true`**. Controls whether the sidebar navigation is shown. Required for tabs/tab_items/tab_groups to display properly.
-
-**始终设置为 `true`**。控制是否显示侧边栏导航。tabs/tab_items/tab_groups 需要此设置才能正确显示。
-
-```yaml
-showSidebar: true
 ```
 
 #### color (String)
@@ -171,21 +189,6 @@ Custom icon name (use `icon_slds` when possible).
 
 ```yaml
 icon: custom_icon
-```
-
-#### is_creator (Boolean)
-Whether this application uses the Creator UI framework.
-
-```yaml
-is_creator: true   # Modern UI
-is_creator: false  # Classic UI
-```
-
-#### visible (Boolean) — **⚠️ Required, MUST be `true`**
-Whether the application is visible in the app menu. **必须存在且值为 `true`，不能省略。**
-
-```yaml
-visible: true   # Required — always set this
 ```
 
 #### sort (Number)

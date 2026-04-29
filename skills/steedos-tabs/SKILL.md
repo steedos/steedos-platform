@@ -156,9 +156,14 @@ label: 合同管理
 #### object (String) — for `type: object`
 The object API name to display.
 
+**⚠️ CRITICAL: The field name is `object`, NOT `object_name`. Using `object_name` is a common mistake and will NOT work.**
+
+**⚠️ 重要：字段名为 `object`，不是 `object_name`。使用 `object_name` 是常见错误，不会生效。**
+
 ```yaml
 type: object
-object: contracts
+object: contracts     # ✅ Correct
+# object_name: contracts  # ❌ WRONG — do NOT use object_name
 ```
 
 #### page (String) — for `type: page`
