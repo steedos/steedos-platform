@@ -19,7 +19,7 @@ class StartCommand extends Command {
       // eslint-disable-next-line @typescript-eslint/no-require-imports
       const server = require(steedosPath);
 
-      server.bootstrap();
+      await server.bootstrap();
     } catch (error) {
       this.error(error.message, { exit: 1 });
     }

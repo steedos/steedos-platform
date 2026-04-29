@@ -26,6 +26,26 @@ import { AllExceptionsFilter, MongodbService } from "@builder6/core";
 import { HybridAdapter } from "@builder6/core";
 import express from "express";
 import { readFileSync } from "fs";
+import * as net from "net";
+
+function checkPortAvailable(port: number): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const server = net.createServer();
+    server.once('error', (err: NodeJS.ErrnoException) => {
+      if (err.code === 'EADDRINUSE') {
+        reject(new Error(
+          `启动失败: 端口 ${port} 已被占用，请先停止占用该端口的进程，或通过环境变量 B6_PORT 指定其他端口。`
+        ));
+      } else {
+        reject(err);
+      }
+    });
+    server.once('listening', () => {
+      server.close(() => resolve());
+    });
+    server.listen(port);
+  });
+}
 
 // Cached OEM favicon URL (with TTL)
 let _cachedFaviconUrl: string | undefined;
@@ -299,5 +319,7 @@ export async function bootstrap() {
     expressApp.use("/", express.static(webappDistPath));
   }
 
-  await app.listen(process.env.B6_PORT ?? 5100);
+  const port = Number(process.env.B6_PORT) || 5100;
+  await checkPortAvailable(port);
+  await app.listen(port);
 }
