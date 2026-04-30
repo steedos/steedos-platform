@@ -129,7 +129,25 @@ export const AmisRender = function ({schema = {}, data = {}, env = {}}) {
       } catch (e) {
         // 忽略
       }
-      // 2) 兜底：截掉 /view/... 或 /grid/... 段，回到对象根路径
+      // 2) 复用来源 tab 记录（issue: steedos-plugins#701）：
+      //    例如从微页面 /app/{app}/page/xxx 点列表行进入详情页，goBack 应回到该微页面。
+      //    `steedos_last_active_tab:{appId}` 由 widgets 在所有 SPA 导航时写入。
+      try {
+        const appMatch = pathname.match(/^\/app\/([^/]+)\//);
+        if (appMatch) {
+          const raw = sessionStorage.getItem(`steedos_last_active_tab:${appMatch[1]}`);
+          if (raw) {
+            const rec = JSON.parse(raw);
+            if (rec && rec.path && rec.path !== pathname) {
+              navigate(rec.path);
+              return;
+            }
+          }
+        }
+      } catch (e) {
+        // 忽略
+      }
+      // 3) 兜底：截掉 /view/... 或 /grid/... 段，回到对象根路径
       //    （正则同时匹配 view/grid 两种，避免截 grid 时丢段后重新触发 #619）
       if (objMatch && objMatch[2]) {
         navigate(objMatch[1]);
@@ -175,6 +193,36 @@ export const AmisRender = function ({schema = {}, data = {}, env = {}}) {
         linkPathname = link.substring(0, idx);
         linkSearch = link.substring(idx);
       }
+
+      // 详情页来源 tab 高亮覆盖（issue: steedos-plugins#701）
+      // 仅当处于真实记录详情页 /app/{appId}/{object}/view/{recordId}（recordId !== 'none'），
+      // 且当前 pathname 不是任何菜单 link 的精确路径时（避免误盖菜单直达详情页的合法链接），
+      // 才用 sessionStorage 中保存的"来源 tab"接管菜单高亮。
+      const decodedPathname = decodeURI(pathname);
+      const decodedLink = decodeURI(linkPathname);
+      const _navPaths: string[] = (window as any)._steedosNavPaths || [];
+      const hasExactNavLinkForCurrentPath = _navPaths.some((p) => {
+        try { return decodeURI(p) === decodedPathname; } catch (e) { return p === pathname; }
+      });
+      const detailMatch = pathname.match(/^\/app\/([^/]+)\/[^/]+\/view\/([^/?#]+)/);
+      if (!hasExactNavLinkForCurrentPath && detailMatch && detailMatch[2] !== 'none') {
+        try {
+          const raw = sessionStorage.getItem(`steedos_last_active_tab:${detailMatch[1]}`);
+          if (raw) {
+            const rec = JSON.parse(raw);
+            if (rec && rec.path && rec.tabId) {
+              const recPathOnly = String(rec.path).split('?')[0].split('#')[0];
+              if (decodedLink === decodeURI(recPathOnly)) {
+                return true;
+              }
+              return false;
+            }
+          }
+        } catch (e) {
+          // 忽略 sessionStorage / JSON 异常，落到下方默认匹配逻辑
+        }
+      }
+
       if (linkSearch) {
         if (linkPathname !== pathname) {
           return false;
@@ -193,8 +241,6 @@ export const AmisRender = function ({schema = {}, data = {}, env = {}}) {
         });
         return allMatch;
       }
-      const decodedPathname = decodeURI(pathname);
-      const decodedLink = decodeURI(linkPathname);
       // 精确匹配
       if (decodedPathname === decodedLink) {
         return true;
