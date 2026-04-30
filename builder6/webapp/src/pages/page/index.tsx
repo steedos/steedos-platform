@@ -6,6 +6,31 @@ import { Builder } from "@builder6/react";
 // 这是一个简单的辅助函数，模拟 lodash 的 isString，如果项目中已有 lodash 可直接使用
 const isString = (val) => typeof val === 'string';
 
+// 设计器在初始化新 schema 时会写入 data.appId = "builder" 等"设计期上下文"，
+// 保存时这些字段会被持久化到 page_versions.schema.data。
+// 渲染时若不剥离，amis 内层 data scope 会遮蔽外层 PageView 注入的运行时 appId，
+// 导致对象表格的行链接 `${appId}` 渲染成 "builder"，跳转到错误的 /app/builder/... 路径。
+// 这里只移除运行时上下文字段，保留页面设计者放在 data 中的业务默认值。
+// 参考 platform 2.7 services/service-pages/.../page.render.client.js 的合并策略：
+// 运行时 data 应优先于设计器 data 中的同名上下文字段。
+const RUNTIME_CONTEXT_KEYS = [
+    'appId', 'app', 'app_id',
+    'recordId', 'record_id',
+    'objectName', 'object_name',
+    'context',
+];
+
+const stripRuntimeContext = (schema) => {
+    if (schema && typeof schema === 'object' && schema.data && typeof schema.data === 'object') {
+        for (const key of RUNTIME_CONTEXT_KEYS) {
+            if (key in schema.data) {
+                delete schema.data[key];
+            }
+        }
+    }
+    return schema;
+};
+
 
 function injectServerCss(cssString) {
 
@@ -76,6 +101,8 @@ export const PageView = () => {
                         console.error("Schema parse failed", e);
                     }
                 }
+
+                finalSchema = stripRuntimeContext(finalSchema);
 
                 setSchema(finalSchema);
             } catch (err) {
