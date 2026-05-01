@@ -12,9 +12,8 @@ description: |
   or /api/v6/functions — use steedos-server-api; GraphQL — use steedos-graphql-api;
   architecture internals — use steedos-builder6-internals; auth guards/files/plugins —
   use steedos-builder6-modules.
-  Builder6 Server REST API: Tables CRUD, Direct MongoDB, Files, Auth, Users
-  endpoints with query params, filter operators, Swagger docs, plus Tables module
-  internals (lookup resolution, DataLoader, DevExtreme query adapter).
+  Builder6 REST API: Tables, Direct MongoDB, Files, Auth, Users endpoints.
+  Query params, filter operators, Swagger at /api/v6, DataLoader, DevExtreme adapter.
 ---
 
 # Builder6 Server API | Builder6 服务端 API
