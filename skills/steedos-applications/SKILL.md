@@ -1,17 +1,11 @@
 ---
 name: steedos-applications
 description: |
-  TRIGGER when: user creates/edits a `.app.yml` file; asks how to create a
-  Steedos application, configure the app sidebar menu, set app icon/color,
-  control mobile visibility, configure admin_menus, group tabs with tab_groups,
-  restrict app visibility by permission_set; asks why the application menu is
-  not showing (missing tabs field is a common cause).
-  SKIP: user is asking about individual sidebar navigation items (tabs) —
-  use steedos-tabs; user is asking about the pages tabs point to —
-  use steedos-pages.
-  Creates and configures Steedos applications (.app.yml). Required fields:
-  name, code, tabs. Covers icon_slds, color, tab_items/tab_groups, mobile,
-  showSidebar, and permission-based visibility.
+  Steedos application definition (.app.yml).
+  TRIGGER: .app.yml files; application sidebar menu, icon/color, mobile visibility,
+  admin_menus, tab_groups, permission_set visibility; app menu not showing
+  (missing tabs field); required fields: name, code, tabs; icon_slds, showSidebar.
+  SKIP: sidebar nav items → steedos-tabs; page content → steedos-pages.
 ---
 
 # Steedos Applications | Steedos 应用程序

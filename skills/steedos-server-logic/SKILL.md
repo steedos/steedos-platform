@@ -1,19 +1,16 @@
 ---
 name: steedos-server-logic
 description: |
-  TRIGGER when: user creates/edits a .trigger.yml or .function.yml file;
-  asks how to run server-side JavaScript on record create/update/delete; asks about
-  trigger lifecycle hooks (beforeInsert, afterInsert, beforeUpdate, afterUpdate,
-  beforeDelete, afterDelete); asks about trigger context (ctx.params.doc,
-  ctx.params.previousDoc, ctx.params.id); asks how to validate data, auto-fill
-  fields, cascade updates, or call external APIs; asks how to define a server-side
-  function callable via REST or from a button; asks about function properties
-  (name, objectApiName, is_rest, script, isEnabled) or ctx.input, objects API.
-  Trigger files: main/default/triggers/. Function files: main/default/functions/.
-  SKIP: button UI — steedos-object-buttons; call existing REST — steedos-server-api;
-  object definitions — steedos-objects.
-  Server-side JavaScript triggers (.trigger.yml) and functions (.function.yml).
-  Triggers fire on data change events. Functions are REST-exposed business logic.
+  Server-side triggers (.trigger.yml) and functions (.function.yml).
+  TRIGGER: .trigger.yml, .function.yml files in main/default/triggers/ and
+  functions/; server-side JavaScript on record CRUD; lifecycle hooks
+  (beforeInsert, afterInsert, beforeUpdate, afterUpdate, beforeDelete,
+  afterDelete); trigger context (ctx.params.doc, previousDoc, id);
+  data validation, auto-fill, cascade updates, external API calls;
+  function properties (name, objectApiName, is_rest, script, isEnabled),
+  ctx.input, objects API.
+  SKIP: button UI → steedos-object-buttons; REST calls → steedos-server-api;
+  object definitions → steedos-objects.
 ---
 
 # Steedos Server Logic: Triggers & Functions

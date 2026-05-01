@@ -1,16 +1,13 @@
 ---
 name: steedos-server-api
 description: |
-  TRIGGER when: user asks about Steedos Server REST API for DATA operations:
-  /api/v6/data/:objectName (CRUD records), /api/v6/objects/:objectApiName
-  (object metadata/schema), /api/v6/functions/:objectName/:functionName
-  (invoke server functions), /api/v6/health, /api/v6/public/settings; asks
-  about query params (fields, filters, sort, skip, top) for the data endpoint;
-  asks how to call a Steedos function via REST; cookie-based vs Bearer token auth.
-  SKIP: user asks about /api/v6/tables/:baseId/:tableId or /api/v6/direct/ —
-  use steedos-builder6-api; GraphQL — use steedos-graphql-api.
-  Steedos Server REST API (v6): data CRUD, object metadata, function invocation
-  with filter operators, pagination, and auth details.
+  Steedos Server REST API (v6): data CRUD, object metadata, function invocation.
+  TRIGGER: /api/v6/data/:objectName CRUD; /api/v6/objects/:objectApiName
+  metadata; /api/v6/functions/:objectName/:functionName; /api/v6/health;
+  /api/v6/public/settings; query params (fields, filters, sort, skip, top);
+  call Steedos function via REST; cookie-based vs Bearer token auth.
+  SKIP: /api/v6/tables/ or /api/v6/direct/ → steedos-builder6-api;
+  GraphQL → steedos-graphql-api.
 ---
 
 # Steedos Server API | Steedos 服务端 API

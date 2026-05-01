@@ -1,19 +1,14 @@
 ---
 name: steedos-builtin-objects
 description: |
-  TRIGGER when: user creates a new Steedos project or package; user adds a lookup/
-  master_detail field referencing a built-in object (users, organizations, spaces,
-  space_users, company, roles, permission_set, etc.); user asks about built-in object
-  names, fields, or relationships; user mentions departments, users, roles, permissions,
-  or any core platform entity by Chinese or English name; user configures sharing rules
-  or record-level permissions that depend on organizational hierarchy.
-  SKIP: user is only asking about custom object definition syntax (use steedos-objects),
-  or only asking about field types (use steedos-object-fields).
-  Steedos platform built-in objects reference. Lists ~20 core objects with field
-  definitions: users, spaces, organizations, space_users, company, roles,
-  permission_set, apps, tasks, accounts, contacts, pages, notifications.
-  Full index of ~93 built-in objects. Key: Department=organizations, Workspace=spaces,
-  Division=company, Permission Profile=permission_set.
+  Steedos platform built-in objects reference (~93 objects).
+  TRIGGER: lookup/master_detail field referencing built-in object; built-in object
+  names, fields, relationships; core entities: users, organizations, spaces,
+  space_users, company, roles, permission_set, apps, tasks, accounts, contacts;
+  Chinese/English name mapping (Department=organizations, Workspace=spaces,
+  Division=company, Permission Profile=permission_set);
+  sharing rules, organizational hierarchy.
+  SKIP: custom object syntax → steedos-objects; field types → steedos-object-fields.
 ---
 
 # Steedos Built-in Objects | Steedos 内置对象

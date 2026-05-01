@@ -1,18 +1,13 @@
 ---
 name: steedos-configuration
 description: |
-  Configure Steedos Server via environment variables and YAML settings files.
-  TRIGGER when: user configures Steedos via environment variables or YAML
-  settings; asks about .env files, steedos-config.yml,
-  default.steedos.settings.yml; asks about specific env vars (MONGO_URL,
-  ROOT_URL, B6_TRANSPORTER, JWT_SECRET, etc.); asks about Docker compose
-  setup, production vs development config, env interpolation in YAML.
-  SKIP: user asks about Builder6-specific B6_* internals — use
-  steedos-builder6-internals; user asks about project structure — use
-  steedos-project-package.
-  Covers required env vars, steedos-config.yml, YAML settings with env
-  interpolation, datasources, tenant settings, CFS file storage, SSO/OIDC,
-  email, Docker setup, and security best practices.
+  Steedos Server environment variables and YAML settings.
+  TRIGGER: .env files, steedos-config.yml, default.steedos.settings.yml;
+  env vars (MONGO_URL, ROOT_URL, B6_TRANSPORTER, JWT_SECRET);
+  Docker compose setup, production vs development config, YAML env interpolation;
+  datasources, tenant settings, CFS file storage, SSO/OIDC, email.
+  SKIP: B6_* internals → steedos-builder6-internals;
+  project structure → steedos-project-package.
 ---
 
 # Steedos Configuration | Steedos 配置

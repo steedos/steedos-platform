@@ -1,16 +1,14 @@
 ---
 name: steedos-object-fields
 description: |
-  TRIGGER when: user creates/edits a `.field.yml` file; asks about field types
-  (text, number, currency, select, lookup, master_detail, formula, summary, file,
-  image, location, etc.); asks about field properties (required, default, index,
-  searchable, filterable, visible_on, amis, group); asks how to add a field,
-  configure a lookup/relationship field, write a formula, or customize field UI
-  with Amis schema. Fields live in objects/{name}/fields/.
-  SKIP: user is asking about the object itself (.object.yml) — use steedos-objects;
-  asking about list columns — use steedos-objects; asking about
-  field-level security — use steedos-object-permissions.
-  Comprehensive guide to all Steedos field types and .field.yml configuration.
+  Steedos field types and .field.yml configuration.
+  TRIGGER: .field.yml files in objects/{name}/fields/; field types (text,
+  number, currency, select, lookup, master_detail, formula, summary, file,
+  image, location); field properties (required, default, index, searchable,
+  filterable, visible_on, amis, group); lookup/relationship config, formulas,
+  field UI with Amis schema.
+  SKIP: object definition → steedos-objects; list columns → steedos-objects;
+  field-level security → steedos-object-permissions.
 ---
 # Steedos Object Fields | Steedos 对象字段
 

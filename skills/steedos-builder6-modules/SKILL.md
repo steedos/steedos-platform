@@ -1,16 +1,13 @@
 ---
 name: steedos-builder6-modules
 description: |
-  TRIGGER when: user asks about Builder6 authentication (AuthGuard,
-  AdminGuard, token formats, signIn, password hashing, cookie management,
-  API keys); asks about Builder6 file upload/download system (local/S3
-  storage, /api/v6/files, presigned URLs, collection naming cfs.*); asks
-  about Builder6 plugin system (B6_PLUGIN_MODULES, B6_PLUGIN_PACKAGES,
-  PluginModule, MoleculerPluginService, plugin lifecycle).
-  SKIP: user asks about Steedos object-level permissions — use
-  steedos-object-permissions; user asks about Builder6 architecture — use
-  steedos-builder6-internals.
-  Covers auth guards, file upload/download (local + S3), and dynamic plugin loading.
+  Builder6 auth, file storage, and plugin modules.
+  TRIGGER: AuthGuard, AdminGuard, token formats, signIn, password hashing,
+  cookie management, API keys; file upload/download (local/S3, /api/v6/files,
+  presigned URLs, cfs.* collections); plugin system (B6_PLUGIN_MODULES,
+  B6_PLUGIN_PACKAGES, PluginModule, MoleculerPluginService).
+  SKIP: object permissions → steedos-object-permissions;
+  architecture → steedos-builder6-internals.
 ---
 
 # Builder6 Modules: Auth, Files & Plugins

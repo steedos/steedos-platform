@@ -1,14 +1,13 @@
 ---
 name: steedos-webapps
 description: |
-  Develop custom React + Vite webapps in Steedos packages (webapps/ directory).
-  Build custom amis Renderer components via IIFE compilation, with JSX runtime
-  shimming (amisRequire), CSS scope isolation (postcss-prefix-selector),
-  ScopedContext registration, Express router for SPA access, Tailwind v4
-  workarounds, and multi-webapp management. Covers vite.amis.config.ts,
-  amis-entry.ts, amis-jsx-shim.ts, client loader files
-  (main/default/client/*.client.js with waitForThing/loadJs/loadCss),
-  build scripts, and deployment to public/.
+  Custom React + Vite webapps in Steedos packages (webapps/ directory).
+  TRIGGER: webapps/ directory, React + Vite SPA; custom amis Renderer
+  components (IIFE, amisRequire, ScopedContext); vite.amis.config.ts,
+  amis-entry.ts, amis-jsx-shim.ts; client loader (*.client.js, waitForThing,
+  loadJs, loadCss); CSS scope isolation (postcss-prefix-selector);
+  Tailwind v4; build scripts, deployment to public/.
+  SKIP: Amis page (non-React) → steedos-pages.
 ---
 
 # Steedos Webapps | Steedos 软件包自定义 React 应用

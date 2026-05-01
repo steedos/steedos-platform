@@ -1,17 +1,12 @@
 ---
 name: steedos-getting-started
 description: |
-  TRIGGER when: user is NEW to Steedos and asks "what is Steedos", "where do I
-  start", "how does Steedos work", or any broad orientation question; asks which
-  skill to use for a given task; no other more specific skill clearly matches;
-  asks about Steedos CLI commands (steedos start, restart, deploy, import/export);
-  asks about validating a Steedos package after creation or modification.
-  SKIP: user has a specific task already identified — route directly to the
-  relevant skill (steedos-objects, steedos-object-fields, steedos-pages,
-  steedos-server-logic, steedos-server-api, etc.). Use this skill as an
-  orientation/routing guide ONLY, not for implementation details.
-  Steedos Platform overview, skill routing guide, CLI commands reference, and
-  package validation tool.
+  Steedos Platform overview, skill routing guide, and CLI commands.
+  TRIGGER: new to Steedos, "what is Steedos", "where do I start";
+  which skill to use; no specific skill matches; Steedos CLI
+  (steedos start, restart, deploy, import/export); package validation.
+  SKIP: specific task identified → route to relevant skill directly.
+  Orientation/routing guide ONLY, not for implementation details.
 ---
 
 # Steedos Platform Overview | Steedos 平台概览

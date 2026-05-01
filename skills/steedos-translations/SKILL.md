@@ -1,20 +1,15 @@
 ---
 name: steedos-translations
 description: |
-  TRIGGER when: user creates/edits a `.translation.yml` or `.objectTranslation.yml`
-  file; asks how to add Chinese/English labels to objects, fields, list views,
-  buttons, select options, or tab/app names; asks about i18n/internationalization
-  in a Steedos project; asks how to translate field labels, help text, picklist
-  option labels, or action button labels; asks about translation file naming
-  conventions (en.translation.yml, zh-CN.objectTranslation.yml); asks why a label
-  appears in the wrong language.
-  SKIP: user is defining the field itself (type, required, etc.) — use
-  steedos-object-fields; user is defining the object structure — use
-  steedos-objects; user is configuring app/tab names in source files —
-  use steedos-applications / steedos-tabs.
-  Steedos metadata i18n system. Two file types: .translation.yml (app/tab/
-  custom labels) and .objectTranslation.yml (object/field/listview/button labels).
-  Supports en and zh-CN language codes.
+  Steedos i18n: .translation.yml and .objectTranslation.yml files.
+  TRIGGER: .translation.yml, .objectTranslation.yml files; Chinese/English
+  labels for objects, fields, list views, buttons, select options, tab/app
+  names; i18n/internationalization; translate field labels, help text,
+  picklist options; naming conventions (en.translation.yml,
+  zh-CN.objectTranslation.yml); label shows wrong language.
+  SKIP: field definition → steedos-object-fields;
+  object structure → steedos-objects; app/tab source config →
+  steedos-applications / steedos-tabs.
 ---
 
 # Steedos Translations | Steedos 国际化

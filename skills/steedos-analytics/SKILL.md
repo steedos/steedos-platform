@@ -1,18 +1,12 @@
 ---
 name: steedos-analytics
 description: |
-  Create analytics question files (.question.yml) and dashboard files
-  (.dashboard.yml) in Steedos projects. Questions are report/chart definitions
-  (MBQL queries, display types, visualization_settings, result_metadata).
-  Dashboards are visual containers that arrange multiple question cards in a
-  grid layout with filter parameters. Both stored as YAML seed data files
-  under <package>/main/default/. Based on the @steedos-labs/analytics package.
-  TRIGGER when: user creates/edits a .question.yml or .dashboard.yml file;
-  asks about analytics reports, charts, MBQL queries, display types,
-  visualization_settings, result_metadata; asks about dashboard grid layout,
-  card placement, parameter definitions, parameter_mappings.
-  SKIP: user wants a custom Amis page — use steedos-pages; user wants to
-  call the analytics API programmatically — use steedos-server-api.
+  Analytics question (.question.yml) and dashboard (.dashboard.yml) files.
+  TRIGGER: .question.yml or .dashboard.yml files; analytics reports, charts,
+  MBQL queries, display types, visualization_settings, result_metadata;
+  dashboard grid layout, card placement, parameter_mappings;
+  @steedos-labs/analytics package; YAML seed data under <package>/main/default/.
+  SKIP: custom Amis page → steedos-pages; analytics API calls → steedos-server-api.
 ---
 
 # Steedos Analytics — Questions & Dashboards File Format Guide

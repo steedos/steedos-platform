@@ -1,19 +1,15 @@
 ---
 name: steedos-builder6-api
 description: |
-  TRIGGER when: user asks about Builder6 REST API endpoints: Tables module
-  (/api/v6/tables/:baseId/:tableId CRUD), Direct MongoDB (/api/v6/direct/:objectName),
-  Files API (/api/v6/files), Auth login (/api/v6/auth/login), Users profile
-  (/api/v6/users/me), presigned URLs, or Swagger UI at /api/v6; asks about
-  baseId/tableId addressing, batch operations, collection naming (t_{baseId}_{tableId}),
-  lookup field resolution, DataLoader batching, DevExtreme query adapter
-  (@builder6/query-mongodb), field type handling, or MetaService for field schema.
-  SKIP: user asks about /api/v6/data/:objectName CRUD or /api/v6/objects metadata
-  or /api/v6/functions — use steedos-server-api; GraphQL — use steedos-graphql-api;
-  architecture internals — use steedos-builder6-internals; auth guards/files/plugins —
-  use steedos-builder6-modules.
-  Builder6 REST API: Tables, Direct MongoDB, Files, Auth, Users endpoints.
-  Query params, filter operators, Swagger at /api/v6, DataLoader, DevExtreme adapter.
+  Builder6 REST API: Tables, Direct MongoDB, Files, Auth, Users.
+  TRIGGER: /api/v6/tables/:baseId/:tableId CRUD; /api/v6/direct/:objectName;
+  /api/v6/files; /api/v6/auth/login; /api/v6/users/me; presigned URLs;
+  Swagger UI at /api/v6; baseId/tableId addressing, batch operations,
+  collection naming (t_{baseId}_{tableId}), lookup field resolution,
+  DataLoader batching, DevExtreme adapter (@builder6/query-mongodb), MetaService.
+  SKIP: /api/v6/data/ or /api/v6/objects or /api/v6/functions → steedos-server-api;
+  GraphQL → steedos-graphql-api; architecture → steedos-builder6-internals;
+  auth guards/files/plugins → steedos-builder6-modules.
 ---
 
 # Builder6 Server API | Builder6 服务端 API

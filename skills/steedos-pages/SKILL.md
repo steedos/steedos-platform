@@ -1,18 +1,13 @@
 ---
 name: steedos-pages
 description: |
-  TRIGGER when: user creates/edits a .page.yml or .page.amis.json file; asks
-  about standalone Amis pages (type: app) for dashboards/reports/forms; asks
-  about object-bound record detail pages (type: record) or list pages
-  (type: list) with pageAssignments; asks about Steedos-specific Amis
-  components (steedos-record-service, steedos-object-listview,
-  steedos-record-form, steedos-record-detail-header); asks about
-  render_engine: amis.
-  SKIP: user wants a React webapp — use steedos-webapps; user wants action
-  buttons on a record — use steedos-object-buttons; user wants sidebar
-  navigation — use steedos-tabs.
-  Builds Amis-based custom pages: standalone (type: app) and object-bound
-  (type: record/list), defined as paired .page.yml + .page.amis.json files.
+  Amis-based custom pages: standalone (type: app) and object-bound (type: record/list).
+  TRIGGER: .page.yml, .page.amis.json files; standalone Amis pages for
+  dashboards/reports/forms; record detail pages, list pages, pageAssignments;
+  Steedos Amis components (steedos-record-service, steedos-object-listview,
+  steedos-record-form, steedos-record-detail-header); render_engine: amis.
+  SKIP: React webapp → steedos-webapps; action buttons → steedos-object-buttons;
+  sidebar nav → steedos-tabs.
 ---
 
 # Steedos Pages | Steedos 页面

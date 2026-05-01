@@ -1,20 +1,13 @@
 ---
 name: steedos-object-permissions
 description: |
-  TRIGGER when: user creates/edits a `.permission.yml`, `.permissionset.yml`,
-  `.profile.yml`, `.role.yml`, or `.restrictionRule.yml` file; asks how to
-  control who can create, read, edit, or delete records of an object; asks about
-  object-level permissions (allowCreate, allowRead, allowEdit, allowDelete,
-  viewAllRecords, modifyAllRecords); asks about field-level permissions
-  (readable_fields, editable_fields); asks about restriction rules (dynamic
-  row-level security filters); asks how to define a permission set or profile.
-  SKIP: user asking about button visibility formulas (visibleOn) — use
-  steedos-object-buttons; user asking about field visible_on formula —
-  use steedos-object-fields; user asking about tab-level permissions — use
-  steedos-tabs.
-  Multi-level permission control for Steedos objects: object-level, field-level,
-  and record-level (restriction rules). Covers .permission.yml, .permissionset.yml,
-  .profile.yml, .role.yml, and restrictionRule files.
+  Multi-level permission control: object-level, field-level, record-level.
+  TRIGGER: .permission.yml, .permissionset.yml, .profile.yml, .role.yml,
+  .restrictionRule.yml; allowCreate/Read/Edit/Delete, viewAllRecords,
+  modifyAllRecords; readable_fields, editable_fields; restriction rules
+  (dynamic row-level filters); permission set, profile definition.
+  SKIP: button visibility (visibleOn) → steedos-object-buttons;
+  field visible_on → steedos-object-fields; tab permissions → steedos-tabs.
 ---
 # Steedos Object Permissions | Steedos 对象权限
 

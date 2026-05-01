@@ -1,15 +1,12 @@
 ---
 name: steedos-builder6-internals
 description: |
-  Builder6 Server architecture and configuration. NestJS 11 + Moleculer 0.14
-  hybrid monorepo with 20+ @builder6/* packages.
-  TRIGGER when: user asks about Builder6 Server architecture (monorepo
-  structure, @builder6/* packages, module organization, bootstrap, middleware,
-  guards); asks about Builder6 configuration (B6_* environment variables,
-  dotenv-flow parsing, STEEDOS_ compatibility aliases, ConfigService access).
-  SKIP: user wants to USE Builder6 API — use steedos-builder6-api; user wants
-  Steedos Server internals — use steedos-server-internals; user wants to
-  configure Steedos project env — use steedos-configuration.
+  Builder6 Server architecture: NestJS 11 + Moleculer 0.14 hybrid monorepo.
+  TRIGGER: @builder6/* packages, monorepo structure, module organization,
+  bootstrap, middleware, guards; B6_* environment variables, dotenv-flow,
+  STEEDOS_ compatibility aliases, ConfigService access.
+  SKIP: use API → steedos-builder6-api; Steedos Server internals →
+  steedos-server-internals; project env config → steedos-configuration.
 ---
 
 # Builder6 Server Architecture & Configuration

@@ -1,19 +1,15 @@
 ---
 name: steedos-objects
 description: |
-  TRIGGER when: user creates/edits a .object.yml or .listview.yml file;
-  asks how to define a Steedos object (table), configure object-level settings
-  (label, icon, enable_files, enable_approvals, enable_audit), set up object
-  relationships (extend, base), or asks about the object folder structure
-  (objects/{name}/ with fields/, listviews/, permissions/, buttons/ subfolders);
-  asks how to define a list view, configure columns, filters, sort order, searchable
-  fields, mobile columns, view types (grid, calendar, kanban), crud_mode,
-  shared/shared_to, or filter_scope; asks "how do I create a new object".
-  SKIP: field details — steedos-object-fields; permissions — steedos-object-permissions;
-  buttons — steedos-object-buttons; triggers/functions — steedos-server-logic.
-  Defines Steedos object data models (.object.yml) and list views (.listview.yml).
-  Covers object properties, feature flags, inheritance, naming conventions,
-  multi-file layout, list view columns, filters, sort, and sharing settings.
+  Steedos object data models (.object.yml) and list views (.listview.yml).
+  TRIGGER: .object.yml, .listview.yml files; object settings (label, icon,
+  enable_files, enable_approvals, enable_audit), object relationships (extend,
+  base), folder structure (objects/{name}/ with fields/, listviews/, permissions/,
+  buttons/); list view columns, filters, sort, searchable fields, mobile columns,
+  view types (grid, calendar, kanban), crud_mode, shared/shared_to, filter_scope;
+  "how do I create a new object".
+  SKIP: fields → steedos-object-fields; permissions → steedos-object-permissions;
+  buttons → steedos-object-buttons; triggers/functions → steedos-server-logic.
 ---
 
 # Steedos Objects | Steedos 对象定义

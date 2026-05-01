@@ -1,16 +1,11 @@
 ---
 name: steedos-project-package
 description: |
-  Learn how to create and structure Steedos projects and packages.
-  TRIGGER when: user creates a new Steedos project or package; asks about
-  project structure, package.json setup, steedos-config.yml, package.service.js;
-  asks about metadata directory structure (objects, triggers, functions, pages, etc.);
-  asks about naming conventions or file types in a Steedos project.
-  SKIP: user asks about specific metadata types (objects, fields, triggers,
-  buttons, pages, etc.) — route to the relevant skill.
-  Covers minimal project requirements, package.json, steedos-config.yml,
-  package.service.js, directory structure, metadata file types, naming
-  conventions, and installation procedures.
+  Steedos project and package structure.
+  TRIGGER: new project/package creation; project structure, package.json,
+  steedos-config.yml, package.service.js; metadata directory structure
+  (objects, triggers, functions, pages); naming conventions, file types.
+  SKIP: specific metadata types → route to relevant skill.
 ---
 
 # Steedos Project & Package Format | Steedos 项目与软件包格式

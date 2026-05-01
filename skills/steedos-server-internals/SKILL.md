@@ -1,20 +1,15 @@
 ---
 name: steedos-server-internals
 description: |
-  TRIGGER when: user asks about HOW Steedos Server is built internally —
-  NestJS module organization, Moleculer broker (namespace, transporter,
-  cacher, serializer), AppMoleculer service events ($packages.changed,
-  $metadata.*, @objectRecordEvent), Socket.IO AppGateway, WebSocket rooms,
-  bootstrap sequence, middleware stack, guards, dependency injection,
-  inter-service communication (broker.call, broker.emit), edition system,
-  or the @builder6/* package ecosystem.
-  SKIP: user wants to USE the REST API — use steedos-server-api or
-  steedos-builder6-api; user wants to configure the server — use
-  steedos-configuration; user wants Builder6 internals — use
-  steedos-builder6-internals; user wants an overview — use
-  steedos-getting-started.
-  Internal architecture: NestJS 11 + Moleculer 0.14 hybrid, module layout,
-  bootstrap, middleware, guards, Socket.IO, Moleculer events, WebSocket rooms.
+  Steedos Server internal architecture: NestJS 11 + Moleculer 0.14 hybrid.
+  TRIGGER: NestJS module organization; Moleculer broker (namespace, transporter,
+  cacher, serializer); AppMoleculer events ($packages.changed, $metadata.*,
+  @objectRecordEvent); Socket.IO AppGateway, WebSocket rooms; bootstrap sequence,
+  middleware, guards, dependency injection; broker.call, broker.emit;
+  edition system, @builder6/* ecosystem.
+  SKIP: use REST API → steedos-server-api or steedos-builder6-api;
+  configure server → steedos-configuration; Builder6 internals →
+  steedos-builder6-internals; overview → steedos-getting-started.
 ---
 
 # Steedos Server Architecture | Steedos 服务端架构
