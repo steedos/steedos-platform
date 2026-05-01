@@ -9,21 +9,11 @@ description: |
   or record-level permissions that depend on organizational hierarchy.
   SKIP: user is only asking about custom object definition syntax (use steedos-objects),
   or only asking about field types (use steedos-object-fields).
-  Steedos platform built-in objects reference. Lists ~20 commonly used
-  core objects with field definitions and relationships: users, spaces,
-  organizations, space_users, company, roles, permission_set, apps,
-  tasks, accounts, contacts, pages, notifications, etc. Also provides
-  a full index of all ~93 built-in objects by category.
-
-  IMPORTANT name mappings (Steedos names differ from common expectations):
-  - Department/部门 → object name is `organizations` (NOT departments)
-  - Workspace/工作区 → object name is `spaces`
-  - Workspace User/工作区用户 → object name is `space_users`
-  - Division/分部 → object name is `company`
-  - Permission Profile/权限简档 → object name is `permission_set`
-  - Task/任务 → object name is `tasks`
-  - Contact/联系人 → object name is `contacts`
-  - Account/客户 → object name is `accounts`
+  Steedos platform built-in objects reference. Lists ~20 core objects with field
+  definitions: users, spaces, organizations, space_users, company, roles,
+  permission_set, apps, tasks, accounts, contacts, pages, notifications.
+  Full index of ~93 built-in objects. Key: Department=organizations, Workspace=spaces,
+  Division=company, Permission Profile=permission_set.
 ---
 
 # Steedos Built-in Objects | Steedos 内置对象
