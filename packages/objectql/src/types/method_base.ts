@@ -73,8 +73,11 @@ export async function getMongoInsertBaseDoc(object: any, doc: Dictionary<any>, u
 
     var extras = ["spaces", "company", "organizations", "users", "space_users", "flows", "forms"];
     if (extras.indexOf(object.name) < 0 && doc.space) {
+        if(_.has(doc, "company_ids") && _.has(doc, "company_id") && doc.company_id != doc.company_ids[0]){
+            doc.company_ids = [doc.company_id];
+        }
         /* company_ids/company_id默认值逻辑*/
-        if (!doc.company_id || !doc.company_ids) {
+        else if (!doc.company_id || !doc.company_ids) {
             if (!doc.company_id) {
                 if (doc.company_ids && doc.company_ids.length) {
                     /* 如果用户在界面上指定了company_ids，则取第一个值 */
@@ -111,8 +114,11 @@ export async function getMongoUpdateBaseDoc(object: any, doc: Dictionary<any>, u
 
     var extras = ["spaces", "company", "organizations", "users", "space_users", "flows", "forms"];
     if (extras.indexOf(object.name) < 0) {
+        if(_.has(doc, "company_ids") && _.has(doc, "company_id") && doc.company_id != doc.company_ids[0]){
+            doc.company_ids = [doc.company_id];
+        }
         /* company_ids/company_id级联修改逻辑*/
-        if (_.has(doc, "company_ids")) {
+        else if (_.has(doc, "company_ids")) {
             /*
                 原则上应该将 company_ids 设置为可编辑，company_id 设置为只读。
                 当 company_ids 可编辑时，修改 company_ids 同时更新 company_id = company_ids[0]
