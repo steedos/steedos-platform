@@ -1,6 +1,6 @@
 {
   "name": "@steedos/ai",
-  "version": "3.0.14-beta.10",
+  "version": "3.0.14-beta.11",
   "main": "dist/index.js",
   "license": "MIT",
   "files": [
@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@ai-sdk/openai": "^2.0.52",
-    "@steedos/objectql": "3.0.14-beta.10",
+    "@steedos/objectql": "3.0.14-beta.11",
     "ai": "^5.0.71",
     "openai": "^6.8.1"
   },
@@ -29,7 +29,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "f508d51da8f6f0436fba72aab808563dbadcb6ba",
+  "gitHead": "7374cbad62f260d4d07203866c4946bdaea8685a",
   "devDependencies": {
     "@types/node": "^18.0.3",
     "typescript": "5.7.3"
