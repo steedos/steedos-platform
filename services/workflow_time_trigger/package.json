@@ -1,15 +1,15 @@
 {
   "name": "@steedos/workflow_time_trigger",
-  "version": "3.0.14-beta.12",
+  "version": "3.0.14-beta.13",
   "main": "package.service.js",
   "license": "MIT",
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
-    "@steedos/objectql": "3.0.14-beta.12",
+    "@steedos/objectql": "3.0.14-beta.13",
     "eval": "0.1.8",
     "node-schedule": "2.1.0"
   },
-  "gitHead": "69e56052dd2a5fe3c73912ef559c66760bc26435"
+  "gitHead": "509c8ba8762b0d15fc5fbba518fb08c0350ecb8f"
 }
