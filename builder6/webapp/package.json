@@ -1,6 +1,6 @@
 {
   "name": "@steedos/webapp",
-  "version": "3.0.14-beta.13",
+  "version": "3.0.14-beta.14",
   "files": [
     "dist"
   ],
@@ -75,7 +75,7 @@
     "access": "public"
   },
   "repository": "https://github.com/steedos/app-builder/tree/master/apps/accounts",
-  "gitHead": "509c8ba8762b0d15fc5fbba518fb08c0350ecb8f",
+  "gitHead": "554add336a2137b998ab14a35a9b07b7c1925c0a",
   "dependencies": {
     "@steedos-widgets/amis-object": "^6.10.53-beta.10",
     "autoprefixer": "^10.4.23"
