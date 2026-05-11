@@ -6,8 +6,9 @@ import {logError} from './errors';
 import {bindClientFunc, forceLogoutIfNecessary} from './helpers';
 import LocalStorageStore from '../stores/local_storage_store';
 import { getCurrentUserId } from '../selectors/entities/users';
-import { getSpace } from '../selectors/entities/spaces';
+import { getSpace, getSpaces } from '../selectors/entities/spaces';
 import { getRootUrl } from '../selectors/settings';
+import { getSettingsTenantId } from '../selectors';
 import store from '../stores/redux_store';
 
 import { checkRedirectUrlWhitelist } from '../utils/check';
@@ -18,6 +19,19 @@ export function selectSpace(spaceId?: string): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
 
     let selectedSpaceId = spaceId || LocalStorageStore.getItem('spaceId');
+    if (!selectedSpaceId) {
+      // Try settingsTenantId (from STEEDOS_TENANT_ID env var)
+      selectedSpaceId = getSettingsTenantId(getState());
+      console.log(`selectedSpaceId`, selectedSpaceId)
+    }
+    if (!selectedSpaceId) {
+      // Auto-select if only one space available
+      const spaces = getSpaces(getState());
+      const spaceIds = Object.keys(spaces);
+      if (spaceIds.length === 1) {
+        selectedSpaceId = spaceIds[0];
+      }
+    }
     if (!selectedSpaceId) {
       return {data: false};
     }

@@ -17,17 +17,24 @@ const Logout = (props) => {
     }
 
     if (tenant.page_logout) {
-      // If you need to use tenant's logout page
       redirect_uri = tenant.page_logout;
     }
 
     logout()
       .then(() => {
-        navigate(redirect_uri);
+        if (redirect_uri.startsWith('http://') || redirect_uri.startsWith('https://')) {
+          window.location.href = redirect_uri;
+        } else {
+          navigate(redirect_uri);
+        }
       })
       .catch((e) => {
         console.error(e);
-        navigate(redirect_uri);
+        if (redirect_uri.startsWith('http://') || redirect_uri.startsWith('https://')) {
+          window.location.href = redirect_uri;
+        } else {
+          navigate(redirect_uri);
+        }
       });
   }, [logout, navigate, location.search, tenant.page_logout]);
 
