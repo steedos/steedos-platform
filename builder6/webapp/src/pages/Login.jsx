@@ -57,7 +57,8 @@ class Login extends React.Component {
 
     super(props, context);
 
-    if(this.props.tenant.page_login){
+    const noRedirect = new URLSearchParams(this.props.location.search).get('default');
+    if(this.props.tenant.page_login && !noRedirect){
       // TODO 给 page login 拼接 redirect url?
       return window.location.href = this.props.tenant.page_login;
     }
