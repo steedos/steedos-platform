@@ -1,6 +1,6 @@
 {
     "name": "@steedos/service-core-objects",
-    "version": "3.0.14-beta.15",
+    "version": "3.0.14-beta.16",
     "main": "package.service.js",
     "publishConfig": {
         "access": "public"
@@ -9,7 +9,7 @@
         "steedos"
     ],
     "dependencies": {
-        "@steedos/service-package-loader": "3.0.14-beta.15",
+        "@steedos/service-package-loader": "3.0.14-beta.16",
         "bcryptjs": "^3.0.3",
         "json2xls": "^0.1.2",
         "lodash": "^4.17.21"
@@ -17,5 +17,5 @@
     "description": "steedos package",
     "repository": {},
     "license": "MIT",
-    "gitHead": "629aeb346ee02ead884d9b425a03fa9ec1d54cb5"
+    "gitHead": "15bc7fc1744259797fe767bbf93b0853069ee84a"
 }
