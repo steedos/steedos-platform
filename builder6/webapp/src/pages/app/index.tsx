@@ -11,6 +11,20 @@ const on_click_script = `
     }
   `;
 
+  const navigateTo = (path: string) => {
+    if (!path) return;
+    if (path.startsWith('/') || path.startsWith(window.location.origin)) {
+      try {
+        const url = new URL(path, window.location.origin);
+        (window as any).navigate(url.pathname + url.search + url.hash);
+      } catch {
+        (window as any).navigate(path);
+      }
+    } else {
+      window.location.href = path;
+    }
+  };
+
   const pcInitJumtoFirstAppFirstTabScript = (payload, response, api, context) => {
     const resolvePathTemplate = (path, data) => {
       if (!path || path.indexOf('${') < 0) {
@@ -37,17 +51,17 @@ const on_click_script = `
       let firstApp = app_items[0];
       if(firstApp && firstApp.default_tab){
         if (typeof firstApp.default_tab === 'object' && firstApp.default_tab.path) {
-          window.location.href = resolvePathTemplate(firstApp.default_tab.path, firstApp.default_tab);
+          navigateTo(resolvePathTemplate(firstApp.default_tab.path, firstApp.default_tab));
         }
         else{
-          window.location.href = `/app/${firstApp.id}/${firstApp.default_tab}`;
+          navigateTo(`/app/${firstApp.id}/${firstApp.default_tab}`);
         }
         return payload;
       }
       if(firstApp && firstApp.children && firstApp.children.length > 0){
         let firstTab = firstApp.children[0];
         if(firstTab){
-          window.location.href = resolvePathTemplate(firstTab.path, firstTab);
+          navigateTo(resolvePathTemplate(firstTab.path, firstTab));
         }
       }
     }
