@@ -60,7 +60,10 @@ class Login extends React.Component {
     const noRedirect = new URLSearchParams(this.props.location.search).get('default');
     if(this.props.tenant.page_login && !noRedirect){
       // TODO 给 page login 拼接 redirect url?
-      return window.location.href = this.props.tenant.page_login;
+      window.location.href = this.props.tenant.page_login;
+      this._redirecting = true;
+      this.state = {};
+      return;
     }
 
     let inApp = false
@@ -439,6 +442,9 @@ class Login extends React.Component {
   }
 
   render() {
+    if (this._redirecting) {
+      return null;
+    }
     return (
       <>
         <Background />
