@@ -112,6 +112,37 @@ module.exports = {
 				return page;
 			}
 		},
+		getPageWidgetSchema: {
+			rest: {
+				method: "GET",
+				path: "/page/:apiName/widget_schema"
+			},
+			async handler(ctx) {
+				const { apiName } = ctx.params;
+				const widgetType = `amis-${apiName}`;
+
+				const widgets = await objectql.getObject('widgets').find({
+					filters: [['type', '=', widgetType]]
+				});
+
+				const sorted = _.sortBy(widgets, 'sort');
+				const bodies = sorted.map(w => w.schema).filter(Boolean);
+
+				if (bodies.length === 0) {
+					return { status: 0, data: { type: 'wrapper', body: [] } };
+				}
+
+				return {
+					status: 0,
+					data: {
+						type: 'wrapper',
+						className: 'w-full max-w-4xl space-y-4 p-0',
+						size: 'none',
+						body: bodies
+					}
+				};
+			}
+		},
 		searchPage:{
 			rest: {
 				method: "GET",
