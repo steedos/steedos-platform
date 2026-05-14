@@ -235,7 +235,7 @@ fields:
         value: all
       - label: Collapse All
         value: none
-    visible_on: '{{ data.enable_tree == true }}'
+    visible_on: '{{ formData.enable_tree == true }}'
   enable_workflow:
     name: enable_workflow
     defaultValue: true
