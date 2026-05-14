@@ -128,6 +128,11 @@
       "type": "string",
       "description": "树状结构子节点字段，默认为children"
     },
+    "tree_expand": {
+      "type": "string",
+      "enum": ["first", "all", "none"],
+      "description": "树状结构列表默认展开行为：first 默认展开第一个节点（默认值），all 默认展开全部节点，none 默认全部收起"
+    },
     "enable_approvals": {
       "type": "boolean",
       "description": "历史步骤"
