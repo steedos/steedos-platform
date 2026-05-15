@@ -43,8 +43,8 @@ module.exports = {
             created: now,
             modified_by: userId,
             modified: now,
-            company_id: object.companyId,
-            company_ids: object.companyIds
+            company_id: object.company_id,
+            company_ids: object.company_ids
         };
         await objectql.getObject('tabs').insert(tabDoc);
         
