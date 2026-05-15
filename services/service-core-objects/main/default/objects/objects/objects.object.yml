@@ -220,6 +220,22 @@ fields:
     label: Enable Tree
     sort_no: 200
     type: boolean
+  tree_expand:
+    name: tree_expand
+    group: advanced
+    hidden: false
+    label: Tree Default Expand
+    sort_no: 205
+    type: select
+    defaultValue: first
+    options:
+      - label: Expand First
+        value: first
+      - label: Expand All
+        value: all
+      - label: Collapse All
+        value: none
+    visible_on: '{{ formData.enable_tree == true }}'
   enable_workflow:
     name: enable_workflow
     defaultValue: true

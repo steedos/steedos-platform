@@ -138,6 +138,7 @@ abstract class SteedosObjectProperties {
   enable_tree?: boolean;
   parent_field?: string;
   children_field?: string;
+  tree_expand?: string;
   enable_enhanced_lookup?: boolean;
   enable_inline_edit?: boolean;
   enable_approvals?: boolean;
@@ -212,6 +213,7 @@ const properties = [
   "enable_tree",
   "parent_field",
   "children_field",
+  "tree_expand",
   "enable_enhanced_lookup",
   "enable_workflow",
   "is_view",

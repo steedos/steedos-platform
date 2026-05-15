@@ -87,6 +87,17 @@ fields:
     label: Enable Tree
     help: 
     description: Enable a tree structure to display records
+  tree_expand:
+    label: Tree Default Expand
+    help: 
+    options:
+      - label: First node only
+        value: first
+      - label: Expand all
+        value: all
+      - label: Collapse all
+        value: none
+    description: Default expansion behavior of the tree list. Defaults to expanding the first node; can be set to expand all nodes or collapse all.
   enable_enhanced_lookup:
     label: Enable Enhanced Lookup
     help: 
