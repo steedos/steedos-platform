@@ -73,7 +73,12 @@ export async function getMongoInsertBaseDoc(object: any, doc: Dictionary<any>, u
 
     var extras = ["spaces", "company", "organizations", "users", "space_users", "flows", "forms"];
     if (extras.indexOf(object.name) < 0 && doc.space) {
-        if(_.has(doc, "company_ids") && _.has(doc, "company_id") && doc.company_id != doc.company_ids[0]){
+        // 注意：此处必须用真值 + Array 检查，不要使用 `_.has(doc, "company_ids")`。
+        // _.has 仅判断属性是否存在，对于显式赋值为 undefined 的字段（例如其它
+        // 触发器中以 `doc.company_ids = object.companyIds` 这类 camelCase 误写
+        // 导致字段为 undefined 的场景）依然返回 true，进而触发
+        // `doc.company_ids[0]` 抛出 "Cannot read properties of undefined (reading '0')"。
+        if(doc.company_id && Array.isArray(doc.company_ids) && doc.company_ids.length && doc.company_id != doc.company_ids[0]){
             doc.company_ids = [doc.company_id];
         }
         /* company_ids/company_id默认值逻辑*/
@@ -114,7 +119,10 @@ export async function getMongoUpdateBaseDoc(object: any, doc: Dictionary<any>, u
 
     var extras = ["spaces", "company", "organizations", "users", "space_users", "flows", "forms"];
     if (extras.indexOf(object.name) < 0) {
-        if(_.has(doc, "company_ids") && _.has(doc, "company_id") && doc.company_id != doc.company_ids[0]){
+        // 注意：此处必须用真值 + Array 检查，不要使用 `_.has(doc, "company_ids")`。
+        // _.has 对显式赋值为 undefined 的字段也返回 true，会导致后续
+        // `doc.company_ids[0]` 抛出 "Cannot read properties of undefined (reading '0')"。
+        if(doc.company_id && Array.isArray(doc.company_ids) && doc.company_ids.length && doc.company_id != doc.company_ids[0]){
             doc.company_ids = [doc.company_id];
         }
         /* company_ids/company_id级联修改逻辑*/
