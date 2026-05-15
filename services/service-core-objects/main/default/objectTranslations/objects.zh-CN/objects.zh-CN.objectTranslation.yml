@@ -91,6 +91,17 @@ fields:
     label: 树状结构显示
     help: 
     description: 以树状格式呈现数据层级结构，方便查看记录的父子关系。
+  tree_expand:
+    label: 树列表默认展开
+    help: 
+    options:
+      - label: 仅展开首个节点
+        value: first
+      - label: 全部展开
+        value: all
+      - label: 全部收起
+        value: none
+    description: 配置开启树状结构显示后，列表加载时的默认展开行为。默认展开第一个节点；可选择默认展开全部节点或全部收起。
   enable_enhanced_lookup:
     label: 弹出窗口查找
     help: 
