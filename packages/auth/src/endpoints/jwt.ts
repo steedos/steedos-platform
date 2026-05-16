@@ -20,7 +20,7 @@ import { getSteedosSchema } from '@steedos/objectql'
 //   })
 // }
 
-async function getTokenInfo(req) {
+async function getTokenInfo(req, spaceId?) {
   let payload = req.user
   let data = { userId: '', authToken: '' }
   let userObj = getSteedosSchema().getObject('users')
@@ -56,7 +56,8 @@ async function getTokenInfo(req) {
           extraData: null,
           valid: true,
           created: new Date(),
-          modified: new Date()
+          modified: new Date(),
+          space: spaceId || null
       }
       await sessionsObj.directInsert(sessionObj);
     }
@@ -91,7 +92,7 @@ export const jwtSSO = async (req, res) => {
       throw new Error('spaceId is needed!')
     }
     let verifiedPayload = jwt.verify(token, secret);
-    let data = await getTokenInfo({ user: verifiedPayload })
+    let data = await getTokenInfo({ user: verifiedPayload }, spaceId)
     setAuthCookies(req, res, data.userId, data.authToken, spaceId)
     let redirectUrl = verifiedPayload.redirect_url;
     if(redirectUrl && (redirectUrl.startsWith('https://') || redirectUrl.startsWith('http%3A%2F%2F'))){
