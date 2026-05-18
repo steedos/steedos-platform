@@ -9,7 +9,7 @@
   "dependencies": {
     "@steedos-labs/analytics": "^3.1.2",
     "@steedos-labs/plugin-print-template": "^3.0.3",
-    "@steedos-labs/plugin-workflow": "^3.0.79",
+    "@steedos-labs/plugin-workflow": "^3.0.80",
     "@steedos/ee_branding": "3.0.14-beta.20",
     "@steedos/service-license": "^3.0.2",
     "mssql": "^11.0.1",
