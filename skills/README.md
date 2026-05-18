@@ -165,6 +165,13 @@ Builder6 authentication (guards, token formats, AuthService), file upload/downlo
 
 Builder6 认证（守卫、Token、AuthService）、文件上传下载（本地 + S3）和动态插件系统。
 
+### 🧪 Dev & Testing | 开发测试 (1 skill)
+
+#### [steedos-dev-testing](./steedos-dev-testing/SKILL.md)
+Automated dev-test workflow using Playwright MCP Server. Iterative loop: modify → build → restart → browser test → record → repeat. Includes project configuration template and setup guidance.
+
+使用 Playwright MCP Server 的自动化开发测试工作流。迭代循环：修改 → 构建 → 重启 → 浏览器测试 → 记录 → 重复。包含项目配置模板和环境配置引导。
+
 ## Quick Reference | 快速参考
 
 ### By Task | 按任务查找
@@ -192,6 +199,7 @@ Builder6 认证（守卫、Token、AuthService）、文件上传下载（本地 
 | Server architecture | [steedos-server-internals](./steedos-server-internals/SKILL.md) |
 | Builder6 REST API | [steedos-builder6-api](./steedos-builder6-api/SKILL.md) |
 | Auth/Files/Plugins | [steedos-builder6-modules](./steedos-builder6-modules/SKILL.md) |
+| Automated dev & testing | [steedos-dev-testing](./steedos-dev-testing/SKILL.md) |
 
 ### By File Type | 按文件类型查找
 
