@@ -1,6 +1,6 @@
 {
     "name": "@steedos/standard-permission",
-    "version": "3.0.15-beta.1",
+    "version": "3.0.15-beta.2",
     "main": "package.service.js",
     "publishConfig": {
         "access": "public"
@@ -11,7 +11,7 @@
     "description": "steedos package",
     "repository": {},
     "license": "MIT",
-    "gitHead": "ff62e2bc9d8c85b48d928e042f7882f0ef77cbe1",
+    "gitHead": "0619786a4835de5c8b37c5494d1b58b459af2f64",
     "dependencies": {
         "clone": "^2.1.2"
     }
