@@ -8733,6 +8733,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@steedos/cachers@npm:3.0.14-beta.20":
+  version: 3.0.14-beta.20
+  resolution: "@steedos/cachers@npm:3.0.14-beta.20"
+  dependencies:
+    lodash: ^4.17.21
+    lru-cache: ^7.10.1
+  checksum: 2984c2a5f6e613d821a98a208825c32fcc6c620b69fe99c739519138bd36aad05d0461e4a483aea0ef7c9e1fe96cd836e601407c36dbc16e619ebd5c757185f7
+  languageName: node
+  linkType: hard
+
 "@steedos/client@3.0.15-beta.2, @steedos/client@workspace:packages/client":
   version: 0.0.0-use.local
   resolution: "@steedos/client@workspace:packages/client"
@@ -8742,6 +8752,16 @@ __metadata:
     typescript: 5.7.3
   languageName: unknown
   linkType: soft
+
+"@steedos/client@npm:3.0.14-beta.20":
+  version: 3.0.14-beta.20
+  resolution: "@steedos/client@npm:3.0.14-beta.20"
+  dependencies:
+    "@steedos/filters": 3.0.14-beta.20
+    node-fetch: ^3.2.10
+  checksum: 8ba0d4f15bae78fb1ef0c5b81c29452fa23830478a9c6071abbda41e05bdde146619edf6a3e5f5254d1ff0bffe4e496696e33b38f745753962dc86907de5ded0
+  languageName: node
+  linkType: hard
 
 "@steedos/create-steedos-package@workspace:packages/create-steedos-package":
   version: 0.0.0-use.local
@@ -8846,6 +8866,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@steedos/filters@npm:3.0.14-beta.20":
+  version: 3.0.14-beta.20
+  resolution: "@steedos/filters@npm:3.0.14-beta.20"
+  dependencies:
+    "@babel/runtime": 7.28.4
+    lodash: 4.17.21
+    moment: ^2.24.0
+  checksum: 3736a920d2f09173b81b52a0ba182a853e025e88a7eb1b7d523c82ab9071f66cb9ede3b59cc1c79badd279d2be4cfa34dc23bc52125b5ec86e3cc1f356fb046b
+  languageName: node
+  linkType: hard
+
 "@steedos/formula@3.0.15-beta.2, @steedos/formula@workspace:packages/formula":
   version: 0.0.0-use.local
   resolution: "@steedos/formula@workspace:packages/formula"
@@ -8862,6 +8893,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@steedos/formula@npm:3.0.14-beta.20":
+  version: 3.0.14-beta.20
+  resolution: "@steedos/formula@npm:3.0.14-beta.20"
+  checksum: be45bc7c3fab25f8b2e89b2c2940260739594ea98cbed374bfb817cdd4ebb6ea1063bf5da40310b7f03cbc5c9224d28ae3003bef82cba9820ec4d9b26213e220
+  languageName: node
+  linkType: hard
+
 "@steedos/i18n@3.0.15-beta.2, @steedos/i18n@workspace:packages/i18n":
   version: 0.0.0-use.local
   resolution: "@steedos/i18n@workspace:packages/i18n"
@@ -8873,6 +8911,18 @@ __metadata:
     underscore: ^1.13.7
   languageName: unknown
   linkType: soft
+
+"@steedos/i18n@npm:3.0.14-beta.20":
+  version: 3.0.14-beta.20
+  resolution: "@steedos/i18n@npm:3.0.14-beta.20"
+  dependencies:
+    "@steedos/cachers": 3.0.14-beta.20
+    i18next: ^19.3.4
+    i18next-sprintf-postprocessor: ^0.2.2
+    underscore: ^1.13.7
+  checksum: a54728669e857433353cfac1cc0abaa31029755ad41b90b1ef88d5962a415e2a3d0e56bcccef6c1fe4c61aed7509532bab0d362e6da3863fb4243c8e4ac7e394
+  languageName: node
+  linkType: hard
 
 "@steedos/license@npm:^3.0.2":
   version: 3.0.2
@@ -8930,6 +8980,29 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@steedos/metadata-core@npm:3.0.14-beta.20":
+  version: 3.0.14-beta.20
+  resolution: "@steedos/metadata-core@npm:3.0.14-beta.20"
+  dependencies:
+    "@steedos/client": 3.0.14-beta.20
+    archiver: ^5.1.0
+    chalk: ^4.1.0
+    clone: ^2.1.2
+    compressing: ^1.5.1
+    dotenv-flow: ^3.2.0
+    eval: ^0.1.4
+    glob: ^10.5.0
+    globby: ^11.1.0
+    graceful-fs: 4.2.10
+    ini: ^2.0.0
+    js-beautify: 1.14.7
+    js-yaml: ^3.14.2
+    mkdirp: ^1.0.4
+    underscore: ^1.13.7
+  checksum: d8e94056b3ccf1ef96f217f8a2422027d7bfdc279c1abc7ad8403ee76c766852995063df217c4a8ef88a03d942b67bda653fa2c1fed59e78d8deebc073ffb0e0
+  languageName: node
+  linkType: hard
+
 "@steedos/metadata-registrar@3.0.15-beta.2, @steedos/metadata-registrar@workspace:packages/metadata-registrar":
   version: 0.0.0-use.local
   resolution: "@steedos/metadata-registrar@workspace:packages/metadata-registrar"
@@ -8955,6 +9028,30 @@ __metadata:
     underscore: ^1.13.7
   languageName: unknown
   linkType: soft
+
+"@steedos/metadata-registrar@npm:3.0.14-beta.20":
+  version: 3.0.14-beta.20
+  resolution: "@steedos/metadata-registrar@npm:3.0.14-beta.20"
+  dependencies:
+    "@salesforce/ts-types": 1.1.2
+    "@steedos/client": 3.0.14-beta.20
+    "@steedos/metadata-core": 3.0.14-beta.20
+    archiver: ^5.1.0
+    chalk: ^4.1.0
+    clone: ^2.1.2
+    compressing: ^1.5.1
+    dotenv-flow: ^3.2.0
+    eval: ^0.1.4
+    glob: ^10.5.0
+    ini: ^2.0.0
+    ioredis: ^5.3.2
+    js-yaml: ^3.14.2
+    lodash: ^4.17.21
+    tslib: ^2.4.0
+    underscore: ^1.13.7
+  checksum: 1e74a0cde1e9f40a478329adaac7c5b27261138fca3924e16ba8c245029c8e19de5c6a6efb5c7b040c2536eee8d7574e96a3cc25f550b482a8e2a73dba1405fc
+  languageName: node
+  linkType: hard
 
 "@steedos/migrate@3.0.15-beta.2, @steedos/migrate@workspace:packages/migrate":
   version: 0.0.0-use.local
@@ -9045,6 +9142,52 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@steedos/objectql@npm:3.0.14-beta.20":
+  version: 3.0.14-beta.20
+  resolution: "@steedos/objectql@npm:3.0.14-beta.20"
+  dependencies:
+    "@salesforce/kit": 1.0.4
+    "@salesforce/ts-types": 1.1.1
+    "@steedos/cachers": 3.0.14-beta.20
+    "@steedos/filters": 3.0.14-beta.20
+    "@steedos/formula": 3.0.14-beta.20
+    "@steedos/i18n": 3.0.14-beta.20
+    "@steedos/metadata-core": 3.0.14-beta.20
+    "@steedos/metadata-registrar": 3.0.14-beta.20
+    "@steedos/odata-v4-mongodb": 3.0.14-beta.20
+    "@steedos/odata-v4-sql": 3.0.14-beta.20
+    "@steedos/odata-v4-typeorm": 3.0.14-beta.20
+    "@steedos/schemas": 3.0.14-beta.20
+    ajv: ^8.17.1
+    amis-formula: ~6.3.0
+    app-root-path: ^2.2.1
+    axios: ^1.13.2
+    body-parser: ^2.2.1
+    bunyan-sfdx-no-dtrace: ^1.8.2
+    clone: ^2.1.2
+    cookies: ^0.8.0
+    deasync: 0.1.30
+    eval: ^0.1.4
+    express: ^5.1.0
+    graphql: ^15.8.0
+    graphql-parse-resolve-info: ^4.12.3
+    jsonwebtoken: ^9.0.3
+    lodash: ^4.17.21
+    mingo: ^6.0.5
+    moment: ^2.29.1
+    mongodb: ^3.7.3
+    mongodb-uri: ^0.9.7
+    node-fetch: ^3.2.10
+    path: ^0.12.7
+    reflect-metadata: ^0.2.0
+    sequelize: ^6.37.7
+    tslib: ^2.4.0
+    typeorm: 0.3.26
+    underscore: ^1.13.7
+  checksum: a64bf04bd438306b2a7aec887aa36f112f795417d8860a29dbcf980f759c99b20ce614d36af1310a6fab624a9e8dfedc5f9696611d3179d30e96cb145eaff510
+  languageName: node
+  linkType: hard
+
 "@steedos/odata-v4-mongodb@3.0.15-beta.2, @steedos/odata-v4-mongodb@workspace:packages/odata-v4-mongodb":
   version: 0.0.0-use.local
   resolution: "@steedos/odata-v4-mongodb@workspace:packages/odata-v4-mongodb"
@@ -9054,11 +9197,28 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@steedos/odata-v4-mongodb@npm:3.0.14-beta.20":
+  version: 3.0.14-beta.20
+  resolution: "@steedos/odata-v4-mongodb@npm:3.0.14-beta.20"
+  dependencies:
+    "@steedos/odata-v4-parser": 3.0.14-beta.20
+    odata-v4-literal: ^0.1.0
+  checksum: 06f4e1dfc5842229fb5cc25b298b034be9041b9bb972f09a8e8fd2e611dc1bf65ad51bec9f8860ba1c0423e1e498890f27618dcebda9221a3ed18e4ab1c9aafa
+  languageName: node
+  linkType: hard
+
 "@steedos/odata-v4-parser@3.0.15-beta.2, @steedos/odata-v4-parser@workspace:packages/odata-v4-parser":
   version: 0.0.0-use.local
   resolution: "@steedos/odata-v4-parser@workspace:packages/odata-v4-parser"
   languageName: unknown
   linkType: soft
+
+"@steedos/odata-v4-parser@npm:3.0.14-beta.20":
+  version: 3.0.14-beta.20
+  resolution: "@steedos/odata-v4-parser@npm:3.0.14-beta.20"
+  checksum: 6fa7caed7b70521b883a4f78e6c132beded63991161c7fe3d9448cd06b63864a2fdb97d0f9e40b5015354a2136e928fd760c228b88d94b8f935dc6ead4a05aae
+  languageName: node
+  linkType: hard
 
 "@steedos/odata-v4-sql@3.0.15-beta.2, @steedos/odata-v4-sql@workspace:packages/odata-v4-sql":
   version: 0.0.0-use.local
@@ -9070,6 +9230,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@steedos/odata-v4-sql@npm:3.0.14-beta.20":
+  version: 3.0.14-beta.20
+  resolution: "@steedos/odata-v4-sql@npm:3.0.14-beta.20"
+  dependencies:
+    "@steedos/odata-v4-parser": 3.0.14-beta.20
+    odata-v4-literal: ^0.1.0
+  checksum: 36b49a608f26681dc4f3ab57147eb370ccb48eb7e45a07247e15815e4a13d197186e7e9e28671db6d635c9d09a9907c78dbbcad4f977adda2695163b796b3dbd
+  languageName: node
+  linkType: hard
+
 "@steedos/odata-v4-typeorm@3.0.15-beta.2, @steedos/odata-v4-typeorm@workspace:packages/odata-v4-typeorm":
   version: 0.0.0-use.local
   resolution: "@steedos/odata-v4-typeorm@workspace:packages/odata-v4-typeorm"
@@ -9079,6 +9249,17 @@ __metadata:
     odata-v4-literal: ^0.1.0
   languageName: unknown
   linkType: soft
+
+"@steedos/odata-v4-typeorm@npm:3.0.14-beta.20":
+  version: 3.0.14-beta.20
+  resolution: "@steedos/odata-v4-typeorm@npm:3.0.14-beta.20"
+  dependencies:
+    "@steedos/odata-v4-parser": 3.0.14-beta.20
+    "@steedos/odata-v4-sql": 3.0.14-beta.20
+    odata-v4-literal: ^0.1.0
+  checksum: 8090cc516a0174517e8c6df04aa74644c2eb6f9924f9930a36d4352a476c068922197e6d1243ff64c10aafb93512172d4bed5beb8af51593e1b587605420cd9b
+  languageName: node
+  linkType: hard
 
 "@steedos/process@3.0.15-beta.2, @steedos/process@workspace:packages/process":
   version: 0.0.0-use.local
@@ -9100,11 +9281,28 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@steedos/router@npm:3.0.14-beta.20":
+  version: 3.0.14-beta.20
+  resolution: "@steedos/router@npm:3.0.14-beta.20"
+  dependencies:
+    compression: 1.7.4
+    cors: 2.8.5
+  checksum: b5084c05c0c0d5ad0c3ea95de4d7e7e307330e68a05953900a07aff904bc677d254e88a92f4e3be8ef96e62c6710d4bf65b92b1bf52f261ba091e3f449d43b36
+  languageName: node
+  linkType: hard
+
 "@steedos/schemas@3.0.15-beta.2, @steedos/schemas@workspace:packages/schemas":
   version: 0.0.0-use.local
   resolution: "@steedos/schemas@workspace:packages/schemas"
   languageName: unknown
   linkType: soft
+
+"@steedos/schemas@npm:3.0.14-beta.20":
+  version: 3.0.14-beta.20
+  resolution: "@steedos/schemas@npm:3.0.14-beta.20"
+  checksum: 7482077904facb71edd36041f445aad09f6018a8dc9861f6275d12b36c3db6c72dfd4335200d68fbc3605c339ca76e16ed7cb37c8009f35b01e642e95ccd5355
+  languageName: node
+  linkType: hard
 
 "@steedos/server@3.0.15-beta.2, @steedos/server@workspace:builder6/server":
   version: 0.0.0-use.local
@@ -9548,6 +9746,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@steedos/service-object-mixin@npm:3.0.14-beta.20":
+  version: 3.0.14-beta.20
+  resolution: "@steedos/service-object-mixin@npm:3.0.14-beta.20"
+  dependencies:
+    "@steedos/utils": 3.0.14-beta.20
+  checksum: 2eed5e5e13433f300e8e13550c42f8abaee017acf24720985a90cda4fdd4d889b085173dec5ec9393e8ba45ec8895c90ae51492b0a0ba7268eb26289c9e3bb18
+  languageName: node
+  linkType: hard
+
 "@steedos/service-objectql@3.0.15-beta.2, @steedos/service-objectql@workspace:services/service-objectql":
   version: 0.0.0-use.local
   resolution: "@steedos/service-objectql@workspace:services/service-objectql"
@@ -9573,6 +9780,24 @@ __metadata:
     underscore: ^1.13.7
   languageName: unknown
   linkType: soft
+
+"@steedos/service-package-loader@npm:3.0.14-beta.20":
+  version: 3.0.14-beta.20
+  resolution: "@steedos/service-package-loader@npm:3.0.14-beta.20"
+  dependencies:
+    "@steedos/metadata-core": 3.0.14-beta.20
+    "@steedos/metadata-registrar": 3.0.14-beta.20
+    "@steedos/router": 3.0.14-beta.20
+    "@steedos/service-object-mixin": 3.0.14-beta.20
+    clone: ^2.1.2
+    csvtojson: ~2.0.10
+    moleculer: ^0.14.35
+    moment: ^2.24.0
+    node-xlsx: ^0.24.0
+    underscore: ^1.13.7
+  checksum: 46e3ce34669915c2b37e18fd4516daccdd954cab99d14a3e458faf518d18decc03e1ac7454e388240a7e88fb2bc05de2b1a4657d0eed40e659eaf2426b333979
+  languageName: node
+  linkType: hard
 
 "@steedos/service-package-registry@3.0.15-beta.2, @steedos/service-package-registry@workspace:services/service-package-registry":
   version: 0.0.0-use.local
@@ -9618,6 +9843,20 @@ __metadata:
   resolution: "@steedos/service-plugin-amis@workspace:services/service-plugin-amis"
   dependencies:
     tailwindcss: ^3.4.17
+  languageName: unknown
+  linkType: soft
+
+"@steedos/service-push-notifications@workspace:services/service-push-notifications":
+  version: 0.0.0-use.local
+  resolution: "@steedos/service-push-notifications@workspace:services/service-push-notifications"
+  dependencies:
+    "@steedos/objectql": 3.0.14-beta.20
+    "@steedos/service-package-loader": 3.0.14-beta.20
+    google-auth-library: ^9.0.0
+    lodash: ^4.17.21
+  dependenciesMeta:
+    google-auth-library:
+      optional: true
   languageName: unknown
   linkType: soft
 
@@ -9718,6 +9957,21 @@ __metadata:
     underscore: ^1.13.7
   languageName: unknown
   linkType: soft
+
+"@steedos/utils@npm:3.0.14-beta.20":
+  version: 3.0.14-beta.20
+  resolution: "@steedos/utils@npm:3.0.14-beta.20"
+  dependencies:
+    "@steedos/filters": 3.0.14-beta.20
+    "@steedos/odata-v4-mongodb": 3.0.14-beta.20
+    clone: ^2.1.2
+    cookies: ^0.8.0
+    mingo: ^6.0.5
+    psl: 1.9.0
+    underscore: ^1.13.7
+  checksum: c9391b414d96addcc2c4c23a65af002c1a0c54b0e3ddd2eb13b8f22bc8cc546d957cc52546138bc9dc0f6db9c182116d7bc51bd18ae886503829ebb540ae1a27
+  languageName: node
+  linkType: hard
 
 "@steedos/validate@workspace:packages/validate":
   version: 0.0.0-use.local
@@ -12842,7 +13096,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"base64-js@npm:^1.0.2, base64-js@npm:^1.3.1":
+"base64-js@npm:^1.0.2, base64-js@npm:^1.3.0, base64-js@npm:^1.3.1":
   version: 1.5.1
   resolution: "base64-js@npm:1.5.1"
   checksum: 669632eb3745404c2f822a18fc3a0122d2f9a7a13f7fb8b5823ee19d1d2ff9ee5b52c53367176ea4ad093c332fd5ab4bd0ebae5a8e27917a4105a4cfc86b1005
@@ -12926,7 +13180,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bignumber.js@npm:^9.0.1":
+"bignumber.js@npm:^9.0.0, bignumber.js@npm:^9.0.1":
   version: 9.3.1
   resolution: "bignumber.js@npm:9.3.1"
   checksum: 6ab100271a23a75bb8b99a4b1a34a1a94967ac0b9a52a198147607bd91064e72c6f356380d7a09cd687bf50d81ad2ed1a0a8edfaa90369c9003ed8bb2440d7f0
@@ -16769,7 +17023,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ecdsa-sig-formatter@npm:1.0.11":
+"ecdsa-sig-formatter@npm:1.0.11, ecdsa-sig-formatter@npm:^1.0.11":
   version: 1.0.11
   resolution: "ecdsa-sig-formatter@npm:1.0.11"
   dependencies:
@@ -18018,7 +18272,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"extend@npm:^3.0.0":
+"extend@npm:^3.0.0, extend@npm:^3.0.2":
   version: 3.0.2
   resolution: "extend@npm:3.0.2"
   checksum: a50a8309ca65ea5d426382ff09f33586527882cf532931cb08ca786ea3146c0553310bda688710ff61d7668eba9f96b923fe1420cdf56a2c3eaf30fcab87b515
@@ -18991,6 +19245,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"gaxios@npm:^6.0.0, gaxios@npm:^6.1.1":
+  version: 6.7.1
+  resolution: "gaxios@npm:6.7.1"
+  dependencies:
+    extend: ^3.0.2
+    https-proxy-agent: ^7.0.1
+    is-stream: ^2.0.0
+    node-fetch: ^2.6.9
+    uuid: ^9.0.1
+  checksum: ed5952655339918e0868c6f4e079d6e9e55b20a242ddb1be25076cdfb0dd1ca5a2cb233da7352baa972c19f898a78fa6ba67e7d848717c9ca9877c269b5b02f7
+  languageName: node
+  linkType: hard
+
+"gcp-metadata@npm:^6.1.0":
+  version: 6.1.1
+  resolution: "gcp-metadata@npm:6.1.1"
+  dependencies:
+    gaxios: ^6.1.1
+    google-logging-utils: ^0.0.2
+    json-bigint: ^1.0.0
+  checksum: 7dffe884fd718482b559a841da469dc30e766a4b86c71cda96bed42579763d58f28328238b2eb424c29ba10ef45d4bb8a6586441921734f01012b55bbea79711
+  languageName: node
+  linkType: hard
+
 "generator-function@npm:^2.0.0":
   version: 2.0.1
   resolution: "generator-function@npm:2.0.1"
@@ -19563,6 +19841,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"google-auth-library@npm:^9.0.0":
+  version: 9.15.1
+  resolution: "google-auth-library@npm:9.15.1"
+  dependencies:
+    base64-js: ^1.3.0
+    ecdsa-sig-formatter: ^1.0.11
+    gaxios: ^6.1.1
+    gcp-metadata: ^6.1.0
+    gtoken: ^7.0.0
+    jws: ^4.0.0
+  checksum: 1c7660b7d21504a58b6b7780b0ca56f07a4d2b68d2ca14e5c4beaedd45cc4898baa8df1cfaf4dac15413a8db3cecc00e84662d8a327f9b9488ff2df7d8d23c84
+  languageName: node
+  linkType: hard
+
+"google-logging-utils@npm:^0.0.2":
+  version: 0.0.2
+  resolution: "google-logging-utils@npm:0.0.2"
+  checksum: 270de74cde8abe0a6639b4bebbb6db2c7d8a495cf14b23779450d3d010e759f3ffcb7eb200b1bcb05da1897fa63f3e336df2274f02fc69d3bb388019fa2b3134
+  languageName: node
+  linkType: hard
+
 "gopd@npm:^1.0.1, gopd@npm:^1.2.0":
   version: 1.2.0
   resolution: "gopd@npm:1.2.0"
@@ -19795,6 +20094,16 @@ __metadata:
     section-matter: ^1.0.0
     strip-bom-string: ^1.0.0
   checksum: 37717bd424344487d655392251ce8d8878a1275ee087003e61208fba3bfd59cbb73a85b2159abf742ae95e23db04964813fdc33ae18b074208428b2528205222
+  languageName: node
+  linkType: hard
+
+"gtoken@npm:^7.0.0":
+  version: 7.1.0
+  resolution: "gtoken@npm:7.1.0"
+  dependencies:
+    gaxios: ^6.0.0
+    jws: ^4.0.0
+  checksum: 1f338dced78f9d895ea03cd507454eb5a7b77e841ecd1d45e44483b08c1e64d16a9b0342358d37586d87462ffc2d5f5bff5dfe77ed8d4f0aafc3b5b0347d5d16
   languageName: node
   linkType: hard
 
@@ -22631,6 +22940,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"json-bigint@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "json-bigint@npm:1.0.0"
+  dependencies:
+    bignumber.js: ^9.0.0
+  checksum: c67bb93ccb3c291e60eb4b62931403e378906aab113ec1c2a8dd0f9a7f065ad6fd9713d627b732abefae2e244ac9ce1721c7a3142b2979532f12b258634ce6f6
+  languageName: node
+  linkType: hard
+
 "json-buffer@npm:3.0.0":
   version: 3.0.0
   resolution: "json-buffer@npm:3.0.0"
@@ -22953,7 +23271,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jws@npm:^4.0.1":
+"jws@npm:^4.0.0, jws@npm:^4.0.1":
   version: 4.0.1
   resolution: "jws@npm:4.0.1"
   dependencies:
@@ -26376,7 +26694,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:^2.3.0, node-fetch@npm:^2.6.1, node-fetch@npm:^2.6.12, node-fetch@npm:^2.6.7":
+"node-fetch@npm:^2.3.0, node-fetch@npm:^2.6.1, node-fetch@npm:^2.6.12, node-fetch@npm:^2.6.7, node-fetch@npm:^2.6.9":
   version: 2.7.0
   resolution: "node-fetch@npm:2.7.0"
   dependencies:
@@ -35744,7 +36062,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uuid@npm:^9.0.0":
+"uuid@npm:^9.0.0, uuid@npm:^9.0.1":
   version: 9.0.1
   resolution: "uuid@npm:9.0.1"
   bin:

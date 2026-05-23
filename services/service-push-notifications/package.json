@@ -1,0 +1,22 @@
+{
+    "name": "@steedos/service-push-notifications",
+    "version": "3.0.14-beta.20",
+    "main": "package.service.js",
+    "publishConfig": {
+        "access": "public"
+    },
+    "keywords": [
+        "steedos"
+    ],
+    "dependencies": {
+        "@steedos/objectql": "3.0.14-beta.20",
+        "@steedos/service-package-loader": "3.0.14-beta.20",
+        "lodash": "^4.17.21"
+    },
+    "optionalDependencies": {
+        "google-auth-library": "^9.0.0"
+    },
+    "description": "Steedos push notifications service (GeTui + FCM)",
+    "repository": {},
+    "license": "MIT"
+}
