@@ -2,7 +2,7 @@
 name: steedos-configuration
 description: |
   Steedos Server environment variables and YAML settings.
-  TRIGGER: .env files, steedos-config.yml, default.steedos.settings.yml;
+  TRIGGER: .env files;
   env vars (MONGO_URL, ROOT_URL, B6_TRANSPORTER, JWT_SECRET);
   Docker compose setup, production vs development config, YAML env interpolation;
   datasources, tenant settings, CFS file storage, SSO/OIDC, email.
@@ -19,8 +19,6 @@ Configuration is loaded from multiple sources (in priority order):
 1. **System environment variables** (highest priority)
 2. **`.env.local`** file
 3. **`.env`** file
-4. **Project config** (`steedos-config.yml` in working directory)
-5. **Default settings** (`default.steedos.settings.yml` shipped with server)
 
 YAML values support `${ENV_VAR}` interpolation from environment variables.
 
@@ -105,25 +103,6 @@ YAML values support `${ENV_VAR}` interpolation from environment variables.
 ---
 
 ## YAML Configuration | YAML 配置
-
-### steedos-config.yml (Project Level)
-
-Place in the server working directory:
-
-```yaml
-datasources:
-  default:
-    connection:
-      url: ${MONGO_URL}
-    objectFiles:
-      - "./steedos-app/**"
-
-tenant:
-  _id: ${STEEDOS_TENANT_ID}
-  name: My Company
-  enable_register: true
-  enable_password_login: true
-```
 
 ### Configuration Sections | 配置节
 

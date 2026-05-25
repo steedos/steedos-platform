@@ -45,14 +45,14 @@ Steedos 平台概览、技能路由指南、CLI 命令参考和软件包校验�
 ### 🏗️ Foundation | 基础 (2 skills)
 
 #### [steedos-project-package](./steedos-project-package/SKILL.md)
-Learn how to create and structure Steedos projects and packages, including minimal requirements, package.json, steedos-config.yml, package.service.js, directory structure, metadata file types, and naming conventions.
+Learn how to create and structure Steedos projects and packages, including minimal requirements, package.json, package.service.js, directory structure, metadata file types, and naming conventions.
 
-了解如何创建和组织 Steedos 项目和软件包，包括项目要求、package.json、steedos-config.yml、package.service.js、目录结构、元数据文件类型和命名规范。
+了解如何创建和组织 Steedos 项目和软件包，包括项目要求、package.json、package.service.js、目录结构、元数据文件类型和命名规范。
 
 #### [steedos-configuration](./steedos-configuration/SKILL.md)
-Configure Steedos Server via environment variables and YAML settings files. Covers required env vars, steedos-config.yml, YAML settings with env interpolation, datasources, tenant settings, CFS file storage, SSO/OIDC, email, Docker setup, and security best practices.
+Configure Steedos Server via environment variables and YAML settings files. Covers required env vars, YAML settings with env interpolation, datasources, tenant settings, CFS file storage, SSO/OIDC, email, Docker setup, and security best practices.
 
-通过环境变量和 YAML 配置文件配置 Steedos 服务端。涵盖必需变量、steedos-config.yml、YAML 环境变量插值、数据源、租户设置、文件存储、SSO/OIDC、邮件、Docker 部署和安全最佳实践。
+通过环境变量和 YAML 配置文件配置 Steedos 服务端。涵盖必需变量、YAML 环境变量插值、数据源、租户设置、文件存储、SSO/OIDC、邮件、Docker 部署和安全最佳实践。
 
 ### 📊 Data Modeling | 数据建模 (3 skills)
 
@@ -205,7 +205,7 @@ Automated dev-test workflow using Playwright MCP Server. Iterative loop: modify 
 
 | File Type | Skill Reference |
 |-----------|----------------|
-| `package.json`, `steedos-config.yml` | [steedos-project-package](./steedos-project-package/SKILL.md) |
+| `package.json` | [steedos-project-package](./steedos-project-package/SKILL.md) |
 | `.env` | [steedos-configuration](./steedos-configuration/SKILL.md) |
 | `*.object.yml` | [steedos-objects](./steedos-objects/SKILL.md) |
 | `*.field.yml` | [steedos-object-fields](./steedos-object-fields/SKILL.md) |

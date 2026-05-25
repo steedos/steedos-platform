@@ -42,7 +42,6 @@ A **project** is a Node.js/TypeScript workspace that runs the Steedos platform. 
 ```
 my-steedos-project/
 ├── package.json              # NPM package configuration (REQUIRED)
-├── steedos-config.yml        # Steedos configuration (REQUIRED)
 ├── .env                      # Environment variables (RECOMMENDED)
 ├── .gitignore               # Git ignore rules
 └── steedos-packages/        # Custom packages (OPTIONAL)
@@ -77,18 +76,7 @@ my-steedos-project/
 - `workspaces` for custom packages
 - `start` script to run Steedos (use `yarn start`)
 
-### 2. steedos-config.yml (REQUIRED)
-
-This file is REQUIRED by Steedos, even if empty.
-
-```yaml
-# Empty file is acceptable
-# Or add configuration:
-metadata_packages:
-  - '@steedos-packages/my-package'
-```
-
-### 3. .env (RECOMMENDED)
+### 2. .env (RECOMMENDED)
 
 ```env
 PORT=5100
@@ -105,7 +93,6 @@ B6_LOG_LEVEL=warn
 ```
 my-steedos-project/
 ├── package.json
-├── steedos-config.yml
 ├── .env
 ├── .gitignore
 ├── yarn.lock
@@ -133,13 +120,10 @@ mkdir my-steedos-project && cd my-steedos-project
 # Step 2: Initialize
 yarn init -y
 
-# Step 3: Create required files
-touch steedos-config.yml
-
-# Step 4: Install dependencies
+# Step 3: Install dependencies
 yarn add @steedos/server
 
-# Step 5: Start server
+# Step 4: Start server
 yarn start
 ```
 
@@ -257,19 +241,7 @@ module.exports = {
 
 ## Package Registration | 软件包注册
 
-In project `steedos-config.yml`:
-
-```yaml
-metadata:
-  - ./steedos-packages/my-package
-```
-
-Or as NPM dependency:
-
-```yaml
-metadata_packages:
-  - '@steedos-packages/my-package'
-```
+Register packages as NPM dependencies or in the project workspace configuration.
 
 ## Metadata File Types | 元数据文件类型
 
@@ -320,13 +292,11 @@ metadata_packages:
 ## Troubleshooting | 故障排除
 
 ### Server won't start
-- Check if `steedos-config.yml` exists
 - Verify MongoDB and Redis are running
 - Check `.env` configuration
 
 ### Packages not loading
 - Verify package structure (package.json + package.service.js)
-- Check `steedos-config.yml` registration
 - Restart server after changes
 
 ### Port already in use
