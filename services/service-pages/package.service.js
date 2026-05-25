@@ -142,14 +142,14 @@ module.exports = {
 					return {
 						type: 'wrapper',
 						size: 'none',
-						className: 'relative group/widget',
+						className: 'widget-container',
 						body: [
 							{
 								type: 'button',
 								label: '',
-								icon: 'fa fa-times',
+								icon: 'fa fa-times-circle',
 								level: 'link',
-								className: 'absolute top-1 right-1 z-10 opacity-0 group-hover/widget:opacity-100 transition-opacity text-neutral-400 hover:text-red-500',
+								className: 'widget-remove-btn text-neutral-400 hover:text-red-500',
 								onEvent: {
 									click: {
 										actions: [{
