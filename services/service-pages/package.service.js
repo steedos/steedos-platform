@@ -118,19 +118,51 @@ module.exports = {
 				path: "/page/:apiName/widget_schema"
 			},
 			async handler(ctx) {
-				const { apiName } = ctx.params;
+				const { apiName, ids } = ctx.params;
 				const widgetType = `amis-${apiName}`;
 
 				const widgets = await objectql.getObject('widgets').find({
 					filters: [['type', '=', widgetType]]
 				});
 
-				const sorted = _.sortBy(widgets, 'sort');
-				const bodies = sorted.map(w => w.schema).filter(Boolean);
+				let selected = [];
+				if (ids) {
+					const idList = String(ids).split(',').map(s => s.trim()).filter(Boolean);
+					selected = idList
+						.map(id => widgets.find(w => w._id === id || w.name === id))
+						.filter(Boolean);
+				}
 
-				if (bodies.length === 0) {
+				if (selected.length === 0) {
 					return { status: 0, data: { type: 'wrapper', body: [] } };
 				}
+
+				const bodies = selected.map(w => {
+					const wid = w._id || w.name;
+					return {
+						type: 'wrapper',
+						size: 'none',
+						className: 'relative group/widget',
+						body: [
+							{
+								type: 'button',
+								label: '',
+								icon: 'fa fa-times',
+								level: 'link',
+								className: 'absolute top-1 right-1 z-10 opacity-0 group-hover/widget:opacity-100 transition-opacity text-neutral-400 hover:text-red-500',
+								onEvent: {
+									click: {
+										actions: [{
+											actionType: 'custom',
+											script: "var key='steedos_launcher_widgets';var ids=(localStorage.getItem(key)||'').split(',').filter(Boolean);ids=ids.filter(function(x){return x!=='" + wid + "'});localStorage.setItem(key, ids.join(','));window.location.reload();"
+										}]
+									}
+								}
+							},
+							w.schema
+						]
+					};
+				});
 
 				return {
 					status: 0,
@@ -139,6 +171,29 @@ module.exports = {
 						className: 'w-full max-w-4xl space-y-4 p-0',
 						size: 'none',
 						body: bodies
+					}
+				};
+			}
+		},
+		getPageWidgets: {
+			rest: {
+				method: "GET",
+				path: "/page/:apiName/widgets"
+			},
+			async handler(ctx) {
+				const { apiName } = ctx.params;
+				const widgetType = `amis-${apiName}`;
+				const widgets = await objectql.getObject('widgets').find({
+					filters: [['type', '=', widgetType]]
+				});
+				const sorted = _.sortBy(widgets, 'sort');
+				return {
+					status: 0,
+					data: {
+						items: sorted.map(w => ({
+							value: w._id || w.name,
+							label: w.label || w.name
+						}))
 					}
 				};
 			}
