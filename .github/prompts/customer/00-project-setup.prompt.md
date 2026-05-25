@@ -9,6 +9,19 @@ description: "Steedos 项目创建指南 / Steedos Project Setup Guide"
 
 ---
 
+## ⚠️ 包管理器规则 / Package Manager Rules
+
+**必须使用 Yarn 作为包管理器！禁止使用 npm！**
+
+| 操作 | ✅ 正确 | ❌ 错误 |
+|------|---------|---------|
+| 初始化 | `yarn init -y` | `npm init -y` |
+| 安装依赖 | `yarn install` 或 `yarn add <pkg>` | `npm install` |
+| 启动项目 | `yarn start` | `npm start` / `npm run start` |
+| 运行脚本 | `yarn <script>` | `npm run <script>` |
+
+---
+
 ## 中文指南
 
 ### 快速创建 Steedos 项目
@@ -70,7 +83,7 @@ cd my-steedos-project
 #### 步骤 2: 创建 package.json
 
 ```bash
-npm init -y
+yarn init -y
 ```
 
 然后编辑 `package.json`:
@@ -96,10 +109,10 @@ npm init -y
 #### 步骤 3: 安装依赖
 
 ```bash
-npm install
-# 或使用 yarn
 yarn install
 ```
+
+> ⚠️ **重要**: 必须使用 `yarn` 安装依赖,不要使用 `npm install`。
 
 #### 步骤 4: 创建 steedos-config.yml
 
@@ -147,12 +160,12 @@ mkdir -p steedos-packages
 #### 步骤 7: 启动项目
 
 ```bash
-npm start
-# 或
-steedos start
+yarn start
 ```
 
 服务器将在 http://localhost:5100 启动。
+
+> ⚠️ **重要**: 必须使用 `yarn start` 启动项目,不要使用 `npm start`。
 
 ### 添加自定义软件包
 
@@ -258,7 +271,8 @@ B6_LOG_LEVEL=warn
 - ✅ 唯一必需依赖: `@steedos/server`
 - ✅ 使用 `steedos start` 启动
 - ✅ 软件包放在 `steedos-packages/` 目录
-- ✅ 支持 npm workspaces 管理多个软件包
+- ✅ 支持 yarn workspaces 管理多个软件包
+- ⚠️ 必须使用 yarn，禁止使用 npm
 - ❌ 不是 Python 项目
 - ❌ 不需要 Django/Flask
 
@@ -325,7 +339,7 @@ cd my-steedos-project
 #### Step 2: Create package.json
 
 ```bash
-npm init -y
+yarn init -y
 ```
 
 Then edit `package.json`:
@@ -351,10 +365,10 @@ Then edit `package.json`:
 #### Step 3: Install Dependencies
 
 ```bash
-npm install
-# or with yarn
 yarn install
 ```
+
+> ⚠️ **IMPORTANT**: Always use `yarn` to install dependencies. Do NOT use `npm install`.
 
 #### Step 4: Create steedos-config.yml
 
@@ -402,12 +416,12 @@ mkdir -p steedos-packages
 #### Step 7: Start the Project
 
 ```bash
-npm start
-# or
-steedos start
+yarn start
 ```
 
 The server will start at http://localhost:5100.
+
+> ⚠️ **IMPORTANT**: Always use `yarn start` to start the project. Do NOT use `npm start`.
 
 ### Adding Custom Packages
 
@@ -513,7 +527,8 @@ When user says:
 - ✅ Only required dependency: `@steedos/server`
 - ✅ Start with `steedos start`
 - ✅ Packages go in `steedos-packages/` directory
-- ✅ Supports npm workspaces for managing multiple packages
+- ✅ Supports yarn workspaces for managing multiple packages
+- ⚠️ ALWAYS use yarn, NEVER use npm
 - ❌ NOT a Python project
 - ❌ NO need for Django/Flask
 

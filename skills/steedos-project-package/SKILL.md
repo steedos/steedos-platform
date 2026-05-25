@@ -1,11 +1,7 @@
 ---
 name: steedos-project-package
 description: |
-  Steedos project and package structure.
-  TRIGGER: new project/package creation; project structure, package.json,
-  steedos-config.yml, package.service.js; metadata directory structure
-  (objects, triggers, functions, pages); naming conventions, file types.
-  SKIP: specific metadata types → route to relevant skill.
+  Steedos project/package init & creation (初始化项目, 创建软件包), yarn install/start (NEVER npm).
 ---
 
 # Steedos Project & Package Format | Steedos 项目与软件包格式
@@ -23,7 +19,19 @@ A **project** is a Node.js/TypeScript workspace that runs the Steedos platform. 
 - **Frontend**: React + Amis (Baidu low-code UI framework)
 - **Metadata**: YAML files (.object.yml, .trigger.yml, .function.yml, etc.)
 - **Databases**: MongoDB (metadata), PostgreSQL/MySQL (business data)
-- **Package Manager**: Yarn
+- **Package Manager**: Yarn (⚠️ 禁止使用 npm)
+
+## ⚠️ CRITICAL: Package Manager
+
+**ALWAYS use `yarn`. NEVER use `npm`.**
+
+| Action | ✅ Correct | ❌ Wrong |
+|--------|-----------|----------|
+| Init | `yarn init -y` | `npm init -y` |
+| Install | `yarn install` / `yarn add <pkg>` | `npm install` / `npm i` |
+| Start | `yarn start` | `npm start` / `npm run start` |
+| Run script | `yarn <script>` | `npm run <script>` |
+| Add dep | `yarn add @steedos/server` | `npm install @steedos/server` |
 
 ---
 
