@@ -334,6 +334,8 @@ fields:
     type: select
     defaultValue: space
     required: true
+    hidden: true
+    visible_on: '{{false}}'
     options:
       - label: 我的
         value: mine
