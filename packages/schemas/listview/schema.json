@@ -115,6 +115,10 @@
       "type": "boolean",
       "description": "是否要求用户先设置过滤条件后才进行数据请求"
     },
+    "auto_open_filter": {
+      "type": "boolean",
+      "description": "进入列表视图时是否自动展开搜索栏。默认 false。不影响 filter_required 的强制约束；在分栏(split)模式下不生效。"
+    },
     "scrolling_mode": {
       "type": "string",
       "description": "滚动条样式",
