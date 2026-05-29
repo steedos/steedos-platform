@@ -29,8 +29,16 @@ export const ObjectDetail = () => {
     return null;
   }
 
+  // 修复 steedos/steedos-plugins#800: 同一路由 /app/:appId/:objectName/view/:recordId 在 SPA
+  // 切换对象段时（如审批 inbox 三栏点新建跳到 instances/view/<newId>），ObjectDetail 组件不会
+  // 卸载，AmisRender 内部 amis 沿用旧的 steedos-page-object-control 实例，PageObject 异步函数
+  // 不会重跑，schema 中硬编码的 objectApiName 仍是上一对象 (instance_tasks)，导致 PageRecordDetail
+  // 加载错误的 record page（instance_tasks_detail.page.amis.json），又用新对象的 recordId
+  // 查不到 instance_task 记录，最终在三栏右侧一直 loading / 显示"无法找到记录"。
+  // 用 appId + objectName 作为 AmisRender 的 key，强制对象段变化时整个 amis 树重挂载。
+  // 同对象不同 recordId 切换 key 不变，仍走 schema diff，不影响三栏列表-详情联动。
   return (
-    <AmisRender schema = {{
+    <AmisRender key={`${appId}/${objectName}`} schema = {{
         type: 'page',
         bodyClassName: 'p-0',
         body: {

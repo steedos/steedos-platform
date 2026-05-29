@@ -30,7 +30,7 @@ export const ObjectListView = () => {
   }
 
   return (
-    <AmisRender schema = {{
+    <AmisRender key={`${appId}/${objectName}`} schema = {{
       type: 'page',
       bodyClassName: 'p-0 h-full',
       body: {
