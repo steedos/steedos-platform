@@ -25,9 +25,9 @@
   "dependencies": {
     "@accounts/types": "0.20.1",
     "@babel/runtime": "^7.12.18",
-    "@steedos/auth": "^3.0.15-beta.6",
-    "@steedos/objectql": "^3.0.15-beta.6",
-    "@steedos/utils": "^3.0.15-beta.6",
+    "@steedos/auth": "3.0.15-beta.6",
+    "@steedos/objectql": "3.0.15-beta.6",
+    "@steedos/utils": "3.0.15-beta.6",
     "app-root-path": "^2.2.1",
     "bcryptjs": "^3.0.3",
     "body-parser": "^2.2.1",
@@ -56,5 +56,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "cda9202efaa7ca292fc441e8ee9e2374e09dbc39"
+  "gitHead": "cd3a60e242eed4ae305077393f0785ddb79f17de"
 }

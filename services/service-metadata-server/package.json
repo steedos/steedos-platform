@@ -7,16 +7,16 @@
     "build": "rm -rf ./lib && tsc"
   },
   "dependencies": {
-    "@steedos/objectql": "^3.0.15-beta.6",
-    "@steedos/service-metadata": "^3.0.15-beta.6",
-    "@steedos/service-metadata-apps": "^3.0.15-beta.6",
-    "@steedos/service-metadata-layouts": "^3.0.15-beta.6",
-    "@steedos/service-metadata-objects": "^3.0.15-beta.6",
-    "@steedos/service-metadata-permissionsets": "^3.0.15-beta.6",
-    "@steedos/service-metadata-tabs": "^3.0.15-beta.6",
-    "@steedos/service-metadata-translations": "^3.0.15-beta.6",
-    "@steedos/service-metadata-triggers": "^3.0.15-beta.6",
-    "@steedos/service-packages": "^3.0.15-beta.6",
+    "@steedos/objectql": "3.0.15-beta.6",
+    "@steedos/service-metadata": "3.0.15-beta.6",
+    "@steedos/service-metadata-apps": "3.0.15-beta.6",
+    "@steedos/service-metadata-layouts": "3.0.15-beta.6",
+    "@steedos/service-metadata-objects": "3.0.15-beta.6",
+    "@steedos/service-metadata-permissionsets": "3.0.15-beta.6",
+    "@steedos/service-metadata-tabs": "3.0.15-beta.6",
+    "@steedos/service-metadata-translations": "3.0.15-beta.6",
+    "@steedos/service-metadata-triggers": "3.0.15-beta.6",
+    "@steedos/service-packages": "3.0.15-beta.6",
     "lodash": "^4.17.21",
     "underscore": "^1.13.7"
   },
@@ -26,5 +26,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "cda9202efaa7ca292fc441e8ee9e2374e09dbc39"
+  "gitHead": "cd3a60e242eed4ae305077393f0785ddb79f17de"
 }

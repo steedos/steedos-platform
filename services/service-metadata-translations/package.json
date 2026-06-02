@@ -19,7 +19,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@steedos/metadata-registrar": "^3.0.15-beta.6",
+    "@steedos/metadata-registrar": "3.0.15-beta.6",
     "dotenv-flow": "^3.1.0",
     "ioredis": "^4.22.0",
     "lodash": "^4.17.21",
@@ -31,5 +31,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "cda9202efaa7ca292fc441e8ee9e2374e09dbc39"
+  "gitHead": "cd3a60e242eed4ae305077393f0785ddb79f17de"
 }

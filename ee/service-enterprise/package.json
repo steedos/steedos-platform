@@ -10,7 +10,7 @@
     "@steedos-labs/analytics": "^3.1.2",
     "@steedos-labs/plugin-print-template": "^3.0.3",
     "@steedos-labs/plugin-workflow": "^3.0.86",
-    "@steedos/ee_branding": "^3.0.15-beta.6",
+    "@steedos/ee_branding": "3.0.15-beta.6",
     "@steedos/service-license": "^3.0.2",
     "mssql": "^11.0.1",
     "oracledb": "^6.8.0"
@@ -19,5 +19,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "cda9202efaa7ca292fc441e8ee9e2374e09dbc39"
+  "gitHead": "cd3a60e242eed4ae305077393f0785ddb79f17de"
 }

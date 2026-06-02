@@ -15,9 +15,9 @@
     "repository": {},
     "license": "MIT",
     "dependencies": {
-        "@steedos/objectql": "^3.0.15-beta.6",
-        "@steedos/service-object-mixin": "^3.0.15-beta.6",
+        "@steedos/objectql": "3.0.15-beta.6",
+        "@steedos/service-object-mixin": "3.0.15-beta.6",
         "lodash": "^4.17.21"
     },
-    "gitHead": "cda9202efaa7ca292fc441e8ee9e2374e09dbc39"
+    "gitHead": "cd3a60e242eed4ae305077393f0785ddb79f17de"
 }
