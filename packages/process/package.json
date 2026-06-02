@@ -1,6 +1,6 @@
 {
   "name": "@steedos/process",
-  "version": "3.0.15-beta.5",
+  "version": "3.0.15-beta.6",
   "main": "lib/index.js",
   "repository": "https://github.com/steedos/steedos-platform.git",
   "scripts": {
@@ -15,8 +15,8 @@
     "typescript": "5.7.3"
   },
   "dependencies": {
-    "@steedos/auth": "3.0.15-beta.5",
-    "@steedos/objectql": "3.0.15-beta.5",
+    "@steedos/auth": "^3.0.15-beta.6",
+    "@steedos/objectql": "^3.0.15-beta.6",
     "express": "^5.1.0"
   },
   "gitHead": "cda9202efaa7ca292fc441e8ee9e2374e09dbc39"

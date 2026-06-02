@@ -1,6 +1,6 @@
 {
   "name": "@steedos/validate",
-  "version": "3.0.15-beta.5",
+  "version": "3.0.15-beta.6",
   "description": "Steedos package validation tool",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
