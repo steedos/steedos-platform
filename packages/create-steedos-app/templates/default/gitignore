@@ -6,6 +6,7 @@
 
 **/npm-error.log
 **/yarn-error.log
+**/pnpm-debug.log
 **/lerna-debug.log
 
 dist
@@ -13,7 +14,6 @@ logs
 
 .env.local
 
-yarn.lock
 package-lock.json
 steedos-storage
 

@@ -59,7 +59,8 @@
     "underscore": "^1.13.7",
     "validator": "^13.15.23",
     "yargs": "^13.2.1",
-    "yn": "^2.0.0"
+    "yn": "^2.0.0",
+    "@steedos/i18n": "workspace:*"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.26.10",

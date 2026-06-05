@@ -5,7 +5,7 @@ import { getCurrentUser } from "../selectors/entities/users";
 import { getMySpaces, getCurrentSpaceId, getSpace } from '../selectors/entities/spaces';
 import LocalStorageStore from '../stores/local_storage_store';
 import { selectSpace } from '../actions/spaces';
-import { redirect } from "react-router";
+import { redirect } from "react-router-dom";
 
 
 const dispatch = store.dispatch;

@@ -36,8 +36,8 @@ The AI will ask you for:
 1. Test URL and port (default: http://127.0.0.1:5100)
 2. Login credentials (email + password)
 3. Working directory (which package to build)
-4. Build command (default: yarn build)
-5. Start command (default: yarn start)
+4. Build command (default: pnpm build)
+5. Start command (default: pnpm start)
 6. Startup wait time (default: 20s)
 7. Default test page path
 
@@ -67,8 +67,8 @@ When asked to configure a project, generate this in `.github/copilot-instruction
 ## 构建与重启 | Build & Restart
 
 - **工作目录 / Working Dir**: ./steedos-packages/{package_name}
-- **构建命令 / Build**: yarn build
-- **启动命令 / Start**: yarn start
+- **构建命令 / Build**: pnpm build
+- **启动命令 / Start**: pnpm start
 - **重启流程 / Restart**: kill port {PORT} → cd {dir} → build → start
 - **启动等待 / Wait**: 20s
 - **端口 / Port**: 5100
@@ -90,7 +90,7 @@ Default: Playwright MCP Server for browser automation testing.
 ```
 1. ANALYZE  — Read .github/copilot-instructions.md, understand the task
 2. MODIFY   — Make targeted code changes
-3. BUILD    — yarn build (fix errors before proceeding)
+3. BUILD    — pnpm build (fix errors before proceeding)
 4. RESTART  — Kill port → start server (async)
 5. WAIT     — Wait for server ready (default 20s)
 6. TEST     — Playwright MCP: login → navigate → verify
@@ -102,7 +102,7 @@ Default: Playwright MCP Server for browser automation testing.
 
 ```bash
 cd {working_directory}
-yarn build
+pnpm build
 ```
 
 If build fails, fix and retry. NEVER proceed with a failed build.
@@ -112,7 +112,7 @@ If build fails, fix and retry. NEVER proceed with a failed build.
 ```bash
 lsof -ti:{PORT} | xargs kill -9 2>/dev/null
 cd {working_directory}
-yarn start   # run async
+pnpm start   # run async
 ```
 
 Or: `npx steedos restart` if supported.

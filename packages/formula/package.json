@@ -10,7 +10,7 @@
     "node": ">=11.0.0"
   },
   "scripts": {
-    "build": "yarn rollup -c",
+    "build": "pnpm exec rollup -c",
     "compile:parser": "node .scripts/make-pegjs",
     "test": "mocha --require @babel/register --recursive --grep @integration --invert",
     "test:integration": "mocha --require @babel/register --recursive --grep @integration",

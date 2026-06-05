@@ -118,9 +118,9 @@ docker run -d -p 80:80 steedos/steedos-community:3.0
 Initialize a project using our scaffolding tool:
 
 ```bash
-npx create-steedos-app my-app
+pnpm create steedos-app my-app
 cd my-app
-yarn install && yarn start
+pnpm install && pnpm start
 
 ```
 

@@ -108,14 +108,14 @@ docker run -d -p 80:80 steedos/steedos-community:3.0
 
 ```bash
 # 创建项目
-npx create-steedos-app my-project
+pnpm create steedos-app my-project
 
 # 进入目录并安装依赖
 cd my-project
-yarn install
+pnpm install
 
 # 启动服务
-yarn start
+pnpm start
 
 ```
 

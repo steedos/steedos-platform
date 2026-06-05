@@ -9,5 +9,8 @@
     "access": "public"
   },
   "homepage": "https://github.com/steedos/steedos-platform/tree/master/packages/steedos-plugin-schema-builder",
-  "gitHead": "cd3a60e242eed4ae305077393f0785ddb79f17de"
+  "gitHead": "cd3a60e242eed4ae305077393f0785ddb79f17de",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
 }

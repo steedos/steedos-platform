@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentUser } from "../selectors/entities/users";
 import { getCurrentSpace, getCurrentSpaceId } from "../selectors/entities/spaces";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { validate } from '../actions/users'
 
 

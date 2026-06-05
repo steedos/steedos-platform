@@ -12,12 +12,15 @@
     "access": "public"
   },
   "devDependencies": {
+    "@types/express-serve-static-core": "^5.1.1",
     "typescript": "5.7.3"
   },
   "dependencies": {
     "@steedos/auth": "3.0.15-beta.6",
+    "@steedos/i18n": "workspace:*",
     "@steedos/objectql": "3.0.15-beta.6",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "lodash": "^4.17.21"
   },
   "gitHead": "cd3a60e242eed4ae305077393f0785ddb79f17de"
 }

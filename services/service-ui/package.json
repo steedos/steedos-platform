@@ -1,24 +1,27 @@
 {
-    "name": "@steedos/service-ui",
-    "version": "3.0.15-beta.6",
-    "main": "package.service.js",
-    "keywords": [
-        "steedos"
-    ],
-    "scripts": {
-        "build": "tsc"
-    },
-    "description": "steedos package",
-    "repository": {},
-    "dependencies": {
-        "@steedos/auth": "3.0.15-beta.6",
-        "@steedos/i18n": "3.0.15-beta.6",
-        "@steedos/objectql": "3.0.15-beta.6",
-        "express": "^5.1.0"
-    },
-    "license": "MIT",
-    "publishConfig": {
-        "access": "public"
-    },
-    "gitHead": "cd3a60e242eed4ae305077393f0785ddb79f17de"
+  "name": "@steedos/service-ui",
+  "version": "3.0.15-beta.6",
+  "main": "package.service.js",
+  "keywords": [
+    "steedos"
+  ],
+  "scripts": {
+    "build": "tsc"
+  },
+  "description": "steedos package",
+  "repository": {},
+  "dependencies": {
+    "@steedos/auth": "3.0.15-beta.6",
+    "@steedos/filters": "3.0.15-beta.6",
+    "@steedos/i18n": "3.0.15-beta.6",
+    "@steedos/objectql": "3.0.15-beta.6",
+    "@steedos/odata-v4-mongodb": "3.0.15-beta.6",
+    "express": "^5.1.0",
+    "lodash": "^4.17.21"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "cd3a60e242eed4ae305077393f0785ddb79f17de"
 }

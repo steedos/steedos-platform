@@ -217,8 +217,8 @@ export class SteedosFieldType
     reference_to: string,
     datasource: SteedosDataSourceType,
   ): string {
-    if (_.isString(reference_to)) {
-      if ((reference_to.split(".").length = 1)) {
+    if (typeof reference_to === "string") {
+      if (reference_to.split(".").length === 1) {
         if (datasource.getObject(reference_to)) {
           return `${datasource.name}.${reference_to}`;
         }
@@ -231,12 +231,12 @@ export class SteedosFieldType
     if (this.reference_to) {
       let datasource = this._object.datasource;
       if (datasource.name != "meteor") {
-        if (_.isString(this.reference_to)) {
+        if (typeof this.reference_to === "string") {
           this.reference_to = this.transformReferenceTo(
             this.reference_to,
             datasource,
           );
-        } else if (_.isArray(this.reference_to)) {
+        } else if (Array.isArray(this.reference_to)) {
           let reference_to: string[] = [];
           _.each(this.reference_to, (_reference_to) => {
             reference_to.push(

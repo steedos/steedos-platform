@@ -19,7 +19,7 @@ interface InstallArgs {
 }
 
 /**
- * Spawn a package manager installation with either Yarn or NPM.
+ * Spawn a package manager installation with pnpm, Yarn or npm.
  *
  * @returns A Promise that resolves once the installation is finished.
  */
@@ -43,6 +43,7 @@ export function install(
     let args: string[]
     let command = packageManager
     const useYarn = packageManager === 'yarn'
+    const usePnpm = packageManager === 'pnpm'
 
     if (dependencies && dependencies.length) {
       /**
@@ -57,9 +58,13 @@ export function install(
         args.push('--cwd', root)
         if (devDependencies) args.push('--dev')
         args.push(...dependencies)
+      } else if (usePnpm) {
+        args = ['add', '--save-exact']
+        if (devDependencies) args.push('--save-dev')
+        args.push(...dependencies)
       } else {
         /**
-         * Call `(p)npm install [--save|--save-dev] ...`.
+         * Call `npm install [--save|--save-dev] ...`.
          */
         args = ['install', '--save-exact']
         args.push(devDependencies ? '--save-dev' : '--save')

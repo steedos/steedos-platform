@@ -1,18 +1,19 @@
 {
-    "name": "@steedos/standard-permission",
-    "version": "3.0.15-beta.6",
-    "main": "package.service.js",
-    "publishConfig": {
-        "access": "public"
-    },
-    "keywords": [
-        "steedos"
-    ],
-    "description": "steedos package",
-    "repository": {},
-    "license": "MIT",
-    "gitHead": "cd3a60e242eed4ae305077393f0785ddb79f17de",
-    "dependencies": {
-        "clone": "^2.1.2"
-    }
+  "name": "@steedos/standard-permission",
+  "version": "3.0.15-beta.6",
+  "main": "package.service.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "steedos"
+  ],
+  "description": "steedos package",
+  "repository": {},
+  "license": "MIT",
+  "gitHead": "cd3a60e242eed4ae305077393f0785ddb79f17de",
+  "dependencies": {
+    "clone": "^2.1.2",
+    "lodash": "^4.17.21"
+  }
 }

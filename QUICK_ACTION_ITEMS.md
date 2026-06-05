@@ -12,7 +12,7 @@
 ```bash
 # 1. 安装依赖
 cd /home/runner/work/steedos-platform/steedos-platform
-yarn add -W winston winston-daily-rotate-file
+pnpm add -w winston winston-daily-rotate-file
 
 # 2. 创建日志包
 mkdir -p packages/logger/src
@@ -117,7 +117,7 @@ cat > .husky/pre-commit << 'EOF'
 . "$(dirname -- "$0")/_/husky.sh"
 
 # 运行 lint-staged
-yarn lint-staged
+pnpm lint-staged
 
 # 检查是否有未解决的冲突标记
 if git diff --cached | grep -E '<<<<<<|>>>>>>|======' > /dev/null; then
@@ -199,9 +199,9 @@ EOF
 **执行步骤**:
 ```bash
 # 1. 安装测试依赖
-yarn add -D -W jest @types/jest ts-jest
-yarn add -D -W @testing-library/react @testing-library/jest-dom
-yarn add -D -W c8  # 代码覆盖率工具
+pnpm add -Dw jest @types/jest ts-jest
+pnpm add -Dw @testing-library/react @testing-library/jest-dom
+pnpm add -Dw c8  # 代码覆盖率工具
 
 # 2. 创建 Jest 配置
 cat > jest.config.js << 'EOF'
@@ -255,17 +255,17 @@ EOF
 
 **执行步骤**:
 ```bash
-# 1. 运行 yarn audit
-yarn audit
+# 1. 运行 pnpm audit
+pnpm audit
 
 # 2. 自动修复（如果可能）
-yarn audit fix
+pnpm audit fix
 
 # 3. 检查过期依赖
-yarn outdated
+pnpm outdated
 
 # 4. 添加 Snyk 监控（可选）
-yarn add -D snyk
+pnpm add -D snyk
 npx snyk test
 npx snyk monitor  # 持续监控
 
@@ -290,8 +290,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '22'
-      - run: yarn install
-      - run: yarn audit
+      - run: pnpm install
+      - run: pnpm audit
 EOF
 ```
 
@@ -320,7 +320,7 @@ for pkg in "${packages[@]}"; do
 
 ## 安装
 \`\`\`bash
-yarn add @steedos/$pkg
+pnpm add @steedos/$pkg
 \`\`\`
 
 ## 使用示例
@@ -338,7 +338,7 @@ EOF
 done
 
 # 2. 添加 API 文档生成
-yarn add -D -W typedoc
+pnpm add -Dw typedoc
 cat > typedoc.json << 'EOF'
 {
   "entryPoints": ["packages/*/src/index.ts"],
@@ -380,7 +380,7 @@ module.exports = {
 EOF
 
 # 2. 添加 Prometheus metrics（可选）
-yarn add -W prom-client
+pnpm add -w prom-client
 
 # 3. 创建简单的性能测试脚本
 cat > scripts/perf-test.js << 'EOF'
@@ -396,7 +396,7 @@ const instance = autocannon({
 autocannon.track(instance, { renderProgressBar: true });
 EOF
 
-yarn add -D autocannon
+pnpm add -D autocannon
 # 运行: node scripts/perf-test.js
 ```
 
@@ -424,7 +424,7 @@ EOF
 # "format:fix": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\""
 
 # 3. 运行全局格式化（首次）
-yarn format:fix
+pnpm format:fix
 
 # 4. 在 lint-staged 中确保格式化
 # package.json 中已有配置，确认正常工作
@@ -474,9 +474,9 @@ yarn format:fix
 
 在执行每个任务后，确保：
 
-- [ ] 代码可以正常构建（`yarn build`）
-- [ ] 所有现有测试通过（`yarn test`）
-- [ ] 代码通过 lint 检查（`yarn eslint`）
+- [ ] 代码可以正常构建（`pnpm build`）
+- [ ] 所有现有测试通过（`pnpm test`）
+- [ ] 代码通过 lint 检查（`pnpm eslint`）
 - [ ] 更新相关文档
 - [ ] 创建 Pull Request 并请求代码审查
 - [ ] 在团队内分享改进成果

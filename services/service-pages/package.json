@@ -9,6 +9,7 @@
   "gitHead": "cd3a60e242eed4ae305077393f0785ddb79f17de",
   "dependencies": {
     "clone": "^2.1.2",
-    "ejs": "^3.1.8"
+    "ejs": "^3.1.8",
+    "lodash": "^4.17.21"
   }
 }

@@ -217,14 +217,14 @@ Located in the `packages/` directory, consisting of 26 core NPM packages.
 
 - **Location**: `packages/create-steedos-app/`
 - **Function**: Create new Steedos applications
-- **Usage**: `npx create-steedos-app my-app`
+- **Usage**: `pnpm create steedos-app my-app`
 
 #### @steedos/create-steedos-package
 **Package Scaffolding**
 
 - **Location**: `packages/create-steedos-package/`
 - **Function**: Create new Steedos packages
-- **Usage**: `npx create-steedos-package my-package`
+- **Usage**: `pnpm dlx @steedos/create-steedos-package my-package`
 
 #### @steedos/steedos-plugin-schema-builder
 **Schema Builder Plugin**
@@ -536,7 +536,7 @@ Located in the `builder6/` directory.
 
 - **Location**: `builder6/server/`
 - **Function**: Steedos main server application
-- **Start**: `yarn start`
+- **Start**: `pnpm start`
 - **Port**: 5100
 
 ### builder6/webapp
@@ -544,7 +544,7 @@ Located in the `builder6/` directory.
 
 - **Location**: `builder6/webapp/`
 - **Technology**: React, Amis
-- **Development**: `yarn webapp`
+- **Development**: `pnpm webapp`
 - **Port**: 3000 (development mode)
 
 ### builder6/ai

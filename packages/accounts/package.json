@@ -16,7 +16,7 @@
   "license": "MIT",
   "scripts": {
     "start": "tsc && cross-env NODE_ENV=development nodemon -w src -x ts-node steedos-server.ts",
-    "cstart": "yarn build && yarn start",
+    "cstart": "pnpm build && pnpm start",
     "server": "cross-env NODE_ENV=development nodemon -w src -x ts-node server.ts",
     "build": "rm -rf ./lib && tsc",
     "compile": "tsc",
@@ -51,7 +51,8 @@
     "string-random": "^0.1.3",
     "tslib": "^2.4.0",
     "url-join": "^4.0.1",
-    "validator": "^13.15.23"
+    "validator": "^13.15.23",
+    "@steedos/i18n": "workspace:*"
   },
   "publishConfig": {
     "access": "public"

@@ -104,18 +104,18 @@ CustomLabels:
     underscore characters
   _datasources_testConnection_ok: Test OK
   _datasources_driver_error_notFind_mssql: >-
-    Mssql driver not found, please install (`yarn add mssql`) in the project and
+    Mssql driver not found, please install (`pnpm add mssql`) in the project and
     restart the service
   _datasources_driver_error_notFind_pg: >-
-    Postgres driver not found, please install (`yarn add pg`) in the project and
+    Postgres driver not found, please install (`pnpm add pg`) in the project and
     restart the service
   _datasources_driver_error_notFind_oracledb: >-
-    Oracle driver not found, please install (`yarn add oracledb`) in the project
+    Oracle driver not found, please install (`pnpm add oracledb`) in the project
     and restart the service
   _datasources_driver_error_notFind_mysql: >-
-    Mysql driver not found, please install (`yarn add mysql`) in the project and
+    Mysql driver not found, please install (`pnpm add mysql`) in the project and
     restart the service
   _datasources_driver_error_notFind_sqlite3: >-
-    Sqlite driver not found, please install (`yarn add sqlite3`) in the project
+    Sqlite driver not found, please install (`pnpm add sqlite3`) in the project
     and restart the service
   datasources_field_driver_options_meteor-mongo: 

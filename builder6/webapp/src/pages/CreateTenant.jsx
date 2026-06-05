@@ -9,7 +9,7 @@ import Logo from '../components/Logo';
 import Card from '../components/Card';
 import * as GlobalAction from '../actions/global_actions';
 import { getCurrentUser } from '../selectors/entities/users';
-import { useLocation, useNavigate, Navigate } from "react-router";
+import { useLocation, useNavigate, Navigate } from "react-router-dom";
 
 class CreateTenant extends React.PureComponent {
 

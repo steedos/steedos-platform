@@ -5,7 +5,7 @@
   "main": "lib/objects.service.js",
   "scripts": {
     "dev": "moleculer-runner --repl --hot lib/services/**/*.service.js",
-    "start": "yarn build && moleculer-runner --repl --hot lib/objects.service.js",
+    "start": "pnpm build && moleculer-runner --repl --hot lib/objects.service.js",
     "cli": "moleculer connect redis://192.168.3.17:6379",
     "ci": "jest --watch",
     "test": "jest --coverage",
@@ -23,6 +23,7 @@
     "@steedos/formula": "3.0.15-beta.6",
     "@steedos/i18n": "3.0.15-beta.6",
     "@steedos/metadata-registrar": "3.0.15-beta.6",
+    "amis-formula": "~6.3.0",
     "dotenv-flow": "^3.1.0",
     "ioredis": "^4.22.0",
     "lodash": "^4.17.21",

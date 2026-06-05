@@ -16,45 +16,44 @@ This document provides a quick reference for commonly used commands, APIs, and c
 git clone https://github.com/steedos/steedos-platform.git
 
 # Install dependencies
-yarn
-
+pnpm install
 # Build all packages
-yarn build
+pnpm build
 
 # Start development server
-yarn start
+pnpm start
 
 # Start Web application development server
-yarn webapp
+pnpm webapp
 
 # Clean dependencies
-yarn clean
+pnpm clean
 
 # Start all services with Docker
-yarn docker
+pnpm docker
 
 # Start database services only
-yarn docker:db
+pnpm docker:db
 ```
 
 ### Create New App/Package
 
 ```bash
 # Create new application
-npx create-steedos-app my-app
+pnpm create steedos-app my-app
 cd my-app
-yarn install
-yarn start
+pnpm install
+pnpm start
 
 # Create new package
-npx create-steedos-package my-package
+pnpm dlx @steedos/create-steedos-package my-package
 ```
 
 ### Moleculer REPL
 
 ```bash
 # Start REPL
-yarn repl
+pnpm repl
 
 # Common REPL commands
 mol$ actions                    # List all actions

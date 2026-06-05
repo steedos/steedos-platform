@@ -15,7 +15,7 @@ import { getCurrentUser } from '../selectors/entities/users';
 import { getSpaceCount, getCurrentSpace, getSpaces, getMySpaces } from '../selectors/entities/spaces';
 import { getTenant } from '../selectors';
 import { selectSpace, acceptInvitation, declineInvitation } from '../actions/spaces';
-import { useLocation, useNavigate, Navigate } from "react-router";
+import { useLocation, useNavigate, Navigate } from "react-router-dom";
 
 class SelectSpace extends React.PureComponent {
   static propTypes = {

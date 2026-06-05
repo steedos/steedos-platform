@@ -17,22 +17,22 @@
 
 ### 安装node modules
 ```
-yarn
+pnpm install
 ```
 
 ### 运行测试
 - 新建记录
 ```
-yarn test:openapi:insert
+pnpm test:openapi:insert
 ```
 - 查询记录
 ```
-yarn test:openapi:find
+pnpm test:openapi:find
 ```
 
 - 新建主记录及新建50条子表记录
 ```
-yarn test:openapi:insert:child
+pnpm test:openapi:insert:child
 ```
 
 - 新建主记录并修改

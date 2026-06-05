@@ -21,7 +21,7 @@
   "scripts": {
     "start": "node ./dist/index.js",
     "dev": "ts-node src/index.ts",
-    "build": "rm -rf dist && npx tsc"
+    "build": "rm -rf dist && tsc"
   },
   "dependencies": {
     "@vercel/ncc": "0.33.4",

@@ -13,11 +13,11 @@ export function getPkgManager(): PackageManager {
       }
     }
     try {
-      execSync('yarn --version', { stdio: 'ignore' })
-      return 'yarn'
-    } catch {
       execSync('pnpm --version', { stdio: 'ignore' })
       return 'pnpm'
+    } catch {
+      execSync('yarn --version', { stdio: 'ignore' })
+      return 'yarn'
     }
   } catch {
     return 'npm'

@@ -7,13 +7,17 @@
     "build": "rm -rf ./lib && tsc"
   },
   "dependencies": {
+    "@steedos/i18n": "workspace:*",
     "@steedos/metadata-api": "3.0.15-beta.6",
     "@steedos/metadata-core": "3.0.15-beta.6",
+    "@steedos/metadata-registrar": "3.0.15-beta.6",
     "@steedos/objectql": "3.0.15-beta.6",
     "bson": "4.6.4",
     "csvtojson": "~2.0.10",
     "dotenv-flow": "^3.1.0",
+    "js-yaml": "^3.14.2",
     "lodash": "^4.17.21",
+    "mongodb": "^3.7.4",
     "node-xlsx": "^0.24.0"
   },
   "devDependencies": {

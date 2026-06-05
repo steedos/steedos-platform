@@ -10,14 +10,18 @@
   ],
   "scripts": {
     "format": "prettier --write \"src/**/*.ts\"",
-    "build": "npx rimraf dist && tsc",
-    "build:watch": "npx rimraf dist && tsc --watch"
+    "build": "pnpm exec rimraf dist && tsc",
+    "build:watch": "pnpm exec rimraf dist && tsc --watch"
   },
   "dependencies": {
     "@ai-sdk/openai": "^2.0.52",
     "@steedos/objectql": "3.0.15-beta.6",
+    "@steedos/service-package-loader": "3.0.15-beta.6",
     "ai": "^5.0.71",
-    "openai": "^6.8.1"
+    "express": "^5.2.1",
+    "moleculer": "^0.14.35",
+    "openai": "^6.8.1",
+    "zod": "^4.4.3"
   },
   "peerDependencies": {
     "@builder6/core": "^4.0.0",
@@ -31,6 +35,8 @@
   },
   "gitHead": "cd3a60e242eed4ae305077393f0785ddb79f17de",
   "devDependencies": {
+    "@nestjs/testing": "^11.1.24",
+    "@types/jest": "^30.0.0",
     "@types/node": "^18.0.3",
     "typescript": "5.7.3"
   }

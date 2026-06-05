@@ -10,10 +10,10 @@
 
 ### 安装node modules
 ```
-yarn
+pnpm install
 ```
 
 ### 运行测试
 ```
-yarn test
+pnpm test:platform
 ```

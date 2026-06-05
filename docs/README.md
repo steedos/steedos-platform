@@ -32,14 +32,14 @@ Visit http://localhost
 
 ```bash
 # Create project
-npx create-steedos-app my-project
+pnpm create steedos-app my-project
 
 # Enter directory and install dependencies
 cd my-project
-yarn install
+pnpm install
 
 # Start service
-yarn start
+pnpm start
 ```
 
 Visit http://localhost:5100

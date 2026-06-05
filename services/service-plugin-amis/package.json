@@ -9,5 +9,9 @@
   "gitHead": "cd3a60e242eed4ae305077393f0785ddb79f17de",
   "devDependencies": {
     "tailwindcss": "^3.4.17"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "@steedos/i18n": "workspace:*"
   }
 }

@@ -1,0 +1,6 @@
+packages:
+  - packages/*
+  - services/*
+  - ee/*
+  - builder6/*
+  - test/playwright

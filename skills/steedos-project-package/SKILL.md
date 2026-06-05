@@ -1,7 +1,7 @@
 ---
 name: steedos-project-package
 description: |
-  Steedos project/package init & creation (初始化项目, 创建软件包), yarn install/start (NEVER npm).
+  Steedos project/package init & creation (初始化项目, 创建软件包), pnpm install/start (NEVER npm).
 ---
 
 # Steedos Project & Package Format | Steedos 项目与软件包格式
@@ -19,19 +19,19 @@ A **project** is a Node.js/TypeScript workspace that runs the Steedos platform. 
 - **Frontend**: React + Amis (Baidu low-code UI framework)
 - **Metadata**: YAML files (.object.yml, .trigger.yml, .function.yml, etc.)
 - **Databases**: MongoDB (metadata), PostgreSQL/MySQL (business data)
-- **Package Manager**: Yarn (⚠️ 禁止使用 npm)
+- **Package Manager**: pnpm (⚠️ 禁止使用 npm)
 
 ## ⚠️ CRITICAL: Package Manager
 
-**ALWAYS use `yarn`. NEVER use `npm`.**
+**ALWAYS use `pnpm`. NEVER use `npm`.**
 
 | Action | ✅ Correct | ❌ Wrong |
 |--------|-----------|----------|
-| Init | `yarn init -y` | `npm init -y` |
-| Install | `yarn install` / `yarn add <pkg>` | `npm install` / `npm i` |
-| Start | `yarn start` | `npm start` / `npm run start` |
-| Run script | `yarn <script>` | `npm run <script>` |
-| Add dep | `yarn add @steedos/server` | `npm install @steedos/server` |
+| Init | `pnpm init` | `npm init -y` |
+| Install | `pnpm install` / `pnpm add <pkg>` | `npm install` / `npm i` |
+| Start | `pnpm start` | `npm start` / `npm run start` |
+| Run script | `pnpm <script>` | `npm run <script>` |
+| Add dep | `pnpm add @steedos/server` | `npm install @steedos/server` |
 
 ---
 
@@ -74,7 +74,7 @@ my-steedos-project/
 **Key Points:**
 - `@steedos/server` dependency is REQUIRED
 - `workspaces` for custom packages
-- `start` script to run Steedos (use `yarn start`)
+- `start` script to run Steedos (use `pnpm start`)
 
 ### 2. .env (RECOMMENDED)
 
@@ -95,7 +95,7 @@ my-steedos-project/
 ├── package.json
 ├── .env
 ├── .gitignore
-├── yarn.lock
+├── pnpm-lock.yaml
 ├── node_modules/
 ├── steedos-storage/
 └── steedos-packages/
@@ -118,21 +118,21 @@ my-steedos-project/
 mkdir my-steedos-project && cd my-steedos-project
 
 # Step 2: Initialize
-yarn init -y
+pnpm init
 
 # Step 3: Install dependencies
-yarn add @steedos/server
+pnpm add @steedos/server
 
 # Step 4: Start server
-yarn start
+pnpm start
 ```
 
 Or use the CLI:
 
 ```bash
-yarn global add @steedos/cli
+pnpm add --global @steedos/cli
 steedos create my-project
-cd my-project && yarn start
+cd my-project && pnpm start
 ```
 
 ## Git Configuration | Git 配置
@@ -141,7 +141,7 @@ Recommended .gitignore:
 
 ```
 node_modules/
-.yarn/
+.pnpm-store/
 .env
 .env.local
 steedos-storage/

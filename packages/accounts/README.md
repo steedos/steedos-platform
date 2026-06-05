@@ -16,8 +16,8 @@ export ROOT_URL=http://127.0.0.1:4000/
 ## Start Server at 4000
 
 ```bash
-yarn
-yarn start
+pnpm install
+pnpm start
 ```
 
 Server apis runs on https://127.0.0.1:4000/accounts/
@@ -26,8 +26,8 @@ Server apis runs on https://127.0.0.1:4000/accounts/
 
 ```bash
 cd webapp
-yarn
-yarn start
+pnpm install
+pnpm start
 ```
 
 Navigate to https://127.0.0.1:3000/ to view react webapp.
@@ -36,8 +36,8 @@ Navigate to https://127.0.0.1:3000/ to view react webapp.
 
 ```bash
 cd webapp
-yarn
-yarn build
+pnpm install
+pnpm build
 ```
 
 Build webapp to /webapps/build folder, will mount to https://127.0.0.1:4000/accounts/a/

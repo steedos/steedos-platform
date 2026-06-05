@@ -42,7 +42,7 @@ config STEEDOS_DB_AUTO_MIGRATE=false in .env.local to disable auto migrate
 ### Add migration script
 
 ```shell
-yarn migrate create :script_name
+pnpm migrate create :script_name
 ```
 ## 功能说明
 - 此包用于执行升级脚本文件

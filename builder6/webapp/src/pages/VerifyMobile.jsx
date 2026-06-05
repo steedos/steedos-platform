@@ -13,7 +13,7 @@ import { verifyEmail, verifyMobile, sendVerificationToken } from '../actions/use
 import * as GlobalAction from '../actions/global_actions';
 import { getCurrentUserId, getCurrentUser } from '../selectors/entities/users';
 import { useCountDown } from "../components/countdown";
-import { useLocation, useNavigate, Navigate } from "react-router";
+import { useLocation, useNavigate, Navigate } from "react-router-dom";
 
 const totalSeconds = 60;
 const ReApplyCodeBtn = ({ onClick, id, loginId, disabled }) => {

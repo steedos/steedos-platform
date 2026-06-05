@@ -53,12 +53,14 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | b
 
 # 确保在构建过程中可用
 ENV PATH=$NVM_DIR/versions/node/v22.12.0/bin:$PATH
+ENV PNPM_HOME=/usr/local/share/pnpm
+ENV PATH=$PNPM_HOME:$PATH
 
 RUN apt-get update \
     && apt-get install -y gnupg curl nodejs
     
-# yarn 
-RUN npm install --global yarn
+# pnpm
+RUN corepack enable && corepack prepare pnpm@10.33.0 --activate
 
 # platform
 COPY ./app/platform /app
@@ -67,9 +69,9 @@ ENV NODE_ENV=production
 
 WORKDIR /app
 
-RUN yarn config set registry https://registry.npmjs.org
+RUN pnpm config set registry https://registry.npmjs.org
 
-RUN yarn && yarn cache clean
+RUN pnpm install --prod && pnpm store prune
 
 # 预加载 UNPKG 资源到缓存
 RUN mkdir -p /steedos-storage/unpkg \
@@ -81,14 +83,14 @@ COPY ./app/steedosctl /opt/steedos/steedosctl
 
 WORKDIR /opt/steedos/steedosctl
 
-RUN npm install --only=prod && npm install --only=prod -g
+RUN pnpm install --prod && pnpm add --global .
 
 
 # nodered
 COPY ./app/nodered /opt/steedos/nodered
 WORKDIR /opt/steedos/nodered
 
-RUN yarn && yarn cache clean
+RUN pnpm install --prod && pnpm store prune
 
 COPY ./fs /
 

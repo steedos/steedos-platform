@@ -13,7 +13,7 @@
 | Node.js | v22.0 及以上 |
 | MongoDB | v7.0 及以上 |
 | Redis | 最新稳定版 |
-| Yarn | 最新稳定版 |
+| pnpm | 最新稳定版 |
 
 ## 快速开始
 
@@ -22,7 +22,7 @@
 确保 MongoDB 和 Redis 服务正常运行，执行以下命令通过 Docker 启动：
 
 ```bash
-yarn start:db
+pnpm start:db
 ```
 
 ### 第二步：安装依赖
@@ -30,7 +30,7 @@ yarn start:db
 在项目根目录执行以下命令安装所需 Node 依赖包：
 
 ```bash
-yarn
+pnpm install
 ```
 
 ### 第三步：启动开发服务器
@@ -38,7 +38,7 @@ yarn
 启动 Steedos 开发服务器，控制台会输出访问地址：
 
 ```bash
-yarn start
+pnpm start
 ```
 
 ### 第四步：访问应用
@@ -135,7 +135,7 @@ STEEDOS_STORAGE_DIR=./storage
 
 1. 启动服务：
    ```bash
-   yarn start
+   pnpm start
    ```
 2. 登录系统，验证功能是否符合需求
 3. 将测试中发现的问题反馈给 AI，等待其修复

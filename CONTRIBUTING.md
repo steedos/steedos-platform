@@ -16,7 +16,7 @@ If you need to deploy the development environment locally, you can refer to the 
 - [MongoDB](https://www.mongodb.com/try/download/) version = 4.2.17. MongoDB is a general purpose, document-based, distributed database built for modern application developers.
 - [Redis](https://redis.io/) version = 6.2.6.
 - [Node.js](https://nodejs.org/en/download/) version = 12.22.7 (which can be checked by running `node -v`). You can use [nvm](https://github.com/nvm-sh/nvm) for managing multiple Node versions on a single machine installed.
-- [Yarn](https://yarnpkg.com/en/) version = 1.22.17 (which can be checked by running `yarn version`). Yarn is a performant package manager for JavaScript and replaces the `npm` client. It is not strictly necessary but highly encouraged.
+- [pnpm](https://pnpm.io/) version = 10.33.0 (which can be checked by running `pnpm --version`). pnpm is the package manager used by this repository.
 - [Meteor](https://www.meteor.com/) version = 1.9.3. Meteor is an open source platform for web, mobile, and desktop used by over half a million developers around the globe to make shipping javascript applications simple, efficient, and scalable.
 
 > Only when you run the source code  in '/creator' folder of our platform, you need to install Meteor. If you use Steedos as a development tool, you do not need to install Meteor.
@@ -25,14 +25,14 @@ If you need to deploy the development environment locally, you can refer to the 
 
 - Clone this repository to your local.
 - Enter to the local folder of this repository by command line.
-- Run `yarn` on command line to install the dependent NPM packages.
-- Then run `yarn bootstrap` to auto link the npm packages that mentioned in the file `lerna.json` by [lerna](https://lerna.js.org/).
-- Then run `yarn build` to auto build all NPM packages in the folder "packages" and "services" of the source code.
+- Run `pnpm install` on command line to install the dependent NPM packages.
+- Then run `pnpm bootstrap` to auto link the npm packages that mentioned in the file `lerna.json` by [lerna](https://lerna.js.org/).
+- Then run `pnpm build` to auto build all NPM packages in the folder "packages" and "services" of the source code.
 - Start the MongoDB service.
 
 ## Run Project
 
-- Run `yarn start` on the command line to start
+- Run `pnpm start` on the command line to start
 
 - Use your browser to access `http://localhost:5100`.
 
@@ -58,7 +58,7 @@ MONGO_URL=mongodb://127.0.0.1/steedos
 ### Use local Node.js to debug platform source code
 
 ```bash
-yarn
-yarn build
-yarn start
+pnpm install
+pnpm build
+pnpm start
 ```

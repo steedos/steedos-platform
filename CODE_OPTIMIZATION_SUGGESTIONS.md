@@ -17,7 +17,7 @@
 - **后端**: Node.js (>=22.0.0), TypeScript 5.7.3, Moleculer微服务框架
 - **前端**: React, Amis (百度低代码框架)
 - **数据库**: MongoDB, MySQL/PostgreSQL/Oracle/SQL Server支持
-- **构建工具**: Lerna 9.x (Monorepo管理), Yarn 3.8.7
+- **构建工具**: Lerna 9.x (Monorepo管理), pnpm 10.33.0
 
 ---
 
@@ -74,8 +74,8 @@
 1. **建立测试基础设施**
    ```bash
    # 添加测试覆盖率工具
-   yarn add -D -W jest @types/jest ts-jest c8
-   yarn add -D -W @testing-library/react @testing-library/jest-dom
+   pnpm add -Dw jest @types/jest ts-jest c8
+   pnpm add -Dw @testing-library/react @testing-library/jest-dom
    ```
 
 2. **制定测试策略**
@@ -113,7 +113,7 @@
 1. **引入专业日志库**
    ```bash
    # 使用 Winston 或 Pino
-   yarn add winston winston-daily-rotate-file
+   pnpm add winston winston-daily-rotate-file
    ```
 
 2. **创建统一日志服务**
@@ -254,8 +254,8 @@
 **实施建议**:
 ```bash
 # 添加性能监控工具
-yarn add -D clinic autocannon
-yarn add prom-client  # Prometheus metrics
+pnpm add -D clinic autocannon
+pnpm add prom-client  # Prometheus metrics
 
 # 运行性能分析
 clinic doctor -- node server.js
@@ -302,7 +302,7 @@ clinic doctor -- node server.js
 **7.1 依赖更新**
 ```bash
 # 检查过期依赖
-yarn outdated
+pnpm outdated
 
 # 使用 Renovate Bot 自动更新
 # 在 .github/renovate.json 配置自动 PR
@@ -311,11 +311,11 @@ yarn outdated
 **7.2 安全审计**
 ```bash
 # 定期运行安全审计
-yarn audit
+pnpm audit
 npm audit fix
 
 # 使用 Snyk 持续监控
-yarn add -D snyk
+pnpm add -D snyk
 snyk test
 ```
 
@@ -351,7 +351,7 @@ snyk test
 
 2. **代码复杂度检查**
    ```bash
-   yarn add -D eslint-plugin-sonarjs
+   pnpm add -D eslint-plugin-sonarjs
    ```
 
 3. **提交规范**
@@ -424,7 +424,7 @@ snyk test
 
 **优化建议**:
 1. **构建加速**
-   - 使用构建缓存（yarn cache, Docker layer cache）
+   - 使用构建缓存（pnpm store, Docker layer cache）
    - 并行执行测试
    - 增量构建
 

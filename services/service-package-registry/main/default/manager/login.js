@@ -52,15 +52,23 @@ async function login(username, password, email, registry, scope) {
 }
 
 function setYarnrcScopes(scopes, registry) {
-    const lines = [];
+    const yarnLines = [];
+    const npmLines = [];
     _.each(scopes, (scope) => {
-        lines.push(`"@${scope}:registry" "${registry}"`);
+        yarnLines.push(`"@${scope}:registry" "${registry}"`);
+        npmLines.push(`@${scope}:registry=${registry}`);
     })
-    fs.writeFileSync(yarnrcConfigPath, lines.join('\n') + '\n');
+    fs.writeFileSync(yarnrcConfigPath, yarnLines.join('\n') + '\n');
+    fs.writeFileSync(configPath, npmLines.join('\n') + '\n');
 }
 
 function getYarnrcScopes() {
-    const data = fs.readFileSync(yarnrcConfigPath, 'utf-8');
+    let data = "";
+    if (fs.existsSync(yarnrcConfigPath)) {
+        data = fs.readFileSync(yarnrcConfigPath, 'utf-8');
+    } else if (fs.existsSync(configPath)) {
+        data = fs.readFileSync(configPath, 'utf-8');
+    }
     const scopes = {};
     if (data) {
         // console.log(`data`, data);
@@ -68,7 +76,7 @@ function getYarnrcScopes() {
             const lines = data.split('\n');
             _.each(lines, (line) => {
                 try {
-                    let s = line.split(' ');
+                    let s = line.includes('=') ? line.split('=') : line.split(' ');
                     if (s.length == 2) {
                         scopes[s[0].replace(/\"/g, "")] = s[1].replace(/\"/g, "");
                     }

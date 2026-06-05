@@ -68,7 +68,7 @@ Actionable tasks that can be started immediately:
 ## 📋 Quick Wins (Can Start This Week)
 
 1. **Day 1**: Add Git hooks for quality checks
-2. **Day 1**: Run security audit with `yarn audit`
+2. **Day 1**: Run security audit with `pnpm audit`
 3. **Day 1**: Setup Prettier format checking
 4. **Day 2**: Create TypeScript strict config for new code
 5. **Day 2-3**: Implement unified logging service

@@ -6,6 +6,7 @@
     "build": "rm -rf ./lib && tsc"
   },
   "dependencies": {
+    "@steedos/cachers": "3.0.15-beta.6",
     "@steedos/metadata-registrar": "3.0.15-beta.6",
     "@steedos/objectql": "3.0.15-beta.6",
     "lodash": "^4.17.21"

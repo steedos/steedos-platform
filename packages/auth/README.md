@@ -1,6 +1,6 @@
 # @steedos/auth用于生成及缓存用户的session，提高验证速度
 ## 安装
-- yarn add @steedos/auth 或者  npm install @steedos/auth
+- pnpm add @steedos/auth 或者  npm install @steedos/auth
 
 ## 开放getSession方法，获取用户session
 - 参数token是`X-AUTH-TOKEN`, spaceId是工作区id

@@ -8,7 +8,7 @@
 import Navbar from "./Navbar"
 import { AppHeader } from "./AppHeader"
 import GlobalLinkInterceptor from "./GlobalLinkInterceptor";
-import { useBlocker, useLocation, useNavigationType } from "react-router";
+import { useBlocker, useLocation, useNavigationType } from "react-router-dom";
 import { useEffect } from "react";
 
 // 路由监听组件

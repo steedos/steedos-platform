@@ -15,7 +15,8 @@
     "lru_map": "^0.4.1",
     "moleculer": "^0.14.35",
     "moleculer-web": "^0.11.0-beta3",
-    "validator": "^13.15.23"
+    "validator": "^13.15.23",
+    "lodash": "^4.17.21"
   },
   "publishConfig": {
     "access": "public"

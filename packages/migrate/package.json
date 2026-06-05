@@ -7,7 +7,8 @@
   "dependencies": {
     "@steedos/service-package-registry": "3.0.15-beta.6",
     "migrate": "^1.6.2",
-    "mongodb": "^3.7.3"
+    "mongodb": "^3.7.3",
+    "lodash": "^4.17.21"
   },
   "publishConfig": {
     "access": "public"

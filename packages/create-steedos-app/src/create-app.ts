@@ -99,7 +99,7 @@ export async function createApp({
     console.log();
   }
 
-  // 5. [核心优化] 安装依赖 (yarn / npm install)
+  // 5. [核心优化] 安装依赖
   console.log("Installing packages. This might take a couple of minutes.");
   console.log();
 
@@ -109,7 +109,7 @@ export async function createApp({
   console.log(`${chalk.green("Success!")} Created ${appName} at ${appPath}`);
   console.log();
 
-  // 6. [核心优化] 自动启动项目 (yarn start)
+  // 6. [核心优化] 自动启动项目
   console.log(`Running ${chalk.cyan(`${packageManager} start`)}...`);
 
   const child = spawn(packageManager, ["start"], {

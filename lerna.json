@@ -6,6 +6,6 @@
     "ee/**",
     "builder6/*"
   ],
-  "npmClient": "yarn",
+  "npmClient": "pnpm",
   "version": "3.0.15-beta.6"
 }

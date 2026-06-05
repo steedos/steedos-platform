@@ -435,7 +435,7 @@ my-package/
 **Creating a Package**:
 
 ```bash
-npx create-steedos-package my-package
+pnpm dlx @steedos/create-steedos-package my-package
 ```
 
 ### 7.2 Object Inheritance
@@ -556,19 +556,18 @@ field_permissions:
 
 ```bash
 # Install dependencies
-yarn
-
+pnpm install
 # Start development server
-yarn start
+pnpm start
 
 # Build all packages
-yarn build
+pnpm build
 
 # Run Docker
-yarn docker
+pnpm docker
 
 # Clean dependencies
-yarn clean
+pnpm clean
 ```
 
 ### C. References

@@ -14,7 +14,7 @@ import * as GlobalAction from '../actions/global_actions';
 import { getCurrentUserId } from '../selectors/entities/users';
 import { useCountDown } from "../components/countdown";
 import { validatePassword } from '../client/password';
-import { useLocation, useNavigate, Navigate } from "react-router";
+import { useLocation, useNavigate, Navigate } from "react-router-dom";
 
 const totalSeconds = 60;
 const ReApplyCodeBtn = ({ onClick, id, loginId, disabled }) => {

@@ -82,7 +82,7 @@ async function run(): Promise<void> {
     process.exit(1);
   }
 
-  const packageManager = "yarn";
+  const packageManager = "pnpm";
 
   await createApp({
     appPath: resolvedProjectPath,
@@ -104,9 +104,11 @@ async function notifyUpdate(): Promise<void> {
           "\n" +
           "You can update by running: " +
           chalk.cyan(
-            pkgManager === "yarn"
-              ? "yarn global add create-steedos-app"
-              : `${pkgManager} install --global create-steedos-app`,
+            pkgManager === "pnpm"
+              ? "pnpm add --global create-steedos-app"
+              : pkgManager === "yarn"
+                ? "yarn global add create-steedos-app"
+                : "npm install --global create-steedos-app",
           ) +
           "\n",
       );

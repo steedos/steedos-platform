@@ -5,7 +5,7 @@
   "main": "lib/translations.service.js",
   "scripts": {
     "dev": "moleculer-runner --repl --hot lib/services/**/*.service.js",
-    "start": "yarn build && moleculer-runner --repl --hot lib/translations.service.js",
+    "start": "pnpm build && moleculer-runner --repl --hot lib/translations.service.js",
     "cli": "moleculer connect redis://192.168.3.30:6379",
     "ci": "jest --watch",
     "test": "jest --coverage",

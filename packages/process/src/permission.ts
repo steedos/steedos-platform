@@ -1,6 +1,7 @@
 import { getReocrdProcessInstance } from './process_manager'
 import * as core from "express-serve-static-core";
 import { allowRecall, allowApprover, allowSubmit } from './permission_manager';
+import { getParam } from './request';
 
 interface Request extends core.Request {
     user: any;
@@ -9,8 +10,8 @@ interface Request extends core.Request {
 export const allowRecallByProcessInstance = async (req: Request, res: core.Response) => {
     try {
         const urlParams = req.params;
-        const objectName = urlParams.objectName;
-        const recordId = urlParams.record;
+        const objectName = getParam(urlParams, 'objectName');
+        const recordId = getParam(urlParams, 'record');
         const userSession = req.user;
         const pendingInstances = await getReocrdProcessInstance(objectName, recordId, 'pending', userSession);
         if(pendingInstances.length > 0){
@@ -29,7 +30,7 @@ export const allowApproverByInstanceHistoryId = async (req: Request, res: core.R
     try {
         const urlParams = req.params;
         // const objectName = urlParams.objectName;
-        const instanceHistoryId = urlParams.record;
+        const instanceHistoryId = getParam(urlParams, 'record');
         const userSession = req.user;
         if(await allowApprover(instanceHistoryId, userSession)){
             return res.status(200).send({allowApprover: true});
@@ -44,8 +45,8 @@ export const allowApproverByInstanceHistoryId = async (req: Request, res: core.R
 export const allowObjectSubmit = async(req: Request, res: core.Response)=>{
     try {
         const urlParams = req.params;
-        const objectName = urlParams.objectName;
-        const recordId = urlParams.record;
+        const objectName = getParam(urlParams, 'objectName');
+        const recordId = getParam(urlParams, 'record');
         const userSession = req.user;
         if(await allowSubmit(objectName, recordId, userSession)){
             return res.status(200).send({allowSubmit: true});

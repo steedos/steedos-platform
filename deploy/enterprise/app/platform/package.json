@@ -10,5 +10,6 @@
   },
   "dependencies": {
     "@steedos/server": "~3.0"
-  }
+  },
+  "packageManager": "pnpm@10.33.0"
 }

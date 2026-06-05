@@ -5,7 +5,7 @@ import { getSettings, getTenant } from '../selectors';
 import { Transition } from '@tailwindui/react'
 import { useState } from 'react'
 import Logo from './Logo';
-import {  useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { getCurrentUser } from '../selectors/entities/users';
 
 const Navbar = ({ tenant, currentUser }: any) => {

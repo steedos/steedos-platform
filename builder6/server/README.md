@@ -5,6 +5,6 @@ Steedos Server 是一个基于 Nestjs 的 Web 服务器，用于处理 Steedos �
 ## 开发
 
 ```bash
-yarn
-yarn start
+pnpm install
+pnpm start
 ```

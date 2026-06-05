@@ -24,7 +24,7 @@ Builder6 Server is a NestJS + Moleculer hybrid monorepo powering the Steedos pla
 - **Session/Cache**: Redis (connect-redis + ioredis)
 - **Auth**: JWT + session tokens via `@builder6/core`
 - **API Docs**: Swagger at `/api/v6`
-- **Build**: Nx 22 + Lerna 9 + Yarn 3.8
+- **Build**: Nx 22 + Lerna 9 + pnpm 3.8
 
 ## Monorepo Structure | 结构
 
@@ -96,11 +96,11 @@ bootstrap()
 ## Development Commands
 
 ```bash
-yarn start:dev      # Hot reload
-yarn start:debug    # Debug mode
-yarn start:prod     # Production
-yarn build          # Build all
-yarn lint           # Lint
+pnpm start:dev      # Hot reload
+pnpm start:debug    # Debug mode
+pnpm start:prod     # Production
+pnpm build          # Build all
+pnpm lint           # Lint
 ```
 
 ---

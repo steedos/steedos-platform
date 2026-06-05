@@ -13,5 +13,8 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "cd3a60e242eed4ae305077393f0785ddb79f17de"
+  "gitHead": "cd3a60e242eed4ae305077393f0785ddb79f17de",
+  "dependencies": {
+    "@steedos/i18n": "workspace:*"
+  }
 }

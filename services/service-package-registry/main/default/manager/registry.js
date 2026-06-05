@@ -2,6 +2,7 @@ const {exec,log,events} = require("../util");
 const child_process = require('child_process');
 const npmCommand = process.platform === 'win32' ? 'npm.cmd' : 'npm'; 
 const yarnCommand = process.platform === 'win32' ? 'yarn.cmd' : 'yarn';  
+const pnpmCommand = process.platform === 'win32' ? 'pnpm.cmd' : 'pnpm';
 const path = require("path");
 const fs = require("fs");
 const moduleRe = /^(@[^/@]+?[/])?[^/@]+?$/;
@@ -20,6 +21,108 @@ const npa = require("npm-package-arg");
 log.init({});
 
 const settings = require('../../../package.service').settings
+
+function getPackageManager(installDir) {
+    if (process.env.STEEDOS_PACKAGE_MANAGER) {
+        return process.env.STEEDOS_PACKAGE_MANAGER;
+    }
+    const userAgent = process.env.npm_config_user_agent || "";
+    if (userAgent.startsWith("pnpm")) {
+        return "pnpm";
+    }
+    if (userAgent.startsWith("yarn")) {
+        return "yarn";
+    }
+    if (userAgent.startsWith("npm")) {
+        return "npm";
+    }
+    try {
+        const packageInfo = loadJson(path.join(installDir, "package.json"));
+        const packageManager = packageInfo.packageManager || "";
+        if (packageManager.startsWith("pnpm@")) {
+            return "pnpm";
+        }
+        if (packageManager.startsWith("yarn@")) {
+            return "yarn";
+        }
+        if (packageManager.startsWith("npm@")) {
+            return "npm";
+        }
+    } catch (error) {
+        // Ignore and fall through to lockfile detection/default.
+    }
+    if (fs.existsSync(path.join(installDir, "pnpm-lock.yaml")) || fs.existsSync(path.join(installDir, "pnpm-workspace.yaml"))) {
+        return "pnpm";
+    }
+    if (fs.existsSync(path.join(installDir, "yarn.lock"))) {
+        return "yarn";
+    }
+    if (fs.existsSync(path.join(installDir, "package-lock.json"))) {
+        return "npm";
+    }
+    return "pnpm";
+}
+
+function getPackageManagerCommand(packageManager) {
+    if (packageManager === "pnpm") {
+        return pnpmCommand;
+    }
+    if (packageManager === "yarn") {
+        return yarnCommand;
+    }
+    return npmCommand;
+}
+
+function buildAddArgs(packageManager, packages, options = {}) {
+    const packageList = Array.isArray(packages) ? packages : [packages];
+    if (packageManager === "pnpm") {
+        const args = ["add", "--save-exact", ...packageList];
+        if (options.registry) {
+            args.push("--registry", options.registry);
+        }
+        return args;
+    }
+    if (packageManager === "yarn") {
+        const args = ["add", "-E", ...packageList];
+        if (options.json) {
+            args.push("--json");
+        }
+        if (options.registry) {
+            args.push("--registry", options.registry);
+        }
+        return args;
+    }
+    const args = ["install", "--no-audit", "--no-update-notifier", "--no-fund", "--save", "--save-exact", ...packageList];
+    if (options.registry) {
+        args.push("--registry", options.registry);
+    }
+    return args;
+}
+
+function buildRemoveArgs(packageManager, packageName) {
+    if (packageManager === "pnpm") {
+        return ["remove", packageName];
+    }
+    if (packageManager === "yarn") {
+        return ["remove", packageName];
+    }
+    return ["uninstall", "--save", packageName];
+}
+
+function parseLastJsonLine(stdout) {
+    if (!stdout) {
+        return null;
+    }
+    const lines = _.compact(stdout.split('\n'));
+    for (let i = lines.length - 1; i >= 0; i--) {
+        try {
+            return JSON.parse(lines[i]);
+        } catch (error) {
+            // Try the previous line.
+        }
+    }
+    return null;
+}
 
 function checkModulePath(folder) {
     var moduleName;
@@ -192,14 +295,11 @@ async function installModule(module, version, url, registry_url) {
         // }
 
         var installDir = settings.userDir || ".";
-        var args = ['install','--no-audit','--no-update-notifier','--no-fund','--save','--save-prefix=~','--production',installName];
-        var yarnArgs = ['add', '-E', installName, '--json']; //yarnCommand  , '--json' --registry
-        if (registry_url) {
-            yarnArgs.push('--registry')
-            yarnArgs.push(registry_url)
-        }
-        console.log('command run:', yarnCommand, yarnArgs.join(' '))
-        return exec.run(yarnCommand,yarnArgs,{
+        const packageManager = getPackageManager(installDir);
+        const packageManagerCommand = getPackageManagerCommand(packageManager);
+        const addArgs = buildAddArgs(packageManager, installName, { registry: registry_url, json: true });
+        console.log('command run:', packageManagerCommand, addArgs.join(' '))
+        return exec.run(packageManagerCommand,addArgs,{
             cwd: installDir
         }, true).then(result => {
             // console.log(`result ok`, result)
@@ -345,22 +445,24 @@ function loadJson(filePath){
 
 async function yarnAddPackage(yarnPackage){
     var installDir = settings.userDir || ".";
+    const packageManager = getPackageManager(installDir);
+    const packageManagerCommand = getPackageManagerCommand(packageManager);
 
     // eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef
     const oldPackageInfo = loadJson(path.join(installDir, 'package.json'));
 
-    var yarnArgs = ['add', '-E', ...yarnPackage.split(' '), '--json'];
-    const data = await exec.run(yarnCommand, yarnArgs, {cwd: installDir}, true);
+    var addArgs = buildAddArgs(packageManager, yarnPackage.split(' '), { json: true });
+    const data = await exec.run(packageManagerCommand, addArgs, {cwd: installDir}, true);
 
     // eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef
     const newPackageInfo = loadJson(path.join(installDir, 'package.json'));
 
     const changes = comparePackageJsonChanges(oldPackageInfo, newPackageInfo);
-    const formatData = JSON.parse(_.last(_.compact(data.stdout.split('\n'))))
+    const formatData = parseLastJsonLine(data.stdout);
     // console.log(`yarnAddPackage:`, yarnPackage, formatData, data)
     // 解析 yarn add 返回的结果
     const steedosPackages = [];
-    if(formatData.data.trees){
+    if(formatData?.data?.trees){
         _.each(formatData.data.trees, (module)=>{
             const parsed = npa(module.name);
             const packagePath = path.dirname(require.resolve(`${parsed.name}/package.json`, {
@@ -447,8 +549,10 @@ async function uninstallModule(module){
         var installName = module;
 
         var installDir = settings.userDir || ".";
-        var yarnArgs = ['remove', installName]; //yarnCommand
-        return exec.run(yarnCommand,yarnArgs,{
+        const packageManager = getPackageManager(installDir);
+        const packageManagerCommand = getPackageManagerCommand(packageManager);
+        var removeArgs = buildRemoveArgs(packageManager, installName);
+        return exec.run(packageManagerCommand,removeArgs,{
             cwd: installDir
         }, true).then(result => {
             console.log(`result ok`, result)

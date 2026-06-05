@@ -22,7 +22,7 @@
 ### 1.1 System Requirements
 
 - **Node.js**: ≥22.0.0
-- **Yarn**: 3.8.7 (Yarn 3 recommended)
+- **pnpm**: 3.8.7 (pnpm 10 recommended)
 - **MongoDB**: ≥4.2.17
 - **Redis**: ≥6.2.6 (Optional, for caching and message queue)
 
@@ -34,10 +34,9 @@ git clone https://github.com/steedos/steedos-platform.git
 cd steedos-platform
 
 # Install dependencies
-yarn
-
+pnpm install
 # Build all packages
-yarn build
+pnpm build
 ```
 
 ### 1.3 Start MongoDB and Redis
@@ -46,7 +45,7 @@ yarn build
 
 ```bash
 # Start database services
-yarn docker:db
+pnpm docker:db
 ```
 
 This starts the following services:
@@ -68,7 +67,7 @@ redis-server
 
 ```bash
 # Start main server
-yarn start
+pnpm start
 
 # Access application
 # Open browser: http://localhost:5100
@@ -78,7 +77,7 @@ yarn start
 
 ```bash
 # Start webapp development server in another terminal
-yarn webapp
+pnpm webapp
 
 # Access development server
 # Open browser: http://localhost:3000
@@ -177,7 +176,7 @@ steedos-platform/
 
 ### 3.1 Monorepo Management
 
-Project uses **Lerna** and **Yarn Workspaces** for monorepo management:
+Project uses **Lerna** and **pnpm Workspaces** for monorepo management:
 
 ```json
 // lerna.json
@@ -188,7 +187,7 @@ Project uses **Lerna** and **Yarn Workspaces** for monorepo management:
     "ee/**",
     "builder6/*"
   ],
-  "npmClient": "yarn",
+  "npmClient": "pnpm",
   "version": "3.0.12"
 }
 ```
@@ -197,28 +196,27 @@ Project uses **Lerna** and **Yarn Workspaces** for monorepo management:
 
 ```bash
 # Install dependencies
-yarn
-
+pnpm install
 # Build all packages
-yarn build
+pnpm build
 
 # Start server
-yarn start
+pnpm start
 
 # Start webapp
-yarn webapp
+pnpm webapp
 
 # Clean node_modules
-yarn clean
+pnpm clean
 
 # Release new version (beta)
-yarn release:beta
+pnpm release:beta
 
 # Run Docker environment
-yarn docker
+pnpm docker
 
 # Start databases only
-yarn docker:db
+pnpm docker:db
 ```
 
 ### 3.3 Package Management
@@ -228,14 +226,14 @@ yarn docker:db
 ```bash
 # Add dependency to packages/objectql
 cd packages/objectql
-yarn add lodash
+pnpm add lodash
 ```
 
 **Add dependency in workspace root**:
 
 ```bash
 # Add to all workspaces
-yarn add -W <package-name>
+pnpm add -w <package-name>
 ```
 
 ### 3.4 Code Formatting
@@ -714,11 +712,11 @@ describe('ObjectQL', () => {
 
 ```bash
 # Run all tests
-yarn test
+pnpm test
 
 # Run tests for specific package
 cd packages/objectql
-yarn test
+pnpm test
 ```
 
 ---
@@ -746,7 +744,7 @@ module.exports = {
       "type": "node",
       "request": "launch",
       "name": "Debug Steedos Server",
-      "runtimeExecutable": "yarn",
+      "runtimeExecutable": "pnpm",
       "runtimeArgs": ["start"],
       "cwd": "${workspaceFolder}",
       "console": "integratedTerminal"
@@ -759,7 +757,7 @@ module.exports = {
 
 ```bash
 # Start REPL
-yarn repl
+pnpm repl
 
 # REPL commands
 mol$ actions        # List all actions

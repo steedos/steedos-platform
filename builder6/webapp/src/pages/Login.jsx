@@ -17,7 +17,7 @@ import LocalStorageStore from '../stores/local_storage_store';
 import { isString, each, compact, values } from 'lodash'
 
 import {Tabs,Tab,Paper} from '@material-ui/core';
-import { useLocation, useNavigate, Navigate } from "react-router";
+import { useLocation, useNavigate, Navigate } from "react-router-dom";
 
 const totalSeconds = 60;
 const ReApplyCodeBtn = ({ onClick, id, loginId, disabled }) => {

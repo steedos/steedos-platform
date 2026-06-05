@@ -1,6 +1,7 @@
 import { getObjectProcessDefinition, recordSubmit } from './process_manager'
 import * as core from "express-serve-static-core";
 import { SteedosError, sendError } from '@steedos/objectql'
+import { getParam } from './request';
 interface Request extends core.Request {
     user: any;
 }
@@ -8,8 +9,8 @@ interface Request extends core.Request {
 export const submit = async (req: Request, res: core.Response) => {
     try {
         const urlParams = req.params;
-        const objectName = urlParams.objectName;
-        const recordId = urlParams.record;
+        const objectName = getParam(urlParams, 'objectName');
+        const recordId = getParam(urlParams, 'record');
         const userSession = req.user;
         const body = req.body;
         const comment = body.comment;

@@ -3,21 +3,21 @@
 The easiest way to get started with Steedos Platform is by using `create-steedos-app`. This CLI tool enables you to quickly start building a new steedos application, with everything set up for you. You can create a new app using the default steedos template, or by using one of the [official Steedos examples](https://github.com/steedos/steedos-platform/tree/master/examples). To get started, use the following command:
 
 ```bash
-npx create-steedos-app@latest
-# or
-yarn create steedos-app
-# or
 pnpm create steedos-app
+# or
+pnpm dlx create-steedos-app@latest
+# or
+npx create-steedos-app@latest
 ```
 
 To create a new app in a specific folder, you can send a name as an argument. For example, the following command will create a new Steedos app called `contract-app` in a folder with the same name:
 
 ```bash
-npx create-steedos-app@latest contract-app
-# or
-yarn create steedos-app contract-app
-# or
 pnpm create steedos-app contract-app
+# or
+pnpm dlx create-steedos-app@latest contract-app
+# or
+npx create-steedos-app@latest contract-app
 ```
 
 ## Options
@@ -26,8 +26,8 @@ pnpm create steedos-app contract-app
 
 - **-e, --example [name]|[github-url]** - An example to bootstrap the app with. You can use an example name from the [Steedos Platform repo](https://github.com/steedos/steedos-platform/tree/master/examples) or a GitHub URL. The URL can use any branch and/or subdirectory.
 - **--example-path &lt;path-to-example&gt;** - In a rare case, your GitHub URL might contain a branch name with a slash (e.g. bug/fix-1) and the path to the example (e.g. foo/bar). In this case, you must specify the path to the example separately: `--example-path foo/bar`
-- **--use-npm** - Explicitly tell the CLI to bootstrap the app using npm. To bootstrap using yarn we recommend to run `yarn create steedos-app`
-- **--use-pnpm** - Explicitly tell the CLI to bootstrap the app using pnpm. To bootstrap using pnpm we recommend running `pnpm create steedos-app`
+- **--use-npm** - Explicitly tell the CLI to bootstrap the app using npm.
+- **--use-pnpm** - Explicitly tell the CLI to bootstrap the app using pnpm. This is the recommended package manager.
 
 ## Why use Create Steedos App?
 

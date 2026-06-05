@@ -5,7 +5,7 @@ import { getSettings, getTenant } from '../selectors';
 import { getCurrentUser } from "../selectors/entities/users";
 import { getCurrentSpaceId } from "../selectors/entities/spaces";
 import Loading from './Loading';
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 const LoggedIn = ({ children }) => {
   const currentUser = useSelector(getCurrentUser);

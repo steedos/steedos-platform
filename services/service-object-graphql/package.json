@@ -1,30 +1,31 @@
 {
-    "name": "@steedos/service-object-graphql",
-    "version": "3.0.15-beta.6",
-    "main": "package.service.js",
-    "publishConfig": {
-        "access": "public"
-    },
-    "keywords": [
-        "steedos"
-    ],
-    "scripts": {
-        "build": "rm -rf ./lib && tsc"
-    },
-    "description": "steedos package",
-    "repository": {},
-    "license": "MIT",
-    "gitHead": "cd3a60e242eed4ae305077393f0785ddb79f17de",
-    "dependencies": {
-        "@steedos/filters": "3.0.15-beta.6",
-        "@steedos/i18n": "3.0.15-beta.6",
-        "@steedos/objectql": "3.0.15-beta.6",
-        "@steedos/service-object-mixin": "3.0.15-beta.6",
-        "graphql": "^15.8.0",
-        "graphql-parse-resolve-info": "^4.12.3",
-        "moleculer": "^0.14.35",
-        "moment": "^2.29.1",
-        "open": "^7.3.0",
-        "underscore": "^1.13.7"
-    }
+  "name": "@steedos/service-object-graphql",
+  "version": "3.0.15-beta.6",
+  "main": "package.service.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "steedos"
+  ],
+  "scripts": {
+    "build": "rm -rf ./lib && tsc"
+  },
+  "description": "steedos package",
+  "repository": {},
+  "license": "MIT",
+  "gitHead": "cd3a60e242eed4ae305077393f0785ddb79f17de",
+  "dependencies": {
+    "@steedos/filters": "3.0.15-beta.6",
+    "@steedos/i18n": "3.0.15-beta.6",
+    "@steedos/objectql": "3.0.15-beta.6",
+    "@steedos/service-object-mixin": "3.0.15-beta.6",
+    "graphql": "^15.8.0",
+    "graphql-parse-resolve-info": "^4.12.3",
+    "moleculer": "^0.14.35",
+    "moment": "^2.29.1",
+    "open": "^7.3.0",
+    "underscore": "^1.13.7",
+    "lodash": "^4.17.21"
+  }
 }
