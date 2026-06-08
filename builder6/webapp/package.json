@@ -77,7 +77,7 @@
   "repository": "https://github.com/steedos/app-builder/tree/master/apps/accounts",
   "gitHead": "65fc20f12e984644ea92d378d5a0950af4d472dc",
   "dependencies": {
-    "@steedos-widgets/amis-object": "^6.10.54-beta.4",
+    "@steedos-widgets/amis-object": "^6.10.54-beta.6",
     "autoprefixer": "^10.4.23"
   }
 }
