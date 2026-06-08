@@ -769,22 +769,27 @@
       document.head.appendChild(style);
     }
 
-    // Android: overlay=true，用注入的 CSS 变量给 header 加 padding，和 iOS 方案一致
+    // Android: WebView 已通过 overlay=false 避开状态栏，不再给 header 额外加顶部空白
     if (isAndroid) {
-      var sbHeight = 'var(--android-status-bar-height, 24px)';
+      var StatusBar = Plugins.StatusBar;
+      if (StatusBar) {
+        StatusBar.setOverlaysWebView({ overlay: false });
+        StatusBar.setStyle({ style: 'LIGHT' });
+      }
+
       var style = document.createElement('style');
       style.textContent =
-        '.steedos-header-container-line-one { height: calc(64px + ' + sbHeight + ') !important; padding-top: ' + sbHeight + ' !important; }' +
-        '.creator-content-wrapper { margin-top: calc(64px + ' + sbHeight + ') !important; }' +
-        '.antd-Modal-content { padding-top: calc(24px + ' + sbHeight + ') !important; }' +
-        '.antd-Modal-close { top: ' + sbHeight + ' !important; }' +
-        '.steedos-instance-detail-wrapper { height: calc(100vh - 64px - ' + sbHeight + ') !important; height: calc(100dvh - 64px - ' + sbHeight + ') !important; }' +
-        '.ant-notification, .antd-Toast-wrap { top: ' + sbHeight + ' !important; padding-top: ' + sbHeight + ' !important; }' +
+        '.steedos-header-container-line-one { height: 64px !important; padding-top: 0 !important; }' +
+        '.creator-content-wrapper { margin-top: 64px !important; }' +
+        '.antd-Modal-content { padding-top: 24px !important; }' +
+        '.antd-Modal-close { top: 0 !important; }' +
+        '.steedos-instance-detail-wrapper { height: calc(100vh - 64px) !important; height: calc(100dvh - 64px) !important; }' +
+        '.ant-notification, .antd-Toast-wrap { top: 0 !important; padding-top: 0 !important; }' +
         '.ant-notification-notice, .antd-Toast-notice { margin-top: 8px !important; }' +
         '[data-radix-popper-content-wrapper] { max-width: calc(100vw - 16px) !important; }' +
         '[data-radix-popper-content-wrapper] [role="dialog"] { max-width: calc(100vw - 16px) !important; overflow-x: hidden !important; }' +
         '[data-radix-popper-content-wrapper] .tb-inbox { width: calc(100vw - 16px) !important; max-width: calc(100vw - 16px) !important; }' +
-        '.ant-drawer .ant-drawer-content { padding-top: ' + sbHeight + ' !important; }' +
+        '.ant-drawer .ant-drawer-content { padding-top: 0 !important; }' +
         '.antd-Drawer-footer { padding-left: 30px !important; padding-right: 30px !important; justify-content: space-between !important; }' +
         '.steedos-approve-submit-button { order: 2 !important; }' +
         '.steedos-approve-close-button { order: 1 !important; }';
