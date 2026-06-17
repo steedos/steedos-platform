@@ -1,6 +1,6 @@
 {
   "name": "@steedos/moleculer-bullmq",
-  "version": "3.0.15-beta.10",
+  "version": "3.0.15-beta.11",
   "description": "Moleculer service for bullmq",
   "main": "src/index.js",
   "directories": {
@@ -52,5 +52,5 @@
     "redis-mock": "^0.56.3",
     "wait-for-expect": "^3.0.2"
   },
-  "gitHead": "0cf0bb85e2363c5b1e3df7f7ae59af14543e74c8"
+  "gitHead": "d4ee9cc833be27c940c3ddf8205c520df92b229c"
 }
