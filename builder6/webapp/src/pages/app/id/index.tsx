@@ -50,12 +50,12 @@ export const AppView = () => {
         if (data?.default_tab) {
           // If default_tab is an object with a path, use it
           if (typeof data.default_tab === 'object' && data.default_tab !== null && data.default_tab.path) {
-            navigate(resolvePathTemplate(data.default_tab.path, data.default_tab), { replace: true });
+            navigate(resolvePathTemplate(data.default_tab.path, data.default_tab));
             return;
           }
           // If default_tab is a string, construct the path
           if (typeof data.default_tab === 'string') {
-            navigate(`/app/${appId}/${data.default_tab}`, { replace: true });
+            navigate(`/app/${appId}/${data.default_tab}`);
             return;
           }
         }
@@ -63,7 +63,7 @@ export const AppView = () => {
         // Fallback: Check if data exists and has at least one item with a path
         if (data?.children.length > 0 && data.children[0].path) {
           const children = _.sortBy(data.children, ['index']);
-          navigate(resolvePathTemplate(children[0].path, children[0]), { replace: true });
+          navigate(resolvePathTemplate(children[0].path, children[0]));
         }
       } catch (error) {
         console.error('Error fetching data:', error);
