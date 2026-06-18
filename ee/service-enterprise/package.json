@@ -1,7 +1,7 @@
 {
   "name": "@steedos/service-enterprise",
   "main": "package.service.js",
-  "version": "3.0.15-beta.10",
+  "version": "3.0.15-beta.12",
   "repository": "https://github.com/steedos/steedos-platform.git",
   "description": "",
   "author": "steedos",
@@ -19,5 +19,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "0cf0bb85e2363c5b1e3df7f7ae59af14543e74c8"
+  "gitHead": "3b7ee525c23838ae7f07e280af403dd7ffd72880"
 }
