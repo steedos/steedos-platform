@@ -156,6 +156,10 @@
       "type": "string",
       "description": "日程资源字段，选择一个相关表字段来标记日程所属资源，日历视图将按此字段进行分组显示。"
     },
+    "calendar_resource_sort": {
+      "type": "string",
+      "description": "日程资源排序，例如：\"name desc\" 或 \"region asc,name asc\"。"
+    },
     "calendar_current_view": {
       "type": "string",
       "description": "日程默认视图，默认为week"
