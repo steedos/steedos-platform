@@ -8643,9 +8643,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos-labs/plugin-workflow@npm:^3.0.93":
-  version: 3.0.93
-  resolution: "@steedos-labs/plugin-workflow@npm:3.0.93"
+"@steedos-labs/plugin-workflow@npm:^3.0.94":
+  version: 3.0.94
+  resolution: "@steedos-labs/plugin-workflow@npm:3.0.94"
   dependencies:
     formidable: ^2.1.5
     graphql-parse-resolve-info: ^4.12.3
@@ -8653,7 +8653,7 @@ __metadata:
     jszip: ^3.10.1
     lodash: ^4.17.21
     node-schedule: ^2.0.0
-  checksum: a36f5c38a796e64f45eab3dcc5a5a3bba928ade0675add6fa49cf77fcda06e8fdf5165f326c17b8665204c05b2a9846753ec272f18ff7f678a9add657fb8c2d1
+  checksum: 699cdf2c303c4b4fa86f7e75a5148011b35150f4dbfc9b4ae9695622947039d2f3c06a00836808a0978651d56a3df6cc6faefc3760fbaa700252dbeef5460d44
   languageName: node
   linkType: hard
 
@@ -8664,10 +8664,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos-widgets/amis-object@npm:^6.10.54-beta.8":
-  version: 6.10.54-beta.8
-  resolution: "@steedos-widgets/amis-object@npm:6.10.54-beta.8"
-  checksum: c6cfabb674e4e696caf07779f148c79362eac8144442edf27f53a7b794a31278dbf03450e8f5f4fd100bde2991a14c685be17b3afff73ac98abe5470f4367cd5
+"@steedos-widgets/amis-object@npm:^6.10.54-beta.9":
+  version: 6.10.54-beta.9
+  resolution: "@steedos-widgets/amis-object@npm:6.10.54-beta.9"
+  checksum: ad3581a0d1fc8f1c0486e52902761e67315ffd65cc82ff17cd36e7b3c6333a5af1bd96e58b445139b0276fcda81369dc46f38d94f7f33a56a7fe8a9787875ffa
   languageName: node
   linkType: hard
 
@@ -9390,7 +9390,7 @@ __metadata:
   dependencies:
     "@steedos-labs/analytics": ^3.1.2
     "@steedos-labs/plugin-print-template": ^3.0.3
-    "@steedos-labs/plugin-workflow": ^3.0.93
+    "@steedos-labs/plugin-workflow": ^3.0.94
     "@steedos/ee_branding": 3.0.15-beta.10
     "@steedos/service-license": ^3.0.2
     mssql: ^11.0.1
@@ -9805,7 +9805,7 @@ __metadata:
     "@material-ui/icons": ^4.4.1
     "@material-ui/styles": ^4.4.1
     "@salesforce-ux/design-system": 2.28.1
-    "@steedos-widgets/amis-object": ^6.10.54-beta.8
+    "@steedos-widgets/amis-object": ^6.10.54-beta.9
     "@tailwindcss/typography": ^0.5.19
     "@tailwindui/react": ^0.1.1
     "@types/node": ^14.14.19
