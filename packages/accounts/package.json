@@ -19,6 +19,7 @@
     "cstart": "pnpm build && pnpm start",
     "server": "cross-env NODE_ENV=development nodemon -w src -x ts-node server.ts",
     "build": "rm -rf ./lib && tsc",
+    "test": "node --test test/*.test.cjs",
     "compile": "tsc",
     "pubNext": "npm publish --tag next --registry https://registry.npmjs.org"
   },
@@ -27,6 +28,7 @@
     "@babel/runtime": "^7.12.18",
     "@steedos/auth": "3.0.15-beta.6",
     "@steedos/objectql": "3.0.15-beta.6",
+    "@steedos/router": "workspace:*",
     "@steedos/utils": "3.0.15-beta.6",
     "app-root-path": "^2.2.1",
     "bcryptjs": "^3.0.3",

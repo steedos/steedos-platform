@@ -19,7 +19,8 @@ const {
 } = require('@steedos/metadata-core');
 const sRouter = require('@steedos/router');
 
-const chalk = require("chalk");
+const chalkModule = require("chalk");
+const chalk = chalkModule.default || chalkModule;
 
 const getPackageYmlData = (packagePath)=>{
     let packageYmlData = {};
