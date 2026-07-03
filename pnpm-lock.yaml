@@ -227,6 +227,9 @@ importers:
       '@steedos/objectql':
         specifier: link:../../packages/objectql
         version: link:../../packages/objectql
+      '@steedos/router':
+        specifier: link:../../packages/router
+        version: link:../../packages/router
       '@steedos/service-community':
         specifier: 3.0.15-beta.6
         version: 3.0.15-beta.6(@opentelemetry/api@1.9.0)(@steedos/utils@3.0.15-beta.6)(@types/node@20.19.41)(babel-plugin-macros@3.1.0)(debug@4.4.3)(encoding@0.1.13)(express@5.2.1)(pino@10.3.1)(postcss@8.5.15)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(redis@4.7.1)(rxjs@7.8.2)(typescript@5.7.3)
@@ -1555,6 +1558,12 @@ importers:
       cors:
         specifier: 2.8.5
         version: 2.8.5
+      express:
+        specifier: ^5.2.1
+        version: 5.2.1
+      express-session:
+        specifier: ^1.18.1
+        version: 1.19.0
       lodash:
         specifier: ^4.17.21
         version: 4.18.1
