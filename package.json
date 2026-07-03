@@ -49,6 +49,7 @@
       "@steedos/objectql": "link:packages/objectql",
       "@steedos/router": "link:packages/router",
       "@steedos/service-package-loader": "link:services/service-package-loader",
+      "@steedos/service-package-registry": "link:services/service-package-registry",
       "@steedos/service-ui": "link:services/service-ui",
       "graphql": "15.10.2"
     }

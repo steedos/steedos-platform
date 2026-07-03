@@ -8,6 +8,7 @@ overrides:
   '@steedos/objectql': link:packages/objectql
   '@steedos/router': link:packages/router
   '@steedos/service-package-loader': link:services/service-package-loader
+  '@steedos/service-package-registry': link:services/service-package-registry
   '@steedos/service-ui': link:services/service-ui
   graphql: 15.10.2
 
@@ -1319,8 +1320,8 @@ importers:
   packages/migrate:
     dependencies:
       '@steedos/service-package-registry':
-        specifier: 3.0.15-beta.6
-        version: 3.0.15-beta.6
+        specifier: link:../../services/service-package-registry
+        version: link:../../services/service-package-registry
       lodash:
         specifier: ^4.17.21
         version: 4.18.1
@@ -1783,8 +1784,8 @@ importers:
         specifier: link:../service-package-loader
         version: link:../service-package-loader
       '@steedos/service-package-registry':
-        specifier: 3.0.15-beta.6
-        version: 3.0.15-beta.6
+        specifier: link:../service-package-registry
+        version: link:../service-package-registry
       '@steedos/service-pages':
         specifier: 3.0.15-beta.6
         version: 3.0.15-beta.6
@@ -6239,9 +6240,6 @@ packages:
 
   '@steedos/service-objectql@3.0.15-beta.6':
     resolution: {integrity: sha512-U1hBQ5DtFkIRbZCkgP3VYuMoO4C5MYCOgUcc+5A3tKIp1uSLyJhlrGlW37HW52W5Ogz07+J2pM1CGnyXmm2kwg==}
-
-  '@steedos/service-package-registry@3.0.15-beta.6':
-    resolution: {integrity: sha512-EVESkzVINDOgP1uZAZCWUcQBwiwfLYTDcNxJyIiReZ0c8VRSH2Xm7gETXC6ngSzVFSc/wpVMVCnEJQxY4jKlzQ==}
 
   '@steedos/service-packages@3.0.15-beta.6':
     resolution: {integrity: sha512-PjslO3I8bySXetlFoSFO0q7Rt8mqCNLD9FTYgJy9c3v/WoQ1FoEm9d0ypIV7vIW3HK8O2N23mCIVPH9jPYSE+w==}
@@ -21589,7 +21587,7 @@ snapshots:
 
   '@steedos/migrate@3.0.15-beta.6':
     dependencies:
-      '@steedos/service-package-registry': 3.0.15-beta.6
+      '@steedos/service-package-registry': link:services/service-package-registry
       migrate: 1.8.0
       mongodb: 3.7.4
     transitivePeerDependencies:
@@ -21599,7 +21597,6 @@ snapshots:
       - mongodb-client-encryption
       - mongodb-extjson
       - snappy
-      - supports-color
 
   '@steedos/moleculer-apollo-server@3.0.15-beta.6(@types/express@5.0.6)(encoding@0.1.13)(graphql@15.10.2)':
     dependencies:
@@ -22106,7 +22103,7 @@ snapshots:
       '@steedos/service-metadata-server': 3.0.15-beta.6(cbor-x@1.6.4)(debug@4.4.3)(encoding@0.1.13)(nats@2.29.3)(notepack.io@3.0.1)(pino@10.3.1)(redlock@4.2.0)
       '@steedos/service-objectql': 3.0.15-beta.6
       '@steedos/service-package-loader': link:services/service-package-loader
-      '@steedos/service-package-registry': 3.0.15-beta.6
+      '@steedos/service-package-registry': link:services/service-package-registry
       '@steedos/service-pages': 3.0.15-beta.6
       '@steedos/service-plugin-amis': 3.0.15-beta.6
       '@steedos/service-rest': 3.0.15-beta.6
@@ -22229,7 +22226,7 @@ snapshots:
       '@steedos/service-metadata-server': 3.0.15-beta.6(cbor-x@1.6.4)(debug@4.4.3)(encoding@0.1.13)(nats@2.29.3)(notepack.io@3.0.1)(pino@10.3.1)(redlock@4.2.0)
       '@steedos/service-objectql': 3.0.15-beta.6
       '@steedos/service-package-loader': link:services/service-package-loader
-      '@steedos/service-package-registry': 3.0.15-beta.6
+      '@steedos/service-package-registry': link:services/service-package-registry
       '@steedos/service-pages': 3.0.15-beta.6
       '@steedos/service-plugin-amis': 3.0.15-beta.6
       '@steedos/service-rest': 3.0.15-beta.6
@@ -23063,28 +23060,6 @@ snapshots:
   '@steedos/service-objectql@3.0.15-beta.6':
     dependencies:
       '@steedos/objectql': link:packages/objectql
-
-  '@steedos/service-package-registry@3.0.15-beta.6':
-    dependencies:
-      '@steedos/auth': 3.0.15-beta.6
-      '@steedos/metadata-core': 3.0.15-beta.6
-      '@steedos/objectql': link:packages/objectql
-      '@steedos/service-package-loader': link:services/service-package-loader
-      clone: 2.1.2
-      fs-extra: 8.1.0
-      i18next: 20.3.2
-      json-stringify-safe: 5.0.1
-      jsonata: 1.8.7
-      lodash: 4.18.1
-      lodash.clonedeep: 4.5.0
-      moment-timezone: 0.5.35
-      npm-package-arg: 9.1.2
-      npm-registry-fetch: 19.1.1
-      package-json: 7.0.0
-      radwag-mass: 1.0.6
-      validator: 13.15.35
-    transitivePeerDependencies:
-      - supports-color
 
   '@steedos/service-packages@3.0.15-beta.6': {}
 

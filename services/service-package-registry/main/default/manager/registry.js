@@ -17,51 +17,16 @@ let installVersionRestricted = false;
 var activePromise = Promise.resolve();
 const _ = require('lodash');
 const npa = require("npm-package-arg");
+const {
+    getPackageManager,
+    buildAddArgs,
+    buildRemoveArgs,
+    parseLastJsonLine
+} = require("./package-manager");
 
 log.init({});
 
 const settings = require('../../../package.service').settings
-
-function getPackageManager(installDir) {
-    if (process.env.STEEDOS_PACKAGE_MANAGER) {
-        return process.env.STEEDOS_PACKAGE_MANAGER;
-    }
-    const userAgent = process.env.npm_config_user_agent || "";
-    if (userAgent.startsWith("pnpm")) {
-        return "pnpm";
-    }
-    if (userAgent.startsWith("yarn")) {
-        return "yarn";
-    }
-    if (userAgent.startsWith("npm")) {
-        return "npm";
-    }
-    try {
-        const packageInfo = loadJson(path.join(installDir, "package.json"));
-        const packageManager = packageInfo.packageManager || "";
-        if (packageManager.startsWith("pnpm@")) {
-            return "pnpm";
-        }
-        if (packageManager.startsWith("yarn@")) {
-            return "yarn";
-        }
-        if (packageManager.startsWith("npm@")) {
-            return "npm";
-        }
-    } catch (error) {
-        // Ignore and fall through to lockfile detection/default.
-    }
-    if (fs.existsSync(path.join(installDir, "pnpm-lock.yaml")) || fs.existsSync(path.join(installDir, "pnpm-workspace.yaml"))) {
-        return "pnpm";
-    }
-    if (fs.existsSync(path.join(installDir, "yarn.lock"))) {
-        return "yarn";
-    }
-    if (fs.existsSync(path.join(installDir, "package-lock.json"))) {
-        return "npm";
-    }
-    return "pnpm";
-}
 
 function getPackageManagerCommand(packageManager) {
     if (packageManager === "pnpm") {
@@ -71,57 +36,6 @@ function getPackageManagerCommand(packageManager) {
         return yarnCommand;
     }
     return npmCommand;
-}
-
-function buildAddArgs(packageManager, packages, options = {}) {
-    const packageList = Array.isArray(packages) ? packages : [packages];
-    if (packageManager === "pnpm") {
-        const args = ["add", "--save-exact", ...packageList];
-        if (options.registry) {
-            args.push("--registry", options.registry);
-        }
-        return args;
-    }
-    if (packageManager === "yarn") {
-        const args = ["add", "-E", ...packageList];
-        if (options.json) {
-            args.push("--json");
-        }
-        if (options.registry) {
-            args.push("--registry", options.registry);
-        }
-        return args;
-    }
-    const args = ["install", "--no-audit", "--no-update-notifier", "--no-fund", "--save", "--save-exact", ...packageList];
-    if (options.registry) {
-        args.push("--registry", options.registry);
-    }
-    return args;
-}
-
-function buildRemoveArgs(packageManager, packageName) {
-    if (packageManager === "pnpm") {
-        return ["remove", packageName];
-    }
-    if (packageManager === "yarn") {
-        return ["remove", packageName];
-    }
-    return ["uninstall", "--save", packageName];
-}
-
-function parseLastJsonLine(stdout) {
-    if (!stdout) {
-        return null;
-    }
-    const lines = _.compact(stdout.split('\n'));
-    for (let i = lines.length - 1; i >= 0; i--) {
-        try {
-            return JSON.parse(lines[i]);
-        } catch (error) {
-            // Try the previous line.
-        }
-    }
-    return null;
 }
 
 function checkModulePath(folder) {
@@ -599,5 +513,12 @@ module.exports = {
     uninstallModule,
     isPackageUrl,
     yarnAddPackage,
-    settings
+    settings,
+    __testOnly: {
+        getPackageManager,
+        getPackageManagerCommand,
+        buildAddArgs,
+        buildRemoveArgs,
+        parseLastJsonLine
+    }
 }
