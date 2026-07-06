@@ -13,7 +13,13 @@
   "license": "MIT",
   "gitHead": "cd3a60e242eed4ae305077393f0785ddb79f17de",
   "dependencies": {
+    "@steedos/auth": "3.0.15-beta.6",
+    "@steedos/objectql": "3.0.15-beta.6",
+    "@steedos/utils": "3.0.15-beta.6",
     "clone": "^2.1.2",
-    "lodash": "^4.17.21"
+    "express": "^5.2.1",
+    "lodash": "^4.17.21",
+    "mongodb": "^3.7.3",
+    "underscore": "^1.13.7"
   }
 }

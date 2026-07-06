@@ -10,13 +10,17 @@
   ],
   "description": "steedos package",
   "dependencies": {
+    "@steedos/auth": "3.0.15-beta.6",
+    "@steedos/i18n": "workspace:*",
     "@steedos/metadata-core": "3.0.15-beta.6",
     "@steedos/moleculer-bullmq": "3.0.15-beta.6",
+    "@steedos/objectql": "3.0.15-beta.6",
     "@steedos/service-object-mixin": "3.0.15-beta.6",
     "amis-formula": "~6.3.0",
     "clone": "^2.1.2",
-    "lodash": "^4.17.21",
-    "@steedos/i18n": "workspace:*"
+    "ejs": "^3.1.8",
+    "express": "^5.2.1",
+    "lodash": "^4.17.21"
   },
   "repository": {},
   "license": "MIT",

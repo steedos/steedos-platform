@@ -12,6 +12,7 @@
     "repository": {},
     "dependencies": {
         "@steedos/accounts": "3.0.15-beta.6",
+        "@steedos/auth": "3.0.15-beta.6",
         "@steedos/objectql": "3.0.15-beta.6",
         "express": "^5.1.0",
         "jsonwebtoken": "^9.0.3",

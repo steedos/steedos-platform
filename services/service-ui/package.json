@@ -18,7 +18,9 @@
     "@steedos/odata-v4-mongodb": "3.0.15-beta.6",
     "@steedos/service-package-loader": "workspace:*",
     "express": "^5.1.0",
-    "lodash": "^4.17.21"
+    "json2xls": "^0.1.2",
+    "lodash": "^4.17.21",
+    "moment": "^2.30.1"
   },
   "license": "MIT",
   "publishConfig": {

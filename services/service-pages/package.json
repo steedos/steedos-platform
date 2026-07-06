@@ -8,8 +8,11 @@
   },
   "gitHead": "cd3a60e242eed4ae305077393f0785ddb79f17de",
   "dependencies": {
+    "@steedos/auth": "3.0.15-beta.6",
+    "@steedos/objectql": "3.0.15-beta.6",
     "clone": "^2.1.2",
     "ejs": "^3.1.8",
+    "express": "^5.2.1",
     "lodash": "^4.17.21"
   }
 }
