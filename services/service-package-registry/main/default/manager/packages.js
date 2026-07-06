@@ -7,6 +7,10 @@ const packageJson = require('./package-json');
 const _ = require('lodash');
 const login = require('./login');
 const metadataApi = require('@steedos/metadata-api');
+const {
+    getPackageManager,
+    ensurePnpmRuntimeWorkspace
+} = require('./package-manager');
 function registryUrl(scope) {
     try {
         const result = login.getYarnrcScopes();
@@ -126,6 +130,9 @@ const maintainSystemFiles = ()=>{
 }
         `)
     }
+
+    const packageManager = getPackageManager(userDir);
+    ensurePnpmRuntimeWorkspace(userDir, packageManager);
 }
 
 const getPackageVersions = async (packageName, options)=>{

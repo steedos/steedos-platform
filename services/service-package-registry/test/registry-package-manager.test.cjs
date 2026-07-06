@@ -65,24 +65,24 @@ function testExplicitYarnProjectStillUsesYarn() {
 function testPnpmAddArgsKeepSupportedSources() {
   assert.deepEqual(
     buildAddArgs('pnpm', ['@steedos-labs/tables'], { registry: 'https://registry.npmmirror.com' }),
-    ['add', '--save-exact', '@steedos-labs/tables', '--registry', 'https://registry.npmmirror.com']
+    ['add', '--save-exact', '--lockfile-dir', '.', '@steedos-labs/tables', '--registry', 'https://registry.npmmirror.com']
   );
   assert.deepEqual(
     buildAddArgs('pnpm', ['file:/tmp/pkg.tgz'], {}),
-    ['add', '--save-exact', 'file:/tmp/pkg.tgz']
+    ['add', '--save-exact', '--lockfile-dir', '.', 'file:/tmp/pkg.tgz']
   );
   assert.deepEqual(
     buildAddArgs('pnpm', ['link:/tmp/pkg'], {}),
-    ['add', '--save-exact', 'link:/tmp/pkg']
+    ['add', '--save-exact', '--lockfile-dir', '.', 'link:/tmp/pkg']
   );
   assert.deepEqual(
     buildAddArgs('pnpm', ['https://example.com/pkg.tgz'], {}),
-    ['add', '--save-exact', 'https://example.com/pkg.tgz']
+    ['add', '--save-exact', '--lockfile-dir', '.', 'https://example.com/pkg.tgz']
   );
 }
 
 function testRemoveArgs() {
-  assert.deepEqual(buildRemoveArgs('pnpm', '@steedos-labs/tables'), ['remove', '@steedos-labs/tables']);
+  assert.deepEqual(buildRemoveArgs('pnpm', '@steedos-labs/tables'), ['remove', '--lockfile-dir', '.', '@steedos-labs/tables']);
   assert.deepEqual(buildRemoveArgs('yarn', '@steedos-labs/tables'), ['remove', '@steedos-labs/tables']);
   assert.deepEqual(buildRemoveArgs('npm', '@steedos-labs/tables'), ['uninstall', '--save', '@steedos-labs/tables']);
 }

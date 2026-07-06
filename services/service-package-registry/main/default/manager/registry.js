@@ -21,7 +21,8 @@ const {
     getPackageManager,
     buildAddArgs,
     buildRemoveArgs,
-    parseLastJsonLine
+    parseLastJsonLine,
+    ensurePnpmRuntimeWorkspace
 } = require("./package-manager");
 
 log.init({});
@@ -211,6 +212,7 @@ async function installModule(module, version, url, registry_url) {
         var installDir = settings.userDir || ".";
         const packageManager = getPackageManager(installDir);
         const packageManagerCommand = getPackageManagerCommand(packageManager);
+        ensurePnpmRuntimeWorkspace(installDir, packageManager);
         const addArgs = buildAddArgs(packageManager, installName, { registry: registry_url, json: true });
         console.log('command run:', packageManagerCommand, addArgs.join(' '))
         return exec.run(packageManagerCommand,addArgs,{
@@ -361,6 +363,7 @@ async function yarnAddPackage(yarnPackage){
     var installDir = settings.userDir || ".";
     const packageManager = getPackageManager(installDir);
     const packageManagerCommand = getPackageManagerCommand(packageManager);
+    ensurePnpmRuntimeWorkspace(installDir, packageManager);
 
     // eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef
     const oldPackageInfo = loadJson(path.join(installDir, 'package.json'));
@@ -465,6 +468,7 @@ async function uninstallModule(module){
         var installDir = settings.userDir || ".";
         const packageManager = getPackageManager(installDir);
         const packageManagerCommand = getPackageManagerCommand(packageManager);
+        ensurePnpmRuntimeWorkspace(installDir, packageManager);
         var removeArgs = buildRemoveArgs(packageManager, installName);
         return exec.run(packageManagerCommand,removeArgs,{
             cwd: installDir

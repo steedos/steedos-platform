@@ -73,10 +73,21 @@ function getPackageManager(installDir) {
     return "pnpm";
 }
 
+function ensurePnpmRuntimeWorkspace(installDir, packageManager) {
+    if (packageManager !== "pnpm") {
+        return;
+    }
+    fs.mkdirSync(installDir, { recursive: true });
+    const workspaceFile = path.join(installDir, "pnpm-workspace.yaml");
+    if (!fs.existsSync(workspaceFile)) {
+        fs.writeFileSync(workspaceFile, "packages: []\n");
+    }
+}
+
 function buildAddArgs(packageManager, packages, options = {}) {
     const packageList = Array.isArray(packages) ? packages : [packages];
     if (packageManager === "pnpm") {
-        const args = ["add", "--save-exact", ...packageList];
+        const args = ["add", "--save-exact", "--lockfile-dir", ".", ...packageList];
         if (options.registry) {
             args.push("--registry", options.registry);
         }
@@ -101,7 +112,7 @@ function buildAddArgs(packageManager, packages, options = {}) {
 
 function buildRemoveArgs(packageManager, packageName) {
     if (packageManager === "pnpm") {
-        return ["remove", packageName];
+        return ["remove", "--lockfile-dir", ".", packageName];
     }
     if (packageManager === "yarn") {
         return ["remove", packageName];
@@ -129,5 +140,6 @@ module.exports = {
     buildAddArgs,
     buildRemoveArgs,
     parseLastJsonLine,
-    findPackageManagerFromAncestors
+    findPackageManagerFromAncestors,
+    ensurePnpmRuntimeWorkspace
 };
