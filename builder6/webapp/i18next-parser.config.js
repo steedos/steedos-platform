@@ -1,5 +1,5 @@
 module.exports = {
-  locales: ['en', 'zh-CN'], // Your supported languages
+  locales: ['en', 'zh-CN', 'ko'], // Your supported languages
   output: 'public/locales/$LOCALE/$NAMESPACE.json', // Where to output the JSON files
   input: ['src/**/*.{js,jsx,ts,tsx}'], // Where to find your React files 
   defaultNamespace: 'translation', // Default namespace if not specified

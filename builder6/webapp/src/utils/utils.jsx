@@ -17,6 +17,8 @@ export const getBrowserLng = function () {
   l = navigator.userLanguage || navigator.language || 'en';
   if (l.indexOf("zh") >= 0) {
     lng = "zh-CN";
+  } else if (l.indexOf("ko") >= 0) {
+    lng = "ko";
   } else {
     lng = "en";
   }
