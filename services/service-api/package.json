@@ -1,14 +1,14 @@
 {
   "name": "@steedos/service-api",
-  "version": "3.0.15-beta.16",
+  "version": "3.0.15-beta.17",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@steedos/auth": "3.0.15-beta.16",
-    "@steedos/moleculer-apollo-server": "3.0.15-beta.16",
-    "@steedos/router": "3.0.15-beta.16",
-    "@steedos/service-object-graphql": "3.0.15-beta.16",
-    "@steedos/service-ui": "3.0.15-beta.16",
+    "@steedos/auth": "3.0.15-beta.17",
+    "@steedos/moleculer-apollo-server": "3.0.15-beta.17",
+    "@steedos/router": "3.0.15-beta.17",
+    "@steedos/service-object-graphql": "3.0.15-beta.17",
+    "@steedos/service-ui": "3.0.15-beta.17",
     "graphql": "^15.8.0",
     "graphql-iso-date": "^3.6.1",
     "graphql-type-json": "^0.3.2",
@@ -20,7 +20,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "ad06448a3aea8bb839dac79d200a53a4ca463820",
+  "gitHead": "c8f40fd59be9f3ba17209ce9ff9773a0ca687351",
   "devDependencies": {
     "@types/graphql-iso-date": "^3.4.0"
   }
