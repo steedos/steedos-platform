@@ -8629,20 +8629,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos-labs/plugin-workflow@npm:^3.0.90":
-  version: 3.0.90
-  resolution: "@steedos-labs/plugin-workflow@npm:3.0.90"
-  dependencies:
-    formidable: ^2.1.5
-    graphql-parse-resolve-info: ^4.12.3
-    he: ^1.2.0
-    jszip: ^3.10.1
-    lodash: ^4.17.21
-    node-schedule: ^2.0.0
-  checksum: e194ca875a3364ca2448d849bf68a66dcbd809e931bbbdff311fca83a8876e0ec417bee10f47be2f43d21ccb5bade29e2bd18f0be77ddee6a76cd881cec16b83
-  languageName: node
-  linkType: hard
-
 "@steedos-labs/plugin-workflow@npm:^3.0.99":
   version: 3.0.99
   resolution: "@steedos-labs/plugin-workflow@npm:3.0.99"
@@ -8661,13 +8647,6 @@ __metadata:
   version: 6.10.54-beta.14
   resolution: "@steedos-widgets/amis-object@npm:6.10.54-beta.14"
   checksum: 6654e1a2135dcdc80b73a4e6ff2219af7f93522a4d965679a34da730f07dd915e0dd5a665fe44808e53b1c84feab777df1189c93ea3d0394e60fad81ec72ea16
-  languageName: node
-  linkType: hard
-
-"@steedos-widgets/amis-object@npm:^6.10.54-beta.6":
-  version: 6.10.54-beta.6
-  resolution: "@steedos-widgets/amis-object@npm:6.10.54-beta.6"
-  checksum: 70f6c734d8eaa6c05440ea5a2184ff1d17a9c15840da40f82feacba76dc03ebb45e04e9e3ada82cf3a35f791831f10780e72bf35f6bceee2bc0a9bacf4a60770
   languageName: node
   linkType: hard
 
@@ -8794,21 +8773,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/ee_branding@npm:3.0.15-beta.10":
-  version: 3.0.15-beta.10
-  resolution: "@steedos/ee_branding@npm:3.0.15-beta.10"
-  checksum: 918cb2cf6efac8cce83992a02c2adeedf01dd4e9e128d8888a02885a0bccb847a46c5f7646b711bcdff64093dcd0786348237dbd50935114d71dce808c8d049b
-  languageName: node
-  linkType: hard
-
-"@steedos/ee_branding@npm:3.0.15-beta.11":
-  version: 3.0.15-beta.11
-  resolution: "@steedos/ee_branding@npm:3.0.15-beta.11"
-  checksum: 45c0aa57f58b38168741a166c8a49410a64b7cec95da91d7eedf2da5436e142242a02ebabcd9fc234db639bb2f1554e7e176dcc24c7ce0e064f670b475e7fa46
-  languageName: node
-  linkType: hard
-
-"@steedos/ee_branding@workspace:ee/branding":
+"@steedos/ee_branding@3.0.15-beta.24, @steedos/ee_branding@workspace:ee/branding":
   version: 0.0.0-use.local
   resolution: "@steedos/ee_branding@workspace:ee/branding"
   languageName: unknown
@@ -9182,8 +9147,8 @@ __metadata:
     "@steedos/auth": 3.0.15-beta.24
     "@steedos/objectql": 3.0.15-beta.24
     "@steedos/service-community": 3.0.15-beta.24
-    "@steedos/service-enterprise": 3.0.15-beta.11
-    "@steedos/webapp": 3.0.15-beta.11
+    "@steedos/service-enterprise": 3.0.15-beta.24
+    "@steedos/webapp": 3.0.15-beta.24
     "@types/jest": ^29.5.2
     "@types/multer": ^1.4.12
     "@types/node": ^20.3.1
@@ -9369,29 +9334,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/service-enterprise@npm:3.0.15-beta.11":
-  version: 3.0.15-beta.11
-  resolution: "@steedos/service-enterprise@npm:3.0.15-beta.11"
-  dependencies:
-    "@steedos-labs/analytics": ^3.1.2
-    "@steedos-labs/plugin-print-template": ^3.0.3
-    "@steedos-labs/plugin-workflow": ^3.0.90
-    "@steedos/ee_branding": 3.0.15-beta.11
-    "@steedos/service-license": ^3.0.2
-    mssql: ^11.0.1
-    oracledb: ^6.8.0
-  checksum: f6749c83bb79a4fb833fa2a26b7ffb42df3ccada094e0053c24f64e8838371d3f74696063cc0f33d4c3ef08d29cb04a70038f1ff6c11cde0be6b108f03d0afb4
-  languageName: node
-  linkType: hard
-
-"@steedos/service-enterprise@workspace:ee/service-enterprise":
+"@steedos/service-enterprise@3.0.15-beta.24, @steedos/service-enterprise@workspace:ee/service-enterprise":
   version: 0.0.0-use.local
   resolution: "@steedos/service-enterprise@workspace:ee/service-enterprise"
   dependencies:
     "@steedos-labs/analytics": ^3.1.2
     "@steedos-labs/plugin-print-template": ^3.0.3
     "@steedos-labs/plugin-workflow": ^3.0.99
-    "@steedos/ee_branding": 3.0.15-beta.10
+    "@steedos/ee_branding": 3.0.15-beta.24
     "@steedos/service-license": ^3.0.2
     mssql: ^11.0.1
     oracledb: ^6.8.0
@@ -9782,17 +9732,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@steedos/webapp@npm:3.0.15-beta.11":
-  version: 3.0.15-beta.11
-  resolution: "@steedos/webapp@npm:3.0.15-beta.11"
-  dependencies:
-    "@steedos-widgets/amis-object": ^6.10.54-beta.6
-    autoprefixer: ^10.4.23
-  checksum: e1de1d3dafda8829254133e5a6cf9487496488f0b60ee445f9fa274ff63b26b049df88de25a1121c0d98e26bc9bc69fe21f5cc60dd14e429980da4b5d8b07531
-  languageName: node
-  linkType: hard
-
-"@steedos/webapp@workspace:builder6/webapp":
+"@steedos/webapp@3.0.15-beta.24, @steedos/webapp@workspace:builder6/webapp":
   version: 0.0.0-use.local
   resolution: "@steedos/webapp@workspace:builder6/webapp"
   dependencies:
