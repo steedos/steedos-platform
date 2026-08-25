@@ -1,14 +1,14 @@
 {
   "name": "@steedos/utils",
-  "version": "3.0.15-beta.34",
+  "version": "3.0.15-beta.35",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
     "build": "rm -rf ./lib && tsc"
   },
   "dependencies": {
-    "@steedos/filters": "3.0.15-beta.34",
-    "@steedos/odata-v4-mongodb": "3.0.15-beta.34",
+    "@steedos/filters": "3.0.15-beta.35",
+    "@steedos/odata-v4-mongodb": "3.0.15-beta.35",
     "clone": "^2.1.2",
     "cookies": "^0.8.0",
     "mingo": "^6.0.5",
@@ -21,5 +21,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "a8fade186a3952b9d9df2391b6a04884882bf63c"
+  "gitHead": "345e9f06706d4d5431bd0356ebdc8e025bda794e"
 }
