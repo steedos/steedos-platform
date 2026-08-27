@@ -1,6 +1,6 @@
 {
   "name": "@steedos/objectql",
-  "version": "3.0.15-beta.35",
+  "version": "3.0.15-beta.36",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -15,16 +15,16 @@
   "dependencies": {
     "@salesforce/kit": "1.0.4",
     "@salesforce/ts-types": "1.1.1",
-    "@steedos/cachers": "3.0.15-beta.35",
-    "@steedos/filters": "3.0.15-beta.35",
-    "@steedos/formula": "3.0.15-beta.35",
-    "@steedos/i18n": "3.0.15-beta.35",
-    "@steedos/metadata-core": "3.0.15-beta.35",
-    "@steedos/metadata-registrar": "3.0.15-beta.35",
-    "@steedos/odata-v4-mongodb": "3.0.15-beta.35",
-    "@steedos/odata-v4-sql": "3.0.15-beta.35",
-    "@steedos/odata-v4-typeorm": "3.0.15-beta.35",
-    "@steedos/schemas": "3.0.15-beta.35",
+    "@steedos/cachers": "3.0.15-beta.36",
+    "@steedos/filters": "3.0.15-beta.36",
+    "@steedos/formula": "3.0.15-beta.36",
+    "@steedos/i18n": "3.0.15-beta.36",
+    "@steedos/metadata-core": "3.0.15-beta.36",
+    "@steedos/metadata-registrar": "3.0.15-beta.36",
+    "@steedos/odata-v4-mongodb": "3.0.15-beta.36",
+    "@steedos/odata-v4-sql": "3.0.15-beta.36",
+    "@steedos/odata-v4-typeorm": "3.0.15-beta.36",
+    "@steedos/schemas": "3.0.15-beta.36",
     "ajv": "^8.17.1",
     "amis-formula": "~6.3.0",
     "app-root-path": "^2.2.1",
@@ -60,5 +60,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "345e9f06706d4d5431bd0356ebdc8e025bda794e"
+  "gitHead": "d726ba7e611121e2b7f95e70db2ccb8c7059297f"
 }
