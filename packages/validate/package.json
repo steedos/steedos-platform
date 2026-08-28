@@ -1,6 +1,6 @@
 {
   "name": "@steedos/validate",
-  "version": "3.0.15-beta.37",
+  "version": "3.0.15-beta.38",
   "description": "Steedos package validation tool",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -26,5 +26,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "4bda66f1400e5226f2a4d8a674c248c5f2f66223"
+  "gitHead": "8b7eb944ac35eabb2d3444fbba1998c74c9cc09a"
 }

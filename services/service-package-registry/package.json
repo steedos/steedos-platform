@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-package-registry",
-  "version": "3.0.15-beta.37",
+  "version": "3.0.15-beta.38",
   "description": "",
   "main": "package.service.js",
   "scripts": {
@@ -9,10 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@steedos/auth": "3.0.15-beta.37",
-    "@steedos/metadata-core": "3.0.15-beta.37",
-    "@steedos/objectql": "3.0.15-beta.37",
-    "@steedos/service-package-loader": "3.0.15-beta.37",
+    "@steedos/auth": "3.0.15-beta.38",
+    "@steedos/metadata-core": "3.0.15-beta.38",
+    "@steedos/objectql": "3.0.15-beta.38",
+    "@steedos/service-package-loader": "3.0.15-beta.38",
     "clone": "^2.1.2",
     "fs-extra": "8.1.0",
     "i18next": "20.3.2",
@@ -30,5 +30,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "4bda66f1400e5226f2a4d8a674c248c5f2f66223"
+  "gitHead": "8b7eb944ac35eabb2d3444fbba1998c74c9cc09a"
 }
