@@ -1,12 +1,12 @@
 {
   "name": "@steedos/service-plugin-amis",
-  "version": "3.0.15-beta.40",
+  "version": "3.0.15-beta.41",
   "main": "package.service.js",
   "license": "MIT",
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "53f21035f1c3280530596e841a08ce5d175b344b",
+  "gitHead": "024205f96260945d77c029058dc13b98b240c3e1",
   "devDependencies": {
     "tailwindcss": "^3.4.17"
   }
