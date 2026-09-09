@@ -8629,9 +8629,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@steedos-labs/plugin-workflow@npm:^3.0.115":
-  version: 3.0.115
-  resolution: "@steedos-labs/plugin-workflow@npm:3.0.115"
+"@steedos-labs/plugin-workflow@npm:^3.0.116":
+  version: 3.0.116
+  resolution: "@steedos-labs/plugin-workflow@npm:3.0.116"
   dependencies:
     formidable: ^2.1.5
     graphql-parse-resolve-info: ^4.12.3
@@ -8639,7 +8639,7 @@ __metadata:
     jszip: ^3.10.1
     lodash: ^4.17.21
     node-schedule: ^2.0.0
-  checksum: a0dd066100088b2dcd472840a217b63da61bb2205b932c65956b1487ea78042ecebe2c755769154521d0b306cacace2f09a04b535eb17497627abcdf31876fe3
+  checksum: 588875afa3ca02bb7a091373f0f692519207ce4a1eb0563c37b3f12ddc7e7631ea189665900f3ea2f06269b25cb001984e82a2086e3dcb5ed1be2f60d4b68f47
   languageName: node
   linkType: hard
 
@@ -9340,7 +9340,7 @@ __metadata:
   dependencies:
     "@steedos-labs/analytics": ^3.1.2
     "@steedos-labs/plugin-print-template": ^3.0.3
-    "@steedos-labs/plugin-workflow": ^3.0.115
+    "@steedos-labs/plugin-workflow": ^3.0.116
     "@steedos/ee_branding": 3.0.15-beta.45
     "@steedos/service-license": ^3.0.2
     mssql: ^11.0.1
