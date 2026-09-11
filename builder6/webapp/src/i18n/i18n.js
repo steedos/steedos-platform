@@ -13,6 +13,7 @@ import { getSettings } from '../selectors';
 
 import en from './en.json';
 import zhCN from './zh-CN.json';
+import ko from './ko.json';
 
 
 // should match the values in model/config.go
@@ -28,6 +29,12 @@ const languages = {
         name: '中文 (简体)',
         order: 13,
         translations: zhCN
+    },
+    ko: {
+        value: 'ko',
+        name: '한국어',
+        order: 14,
+        translations: ko
     },
 };
 
