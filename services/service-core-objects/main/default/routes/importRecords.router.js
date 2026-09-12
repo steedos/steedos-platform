@@ -60,7 +60,12 @@ router.post('/api/data/initiateImport', requireAuthentication, initiateImport);
 router.get('/api/data/download/template/:record_id', requireAuthentication, async function (req, res) {
     try {
         const { record_id } = req.params;
-        let queueImportDoc = await getObject("queue_import").findOne(record_id);
+        // 安全修复：原 findOne 不带 userSession，任意登录用户可按 record_id 下载他人导入任务的模板
+        // (字段映射/表头，横向越权 IDOR)。改为带 userSession 的权限校验读取，无权则视为不存在。
+        let queueImportDoc = await getObject("queue_import").findOne(record_id, {}, req.user);
+        if (!queueImportDoc) {
+            return res.status(404).send({ status: "failed", message: "not found" });
+        }
         let fieldMaps = queueImportDoc.field_mappings;
         if (_.isEmpty(fieldMaps)) {
             return;
