@@ -46,17 +46,20 @@ module.exports = {
 				if(!userIds || userIds.length == 0){
 					return []
 				}
-				//此查询不带权限, 使用userIds 获取用户姓名
+				const userSession = ctx.meta.user;
+				// 安全修复：原查询"不带权限"，任意登录用户可按 userIds 批量解析任意租户用户姓名(跨租户枚举)。
+				// 现限定在调用者所在空间内解析(仍满足同空间显示需要)，并传入 userSession。
 				return await ctx.broker.call(
 					'objectql.find',
 					{
 						objectName: 'space_users',
 						query: {
 							fields: ['_id', 'user', 'name', 'sort_no'],
-							filters: [["user", "in", userIds]],
+							filters: [["user", "in", userIds], ["space", "=", userSession && userSession.spaceId]],
 							sort: 'sort_no desc'
 						},
-					}
+					},
+					{ meta: { user: userSession } }
 				);
 			}
 		}

@@ -218,10 +218,10 @@ module.exports = {
 
 				/**
 				 * After call hook. You can modify the data.
-				 * @param {Context} ctx 
-				 * @param {Object} route 
-				 * @param {IncomingRequest} req 
-				 * @param {ServerResponse} res 
+				 * @param {Context} ctx
+				 * @param {Object} route
+				 * @param {IncomingRequest} req
+				 * @param {ServerResponse} res
 				 * @param {Object} data
 				onAfterCall(ctx, route, req, res, data) {
 					// Async function which return with Promise
@@ -243,7 +243,11 @@ module.exports = {
 				},
 
 				// Mapping policy setting. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Mapping-policy
-				mappingPolicy: "all", // Available values: "all", "restrict"
+				// 安全加固(G1)：由 "all" 改为 "restrict"，网关只暴露显式声明了 rest/alias 的 action。
+				// 原 "all" + whitelist "**" 会把每个服务的每个内部 action(含无 rest 块的 objectql.directDelete、
+				// metadata objects.delete 等)都暴露为 HTTP 端点，且网关 authorize() 仅校验"已登录"，
+				// 导致任意登录用户可绕权限层直连数据层(参见安全审计 G1)。restrict 后仅保留意图暴露的接口。
+				mappingPolicy: "restrict", // Available values: "all", "restrict"
 
 				// Enable/disable logging
 				logging: false,

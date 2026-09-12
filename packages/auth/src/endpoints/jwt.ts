@@ -24,9 +24,18 @@ async function getTokenInfo(req, spaceId?) {
   let payload = req.user
   let data = { userId: '', authToken: '' }
   let userObj = getSteedosSchema().getObject('users')
-  let user = (await userObj.find({ filters: `username eq '${payload.username}'`, fields: ['_id'] }))[0]
+  // 安全修复：用数组过滤替代字符串插值，避免 payload.username 造成 OData 过滤注入。
+  let user = (await userObj.find({ filters: [['username', '=', payload.username]], fields: ['_id'] }))[0]
   if (user) {
     let userId = user._id
+    // 安全修复(B5)：原实现仅按 username 全局解析用户，随后在 client 指定的 spaceId 直接签发登录态，
+    // 不校验该用户是否属于该 space，导致 JWT SSO 跨租户冒充。这里要求该用户在目标 space 有已接受的成员关系。
+    if (spaceId) {
+      let su = await getSteedosSchema().getObject('space_users').find({ filters: [['user', '=', userId], ['space', '=', spaceId], ['user_accepted', '=', true]], fields: ['_id'] })
+      if (!su || su.length === 0) {
+        return data;
+      }
+    }
     let authToken = payload.sessionId ? `${payload.iss}-${payload.username}-${payload.sessionId}` : `${payload.iss}-${payload.username}`
     let hashedToken = hashLoginToken(authToken).replace(/\//g, '%2F');
     let filters = `(services/resume/loginTokens/hashedToken eq '${hashedToken}')`;

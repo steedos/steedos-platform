@@ -149,7 +149,7 @@ module.exports = {
             },
             async handler(ctx) {
                 this.broker.logger.info('[service][space_users]===>', '/service/api/space_users/is_password_empty', ctx.params.suId)
-                return await this.is_password_empty(ctx.params.suId)
+                return await this.is_password_empty(ctx.params.suId, ctx.meta.user)
             }
         },
         /**
@@ -207,7 +207,13 @@ module.exports = {
          * @returns 
          */
         async disable(suId, userSession) {
-            const spaceUser = await getObject('space_users').findOne(suId, { fields: ["user_accepted", "user", "profile", "company_ids"] });
+            const spaceUser = await getObject('space_users').findOne(suId, { fields: ["user_accepted", "user", "profile", "company_ids", "space"] });
+
+            // 安全修复：原实现只校验 is_space_admin(调用者是否为自己某空间的管理员)，不校验目标 suId
+            // 属于调用者所在空间，导致任一空间管理员可停用/启用其它租户的用户(跨租户越权)。
+            if (!spaceUser || spaceUser.space !== (userSession && userSession.spaceId)) {
+                throw new Error('space_users_method_disable_enable_error_only_admin')
+            }
 
             const companyIds = spaceUser.company_ids;
 
@@ -271,7 +277,12 @@ module.exports = {
          * @returns 
          */
         async enable(suId, userSession) {
-            const spaceUser = await getObject('space_users').findOne(suId, { fields: ["user_accepted", "user", "profile", "company_ids"] });
+            const spaceUser = await getObject('space_users').findOne(suId, { fields: ["user_accepted", "user", "profile", "company_ids", "space"] });
+
+            // 安全修复：校验目标 suId 属于调用者所在空间，防止跨租户 admin 越权(见 disable)。
+            if (!spaceUser || spaceUser.space !== (userSession && userSession.spaceId)) {
+                throw new Error('space_users_method_disable_enable_error_only_admin')
+            }
 
             const companyIds = spaceUser.company_ids;
 
@@ -326,7 +337,12 @@ module.exports = {
          * @returns 
          */
         async lockout(suId, userSession) {
-            let spaceUser = await getObject('space_users').findOne(suId, { fields: ["user_accepted", "user", "profile", "company_ids"] });
+            let spaceUser = await getObject('space_users').findOne(suId, { fields: ["user_accepted", "user", "profile", "company_ids", "space"] });
+
+            // 安全修复：校验目标 suId 属于调用者所在空间，防止跨租户 admin 越权(见 disable)。
+            if (!spaceUser || spaceUser.space !== (userSession && userSession.spaceId)) {
+                throw new Error("space_users_method_unlock_lockout_error_only_admin")
+            }
 
             const companyIds = spaceUser.company_ids;
 
@@ -363,7 +379,12 @@ module.exports = {
          * @returns 
          */
         async unlock(suId, userSession) {
-            let spaceUser = await getObject('space_users').findOne(suId, { fields: ["user_accepted", "user", "profile", "company_ids"] });
+            let spaceUser = await getObject('space_users').findOne(suId, { fields: ["user_accepted", "user", "profile", "company_ids", "space"] });
+
+            // 安全修复：校验目标 suId 属于调用者所在空间，防止跨租户 admin 越权(见 disable)。
+            if (!spaceUser || spaceUser.space !== (userSession && userSession.spaceId)) {
+                throw new Error("space_users_method_unlock_lockout_error_only_admin")
+            }
 
             const companyIds = spaceUser.company_ids;
 
@@ -395,8 +416,18 @@ module.exports = {
          * @param {*} suId 
          * @returns 
          */
-        async is_password_empty(suId) {
-            let spaceUser = await getObject('space_users').findOne(suId, { fields: ["user"] });
+        async is_password_empty(suId, userSession) {
+            let spaceUser = await getObject('space_users').findOne(suId, { fields: ["user", "space"] });
+            if (!spaceUser) {
+                throw new Error('未找到用户');
+            }
+            // 安全修复：原实现不校验调用者身份，任意登录用户可查任意账号密码是否为空(辅助定位弱口令/空口令)。
+            // 现仅允许本人或本空间管理员查询。
+            const isSelf = !!userSession && spaceUser.user === userSession.userId;
+            const isAdmin = !!userSession && userSession.is_space_admin === true && spaceUser.space === userSession.spaceId;
+            if (!isSelf && !isAdmin) {
+                throw new Error('no permission');
+            }
             const result = await getObject('users').findOne(spaceUser.user, { fields:["services.password"] });
             if(result){
                 return { empty: !!!(result.services && result.services.password && (result.services.password.bcrypt || result.services.password.bcrypts)) }
