@@ -5,6 +5,10 @@
  * @LastEditTime: 2025-03-10 11:52:39
  * @Description: 
 -->
+<!-- 安全修复(E1)：原模板经 JSON.stringify 把用户可控数据内联进 script 标签，而 JSON.stringify 不转义
+     小于号，攻击者可闭合 script 标签注入 HTML(匿名反射型 XSS)。__safeJson 对 < > 及 U+2028/U+2029
+     转义后再内联，杜绝脚本闭合。 -->
+<% var __safeJson = function (o) { return JSON.stringify(o === undefined ? null : o).split('<').join('\\u003c').split('>').join('\\u003e').split('\u2028').join('\\u2028').split('\u2029').join('\\u2029'); }; %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -181,12 +185,12 @@
     const page = {
         render_engine: 'amis',
         name: "<%=pageApiName%>",
-        schema:  <%- JSON.stringify(pageSchema) %> || {}
+        schema:  <%- __safeJson(pageSchema) %> || {}
     }
 
     const container = $(".page-template-root")[0];
 
-    const queryData = <%- JSON.stringify(locals.queryData || {}) %>;
+    const queryData = <%- __safeJson(locals.queryData || {}) %>;
 
     Steedos.Page.render(container, page, Object.assign({}, {
                     appId: appId,

@@ -87,11 +87,17 @@ router.get('/api/page/public/:pageId', async function (req, res) {
         const pageVersion = await objectql.broker.call(`page.getLatestPageVersion`, {pageId: pageId});
         if(!pageVersion){
             return res.status(404).send({ message: 'Page not found' });
-        }else if(page.type != 'app'){
+        }else if(!page || page.type != 'app'){
             // 如果不是app类型的page,则返回错误信息
             return res.status(404).send({ message: 'Must be App page.' });
         }
-        
+        // 安全修复：本端点匿名可访问，原实现对任意 app 页面都渲染，导致匿名可跨租户读取任意 App 页面
+        // 的 schema(IDOR)。pages 对象有 allow_anonymous 字段用于标记页面是否允许匿名访问，
+        // 这里仅服务显式 allow_anonymous 的页面。
+        if(page.allow_anonymous !== true){
+            return res.status(404).send({ message: 'Page not found' });
+        }
+
         let assetUrls = req.query.assetUrls;
 
         let locale = "zh-CN";
