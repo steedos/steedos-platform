@@ -21,7 +21,12 @@ const getUISchema = async function(objectName, userSession){
 
 router.post('/api/listview/filters', auth.requireAuthentication, async function (req, res) {
     const {id, filters} = req.body;
-    const record = await objectql.getObject('object_listviews').directUpdate(id, {filters: filters})
+    const userSession = req.user;
+    // 安全修复：原实现用 directUpdate 绕过权限层且不带 userSession，任意登录用户可改任意租户
+    // 任意 object_listviews 的 filters(且 filters 会经 @steedos/filters 的 evaluateFormula 求值，
+    // 构成持久化风险)。改为带 userSession 的 update，由 objectql 权限层校验对象编辑权与记录级
+    // (空间/owner)权限。
+    const record = await objectql.getObject('object_listviews').update(id, {filters: filters}, userSession)
     res.status(200).send(record);
 });
 

@@ -47,9 +47,16 @@ module.exports = {
                 path: "/reset"
             },
             async handler(ctx) {
+                const userSession = ctx.meta.user;
+                // 安全修复：原 handler 无任何鉴权(不校验 is_space_admin、不读 userSession)，
+                // 且 directDelete 按 name 过滤不带 space，任意登录用户可跨租户删除任意对象及其字段定义。
+                // 现要求空间管理员，且删除范围限定在调用者所在 space。
+                if (!userSession || !userSession.is_space_admin) {
+                    throw new Error('no permission');
+                }
                 const { objectName } = ctx.params;
-                await getObject('objects').directDelete({filters: ['name','=', objectName]});
-                await getObject('object_fields').directDelete({filters: ['object','=', objectName]});
+                await getObject('objects').directDelete({filters: [['name','=', objectName], ['space','=', userSession.spaceId]]});
+                await getObject('object_fields').directDelete({filters: [['object','=', objectName], ['space','=', userSession.spaceId]]});
                 await sleep(2 * 1000)
                 return true;
             }

@@ -695,6 +695,17 @@ module.exports = {
     },
 
     merged(schema) {
+        // 安全加固(G1)：objectql 服务暴露的是数据层内部原语(find/direct*/insert/update/delete 等)，
+        // 这些 action 只应通过内部 broker.call 调用，绝不能经 API 网关被前端/外部直接调用。
+        // 默认 visibility 为 "published"，会被 moleculer-web 网关暴露；这里统一降为 "protected"，
+        // 使其仅内部可调用、不再出现在任何 HTTP 路由中，从根上关闭「任意登录用户经
+        // /service/api/objectql/directDelete 等直连数据层」的越权(参见安全审计 G1)。
+        for (const name in schema.actions) {
+            const action = schema.actions[name];
+            if (action && typeof action === "object" && !action.visibility) {
+                action.visibility = "protected";
+            }
+        }
     },
 
     /**
