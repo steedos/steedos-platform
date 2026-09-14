@@ -66,6 +66,12 @@ router.get('/api/data/download/template/:record_id', requireAuthentication, asyn
         if (!queueImportDoc) {
             return res.status(404).send({ status: "failed", message: "not found" });
         }
+        // 安全修复：queue_import 为空间级可读，仅加 userSession 仍允许同空间他人读取(横向 IDOR)。
+        // 导入任务模板属敏感个人数据，限定仅本人或空间管理员可下载。
+        const _us = req.user || {};
+        if (queueImportDoc.owner !== _us.userId && _us.is_space_admin !== true) {
+            return res.status(404).send({ status: "failed", message: "not found" });
+        }
         let fieldMaps = queueImportDoc.field_mappings;
         if (_.isEmpty(fieldMaps)) {
             return;
