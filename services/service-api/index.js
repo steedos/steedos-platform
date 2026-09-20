@@ -501,6 +501,13 @@ module.exports = {
 				throw new ApiGateway.Errors.UnAuthorizedError("NO_RIGHTS");
 			}
 
+			// 禁止经 HTTP 网关直接调用绕过对象/记录级权限的内部方法（direct* 系列，如 objectql.directFind）。
+			// 这些动作仅供服务间调用，见 service-objectql 中的 visibility: "public"。
+			const actionName = req.$action && req.$action.name;
+			if (actionName && /(^|\.)direct[A-Z0-9]/.test(actionName)) {
+				throw new ApiGateway.Errors.UnAuthorizedError("NO_RIGHTS");
+			}
+
 			// // It check the `auth` property in action schema.
 			// if (req.$action.auth == "required" && !user) {
 			// 	throw new ApiGateway.Errors.UnAuthorizedError("NO_RIGHTS");

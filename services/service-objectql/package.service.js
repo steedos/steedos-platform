@@ -190,6 +190,7 @@ module.exports = {
             }
         },
         directUpdateMany: {
+            visibility: "public", // 仅供服务间调用；这些方法绕过对象/记录级权限，不得经 HTTP 网关暴露
             params: {
                 objectName: { type: "string" },
                 queryFilters: { type: "array", items: "any" },
@@ -232,6 +233,7 @@ module.exports = {
             }
         },
         directFind: {
+            visibility: "public", // 仅供服务间调用；这些方法绕过对象/记录级权限，不得经 HTTP 网关暴露
             params: {
                 objectName: { type: "string" },
                 query: {
@@ -253,6 +255,7 @@ module.exports = {
             }
         },
         directInsert: {
+            visibility: "public", // 仅供服务间调用；这些方法绕过对象/记录级权限，不得经 HTTP 网关暴露
             params: {
                 objectName: { type: "string" },
                 doc: { type: "object" }
@@ -265,6 +268,7 @@ module.exports = {
             }
         },
         directUpdate: {
+            visibility: "public", // 仅供服务间调用；这些方法绕过对象/记录级权限，不得经 HTTP 网关暴露
             params: {
                 objectName: { type: "string" },
                 id: { type: "any" },
@@ -278,6 +282,7 @@ module.exports = {
             }
         },
         directDelete: {
+            visibility: "public", // 仅供服务间调用；这些方法绕过对象/记录级权限，不得经 HTTP 网关暴露
             params: {
                 objectName: { type: "string" },
                 id: { type: "any" },
