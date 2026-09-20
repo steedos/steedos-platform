@@ -24,7 +24,7 @@ export class DataService {
 
   async findOne(objectName, id, userSession) {
     const obj = getObject(objectName);
-    return await obj.findOne(id, userSession);
+    return await obj.findOne(id, {}, userSession);
   }
 
   async update(objectName, id, data, userSession) {
@@ -34,6 +34,6 @@ export class DataService {
 
   async delete(objectName, id, userSession) {
     const obj = getObject(objectName);
-    return await obj.update(id, userSession);
+    return await obj.delete(id, userSession);
   }
 }
