@@ -325,9 +325,13 @@ export class DataController {
     const userSession = await getSessionByUserId(user.user, user.space);
     try {
       const result = await this.dataService.delete(objectName, id, userSession);
-      // mongo 驱动返回 deletedCount（number），typeorm 驱动无返回值，
-      // 所以只有明确返回 0 才判定为记录不存在。
-      if (result === 0) {
+      // 各驱动的返回值形态不一致：mongo 驱动返回 deletedCount（number），
+      // typeorm 驱动无返回值，也可能拿到 { deletedCount } 形式的对象。
+      // 三种形态都兼容，且只有明确取到 0 时才判定记录不存在，
+      // 取不到计数（undefined）一律按删除成功处理，避免误报 404。
+      const deletedCount =
+        typeof result === "number" ? result : result?.deletedCount;
+      if (deletedCount === 0) {
         return res.status(404).send();
       }
       res.status(200).send({ deleted: true, _id: id });
