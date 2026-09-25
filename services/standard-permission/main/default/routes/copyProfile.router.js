@@ -30,6 +30,12 @@ router.post('/api/permission/permission_set/copy', auth.requireAuthentication, a
         const userSession = req.user;
         const { userId, spaceId, company_id } = userSession;
 
+        // 安全修复：原实现仅要求登录，无 is_space_admin 校验，且用裸 mongo insert 绕权限层创建权限简档，
+        // 任意登录用户可克隆(含 admin)简档并配合其它接口赋给自己造成提权。现要求空间管理员。
+        if (!userSession.is_space_admin) {
+            return res.status(403).send({ error: 'Permission denied' });
+        }
+
         const { originalPermissionSetId, name, label } = req.body;
         if (!originalPermissionSetId) {
             throw new Error("originalPermissionSetId is required");
