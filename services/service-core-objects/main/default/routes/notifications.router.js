@@ -49,6 +49,14 @@ router.get(
                     return res.redirect(redirectUrl);
                 }
             }
+            // 安全修复：原实现无论归属都读取通知并跳转到 record.url，任意登录用户可用他人 notification _id
+            // 拿到他人通知的跳转地址(跨用户 IDOR)。现要求只能操作本人的通知。
+            if (record.owner !== userSession.userId) {
+                return res.status(403).send({
+                    "error": "Permission denied",
+                    "success": false
+                });
+            }
             if (!record.related_to && !record.url) {
                 return res.status(401).send({
                     "error": "Validate Request -- Missing related_to or url",
@@ -59,9 +67,19 @@ router.get(
                 // 没有权限时，只是不修改is_read值，但是允许跳转到相关记录查看
                 await getSteedosSchema().getObject('notifications').update(record_id, { 'is_read': true, modified: new Date() })
             }
-            let redirectUrl = record.url ? record.url : util.getObjectRecordRelativeUrl(record.related_to.o, record.related_to.ids[0], record.space, {
-                rootUrl, appId
-            });
+            // 安全修复：record.url 直接用于 res.redirect 存在开放重定向风险，仅允许站内相对路径("/..."，
+            // 且非协议相对地址"//")，否则回退到相关记录地址。
+            const isSafeInternalUrl = (u) => typeof u === 'string' && /^\/(?!\/)/.test(u);
+            let redirectUrl;
+            if (isSafeInternalUrl(record.url)) {
+                redirectUrl = record.url;
+            } else if (record.related_to && record.related_to.o) {
+                redirectUrl = util.getObjectRecordRelativeUrl(record.related_to.o, record.related_to.ids[0], record.space, {
+                    rootUrl, appId
+                });
+            } else {
+                redirectUrl = util.getObjectRecordRelativeUrl("notifications", record_id);
+            }
             if (req_async) { // || req.get("X-Requested-With") === 'XMLHttpRequest'
                 return res.status(200).send({
                     "status": 200,

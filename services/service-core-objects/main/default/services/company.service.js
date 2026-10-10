@@ -76,6 +76,13 @@ module.exports = {
                 fields: ["organization", "space"]
             });
 
+            // 安全修复：原 handler 无任何鉴权，且内部对 space_users/organizations/company 全用 directUpdate
+            // (绕权限层)，任意登录用户可传任意租户 companyId 触发该租户组织/分部数据重算(完整性/DoS)。
+            // 现要求空间管理员，且 companyId 必须属于调用者所在空间。
+            if (!userSession || userSession.is_space_admin !== true || !company || company.space !== userSession.spaceId) {
+                throw new Error('no permission');
+            }
+
             if (!company.organization) {
                 throw new Error("该分部的关联组织未设置");
             }
