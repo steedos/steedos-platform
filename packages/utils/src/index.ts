@@ -11,6 +11,7 @@ export * from "./defaultsDeep";
 export * from "./settings";
 
 export * from "./cookies";
+export * from "./assetUrls";
 
 export const hiddenObjects = ["core", "base", "cfs_instances_filerecord"];
 

@@ -7,6 +7,7 @@ const express = require("express");
 const router = express.Router();
 const auth = require('@steedos/auth');
 const ejs = require('ejs');
+const { filterAssetUrls } = require("@steedos/utils");
 const fs = require('fs');
 const _ = require('lodash');
 
@@ -14,7 +15,7 @@ router.get('/api/amisAppNavSchemaDesign', auth.requireAuthentication, async func
     try {
         res.set('Content-Type', 'text/html');
         const userSession = req.user;
-        let assetUrls = req.query.assetUrls;
+        let assetUrls = filterAssetUrls(req.query.assetUrls);
         const assetUrl = `assetUrl=${assetUrls.split(',').join("&assetUrl=")}&`;
         // const dataContext = {
         //     rootUrl: process.env.ROOT_URL,

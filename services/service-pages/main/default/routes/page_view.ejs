@@ -100,7 +100,12 @@
 
     let searchParams = new URLSearchParams(location.search);
     if (searchParams.get('assetUrls')) {
+      <%_ if (locals.ASSET_URLS_WHITELIST_ENABLED) { _%>
+      // 配置了资产包白名单时，只保存服务端过滤后的地址
+      sessionStorage.setItem('assetUrls', <%- JSON.stringify(STEEDOS_PUBLIC_PAGE_ASSETURLS || "").replace(/</g, "\\u003c") %>)
+      <%_ } else { _%>
       sessionStorage.setItem('assetUrls', searchParams.get('assetUrls'))
+      <%_ } _%>
     }
 
     let assetUrls = "<%=STEEDOS_PUBLIC_PAGE_ASSETURLS%>"
