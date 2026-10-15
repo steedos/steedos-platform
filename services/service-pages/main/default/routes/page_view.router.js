@@ -7,6 +7,7 @@ const express = require('express');
 const router = express.Router();
 const auth = require('@steedos/auth');
 const ejs = require('ejs');
+const { filterAssetUrls, isAssetUrlsWhitelistEnabled } = require("@steedos/utils");
 const fs = require('fs');
 const _ = require('lodash');
 const path = require('path');
@@ -31,7 +32,7 @@ router.get('/api/page/view/:pageId', auth.authentication, async function (req, r
             return res.redirect(`/login?redirect_uri=${encodeURIComponent(`/api/page/view/${pageId}`)}`);
         }
         
-        let assetUrls = req.query.assetUrls;
+        let assetUrls = filterAssetUrls(req.query.assetUrls);
 
         let locale = "zh-CN";
         if (req.query.locale == "en-us") {
@@ -47,6 +48,7 @@ router.get('/api/page/view/:pageId', auth.authentication, async function (req, r
             STEEDOS_UNPKG_URL: process.env.STEEDOS_UNPKG_URL,
             STEEDOS_AMIS_URL: process.env.STEEDOS_AMIS_URL,
             STEEDOS_PUBLIC_PAGE_ASSETURLS: assetUrls || process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS,
+            ASSET_URLS_WHITELIST_ENABLED: isAssetUrlsWhitelistEnabled(),
             NODE_ENV: process.env.NODE_ENV,
             ROOT_URL: process.env.ROOT_URL,
             STEEDOS_VERSION: process.env.STEEDOS_VERSION,
@@ -92,7 +94,7 @@ router.get('/api/page/public/:pageId', async function (req, res) {
             return res.status(404).send({ message: 'Must be App page.' });
         }
         
-        let assetUrls = req.query.assetUrls;
+        let assetUrls = filterAssetUrls(req.query.assetUrls);
 
         let locale = "zh-CN";
         if (req.query.locale == "en-us") {
@@ -108,6 +110,7 @@ router.get('/api/page/public/:pageId', async function (req, res) {
             STEEDOS_UNPKG_URL: process.env.STEEDOS_UNPKG_URL,
             STEEDOS_AMIS_URL: process.env.STEEDOS_AMIS_URL,
             STEEDOS_PUBLIC_PAGE_ASSETURLS: assetUrls || process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS,
+            ASSET_URLS_WHITELIST_ENABLED: isAssetUrlsWhitelistEnabled(),
             NODE_ENV: process.env.NODE_ENV,
             ROOT_URL: process.env.ROOT_URL,
             STEEDOS_VERSION: process.env.STEEDOS_VERSION,

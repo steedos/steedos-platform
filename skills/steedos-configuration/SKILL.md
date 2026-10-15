@@ -76,6 +76,7 @@ YAML values support `${ENV_VAR}` interpolation from environment variables.
 | `STEEDOS_UNPKG_URL` | `/unpkg` | CDN URL for unpkg assets |
 | `STEEDOS_AMIS_VERSION` | `6.3.0-patch.8` | Amis widget version |
 | `STEEDOS_WIDGETS_VERSION` | `6.10.52` | Steedos widgets version |
+| `STEEDOS_PAGE_ASSETURLS_WHITELIST` | — (no restriction) | Comma-separated whitelist for the `assetUrls` URL parameter of page render / designer APIs. Entry can be an origin (`https://cdn.example.com`) or an origin with path prefix (`https://cdn.example.com/assets/`). URLs in `STEEDOS_PUBLIC_PAGE_ASSETURLS` are always allowed; others are ignored. Unset = no restriction |
 
 ### Plugin System | 插件系统
 

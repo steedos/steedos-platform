@@ -22,6 +22,8 @@ waitForThing(window, 'Builder').then(()=>{
 
 - STEEDOS_PUBLIC_PAGE_ASSETURLS: 资产包的url地址,多个用逗号分隔.如果未配置,则不加载
 
+- STEEDOS_PAGE_ASSETURLS_WHITELIST: 页面渲染、设计器等接口中 url 参数 `assetUrls` 允许加载的资产包地址白名单,多个用逗号分隔.可以只写域名(如 `https://cdn.example.com`,该域名下都允许),也可以带路径(如 `https://cdn.example.com/assets/`,该路径下允许).`STEEDOS_PUBLIC_PAGE_ASSETURLS` 中的地址始终允许,不在白名单中的地址会被忽略.如果未配置,则不限制
+
 - STEEDOS_PUBLIC_PAGE_UNPKGURL: unpkg cdn配置, 默认为 https://npm.elemecdn.com
 
 ## 自定义渲染器

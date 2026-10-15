@@ -9,6 +9,7 @@
 const express = require('express');
 const router = express.Router();
 const ejs = require('ejs');
+const { filterAssetUrls, isAssetUrlsWhitelistEnabled } = require("@steedos/utils");
 
 router.get('/api/page/render', async function (req, res) {
     try {
@@ -23,7 +24,7 @@ router.get('/api/page/render', async function (req, res) {
             }
         }
 
-        let assetUrls = req.query.assetUrls;
+        let assetUrls = filterAssetUrls(req.query.assetUrls);
 
         let locale = "zh-CN";
         if (req.query.locale == "en-us") {
@@ -47,6 +48,7 @@ router.get('/api/page/render', async function (req, res) {
             STEEDOS_UNPKG_URL: process.env.STEEDOS_UNPKG_URL,
             STEEDOS_AMIS_URL: process.env.STEEDOS_AMIS_URL,
             STEEDOS_PUBLIC_PAGE_ASSETURLS: assetUrls || process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS,
+            ASSET_URLS_WHITELIST_ENABLED: isAssetUrlsWhitelistEnabled(),
             NODE_ENV: process.env.NODE_ENV,
             ROOT_URL: process.env.ROOT_URL,
             STEEDOS_VERSION: process.env.STEEDOS_VERSION,
