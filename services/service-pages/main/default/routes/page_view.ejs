@@ -130,7 +130,7 @@
       steedosAmisVersion: "<%=STEEDOS_AMIS_VERSION%>",
       locale: "<%=STEEDOS_LOCALE%>" || getBrowserLocale(),
       useOpenAPI: STEEDOS_PUBLIC_USE_OPEN_API,
-      context: <%- JSON.stringify(USER_CONTEXT) %>
+      context: <%- JSON.stringify(USER_CONTEXT).replace(/</g, "\\u003c") %>
     });
 
     window.axios = amisRequire('axios');
@@ -181,12 +181,12 @@
     const page = {
         render_engine: 'amis',
         name: "<%=pageApiName%>",
-        schema:  <%- JSON.stringify(pageSchema) %> || {}
+        schema:  <%- (JSON.stringify(pageSchema) || "null").replace(/</g, "\\u003c") %> || {}
     }
 
     const container = $(".page-template-root")[0];
 
-    const queryData = <%- JSON.stringify(locals.queryData || {}) %>;
+    const queryData = <%- JSON.stringify(locals.queryData || {}).replace(/</g, "\\u003c") %>;
 
     Steedos.Page.render(container, page, Object.assign({}, {
                     appId: appId,
