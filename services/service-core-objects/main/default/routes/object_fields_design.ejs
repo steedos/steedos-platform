@@ -119,7 +119,7 @@
             global: {
               userId: userId,
               spaceId: tenantId,
-              user: <%- JSON.stringify(userSession) %>, 
+              user: <%- JSON.stringify(userSession).replace(/</g, "\\u003c") %>, 
               now: new Date(),
             }
           },
@@ -156,11 +156,11 @@
             schema.data.context.tenantId = tenantId;
             schema.data.context.userId = userId;
             schema.data.context.authToken = authToken;
-            schema.data.context.user = <%- JSON.stringify(userSession) %>;
+            schema.data.context.user = <%- JSON.stringify(userSession).replace(/</g, "\\u003c") %>;
             schema.data.global = {
               userId: userId,
               spaceId: tenantId,
-              user: <%- JSON.stringify(userSession) %>, 
+              user: <%- JSON.stringify(userSession).replace(/</g, "\\u003c") %>, 
               now: new Date(),
             }
             // if (objectName && pageType === "record") {

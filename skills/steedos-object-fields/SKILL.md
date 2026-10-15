@@ -348,7 +348,7 @@ name: contact
 type: lookup
 label: Contact
 reference_to: contacts
-filters: [["account", "=", "{$customer}"]]
+filters: [["account", "=", "${customer}"]]
 depend_on:
   - customer
 
@@ -363,7 +363,7 @@ multiple: true
 Lookup properties:
 - `reference_to` — target object API name (required)
 - `multiple` — allow selecting multiple records (`true`/`false`)
-- `filters` — filter condition for lookup dropdown
+- `filters` — filter condition for lookup dropdown. Use `${fieldName}` to reference another field's value in the current form (list that field in `depend_on`). Do NOT write `{$fieldName}`.
 - `depend_on` — re-fetch options when these fields change
 - `deleted_lookup_record_behavior` — when referenced record is deleted. **⚠️ MUST be `clear` (set to null) or `retain` (keep stale reference). Only these two values are valid.**
 
@@ -535,7 +535,7 @@ label: Contact
 reference_to: contacts
 depend_on:
   - customer
-filters: [["account", "=", "{$customer}"]]
+filters: [["account", "=", "${customer}"]]
 ```
 
 ## Best Practices | 最佳实践

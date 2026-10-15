@@ -207,13 +207,12 @@ name: user_order_filter
 object_name: orders
 active: true
 entry_criteria: '{{$user.profile == "user"}}'
-record_filter: >
-  {{[
-    ["owner", "=", "$user.userId"],
-    "or",
-    ["assigned_to", "=", "$user.userId"]
-  ]}}
+record_filter: '{{[["owner", "=", $user.userId], "or", ["assigned_to", "=", $user.userId]]}}'
 ```
+
+`{{ }}` expression notes:
+- Inside `{{ }}` the content is JavaScript and `$user` is the current user session variable, so write `$user.userId` **without quotes** (`"$user.userId"` is just a literal string).
+- Keep the whole `{{ ... }}` on **one line** in a quoted string. Multi-line values (e.g. YAML `>` / `|` blocks) are not recognized as expressions and the rule silently does nothing.
 
 ## Record-Level Permissions | 记录级权限
 

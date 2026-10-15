@@ -101,7 +101,7 @@
             schema.data.context.tenantId = tenantId;
             schema.data.context.userId = userId;
             schema.data.context.authToken = authToken;
-            schema.data.context.user = <%- JSON.stringify(userSession) %>;
+            schema.data.context.user = <%- JSON.stringify(userSession).replace(/</g, "\\u003c") %>;
 
             return schema || initialContent
           }
