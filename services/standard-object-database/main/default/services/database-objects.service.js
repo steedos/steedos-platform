@@ -5,7 +5,16 @@
  * @LastEditTime: 2023-05-18 09:26:18
  * @Description: 
  */
+const validator = require('validator');
 var packageServiceName = '~database-objects'
+
+/**
+ * 是否禁止从数据库加载 triggers（object_triggers 表中的记录）
+ * 通过环境变量 STEEDOS_DISABLE_DATABASE_TRIGGERS=true 开启
+ */
+function isDatabaseTriggersDisabled(){
+    return validator.toBoolean(process.env.STEEDOS_DISABLE_DATABASE_TRIGGERS || 'false', true);
+}
 function isPatternTrigger(data){
     const {listenTo} = data;
     if(listenTo === '*'){
@@ -121,8 +130,12 @@ module.exports = {
 	 * Service started lifecycle event handler
 	 */
 	async started() {
+        if(isDatabaseTriggersDisabled()){
+            this.logger.info('STEEDOS_DISABLE_DATABASE_TRIGGERS is enabled, skip loading triggers from database.');
+            return;
+        }
         Meteor.startup(async ()=>{
-            this.subTriggers = await this.subTriggers();
+            this.triggersObserveHandle = await this.subTriggers();
         })
 	},
 
@@ -130,6 +143,9 @@ module.exports = {
 	 * Service stopped lifecycle event handler
 	 */
 	async stopped() {
+        if(this.triggersObserveHandle && this.triggersObserveHandle.stop){
+            this.triggersObserveHandle.stop();
+        }
         // TODO 停止服务时, 需要执行以下操作
         // 1 stop订阅
         // 2 清理元数据
