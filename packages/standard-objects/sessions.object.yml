@@ -65,11 +65,13 @@ permission_set:
     allowCreate: false
     allowDelete: false
     allowEdit: false
-    allowRead: true
+    allowRead: false
     modifyAllRecords: false
-    viewAllRecords: true
+    viewAllRecords: false
     modifyCompanyRecords: false
-    viewCompanyRecords: true
+    viewCompanyRecords: false
+    unreadable_fields:
+      - token
   admin:
     allowCreate: false
     allowDelete: false
@@ -77,3 +79,5 @@ permission_set:
     allowRead: true
     modifyAllRecords: false
     viewAllRecords: true
+    unreadable_fields:
+      - token
