@@ -61,15 +61,22 @@ list_views:
       - modified
     sort: [["modified", "desc"]]
 permission_set:
+  # Login sessions store authentication tokens. They must never be readable by
+  # regular users: the auto-generated GraphQL/ObjectQL API enforces this
+  # object-level permission set (not tab visibility), so granting the "user"
+  # permission set viewAllRecords/viewCompanyRecords exposed every user's
+  # session token to any authenticated caller (broken access control / session
+  # hijacking). The admin_sessions tab is already admin-only; keep data access
+  # admin-only here too.
   user:
     allowCreate: false
     allowDelete: false
     allowEdit: false
-    allowRead: true
+    allowRead: false
     modifyAllRecords: false
-    viewAllRecords: true
+    viewAllRecords: false
     modifyCompanyRecords: false
-    viewCompanyRecords: true
+    viewCompanyRecords: false
   admin:
     allowCreate: false
     allowDelete: false
