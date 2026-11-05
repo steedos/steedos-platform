@@ -664,6 +664,8 @@ export class Mongo implements DatabaseInterface {
     const infos = this.resolveInfo(connection);
     const session: any = {
       userId,
+      // owner 用于对象权限：普通用户只能查看自己的会话记录
+      owner: userId,
       token,
       ...infos,
       extraData,
