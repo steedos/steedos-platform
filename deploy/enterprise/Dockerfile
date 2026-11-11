@@ -49,10 +49,10 @@ ENV NVM_DIR=/root/.nvm
 
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash \
     && chmod +x "$NVM_DIR/nvm.sh" \
-    && bash -c ". $NVM_DIR/nvm.sh && nvm install 22.23.3 && nvm alias default 22.23.3"
+    && bash -c ". $NVM_DIR/nvm.sh && nvm install 22.23.4 && nvm alias default 22.23.4"
 
 # 确保在构建过程中可用
-ENV PATH=$NVM_DIR/versions/node/v22.23.3/bin:$PATH
+ENV PATH=$NVM_DIR/versions/node/v22.23.4/bin:$PATH
 
 RUN apt-get update \
     && apt-get install -y gnupg curl nodejs
