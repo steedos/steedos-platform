@@ -201,6 +201,8 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          # 不生成 provenance 证明清单（config 为 application/vnd.oci.empty.v1+json），阿里云镜像仓库不支持，会导致 docker-sync 失败
+          provenance: false
 
       # 正式版才发布 arm64
       - name: Build and push docker
@@ -212,6 +214,8 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          # 同上：不生成阿里云镜像仓库不支持的 provenance 证明清单
+          provenance: false
 
 
   docker-sync:
@@ -272,19 +276,27 @@ jobs:
       #   with:
       #     registry: 252208178451.dkr.ecr.cn-northwest-1.amazonaws.com.cn
 
-      - name: Pull and Push steedos-enterprise
+      # 仓库到仓库直接复制（不经过 runner 本地的镜像存储），清单原样复制，多架构镜像也会完整同步。
+      # 已上传的层会被跳过，所以失败后重试只会补传缺失的部分。
+      - name: Sync steedos-enterprise to Aliyun
         run: |
           SRC=steedos/steedos-enterprise:${{ env.STEEDOS_VERSION }}
-          docker pull $SRC
+          ALIYUN=registry.cn-shanghai.aliyuncs.com/steedos
 
-          # docker tag $SRC 252208178451.dkr.ecr.cn-northwest-1.amazonaws.com.cn/dockerhub/steedos/steedos-enterprise:${{ env.STEEDOS_VERSION }}
-          # docker push 252208178451.dkr.ecr.cn-northwest-1.amazonaws.com.cn/dockerhub/steedos/steedos-enterprise:${{ env.STEEDOS_VERSION }}
+          # ECR=252208178451.dkr.ecr.cn-northwest-1.amazonaws.com.cn/dockerhub/steedos
+          #   -t $ECR/steedos-enterprise:${{ env.STEEDOS_VERSION }}
 
-          docker tag $SRC registry.cn-shanghai.aliyuncs.com/steedos/steedos-community:${{ env.STEEDOS_VERSION }}
-          docker tag $SRC registry.cn-shanghai.aliyuncs.com/steedos/steedos-enterprise:${{ env.STEEDOS_VERSION }}
-
-          docker push registry.cn-shanghai.aliyuncs.com/steedos/steedos-community:${{ env.STEEDOS_VERSION }}
-          docker push registry.cn-shanghai.aliyuncs.com/steedos/steedos-enterprise:${{ env.STEEDOS_VERSION }}
+          for attempt in 1 2 3; do
+            if docker buildx imagetools create --prefer-index=false \
+              -t $ALIYUN/steedos-community:${{ env.STEEDOS_VERSION }} \
+              -t $ALIYUN/steedos-enterprise:${{ env.STEEDOS_VERSION }} \
+              $SRC; then
+              exit 0
+            fi
+            echo "::warning::同步到阿里云失败（第 ${attempt} 次）"
+            sleep 15
+          done
+          exit 1
 
   npm-sync:
     runs-on: ubuntu-latest
